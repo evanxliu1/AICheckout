@@ -15,7 +15,7 @@ export const PREP_RE =
 
 /** Items total. Tested before TOTAL_RE, since most of these contain a total word. */
 export const SUBTOTAL_RE =
-  /sub-?\s?tot|subtotaal|zwischen|sous-?\s?total|sottototale|subtotale|delsumma|mellansumma|suma cz[ęe][śs]ciowa|warto[śs][ćc] (?:produkt|koszyk|towar)|cena produkt|ara toplam|小計|小计|商品合計|商品小計|商品金額|소계|상품\s?금액|주문\s?금액|المجموع الفرعي|مجموع المنتجات|merchandise|warenwert|artikelsumme|items?\s*(?:\(s\))?\s*\(?\s*\d*\s*\)?\s*:?\s*(?:sub)?total|total in (?:the )?(?:cart|bag|basket)|total(?:e|aal)?\s(?:de\s|dei\s|des\s|van\s)?(?:prod|art[ií]|produit|producto)/u;
+  /sub-?\s?tot|subtotaal|zwischen|sous-?\s?total|sottototale|subtotale|delsumma|mellansumma|suma cz[ęe][śs]ciowa|warto[śs][ćc] (?:produkt|koszyk|towar)|cena produkt|ara toplam|ürün toplam|artikel\s?gesamt|produkt\w*\s?gesamt|小計|小计|商品合計|商品小計|商品金額|소계|상품\s?금액|주문\s?금액|المجموع الفرعي|مجموع المنتجات|merchandise|warenwert|artikelsumme|items?\s*(?:\(s\))?\s*\(?\s*\d*\s*\)?\s*:?\s*(?:sub)?total|total in (?:the )?(?:cart|bag|basket)|total(?:e|aal)?\s(?:de\s|dei\s|des\s|van\s)?(?:prod|art[ií]|produit|producto)/u;
 
 /** Order total, with or without tax or shipping. */
 export const TOTAL_RE =
@@ -27,6 +27,13 @@ export const GRAND_RE =
 
 /** A total after a gift card, store credit or points: only when a credit row is on the page. */
 export const AFTER_RE = /\bdue\b|after|remaining|verbleib|restbetrag|balance/u;
+
+/**
+ * A card offer's hypothetical credit ("$200 gift card upon approval", "future statement credit", "after you spend"):
+ * never a credit in the cart, never a total after one.
+ */
+export const OFFER_RE =
+  /approv|\bstatement\b|terms apply|when you (?:open|apply|spend)|after you spend|if you (?:open|apply|spend)|apply (?:now|today)|card ?members?\b|\bgenehmig|\bapprobation|\baprobaci/u;
 
 /** A credit row: negative amount with one of these words. */
 export const CREDIT_RE =
@@ -66,7 +73,7 @@ const QUALIFIED_SAVINGS_RE =
  * classifying. Only as a parenthetical or after a comma or dash: "Total tax calculated at checkout" is a tax row.
  */
 const AT_CHECKOUT_RE =
-  /[(,\-–—]\s*(?:\b(?:ship\w*|deliver\w*|tax\w*|vat|gst|duties)\b\s*(?:(?:&|and|,)\s*)?)*(?:calculated|estimated|determined)\s+(?:at|in|during)\s+checkout\)?/gu;
+  /[(,:\-–—]\s*(?:\b(?:ship\w*|deliver\w*|tax\w*|vat|gst|duties)\b\s*(?:(?:&|and|,)\s*)?)*(?:calculated|estimated|determined)\s+(?:at|in|during)\s+checkout\)?/gu;
 
 const TAX_SHIP_RE = new RegExp(`${SHIP_RE.source}|${TAX_RE.source}`, 'gu');
 const TOTAL_WORD_RE = new RegExp(`${SUBTOTAL_RE.source}|${TOTAL_RE.source}`, 'u');
@@ -80,9 +87,9 @@ const PREP_AFTER_RE = new RegExp(`^[\\s):.-]*(?:\\d+\\s?%\\s*)?(?:${PREP_RE.sour
 /**
  * An English tax word right after the total word with nothing but a trailing preposition ("Total tax included",
  * "Total VAT incl.") is the tax row; set off by a parenthesis or comma ("Total (tax included)", "Total, VAT incl.")
- * or fused ("Total tax-inclusive") it is a total.
+ * or fused ("Total tax-inclusive") it is a total, as is an order total ("Grand total VAT inclusive").
  */
-const TAX_ROW_RE = /\btotal\s+(?:tax\w*|vat|gst|hst|pst|qst)\b(?!-)/u;
+const TAX_ROW_RE = /(?<!(?:grand|order)\s)\btotal\s+(?:tax\w*|vat|gst|hst|pst|qst)\b(?!-)/u;
 
 /**
  * Whether a label that names tax or shipping is a qualified total ("Total incl. VAT", "Pre-tax total", "Total + tax",

@@ -151,9 +151,10 @@ export function storefrontOf(url: string, lang: string): Storefront {
 
 /**
  * Rule (b): a currency code from the page's structured data (JSON-LD, currency meta tags, microdata, currency
- * attributes such as `data-currency` or a component's `currency`). Null when there is none or they disagree.
+ * attributes such as `data-currency` or a component's `currency`). Null when there is none; `'conflict'` when they
+ * disagree (a storefront serving several currencies), which blocks rule (d).
  */
-export function structuredCurrency(doc: Document): string | null {
+export function structuredCurrency(doc: Document): string | 'conflict' | null {
   const found = new Set<string>();
   const add = (v: string | null | undefined) => {
     const c = v?.trim().toUpperCase();
@@ -178,7 +179,7 @@ export function structuredCurrency(doc: Document): string | null {
         if (/^[A-Za-z]{3}$/.test(v)) add(v);
       }
   }
-  return found.size === 1 ? [...found][0]! : null;
+  return found.size === 1 ? [...found][0]! : found.size > 1 ? 'conflict' : null;
 }
 
 const PREFIX_ALT = Object.keys(DECIDING_MARKERS)
@@ -308,13 +309,13 @@ export type RowCurrencyEvidence = {
  */
 export function resolveCurrency(
   row: RowCurrencyEvidence,
-  structured: string | null,
+  structured: string | 'conflict' | null,
   store: Storefront,
   named: () => Set<string>,
 ): string | null {
   if (row.codes.length > 1) return null;
   if (row.codes.length === 1) return row.codes[0]!;
-  if (structured) return structured;
+  if (structured && structured !== 'conflict') return structured;
   if (row.marker && row.marker !== 'shared') return row.marker;
   // Rule (d): the storefront, only for a shared marker or no marker, and only when nothing on the page names
   // another currency.

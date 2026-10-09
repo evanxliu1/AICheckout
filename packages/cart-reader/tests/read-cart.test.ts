@@ -643,3 +643,62 @@ describe('amount grammar', () => {
     expect(findAmounts('Qty 1 Size R', isCode)).toEqual([]);
   });
 });
+
+describe('round 6 (2026-10-08): generalization to stores the reader was not tuned on', () => {
+  it("a header's basket flyout yields to the page's own summary", () => {
+    const flyout = `<header><div>${row('Total', '$31.00')}<button>Checkout</button></div></header>`;
+    const main = `<main>${summary(row('Subtotal', '$26.00') + row('Shipping', '$5.00'))}</main>`;
+    expect(page(flyout + main)).toEqual({
+      shown: true,
+      kind: 'subtotal',
+      amountMinor: 2600,
+      currency: 'USD',
+    });
+    // Alone, the flyout is the page's summary (a mini cart open over a product page).
+    expect(page(flyout)).toMatchObject({ shown: true, amountMinor: 3100 });
+  });
+  it('an order total qualified by a tax note is a total, and a colon sets off an at-checkout note', () => {
+    expect(classifyLabel('grand total vat inclusive')).toBe('estimatedTotal');
+    expect(classifyLabel('order total tax included')).toBe('estimatedTotal');
+    expect(classifyLabel('total tax included')).toBeNull();
+    expect(classifyLabel('estimated total: tax calculated at checkout')).toBe('estimatedTotal');
+    const r = page(
+      summary(
+        row('SubTotal', '$29.99') +
+          row('Discount', '-$13.00') +
+          row('Estimated total: Tax calculated at checkout', '$16.99'),
+      ),
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 1699, currency: 'USD' });
+  });
+  it("a card offer's hypothetical credit is neither a credit nor an after-credit total", () => {
+    const offer =
+      `<section><p>$200 gift card upon approval: -$200.00</p><p>Future $100 credit on your statement*: -$100.00</p>` +
+      `${row('Total after gift card and future statement credit*', '$4.93')}<button>Checkout</button></section>`;
+    const r = page(offer + summary(row('Subtotal', '$279.98') + row('Total', '$304.93')));
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 30493, currency: 'USD' });
+  });
+  it('a different order total outside the summary list keeps two totals ambiguous', () => {
+    const bar = `<div>${row('Order Total', '$32.84')}<button>Secure checkout</button></div>`;
+    const list = summary(row('Subtotal', '$29.99') + row('Estimated Total', '$29.99'));
+    expect(page(list + bar)).toEqual({ shown: false, reason: 'ambiguous' });
+  });
+  it('disagreeing structured currencies with other codes in view block the storefront rule', () => {
+    const head =
+      '<meta property="og:price:currency" content="CAD"><meta property="product:price:currency" content="USD">';
+    const footer =
+      '<footer><ul><li>Australia AUD</li><li>Canada CAD</li><li>United Kingdom GBP</li></ul></footer>';
+    expect(page(summary(row('Total', '$125.00')) + footer, { head })).toEqual({
+      shown: false,
+      reason: 'currency-undetermined',
+    });
+  });
+  it('a product total is an items total in any language', () => {
+    expect(classifyLabel('ürün toplamı')).toBe('subtotal');
+    expect(classifyLabel('artikel gesamt')).toBe('subtotal');
+    expect(classifyLabel('total produits')).toBe('subtotal');
+    expect(
+      page(summary(row('Ürün Toplamı', '1.000,00 TL')), { url: 'https://shop.example.com.tr/' }),
+    ).toMatchObject({ shown: true, kind: 'subtotal', amountMinor: 100000, currency: 'TRY' });
+  });
+});
