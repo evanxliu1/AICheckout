@@ -415,6 +415,14 @@ describe('review round 4 (2026-10-08)', () => {
         currency: 'USD',
       });
       expect(page(`<p>$19.72 (approx. CAD 27.10)</p>${total}`)).toMatchObject({ currency: 'USD' });
+      expect(page(summary(row('Total', '$25.00') + row('Approx.', 'â‰ˆ CHF 22.10')))).toMatchObject({
+        currency: 'USD',
+      });
+      // A currency list beside a phone number, and "Hong Kong SAR" beside a price, are not priced codes.
+      expect(
+        page(`<ul><li>USD (selected)</li><li>EUR</li><li>GBP</li></ul><p>800-555-0100</p>${total}`),
+      ).toMatchObject({ currency: 'USD' });
+      expect(page(`<p>Ships to Hong Kong SAR</p><p>$19.72</p>${total}`)).toMatchObject({ currency: 'USD' });
     });
     it('the chosen option of a currency select counts; a country select does not', () => {
       expect(page(`<select><option>USD</option><option selected>CAD</option></select>${total}`)).toEqual(

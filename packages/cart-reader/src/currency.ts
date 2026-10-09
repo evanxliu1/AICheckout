@@ -201,9 +201,10 @@ const STATEMENT_RE = new RegExp(
 const SELECTOR_RE = new RegExp(`${CODE}\\s?\\$(?!\\s?\\d)|\\$\\s?${CODE}|\\(${CODE}\\s?\\$?\\)`, 'gu');
 // A price written with a code or country-named prefix ("CA$19.99", "$19.99 CAD", "CAD 19.99"). A conversion, after
 // "≈" (also mangled), "~", "approx" or an opening parenthesis ("$19.72 (≈ AUD 11.50)"), is checked in code; a code
-// after a capitalised word ("Hong Kong SAR $19.72", a place beside a price) is not a prefix.
+// after a capitalised word ("Hong Kong SAR $19.72", a place beside a price) or another code ("EUR CAD GBP 800-555-0100",
+// a list beside a phone number) is not a prefix, nor is one before digits with a dash (a phone number or an ID).
 const PRICED_RE = new RegExp(
-  `(?<!\\p{Lu}\\p{Ll}+\\s)(?<![A-Za-z])(?<c1>[A-Z]{3})\\s?\\$?\\s?(?=\\d)|(?<p>${PREFIX_ALT})\\s?(?=\\d)|\\d[\\d.,' ]*\\s?\\$?\\s?(?<![A-Za-z])(?<c2>[A-Z]{3})(?![A-Za-z])`,
+  `(?<!\\p{Lu}\\p{Ll}+\\s)(?<![A-Z]{3}\\s)(?<![A-Za-z])(?<c1>[A-Z]{3})\\s?\\$?\\s?(?=\\d)(?!\\d+-)|(?<p>${PREFIX_ALT})\\s?(?=\\d)|\\d[\\d.,' ]*\\s?\\$?\\s?(?<![A-Za-z])(?<c2>[A-Z]{3})(?![A-Za-z])`,
   'gu',
 );
 /**
@@ -280,7 +281,7 @@ export function namedCurrencies(text: string, selects: SelectOptions[] = []): Se
       .slice(Math.max(0, m.index - 12), m.index)
       .split(')')
       .pop()!;
-    if (!/[(≈~]|approx/.test(before)) add(c1 ?? c2, p);
+    if (!/[(≈~]|approx/i.test(before)) add(c1 ?? c2, p);
   }
   const lower = text.toLowerCase();
   for (const [re, c] of NAMES) if (re.test(lower)) out.add(c);
