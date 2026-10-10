@@ -4,17 +4,17 @@ title: Now
 description: Current state, active work, open questions and next steps. Rewritten at the end of every session.
 status: stable
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-10T08:00:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-10T10:40:00Z
 ---
 
 # Now
 
-As of 2026-10-10T08:00Z.
+As of 2026-10-10T10:40Z.
 
 ## Current state
 
-- **`origin/main` is `6000085`** (PR #78, Phase 13b). Phases 7–13 and 13b are done; Phase 13c (cart detection and the badge at any store) is planned on branch `phase13c-cart-detection` ([plan](product/phase-13c-cart-detection.md), [roadmap](product/roadmap.md)).
+- **`origin/main` is `6000085`** (PR #78, Phase 13b). Phases 7–13 and 13b are done; Phase 13c (cart detection and the badge at any store) is built, reviewed and measured on branch `phase13c-cart-detection`, PR pending ([plan](product/phase-13c-cart-detection.md), [roadmap](product/roadmap.md)).
 - **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render last checked serving `e9fe387`; all 10 migrations on hosted ([hosting](ops/hosting.md)).
 - **Captures:** the main checkout holds every gitignored issuer capture ([capture folders](ops/catalog-release.md#capture-folders)) and the pane exports (`evals/merchants/capture/data/pane/`); `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them. Curation model: gpt-5.6-luna `xhigh`.
 - **Reader rules:** the reader shows an amount only when certain, otherwise withholds (rates only); generic reader only, no store configs. **Since 2026-10-08 (Evan) the ≥ 99% bar is a quality target, not a pass gate** ([decision](decisions/2026-10-08-pause-capture-quality-target.md)); results are reported with exact bounds, store counts and coverage (target 80% on `cart-1`).
@@ -28,14 +28,14 @@ As of 2026-10-10T08:00Z.
 
 ## Active work
 
-- **Phase 13c:** 13c.1 detector **done 2026-10-10** (`packages/cart-reader/src/detect.ts`, `evals/reader/detect.mjs`; development quick loop: badge recall 93.0%, 0 false shows on `minicart-1` and `empty-cart`, hinted p95 10.9 ms; held-out A untouched). 13c.2 badge everywhere **done 2026-10-10** on `phase13c-cart-detection` ([plan progress](product/phase-13c-cart-detection.md#progress), [choices](decisions/2026-10-10-rates-view-reference-amount-and-spa-navigation.md)): `https://*/*`, one reader per URL, generic merchant and `disabledSites` in the worker, the rates view at $100 in the badge and popup, the popup's read on open, Navigation API for single-page carts, `e2e/badge-any-store.spec.ts`; gate green. 13c.3 review **done 2026-10-10** (changes required, all applied by the implementer: strict title/heading phrase rule, quantity and remove controls both required, slug and search-term URLs, host-only checkout dropped, `commande`/`pedido` dropped, fixed drawers excluded, `not-a-cart` reason, skip rule by tab id; development recall 90.6% from 93.0%, false shows still 0/119 and 0/189; [plan progress](product/phase-13c-cart-detection.md#progress)). Re-check 2026-10-10: approve with fixes, applied (line-item pairing within six levels, non-line remove controls excluded; recall unchanged at 90.6%). `evals/reader/live-home.mjs` built (robots, bot walls never bypassed, text-free rows, summary with bounds); the coordinator runs it: `node evals/reader/live-home.mjs`. 13c.4 measured 2026-10-10 (held-out A detector run 1 and the live home sweep, coordinator). 13c.5 reader coverage round **done 2026-10-10** (development quick loop: 405 correct / 0 wrong / 317 withheld, `cart-1` coverage 89.9% from 86%, variants 0 wrong; detector recall 93.7% from 90.6%, 0 false shows; [plan progress](product/phase-13c-cart-detection.md#progress)). Next: the official development run (`node evals/reader/run.mjs --split development`, coordinator), the report's coverage section, 13c.6 PR.
+- **Phase 13c, PR pending** ([plan](product/phase-13c-cart-detection.md#progress), [report](../docs/evals/cart-detection-v1.md)). Built by Fable 5.1 implementers, independent Fable 5.1 reviews after each milestone (agent-verified), all must-fix and should-fix items applied. Detector held-out A run 1 (detector `9da996e`): badge recall 232/278 (83.5%), false shows 0/84 `minicart-1`, 0/133 `empty-cart`. Final detector `59dff8c` on development: recall 388/414 (93.7%), 0/119 and 0/189. Live home sweep: 0 false shows on 244 loaded sites (205 stores, 39 non-store). Reader coverage round (development only): 405 correct / 0 wrong / 317 withheld, `cart-1` 89.9% (was 86%), variants 0 wrong; the reader's held-out estimate stays v1 run 2. Gate: lint, format, typecheck, `npm test`, build, browser 21 passed / 3 skipped. Next: PR, merge after CI (Evan's go).
 
 ## Open questions and next steps
 
 1. **Next catalog renewal before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)); plan it for about 2026-10-28 (Evan types `publish <version>`). Re-read the NerdWallet estimates (valid for catalogs verified up to 2026-11-01).
 2. Evan's call (asked 2026-10-07): allow known cart-only pages under `/checkout` (VTEX `/checkout/#/cart`, AbeBooks `/checkout/basket`) in any future capture; 11 stores were excluded as `would-need-forbidden-action`.
 3. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it; `pipeline handoff` should name the merchant MCC freshness record.
-4. Before the Web Store release (Phase 15): verify `orderConfirmation` URLs on real orders (Evan); enable GitHub private vulnerability reporting; optionally confirm a loaded `build:hosted` extension picks up release 3.
+4. Before the Web Store release (Phase 15): rewrite `docs/release/privacy-policy.md`, `store-listing.md` (justify `https://*/*`, the content script on every https page, single purpose), `support.md`, `reviewer-instructions.md` and `extension/README.md` for the badge at any store, the rates view and the popup's read on open (Phase 13c); verify `orderConfirmation` URLs on real orders (Evan); enable GitHub private vulnerability reporting; optionally confirm a loaded `build:hosted` extension picks up release 3.
 5. Evan's calls: Aer Lingus and Iberia Avios valuation; a second luna repeat against gpt-5.5; the deferred human spot-check of agent-verified labels; revoking the legacy HS256 JWT secret.
 6. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)).
 7. Housekeeping: other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; remove merged worktrees (`.claude/worktrees/agent-*`) when Evan agrees.
