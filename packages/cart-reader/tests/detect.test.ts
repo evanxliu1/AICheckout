@@ -219,6 +219,31 @@ describe('detectCartPage', () => {
       reason: 'no-structure',
     });
   });
+  it('pairs a quantity control only with a remove control of the same line (review fix)', () => {
+    // A listing with quick-add steppers and a "Remove filter" chip.
+    const tile = (n: string) =>
+      `<article><img src="${n}.png" alt=""><h2>${n}</h2><label>Qty <input type="number" value="1"></label><button>Add</button></article>`;
+    const listing = `<main><h1>Bag</h1><div class="filters"><button>Remove filter: Black</button></div>${tile('Tote')}${tile('Duffel')}</main>`;
+    expect(page(listing, { url: 'https://a.example/womens/bag', title: 'Bags' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A product page with its stepper and a "Delete my review" link, heading "Bag".
+    const product = `<main><h1>Bag</h1><img src="p.png" alt=""><label>Qty <input type="number" value="1"></label><button>Add to cart</button><section><h2>Reviews</h2><a href="/reviews/1/delete">Delete my review</a></section></main>`;
+    expect(page(product, { url: 'https://a.example/p/123', title: 'Bag' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A line with both controls, far from each other in the tree, still counts within six levels.
+    const line = `<main><h1>Bag</h1><ul><li><div><div><label>Qty <input type="number" value="2"></label></div></div><div><div><button>Remove</button></div></div></li></ul></main>`;
+    expect(page(line, { url: 'https://a.example/bag', title: 'Bag' })).toEqual({
+      page: 'cart',
+      reason: 'url-items',
+    });
+    // "Mi cesta de la compra": filler beside the cart word (nit).
+    expect(cartUrlHint('https://a.example/x', 'Mi cesta de la compra | Tienda')?.title).toBe('cart');
+    expect(cartUrlHint('https://a.example/x', 'Mon panier d’achats')?.title).toBe('cart');
+  });
   it('is none on a product page with an open mini-cart drawer', () => {
     const drawer = `<div role="dialog" aria-modal="true"><h2>Your cart</h2>${item()}${summary(row('Subtotal', '$20.00'))}</div>`;
     const body = `<main><h1>Widget</h1><p>$20.00</p><button>Add to cart</button></main>${drawer}`;

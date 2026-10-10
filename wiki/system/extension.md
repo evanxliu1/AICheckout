@@ -68,7 +68,7 @@ Verified 2026-10-03 on branch `s2-m7-extension-ui` (Stage 2 M7, merged with `mai
 | Vault crypto | PBKDF2-SHA256, 600,000 iterations; AES-GCM-256 with header as AAD; passphrase 15–256 chars; envelope ≤ 512 KiB | [`state/vault-crypto.ts`](../../extension/src/state/vault-crypto.ts) |
 | Comparison freshness | Saved comparison invalid after 15 min, a new local day, a revision or catalog change | `RESULT_MAX_AGE_MS` in [`state/service.ts`](../../extension/src/state/service.ts) |
 | Manual cart snapshot | Valid 5 min; read times out after 8 s | `CART_MAX_AGE_MS`, `CART_READ_TIMEOUT_MS` |
-| Manual reader bundle | `dist/src/checkout/content.js`: 42,182 bytes (34,458 in Phase 13b, 8,908 before `readCart`; 13c adds the detector); the badge content script `dist/src/badge/content.js` 46,386 bytes | `vite.config.ts` content-script plugin |
+| Manual reader bundle | `dist/src/checkout/content.js`: 42,757 bytes (34,458 in Phase 13b, 8,908 before `readCart`; 13c adds the detector); the badge content script `dist/src/badge/content.js` 46,961 bytes | `vite.config.ts` content-script plugin |
 | Savings history | ≤ 500 entries, newest first | `MAX_SAVINGS_ENTRIES` in [`state/contracts.ts`](../../extension/src/state/contracts.ts) |
 | Wallet | ≤ 20 cards, ≤ 30 usage rows per card, catalog v3 `choices` (≤ 5 per card, 1–5 options each), wallet `gates` and `valueOverrides` (≤ 100 each, 1–10,000 hundredths of a cent); unique IDs, default card must be owned | `walletSchema` |
 | Catalog fetch | 8 s timeout, body ≤ `CATALOG_V3_LIMITS.bytes` + 2048 (`MAX_RESPONSE_BYTES`), HTTPS only, `redirect: 'error'`, no credentials/referrer, `no-store` | [`catalog-client/src/index.ts`](../../packages/catalog-client/src/index.ts) |

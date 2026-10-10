@@ -104,13 +104,73 @@ const CHECKOUT_SUBSTRINGS = ['レジ', '結帳', '结算', '결제'];
 /** Words that may stand beside a cart word in a title segment or heading without changing what it names ("Your
  * shopping cart (2 items)", "Mon panier", "Dein Warenkorb", "Mi cesta"), in the supported languages; a count too. */
 const PHRASE_FILLER = new Set([
-  ...['your', 'my', 'the', 'shopping', 'review', 'items', 'item', 'view', 'in', 'of', 'a', 'and'],
-  ...['votre', 'vos', 'ton', 'ta', 'mon', 'ma', 'le', 'la', 'les', 'articles', 'article', 'd', 'de', 'du'],
-  ...['dein', 'deine', 'ihr', 'ihre', 'mein', 'meine', 'der', 'die', 'das', 'artikel', 'im'],
-  ...['tu', 'tus', 'su', 'sus', 'mi', 'mis', 'el', 'los', 'las', 'artículos', 'articulos', 'en'],
-  ...['il', 'tuo', 'tua', 'mio', 'mia', 'i', 'gli', 'articoli', 'nel'],
-  ...['je', 'jouw', 'uw', 'mijn', 'het', 'artikelen'],
-  ...['o', 'seu', 'sua', 'meu', 'minha', 'itens', 'no'],
+  ...[
+    'your',
+    'my',
+    'the',
+    'shopping',
+    'review',
+    'items',
+    'item',
+    'view',
+    'in',
+    'of',
+    'a',
+    'and',
+    'purchases',
+  ],
+  ...[
+    'votre',
+    'vos',
+    'ton',
+    'ta',
+    'mon',
+    'ma',
+    'le',
+    'la',
+    'les',
+    'articles',
+    'article',
+    'd',
+    'de',
+    'du',
+    'achats',
+    'achat',
+  ],
+  ...[
+    'dein',
+    'deine',
+    'ihr',
+    'ihre',
+    'mein',
+    'meine',
+    'der',
+    'die',
+    'das',
+    'artikel',
+    'im',
+    'einkauf',
+    'einkäufe',
+  ],
+  ...[
+    'tu',
+    'tus',
+    'su',
+    'sus',
+    'mi',
+    'mis',
+    'el',
+    'los',
+    'las',
+    'artículos',
+    'articulos',
+    'en',
+    'compra',
+    'compras',
+  ],
+  ...['il', 'tuo', 'tua', 'mio', 'mia', 'i', 'gli', 'articoli', 'nel', 'acquisti', 'spesa'],
+  ...['je', 'jouw', 'uw', 'mijn', 'het', 'artikelen', 'aankopen'],
+  ...['o', 'seu', 'sua', 'meu', 'minha', 'itens', 'no', 'compras'],
   ...['din', 'dit', 'min', 'mitt', 'varor', 'varer'],
   ...['twój', 'twoj', 'mój', 'moj', 'produkty', 'produktów'],
   ...['ваша', 'ваш', 'моя', 'мой', 'товары', 'товаров'],
@@ -406,14 +466,15 @@ function headingWord(document: Document, ctx: Ctx): 'cart' | 'checkout' | null {
 
 /**
  * Cart line items in the main content: a visible quantity control (a number input, or a control whose label names
- * the quantity) and a visible remove control, both. A product page's own quantity stepper, or a listing's quick-add
- * tiles, have no remove control.
+ * the quantity) and a visible remove control in the same line block (a shared ancestor within LINE_LEVELS levels,
+ * review fix). A product page's own stepper beside a "Delete my review" link, or a listing's quick-add tiles beside a
+ * "Remove filter" button, do not pair up; filter, compare, review, account and "remove all" controls never count.
  */
 function hasLineItems(document: Document, ctx: Ctx): boolean {
   const controls = queryAll(document, ctx, 'input[type="number"], select, button, a, input[type="text"]');
   let seen = 0;
-  let qty = false;
-  let remove = false;
+  const qtys: Element[] = [];
+  const removes: Element[] = [];
   for (const c of controls) {
     if (seen++ >= MAX_CONTROLS) break;
     const label =
@@ -421,18 +482,35 @@ function hasLineItems(document: Document, ctx: Ctx): boolean {
         c.nodeName === 'INPUT' || c.nodeName === 'SELECT' ? '' : (c.textContent ?? '').slice(0, 60)
       }`.toLowerCase();
     const isQty = c.getAttribute('type') === 'number' || LINE_ITEM_RE.test(label);
-    // "Add or remove from wishlist", "save for later": not a line's remove control.
-    const isRemove = REMOVE_RE.test(label) && !WISHLIST_RE.test(label);
+    // "Add or remove from wishlist", "save for later", "remove filter", "delete my review": not a line's control.
+    const isRemove = REMOVE_RE.test(label) && !WISHLIST_RE.test(label) && !NOT_LINE_REMOVE_RE.test(label);
     if (!isQty && !isRemove) continue;
     if (!inMain(c, ctx) || hiddenWhy(c, ctx)) continue;
-    if (isQty) qty = true;
-    if (isRemove) remove = true;
-    if (qty && remove) return true;
+    if (isQty) qtys.push(c);
+    if (isRemove) removes.push(c);
+  }
+  if (!qtys.length || !removes.length) return false;
+  const blocks = new Set<Element>();
+  for (const q of qtys) {
+    let a = parentOf(q);
+    for (let depth = 0; a && a.nodeName !== 'BODY' && depth < LINE_LEVELS; depth += 1, a = parentOf(a))
+      blocks.add(a);
+  }
+  for (const r of removes) {
+    let a = parentOf(r);
+    for (let depth = 0; a && a.nodeName !== 'BODY' && depth < LINE_LEVELS; depth += 1, a = parentOf(a))
+      if (blocks.has(a)) return true;
   }
   return false;
 }
+/** How many levels up a quantity control and a remove control may meet and still be one line. */
+const LINE_LEVELS = 6;
+/** Remove controls that are not a cart line's: filters, comparisons, reviews, accounts, addresses, "remove all". */
+const NOT_LINE_REMOVE_RE =
+  /filter|filtre|filtro|facet|compar|vergleich|review|avis|bewertung|rese[ñn]a|recensi|account|konto|compte|cuenta|address|adresse|direcci[óo]n|card\b|payment|\ball\b|alle\b|tout|tous|todo|tutti|coupon|promo|voucher/u;
 
-/** An element's computed style through the reader's cache (empty without a window). */
+/** An element's computed style through the reader's cache. `analyze` has already run when the detector asks, so
+ * writing new entries to `ctx.styles` only extends that pass's cache; the reader never reads it again. */
 function styleOf(el: Element, ctx: Ctx): CSSStyleDeclaration {
   let cs = ctx.styles.get(el);
   if (!cs) {
