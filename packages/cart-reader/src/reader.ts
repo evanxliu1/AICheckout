@@ -259,19 +259,26 @@ export function analyze(
   // $145.90"; "Item total" + "Shipping total" = "Subtotal"). Tax does not count: a total before tax and one after it
   // are the protocol's ambiguous pair, and sums of several rows are left alone.
   const summed = resolved.filter((r) => r.minor !== null && r.minor > 0 && r.inSummary);
+  // Two items totals are promoted only when no order total is labelled already (review fix, 13c.5): "Item total" +
+  // "Shipping total" = "Subtotal" beside a "Total" row would make a second total. Every pair is judged on the rows as
+  // labelled, so two sellers' sub-carts promote together and stay ambiguous.
+  const hadTotal = resolved.some((r) => r.kind === 'estimatedTotal');
+  const promoted: [Row, Row][] = [];
   for (const b of summed)
     for (const a of summed) {
       if (a === b || a.kind !== b.kind || a.kind === 'afterCredit') continue;
       if (a.currency !== b.currency || a.minor! >= b.minor!) continue;
+      if (a.kind === 'subtotal' && hadTotal) continue;
       const summary = summaryOf(a.els.at(-1)!, a.kind, ctx);
       if (!summary) continue;
       const addons = shippingAmounts(summary, [...a.els, ...b.els], ctx, MINOR_UNITS[b.currency!]!);
-      if (addons.includes(b.minor! - a.minor!)) {
-        b.kind = 'estimatedTotal';
-        a.kind = 'subtotal';
-        a.why = 'items-total-by-sum';
-      }
+      if (addons.includes(b.minor! - a.minor!)) promoted.push([a, b]);
     }
+  for (const [a, b] of promoted) {
+    b.kind = 'estimatedTotal';
+    a.kind = 'subtotal';
+    a.why = 'items-total-by-sum';
+  }
   const kind = KINDS.find((k) => resolved.some((r) => r.kind === k));
   if (!kind) return withhold('no-summary', rows);
   if (credits.length > 0 && kind !== 'afterCredit') return withhold('credit-unclear', rows);
@@ -776,11 +783,14 @@ function inOfferBlock(el: Element, ctx: Ctx): boolean {
   let a = parentOf(el);
   for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; depth += 1, a = parentOf(a)) {
     const text = blockText(a, ctx);
-    if (text.length > 500 || SHIP_RE.test(text) || TAX_RE.test(text)) return false;
-    if (OFFER_RE.test(text)) return true;
+    // A real summary (shipping, tax or a checkout control) with a promo "Apply now" or a "Terms apply" footnote is not
+    // an offer block (review fix, 13c.5): the offer must also talk of a card, a credit or a new total.
+    if (text.length > 500 || SHIP_RE.test(text) || TAX_RE.test(text) || CHECKOUT_RE.test(text)) return false;
+    if (OFFER_RE.test(text) && OFFER_CONTEXT_RE.test(text)) return true;
   }
   return false;
 }
+const OFFER_CONTEXT_RE = /credit|\bcard\b|karte|carte|tarjeta|new total/u;
 
 /** The text with its amounts taken out: the row's label. */
 function withoutAmounts(text: string): string {

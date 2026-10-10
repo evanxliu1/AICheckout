@@ -257,6 +257,35 @@ describe('detectCartPage', () => {
       reason: 'title-only',
     });
   });
+  it('a fixed box with a cart heading or a close control is a drawer whatever its height (review fix)', () => {
+    // A URL-hinted product page with a short fixed mini-cart popover: none.
+    const popover = (head: string) =>
+      `<aside style="position: fixed; top: 60px; right: 0; height: 300px">${head}${item()}${summary(row('Subtotal', '$20.00') + row('Total', '$20.00'))}</aside>`;
+    const product = `<main><h1>Wicker basket</h1><img src="b.png" alt=""><p>$120.00</p><button>Add to cart</button></main>`;
+    expect(page(product + popover('<h2>Your cart</h2>'), { url: 'https://a.example/shop/basket' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    expect(
+      page(product + popover('<button aria-label="Close">×</button>'), {
+        url: 'https://a.example/shop/basket',
+      }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A hinted listing with a fixed bottom bar holding a line: none too.
+    const bar = `<div style="position: fixed; bottom: 0; height: 80px"><button>Close</button>${item()}</div>`;
+    expect(
+      page(`<main><h1>Bags</h1><p>Sort by</p></main>${bar}`, { url: 'https://a.example/womens/bag' }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A summary made sticky by script (fixed, short, no heading or close control of its own) is the cart's.
+    const sticky = `<main><h1>Your cart</h1>${item()}<aside style="position: fixed; top: 80px; height: 200px">${summary(row('Subtotal', '$20.00') + row('Total', '$20.00'))}</aside></main>`;
+    expect(page(sticky)).toEqual({ page: 'cart', reason: 'url-summary' });
+  });
   it('is none on an empty cart in several languages', () => {
     const empty = (h: string, msg: string, rows = '') => `<main><h1>${h}</h1><p>${msg}</p>${rows}</main>`;
     expect(page(empty('Your cart', 'Your cart is empty.'))).toEqual({ page: 'none', reason: 'no-structure' });

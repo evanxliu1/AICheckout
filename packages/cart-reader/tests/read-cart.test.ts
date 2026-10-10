@@ -763,6 +763,35 @@ describe('Phase 13c.5 coverage round (2026-10-10)', () => {
     );
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4876, currency: 'USD' });
   });
+  it('a real summary with a promo "Apply now" button or a "Terms apply" footnote keeps its rows (review fix)', () => {
+    const promo = page(
+      `<div>${row('Subtotal', '$48.76')}${row('Total', '$48.76')}<label>Promo code <input type="text"></label><button>Apply now</button><button>Checkout</button></div>`,
+    );
+    expect(promo).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4876, currency: 'USD' });
+    const terms = page(
+      `<div>${row('Subtotal', '$48.76')}${row('Total', '$48.76')}<p>Free returns. Terms apply.</p><button>Checkout</button></div>`,
+    );
+    expect(terms).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4876, currency: 'USD' });
+  });
+  it('two items totals are not promoted beside a labelled order total (review fix)', () => {
+    const r = page(
+      summary(
+        row('Item total', '$96.91') +
+          row('Shipping total', '$13.84') +
+          row('Subtotal', '$110.75') +
+          row('Tax', '$9.00') +
+          row('Total', '$119.75'),
+      ),
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 11975, currency: 'USD' });
+    // Two sellers' sub-carts, each items total plus shipping: both promote, so the totals stay ambiguous.
+    const seller = (items: string, ship: string, sub: string) =>
+      `<section>${row('Item total', items)}${row('Shipping total', ship)}${row('Subtotal', sub)}</section>`;
+    const two = page(
+      `${seller('$96.91', '$13.84', '$110.75')}${seller('$59.99', '$8.00', '$67.99')}<button>Checkout</button>`,
+    );
+    expect(two).toEqual({ shown: false, reason: 'ambiguous' });
+  });
   it('an inline stylesheet or JSON blob beside a summary row is not its text', () => {
     const blob = `<style>${'.a{color:red}'.repeat(400)}</style><script type="application/json">${'{"k":1}'.repeat(200)}</script>`;
     const r = page(

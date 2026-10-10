@@ -424,13 +424,10 @@ function inMain(el: Element, ctx: Ctx): boolean {
   if (inHeader(el)) return false;
   for (let a: Element | null = el; a && a.nodeName !== 'BODY'; a = parentOf(a)) {
     const role = a.getAttribute('role');
-    // A fixed box as tall as most of the viewport is an open drawer; a shorter one (a summary made sticky by script,
-    // a bottom bar) is the page's own content.
-    if (
-      styleOf(a, ctx).position === 'fixed' &&
-      (!ctx.layout || a.getBoundingClientRect().height >= DRAWER_HEIGHT * viewH(ctx))
-    )
-      return false;
+    // A fixed box is an open drawer when it is as tall as most of the viewport, or whatever its height when it carries
+    // its own cart heading or a close control (a mini-cart popover, a bottom sheet); a short fixed box with neither (a
+    // summary made sticky by script, a bottom bar) is the page's own content.
+    if (styleOf(a, ctx).position === 'fixed' && isDrawer(a, ctx)) return false;
     if (
       a.nodeName === 'FOOTER' ||
       a.nodeName === 'NAV' ||
@@ -512,6 +509,26 @@ function hasLineItems(document: Document, ctx: Ctx): boolean {
 /** A fixed box at least this share of the viewport's height is a drawer, not a sticky summary or bar. */
 const DRAWER_HEIGHT = 0.6;
 const viewH = (ctx: Ctx) => ctx.view?.innerHeight ?? 0;
+/** A drawer's close control: its label or text says close or dismiss, or is a lone × glyph. */
+const CLOSE_RE =
+  /\bclose\b|dismiss|schlie[ßs]|fermer|cerrar|chiudi|sluiten|zamknij|kapat|закрыть|閉じる|关闭|닫기|إغلاق|^\s*[×✕✖x]\s*$/iu;
+/**
+ * Whether a fixed box is a drawer (review fix, 13c.5): at least DRAWER_HEIGHT of the viewport, or a visible cart or
+ * checkout heading (h2, h3, role=heading or its aria-label) or close control of its own.
+ */
+function isDrawer(box: Element, ctx: Ctx): boolean {
+  if (ctx.layout && box.getBoundingClientRect().height >= DRAWER_HEIGHT * viewH(ctx)) return true;
+  if (wordIn((box.getAttribute('aria-label') ?? '').toLowerCase())) return true;
+  for (const h of box.querySelectorAll('h1, h2, h3, [role="heading"]'))
+    if (!hiddenWhy(h, ctx) && wordIn(visibleText(h, ctx).replace(/\s+/g, ' ').trim().toLowerCase()))
+      return true;
+  for (const c of box.querySelectorAll('button, a, [role="button"]')) {
+    const label = `${c.getAttribute('aria-label') ?? ''} ${c.getAttribute('title') ?? ''}`.trim();
+    if (CLOSE_RE.test(label) || CLOSE_RE.test((c.textContent ?? '').trim().slice(0, 40)))
+      return !hiddenWhy(c, ctx);
+  }
+  return false;
+}
 /** How many levels up a quantity control and a remove control may meet and still be one line. */
 const LINE_LEVELS = 6;
 /** Remove controls that are not a cart line's: filters, comparisons, reviews, accounts, addresses, "remove all". */
