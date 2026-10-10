@@ -7,6 +7,7 @@ import Popup from '../src/popup/Popup';
 import type { AppState, CatalogCache } from '../src/state/contracts';
 import { CATALOG_V3, PILOT_CATALOG } from '../src/domain';
 import WalletEditor from '../src/components/WalletEditor';
+import { READ_COPY } from '../src/checkout/read-copy';
 
 let data: Record<string, unknown>;
 const read = vi.fn();
@@ -26,6 +27,8 @@ beforeEach(() => {
     },
   };
   read.mockReset();
+  // Phase 13c: the popup reads the open https tab on load; by default that tab is not a cart.
+  read.mockRejectedValue(new Error(READ_COPY['unsupported-page']));
   const handle = createStateService(
     {
       get: async () => structuredClone(data),
@@ -184,18 +187,61 @@ describe('popup store from the open tab', () => {
     ).toBeTruthy();
     expect((data.checkoutStateV1 as AppState).cart?.extractorVersion).toBe('generic-reader-v1');
   });
-  it('shows the reader’s message when it withholds and fills nothing', async () => {
+  it('compares by rate when the reader withholds, never asking for an amount (Phase 13c)', async () => {
     openOn('https://shop.example.com/checkout');
-    read.mockRejectedValue(
-      new Error(
-        'The cart total could not be read with certainty on this page. Enter the amount you will pay.',
-      ),
-    );
+    read.mockRejectedValue(new Error(READ_COPY.withheld));
     render(<Popup />);
-    fireEvent.click(await screen.findByRole('button', { name: 'Read cart amount' }));
-    expect(await screen.findByText(/Enter the amount you will pay/)).toBeTruthy();
+    // On open: the rates view, no error, the amount field still there and empty.
+    expect(await screen.findByText('Best card by rate at Another U.S. online store')).toBeTruthy();
+    expect(screen.getByText(/The cart amount wasn’t read on this page/)).toBeTruthy();
+    expect(screen.getByText('1.5% back')).toBeTruthy();
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.queryByText(/enter the amount/i)).toBeNull();
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('');
     expect(merchantValue()).toBe('generic-us-online');
+    // "Read cart amount" is a re-read with the same outcome.
+    fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
+    expect(await screen.findByText('Best card by rate at Another U.S. online store')).toBeTruthy();
+    expect(read).toHaveBeenCalledTimes(2);
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+  it('reads the cart on open on an https tab and fills a certain amount', async () => {
+    openOn('https://shop.example.com/cart');
+    read.mockResolvedValue({
+      id: '6b89a362-0be9-4dca-990d-7e110e7f91ea',
+      capturedAt: Date.now(),
+      tabId: 3,
+      documentId: 'doc-1',
+      pageKey: 'a'.repeat(64),
+      merchantId: 'generic-us-online',
+      currency: 'USD',
+      amountCents: 4200,
+      kind: 'subtotal',
+      extractorVersion: 'generic-reader-v1',
+    });
+    render(<Popup />);
+    expect(await screen.findByText(/Read \$42\.00 as a subtotal/)).toBeTruthy();
+    expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('42.00');
+    expect(read).toHaveBeenCalledTimes(1);
+  });
+  it('on open, keeps the USD-only message and says nothing about other outcomes; never reads an http tab', async () => {
+    openOn('https://shop.example.com/cart');
+    read.mockRejectedValue(new Error(READ_COPY['unsupported-currency']));
+    render(<Popup />);
+    expect(await screen.findByText(/supports USD only/)).toBeTruthy();
+    cleanup();
+    read.mockRejectedValue(new Error(READ_COPY['empty-cart']));
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(read).toHaveBeenCalledTimes(2));
+    expect(screen.queryByRole('alert')).toBeNull();
+    cleanup();
+    read.mockClear();
+    openOn('http://shop.example.com/cart');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
+    expect(read).not.toHaveBeenCalled();
   });
 });
 describe('offline comparison popup', () => {
