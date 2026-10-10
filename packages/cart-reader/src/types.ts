@@ -17,3 +17,10 @@ export type ReadOptions = {
   /** The page's URL. The reader may use it (the TLD included); it never fetches it. */
   url: string;
 };
+
+/** What a page is to the shopper: their cart (or basket, bag), a checkout step, or neither (Phase 13c). */
+export const PAGE_KINDS = ['cart', 'checkout', 'none'] as const;
+export type PageKind = (typeof PAGE_KINDS)[number];
+/** The detector's verdict with a short machine reason (no page text). */
+export type PageDetection = { page: PageKind; reason: string };
+export type DetectOptions = ReadOptions;

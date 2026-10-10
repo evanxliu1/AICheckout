@@ -20,8 +20,12 @@ export const DEFAULTS = {
   errata: 'evals/merchants/errata',
 };
 export const RUNS_SCHEMA = 'reader-runs.1';
-/** Held-out runs allowed in Phases 10–17 in total, per split. Development has no limit. */
+/** Held-out runs allowed in Phases 10–17 in total, per split and run kind. Development has no limit. */
 export const RUN_LIMITS = { 'heldout-a': 2 };
+/** The Phase 13c cart page detector's own held-out allowance (one run; the reader's runs are not touched). */
+export const DETECTOR_RUN_LIMITS = { 'heldout-a': 1 };
+/** Run kinds logged in runs.json: a row without `kind` is a reader run. */
+export const RUN_KINDS = ['reader', 'detector'];
 export const isHeldout = (split) => split !== 'development';
 export const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 const fileSha = (file) => sha256(readFileSync(file));
@@ -40,11 +44,13 @@ export const RunRow = z.strictObject({
   frozenVariantLabelSha256: sha,
   freezeSha256: sha,
   readerBundleSha256: sha,
-  legacyBundleSha256: sha,
+  /** The legacy adapters' bundle; a detector run has none. */
+  legacyBundleSha256: sha.optional(),
   chromium: z.string(),
   pageStates: z.number().int().nonnegative(),
   variants: z.number().int().nonnegative(),
   status: z.enum(['started', 'complete', 'failed']),
+  kind: z.enum(RUN_KINDS).optional(),
   endedUtc: z.iso.datetime().optional(),
   metrics: z.record(z.string(), z.union([z.number(), z.boolean(), z.null()])).optional(),
 });
@@ -90,7 +96,7 @@ export function appendRun(file, row, { confirm } = {}) {
     const data = readRuns(file);
     if (data.runs.some((r) => r.runId === row.runId)) throw new Error(`run ${row.runId} is already logged`);
     if (confirm !== undefined) {
-      const n = checkRunAllowed(data, row.split, confirm);
+      const n = checkRunAllowed(data, row.split, confirm, row.kind ?? 'reader');
       if (n !== row.heldoutRun) throw new Error(`run number ${n} is not the row's ${row.heldoutRun}`);
     }
     data.runs.push(RunRow.parse(row));
@@ -107,14 +113,15 @@ export function updateRun(file, runId, patch) {
   });
 }
 
-/** Runs of a split already logged (each counts once reader code ran, whatever its status). */
-export const runsUsed = (runs, split) => runs.runs.filter((r) => r.split === split).length;
+/** Runs of a split and kind already logged (each counts once reader code ran, whatever its status). */
+export const runsUsed = (runs, split, kind = 'reader') =>
+  runs.runs.filter((r) => r.split === split && (r.kind ?? 'reader') === kind).length;
 
 /**
  * Refuse a split the harness doesn't run, a held-out run over the limit, or one without `--confirm-heldout-run <n>`,
  * n being this run's number (used + 1). Returns the run number for a held-out split, null for development.
  */
-export function checkRunAllowed(runs, split, confirm) {
+export function checkRunAllowed(runs, split, confirm, kind = 'reader') {
   if (!SPLITS.includes(split))
     throw new Error(
       `unknown split ${split}: the harness runs ${SPLITS.join(' and ')} only (a fresh held-out set needs its own freeze and run limit first)`,
@@ -123,14 +130,15 @@ export function checkRunAllowed(runs, split, confirm) {
     if (confirm != null) throw new Error('--confirm-heldout-run is for held-out splits only');
     return null;
   }
-  const limit = RUN_LIMITS[split];
+  const limit = (kind === 'detector' ? DETECTOR_RUN_LIMITS : RUN_LIMITS)[split];
   if (!limit) throw new Error(`no run limit is defined for ${split}`);
-  const used = runsUsed(runs, split);
+  const used = runsUsed(runs, split, kind);
+  const what = kind === 'detector' ? `${split} detector` : split;
   if (used >= limit)
-    throw new Error(`${split} has used ${used} of ${limit} runs; no further run is allowed (stop rule)`);
+    throw new Error(`${what} has used ${used} of ${limit} runs; no further run is allowed (stop rule)`);
   const n = used + 1;
   if (confirm == null)
-    throw new Error(`${split} run ${n} of ${limit} needs --confirm-heldout-run ${n} (it counts once it starts)`);
+    throw new Error(`${what} run ${n} of ${limit} needs --confirm-heldout-run ${n} (it counts once it starts)`);
   if (Number(confirm) !== n)
     throw new Error(`--confirm-heldout-run ${confirm} is not this run's number ${n} of ${limit}`);
   return n;
