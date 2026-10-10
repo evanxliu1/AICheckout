@@ -1,22 +1,12 @@
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
 import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout, merchantForTab } from './merchants';
+import { READ_COPY } from './read-copy';
 
 /** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
 const contentFile = 'src/checkout/content.js';
 
-const copy = {
-  'unsupported-page':
-    'Open a store’s cart or checkout page in a web tab, then read it again. You can also enter the amount manually.',
-  'empty-cart': 'The cart has no amount to compare. Add an item or enter a purchase amount manually.',
-  'summary-missing':
-    'No readable order summary was found. Wait for the cart to load, retry, or enter the amount manually.',
-  'ambiguous-amount':
-    'The page shows an ambiguous amount. Enter and confirm the amount you will charge manually.',
-  'unsupported-currency': 'This comparison supports USD only. The cart showed another currency.',
-  'page-loading': 'The order summary is still loading. Wait for it to finish, then read it again.',
-  withheld: 'The cart total could not be read with certainty on this page. Enter the amount you will pay.',
-};
+const copy = READ_COPY;
 const changed = 'The cart or page changed. Read the cart again and confirm the current amount.';
 
 async function hash(text: string) {

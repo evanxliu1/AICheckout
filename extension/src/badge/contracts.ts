@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { MAX_AMOUNT_CENTS, PAYMENT_PATHS_V3 } from '../domain';
 import type { Catalog, Comparison, PaymentPathV3, UnavailableComparison, Wallet } from '../domain';
 import { MERCHANT_IDS } from '../checkout/merchants';
+import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
 import { probeSchema } from '../checkout/contracts';
 import { purchaseSchema } from '../state/contracts';
 
@@ -16,6 +17,20 @@ export { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from './pages';
 
 const money = z.number().int().min(0).max(MAX_AMOUNT_CENTS);
 const merchantId = z.enum(MERCHANT_IDS);
+/** A badge tab's store: a legacy store, or the generic profile at any other site (Phase 13c). */
+const badgeMerchantId = z.enum([...MERCHANT_IDS, GENERIC_MERCHANT_ID]);
+/** A hostname the shopper turned the badge off for (lower case, no port, ≤ 253 chars). */
+const host = z
+  .string()
+  .min(1)
+  .max(253)
+  .regex(/^[a-z0-9.-]+$/);
+/** The badge compares cards' rates at this amount when the cart amount is not read: below every
+ * cap in the catalog, so a card's reward here is its rate ($100 × bps / 10,000 = bps cents). */
+export const RATES_REFERENCE_CENTS = 10_000;
+/** Unavailable readings that still show the badge, in the rates view: the page is a cart or checkout
+ * but its amount could not be read with certainty. Loading, empty and non-USD carts hide it. */
+export const RATES_VIEW_REASONS = ['withheld', 'summary-missing', 'ambiguous-amount'] as const;
 
 /** From the content script. It carries the adapter's reading only; never card or wallet data. */
 export const contentMessageSchema = z.discriminatedUnion('type', [
@@ -58,13 +73,24 @@ export type BadgeAction = BadgeRequest extends infer R
   : never;
 export type BadgeRequest = z.infer<typeof badgeRequestSchema>;
 
+export const MAX_DISABLED_SITES = 500;
 export const settingsSchema = z.strictObject({
   schemaVersion: z.literal(1),
-  /** Sites where the badge never appears (per-site off switch). */
+  /** Legacy stores where the badge never appears (per-site off switch). */
   disabledMerchants: z.array(merchantId).max(MERCHANT_IDS.length),
+  /** Phase 13c: the badge at every store without an adapter (on by default; existing installs
+   * have no stored value and get the default). */
+  showOnOtherStores: z.boolean().default(true),
+  /** Hosts of other stores where the shopper chose "Not on this site". */
+  disabledSites: z.array(host).max(MAX_DISABLED_SITES).default([]),
 });
 export type Settings = z.infer<typeof settingsSchema>;
-export const defaultSettings = (): Settings => ({ schemaVersion: 1, disabledMerchants: [] });
+export const defaultSettings = (): Settings => ({
+  schemaVersion: 1,
+  disabledMerchants: [],
+  showOnOtherStores: true,
+  disabledSites: [],
+});
 
 const recommendationSchema = z.strictObject({
   purchase: purchaseSchema,
@@ -73,7 +99,9 @@ const recommendationSchema = z.strictObject({
 });
 /** Per-tab badge state in chrome.storage.session (memory only; cleared when the tab closes). */
 export const tabEntrySchema = z.strictObject({
-  merchantId,
+  merchantId: badgeMerchantId,
+  /** The tab's hostname, for the per-site switch at other stores (never the path). */
+  host: z.string().max(253).default(''),
   reading: z
     .strictObject({
       amountCents: money.positive(),
@@ -104,7 +132,15 @@ export type BadgeView =
   | { kind: 'locked'; order: boolean }
   | { kind: 'damaged' }
   | { kind: 'no-cards' }
-  | { kind: 'unreadable'; merchantId: string }
+  /** The cart amount was not read: the owned cards ranked by rate at RATES_REFERENCE_CENTS. */
+  | {
+      kind: 'rates';
+      merchantId: string;
+      paymentPath: PaymentPathV3;
+      result: Comparison;
+      catalog: Catalog;
+      wallet: Wallet;
+    }
   | { kind: 'unavailable'; merchantId: string; result: UnavailableComparison }
   | {
       kind: 'ready';

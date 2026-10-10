@@ -13,9 +13,12 @@ const adapters = readdirSync(adapterDir)
   .filter((name) => name.endsWith('.json'))
   .sort()
   .map((file) => siteAdapterSchema.parse(JSON.parse(readFileSync(new URL(file, adapterDir), 'utf8'))));
-/** The automatic badge's reach, derived from the adapters: exactly their hosts and pages. */
-export const BADGE_HOSTS = [...new Set(adapters.flatMap((adapter) => adapter.match.hosts))].sort();
-export const BADGE_MATCHES = adapters.flatMap((adapter) => adapter.matchPatterns);
+/** The automatic badge's reach (Phase 13c): every https page, top frame only. The legacy adapters'
+ * hosts and patterns are a subset; the content script picks the reader per URL. */
+export const BADGE_MATCHES = ['https://*/*'];
+export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
+// The adapters are still validated at build time (above); their hosts no longer widen the manifest.
+void adapters;
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -24,7 +27,7 @@ export default defineConfig(({ mode }) => {
   const e2eCatalogDate = env.VITE_E2E_CATALOG_DATE;
   const configured = {
     ...structuredClone(manifest),
-    host_permissions: BADGE_HOSTS.map((host) => `https://${host}/*`),
+    host_permissions: [...BADGE_HOST_PERMISSIONS],
   };
   if (endpoint) {
     const url = new URL(endpoint);
@@ -75,8 +78,7 @@ export default defineConfig(({ mode }) => {
     },
   };
   // The badge content script and its iframe page are added to the manifest crxjs wrote, so
-  // crxjs does not rebuild the content script with a module loader. Both are limited to the
-  // adapters' hosts and pages.
+  // crxjs does not rebuild the content script with a module loader. Both reach every https page.
   const badgeManifest = {
     name: 'badge-manifest',
     apply: 'build' as const,
@@ -89,11 +91,14 @@ export default defineConfig(({ mode }) => {
       ];
       // The manual reader (src/checkout/content.js) needs no web-accessible entry: it is injected
       // with chrome.scripting.executeScript({ files }), which pages cannot request.
-      // The badge page stays at a static URL (use_dynamic_url: false) because the worker identifies
-      // its sender by that URL; a per-frame nonce (URL fragment) stops page-made copies instead.
+      // The badge page stays at a static URL (use_dynamic_url: false, evaluated again in Phase 13c):
+      // the worker identifies its sender by that exact URL and the content script gets it from
+      // chrome.runtime.getURL, which has no dynamic form; a per-frame nonce (URL fragment) stops
+      // page-made copies instead. Any https site can therefore detect the extension by fetching the
+      // page (wiki/system/cart-badge.md).
       generated.web_accessible_resources = [
         {
-          matches: BADGE_HOSTS.map((host) => `https://${host}/*`),
+          matches: [...BADGE_MATCHES],
           resources: ['src/badge/index.html'],
           use_dynamic_url: false,
         },

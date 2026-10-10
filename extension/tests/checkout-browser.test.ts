@@ -140,9 +140,9 @@ describe('checkout browser boundary', () => {
       probe({ ...generic, merchantId: 'best-buy-us' });
       await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
     });
-    it('tells the shopper to enter the amount when the reader withholds, and keeps the USD-only message', async () => {
+    it('reports a withheld read as compared by rate (never asks for an amount), and keeps the USD-only message', async () => {
       probe({ status: 'unavailable', reason: 'withheld' });
-      await expect(readActiveCheckout()).rejects.toThrow('Enter the amount you will pay');
+      await expect(readActiveCheckout()).rejects.toThrow('compared by rate');
       probe({ status: 'unavailable', reason: 'unsupported-currency' });
       await expect(readActiveCheckout()).rejects.toThrow('supports USD only');
     });

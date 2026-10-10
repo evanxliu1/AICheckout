@@ -1,4 +1,5 @@
 import { compareRewards } from '../domain';
+import { RATES_REFERENCE_CENTS } from '../badge/contracts';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
 import type { Catalog } from '../domain';
 import {
@@ -240,6 +241,25 @@ export function createStateService(
         };
         await storage.set({ [STATE_KEY]: next });
         return success(next, catalog);
+      }
+      if (request.type === 'checkout:rates') {
+        const purchase = enginePurchase(
+          {
+            merchantId: request.merchantId,
+            currency: 'USD' as const,
+            amountCents: RATES_REFERENCE_CENTS,
+            purchasedOn: localDate(now),
+            eligiblePurchase: 'eligible' as const,
+            onlineRetail: request.onlineRetail,
+            paymentPath: request.paymentPath,
+          },
+          catalog,
+        );
+        return success(
+          state,
+          catalog,
+          compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, now),
+        );
       }
       if (request.expectedRevision !== state.revision) {
         return {

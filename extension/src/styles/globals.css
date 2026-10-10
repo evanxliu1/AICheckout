@@ -331,3 +331,32 @@ body {
 .onboarding__body h2:focus {
   outline: none;
 }
+
+/* The rates view (Phase 13c): card name and rate on one line; the clear best card in navy. */
+.rates-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+.rates-row__name {
+  font-weight: var(--token-typography-font-weight-medium);
+}
+.rates-row__rate {
+  font-family: var(--ac-font-display);
+  font-weight: var(--token-typography-font-weight-medium);
+  text-align: right;
+  white-space: nowrap;
+}
+.rates-row--best {
+  padding: 12px 16px;
+  color: var(--ac-color-on-navy);
+  background: var(--ac-color-navy);
+  border-radius: var(--ac-radius-hero);
+}
+.rates-row--best .rates-row__rate {
+  color: var(--ac-color-sky);
+}
+.estimate-list > .rates-row--best + li {
+  border-top: 0;
+}

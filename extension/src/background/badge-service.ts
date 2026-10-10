@@ -3,7 +3,14 @@
 // iframe (an extension page); replies to the content script are a single show/hide flag.
 import { compareRewards } from '../domain';
 import type { Catalog, Purchase, Wallet } from '../domain';
-import { merchantForCheckout, merchantForOrderConfirmation, type MerchantId } from '../checkout/merchants';
+import {
+  GENERIC_READER_VERSION,
+  MERCHANTS,
+  merchantForCheckout,
+  merchantForOrderConfirmation,
+  merchantForTab,
+} from '../checkout/merchants';
+import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from '@ai-checkout/rewards-core/generic-merchant';
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
 import { localDate } from '../state/keys';
@@ -17,7 +24,10 @@ import {
   badgeRequestSchema,
   contentMessageSchema,
   defaultSettings,
+  MAX_DISABLED_SITES,
   ORDER_WINDOW_MS,
+  RATES_REFERENCE_CENTS,
+  RATES_VIEW_REASONS,
   SETTINGS_KEY,
   settingsSchema,
   tabStoreSchema,
@@ -37,8 +47,9 @@ export interface BadgeDeps {
   notify: (tabId: number | null) => void;
 }
 
-const newEntry = (merchantId: MerchantId): TabEntry => ({
+const newEntry = (merchantId: TabEntry['merchantId'], host: string): TabEntry => ({
   merchantId,
+  host,
   reading: null,
   unreadable: false,
   dismissed: false,
@@ -66,8 +77,14 @@ export function autoPurchase(
   paymentPath: TabEntry['paymentPath'],
   now: number,
 ): Purchase & { paymentPath: TabEntry['paymentPath'] } {
+  // The generic store's profile is the engine's (catalog v3), not the catalog's.
   const profile =
-    catalog.schemaVersion === 1 ? undefined : catalog.merchants.find((m) => m.id === merchantId);
+    catalog.schemaVersion === 1
+      ? undefined
+      : (catalog.merchants.find((m) => m.id === merchantId) ??
+        (catalog.schemaVersion === 3 && merchantId === GENERIC_MERCHANT_ID
+          ? GENERIC_MERCHANT_PROFILE
+          : undefined));
   return enginePurchase(
     {
       merchantId,
@@ -117,8 +134,16 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     const parsed = settingsSchema.safeParse((await local.get(SETTINGS_KEY))[SETTINGS_KEY]);
     return parsed.success ? parsed.data : defaultSettings();
   }
+  /** Not dismissed in this tab, and not switched off: a legacy store by its id, any other store by
+   * the "other stores" toggle and its host (Phase 13c). */
   const visible = (entry: TabEntry, current: Settings) =>
-    !entry.dismissed && !current.disabledMerchants.includes(entry.merchantId);
+    !entry.dismissed &&
+    (entry.merchantId === GENERIC_MERCHANT_ID
+      ? current.showOnOtherStores && !current.disabledSites.includes(entry.host)
+      : !(current.disabledMerchants as string[]).includes(entry.merchantId));
+  /** A reading that shows the badge: a found amount, or a cart whose amount was not read (rates view). */
+  const shows = (reading: { status: 'found' } | { status: 'unavailable'; reason: string }) =>
+    reading.status === 'found' || (RATES_VIEW_REASONS as readonly string[]).includes(reading.reason);
   /** A pending order question, until ORDER_WINDOW_MS after the order page. */
   const livePrompt = (entry: TabEntry | undefined) => {
     const prompt = entry?.orderPrompt;
@@ -167,13 +192,24 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
         if (entry.orderPrompt) await saveTab(tabId, { ...entry, orderPrompt: null });
         return { show: false };
       }
-      const merchantId = merchantForCheckout(url);
+      // One reader per URL: a legacy adapter's cart URL names its store and carries its version; any
+      // other https page is the generic reader's, at the store the tab resolves to.
+      const legacy = merchantForCheckout(url);
+      const merchantId = legacy ?? (merchantForTab(url) as TabEntry['merchantId'] | null);
       const reading = message.data.reading;
-      if (!merchantId || (reading.status === 'found' && reading.merchantId !== merchantId))
+      if (!merchantId) return { show: false };
+      if (
+        reading.status === 'found' &&
+        (reading.merchantId !== merchantId ||
+          reading.extractorVersion !== (legacy ? MERCHANTS[legacy].extractorVersion : GENERIC_READER_VERSION))
+      )
         return { show: false };
+      const host = new URL(url).hostname.replace(/\.$/, '').toLowerCase();
       // A new cart ends any order question from an earlier purchase in this tab.
       const base =
-        entry && entry.merchantId === merchantId ? { ...entry, orderPrompt: null } : newEntry(merchantId);
+        entry && entry.merchantId === merchantId
+          ? { ...entry, host, orderPrompt: null }
+          : newEntry(merchantId, host);
       let next: TabEntry;
       if (reading.status === 'found') {
         const same =
@@ -195,7 +231,7 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       } else next = { ...base, reading: null, unreadable: true };
       await saveTab(tabId, next);
       notify(tabId);
-      return reply(tabId, next, reading.status === 'found' && visible(next, current), framed);
+      return reply(tabId, next, shows(reading) && visible(next, current), framed);
     });
   }
 
@@ -226,11 +262,26 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
     }
     if (!state.wallet.cards.length) return { kind: 'no-cards' };
     const amountCents = entry.amountOverrideCents ?? entry.reading?.amountCents;
-    if (!amountCents) return { kind: 'unreadable', merchantId: entry.merchantId };
     const now = clock();
-    const purchase = autoPurchase(catalog, entry.merchantId, amountCents, entry.paymentPath, now);
+    // No amount read or typed: the cards ranked by rate at the reference amount (never a prompt).
+    const purchase = autoPurchase(
+      catalog,
+      entry.merchantId,
+      amountCents ?? RATES_REFERENCE_CENTS,
+      entry.paymentPath,
+      now,
+    );
     const result = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, now);
     if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
+    if (!amountCents)
+      return {
+        kind: 'rates',
+        merchantId: entry.merchantId,
+        paymentPath: purchase.paymentPath,
+        result,
+        catalog: badgeCatalog(catalog, state.wallet, entry.merchantId),
+        wallet: state.wallet,
+      };
     const recommendation = entry.recommendation;
     if (
       !recommendation ||
@@ -326,7 +377,16 @@ export function createBadgeService({ local, session, vault, clock = Date.now, op
       else if (value.type === 'badge:dismiss') await saveTab(tabId, { ...entry, dismissed: true });
       else if (value.type === 'badge:disable-site') {
         const current = await settings();
-        if (!current.disabledMerchants.includes(entry.merchantId))
+        if (entry.merchantId === GENERIC_MERCHANT_ID) {
+          // Another store: its host, never the shared generic id (that would hide the badge everywhere).
+          if (entry.host && !current.disabledSites.includes(entry.host))
+            await local.set({
+              [SETTINGS_KEY]: {
+                ...current,
+                disabledSites: [...current.disabledSites, entry.host].slice(-MAX_DISABLED_SITES),
+              },
+            });
+        } else if (!current.disabledMerchants.includes(entry.merchantId))
           await local.set({
             [SETTINGS_KEY]: {
               ...current,

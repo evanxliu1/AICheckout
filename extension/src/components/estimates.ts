@@ -374,3 +374,40 @@ export function rowEmphasis(
   const estimated = [first, row].some((e) => e.unitValue?.basis === 'published-estimate');
   return estimated ? { best: false, deltaCents, deltaEstimated: true } : { best: false, deltaCents };
 }
+
+/** A card's rate when the cart amount is not read (Phase 13c). `estimate` comes from a comparison at
+ * `RATES_REFERENCE_CENTS` ($100), below every cap, so its cents are the rate in basis points: "2% back",
+ * "1%–3% back" where conditions decide, "3 points per $1 (est. 3.6%)" for valued points (the shopper's
+ * or the issuer's value without "est."), "2 miles per $1" for a program without a value. */
+export function rateWording(estimate: CardEstimate, catalog: Catalog): string {
+  const kind = rewardKind(estimate, catalog);
+  const program = programOf(estimate, catalog);
+  const pct = (cents: number) => `${Number((cents / 100).toFixed(2))}%`;
+  const span = (min: number, max: number, f: (n: number) => string) =>
+    min === max ? f(min) : `${f(min)}–${f(max)}`;
+  if (kind === 'cash' || kind === 'store')
+    return `${span(estimate.minRewardCents, estimate.maxRewardCents, pct)} ${kind === 'store' ? 'in store rewards' : 'back'}`;
+  const minUnits = estimate.minRewardUnits ?? 0,
+    maxUnits = estimate.maxRewardUnits ?? 0;
+  const per = (units: number) => count(units / 100);
+  const n = maxUnits / 100;
+  const unit =
+    n === 1 && minUnits === maxUnits && /^[a-z]+s$/.test(program!.unitName)
+      ? program!.unitName.slice(0, -1)
+      : program!.unitName;
+  const units = `${span(minUnits, maxUnits, per)} ${unit} per $1`;
+  if (kind === 'unvalued') return units;
+  const estimated = estimate.unitValue?.basis === 'published-estimate' ? 'est. ' : '';
+  return `${units} (${estimated}${span(estimate.minRewardCents, estimate.maxRewardCents, pct)})`;
+}
+
+/** Whether a spend cap on an owned card's applied rule could change the order at the real amount:
+ * the rates view compares at $100, below every cap, so the note is shown when one exists. */
+export function ratesCapped(result: { estimates: CardEstimate[] }, catalog: Catalog): boolean {
+  if (catalog.schemaVersion === 1) return false;
+  return result.estimates.some((e) => {
+    const card = catalog.cards.find((c) => c.id === e.cardId);
+    const rule = (card?.rules as AnyRule[] | undefined)?.find((r) => r.id === e.appliedRuleId);
+    return !!rule && 'cap' in rule && rule.cap.kind === 'spend';
+  });
+}

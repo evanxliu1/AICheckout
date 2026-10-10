@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary';
 import WalletEditor from '../components/WalletEditor';
 import ComparisonResult from '../components/ComparisonResult';
+import RatesResult from '../components/RatesResult';
 import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
 import BadgeSettings from '../components/BadgeSettings';
@@ -22,7 +23,8 @@ import PopupHeader from '../components/PopupHeader';
 import { PAYMENT_LABELS } from '../components/estimates';
 import { unvaluedPrograms } from '../components/wallet-options';
 import { GENERIC_MERCHANT_ID, catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
-import type { Eligibility, PaymentPathV3, Wallet } from '../domain';
+import type { Comparison, Eligibility, PaymentPathV3, Wallet } from '../domain';
+import { RATES_READ_MESSAGES, READ_COPY } from '../checkout/read-copy';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
@@ -33,13 +35,14 @@ type View = Extract<CheckoutResponse, { ok: true }>;
 /** The stores the popup offers: the supported stores, then any other U.S. online store. */
 const STORE_IDS: string[] = [...MERCHANT_IDS, GENERIC_MERCHANT_ID];
 
-/** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null. */
-async function activeTabMerchant() {
+/** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null, and
+ * whether the tab is an https page the popup reads on open (Phase 13c). */
+async function activeTabMerchant(): Promise<{ id: string | null; https: boolean }> {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    return merchantForTab(tab?.url);
+    return { id: merchantForTab(tab?.url), https: !!tab?.url && tab.url.startsWith('https://') };
   } catch {
-    return null;
+    return { id: null, https: false };
   }
 }
 /** Online retail eligibility for a newly chosen store: the generic store sells physical goods
@@ -72,6 +75,8 @@ export default function Popup({
   const [paymentPath, setPaymentPath] = useState<PaymentPathV3>('card');
   const [dirty, setDirty] = useState(false);
   const [cartId, setCartId] = useState<string | null>(null);
+  /** The rates view: the cards ranked by rate when the read found a cart but no certain amount. */
+  const [rates, setRates] = useState<{ merchantId: string; result: Comparison } | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
   // The catalog in effect comes from the worker with every response; pages bundle none.
   const catalog = view?.catalog;
@@ -157,12 +162,16 @@ export default function Popup({
   useEffect(() => {
     let cancelled = false;
     // Kept even when loading fails, so "Reload saved inputs" restores the tab's store too.
-    const tab = activeTabMerchant().then((id) => {
-      store.current = id;
+    const tab = activeTabMerchant().then((found) => {
+      store.current = found.id;
+      return found;
     });
     void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), tab])
-      .then(([next]) => {
-        if (!cancelled) restore(next);
+      .then(([next, found]) => {
+        if (cancelled) return;
+        restore(next);
+        // An https store tab is read on open: a certain amount fills in, otherwise the rates view.
+        if (found.https && found.id && next.state.wallet.cards.length) void readCart(true, next, found.id);
       })
       .catch((err) => {
         if (!cancelled)
@@ -171,7 +180,7 @@ export default function Popup({
     return () => {
       cancelled = true;
     };
-  }, [restore]);
+  }, [restore]); // eslint-disable-line react-hooks/exhaustive-deps -- readCart reads the mounted state once
 
   useEffect(() => {
     // Only a ready result computed from the current inputs can go stale; an unavailable result
@@ -245,27 +254,56 @@ export default function Popup({
     return () => chrome.storage.onChanged.removeListener(onChange);
   }, [restore, view]);
 
-  async function readCart() {
-    if (!view) return;
+  /** The cards ranked by rate at `store` (read-only; nothing is stored). */
+  async function loadRates(store: string, online: Eligibility) {
+    const next = await checkoutRequest({
+      type: 'checkout:rates',
+      merchantId: store,
+      onlineRetail: online,
+      paymentPath,
+    });
+    if (next.comparison?.status === 'ready') setRates({ merchantId: store, result: next.comparison });
+  }
+  /** Reads the open tab. `auto` (on open): a found amount fills in, a cart whose amount was not read
+   * shows the rates view, any other outcome changes nothing; the button shows every message. */
+  async function readCart(auto = false, base: View | null = view, tabStore: string = merchantId) {
+    if (!base) return;
     setPending('read');
     setError('');
-    setDirty(true);
-    setEligible(false);
+    if (!auto) {
+      setDirty(true);
+      setEligible(false);
+    }
     try {
       const next = await checkoutRequest({
         type: 'checkout:read-cart',
-        expectedRevision: view.state.revision,
+        expectedRevision: base.state.revision,
       });
+      setRates(null);
       setView(next);
-      setCartId(next.state.cart?.id ?? null);
-      setAmount(next.state.cart ? (next.state.cart.amountCents / 100).toFixed(2) : '');
+      if (next.state.cart || !auto) {
+        setDirty(true);
+        setEligible(false);
+        setCartId(next.state.cart?.id ?? null);
+        setAmount(next.state.cart ? (next.state.cart.amountCents / 100).toFixed(2) : '');
+        setOnlineRetail(next.state.cart ? storeOnlineRetail(next.state.cart.merchantId) : 'unknown');
+      }
       if (next.state.cart) {
         setMerchantId(next.state.cart.merchantId);
         store.current = next.state.cart.merchantId;
       }
-      setOnlineRetail(next.state.cart ? storeOnlineRetail(next.state.cart.merchantId) : 'unknown');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'The cart could not be read. Enter the amount manually.');
+      const message = err instanceof Error ? err.message : '';
+      if (RATES_READ_MESSAGES.includes(message)) {
+        // A cart or checkout page with no certain amount: compare by rate, never ask for an amount.
+        setCartId(null);
+        try {
+          await loadRates(tabStore, storeOnlineRetail(tabStore));
+        } catch {
+          if (!auto) setError('Your cards could not be compared. Try again.');
+        }
+      } else if (!auto || message === READ_COPY['unsupported-currency'])
+        setError(message || 'The cart could not be read. Enter the amount manually.');
     } finally {
       setPending(null);
     }
@@ -320,6 +358,7 @@ export default function Popup({
         },
       });
       justCompared.current = true;
+      setRates(null);
       setView(next);
       setDirty(false);
     } catch (err) {
@@ -476,6 +515,7 @@ export default function Popup({
                             store.current = e.target.value;
                             setAmount('');
                             setCartId(null);
+                            setRates(null);
                             setOnlineRetail(storeOnlineRetail(e.target.value));
                             setEligible(false);
                             setDirty(true);
@@ -636,6 +676,18 @@ export default function Popup({
                     </form>
                   </div>
                 </Card>
+                {rates && (
+                  <Card as="section" hasBorder aria-labelledby="rates-heading">
+                    <div className="card-body">
+                      <RatesResult
+                        catalog={view.catalog}
+                        result={rates.result}
+                        merchantId={rates.merchantId}
+                        headingId="rates-heading"
+                      />
+                    </div>
+                  </Card>
+                )}
                 {/* Always mounted, so screen readers announce a result when it appears. */}
                 <div aria-live="polite">
                   {!dirty && view.comparison && (

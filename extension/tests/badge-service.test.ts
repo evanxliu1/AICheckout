@@ -11,7 +11,7 @@ import { CATALOG_KEY, STATE_KEY } from '../src/state/service';
 import { cardEstimate, savingsEntry, totalExtraCents } from '../src/state/savings';
 import { rewardsWording } from '../src/components/estimates';
 import { CATALOG_V2, CATALOG_V3, redateCatalog } from '../src/domain';
-import type { Wallet } from '../src/domain';
+import type { Catalog, Wallet } from '../src/domain';
 
 let now = Date.parse('2026-10-02T15:00:00Z');
 const clock = () => now;
@@ -51,12 +51,12 @@ const wallet = {
     },
   ],
 };
-function setup(state: Partial<AppState> | null = { wallet }) {
+function setupWith(state: Partial<AppState> | null = { wallet }, cat: Catalog = catalog) {
   const local = memory(
     state
       ? {
           [STATE_KEY]: { ...emptyState(), ...state },
-          [CATALOG_KEY]: { release: release(), lastCheckedAt: null },
+          [CATALOG_KEY]: { release: release(cat), lastCheckedAt: null },
         }
       : {},
   );
@@ -75,13 +75,13 @@ function setup(state: Partial<AppState> | null = { wallet }) {
   return { badge, vault, local, session, open, notify };
 }
 /** The re-dated catalog as a published release, so it is valid on the test date. */
-function release() {
+function release(cat: Catalog = catalog) {
   return {
     sequence: 1,
-    version: catalog.version,
+    version: cat.version,
     catalog_hash: 'a'.repeat(64),
     published_at: '2026-10-01T00:00:00Z',
-    catalog,
+    catalog: cat,
   };
 }
 const reading = (amountCents: number) => ({
@@ -97,7 +97,8 @@ const reading = (amountCents: number) => ({
   framed: false,
 });
 const cart = 'https://www.bestbuy.com/cart';
-type Setup = ReturnType<typeof setup>;
+type Setup = ReturnType<typeof setupWith>;
+const setup = (state: Partial<AppState> | null = { wallet }) => setupWith(state);
 /** The latest frame nonce the worker gave each tab's content script. */
 const nonces = new WeakMap<Setup, Map<number, string>>();
 async function send(t: Setup, message: object, tab: number, url: string) {
@@ -117,6 +118,118 @@ const view = async (t: Setup, tab = 4) => {
   if (!reply.ok) throw new Error(reply.error);
   return reply.view;
 };
+
+const GENERIC = 'https://shop.example.com/cart';
+const genericReading = (amountCents: number) => ({
+  type: 'cart:reading',
+  reading: {
+    status: 'found',
+    merchantId: 'generic-us-online',
+    currency: 'USD',
+    amountCents,
+    kind: 'estimated-total',
+    extractorVersion: 'generic-reader-v1',
+  },
+  framed: false,
+});
+const withheld = {
+  type: 'cart:reading',
+  reading: { status: 'unavailable', reason: 'withheld' },
+  framed: false,
+};
+
+describe('badge service at any store (Phase 13c)', () => {
+  // The generic store exists only in catalog v3 (the engine supplies its profile).
+  const v3 = redateCatalog(CATALOG_V3, '2026-10-01');
+  const walletV3 = {
+    ...wallet,
+    cards: wallet.cards.map((c) => ({
+      ...c,
+      usage: c.usage.map((u) => ({ ...u, ruleId: 'bce-online-retail-v2' })),
+    })),
+  };
+  const setup = () => setupWith({ wallet: walletV3 }, v3);
+  it('accepts a generic reading at a store without an adapter and ranks at the generic profile', async () => {
+    const t = setup();
+    expect(await send(t, genericReading(10000), 4, GENERIC)).toMatchObject({ show: true });
+    const v = (await view(t)) as Extract<BadgeView, { kind: 'ready' }>;
+    expect(v.kind).toBe('ready');
+    expect(v.merchantId).toBe('generic-us-online');
+    // The generic profile is online retail: Blue Cash Everyday's 3% beats Double Cash's 2%.
+    expect(v.result.preferredCardId).toBe('amex-blue-cash-everyday');
+    // The generic profile is the engine's, not the catalog's: the slice carries no merchant.
+    expect((v.catalog as Extract<Catalog, { schemaVersion: 3 }>).merchants).toEqual([]);
+    expect((t.session.read()[BADGE_TABS_KEY] as Record<string, { host: string }>)['4'].host).toBe(
+      'shop.example.com',
+    );
+  });
+  it('refuses a generic reading that names another store or carries an adapter version', async () => {
+    const t = setup();
+    const named = {
+      ...genericReading(10000),
+      reading: { ...genericReading(10000).reading, merchantId: 'best-buy-us' },
+    };
+    expect(await send(t, named, 4, GENERIC)).toEqual({ show: false });
+    // A legacy cart URL takes only its adapter's reading.
+    expect(await send(t, genericReading(10000), 5, cart)).toEqual({ show: false });
+    // A legacy store's other pages take a generic reading at that store's id.
+    expect(await send(t, named, 6, 'https://www.bestbuy.com/site/basket')).toMatchObject({ show: true });
+    expect(((await view(t, 6)) as Extract<BadgeView, { kind: 'ready' }>).merchantId).toBe('best-buy-us');
+  });
+  it('shows the rates view when the amount was not read: ranked at $100, with rates, never a prompt', async () => {
+    const t = setup();
+    expect(await send(t, withheld, 4, GENERIC)).toMatchObject({ show: true });
+    const v = (await view(t)) as Extract<BadgeView, { kind: 'rates' }>;
+    expect(v.kind).toBe('rates');
+    expect(v.result.preferredCardId).toBe('amex-blue-cash-everyday');
+    const best = v.result.estimates.find((e) => e.cardId === 'amex-blue-cash-everyday')!;
+    // At $100 the cents are the rate in basis points: a sure 3%.
+    expect([best.minRewardCents, best.maxRewardCents]).toEqual([300, 300]);
+    expect(JSON.stringify(v)).not.toContain('enter the amount');
+    // Loading, empty and non-USD carts hide the badge.
+    for (const reason of ['page-loading', 'empty-cart', 'unsupported-currency', 'unsupported-page'])
+      expect(await send(t, { ...withheld, reading: { status: 'unavailable', reason } }, 5, GENERIC)).toEqual({
+        show: false,
+      });
+    // A typed amount in the panel turns the rates view into an estimate.
+    await act(t, { type: 'badge:set-amount', amountCents: 5000 }, 4);
+    expect((await view(t)).kind).toBe('ready');
+  });
+  it('"Not on this site" at another store records its host, not the shared generic id', async () => {
+    const t = setup();
+    await send(t, genericReading(10000), 4, GENERIC);
+    await act(t, { type: 'badge:disable-site' }, 4);
+    expect(t.local.read()[SETTINGS_KEY]).toMatchObject({
+      disabledMerchants: [],
+      disabledSites: ['shop.example.com'],
+    });
+    expect(await send(t, genericReading(10000), 5, GENERIC)).toEqual({ show: false });
+    expect(await send(t, genericReading(10000), 6, 'https://other.example.com/cart')).toMatchObject({
+      show: true,
+    });
+    expect((await view(t, 4)).kind).toBe('hidden');
+  });
+  it('the "other stores" toggle hides every store without an adapter and leaves legacy stores alone', async () => {
+    const t = setup();
+    await t.badge.saveSettings({
+      schemaVersion: 1,
+      disabledMerchants: [],
+      showOnOtherStores: false,
+      disabledSites: [],
+    });
+    expect(await send(t, genericReading(10000), 4, GENERIC)).toEqual({ show: false });
+    expect(await send(t, reading(10000), 5, cart)).toMatchObject({ show: true });
+    // Settings stored before Phase 13c (no toggle, no sites) still parse, with the defaults.
+    await t.local.api.set({ [SETTINGS_KEY]: { schemaVersion: 1, disabledMerchants: [] } });
+    expect(await t.badge.settings()).toEqual({
+      schemaVersion: 1,
+      disabledMerchants: [],
+      showOnOtherStores: true,
+      disabledSites: [],
+    });
+    expect(await send(t, genericReading(10000), 6, GENERIC)).toMatchObject({ show: true });
+  });
+});
 
 describe('badge service', () => {
   it('answers the content script with only a show flag and the iframe with the ranked comparison', async () => {
@@ -191,7 +304,12 @@ describe('badge service', () => {
     expect(await send(t, reading(10000), 4, cart)).toEqual({ show: false });
     expect(await send(t, reading(10000), 5, cart)).toMatchObject({ show: true });
     await act(t, { type: 'badge:disable-site' }, 5);
-    expect(t.local.read()[SETTINGS_KEY]).toEqual({ schemaVersion: 1, disabledMerchants: ['best-buy-us'] });
+    expect(t.local.read()[SETTINGS_KEY]).toEqual({
+      schemaVersion: 1,
+      disabledMerchants: ['best-buy-us'],
+      showOnOtherStores: true,
+      disabledSites: [],
+    });
     expect(await send(t, reading(10000), 6, cart)).toEqual({ show: false });
     await t.badge.removed(4);
     expect(Object.keys(t.session.read()[BADGE_TABS_KEY] as object)).not.toContain('4');
