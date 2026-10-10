@@ -43,7 +43,21 @@ Simplified by Evan on 2026-10-08: "no need for isolation audit or held out A run
 | 13.4 Held-out A | Coordinator | `run.mjs --split heldout-a --confirm-heldout-run 1`, commit the `runs.json` row, `score.mjs --record` and `--class-only`; a second run only after a generic fix on development | Scored |
 | 13.5 Report | Coordinator | `docs/evals/reader-v1.md`: precision with exact bounds at page, store and operator level, coverage, by stream, state, currency and variant; wiki; PR | PR merged after CI |
 
-**Phase 13b** (separate PR): the extension uses the reader on checkout pages of non-legacy stores. It shows the reader's amount when the reader is certain, otherwise card rates only. The Amazon, Best Buy and Newegg adapters stay. End-to-end tests run on fixture pages.
+## Phase 13b: the reader in the extension (planned 2026-10-09)
+
+Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Branch `phase13b-extension`; implementer Fable 5.1; an independent review before the PR.
+
+**Scope: the popup's "Read cart" at any store.** Today the popup reads the cart only at the three legacy stores (Best Buy US, Newegg US, Amazon US) and asks for a typed amount everywhere else (Phase 11).
+- On "Read cart" at any other page, the popup injects the manual reader (`src/checkout/content.js`, `activeTab` + `scripting`, as today) and that reader runs `readCart` from `@ai-checkout/cart-reader` in the isolated world. The legacy adapters keep their three stores and run first there.
+- **Shown and USD:** the amount fills the purchase like a legacy read (merchant = the store the popup already resolved, usually the generic store profile; kind `afterCredit`→`total`, `estimatedTotal`→`estimated-total`, `subtotal`→`subtotal`; reader version `generic-reader-v1`). The read is validated again before the comparison is saved, as legacy reads are.
+- **Shown in another currency:** "This comparison supports USD only" (the existing message); nothing is filled.
+- **Withheld:** a plain message to enter the amount; the shopper types it (Phase 11 behaviour). No guess, no partial amount.
+- **Privacy unchanged:** the content script returns only the reading (kind, amount, currency, or a reason code), never page text; it reads nothing on its own, only on the shopper's click.
+
+**Out of scope:** the automatic badge stays on the three legacy stores (it would need host access to every site, a Release A decision); the legacy adapters stay; no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
+
+**Tests:** unit tests for the mapping, currency and withhold paths and the contracts; Playwright end-to-end tests on local fixture stores (a generic cart page read correctly, a withheld page, a non-USD page, a legacy store unchanged); every existing test green.
+
 
 ## What matters most
 
@@ -52,6 +66,7 @@ Simplified by Evan on 2026-10-08: "no need for isolation audit or held out A run
 
 ## Progress
 
+- **2026-10-09: 13b built** on `phase13b-extension` by Fable 5.1 (independent review before the PR pending). `extension/src/checkout/manual-reader.ts` runs the legacy adapter on its cart URLs and `readCart` elsewhere; the popup offers "Read cart amount" at every store; contracts accept `generic-reader-v1`; the manual reader bundle grew from 8,908 to 34,458 bytes. Unit tests for the split, mapping and contracts; `e2e/generic-read.spec.ts` (generic read, withheld, euro, legacy cart URL). Details: [Extension](../system/extension.md#manual-cart-read-popup), [decision](../decisions/2026-10-09-generic-read-on-legacy-site-pages.md).
 - **2026-10-09: 13.2–13.5 done** on `phase13-reader`. Fable 5.1 built the reader in six rounds (final `94b7b9a`), reviewed by an independent subagent after rounds 3–6 (agent-verified). Development: 384 correct / 0 wrong / 338 withheld, `cart-1` coverage 86%, p95 10 ms. Held-out A run 1 (unbiased): 237 correct / 18 wrong (precision 92.9%, ≤ 10.3%), `cart-1` coverage 76.9%. Run 2 after held-out-informed general fixes: 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used. Report: [reader-v1](../../docs/evals/reader-v1.md). Next: PR, then 13b (extension).
 
 - **2026-10-08:** plan written; Phase 12 merged (PR #76, `298d6f6`); simplified by Evan the same day.

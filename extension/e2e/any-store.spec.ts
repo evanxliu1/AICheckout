@@ -43,7 +43,8 @@ test('popup on an unsupported store recommends a card from a typed amount', asyn
       'generic-us-online',
     );
     expect(await popup.evaluate("document.getElementById('online-eligibility').value")).toBe('eligible');
-    expect(await popup.text()).not.toContain('Read cart amount');
+    // Phase 13b: the cart can be read here too (generic-read.spec.ts); this spec types the amount.
+    expect(await popup.text()).toContain('Read cart amount');
     await popup.fill('purchase-amount', '100');
     await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
     await popup.click('Compare my cards');

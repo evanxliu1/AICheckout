@@ -263,7 +263,7 @@ export default function Popup({
         setMerchantId(next.state.cart.merchantId);
         store.current = next.state.cart.merchantId;
       }
-      setOnlineRetail('unknown');
+      setOnlineRetail(next.state.cart ? storeOnlineRetail(next.state.cart.merchantId) : 'unknown');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'The cart could not be read. Enter the amount manually.');
     } finally {
@@ -499,19 +499,15 @@ export default function Popup({
                         terms or an extension update.
                       </AlertInline>
                     )}
-                    {merchantId === GENERIC_MERCHANT_ID ? (
-                      <p className="supporting">Type the amount you will pay at this store’s checkout.</p>
-                    ) : (
-                      <Button
-                        color="secondary"
-                        icon="shopping-cart"
-                        isLoading={pending === 'read'}
-                        disabled={busy && pending !== 'read'}
-                        onClick={() => void readCart()}
-                      >
-                        Read cart amount
-                      </Button>
-                    )}
+                    <Button
+                      color="secondary"
+                      icon="shopping-cart"
+                      isLoading={pending === 'read'}
+                      disabled={busy && pending !== 'read'}
+                      onClick={() => void readCart()}
+                    >
+                      Read cart amount
+                    </Button>
                     {cart && (
                       <AlertInline
                         color="highlight"

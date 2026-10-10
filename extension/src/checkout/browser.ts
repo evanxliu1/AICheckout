@@ -1,14 +1,13 @@
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
-import { isSupportedCheckout } from './page-reader';
-import { merchantForCheckout } from './merchants';
+import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout, merchantForTab } from './merchants';
 
 /** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
 const contentFile = 'src/checkout/content.js';
 
 const copy = {
   'unsupported-page':
-    'Open a Best Buy US cart or checkout, the Newegg US cart, or the Amazon US cart, then read it again. You can also enter the amount manually.',
+    'Open a store’s cart or checkout page in a web tab, then read it again. You can also enter the amount manually.',
   'empty-cart': 'The cart has no amount to compare. Add an item or enter a purchase amount manually.',
   'summary-missing':
     'No readable order summary was found. Wait for the cart to load, retry, or enter the amount manually.',
@@ -16,6 +15,7 @@ const copy = {
     'The page shows an ambiguous amount. Enter and confirm the amount you will charge manually.',
   'unsupported-currency': 'This comparison supports USD only. The cart showed another currency.',
   'page-loading': 'The order summary is still loading. Wait for it to finish, then read it again.',
+  withheld: 'The cart total could not be read with certainty on this page. Enter the amount you will pay.',
 };
 const changed = 'The cart or page changed. Read the cart again and confirm the current amount.';
 
@@ -26,10 +26,18 @@ async function hash(text: string) {
 async function activeTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.id === undefined || !tab.url)
-    throw new Error('Open the extension from a supported cart using its toolbar button, then try again.');
-  if (!isSupportedCheckout(tab.url)) throw new Error(copy['unsupported-page']);
+    throw new Error('Open the extension from the store tab using its toolbar button, then try again.');
+  if (!merchantForTab(tab.url)) throw new Error(copy['unsupported-page']);
   return { id: tab.id, url: tab.url };
 }
+/** The merchant a reading of this URL must name: the legacy adapter's store on its cart pages, else
+ * the store the popup resolves for the tab (readManualCart does the same split). */
+const expectedMerchant = (url: string) => merchantForCheckout(url) ?? merchantForTab(url);
+/** The reader version a reading of this URL must carry: the adapter's on its cart pages, else the generic one. */
+const expectedVersion = (url: string) => {
+  const legacy = merchantForCheckout(url);
+  return legacy ? MERCHANTS[legacy].extractorVersion : GENERIC_READER_VERSION;
+};
 async function readDocument(tabId: number, documentId: string) {
   const results = await chrome.scripting.executeScript({
     target: { tabId, documentIds: [documentId] },
@@ -61,7 +69,8 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
       result.url !== tab.url ||
       current.id !== tab.id ||
       current.url !== tab.url ||
-      result.reading.merchantId !== merchantForCheckout(tab.url)
+      result.reading.merchantId !== expectedMerchant(tab.url) ||
+      result.reading.extractorVersion !== expectedVersion(tab.url)
     )
       throw new Error(changed);
     const { merchantId, currency, amountCents, kind, extractorVersion } = result.reading;
@@ -80,7 +89,7 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
   } catch (error) {
     if (error instanceof Error && [changed, ...Object.values(copy)].includes(error.message)) throw error;
     throw new Error(
-      'Chrome could not read this page. Reopen the extension from the cart’s toolbar button, or enter the amount manually.',
+      'Chrome could not read this page. Reopen the extension from the cart’s toolbar button, or enter the amount manually. This page can’t be read; enter the amount manually.',
     );
   }
 }
@@ -96,7 +105,7 @@ export async function validateActiveCheckout(snapshot: CartSnapshot): Promise<vo
       current.url !== tab.url ||
       result.url !== tab.url ||
       result.reading.merchantId !== snapshot.merchantId ||
-      result.reading.merchantId !== merchantForCheckout(tab.url) ||
+      result.reading.merchantId !== expectedMerchant(tab.url) ||
       result.reading.amountCents !== snapshot.amountCents ||
       result.reading.kind !== snapshot.kind ||
       result.reading.extractorVersion !== snapshot.extractorVersion
