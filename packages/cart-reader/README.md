@@ -9,6 +9,10 @@ The generic cart reader (Phase 13, [plan](../../wiki/product/phase-13-reader.md)
 
 The extension shows the amount only when the reader shows one; otherwise it shows card rates only. A wrong shown amount is the costly error; a withhold only costs coverage.
 
+## Cart page detector (Phase 13c)
+
+`detectCartPage(document, { url })` says whether the page is the shopper's cart (`cart`), a checkout step (`checkout`) or neither (`none`), with a short machine `reason`; `cartUrlHint(url, title)` is the cheap first signal a content script can run before touching the DOM (null means stop); `readCartPage(document, { url })` returns the detection and the reader's reading from one pass. The same rules bind it (deterministic, synchronous, generic, no `data-pane-*`). A positive needs a URL or main-heading cart word and a structure signal in the main content (a summary row the reader finds, or cart line items). Plan and signals: [Phase 13c](../../wiki/product/phase-13c-cart-detection.md#the-detector); harness: `evals/reader/detect.mjs`.
+
 ## Rules the reader must keep (binding)
 
 - **Deterministic and local.** It reads only the `document` given (open shadow roots included) and `options.url`. No model, network, storage, clock, randomness, timers or global state between calls. Synchronous.

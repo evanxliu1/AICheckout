@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-13, merchants, reader, badge]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-09T23:55:00Z
+  at: 2026-10-10T01:10:00Z
 sources:
   - resource: phase-13-reader.md
     title: Phase 13 plan (reader v1 and 13b)
@@ -165,3 +165,4 @@ Not edited here (release docs are edited only when the task is about them); adde
 ## Progress
 
 - **2026-10-09: planned** (13c.0).
+- **2026-10-10: 13c.1 detector built** (Fable 5.1 implementer, commits `f85de6f`, `92ecd1d` and the docs commit after). `packages/cart-reader/src/detect.ts`: `cartUrlHint(url, title)` (URL path, query, fragment and host tokens, title words; `cartier`, `/cartography`, `/cart/add`, `add-to-cart`, product slugs and `minicart` excluded), `detectCartPage(document, { url })` and `readCartPage(document, { url })` (detection and the reader's reading from one pass). Signals: URL word, else a visible h1/h2/role=heading (level 1–2) or `main` aria-label outside headers, footers, navigation and dialogs; then a structure signal in that main content: a summary row the reader found (labelled, beside shipping, tax or a checkout control, non-zero, visible, whether or not its amount was readable) or line items (a visible quantity control and a visible remove control, or either within seven levels of a product image; open shadow roots searched). The `main` landmark is not relied on (stores wrap only part of the cart in it) and asides count as main content (checkout order summaries). `none` reasons: `no-hint`, `title-only`, `zero-total`, `no-structure`. Harness `evals/reader/detect.mjs` (quick loop and `--scored`; `runs.json` rows carry `kind: detector`, held-out allowance one run, `legacyBundleSha256` optional). Development quick loop: badge recall 385/414 = 93.0% (cart-1 176/188, cart-qty2 137/149, cart-2items 40/40, cart-other 32/37), false shows 0/119 `minicart-1`, 0/189 `empty-cart`, 323 amount view / 62 rates view, detector time unhinted p95 0.2 ms max 0.4 ms, hinted p95 10.9 ms max 34.8 ms. Remaining miss classes: 14 pages where the store's cart is a drawer opened at a product or home URL (by design, no URL or title hint; a known limit), 10 pages whose quantity and remove controls are `visibility: hidden` or boxless in the offline rebuild, 5 `OrderItemDisplayView`-style pages with a cart title but no main heading found (and in three of them the summary lives in an iframe). Held-out A not run.

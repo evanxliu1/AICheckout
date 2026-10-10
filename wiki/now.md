@@ -5,12 +5,12 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-09T23:55:00Z
+  at: 2026-10-10T01:10:00Z
 ---
 
 # Now
 
-As of 2026-10-09T23:55Z.
+As of 2026-10-10T01:10Z.
 
 ## Current state
 
@@ -28,7 +28,7 @@ As of 2026-10-09T23:55Z.
 
 ## Active work
 
-- **Phase 13c:** 13c.1 detector and 13c.2 badge everywhere (Fable 5.1 implementer), 13c.3 independent review (Fable 5.1 reviewer), 13c.4 held-out detector run and live home sweep (coordinator), 13c.5 reader coverage round, 13c.6 PR.
+- **Phase 13c:** 13c.1 detector **done 2026-10-10** on `phase13c-cart-detection` (`packages/cart-reader/src/detect.ts`, `evals/reader/detect.mjs`; development quick loop: badge recall 93.0%, 0 false shows on `minicart-1` and `empty-cart`, hinted p95 10.9 ms; held-out A untouched, [plan progress](product/phase-13c-cart-detection.md#progress)). Next: 13c.2 badge everywhere (Fable 5.1 implementer; `readCartPage` gives detection and reading in one pass, `cartUrlHint` runs before any DOM work), 13c.3 independent review (Fable 5.1 reviewer), 13c.4 held-out detector run (`node evals/reader/detect.mjs --scored --split heldout-a --confirm-heldout-run 1`, once) and live home sweep (coordinator), 13c.5 reader coverage round, 13c.6 PR.
 
 ## Open questions and next steps
 

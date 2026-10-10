@@ -121,9 +121,9 @@ describe('detectCartPage', () => {
   });
   it('is none on a blog post about carts', () => {
     const body = `<main><h1>Ten ways to cut cart abandonment</h1><p>Shoppers leave carts for many reasons. A $5.00 shipping fee is the most common.</p><a href="/cart">View your cart</a></main>`;
-    expect(page(body, { url: 'https://blog.example/posts/cart-abandonment', title: 'Cart abandonment' })).toEqual(
-      { page: 'none', reason: 'no-structure' },
-    );
+    expect(
+      page(body, { url: 'https://blog.example/posts/cart-abandonment', title: 'Cart abandonment' }),
+    ).toEqual({ page: 'none', reason: 'no-structure' });
   });
   it('is none on a page that only links to /cart', () => {
     const body = `<header><a href="/cart">Cart (0)</a></header><main><h1>New arrivals</h1><p>$20.00</p></main>`;
@@ -149,10 +149,16 @@ describe('detectCartPage', () => {
     const empty = (h: string, msg: string, rows = '') => `<main><h1>${h}</h1><p>${msg}</p>${rows}</main>`;
     expect(page(empty('Your cart', 'Your cart is empty.'))).toEqual({ page: 'none', reason: 'no-structure' });
     expect(
-      page(empty('Your cart', 'Your cart is empty.', summary(row('Subtotal', '$0.00') + row('Total', '$0.00')))),
+      page(
+        empty('Your cart', 'Your cart is empty.', summary(row('Subtotal', '$0.00') + row('Total', '$0.00'))),
+      ),
     ).toEqual({ page: 'none', reason: 'zero-total' });
-    expect(page(empty('Warenkorb', 'Ihr Warenkorb ist leer.'), { url: 'https://a.example/warenkorb', lang: 'de' })).toMatchObject({ page: 'none' });
-    expect(page(empty('Panier', 'Votre panier est vide.'), { url: 'https://a.example/panier', lang: 'fr' })).toMatchObject({ page: 'none' });
+    expect(
+      page(empty('Warenkorb', 'Ihr Warenkorb ist leer.'), { url: 'https://a.example/warenkorb', lang: 'de' }),
+    ).toMatchObject({ page: 'none' });
+    expect(
+      page(empty('Panier', 'Votre panier est vide.'), { url: 'https://a.example/panier', lang: 'fr' }),
+    ).toMatchObject({ page: 'none' });
     expect(
       page(empty('カート', 'カートに商品がありません。', summary(row('小計', '¥0'))), {
         url: 'https://a.example/cart',
@@ -162,7 +168,10 @@ describe('detectCartPage', () => {
   });
   it('is none on a non-store page whose URL happens to say cart', () => {
     const body = `<main><h1>Cart</h1><p>A cart is a vehicle designed for transport, using two or more wheels.</p></main>`;
-    expect(page(body, { url: 'https://wiki.example/wiki/Cart' })).toEqual({ page: 'none', reason: 'no-structure' });
+    expect(page(body, { url: 'https://wiki.example/wiki/Cart' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
   });
   it('readCartPage returns the reading beside the detection', () => {
     document.title = 'Cart';
