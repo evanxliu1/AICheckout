@@ -42,3 +42,5 @@ Phase 11 lets the popup recommend a card at any U.S. online store from a typed a
 
 ## Status
 Accepted 2026-10-05 by the Phase 11 builder (claude-code/claude-opus-5-5) under the plan Evan approved; Evan deferred brand websites (OnePay and every brand-scoped or closed-loop card at its brand's site) to Phase 14, before Release A.
+
+Superseded in part 2026-10-09 by [never ask for a typed amount](2026-10-09-never-ask-for-an-amount.md): the popup no longer needs a typed amount at the generic store; it reads on open and shows the rates view when not certain (amount field optional). (Wiki audit 2026-10-10.)

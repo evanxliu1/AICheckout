@@ -27,3 +27,6 @@ The coordinator's Phase 13 plan sealed held-out A from the reader developer: an 
 ## Consequences
 - Held-out A measures how the rules carry over to stores they were not tuned on, not a sealed test; `docs/evals/reader-v1.md` says so beside every held-out number.
 - Fewer agents and steps: develop, review, held-out run, report.
+
+## Status
+Accepted 2026-10-08 (Evan, chat). Status section added 2026-10-10 by the wiki audit.

@@ -36,3 +36,5 @@ Evan, 2026-10-09 (answering the coordinator's question in chat): always on at in
 
 ## Status
 Accepted 2026-10-09 (Evan). Built in 13c.2 on 2026-10-10; `use_dynamic_url` evaluated and kept `false` ([record](2026-10-10-rates-view-reference-amount-and-spa-navigation.md)).
+
+The consequence "Phase 17 keeps consented telemetry" is superseded in part 2026-10-10 by [data collection](2026-10-10-data-collection.md): one onboarding opt-in and a minimal telemetry set ship in Release A (Phase 15). (Wiki audit 2026-10-10.)

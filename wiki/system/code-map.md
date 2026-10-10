@@ -6,7 +6,7 @@ status: stable
 tags: [system, code-map]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: ../../package.json
     title: Root workspaces and scripts
@@ -20,7 +20,7 @@ sources:
 
 # Code map
 
-One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24, TypeScript, Zod 4 everywhere. Packages are consumed as TypeScript source (`exports` points at `src/*.ts`); only the API is bundled for Node (esbuild). Built from reading the tree at commit `f6d3f79` on 2026-10-02.
+One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24, TypeScript, Zod 4 everywhere. Packages are consumed as TypeScript source (`exports` points at `src/*.ts`); only the API is bundled for Node (esbuild). Built from reading the tree at commit `f6d3f79` on 2026-10-02. `packages/cart-reader` and `evals/reader/` added from `main` `7a07113` on 2026-10-10.
 
 ## Workspaces
 
@@ -28,6 +28,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | --- | --- | --- | --- | --- | --- |
 | [`extension/`](../../extension) | `ai-checkout-extension` | MV3 extension: popup, onboarding, worker, state/vault, site adapters, cart badge | [`src/background/index.ts`](../../extension/src/background/index.ts), [`src/popup/index.html`](../../extension/src/popup/index.html), [`src/badge/content.ts`](../../extension/src/badge/content.ts), [`src/checkout/content.ts`](../../extension/src/checkout/content.ts) | `extension/tests/*.test.ts(x)` (vitest), `extension/e2e/*.spec.ts` (Playwright), `scripts/package.test.mjs` | [Extension](extension.md), [Cart badge](cart-badge.md) |
 | [`packages/rewards-core/`](../../packages/rewards-core) | `@ai-checkout/rewards-core` | Catalog schemas v1/v2/v3, engines, money math, bundled catalogs (`CATALOG_V2`, `CATALOG_V3`), parity cases | [`src/index.ts`](../../packages/rewards-core/src/index.ts), `./money` subpath | No own runner; covered by `extension/tests/rewards*.test.ts`, `catalog-schema.test.ts`, `scripts/test-catalog-parity.mjs` | [Rewards engine](rewards-engine.md) |
+| [`packages/cart-reader/`](../../packages/cart-reader) | `@ai-checkout/cart-reader` | Generic cart reader (`readCart`, Phase 13) and cart/checkout page detector (`detectCartPage`, `cartUrlHint`, `readCartPage`, Phase 13c); deterministic, no Zod; bundled into both extension content scripts | [`src/index.ts`](../../packages/cart-reader/src/index.ts), [README](../../packages/cart-reader/README.md) | `packages/cart-reader/tests/*.test.ts` (vitest); real-page runs in `evals/reader/` | [Extension](extension.md#manual-cart-read-popup), [Cart badge](cart-badge.md) |
 | [`packages/catalog-client/`](../../packages/catalog-client) | `@ai-checkout/catalog-client` | `createCatalogFetcher`, `readBoundedJson` (size-capped JSON read) | [`src/index.ts`](../../packages/catalog-client/src/index.ts) | `extension/tests/catalog-refresh.test.ts`, `apps/api/tests/catalog.test.ts` | [Extension](extension.md#catalog-refresh) |
 | [`packages/catalog-review/`](../../packages/catalog-review) | `@ai-checkout/catalog-review` | Browser-safe Zod contracts: review RPC input/output, `MAX_SOURCE_BODY_CHARS`, extraction v1 schema, trace, `limitsSchema` | [`src/index.ts`](../../packages/catalog-review/src/index.ts), [`src/curation.ts`](../../packages/catalog-review/src/curation.ts) | Through API and review tests | [API](api.md), [Curation harness](curation-harness.md) |
 | [`packages/ui/`](../../packages/ui) | `@ai-checkout/ui` | React components (Helios specs, Ocean theme), generated Flight icons, gallery | [`src/index.ts`](../../packages/ui/src/index.ts), `./styles.css` | `tests/components.test.tsx`, `e2e/gallery.spec.ts` (axe) | [UI library](ui-library.md) |
@@ -43,6 +44,7 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | [`supabase/`](../../supabase) | `config.toml`, 10 migrations, generated `seed.sql`, pgTAP tests in `supabase/tests/` | [Database](database.md) |
 | [`evals/curation/`](../../evals/curation) | v1 synthetic corpus, v2 fixture and real corpora (captures gitignored), matrix configs | [Evaluation](evaluation.md) |
 | [`evals/merchants/`](../../evals/merchants) | Phase 12 reader eval data and tools: retail frames, candidate lists (`reader-candidates-8.json`), `sites.json`, seeded selection (`tools/seeded-selection.mjs`), capture (`capture/`: retired Playwright robot, `pane-export.js`, `rebuild.mjs`, `audit-pane-transcript.mjs`, `pane-platform.mjs`, text-free records); exports gitignored | [Merchant coverage design](merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12), [Phase 12 plan](../product/phase-12-reader-eval.md) |
+| [`evals/reader/`](../../evals/reader) | Phase 13 harness: runs and scores the generic reader (`run.mjs`, `score.mjs`, `runs.json` run ledger) and the Phase 13c detector (`detect.mjs`, `live-home.mjs`) on the frozen splits; [README](../../evals/reader/README.md) | [Phase 13 plan](../product/phase-13-reader.md), [Phase 13c plan](../product/phase-13c-cart-detection.md) |
 | [`.claude/agents/`](../../.claude/agents) | Pinned Claude Code subagents: the four card-pipeline agents and `pane-operator` (Phase 12 pane capture, restricted tools) | [Card-expansion pipeline](card-expansion-pipeline.md), [Phase 12 plan](../product/phase-12-reader-eval.md#safety-and-copyright) |
 | [`docs/evals/`](../../docs/evals) | Committed results (`results.json`, `results.md`, SVG charts); the site copies them at build | [Evaluation](evaluation.md), [Public site](public-site.md) |
 | [`scripts/`](../../scripts) | Root Node scripts (below) and [`lint_wiki.py`](../../scripts/lint_wiki.py) | [Testing](testing.md) |
@@ -68,8 +70,9 @@ One npm workspace repo (`extension`, `packages/*`, `apps/*`, `tools/*`), Node 24
 | [`run-eval-matrix.mjs`](../../scripts/run-eval-matrix.mjs), [`summarize-evals.mjs`](../../scripts/summarize-evals.mjs) | `eval:matrix`, `eval:summarize` | Resumable matrix runner; aggregate results into `docs/evals/` |
 | [`capture-issuer-pages.mjs`](../../scripts/capture-issuer-pages.mjs), [`author-real-corpus.mjs`](../../scripts/author-real-corpus.mjs), [`author-curation-corpus.mjs`](../../scripts/author-curation-corpus.mjs), [`build-verification-page.mjs`](../../scripts/build-verification-page.mjs) | none | Corpus capture and authoring |
 | [`build-release-media.mjs`](../../scripts/build-release-media.mjs), [`build-portfolio-demo.mjs`](../../scripts/build-portfolio-demo.mjs), [`render-full-stack-demo.mjs`](../../scripts/render-full-stack-demo.mjs) | `release:media`, `release:portfolio` | Screenshot and video generation |
-| `node --test` over `scripts/lib`, `evals/merchants/tools` and `evals/merchants/capture/tests` | `test:scripts` (part of `npm test`) | Script, selection and capture unit tests ([testing](testing.md)) |
+| `node --test` over `scripts/lib`, `evals/merchants/{tools,capture/tests,labels/tests,variants/tests}` and `evals/reader/tests` | `test:scripts` (part of `npm test`) | Script, selection and capture unit tests ([testing](testing.md)) |
 | `node --test` over `evals/merchants/capture/tests/browser` | `test:capture:browser` | Capture tool and pane export round trip on a 127.0.0.1 fixture shop (Playwright Chromium) |
+| `node --test` over `evals/reader/tests/browser` | `test:reader:browser` | Reader harness browser tests on synthetic pages (not in CI) |
 | [`db-push.sh`](../../scripts/db-push.sh) | none | Pushes new migrations to the linked hosted project (operator only) |
 | `extract-cards.mjs`, `build-expansion-cards.mjs`, `draft-expansion-labels.mjs`, `apply-expansion-verification.mjs`, `check-expansion-quotes.mjs`, `merge-capture-manifests.mjs`, `expansion-capture-report.mjs`, `expansion-pipeline-metrics.mjs`, `score-expansion-traces.mjs` | none (wrapped by `npm run pipeline`) | Card-expansion stages: [catalog expansion](catalog-expansion.md), [card-expansion pipeline](card-expansion-pipeline.md) |
 

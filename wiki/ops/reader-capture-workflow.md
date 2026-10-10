@@ -1,12 +1,12 @@
 ---
 type: Runbook
 title: Reader capture workflow (Phase 12.3)
-description: How the coordinating session runs Phase 12.3 — pane capture of the frozen candidate stores by pane-operator subagents in Claude workflows (pilot, full capture, then split, label, review and freeze), under generic-reader-protocol.10; what it decides alone, when it stops for Evan, and how results reach main.
+description: How the coordinating session runs Phase 12.3 — pane capture of the frozen candidate stores by pane-operator subagents in Claude workflows (pilot, full capture, then split, label, review and freeze), written under generic-reader-protocol.10 (.12 binds since 2026-10-07); what it decides alone, when it stops for Evan, and how results reach main.
 status: stable
 tags: [ops, runbook, phase-12, capture, workflow]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T01:27:22Z
+  at: 2026-10-10T22:28:14Z
 sources:
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol (binding text, .10)
@@ -18,15 +18,15 @@ sources:
 
 # Reader capture workflow (Phase 12.3)
 
-**Capture paused 2026-10-08 (Evan):** about 300 stores captured; the 840 stop rule no longer applies ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)). This runbook stays valid for any later capture. Practical notes from the run: keep the coordinator's own pane tab open (closing the last tab closes the pane); run at most 7 operators (tab cap 9); close stale operator tabs before a new run; the batch script stops starting stores after 3 `not-started` in a row.
+**Capture paused 2026-10-08 (Evan):** about 300 stores captured at the pause; the frozen set holds 337 stores (332 pane + 5 robot) after 532 visits ([report](../../docs/evals/reader-captures-2026-10.md)); the 840 stop rule no longer applies ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)). This runbook stays valid for any later capture. Practical notes from the run: keep the coordinator's own pane tab open (closing the last tab closes the pane); run at most 7 operators (tab cap 9); close stale operator tabs before a new run; the batch script stops starting stores after 3 `not-started` in a row.
 
-The binding rules are in [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md) (`generic-reader-protocol.10`, signed at `779855e`). This page says **how the coordinating session runs them**; where it and the protocol differ, the protocol wins and this page is fixed. Plan and status: [Phase 12 plan](../product/phase-12-reader-eval.md).
+The binding rules are in [`docs/evals/generic-reader-protocol.md`](../../docs/evals/generic-reader-protocol.md). This page was written under `generic-reader-protocol.10` (signed at `779855e`); since 2026-10-07 `.11` (signed at `49b67eb`: the transcript collector) and then `.12` (signed at `265dbdc`: the pane's tab cap bounds concurrency at 8, refused-tab sessions are no session) bind, and the `.11`/`.12` notes below apply. This page says **how the coordinating session runs them**; where it and the protocol differ, the protocol wins and this page is fixed. Plan and status: [Phase 12 plan](../product/phase-12-reader-eval.md).
 
 ## Before starting
 
 | Check | How |
 | --- | --- |
-| Protocol in force | Status line of the protocol names `.10` signed at `779855e` |
+| Protocol in force | Status line of the protocol (`.12` signed at `265dbdc` as of 2026-10-10) |
 | Clean `main` | `git status` clean, `git pull`, all checks green on the last merge |
 | Workflow size | `.claude/settings.local.json` has `"workflowSizeGuideline": "unrestricted"` (Evan, 2026-10-06) |
 | Operator agent | `.claude/agents/pane-operator.md` is listed as an agent type |
@@ -53,7 +53,7 @@ A workflow script cannot read files: the coordinator reads the candidate list an
 
 ## Workflow 2: full capture
 
-- **Batches.** Up to 16 concurrent agents (the workflow cap is about 16; start at 8 and rise only if blocked and error rates don't increase). Each batch takes the next stores of both streams.
+- **Batches.** Since `.12` the pane's tab cap bounds concurrency at 8 (in practice at most 7 operators, see the note at the top); the earlier text allowed up to 16 (the workflow cap), starting at 8. Each batch takes the next stores of both streams.
 - **Stop.** After each batch the script tallies captured sites with a real `cart-1` per stream: U.S. stops at **336** and non-U.S. at **504**; if either stream runs out, the other continues past its target until **840** in all. Seed the tally with the standing robot captures that have a real `cart-1` (lego.com has only `minicart-1` and does not count). If both streams run out below 840, stop and report to Evan before the split; continuing with `--extra-non-us` up to 1,436 needs his approval.
 - **Resume.** Re-run with the same script and `resumeFromRunId` after any interruption; finished agents are cached.
 - **After each batch (coordinator):** add or update each store's entry in `sites.json` (domain, `statusUnderProtocol10`: outcome, method `pane`, `signedIn`, states, record path), set `protocolCurrent` to `generic-reader-protocol.10`, record the batch's concurrency level (the report gives the blocked rate per level), commit, run the transcript audit and list flags. A store with an unexplained flag is a deviation in the report.
@@ -61,7 +61,7 @@ A workflow script cannot read files: the coordinator reads the candidate list an
 
 ## Workflow 3: split, label, review, freeze
 
-Prerequisites to build and review first. Built on 2026-10-07 on `phase12-label-tools`, review pending ([capture README](../../evals/merchants/capture/README.md#workflow-3-tools-split-label-freeze)): `render-pane.mjs`, `build-split-input.mjs`, the `reader-labels.2` schema and validator, `agreement.mjs` and `freeze.mjs`; the offline variant generator and the 10% sample check on 2026-10-07 on `phase12-variants`, review pending ([variants README](../../evals/merchants/variants/README.md)). The list: a renderer that rebuilds each `pane-dom.2` export and takes full-page and viewport screenshots with JavaScript off and network blocked; label files in the `reader-labels.2` schema; the offline variant generator and its manifest; the 10% derived-label sample check; a freeze script that writes `freeze.json` with the SHA-256 of the labels, variant and snapshot manifests, `currency-minor-units.json`, `item-price-bands.json` and `retail-frame-3.json`. Labellers of the standing robot captures get the robot inputs (screenshots, DOM, MHTML).
+Prerequisites to build and review first. Built on 2026-10-07 on `phase12-label-tools` and reviewed (agent-verified) before the 2026-10-08 freeze ([capture README](../../evals/merchants/capture/README.md#workflow-3-tools-split-label-freeze)): `render-pane.mjs`, `build-split-input.mjs`, the `reader-labels.2` schema and validator, `agreement.mjs` and `freeze.mjs`; the offline variant generator and the 10% sample check on 2026-10-07 on `phase12-variants`, likewise reviewed ([variants README](../../evals/merchants/variants/README.md)). The list: a renderer that rebuilds each `pane-dom.2` export and takes full-page and viewport screenshots with JavaScript off and network blocked; label files in the `reader-labels.2` schema; the offline variant generator and its manifest; the 10% derived-label sample check; a freeze script that writes `freeze.json` with the SHA-256 of the labels, variant and snapshot manifests, `currency-minor-units.json`, `item-price-bands.json` and `retail-frame-3.json`. Labellers of the standing robot captures get the robot inputs (screenshots, DOM, MHTML).
 
 1. **Platform and split.** `pane-platform.mjs` over the pane exports + the standing robot rows' platform from `sites.json` → `captured.json` (one row per domain, `{domain, platform}`) and `captured-methods.json` → `node evals/merchants/tools/seeded-selection.mjs split captured.json --extra-us 225 --extra-non-us 800 --weights-protocol-10` → development / held-out A. Commit `splits.json` before any labeller starts.
 2. **Label.** Since 2026-10-08 (Evan) **one labeller per store**, five stores per labeller subagent ([decision](../decisions/2026-10-08-single-labeller.md); [brief](../../evals/merchants/labels/workflows/labeller-brief.md), [workflow](../../evals/merchants/labels/workflows/label.workflow.txt)): rebuilt-page screenshots and tiles, the labeller digest and the export, never any reader output; `reader-labels.2` schema; `agreement.mjs --single` makes the final labels. (Before: two independent labellers per split and an adjudicator.)

@@ -1,12 +1,12 @@
 ---
 type: System Component
-title: Telemetry, operations and value metrics design (Phase 17, draft)
-description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), rotating install IDs with day-since-install buckets, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6; nothing here is built.
+title: Telemetry, operations and value metrics design (Phases 15 and 17, draft)
+description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), a persistent random install ID (rotation dropped 2026-10-10) with day-since-install buckets, exact cart amounts without domains and owned card IDs under one onboarding opt-in, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6 with Evan's 2026-10-10 data-collection answers; a minimal set ships in Release A (Phase 15), the rest in Phase 17; nothing here is built.
 status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -22,9 +22,9 @@ sources:
     title: Current privacy policy draft (to be rewritten)
 ---
 
-# Telemetry, operations and value metrics design (Phase 17, draft)
+# Telemetry, operations and value metrics design (Phases 15 and 17, draft)
 
-**Draft v6, not built, not approved.** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
+**Draft v6, not built; Evan approved the data-collection choices on 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)), which override this page where they differ: one opt-in question at onboarding covers every metric; a persistent random install ID (no rotation); exact cart amounts without a domain; owned cards as catalog IDs; no post-purchase category question; a minimal set ships in Release A (Phase 15).** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
 
 ## Policy frame (Chrome policy text read 2026-10-05)
 
@@ -36,26 +36,29 @@ sources:
 
 ## Consent
 
-- **Off until the shopper agrees** on a dedicated screen (onboarding and settings) naming what is sent (usage and error events, reader results, a random ID) and why; "Not now" equally prominent; the extension works fully either way.
+- **Off until the shopper agrees** to one question at onboarding ("help improve the product and user experience"; changeable in settings, never asked again per metric) naming what is sent (usage, recommendations, owned card products, exact cart amounts, reader results, errors, a random ID) and why; "Not now" equally prominent; the extension works fully either way.
 - Nothing is sent before consent; the install event is queued and sent after consent, or dropped. Withdrawing sends nothing, clears the queue and the ID.
 - Store listing (privacy tab categories), consent screen, privacy policy and event dictionary must agree before any release that sends events (merge gate).
 - `consent_version` recorded; a change of practice asks again.
 
 ## Events
 
-Every event: `install_id` (random, rotated every 30 days, resettable), `install_month`, `days_since_install` bucket (0, 1–6, 7–13, 14–29, 30–59, 60+), `consent_version`, `schema_version`, extension, catalog, merchant-database and reader versions, client timestamp; the server adds its own.
+Every event: `install_id` (random, persistent, reset by Stop sharing or Delete my data; Evan 2026-10-10, no rotation), `install_month`, `days_since_install` bucket (0, 1–6, 7–13, 14–29, 30–59, 60+), `consent_version`, `schema_version`, extension, catalog, merchant-database and reader versions, client timestamp; the server adds its own.
 
-| Group | Events (no domain, no merchant, no amount) |
+| Group | Events (no domain, no merchant, no URL; exact amounts allowed since 2026-10-10) |
 | --- | --- |
 | Lifecycle | install (after consent), onboarding complete, consent given |
-| Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; exact or range) |
+| Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; amount view or rates view; top card's catalog ID; exact `amountCents` when read; Evan 2026-10-10) |
+| Wallet | owned cards as catalog card IDs on change (never numbers, last 4 or balances; Evan 2026-10-10) |
 | Reader quality | Shown or withheld (no `ask` since 2026-10-06); reader kind (generic or legacy adapter; no store configs since 2026-10-06); shopper reported a wrong amount or typed one (relative-difference bucket) |
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 
-**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and generic-reader fixes (no store configs since 2026-10-06); monthly replays of our own captures cover drift.
+**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup, and **"Store not recognised? Suggest it"** on the badge at an unrecognised cart (2026-10-10), at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and generic-reader fixes (no store configs since 2026-10-06); monthly replays of our own captures cover drift.
 
 **Deferred** to the affiliate phase: the "opportunity" event (best owned vs best catalog rate). Reserved names, not emitted: `offer_impression`, `offer_click` with `offer_id`, `placement`, client `click_id`. Dictionary published as `docs/telemetry/events.md` (public, like `docs/evals/`, not wiki material).
+
+**Content script vs telemetry.** The badge content script still sends only the reading to the extension's own service worker (decision 2026-10-09). Telemetry events are built and sent by the worker, after consent, from what the worker already holds; the content script never talks to the server.
 
 ## Ingest and storage
 
@@ -69,8 +72,8 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 
 | Area | Control |
 | --- | --- |
-| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state and the grant prompt (no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
-| Deletion without accounts | "Delete all local data" clears the queue and ID; raw rows expire in 90 days; a request quoting the install ID shown in settings is honoured within 30 days for rows under that ID; rows under earlier, rotated IDs cannot be found and expire at 90 days (the policy says so) |
+| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state (no all-sites grant prompt since 2026-10-09: `https://*/*` is required at install; no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
+| Deletion without accounts | "Stop sharing" clears the queue and ID; "Delete my data" sends the current install ID for deletion of its rows; raw rows expire in 90 days; a reset ID's earlier rows cannot be found and expire at 90 days (the policy says so) |
 | Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a merchant profile; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
 | Security review | Independent threat-model review of the ingest path and the hosted merchant release before Release B |
 | Growth-list integrity | Advisory only, reviewed by Evan; nothing auto-promoted into a release; dashboards count distinct installs, not events |
@@ -83,7 +86,7 @@ Every event: `install_id` (random, rotated every 30 days, resettable), `install_
 | --- | --- |
 | North Star | Weekly active installs with at least one recommendation shown |
 | Funnel | install → onboarding complete → at least one card → first recommendation → active in week 2 |
-| Retention | D7 and D30 from `days_since_install` buckets by `install_month` (D30 = distinct IDs in the 30–59 bucket; no linking of IDs across rotations) |
+| Retention | D7 and D30 by install cohort from the persistent install ID |
 | Coverage | share of recommendations at named profiles; "Suggest this store" counts by domain |
 | Quality | reader precision (shown-wrong) and coverage on held-out real pages (protocol `.8`); field rate of reported wrong amounts and typed amounts (no `ask` since 2026-10-06) |
 | Uninstalls | rate and reasons (disclosed `setUninstallURL` survey) |

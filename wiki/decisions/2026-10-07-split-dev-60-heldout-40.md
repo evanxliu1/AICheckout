@@ -48,3 +48,5 @@ sources:
 Proposed 2026-10-07 by the amendment builder (claude-code/claude-opus-5-5) on Evan's decision in chat. It awaits the independent reviewer's signature of `.10`; `.9` binds until then.
 
 Signed: the independent reviewer signed `generic-reader-protocol.10` at `779855e` on 2026-10-07 after one fix round (developer may not browse non-development candidates; exhausted-U.S. case reported to Evan; stop at 840 real `cart-1` with a re-split remedy before freeze; agent-verified); accepted. Residual: no reader-developer activity on development stores before the final split and freeze.
+
+Superseded in part 2026-10-08 (wiki audit 2026-10-10): the 840 stop with its re-split remedy, the fresh held-out set after two failed runs and held-out A as a pass/fail measurement of the ≥ 99% claim by [capture paused; quality target](2026-10-08-pause-capture-quality-target.md); strict developer isolation from non-development stores relaxed by [Phase 13 simplified](2026-10-08-phase-13-simplified.md). The 60 / 40 two-split design stands.

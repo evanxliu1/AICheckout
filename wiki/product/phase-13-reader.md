@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-13, merchants, reader]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-08T21:00:00Z
+  at: 2026-10-10T22:30:00Z
 sources:
   - resource: phase-12-reader-eval.md
     title: Phase 12 plan (the frozen evaluation set)
@@ -51,10 +51,10 @@ Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Br
 - On "Read cart" at any other page, the popup injects the manual reader (`src/checkout/content.js`, `activeTab` + `scripting`, as today) and that reader runs `readCart` from `@ai-checkout/cart-reader` in the isolated world. The legacy adapters keep their three stores and run first there.
 - **Shown and USD:** the amount fills the purchase like a legacy read (merchant = the store the popup already resolved, usually the generic store profile; kind `afterCredit`→`total`, `estimatedTotal`→`estimated-total`, `subtotal`→`subtotal`; reader version `generic-reader-v1`). The read is validated again before the comparison is saved, as legacy reads are.
 - **Shown in another currency:** "This comparison supports USD only" (the existing message); nothing is filled.
-- **Withheld:** a plain message to enter the amount; the shopper types it (Phase 11 behaviour). No guess, no partial amount.
+- **Withheld:** a plain message to enter the amount; the shopper types it (Phase 11 behaviour). No guess, no partial amount. *(Superseded by Phase 13c on 2026-10-10: a withheld read shows the rates view and nothing asks for an amount; [decision](../decisions/2026-10-09-never-ask-for-an-amount.md).)*
 - **Privacy unchanged:** the content script returns only the reading (kind, amount, currency, or a reason code), never page text; it reads nothing on its own, only on the shopper's click.
 
-**Out of scope:** the automatic badge stays on the three legacy stores (it would need host access to every site, a Release A decision); the legacy adapters stay; no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
+**Out of scope:** the automatic badge stays on the three legacy stores (it would need host access to every site, a Release A decision; *Evan moved it to Phase 13c on 2026-10-09, merged 2026-10-10*); the legacy adapters stay; no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
 
 **Tests:** unit tests for the mapping, currency and withhold paths and the contracts; Playwright end-to-end tests on local fixture stores (a generic cart page read correctly, a withheld page, a non-USD page, a legacy store unchanged); every existing test green.
 
@@ -66,6 +66,7 @@ Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Br
 
 ## Progress
 
+- **2026-10-09: merged.** Reader v1 as PR #77 and 13b as PR #78 (`6000085`). Phase 13c followed ([plan](phase-13c-cart-detection.md)).
 - **2026-10-09: 13b built** on `phase13b-extension` by Fable 5.1 (independent review before the PR pending). `extension/src/checkout/manual-reader.ts` runs the legacy adapter on its cart URLs and `readCart` elsewhere; the popup offers "Read cart amount" at every store; contracts accept `generic-reader-v1`; the manual reader bundle grew from 8,908 to 34,458 bytes. Unit tests for the split, mapping and contracts; `e2e/generic-read.spec.ts` (generic read, withheld, euro, legacy cart URL). Details: [Extension](../system/extension.md#manual-cart-read-popup), [decision](../decisions/2026-10-09-generic-read-on-legacy-site-pages.md).
 - **2026-10-09: 13.2–13.5 done** on `phase13-reader`. Fable 5.1 built the reader in six rounds (final `94b7b9a`), reviewed by an independent subagent after rounds 3–6 (agent-verified). Development: 384 correct / 0 wrong / 338 withheld, `cart-1` coverage 86%, p95 10 ms. Held-out A run 1 (unbiased): 237 correct / 18 wrong (precision 92.9%, ≤ 10.3%), `cart-1` coverage 76.9%. Run 2 after held-out-informed general fixes: 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used. Report: [reader-v1](../../docs/evals/reader-v1.md). Next: PR, then 13b (extension).
 

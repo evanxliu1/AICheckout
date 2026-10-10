@@ -1,12 +1,12 @@
 ---
 type: Product
 title: Phase 12 plan (reader eval protocols and captures)
-description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label 330 U.S. + 500 non-U.S. retail sites (the reader shows total and currency only when certain) in two site splits weighted 3 : 2 (development : held-out A, since `.10`; 1 : 2 : 2 with held-out B under `.8`–`.9`) — planned as three PRs, merged so far as PRs #59–#71.
+description: Pre-register the generic cart reader evaluation (splits, states, labels, bounds, peek policy, capture posture; since `.8` a ≥ 99% precision bar on shown amounts with coverage reported), select the merchant-pipeline held-out domains, build capture tooling (a robot that cannot type or submit, then agent-driven browser-pane capture with an approved export script), and capture and label 330 U.S. + 500 non-U.S. retail sites (the reader shows total and currency only when certain) in two site splits weighted 3 : 2 (development : held-out A, since `.10`; 1 : 2 : 2 with held-out B under `.8`–`.9`) — planned as three PRs, merged as PRs #59–#76 (the frozen eval set with PR #76, 2026-10-08).
 status: stable
 tags: [product, plan, phase-12, merchants, eval]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T01:06:25Z
+  at: 2026-10-10T22:30:00Z
 sources:
   - resource: phase-10-merchant-expansion.md
     title: Merchant coverage plan (Phases 10–17)

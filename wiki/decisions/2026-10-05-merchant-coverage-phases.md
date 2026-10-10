@@ -38,3 +38,5 @@ Phases: 10 feasibility probe, 11 any store with a typed amount, 12 eval protocol
 Accepted 2026-10-05 by Evan in chat (structure, order, D4, D6); recorded by the coordinator (claude-code/claude-opus-5-5).
 
 Phases 14 and 16 narrowed on 2026-10-06 ([reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md)): no store configs; merchant data is profiles, categories, `processor` and `disabled` only, and the merchant pipeline drafts no site adapters. D4's capture method was replaced by `.8` pane capture ([capture protocol 8](2026-10-06-capture-protocol-8.md)).
+
+Superseded in part (wiki audit 2026-10-10): Phase 11's "typed amount" by [never ask for a typed amount](2026-10-09-never-ask-for-an-amount.md) (2026-10-09); Phase 17's optional all-sites badge done in Phase 13c by [badge on all sites](2026-10-09-badge-on-all-sites.md) (2026-10-09); D5's category ranges by [merchant database evidence](2026-10-10-merchant-database-evidence.md) (2026-10-10: weak evidence gives the general rate); telemetry no longer waits for Phase 17, as a minimal consented set ships in Release A ([data collection](2026-10-10-data-collection.md), 2026-10-10).

@@ -5,9 +5,9 @@ description: The automatic cart badge (Phase 3b, at any https store since Phase 
 status: stable
 tags: [system, extension, badge, privacy]
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-10T08:00:00Z
-verified_commit: 1c684a5
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-10T22:28:17Z
+verified_commit: 7a07113
 sources:
   - resource: ../../extension/src/badge/content.ts
     title: Badge content script
@@ -43,7 +43,7 @@ sources:
 
 On a cart or checkout page at any https store (Phase 13c, 2026-10-10, [plan](../product/phase-13c-cart-detection.md); the three legacy adapters' cart pages since Phase 3b) the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right, or, when the reader is not certain of the amount, the best card and its rate (the **rates view**, never a prompt for an amount); clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
-Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe).
+Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe). Rechecked 2026-10-10 against `main` `7a07113` (agent-verified, code reading and a build): the badge code is unchanged since `1c684a5` apart from the shared reader's `not-a-cart` reason, which the content script treats as the detector's `none`; bundle sizes re-measured.
 
 Stage 2 M7 (branch `s2-m7-extension-ui`, PR #30; verified 2026-10-03 with the unit tests and `e2e/badge.spec.ts`) words the v3 states in the badge with the popup's code ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx) reuses `EstimateRow` from `ComparisonResult.tsx` and the wording in `estimates.ts`; [decision](../decisions/2026-10-03-extension-ui-v3.md)), and `badgeCatalog` is `catalogSlice` for the owned cards and this merchant:
 
@@ -65,7 +65,7 @@ Ocean theme (branch `ui-ocean-theme`, merged with `main` on 2026-10-03; [decisio
 | Merchant | `merchantForCheckout(url)` on a legacy cart URL, else `merchantForTab(url)` (a legacy store's other pages name that store, every other site `generic-us-online`); generic readings carry `generic-reader-v1` | [`badge-service.ts:content`](../../extension/src/background/badge-service.ts) |
 | Rates view reference | `RATES_REFERENCE_CENTS` = 10,000 ($100.00): below every catalog cap, so an estimate's cents are its rate in basis points | [`contracts.ts`](../../extension/src/badge/contracts.ts) |
 | Single-page navigation | Navigation API `currententrychange` (fallback `popstate`, `hashchange`), then one debounce before the check | `content.ts:onNavigate`, `auto-reader.ts` |
-| Built content script | `dist/src/badge/content.js` 46,961 bytes (2026-10-10, after the 13c.3 review and re-check fixes; 44,268 before them; it bundles the detector and reader); the manual reader `dist/src/checkout/content.js` 42,757 bytes | `vite.config.ts` content-script plugin |
+| Built content script | `dist/src/badge/content.js` 50,095 bytes at `7a07113` (2026-10-10, after the 13c.5 detector fixes; 46,961 after 13c.3, 44,268 before it; it bundles the detector and reader); the manual reader `dist/src/checkout/content.js` 45,889 bytes | `vite.config.ts` content-script plugin |
 | Debounce | 500 ms after DOM mutations | [`auto-reader.ts:DEBOUNCE_MS`](../../extension/src/badge/auto-reader.ts) |
 | Read budget | 120 changed readings sent per page load, then observation stops (unchanged readings do not count) | `auto-reader.ts:MAX_SENDS` |
 | Observed mutations | In `<body>`: `childList`, `subtree`, `characterData`, attributes `aria-busy`, `class`, `hidden`. On `<html>`: direct `childList` only, so removing the badge host is noticed at once | [`observe.ts:observeCart`](../../extension/src/badge/observe.ts) |
@@ -127,6 +127,7 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 - Recorded cart amounts are the last cart reading (subtotal or estimated total), not the charged total; rewards are guaranteed minimums. Both are labelled estimates in the UI.
 - On a legacy cart URL the badge reads only inside the adapter's summary selector; elsewhere the generic reader reads visible summary text and currency hints ([Extension](extension.md#manual-cart-read-popup)). It never reads order pages, item names, addresses or form values, and only the reading leaves the page.
 - Settings default to `{disabledMerchants: [], showOnOtherStores: true, disabledSites: []}` when missing or invalid; the badge is on everywhere by default. `disabledSites` matches the exact lower-cased hostname.
+- **No payment-processor exclusion yet** (checked 2026-10-10 at `7a07113`): the content script has no list of processor hosts (Shop Pay, PayPal, Klarna, Affirm, Bolt), so a hinted processor checkout page is read like any store under the generic profile. The merchant database's `processor` kind hides them in [Phase 14](../product/phase-14-merchant-database.md) (14.3).
 - Content scripts must stay free of Zod and wallet code: [`pages.ts`](../../extension/src/badge/pages.ts) and [`adapters/ids.ts`](../../extension/src/checkout/adapters/ids.ts) exist so the IIFE stays small.
 - Host permissions and content-script matches are `https://*/*` since 13c, independent of the adapters; `e2e/package.spec.ts`, `any-store.spec.ts`, `generic-read.spec.ts` and [`e2e/hosts.ts`](../../extension/e2e/hosts.ts) pin that set.
 - Privacy at any store: the content script makes no network requests and sends only the reading (`{status, merchantId, amountCents, kind, extractorVersion}` or a reason code); the worker stores per tab the merchant id, the hostname, the reading and the shopper's choices, never a URL path or page text; card data reaches only the badge iframe. `badge-any-store.spec.ts` checks the session storage for the fixture's path and text.
