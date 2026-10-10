@@ -27,3 +27,6 @@ The protocol asked for two independent labellers per split and an adjudicator fo
 ## Consequences
 - Label errors are no longer caught by a second labeller, so a wrong label can count against (or for) the reader. Reports say the labels are single agent labels, agent-verified, and list low-confidence labels; a label later found wrong goes in a dated erratum as before.
 - Labelling takes about a fifth of the agent sessions.
+
+## Status
+Accepted 2026-10-08 (Evan, chat). Status section added 2026-10-10 by the wiki audit.

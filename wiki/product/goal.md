@@ -6,7 +6,7 @@ status: stable
 tags: [product, goal]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:30:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -26,7 +26,7 @@ It is Evan Liu's portfolio project for LLM-engineering roles. The headline is a 
 
 | User | Uses | Needs |
 | --- | --- | --- |
-| Shopper | Extension on Amazon US, Best Buy US, Newegg US carts (automatic badge), and since Phase 11 (2026-10-05) the popup at any other U.S. online store with a typed amount | Correct best-card answer, no account, nothing leaves the device |
+| Shopper | Extension at any U.S. online store: since Phase 13c (2026-10-10) the automatic badge on cart and checkout pages of every https site, with a dollar estimate when the cart amount is read with certainty and otherwise the rates view (no typed amount); the popup reads on open. (Before: the badge on Amazon US, Best Buy US and Newegg US, and from Phase 11, 2026-10-05, the popup elsewhere with a typed amount) | Correct best-card answer, no account; nothing leaves the device without the shopper's opt-in (from Release A, one onboarding consent covers a minimal telemetry set; [decision](../decisions/2026-10-10-data-collection.md)) |
 | Reviewer (Evan) | Hosted review app; chat approval of each release (since 2026-10-05) | Source-cited drafts, diffs against the published catalog, explicit publish on his approval |
 | Recruiter / reader | Public site, results page, repo | Honest, reproducible numbers |
 

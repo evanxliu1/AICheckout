@@ -47,3 +47,5 @@ As chosen above.
 
 ## Status
 Accepted 2026-10-10 (implementer's choice within the plan; review in 13c.3).
+
+13c.3 independent review done (agent-verified, fixes applied); merged with PR #79 (`7a07113`). (Wiki audit 2026-10-10.)

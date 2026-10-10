@@ -6,7 +6,7 @@ status: stable
 tags: [guide, wiki, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-02T02:13:55Z
+  at: 2026-10-10T22:28:14Z
 sources:
   - resource: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
     title: Karpathy, LLM wiki pattern
@@ -40,7 +40,7 @@ This directory is the project's long-term memory. It follows Karpathy's LLM-wiki
 | `guides/` | These four pages | Schema |
 | `archive/` | Superseded documents and retired pages, immutable | Raw sources and history |
 
-Everything outside `wiki/` that is still documentation (`README.md`, `CONTRIBUTING.md`, `SECURITY.md`, the `AGENTS.md`/`CLAUDE.md` files) is a thin entry point that links here.
+Everything outside `wiki/` that is still documentation (`README.md`, `SECURITY.md`, the `AGENTS.md`/`CLAUDE.md` files, package READMEs) is a thin entry point that links here. The extension's public and release docs (`docs/release/`, `docs/verification/`, `extension/README.md`) are not wiki material ([AGENTS.md](../../AGENTS.md)).
 
 ## The three operations
 

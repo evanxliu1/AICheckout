@@ -5,26 +5,26 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T13:00:00Z
+  at: 2026-10-10T22:30:00Z
 ---
 
 # Now
 
-As of 2026-10-10T13:00Z.
+As of 2026-10-10T22:30Z.
 
 ## Current state
 
 - **`origin/main` is `7a07113`** (PR #79, Phase 13c). Phases 7–13c are done; Phase 14 (merchant database) is planned ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)).
-- **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render last checked serving `e9fe387`; all 10 migrations on hosted ([hosting](ops/hosting.md)).
+- **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render checked 2026-10-10: `/health` 200 and the catalog served; all 10 migrations on hosted ([hosting](ops/hosting.md)).
 - **Captures:** the main checkout holds every gitignored issuer capture ([capture folders](ops/catalog-release.md#capture-folders)) and the pane exports (`evals/merchants/capture/data/pane/`); `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them. Curation model: gpt-5.6-luna `xhigh`.
 - **Reader rules:** the reader shows an amount only when certain, otherwise withholds (rates only); generic reader only, no store configs. **Since 2026-10-08 (Evan) the ≥ 99% bar is a quality target, not a pass gate** ([decision](decisions/2026-10-08-pause-capture-quality-target.md)); results are reported with exact bounds, store counts and coverage (target 80% on `cart-1`).
 - **Phase 12 eval set: frozen 2026-10-08** ([report](../docs/evals/reader-captures-2026-10.md)): 337 stores (332 pane + 5 robot), development 200 / held-out A 137; 1,217 page-states labelled once each (one labeller per store, Evan's [decision](decisions/2026-10-08-single-labeller.md)), 819 with an expected amount (held-out A 331, of them 117 `cart-1`); 1,819 variants `.2`; `freeze.json` at `2de2fec` after the independent capture review (72 page-states and 2 stores dropped, 6 deviations reported); check passes. Capture was paused at 532 visited (95 blocked by bot walls or CAPTCHAs, a reported gap).
-- **Tools (agent-verified reviews):** export collector, renders and tiles, labeller digest, label schema and assembler, single-labeller finals, variants and the 10% check, freeze; the Phase 13 harness (`evals/reader/`) with a placeholder reader in `packages/cart-reader`.
+- **Tools (agent-verified reviews):** export collector, renders and tiles, labeller digest, label schema and assembler, single-labeller finals, variants and the 10% check, freeze; the Phase 13 harness (`evals/reader/`); `packages/cart-reader` holds reader v1 and the 13c detector (the placeholder reader was replaced on 2026-10-09).
 - **Reader v1 (2026-10-09, [report](../docs/evals/reader-v1.md)):** `packages/cart-reader` (final `94b7b9a`), built by Fable 5.1 in six rounds with independent reviews. Development 384 correct / 0 wrong / 338 withheld (`cart-1` 86%, p95 10 ms). Held-out A run 1 (unbiased) 237 / 18 (92.9%, wrong rate ≤ 10.3%), run 2 after general fixes 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used.
 
-- **Phase 13b (2026-10-09, merged PR #78):** the popup's "Read cart amount" works at any web store: the legacy adapters on their cart URLs, `readCart` everywhere else, the amount filled only when the reader shows a USD amount, otherwise a message and a typed amount ([Extension](system/extension.md#manual-cart-read-popup), [decision](decisions/2026-10-09-generic-read-on-legacy-site-pages.md)). The badge stays on the three stores. For Phase 15: `docs/release/support.md`, `reviewer-instructions.md` and the capture manifest still describe the three-store manual read, and `docs/release/privacy-policy.md` (line 31) and `store-listing.md` (line 54, scripting row) are narrower than the generic reader, which also reads structured-data, meta and attribute currency hints and the URL's TLD.
+- **Phase 13b (2026-10-09, merged PR #78):** the popup's "Read cart amount" works at any web store: the legacy adapters on their cart URLs, `readCart` everywhere else, the amount filled only when the reader shows a USD amount, otherwise a message and a typed amount ([Extension](system/extension.md#manual-cart-read-popup), [decision](decisions/2026-10-09-generic-read-on-legacy-site-pages.md)). The badge stayed on the three stores. *(Superseded by Phase 13c, 2026-10-10: the badge runs at any https store, a withheld read shows the rates view, and nothing asks for a typed amount; the popup reads on open.)* For Phase 15: `docs/release/support.md`, `reviewer-instructions.md` and the capture manifest still describe the three-store manual read, and `docs/release/privacy-policy.md` (line 31) and `store-listing.md` (line 54, scripting row) are narrower than the generic reader, which also reads structured-data, meta and attribute currency hints and the URL's TLD.
 
-- **Phase 13c (planned 2026-10-09):** Evan chose `https://*/*` at install so the badge runs at any store, no typed amounts ever (best card and dollar estimate when certain, otherwise best card and rate), and 13c before Phase 14 ([all sites](decisions/2026-10-09-badge-on-all-sites.md), [no typing](decisions/2026-10-09-never-ask-for-an-amount.md)). This adds to the Phase 15 docs: the privacy policy, store listing (permission justification for all https sites, single purpose), support, reviewer instructions and `extension/README.md` must describe the badge at any store.
+- **Phase 13c (planned 2026-10-09, merged 2026-10-10 as PR #79):** Evan chose `https://*/*` at install so the badge runs at any store, no typed amounts ever (best card and dollar estimate when certain, otherwise best card and rate), and 13c before Phase 14 ([all sites](decisions/2026-10-09-badge-on-all-sites.md), [no typing](decisions/2026-10-09-never-ask-for-an-amount.md)). This adds to the Phase 15 docs: the privacy policy, store listing (permission justification for all https sites, single purpose), support, reviewer instructions and `extension/README.md` must describe the badge at any store.
 
 ## Active work
 
@@ -33,6 +33,14 @@ As of 2026-10-10T13:00Z.
 - **Data collection decided 2026-10-10** ([decision](decisions/2026-10-10-data-collection.md)): one onboarding opt-in, persistent random ID, exact amounts and owned cards, domains only on a tap, a minimal telemetry set in Release A.
 
 ## Open questions and next steps
+
+**From the 2026-10-10 wiki audit (Evan's calls):**
+- **A1.** Approve D2 (a separate merchant release published on "publish merchants <version>") and D8 (weekly background refresh of catalog and merchants, `alarms`) before 14.2 and 14.3. Decide D9 (licensing of public merchant-code lookups and top-store lists) before the 14.5 seed ([Phases 10–17 plan](product/phase-10-merchant-expansion.md)).
+- **A2.** [Goal](product/goal.md) says "few real users are expected", while the plan and the data-collection decision treat real users and value metrics as goals. Reword the goal?
+- **A3.** Accounts: the goal lists them as "not planned"; Evan said 2026-10-10 "accounts later, once set up". Mark them planned but unscheduled?
+- **A4.** What evidence retires the three legacy adapters? The reader eval excludes Amazon, Best Buy and Newegg, so "once the generic reader matches them" can't be measured as written.
+- **A5.** The popup still says "enter the amount manually" on error paths (empty cart, unsupported page, read errors, the final-charge note: `extension/src/popup/Popup.tsx`, `extension/src/state/service.ts`, `extension/src/checkout/read-copy.ts`). Reword these to match "never ask for an amount"?
+- **A6.** The live public site's privacy and support pages (`apps/site/src/pages.tsx`) still say the extension works only on Amazon, Best Buy and Newegg. Fix now, or with the Phase 15 docs (the extension is not published yet)?
 
 1. **Next catalog renewal before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)); plan it for about 2026-10-28 (Evan types `publish <version>`). Re-read the NerdWallet estimates (valid for catalogs verified up to 2026-11-01).
 2. Evan's call (asked 2026-10-07): allow known cart-only pages under `/checkout` (VTEX `/checkout/#/cart`, AbeBooks `/checkout/basket`) in any future capture; 11 stores were excluded as `would-need-forbidden-action`.

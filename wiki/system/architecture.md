@@ -6,7 +6,7 @@ status: stable
 tags: [system, architecture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Extension build and generated manifest
@@ -28,9 +28,9 @@ sources:
 
 # Architecture
 
-AI Checkout is two systems joined by one data contract. The **shopper side** is a Manifest V3 Chrome extension that reads a supported cart's order summary (or, at any other U.S. online store since Phase 11, takes an amount the shopper types) and ranks the cards the shopper owns with a deterministic engine; no model runs at checkout and wallet data never leaves the device. The **maintainer side** is a Fastify API, a review app and a Supabase PostgreSQL database: an LLM drafts card-rule facts from captured issuer terms, they are reviewed (agent-verified, with Evan approving), and publishing an immutable catalog release is a separate explicit step on Evan's approval of that one release ([catalog release](../ops/catalog-release.md)). The only thing crossing between the two is a validated catalog (`GET /v1/catalog`, Zod schema in `packages/rewards-core`).
+AI Checkout is two systems joined by one data contract. The **shopper side** is a Manifest V3 Chrome extension that reads the cart or checkout total at any https store when it is certain of it (since Phase 13c, 2026-10-10; otherwise it ranks by rate and never asks for an amount) and ranks the cards the shopper owns with a deterministic engine; no model runs at checkout and wallet data never leaves the device. The **maintainer side** is a Fastify API, a review app and a Supabase PostgreSQL database: an LLM drafts card-rule facts from captured issuer terms, they are reviewed (agent-verified, with Evan approving), and publishing an immutable catalog release is a separate explicit step on Evan's approval of that one release ([catalog release](../ops/catalog-release.md)). The only thing crossing between the two is a validated catalog (`GET /v1/catalog`, Zod schema in `packages/rewards-core`).
 
-Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`); hosted behaviour was not checked. Component table, workspaces, migrations and catalog delivery rechecked against `main` `645b1c8` on 2026-10-05.
+Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`); hosted behaviour was not checked. Component table, workspaces, migrations and catalog delivery rechecked against `main` `645b1c8` on 2026-10-05; extension permissions and the checkout flow rechecked against `main` `7a07113` (Phase 13c) on 2026-10-10.
 
 ## Components
 
@@ -38,7 +38,7 @@ Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`);
 | --- | --- | --- | --- | --- |
 | Popup, onboarding, worker, state | `extension/src/{popup,onboarding,background,state}` | Chrome MV3 service worker + extension pages | Wallet, settings, optional passphrase vault, manual comparison, savings history, catalog refresh | [Extension](extension.md) |
 | Automatic cart badge | `extension/src/badge`, `extension/src/background/badge-service.ts` | Content script on every https page + extension iframe (Phase 13c) | Zero-click best-card pill on any recognised cart or checkout page (dollar estimate when the reader is certain, the card's rate otherwise); order-page savings prompt at the three legacy stores | [Cart badge](cart-badge.md) |
-| Site adapters and manual reader | `extension/src/checkout`, `packages/cart-reader` | Isolated-world content script | Declarative per-merchant cart readers (Best Buy US, Newegg US, Amazon US); legacy since 2026-10-06, retired once the generic reader matches them; since Phase 13b (2026-10-09) the popup's "Read cart" runs the generic `readCart` on every other web page; `merchants.ts:merchantForTab` maps the popup's tab to a supported store or the generic profile | [Extension](extension.md#manual-cart-read-popup) |
+| Site adapters and manual reader | `extension/src/checkout`, `packages/cart-reader` | Isolated-world content script | Declarative per-merchant cart readers (Best Buy US, Newegg US, Amazon US); legacy since 2026-10-06, retired once the generic reader matches them; since Phase 13b (2026-10-09) the popup's "Read cart" runs the generic `readCart` on every other web page (since 13c `readCartPage`: the cart/checkout detector, then the reader); `merchants.ts:merchantForTab` maps the popup's tab to a supported store or the generic profile | [Extension](extension.md#manual-cart-read-popup) |
 | Rewards engine and catalog contract | `packages/rewards-core` | Pure TS; imported by extension, API, review app, scripts | Catalog v1/v2/v3 Zod schemas, `compareRewards`, bundled `CATALOG_V2` and `CATALOG_V3` | [Rewards engine](rewards-engine.md) |
 | Catalog client | `packages/catalog-client` | Browser + Node | Bounded, credential-free fetch and JSON read of `/v1/catalog` | [Extension](extension.md#catalog-refresh) |
 | Review and curation contracts | `packages/catalog-review` | Browser + Node | Zod contracts for review RPCs, extraction input/trace, limits | [API](api.md), [Curation harness](curation-harness.md) |
@@ -49,7 +49,7 @@ Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`);
 | UI library | `packages/ui` | React 19 components on Helios token names, Ocean theme values | Shared components for popup, badge, onboarding, review app, site | [UI library](ui-library.md) |
 | Database | `supabase/` | PostgreSQL 17 + Supabase Auth/Data API | Immutable releases, head pointer, private drafts/sources/ledger | [Database](database.md) |
 | Evaluation corpus and runs | `evals/curation`, `scripts/` | Local Node CLIs | Corpora, matrix runs, results in `docs/evals/` | [Evaluation](evaluation.md) |
-| Reader eval capture (Phase 12) | `evals/merchants/`, `.claude/agents/pane-operator.md` | Local only: Node scripts, the retired Playwright robot, and `pane-operator` subagents in the Claude desktop app's browser pane | Retail frames, candidate lists, seeded splits, capture records, `pane-export.js` and offline rebuild, transcript audit | [Merchant coverage design](merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
+| Reader eval capture (Phase 12) and harness (Phase 13) | `evals/merchants/`, `.claude/agents/pane-operator.md`, `evals/reader/` (reader and detector runs and scoring, [README](../../evals/reader/README.md)) | Local only: Node scripts, the retired Playwright robot, and `pane-operator` subagents in the Claude desktop app's browser pane | Retail frames, candidate lists, seeded splits, capture records, `pane-export.js` and offline rebuild, transcript audit | [Merchant coverage design](merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
 | Card-expansion pipeline | `tools/catalog-pipeline` | Local Node CLI (`npm run pipeline`), never on Render | Batch state, gates, multi-batch catalog build, freshness, handoff, CLI publish on Evan's instruction | [Card-expansion pipeline](card-expansion-pipeline.md) |
 
 ## How it fits together
@@ -87,9 +87,9 @@ flowchart LR
 | Hosted service | Render web service `ai-checkout-api`, `plan: free`, `autoDeploy: true`, health check `/health` | [`render.yaml`](../../render.yaml) |
 | Hosted build | `npm ci && npm run build` of the api, review and site workspaces; start `node apps/api/dist/index.js` | [`render.yaml`](../../render.yaml) |
 | Curation on Render | `CURATION_ADAPTER=disabled`, `CURATION_ALLOW_METERED=false` | [`render.yaml`](../../render.yaml) |
-| Extension permissions | `storage`, `activeTab`, `scripting`; host permissions = adapter hosts (`bestbuy.com`, `www.bestbuy.com`, `secure.newegg.com`, `www.amazon.com`) plus the catalog origin in hosted builds | [`extension/vite.config.ts`](../../extension/vite.config.ts) |
+| Extension permissions | `storage`, `activeTab`, `scripting`; host permissions `https://*/*`, required at install since Phase 13c ([decision](../decisions/2026-10-09-badge-on-all-sites.md); the three adapter hosts before), plus the catalog origin in hosted builds | [`extension/vite.config.ts`](../../extension/vite.config.ts) |
 | Node | `>=24 <25` | [`package.json`](../../package.json) |
-| Workspaces | `extension`, `packages/*`, `apps/*`, `tools/*` (one root lockfile) | [`package.json`](../../package.json) |
+| Workspaces | `extension`, `packages/*` (incl. `cart-reader` since Phase 13), `apps/*`, `tools/*` (one root lockfile) | [`package.json`](../../package.json) |
 | Migrations | 10 files, `20260926032620` to `20261002230334` | [`supabase/migrations`](../../supabase/migrations) |
 
 Hosted state (Supabase project, applied migrations, whether a release is published) is owned by [now.md](../now.md) and the ops pages, not here.

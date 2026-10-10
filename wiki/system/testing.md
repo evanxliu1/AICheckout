@@ -6,7 +6,7 @@ status: stable
 tags: [system, testing, ci]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: ../../package.json
     title: Root scripts
@@ -36,8 +36,9 @@ Verified 2026-10-02 by reading the workflows and scripts, and by running the uni
 | Extension unit (vitest + package inspection) | `npm test --workspace=ai-checkout-extension` | |
 | API unit | `npm test --workspace=@ai-checkout/api` | |
 | Review / site / ui unit | `npm test --workspace=@ai-checkout/review` (or `/site`, `/ui`) | |
+| Cart reader and detector unit | `npm test --workspace=@ai-checkout/cart-reader` (`packages/cart-reader/tests`, synthetic pages) | |
 | Pipeline CLI unit | `npm test --workspace=@ai-checkout/catalog-pipeline` (`tools/catalog-pipeline/tests`, synthetic fixtures, in-memory hosted API for `publish`) | |
-| Script unit tests | `npm run test:scripts` (`scripts/lib/*.test.mjs`, `evals/merchants/tools/*.test.mjs`, `evals/merchants/capture/tests/*.test.mjs`) | `capture/tests/capture.test.mjs` covers the robot (recipes, driver guards, robots, platform, control server) and pane capture (`rebuild.mjs`, `audit-pane-transcript.mjs`, `pane-platform.mjs`). Includes `import-boundary.test.mjs`, which lints sample imports with the real ESLint config: product code may not import `tools/` or `@ai-checkout/catalog-pipeline` ([pipeline design](card-expansion-pipeline.md#boundary-rule)) |
+| Script unit tests | `npm run test:scripts` (`scripts/lib/*.test.mjs`, `evals/merchants/{tools,capture/tests,labels/tests,variants/tests}/*.test.mjs`, `evals/reader/tests/*.test.mjs`) | `capture/tests/capture.test.mjs` covers the robot (recipes, driver guards, robots, platform, control server) and pane capture (`rebuild.mjs`, `audit-pane-transcript.mjs`, `pane-platform.mjs`). Includes `import-boundary.test.mjs`, which lints sample imports with the real ESLint config: product code may not import `tools/` or `@ai-checkout/catalog-pipeline` ([pipeline design](card-expansion-pipeline.md#boundary-rule)) |
 | Lint, format, types | `npm run lint`, `npm run format:check`, `npm run typecheck` | |
 | Generated files current | `npm run catalog:v2:check`, `npm run catalog:v3:check`, `npm run db:seed:check` | |
 | Eval plumbing (no model) | `npm run eval:curation -- --check`, `npm run eval:v2 -- --check` | |
@@ -49,6 +50,7 @@ Verified 2026-10-02 by reading the workflows and scripts, and by running the uni
 | Extension browser | `npm run test:browser --workspace=ai-checkout-extension` | `npx playwright install chromium` |
 | Hosted-catalog refresh (local HTTPS stub) | `npm run test:catalog:browser` | |
 | Capture tool (Phase 12) on a 127.0.0.1 fixture shop: robot driver and end-to-end run, and the `pane-export.js` export and offline rebuild round trip (`tests/browser/pane.test.mjs`) | `npm run test:capture:browser` | `npx playwright install chromium` |
+| Reader harness browser (Phase 13, synthetic pages; not in CI) | `npm run test:reader:browser` | `npx playwright install chromium` |
 | Packaged zip | `npm run test:package:browser --workspace=ai-checkout-extension` | |
 | Review browser (real stack) | `npm run test:browser --workspace=@ai-checkout/review` | built api + review, local stack |
 | Review a11y (mocked API) | `npm run test:browser --workspace=@ai-checkout/review -- e2e/a11y.spec.ts` | built review |

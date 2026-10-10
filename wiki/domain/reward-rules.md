@@ -6,7 +6,7 @@ status: stable
 tags: [domain, rewards, engine]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:14Z
 sources:
   - resource: ../../packages/rewards-core/src/types.ts
     title: Catalog v2 types (RewardRuleV2, RuleCap, PaymentPath, Uncertainty)
@@ -54,6 +54,8 @@ Rules do not stack. Each card earns its best applicable rule, and never less tha
 | `limitedTime` | null or {endsOn} | Expired (never applied) if `endsOn` is before the purchase date or before the catalog's `verifiedAt` date |
 
 ### Uncertainty codes (produce a range)
+
+These ranges stay. The 2026-10-10 rule "weak evidence gives the general rate, never a range" ([decision](../decisions/2026-10-10-merchant-database-evidence.md)) covers only a store's **category**. Uncertain caps, activation, payment paths, choices and gates still give a range.
 
 | Code | Trigger |
 | --- | --- |
@@ -115,7 +117,7 @@ Shopper inputs for v3: per card the chosen options; per wallet the gate answers 
 
 ## Gotchas
 
-- **Planned rates-only path (not built, Phases 13–15).** When the generic reader withholds an amount, the recommendation will show rates only ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)). Rates alone can mislead: spend caps, minimums and after-cap rates depend on the amount and can change which card wins, so the rates-only view must say so.
+- **Rates view (built in Phase 13c, 2026-10-10).** When the generic reader withholds an amount, the badge and popup show the best card by rate ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), [no typed amounts](../decisions/2026-10-09-never-ask-for-an-amount.md)). The unchanged engine ranks at `RATES_REFERENCE_CENTS` ($100, below every catalog cap), so an estimate's cents are its rate in basis points ([record](../decisions/2026-10-10-rates-view-reference-amount-and-spa-navigation.md)). Rates alone can mislead: spend caps, minimums and after-cap rates depend on the amount and can change which card wins, so the view shows the engine's `rankingNote` and a cap note (`ratesCapped`) when an applied rule has a spend cap ([Cart badge](../system/cart-badge.md)).
 - `activation: unstated` is a product decision. Issuers state enrollment requirements explicitly, so silence is treated as no activation, and the shopper is never asked to confirm (comment in `engine-v2.ts`).
 - Validation allows an after-cap rate below the base (0..rateBps). The base is always an option, so no rule can pull a card below it.
 - The MCC is never observed at checkout. MCC-group rules depend on a predicted merchant category (see [Merchants](merchants.md)). Channel rules (online retail) and portal rules can be decided with more confidence.

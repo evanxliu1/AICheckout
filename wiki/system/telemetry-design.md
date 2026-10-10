@@ -1,12 +1,12 @@
 ---
 type: System Component
-title: Telemetry, operations and value metrics design (Phase 17, draft)
-description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), rotating install IDs with day-since-install buckets, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6; nothing here is built.
+title: Telemetry, operations and value metrics design (Phases 15 and 17, draft)
+description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), a persistent random install ID (rotation dropped 2026-10-10) with day-since-install buckets, exact cart amounts without domains and owned card IDs under one onboarding opt-in, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6 with Evan's 2026-10-10 data-collection answers; a minimal set ships in Release A (Phase 15), the rest in Phase 17; nothing here is built.
 status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -22,7 +22,7 @@ sources:
     title: Current privacy policy draft (to be rewritten)
 ---
 
-# Telemetry, operations and value metrics design (Phase 17, draft)
+# Telemetry, operations and value metrics design (Phases 15 and 17, draft)
 
 **Draft v6, not built; Evan approved the data-collection choices on 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)), which override this page where they differ: one opt-in question at onboarding covers every metric; a persistent random install ID (no rotation); exact cart amounts without a domain; owned cards as catalog IDs; no post-purchase category question; a minimal set ships in Release A (Phase 15).** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
 
@@ -58,6 +58,8 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 
 **Deferred** to the affiliate phase: the "opportunity" event (best owned vs best catalog rate). Reserved names, not emitted: `offer_impression`, `offer_click` with `offer_id`, `placement`, client `click_id`. Dictionary published as `docs/telemetry/events.md` (public, like `docs/evals/`, not wiki material).
 
+**Content script vs telemetry.** The badge content script still sends only the reading to the extension's own service worker (decision 2026-10-09). Telemetry events are built and sent by the worker, after consent, from what the worker already holds; the content script never talks to the server.
+
 ## Ingest and storage
 
 - `POST /v1/events`, anonymous, through a `security definer` insert-only RPC granted to `anon` that validates and caps rows (no new server secret).
@@ -70,7 +72,7 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 
 | Area | Control |
 | --- | --- |
-| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state and the grant prompt (no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
+| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state (no all-sites grant prompt since 2026-10-09: `https://*/*` is required at install; no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
 | Deletion without accounts | "Stop sharing" clears the queue and ID; "Delete my data" sends the current install ID for deletion of its rows; raw rows expire in 90 days; a reset ID's earlier rows cannot be found and expire at 90 days (the policy says so) |
 | Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a merchant profile; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
 | Security review | Independent threat-model review of the ingest path and the hosted merchant release before Release B |

@@ -6,7 +6,7 @@ status: stable
 tags: [system, evaluation, llm, curation]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-10T22:28:17Z
 sources:
   - resource: ../../evals/curation/README.md
     title: Curation evaluations README
@@ -171,7 +171,7 @@ Full page: [`docs/evals/expansion.md`](../../docs/evals/expansion.md). The expan
 
 ## Related
 
-* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages worldwide since `.2`, total and currency, three site splits weighted 1 : 2 : 2, peek policy), pre-registered 2026-10-05; binding text `generic-reader-protocol.9` (signed `cbf2c72`; `.8` signed `a1c994d`); pass bar: one-sided 95% upper bound of wrong shown amounts ≤ 1%, coverage reported; not a curation eval
+* [Generic cart reader evaluation protocol](../../docs/evals/generic-reader-protocol.md) — the merchant-side eval (real retail pages worldwide since `.2`, total and currency, development and held-out A weighted 3 : 2 since `.10`, peek policy), pre-registered 2026-10-05; binding text `generic-reader-protocol.12` (signed `265dbdc`, 2026-10-07); the ≤ 1% wrong-shown bound is a quality target, not a gate, since 2026-10-08 ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)), coverage reported; not a curation eval
 * [Cards](../domain/cards.md)
 * [Reward rules](../domain/reward-rules.md)
 * [Glossary](../domain/glossary.md)

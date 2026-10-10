@@ -34,3 +34,6 @@ The first pane pilot under `.10` (16 stores, 2026-10-07 04:58–05:05 UTC) captu
 
 ## Consequences
 The independent reviewer signs `.11` before any `.11` capture. The audit still flags operator Writes outside records and data, and the collector is tested on synthetic transcripts and checked on a real pilot transcript.
+
+## Status
+Accepted 2026-10-07: the independent reviewer signed `generic-reader-protocol.11` at `49b67eb` after one fix round (agent-verified). Amended by `.12` (process only, signed at `265dbdc` on 2026-10-07; no decision record). Status section added 2026-10-10 by the wiki audit.

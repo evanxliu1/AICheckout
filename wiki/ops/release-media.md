@@ -6,7 +6,7 @@ status: stable
 tags: [ops, release, media]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T06:05:00Z
+  at: 2026-10-10T22:28:14Z
 sources:
   - resource: ../../package.json
     title: release:media and release:portfolio scripts
@@ -43,7 +43,7 @@ Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun
 
 - `release:portfolio` reuses the running local stack and never resets or migrates a database; start it first ([Local setup](local-setup.md#database-suite-docker)).
 - Intermediate caption renders (`docs/release/assets/video-captions/`, `full-stack-captions/`) are gitignored.
-- The release media is bound to the bundled catalog and the packaged ZIP: after any catalog renewal or extension change, rerun `npm run release:media` before a Web Store submission (last run 2026-10-05 for `2026-10-05.renewal.1`).
+- The release media is bound to the bundled catalog and the packaged ZIP: after any catalog renewal or extension change, rerun `npm run release:media` before a Web Store submission (last run 2026-10-05 for `2026-10-05.renewal.1`). The extension has changed since (Phase 11 generic store, Phase 13b popup read, Phase 13c badge at any https store and rates view), so the current media show the pre-Phase-11 UI and the ZIP hash they are bound to is stale; regenerate before the Phase 15 submission (not re-checked 2026-10-10).
 
 ## Related
 

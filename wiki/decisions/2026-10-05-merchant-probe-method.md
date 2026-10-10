@@ -43,3 +43,5 @@ As chosen above. Clicks were limited to size, colour, add-to-cart, closing popup
 Accepted 2026-10-05 by the Phase 10 builder (claude-code/claude-opus-5-5) within the approved plan; Y is a proposal for Evan.
 
 Y = 80% was accepted by Evan on 2026-10-05 and superseded on 2026-10-06 by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md): 80% on `cart-1` is now a coverage reporting target, and the bar is ≤ 1% wrong among shown amounts (one-sided 95% upper bound).
+
+Since 2026-10-08 the ≤ 1% bar is itself a quality target, not a gate ([capture paused; quality target](2026-10-08-pause-capture-quality-target.md)). (Wiki audit 2026-10-10.)

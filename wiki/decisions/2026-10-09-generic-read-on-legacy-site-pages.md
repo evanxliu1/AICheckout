@@ -39,3 +39,5 @@ As chosen above. One reader per URL: when an adapter matches the URL and fails (
 
 ## Status
 Accepted 2026-10-09 (implementer's choice within the plan; review before the PR pending).
+
+Reviewed (agent-verified, fixes applied) and merged with PR #78 (`6000085`). The withheld message asking the shopper to enter the amount is superseded by [never ask for a typed amount](2026-10-09-never-ask-for-an-amount.md) (2026-10-09; built in 13c: "Your cards are compared by rate"). (Wiki audit 2026-10-10.)
