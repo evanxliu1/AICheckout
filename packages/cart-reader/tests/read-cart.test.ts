@@ -145,11 +145,31 @@ describe('summary rows', () => {
     );
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 3090, currency: 'EUR' });
   });
-  it('still withholds two bare totals', () => {
+  it('shows the total that equals the other total plus the shipping row beside it', () => {
     const r = page(
       `<section>${row('Total', '$24.95')}${row('Shipping', '$5.95')}${row('Total', '$30.90')}</section>`,
     );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 3090, currency: 'USD' });
+    const items = page(
+      `<section>${row('Item total', '$96.91')}${row('Shipping total', '$13.84')}${row('Subtotal', '$110.75')}<button>Checkout</button></section>`,
+    );
+    expect(items).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 11075, currency: 'USD' });
+  });
+  it('still withholds two bare totals that no shipping or tax row explains', () => {
+    const r = page(
+      `<section>${row('Total', '$24.95')}${row('Shipping', '$5.95')}${row('Total', '$31.90')}</section>`,
+    );
     expect(r).toEqual({ shown: false, reason: 'ambiguous' });
+    const promo = page(
+      `<section>${row('Total', '$24.95')}${row('Gift wrap', '$5.95')}${row('Total', '$30.90')}</section>`,
+    );
+    expect(promo).toEqual({ shown: false, reason: 'ambiguous' });
+    // A total before tax and one after it are the protocol's ambiguous pair; tax rows do not resolve them.
+    const tax = page(
+      `<section>${row('Total', '€29.50')}${row('21% VAT', '€5.95')}${row('Total (incl. VAT)', '€35.45')}</section>`,
+      { url: 'https://shop.example.nl/cart' },
+    );
+    expect(tax).toEqual({ shown: false, reason: 'ambiguous' });
   });
   it('withholds when a second total row of the same kind is unreadable', () => {
     const r = page(
@@ -229,12 +249,21 @@ describe('summary rows', () => {
     );
     expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
   });
-  it('keeps a total row that carries a "you saved" note as a total', () => {
+  it('reads a total row that carries a "you saved" note, the note dropped', () => {
     const r = page(
-      `<section>${row('Subtotal', '86.88')}${row('Shipping', '13.04')}<p>Total (2 items) 96.95 You saved 2.57</p></section>`,
+      `<section>${row('Subtotal', '86.88')}${row('Shipping', '13.04')}<p>Total (2 items) 96.95 🎉 You saved 2.57</p></section>`,
       { url: 'https://shop.example.sa/cart' },
     );
-    expect(r).toEqual({ shown: false, reason: 'amount-unreadable' });
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 9695, currency: 'SAR' });
+    const colon = page(
+      `<section>${row('Subtotal', '£1,200.00 EGP')}<p>Estimated total £1,200.00 EGP You Save:£399.99 EGP</p><button>Checkout</button></section>`,
+    );
+    expect(colon).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 120000, currency: 'EGP' });
+    // "You saved" followed by more words is not a trailing note: the row stays a savings row, as before.
+    const words = page(
+      `<section>${row('Subtotal', '$86.88')}<p>Total $96.95 You saved $2.57 on shipping today</p><button>Checkout</button></section>`,
+    );
+    expect(words).toEqual({ shown: true, kind: 'subtotal', amountMinor: 8688, currency: 'USD' });
   });
   it('does not read an item number as an amount', () => {
     const r = page(
@@ -723,5 +752,39 @@ describe('round 6 (2026-10-08): generalization to stores the reader was not tune
     expect(
       page(summary(row('Ürün Toplamı', '1.000,00 TL')), { url: 'https://shop.example.com.tr/' }),
     ).toMatchObject({ shown: true, kind: 'subtotal', amountMinor: 100000, currency: 'TRY' });
+  });
+});
+
+describe('Phase 13c.5 coverage round (2026-10-10)', () => {
+  it("a card offer's illustrated new total is not the cart's total", () => {
+    const offer = `<div><p>Get a store credit card and receive $25 off your qualifying purchase. Apply now</p><div>${row('Item total', '$48.76')}${row('Savings', '- $25.00')}${row('New total', '$23.76')}</div></div>`;
+    const r = page(
+      summary(row('Subtotal', '$48.76') + row('Delivery', 'FREE') + row('Total', '$48.76')) + offer,
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4876, currency: 'USD' });
+  });
+  it('an inline stylesheet or JSON blob beside a summary row is not its text', () => {
+    const blob = `<style>${'.a{color:red}'.repeat(400)}</style><script type="application/json">${'{"k":1}'.repeat(200)}</script>`;
+    const r = page(
+      `<div>${blob}<div>${row('Subtotal (1 item)', '$65.00')}</div>${blob}<div><button>Checkout</button></div></div>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 6500, currency: 'USD' });
+  });
+  it('table structure between a row and its summary does not use up the climb', () => {
+    const table = `<table><tbody><tr><th>Items (2)</th><td>$70.00</td></tr></tbody><tfoot><tr><th>Subtotal</th><td>$70.00</td></tr></tfoot></table>`;
+    const r = page(
+      `<section><div><div><div>${table}</div></div></div><p>Free shipping is yours with $29.00 more</p><button>Checkout</button></section>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 7000, currency: 'USD' });
+  });
+  it('a shipping threshold row ("$29.00 more", "qualify for free shipping") explains its amount', () => {
+    const more = page(summary(row('Subtotal', '$70.00') + row('Free Shipping Is Yours With', '$29.00 More')));
+    expect(more).toEqual({ shown: true, kind: 'subtotal', amountMinor: 7000, currency: 'USD' });
+    const learn = page(summary(row('Subtotal', '$70.00') + row('Shipping protection', '$2.00 Learn more')));
+    expect(learn).toEqual({ shown: false, reason: 'subtotal-not-alone' });
+  });
+  it('reads the Egyptian pound abbreviation written without dots', () => {
+    const r = page(summary(row('الاجمالي شامل الضريبة', '2,200 ج م')), { lang: 'ar' });
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 220000, currency: 'EGP' });
   });
 });

@@ -169,9 +169,11 @@ export function analyze(
     visible: new Map(),
     shadowRoots: [],
   };
-  // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways.
+  // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways: its overflow applies to
+  // the viewport (the body's own box may be narrower or offset, as on a right-to-left page), so the bound is the
+  // viewport's width.
   if (document.body && view && ctx.layout && view.getComputedStyle(document.body).overflowX !== 'visible')
-    ctx.pageW = Math.min(ctx.pageW, document.body.scrollWidth);
+    ctx.pageW = Math.min(ctx.pageW, root.clientWidth);
   const withhold = (reason: string, rows: Row[] = []) => ({
     reading: { shown: false, reason } as CartReading,
     rows,
@@ -252,6 +254,24 @@ export function analyze(
     else if (credits.some((c) => near(r, c))) resolved.push({ ...r, kind: 'afterCredit' });
     else if (TOTAL_RE.test(r.text.toLowerCase())) resolved.push({ ...r, kind: 'estimatedTotal' });
   }
+  // Arithmetic between two labelled rows of one kind: a row that equals another plus one shipping row of that other's
+  // summary is the order total, and the other the items total ("Total $139.95" + "Est. shipping $5.95" = "Total Price
+  // $145.90"; "Item total" + "Shipping total" = "Subtotal"). Tax does not count: a total before tax and one after it
+  // are the protocol's ambiguous pair, and sums of several rows are left alone.
+  const summed = resolved.filter((r) => r.minor !== null && r.minor > 0 && r.inSummary);
+  for (const b of summed)
+    for (const a of summed) {
+      if (a === b || a.kind !== b.kind || a.kind === 'afterCredit') continue;
+      if (a.currency !== b.currency || a.minor! >= b.minor!) continue;
+      const summary = summaryOf(a.els.at(-1)!, a.kind, ctx);
+      if (!summary) continue;
+      const addons = shippingAmounts(summary, [...a.els, ...b.els], ctx, MINOR_UNITS[b.currency!]!);
+      if (addons.includes(b.minor! - a.minor!)) {
+        b.kind = 'estimatedTotal';
+        a.kind = 'subtotal';
+        a.why = 'items-total-by-sum';
+      }
+    }
   const kind = KINDS.find((k) => resolved.some((r) => r.kind === k));
   if (!kind) return withhold('no-summary', rows);
   if (credits.length > 0 && kind !== 'afterCredit') return withhold('credit-unclear', rows);
@@ -289,6 +309,8 @@ export function analyze(
     // An items total of zero is an empty cart: nothing to recommend a card for, and often a drawer's placeholder.
     if (row.minor === 0) return withhold('subtotal-zero', rows);
     for (const r of chosen) {
+      // A wrapper row around another chosen row is an aggregate of it: the inner row's company is checked.
+      if (chosen.some((o) => o !== r && r.els.at(-1)!.contains(o.els.at(-1)!))) continue;
       const blocker = subtotalBlocker(r, ctx, store, evidence);
       if (blocker) {
         r.why = `not-alone: ${blocker}`;
@@ -453,9 +475,11 @@ export function hiddenWhy(el: Element, ctx: Ctx): string | null {
   // An off-canvas drawer slid out of view: an ancestor translated by at least its own width or height to beyond the
   // viewport's edge (a box aligned right by left:100% and translateX(-100%) stays on screen).
   for (let a: Element | null = el; a; a = parentOf(a)) if (translatedAway(a, ctx)) return 'translated-away';
+  // The box of the element's contents (a wrapper's own box may be collapsed); a void element (an input) has none and
+  // is measured by its own box.
   const range = ctx.doc.createRange();
   range.selectNodeContents(el);
-  const r = range.getBoundingClientRect();
+  const r = el.firstChild ? range.getBoundingClientRect() : el.getBoundingClientRect();
   const sx = ctx.view?.scrollX ?? 0;
   const sy = ctx.view?.scrollY ?? 0;
   if (r.width < 1 || r.height < 1) return 'empty-rect';
@@ -541,7 +565,7 @@ function readVisibleText(el: Element, ctx: Ctx): string {
 
 /** Reads one candidate row (one element, or a label element and a value element). */
 function readRow(els: Element[], ctx: Ctx, store: Storefront, page: PageEvidence): Row | null {
-  const text = normalizeText(els.map((el) => visibleText(el, ctx)).join(' '));
+  const text = withoutSavedNote(normalizeText(els.map((el) => visibleText(el, ctx)).join(' ')));
   const dropped = (why: string): Row => ({
     els,
     text,
@@ -576,7 +600,8 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, page: PageEvidence
       : dropped('negative');
   const kind = classifyLabel(lower);
   if (!kind) return dropped('label');
-  if (kind === 'after-candidate' && OFFER_RE.test(lower)) return dropped('offer');
+  if ((kind === 'after-candidate' && OFFER_RE.test(lower)) || inOfferBlock(els.at(-1)!, ctx))
+    return dropped('offer');
   if (lineItemOf(els.at(-1)!, ctx)) return dropped('line-item');
   // Several different amounts in one total row (a converted price, say): unreadable, but still a total of its kind.
   if (values.size !== 1)
@@ -601,13 +626,35 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, page: PageEvidence
   return { ...report, kind, minor, currency, inSummary: inSummary(els.at(-1)!, kind, ctx) };
 }
 
-/** A block's text, lower-cased, with the markup's indentation collapsed (lengths are of the words); cached. */
+/**
+ * A block's text, lower-cased, with the markup's indentation collapsed (lengths are of the words); cached. Scripts,
+ * styles, templates and option lists inside the block are left out (an inline stylesheet or JSON blob beside a
+ * summary row is not the shopper's words); the walk stops once the text is longer than any caller reads.
+ */
 export function blockText(el: Element, ctx: Ctx): string {
   let text = ctx.blocks.get(el);
-  if (text === undefined)
-    ctx.blocks.set(el, (text = (el.textContent ?? '').replace(/\s+/g, ' ').toLowerCase()));
+  if (text === undefined) {
+    // A plain walk: a TreeWalker filter callback cannot run in a document whose scripting is off.
+    const parts: string[] = [];
+    let length = 0;
+    const walk = (node: Node) => {
+      for (let c = node.firstChild; c && length <= MAX_BLOCK_TEXT; c = c.nextSibling) {
+        if (c.nodeType === 3) {
+          parts.push((c as Text).data);
+          length += (c as Text).data.length;
+        } else if (c.nodeType === 1 && !SKIP_PARENTS.has(c.nodeName)) walk(c);
+      }
+    };
+    walk(el);
+    ctx.blocks.set(el, (text = parts.join('').replace(/\s+/g, ' ').toLowerCase()));
+  }
   return text;
 }
+const MAX_BLOCK_TEXT = 4000;
+/** The longest text a cart summary block (totals, shipping, tax, promo field, checkout controls) runs to. */
+const MAX_SUMMARY_TEXT = 1500;
+/** Table structure between a row and its summary: these levels do not count toward the summary climb. */
+const TABLE_TAGS = new Set(['TR', 'TBODY', 'THEAD', 'TFOOT', 'TABLE']);
 
 /**
  * Whether a row sits inside one product line (a product image or quantity control within three levels, before any
@@ -626,13 +673,24 @@ function lineItemOf(el: Element, ctx: Ctx): boolean {
   return false;
 }
 
-/** The nearest (or, with `outermost`, the largest) ancestor up to five under body that reads as a cart summary. */
-function summaryOf(el: Element, kind: Kind | 'after-candidate', ctx: Ctx, outermost = false): Element | null {
+/**
+ * The nearest (or, with `outermost`, the largest) ancestor up to five under body that reads as a cart summary. For
+ * the nearest, table structure (a row in a table footer) does not count toward the five.
+ */
+function summaryOf(
+  el: Element,
+  kind: Kind | 'after-candidate',
+  ctx: Ctx,
+  outermost = false,
+  maxText = MAX_BLOCK_TEXT,
+): Element | null {
   let found: Element | null = null;
   let a = parentOf(el);
-  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 5; depth += 1) {
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 5;) {
+    // Table structure is free only for the nearest summary; the largest scope stays tight.
+    if (outermost || !TABLE_TAGS.has(a.nodeName)) depth += 1;
     const text = blockText(a, ctx);
-    if (text.length > 4000) break;
+    if (text.length > maxText) break;
     if (
       SHIP_RE.test(text) ||
       TAX_RE.test(text) ||
@@ -657,12 +715,69 @@ function inSummary(el: Element, kind: Kind | 'after-candidate', ctx: Ctx): boole
  * shows a product image, a quantity or a remove control. Its prices are the line's, not an unlabelled total.
  */
 function inProductLine(el: Element, summary: Element, subtotal: Element, ctx: Ctx): boolean {
-  for (let a = parentOf(el); a && a !== summary; a = parentOf(a)) {
+  for (let a: Element | null = el; a && a !== summary; a = parentOf(a)) {
     if (a.contains(subtotal)) return false;
     const text = blockText(a, ctx);
     if (text.length > 600) return false;
     if (LINE_ITEM_RE.test(text) || REMOVE_RE.test(text) || a.querySelector('img, picture') !== null)
       return true;
+  }
+  return false;
+}
+
+/**
+ * The amounts of the summary's visible shipping rows (one non-negative amount each, in `exponent` minor units),
+ * leaving out rows inside `exclude`. The rows are found as `subtotalBlocker` finds them.
+ */
+function shippingAmounts(summary: Element, exclude: Element[], ctx: Ctx, exponent: number): number[] {
+  const out: number[] = [];
+  const seen = new Set<Element>();
+  const walker = ctx.doc.createTreeWalker(summary, 4 /* SHOW_TEXT */);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!/\d/.test((n as Text).data)) continue;
+    let el = n.parentNode as Element | null;
+    if (!el || el.nodeType !== 1 || SKIP_PARENTS.has(el.nodeName)) continue;
+    while (el && el !== summary && !/\p{L}{2}/u.test(withoutAmounts(normalizeText(el.textContent ?? ''))))
+      el = parentOf(el);
+    if (!el || seen.has(el) || exclude.some((e) => e.contains(el) || el!.contains(e))) continue;
+    seen.add(el);
+    if (hiddenWhy(el, ctx)) continue;
+    const text = normalizeText(visibleText(el, ctx));
+    if (text.length > MAX_ROW_TEXT) continue;
+    const label = withoutAmounts(text).toLowerCase();
+    if (EXCLUDE_RE.test(label) || !SHIP_RE.test(label) || TAX_RE.test(label) || classifyLabel(label))
+      continue;
+    const amounts = findAmounts(text, isCode);
+    if (amounts.length !== 1 || amounts[0]!.negative || !amounts[0]!.number) continue;
+    const minor = toMinor(amounts[0]!.number, exponent);
+    if (minor !== null && minor > 0) out.push(minor);
+  }
+  return out;
+}
+
+/** A "you save" note at the end of a total row ("Total 96.95 🎉 You saved 2.57", "You Save: £399.99 EGP"): dropped. */
+const SAVED_NOTE_RE = /\byou(?:'ve| have)? sav(?:e|ed)\b\s*:?\s*/giu;
+function withoutSavedNote(text: string): string {
+  let m: RegExpExecArray | null = null;
+  for (const x of text.matchAll(SAVED_NOTE_RE)) m = x;
+  if (!m) return text;
+  const tail = text.slice(m.index + m[0].length);
+  const tailAmounts = findAmounts(tail, isCode);
+  if (tailAmounts.length > 1 || /[\p{L}\d]/u.test(withoutAmounts(tail))) return text;
+  const head = text.slice(0, m.index).replace(/[^\p{L}\d)%]+$/u, '');
+  return findAmounts(head, isCode).length > 0 ? head : text;
+}
+
+/**
+ * Whether a row sits in a card offer's illustration ("Apply now", "upon approval"): a block within three levels,
+ * short and with no shipping or tax words, whose text matches OFFER_RE. Its "new total" is not the cart's.
+ */
+function inOfferBlock(el: Element, ctx: Ctx): boolean {
+  let a = parentOf(el);
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; depth += 1, a = parentOf(a)) {
+    const text = blockText(a, ctx);
+    if (text.length > 500 || SHIP_RE.test(text) || TAX_RE.test(text)) return false;
+    if (OFFER_RE.test(text)) return true;
   }
   return false;
 }
@@ -687,7 +802,8 @@ function withoutAmounts(text: string): string {
  */
 function subtotalBlocker(row: Row, ctx: Ctx, store: Storefront, page: PageEvidence): string | null {
   const own = row.els.at(-1)!;
-  const summary = summaryOf(own, 'subtotal', ctx, true);
+  // The largest summary block of summary length: the page's columns beyond it are not the subtotal's company.
+  const summary = summaryOf(own, 'subtotal', ctx, true, MAX_SUMMARY_TEXT);
   if (!summary) return null;
   const marked = findAmounts(row.text, isCode).some((a) => a.marker !== null || a.code !== null);
   const seen = new Set<Element>();

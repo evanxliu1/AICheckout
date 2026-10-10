@@ -424,7 +424,13 @@ function inMain(el: Element, ctx: Ctx): boolean {
   if (inHeader(el)) return false;
   for (let a: Element | null = el; a && a.nodeName !== 'BODY'; a = parentOf(a)) {
     const role = a.getAttribute('role');
-    if (styleOf(a, ctx).position === 'fixed') return false;
+    // A fixed box as tall as most of the viewport is an open drawer; a shorter one (a summary made sticky by script,
+    // a bottom bar) is the page's own content.
+    if (
+      styleOf(a, ctx).position === 'fixed' &&
+      (!ctx.layout || a.getBoundingClientRect().height >= DRAWER_HEIGHT * viewH(ctx))
+    )
+      return false;
     if (
       a.nodeName === 'FOOTER' ||
       a.nodeName === 'NAV' ||
@@ -503,6 +509,9 @@ function hasLineItems(document: Document, ctx: Ctx): boolean {
   }
   return false;
 }
+/** A fixed box at least this share of the viewport's height is a drawer, not a sticky summary or bar. */
+const DRAWER_HEIGHT = 0.6;
+const viewH = (ctx: Ctx) => ctx.view?.innerHeight ?? 0;
 /** How many levels up a quantity control and a remove control may meet and still be one line. */
 const LINE_LEVELS = 6;
 /** Remove controls that are not a cart line's: filters, comparisons, reviews, accounts, addresses, "remove all". */

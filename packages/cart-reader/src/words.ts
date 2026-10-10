@@ -3,7 +3,7 @@
 
 /** Rows that are never a total, whatever else they say: savings, promotions, points, instalments. */
 export const EXCLUDE_RE =
-  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo(?:nth)?\b|monthly|\bapr\b|instal|pay in \d|interest-free|\d+ payments of|financ|\bfee\b|donation|deposit|away from|more to|orders? (?:over|above)|refund|\bminimum\b|\bmin\.|\bmrp\b|\brrp\b|\buvp\b|list price|add to (?:cart|bag|basket)|in den warenkorb|ajouter au|a[ñn]adir al|aggiungi al|toevoegen|\breviews?\b|bewertung|avis\b|rese[ñn]a/u;
+  /sav(?:e|ing)|discount|rabat|descuento|desconto|remise|r[ée]duction|sconto|korting|zni[żz]k|indirim|割引|할인|خصم|promo|coupon|kupon|voucher|c[óo]digo|\bcode\b|economi|ahorr|risparm|bespaar|\boff\b|\bpoints?\b|punkte|puntos|punti|reward|cashback|\bearn|per month|\/\s?mo(?:nth)?\b|monthly|\bapr\b|instal|pay in \d|interest-free|\d+ payments of|financ|\bfee\b|donation|deposit|away from|more to|(?<!learn|read|see|show|view)(?:^|\s)more\s*[!.]?\s*$|qualif|unlock|orders? (?:over|above)|refund|\bminimum\b|\bmin\.|\bmrp\b|\brrp\b|\buvp\b|list price|add to (?:cart|bag|basket)|in den warenkorb|ajouter au|a[ñn]adir al|aggiungi al|toevoegen|\breviews?\b|bewertung|avis\b|rese[ñn]a/u;
 
 /** Shipping and tax words: a row with one of these is a total only in the shape `taxShipQualified` accepts. */
 export const SHIP_RE =
