@@ -95,10 +95,12 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
     await popup.close();
 
     const cartTab = (await readVaultState(worker)).cart!.tabId;
-    await merchant.route('https://other-merchant.example/', (route) =>
+    // An http page: since Phase 13c every https site is readable through the badge's host
+    // permission, so only an http page shows that activeTab access ended with the navigation.
+    await merchant.route('http://other-merchant.example/', (route) =>
       route.fulfill({ contentType: 'text/html', body: '<h1>Unrelated fixture site</h1>' }),
     );
-    await merchant.goto('https://other-merchant.example/');
+    await merchant.goto('http://other-merchant.example/');
     await expect.poll(async () => (await readVaultState(worker)).cart).toBeNull();
     const canRead = (tabId: number) =>
       worker.evaluate(async (target) => {
@@ -111,7 +113,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
       }, tabId);
     expect(await canRead(cartTab)).toBe(false); // activeTab access ended with the navigation.
     await merchant.goto('https://www.bestbuy.com/cart');
-    // Supported carts are readable through the badge's host permission, never other sites.
+    // https pages are readable through the badge's host permission (https://*/*), http never.
     expect(await canRead(cartTab)).toBe(true);
     popup = await openNativePopup(context, merchant, id);
     await expect.poll(popup.text).toContain('Read $27.23 as the order total');
@@ -189,9 +191,12 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     await merchant.locator('table tr:last-child td').evaluate((el) => {
       el.textContent = '$40.00';
     });
+    // The restored comparison fails its re-read and is dropped; the popup then reads the page on
+    // open (Phase 13c) and offers the current amount, unconfirmed, never the stale estimate.
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('saved cart changed or expired');
+    await expect.poll(popup.text).toContain('Read $40.00 as the order total');
     expect(await popup.text()).not.toContain('Your card estimate');
+    expect(await popup.text()).not.toContain('$0.54');
     const permissions = await restarted.evaluate(() => chrome.permissions.getAll());
     expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
     expect(permissions.origins?.sort()).toEqual(BADGE_ORIGINS);
