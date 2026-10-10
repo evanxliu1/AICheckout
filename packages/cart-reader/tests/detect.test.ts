@@ -49,7 +49,9 @@ describe('cartUrlHint', () => {
     expect(cartUrlHint('https://a.example/?page=cart', '')?.url).toBe('cart');
     expect(cartUrlHint('https://a.example/app#/cart', '')?.url).toBe('cart');
     expect(cartUrlHint('https://cart.a.example/', '')?.url).toBe('cart');
-    expect(cartUrlHint('https://checkout.a.example/c/abc', '')?.url).toBe('checkout');
+    // A host label alone never makes a checkout (billing pages of every kind live at checkout.*), it can name the cart.
+    expect(cartUrlHint('https://checkout.a.example/c/abc', '')).toBe(null);
+    expect(cartUrlHint('https://checkout.a.example/cart', '')?.url).toBe('cart');
   });
   it('tells checkout from cart', () => {
     expect(cartUrlHint('https://a.example/checkout', '')?.url).toBe('checkout');
@@ -81,6 +83,35 @@ describe('cartUrlHint', () => {
     expect(cartUrlHint('https://a.example/x', 'سلة التسوق')).toEqual({ url: null, title: 'cart' });
     expect(cartUrlHint('https://a.example/x', 'Cartier watches')).toBe(null);
     expect(cartUrlHint('https://a.example/x', 'Great deals')).toBe(null);
+    expect(cartUrlHint('https://a.example/x', 'Your cart (2 items) | Shop')?.title).toBe('cart');
+    expect(cartUrlHint('https://a.example/x', 'Mon panier - Boutique')?.title).toBe('cart');
+    expect(cartUrlHint('https://a.example/x', 'ショッピングカート (3)')?.title).toBe('cart');
+    // A title segment counts only when nothing but filler stands beside the cart word: these name products.
+    for (const title of [
+      'Gift Basket | Shop',
+      'Tote Bag',
+      'Sleeping Bag - Outdoor Co',
+      'Leather bag',
+      'Cart abandonment tips',
+    ])
+      expect(cartUrlHint('https://a.example/x', title), title).toBe(null);
+  });
+  it('does not take a product, collection or search slug, or a search term, as the cart (review fix)', () => {
+    for (const url of [
+      'https://a.example/products/gift-basket',
+      'https://a.example/products/bag',
+      'https://a.example/collections/bag',
+      'https://a.example/search/basket',
+      'https://a.example/search?q=basket',
+      'https://a.example/?s=cart',
+      'https://a.example/c/basket',
+    ])
+      expect(cartUrlHint(url, ''), url).toBe(null);
+    expect(cartUrlHint('https://a.example/index.php?route=checkout/cart', '')?.url).toBe('cart');
+    expect(cartUrlHint('https://a.example/cart--4362', '')?.url).toBe('cart');
+    // "order" pages are not the checkout (review fix: commande and pedido dropped).
+    expect(cartUrlHint('https://a.example/cuenta/pedido/1234', '')).toBe(null);
+    expect(cartUrlHint('https://a.example/mon-compte/commande/88', '')).toBe(null);
   });
 });
 
@@ -121,15 +152,71 @@ describe('detectCartPage', () => {
   });
   it('is none on a blog post about carts', () => {
     const body = `<main><h1>Ten ways to cut cart abandonment</h1><p>Shoppers leave carts for many reasons. A $5.00 shipping fee is the most common.</p><a href="/cart">View your cart</a></main>`;
+    // The title names a topic, not the cart (review fix): no hint, the page is never read.
     expect(
       page(body, { url: 'https://blog.example/posts/cart-abandonment', title: 'Cart abandonment' }),
-    ).toEqual({ page: 'none', reason: 'no-structure' });
+    ).toEqual({ page: 'none', reason: 'no-hint' });
+    // A bare "Cart" title opens the page, but the heading names a topic: no deciding signal.
+    expect(page(body, { url: 'https://blog.example/posts/cart-abandonment', title: 'Cart' })).toEqual({
+      page: 'none',
+      reason: 'title-only',
+    });
   });
   it('is none on a page that only links to /cart', () => {
     const body = `<header><a href="/cart">Cart (0)</a></header><main><h1>New arrivals</h1><p>$20.00</p></main>`;
-    expect(page(body, { url: 'https://a.example/collections/new', title: 'Cart link page' })).toEqual({
+    expect(page(body, { url: 'https://a.example/collections/new', title: 'Cart' })).toEqual({
       page: 'none',
       reason: 'title-only',
+    });
+  });
+  it('is none on product and listing pages whose names contain a cart word (review fixes)', () => {
+    // A product page with its own quantity stepper beside the image and no remove control.
+    const product = (name: string) =>
+      `<main><h1>${name}</h1><img src="p.png" alt=""><p>$40.00</p><label>Qty <input type="number" value="1"></label><button>Add to cart</button></main>`;
+    expect(
+      page(product('Gift Basket'), {
+        url: 'https://a.example/products/gift-basket',
+        title: 'Gift Basket | Shop',
+      }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-hint',
+    });
+    expect(
+      page(product('Tote Bag'), { url: 'https://a.example/products/tote-bag', title: 'Tote Bag' }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-hint',
+    });
+    // Even on a URL that hints, a stepper without a remove control is not a line item.
+    expect(page(product('Sleeping Bag'), { url: 'https://a.example/bag', title: 'Sleeping Bag' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A listing of quick-add tiles at /collections/bag or /search?q=basket.
+    const tile = (n: string) =>
+      `<article><img src="${n}.png" alt=""><h2>${n}</h2><button>Add to cart</button><label>Qty <input type="number" value="1"></label></article>`;
+    const listing = `<main><h1>Bags</h1>${tile('Tote')}${tile('Duffel')}</main>`;
+    expect(page(listing, { url: 'https://a.example/collections/bag', title: 'Bags' })).toEqual({
+      page: 'none',
+      reason: 'no-hint',
+    });
+    // "Search: basket" has "basket" as a title segment of its own, so the page is opened; its heading decides: none.
+    expect(page(listing, { url: 'https://a.example/search?q=basket', title: 'Search: basket' })).toEqual({
+      page: 'none',
+      reason: 'title-only',
+    });
+    // "Leather bag" with an open aside drawer (not a dialog): the heading names a product, and a fixed drawer is
+    // not main content even on a URL that hints.
+    const drawer = `<aside style="position: fixed; right: 0; top: 0"><h2>Your cart</h2>${item()}${summary(row('Subtotal', '$20.00') + row('Total', '$20.00'))}</aside>`;
+    const leather = `<main><h1>Leather bag</h1><img src="b.png" alt=""><p>$120.00</p><button>Add to cart</button></main>${drawer}`;
+    expect(page(leather, { url: 'https://a.example/products/leather-bag', title: 'Leather bag' })).toEqual({
+      page: 'none',
+      reason: 'no-hint',
+    });
+    expect(page(leather, { url: 'https://a.example/bag', title: 'Leather bag' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
     });
   });
   it('is none on a product page with an open mini-cart drawer', () => {

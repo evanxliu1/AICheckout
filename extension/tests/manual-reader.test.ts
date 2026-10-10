@@ -64,7 +64,11 @@ describe('manual reader (Phase 13b)', () => {
     });
   });
   it('withholds when the reader withholds (no summary, ambiguous totals) and when the total is zero', () => {
-    expect(page('<p>Order total $100.00</p>', store)).toEqual({ status: 'unavailable', reason: 'withheld' });
+    // A checkout URL with no summary rows or line items is not a cart page to the detector (Phase 13c).
+    expect(page('<p>Order total $100.00</p>', store)).toEqual({
+      status: 'unavailable',
+      reason: 'not-a-cart',
+    });
     expect(page(summary(row('Total', '$100.00') + row('Total', '$120.00')), store)).toEqual({
       status: 'unavailable',
       reason: 'withheld',
@@ -87,7 +91,15 @@ describe('manual reader (Phase 13b)', () => {
     document.body.innerHTML = summary(row('Total', '$100.00'));
     expect(readAnyCart(document, 'https://shop.example.com/products/leather-bag')).toEqual({
       page: 'none',
-      reading: { status: 'unavailable', reason: 'withheld' },
+      reading: { status: 'unavailable', reason: 'not-a-cart' },
+    });
+    // A hinted page the detector still calls none (a cart title over a product heading) is not-a-cart either,
+    // even when a drawer shows a euro total: the page is not the cart.
+    document.title = 'Cart';
+    document.body.innerHTML = `<main><h1>Leather bag</h1></main><aside>${summary(row('Total', '€100.00'))}</aside>`;
+    expect(readManualCart(document, 'https://shop.example.com/products/leather-bag')).toEqual({
+      status: 'unavailable',
+      reason: 'not-a-cart',
     });
     // A hinted URL whose page shows an empty cart: `empty-cart`, which hides the badge.
     expect(

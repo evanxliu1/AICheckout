@@ -11,7 +11,7 @@
 // signal. An empty cart (a zero total read by the reader, a summary of zeros, no line items) and a product page whose
 // only cart is an open drawer (no URL hint, headings only in the drawer) are `none`.
 import type { CartReading, DetectOptions, PageDetection } from './types.ts';
-import { analyze, blockText, hiddenWhy, inHeader, parentOf, visibleText, type Ctx } from './reader.ts';
+import { analyze, hiddenWhy, inHeader, parentOf, visibleText, type Ctx } from './reader.ts';
 import { LINE_ITEM_RE } from './words.ts';
 
 /** Cart words, one per token, lower-cased: Latin scripts as whole tokens, other scripts as substrings. */
@@ -96,13 +96,75 @@ const CHECKOUT_TOKENS = new Set([
   'cassa',
   'pokladna',
   'afrekenen',
-  'commande',
-  'pedido',
   'ödeme',
   'odeme',
   'оформление',
 ]);
 const CHECKOUT_SUBSTRINGS = ['レジ', '結帳', '结算', '결제'];
+/** Words that may stand beside a cart word in a title segment or heading without changing what it names ("Your
+ * shopping cart (2 items)", "Mon panier", "Dein Warenkorb", "Mi cesta"), in the supported languages; a count too. */
+const PHRASE_FILLER = new Set([
+  ...['your', 'my', 'the', 'shopping', 'review', 'items', 'item', 'view', 'in', 'of', 'a', 'and'],
+  ...['votre', 'vos', 'ton', 'ta', 'mon', 'ma', 'le', 'la', 'les', 'articles', 'article', 'd', 'de', 'du'],
+  ...['dein', 'deine', 'ihr', 'ihre', 'mein', 'meine', 'der', 'die', 'das', 'artikel', 'im'],
+  ...['tu', 'tus', 'su', 'sus', 'mi', 'mis', 'el', 'los', 'las', 'artículos', 'articulos', 'en'],
+  ...['il', 'tuo', 'tua', 'mio', 'mia', 'i', 'gli', 'articoli', 'nel'],
+  ...['je', 'jouw', 'uw', 'mijn', 'het', 'artikelen'],
+  ...['o', 'seu', 'sua', 'meu', 'minha', 'itens', 'no'],
+  ...['din', 'dit', 'min', 'mitt', 'varor', 'varer'],
+  ...['twój', 'twoj', 'mój', 'moj', 'produkty', 'produktów'],
+  ...['ваша', 'ваш', 'моя', 'мой', 'товары', 'товаров'],
+  ...['あなたの', 'ショッピング', '我的', '내', '나의', '購物', '购物', 'التسوق', 'تسوق', 'הקניות', 'สินค้า'],
+]);
+/** How a title lists its parts ("Your cart | Shop", "Shop - Basket", "Checkout: payment"). */
+const TITLE_SEPARATOR = /\s*[|\-–—:·»«>/]+\s*/u;
+/** A path segment that names what the next segment is: a product, collection, category or search slug, not a page. */
+const SLUG_PARENT = new Set([
+  'product',
+  'products',
+  'produkt',
+  'produkte',
+  'produit',
+  'produits',
+  'producto',
+  'productos',
+  'prodotto',
+  'prodotti',
+  'produto',
+  'produtos',
+  'p',
+  'item',
+  'items',
+  'collection',
+  'collections',
+  'category',
+  'categories',
+  'categoria',
+  'categorias',
+  'categorie',
+  'kategorie',
+  'kategorien',
+  'c',
+  'catalog',
+  'catalogue',
+  'brand',
+  'brands',
+  'marque',
+  'marke',
+  'tag',
+  'tags',
+  'search',
+  'recherche',
+  'suche',
+  'busca',
+  'buscar',
+  'ricerca',
+  'zoeken',
+  's',
+  'q',
+]);
+/** Query keys whose value is a search term, never a route ("?q=basket"). */
+const SEARCH_KEY = /^(?:q|query|search|s|k|keyword|keywords|term|text|searchterm|search_query|w|wd)$/iu;
 /** Tokens that may share a URL segment with a cart word without changing what the segment is. */
 const SEGMENT_FILLER = new Set([
   'shopping',
@@ -149,7 +211,6 @@ const NOT_PAGE_RE =
   /\b(?:add|remove|delete|update|ajax|api|json|mini|count|quick|empty|clear|merge|share|saved|wishlist)\b|minicart/u;
 const PAGE_FILES = /\.(?:html?|php|aspx?|jsp|cfm|do|action)$/iu;
 const MAX_HEADING_TEXT = 80;
-const MAX_LINE_ITEM_TEXT = 800;
 const MAX_CONTROLS = 2000;
 
 export type UrlHint = { url: 'cart' | 'checkout' | null; title: 'cart' | 'checkout' | null };
@@ -163,17 +224,39 @@ export function cartUrlHint(url: string, title: string): UrlHint | null {
   return hint.url || hint.title ? hint : null;
 }
 
-/** Whether a short lower-cased text names the cart or the checkout, on token boundaries. */
+/**
+ * Whether a short lower-cased title or heading names the cart or the checkout: one of its segments (split on the
+ * title separators) must be a cart or checkout word with nothing beside it but filler words and counts ("Your cart
+ * (2 items)", "Mon panier", "カート (3)"). "Gift basket", "Tote bag" and "Sleeping bag" are products, not the cart.
+ */
 function wordIn(text: string): 'cart' | 'checkout' | null {
-  const tokens = text.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
   let checkout = false;
-  for (const t of tokens) {
-    if (CART_TOKENS.has(t)) return 'cart';
-    if (CHECKOUT_TOKENS.has(t)) checkout = true;
+  for (const segment of text.split(TITLE_SEPARATOR)) {
+    const w = phraseWord(segment.trim());
+    if (w === 'cart') return 'cart';
+    if (w === 'checkout') checkout = true;
   }
-  for (const s of CART_SUBSTRINGS) if (text.includes(s)) return 'cart';
-  if (!checkout) for (const s of CHECKOUT_SUBSTRINGS) if (text.includes(s)) checkout = true;
   return checkout ? 'checkout' : null;
+}
+/** The cart or checkout word a whole segment stands for, or null when any other word is in it. */
+function phraseWord(segment: string): 'cart' | 'checkout' | null {
+  if (!segment) return null;
+  const tokens = segment
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((t) => t && !PHRASE_FILLER.has(t) && !/^\p{N}+$/u.test(t));
+  if (tokens.length > 0) {
+    if (!tokens.every((t) => CART_TOKENS.has(t) || CHECKOUT_TOKENS.has(t))) {
+      // Scripts without word spacing: the segment is the cart word plus filler and at most a few other characters.
+      let stripped = segment;
+      for (const f of PHRASE_FILLER) stripped = stripped.replaceAll(f, '');
+      const rest = (s: string) => stripped.replace(s, '').replace(/[\p{N}\p{P}\p{S}\s]/gu, '');
+      for (const s of CART_SUBSTRINGS) if (segment.includes(s) && rest(s).length <= 4) return 'cart';
+      for (const s of CHECKOUT_SUBSTRINGS) if (segment.includes(s) && rest(s).length <= 4) return 'checkout';
+      return null;
+    }
+    return tokens.some((t) => CART_TOKENS.has(t)) ? 'cart' : 'checkout';
+  }
+  return null;
 }
 
 /** Cart or checkout words in the URL's path segments, query keys and values, fragment and host labels. */
@@ -192,33 +275,40 @@ function urlWord(url: string): 'cart' | 'checkout' | null {
   pushPath(u.pathname);
   for (const [k, v] of u.searchParams) {
     segments.push(k);
-    pushPath(v);
+    // "?q=basket" is a search term; a routing value ("?route=checkout/cart") still counts.
+    if (!SEARCH_KEY.test(k)) pushPath(v);
   }
   pushPath(u.hash.replace(/^#!?/, '').split('?')[0] ?? '');
-  // Host labels but the registrable name (`cart.example.com`, not `cart.com`).
-  segments.push(...u.hostname.split('.').slice(0, -2));
+  // Host labels but the registrable name (`cart.example.com`, not `cart.com`). A host label alone never makes a
+  // checkout (`checkout.example.com` hosts billing pages of every kind); it can name the cart.
+  const hostLabels = u.hostname.split('.').slice(0, -2);
+  const fromHost = segments.length;
+  segments.push(...hostLabels);
   let checkout = false;
   for (const [i, seg] of segments.entries()) {
     const lower = seg.toLowerCase();
     // "/cart/add", "add-to-cart", "/cart/count": an endpoint, not the page.
     if (NOT_PAGE_RE.test(seg.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase())) continue;
     if (NOT_PAGE_RE.test(segments[i + 1]?.toLowerCase() ?? '')) continue;
+    // "/products/bag", "/collections/basket", "/search/basket": a slug under a listing, not the cart page.
+    if (i > 0 && i < fromHost && SLUG_PARENT.has(segments[i - 1]!.toLowerCase())) continue;
     // camelCase is split too (CartList, viewCart).
     const tokens = seg
       .replace(/([a-z])([A-Z])/g, '$1 $2')
       .toLowerCase()
       .split(/[^\p{L}\p{N}]+/u)
       .filter(Boolean);
-    const words = tokens.filter((t) => !SEGMENT_FILLER.has(t));
+    // Counts and ids beside the word ("cart--4362", "cart-2") do not change what the segment is.
+    const words = tokens.filter((t) => !SEGMENT_FILLER.has(t) && !/^\p{N}+$/u.test(t));
     if (words.length === 0) continue;
     if (words.every((t) => CART_TOKENS.has(t) || CHECKOUT_TOKENS.has(t))) {
       if (words.some((t) => CART_TOKENS.has(t))) return 'cart';
-      checkout = true;
+      if (i < fromHost) checkout = true;
       continue;
     }
     // A product slug ("leather-bag", "basketball") is not the cart; scripts without spacing are matched inside.
     if (CART_SUBSTRINGS.some((s) => lower.includes(s))) return 'cart';
-    if (CHECKOUT_SUBSTRINGS.some((s) => lower.includes(s))) checkout = true;
+    if (i < fromHost && CHECKOUT_SUBSTRINGS.some((s) => lower.includes(s))) checkout = true;
   }
   return checkout ? 'checkout' : null;
 }
@@ -253,7 +343,7 @@ export function readCartPage(
       !(r.why ?? '').startsWith('hidden') &&
       r.why !== 'struck' &&
       r.minor !== 0 &&
-      inMain(r.els[0]!),
+      inMain(r.els[0]!, ctx),
   );
   const items = summary ? false : hasLineItems(document, ctx);
   if (!summary && !items) return none('no-structure');
@@ -265,14 +355,16 @@ export function readCartPage(
 }
 
 /**
- * Whether an element is in the main content: outside page headers, footers, navigation and dialogs (an open
- * drawer). The `main` landmark is not relied on (stores often wrap only part of the cart page in it), and asides
- * count as main content (a checkout step's order summary is often one).
+ * Whether an element is in the main content: outside page headers, footers, navigation, dialogs and fixed-position
+ * boxes (an open drawer, whether or not it is a dialog). The `main` landmark is not relied on (stores often wrap only
+ * part of the cart page in it), and in-flow asides count as main content (a checkout step's order summary is often
+ * one).
  */
-function inMain(el: Element): boolean {
+function inMain(el: Element, ctx: Ctx): boolean {
   if (inHeader(el)) return false;
   for (let a: Element | null = el; a && a.nodeName !== 'BODY'; a = parentOf(a)) {
     const role = a.getAttribute('role');
+    if (styleOf(a, ctx).position === 'fixed') return false;
     if (
       a.nodeName === 'FOOTER' ||
       a.nodeName === 'NAV' ||
@@ -306,7 +398,7 @@ function headingWord(document: Document, ctx: Ctx): 'cart' | 'checkout' | null {
       const level = h.getAttribute('aria-level');
       if (level !== null && level !== '1' && level !== '2') continue;
     }
-    if (!inMain(h) || hiddenWhy(h, ctx)) continue;
+    if (!inMain(h, ctx) || hiddenWhy(h, ctx)) continue;
     if (consider(visibleText(h, ctx))) return 'cart';
   }
   return checkout ? 'checkout' : null;
@@ -314,7 +406,8 @@ function headingWord(document: Document, ctx: Ctx): 'cart' | 'checkout' | null {
 
 /**
  * Cart line items in the main content: a visible quantity control (a number input, or a control whose label names
- * the quantity) and a visible remove control, or either of them inside a block with a product image.
+ * the quantity) and a visible remove control, both. A product page's own quantity stepper, or a listing's quick-add
+ * tiles, have no remove control.
  */
 function hasLineItems(document: Document, ctx: Ctx): boolean {
   const controls = queryAll(document, ctx, 'input[type="number"], select, button, a, input[type="text"]');
@@ -331,19 +424,22 @@ function hasLineItems(document: Document, ctx: Ctx): boolean {
     // "Add or remove from wishlist", "save for later": not a line's remove control.
     const isRemove = REMOVE_RE.test(label) && !WISHLIST_RE.test(label);
     if (!isQty && !isRemove) continue;
-    if (!inMain(c) || hiddenWhy(c, ctx)) continue;
+    if (!inMain(c, ctx) || hiddenWhy(c, ctx)) continue;
     if (isQty) qty = true;
     if (isRemove) remove = true;
     if (qty && remove) return true;
-    // The control sits in a product line: a small block within seven levels holds an image.
-    let a = parentOf(c);
-    for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 7; depth += 1) {
-      if (blockText(a, ctx).length > MAX_LINE_ITEM_TEXT) break;
-      if (a.querySelector('img, picture') !== null) return true;
-      a = parentOf(a);
-    }
   }
   return false;
+}
+
+/** An element's computed style through the reader's cache (empty without a window). */
+function styleOf(el: Element, ctx: Ctx): CSSStyleDeclaration {
+  let cs = ctx.styles.get(el);
+  if (!cs) {
+    cs = ctx.view ? ctx.view.getComputedStyle(el) : ({} as CSSStyleDeclaration);
+    ctx.styles.set(el, cs);
+  }
+  return cs;
 }
 
 /** Elements matching a selector in the document and its open shadow roots. */

@@ -205,20 +205,42 @@ describe('popup store from the open tab', () => {
     expect(read).toHaveBeenCalledTimes(2);
     expect(screen.queryByRole('alert')).toBeNull();
   });
-  it('keeps a saved comparison for the tab’s store instead of reading on open', async () => {
-    openOn('https://shop.example.com/cart');
+  it('keeps a saved comparison for the tab’s legacy store, but a generic one never suppresses the read elsewhere', async () => {
+    openOn('https://www.newegg.com/p/N82E1');
     render(<Popup />);
+    await vi.waitFor(() => expect(merchantValue()).toBe('newegg-us'));
     await fillPurchase();
-    expect(
-      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
-    ).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
     cleanup();
     read.mockClear();
     render(<Popup />);
-    expect(
-      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
-    ).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
     expect(read).not.toHaveBeenCalled();
+    // A generic comparison saved at one store: another store's tab is still read on open (review fix).
+    cleanup();
+    openOn('https://shop.example.com/cart');
+    render(<Popup />);
+    await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
+    await fillPurchase();
+    await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.');
+    cleanup();
+    read.mockClear();
+    openOn('https://other.example.com/cart');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(read).toHaveBeenCalledTimes(1));
+  });
+  it('says nothing on open on a page that is not a cart, and names it on the button (review fix)', async () => {
+    openOn('https://mail.example.com/inbox');
+    read.mockRejectedValue(new Error(READ_COPY['not-a-cart']));
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    await vi.waitFor(() => expect(read).toHaveBeenCalledTimes(1));
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.queryByText(/Best card by rate/)).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
+    expect(await screen.findByText(/doesn’t look like a cart or checkout page/)).toBeTruthy();
+    expect(screen.queryByText(/Best card by rate/)).toBeNull();
   });
   it('reads the cart on open on an https tab and fills a certain amount', async () => {
     openOn('https://shop.example.com/cart');

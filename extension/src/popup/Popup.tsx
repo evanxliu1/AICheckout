@@ -37,12 +37,16 @@ const STORE_IDS: string[] = [...MERCHANT_IDS, GENERIC_MERCHANT_ID];
 
 /** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null, and
  * whether the tab is an https page the popup reads on open (Phase 13c). */
-async function activeTabMerchant(): Promise<{ id: string | null; https: boolean }> {
+async function activeTabMerchant(): Promise<{ id: string | null; https: boolean; tabId: number | null }> {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    return { id: merchantForTab(tab?.url), https: !!tab?.url && tab.url.startsWith('https://') };
+    return {
+      id: merchantForTab(tab?.url),
+      https: !!tab?.url && tab.url.startsWith('https://'),
+      tabId: tab?.id ?? null,
+    };
   } catch {
-    return { id: null, https: false };
+    return { id: null, https: false, tabId: null };
   }
 }
 /** Online retail eligibility for a newly chosen store: the generic store sells physical goods
@@ -171,10 +175,14 @@ export default function Popup({
         if (cancelled) return;
         restore(next);
         // An https store tab is read on open: a certain amount fills in, otherwise the rates view. A
-        // cart already read, or a comparison saved for this store, is kept instead (reopening the popup
-        // must not discard it); "Read cart amount" re-reads.
-        const settled =
-          !!next.state.cart || (!!next.state.comparison && next.state.purchase?.merchantId === found.id);
+        // cart read in this very tab, or a comparison saved for this legacy store, is kept instead
+        // (reopening the popup must not discard it); the generic id is every other store, so a saved
+        // generic comparison never suppresses the read at another site. "Read cart amount" re-reads.
+        const settled = next.state.cart
+          ? next.state.cart.tabId === found.tabId
+          : !!next.state.comparison &&
+            found.id !== GENERIC_MERCHANT_ID &&
+            next.state.purchase?.merchantId === found.id;
         if (found.https && found.id && next.state.wallet.cards.length && !settled)
           void readCart(true, next, found.id);
       })
@@ -302,6 +310,7 @@ export default function Popup({
       if (RATES_READ_MESSAGES.includes(message)) {
         // A cart or checkout page with no certain amount: compare by rate, never ask for an amount.
         setCartId(null);
+        setDirty(true);
         try {
           await loadRates(tabStore, storeOnlineRetail(tabStore));
         } catch {

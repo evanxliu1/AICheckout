@@ -32,6 +32,9 @@ The [Phase 13c plan](../product/phase-13c-cart-detection.md) left three choices 
 | `use_dynamic_url` | `true` (sites cannot fetch the badge page at a guessable URL); `false` | `false`, kept. The worker routes `badge:*` by the sender's exact static URL (`chrome.runtime.getURL(BADGE_PAGE)`), and the content script has no API that yields the dynamic URL, so a dynamic resource could not be framed. The per-frame nonce still stops page-made copies. Consequence: any https site can detect the extension by fetching `src/badge/index.html` |
 | Which unavailable readings show the rates view | Every unavailable reading; none; a set | `withheld`, `summary-missing` and `ambiguous-amount` (a cart or checkout whose amount is uncertain); `page-loading`, `empty-cart`, `unsupported-currency` and `unsupported-page` hide the badge, as before |
 | Where the per-site host lives | Settings only; the tab entry too | The tab entry (`host`, session storage) holds the hostname so "Not on this site" can record it; never the path |
+| Popup read on open, when to skip (review fix) | Skip when a comparison is saved for the tab's merchant id; key by tab and legacy id | A cart read in this tab (`cart.tabId`), or a comparison saved for the tab's **legacy** store, is kept; the generic id is every other store, so a saved generic comparison never suppresses the read |
+| Detector `none` in the popup (review fix) | Collapse into `withheld` (rates view); a distinct reason | `not-a-cart`: the read on open says nothing (a non-store tab looks as it did before 13c), the button shows a message |
+| Host-only checkout hint (coordinator's call) | Count `checkout.example.com` as a checkout; require a path, query, fragment or heading signal | The latter: SaaS and payment-provider billing pages live at `checkout.*`; a host label can still name the cart |
 
 ## Decision
 As chosen above.
@@ -39,6 +42,7 @@ As chosen above.
 ## Consequences
 - The rates view's order equals the amount view's order for any amount under the smallest binding cap; the cap note names the exception.
 - Fingerprinting by the web-accessible badge page is a known, accepted exposure for Phase 15's privacy policy.
+- The title rule is strict: a title or heading hints only when a segment is the cart word plus filler, so a product named after a bag or basket never opens the badge; two title-hinted development pages were lost to it (90.6% recall).
 - A single-page store that renders its cart later than 500 ms after the URL change is still followed when the URL hints at a cart (the observer attaches on the hinted page); a cart reached at an unhinted URL whose title changes later is not.
 
 ## Status

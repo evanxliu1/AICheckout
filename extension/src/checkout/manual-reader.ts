@@ -16,7 +16,7 @@ export type ManualRead =
       kind: AmountKind;
       extractorVersion: typeof GENERIC_READER_VERSION;
     }
-  | { status: 'unavailable'; reason: 'withheld' };
+  | { status: 'unavailable'; reason: 'withheld' | 'not-a-cart' };
 
 const KIND: Record<ReadingKind, AmountKind> = {
   afterCredit: 'total',
@@ -27,7 +27,8 @@ const KIND: Record<ReadingKind, AmountKind> = {
 /** One reader per URL (Phase 13b, 13c): a URL a legacy adapter matches is that adapter's, unchanged
  * (`page: 'legacy'`); any other http(s) page is the generic detector's, then `readCart`'s, in one pass.
  * Returns only the detection and the reading (or a reason), never page text. A page the detector
- * does not recognise as a cart or checkout (`none`) withholds. */
+ * does not recognise as a cart or checkout (`none`) is `not-a-cart`, distinct from a cart whose amount
+ * is uncertain (`withheld`), so the popup can stay quiet on it. */
 export function readAnyCart(
   document: Document,
   url: string,
@@ -44,12 +45,13 @@ export function readAnyCart(
   } catch {
     return { page: 'none', reading: { status: 'unavailable', reason: 'withheld' } };
   }
-  if (reading?.shown && reading.currency !== 'USD')
-    return { page, reading: { status: 'unavailable', reason: 'unsupported-currency' } };
+  // An empty cart first (the detector's `zero-total` is `none` too), then any other page that is not a cart.
   if (reading?.shown && reading.amountMinor === 0)
     return { page, reading: { status: 'unavailable', reason: 'empty-cart' } };
-  if (page === 'none' || !reading?.shown)
-    return { page, reading: { status: 'unavailable', reason: 'withheld' } };
+  if (page === 'none') return { page, reading: { status: 'unavailable', reason: 'not-a-cart' } };
+  if (reading?.shown && reading.currency !== 'USD')
+    return { page, reading: { status: 'unavailable', reason: 'unsupported-currency' } };
+  if (!reading?.shown) return { page, reading: { status: 'unavailable', reason: 'withheld' } };
   return {
     page,
     reading: {

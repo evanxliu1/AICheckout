@@ -9,16 +9,14 @@ import { siteAdapterSchema } from './src/checkout/adapters/schema';
 
 // Site adapters are bundled data; reject an invalid spec at build time, not at checkout.
 const adapterDir = new URL('./src/checkout/adapters/', import.meta.url);
-const adapters = readdirSync(adapterDir)
+for (const file of readdirSync(adapterDir)
   .filter((name) => name.endsWith('.json'))
-  .sort()
-  .map((file) => siteAdapterSchema.parse(JSON.parse(readFileSync(new URL(file, adapterDir), 'utf8'))));
+  .sort())
+  siteAdapterSchema.parse(JSON.parse(readFileSync(new URL(file, adapterDir), 'utf8')));
 /** The automatic badge's reach (Phase 13c): every https page, top frame only. The legacy adapters'
  * hosts and patterns are a subset; the content script picks the reader per URL. */
 export const BADGE_MATCHES = ['https://*/*'];
 export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
-// The adapters are still validated at build time (above); their hosts no longer widen the manifest.
-void adapters;
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
