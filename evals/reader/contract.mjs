@@ -15,3 +15,9 @@ export const cartReadingSchema = z.discriminatedUnion('shown', [
     reason: z.string().regex(/^[a-z0-9-]{1,64}$/),
   }),
 ]);
+
+/** The cart page detector's output contract (Phase 13c): a page kind and a short machine reason. */
+export const pageDetectionSchema = z.strictObject({
+  page: z.enum(['cart', 'checkout', 'none']),
+  reason: z.string().regex(/^[a-z0-9-]{1,64}$/),
+});

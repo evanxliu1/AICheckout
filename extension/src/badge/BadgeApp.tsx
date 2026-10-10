@@ -5,11 +5,13 @@ import { AlertInline, Button, Field, Icon, Select, TextInput } from '@ai-checkou
 import { formatUsd, parseUsd } from '../domain';
 import type { PaymentPathV3 } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
+import RatesResult from '../components/RatesResult';
 import {
   notAcceptedLines,
   PAYMENT_LABELS,
   pillReward,
   rankingNote,
+  rateWording,
   rewardKind,
   rowEmphasis,
   unavailableCopy,
@@ -184,9 +186,13 @@ export default function BadgeApp() {
     pillText = 'Open AI Checkout to fix saved data';
     pillLabel = `${pillText} (AI Checkout)`;
     pillAction = () => open('popup');
-  } else if (view.kind === 'unreadable') {
-    pillText = 'Can’t read this cart — enter the amount';
-    pillLabel = `${pillText} (AI Checkout). Show details`;
+  } else if (view.kind === 'rates') {
+    // The amount was not read: the best card and its rate, never a prompt (Phase 13c).
+    const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
+    const name = view.catalog.cards.find((c) => c.id === best.cardId)?.shortName ?? best.cardId;
+    pillAmount = rateWording(best, view.catalog);
+    pillText = `Use ${name} · ${pillAmount}`;
+    pillLabel = `${pillText.replace(' (est. ', ' (estimated ')} at this store (AI Checkout). The cart amount was not read. Show details`;
     pillAction = expand;
   } else if (view.kind === 'unavailable') {
     pillText = 'Card terms need attention';
@@ -260,9 +266,7 @@ export default function BadgeApp() {
           type="button"
           className="badge-pill"
           aria-label={pillLabel}
-          aria-expanded={
-            ['ready', 'unreadable', 'unavailable', 'order'].includes(view.kind) ? false : undefined
-          }
+          aria-expanded={['ready', 'rates', 'unavailable', 'order'].includes(view.kind) ? false : undefined}
           onClick={pillAction}
         >
           <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
@@ -293,7 +297,7 @@ function PanelBody({
   apply: (request: BadgeAction) => Promise<unknown>;
   open: (target: 'popup' | 'onboarding') => void;
 }) {
-  if (view.kind === 'ready' || view.kind === 'unreadable')
+  if (view.kind === 'ready' || view.kind === 'rates')
     return <ReadyBody view={view} busy={busy} apply={apply} />;
   if (view.kind === 'unavailable')
     return (
@@ -326,11 +330,12 @@ function ReadyBody({
   busy,
   apply,
 }: {
-  view: Extract<BadgeView, { kind: 'ready' | 'unreadable' }>;
+  view: Extract<BadgeView, { kind: 'ready' | 'rates' }>;
   busy: boolean;
   apply: (request: BadgeAction) => Promise<unknown>;
 }) {
   const ready = view.kind === 'ready' ? view : null;
+  const rates = view.kind === 'rates' ? view : null;
   const [draft, setDraft] = useState(ready ? (ready.amountCents / 100).toFixed(2) : '');
   const [inputError, setInputError] = useState('');
   useEffect(() => {
@@ -344,14 +349,16 @@ function ReadyBody({
   };
   return (
     <>
-      <p className="supporting">
-        {ready && ready.cartAmountCents !== null && !ready.amountEdited
-          ? `Based on ${formatUsd(ready.cartAmountCents)} cart ${KIND_LABELS[ready.amountKind!]} at ${merchantName(view.merchantId)}.`
-          : ready
-            ? `Based on ${formatUsd(ready.amountCents)} you entered, at ${merchantName(view.merchantId)}.`
-            : `This ${merchantName(view.merchantId)} cart can’t be read right now. Enter the amount to compare.`}
-        {ready?.amountKind === 'subtotal' && !ready.amountEdited && ' Tax and shipping are not included.'}
-      </p>
+      {ready ? (
+        <p className="supporting">
+          {ready.cartAmountCents !== null && !ready.amountEdited
+            ? `Based on ${formatUsd(ready.cartAmountCents)} cart ${KIND_LABELS[ready.amountKind!]} at ${merchantName(view.merchantId)}.`
+            : `Based on ${formatUsd(ready.amountCents)} you entered, at ${merchantName(view.merchantId)}.`}
+          {ready.amountKind === 'subtotal' && !ready.amountEdited && ' Tax and shipping are not included.'}
+        </p>
+      ) : (
+        <RatesResult catalog={rates!.catalog} result={rates!.result} merchantId={view.merchantId} />
+      )}
       <form
         className="badge-amount"
         onSubmit={(event) => {
@@ -359,7 +366,12 @@ function ReadyBody({
           submit();
         }}
       >
-        <Field id="badge-amount" label="Amount (USD)" error={inputError || undefined}>
+        <Field
+          id="badge-amount"
+          label={ready ? 'Amount (USD)' : 'Amount (USD, optional)'}
+          helperText={ready ? undefined : 'Enter an amount only if you want a dollar estimate.'}
+          error={inputError || undefined}
+        >
           {(control) => (
             <TextInput
               {...control}
@@ -386,28 +398,28 @@ function ReadyBody({
           )}
         </div>
       </form>
+      <Field id="badge-payment" label="Payment method">
+        {(control) => (
+          <Select
+            {...control}
+            value={view.paymentPath}
+            disabled={busy}
+            onChange={(event) =>
+              void apply({ type: 'badge:set-payment', paymentPath: event.target.value as PaymentPathV3 })
+            }
+          >
+            {Object.entries(PAYMENT_LABELS)
+              .filter(([value]) => value !== 'venmo' || view.catalog.schemaVersion === 3)
+              .map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+          </Select>
+        )}
+      </Field>
       {ready && (
         <>
-          <Field id="badge-payment" label="Payment method">
-            {(control) => (
-              <Select
-                {...control}
-                value={ready.paymentPath}
-                disabled={busy}
-                onChange={(event) =>
-                  void apply({ type: 'badge:set-payment', paymentPath: event.target.value as PaymentPathV3 })
-                }
-              >
-                {Object.entries(PAYMENT_LABELS)
-                  .filter(([value]) => value !== 'venmo' || ready.catalog.schemaVersion === 3)
-                  .map(([value, label]) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-              </Select>
-            )}
-          </Field>
           {ready.result.rankingMayChange && (
             <p className="supporting">{rankingNote(ready.result, ready.catalog)}</p>
           )}

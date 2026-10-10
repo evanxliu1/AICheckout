@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { DEBOUNCE_MS, MAX_SENDS, startAutoReader } from '../src/badge/auto-reader';
-import type { ReaderEnvironment } from '../src/badge/auto-reader';
+import type { PageMode, ReaderEnvironment } from '../src/badge/auto-reader';
+import type { ManualRead } from '../src/checkout/manual-reader';
 import { createBadgeFrame, frameMessage } from '../src/badge/frame';
 import { observeCart } from '../src/badge/observe';
 import type { PageRead } from '../src/checkout/page-reader';
@@ -14,9 +15,21 @@ const found = (amountCents: number): PageRead => ({
   extractorVersion: 'bestbuy-summary-v1',
 });
 
+/** Legacy cart URLs end in /cart; order pages contain thank-you; a hinted page (the generic detector)
+ * contains "basket"; anything else gets no reader. */
+const modeOf = (url: string): PageMode =>
+  url.includes('thank-you')
+    ? 'order'
+    : url.endsWith('/cart')
+      ? 'legacy'
+      : url.includes('basket')
+        ? 'generic'
+        : 'none';
 function environment(overrides: Partial<ReaderEnvironment> = {}) {
-  let reading: PageRead = found(2723);
+  let reading: ManualRead = found(2723);
+  let page: 'legacy' | 'cart' | 'checkout' | 'none' = 'legacy';
   let url = 'https://www.bestbuy.com/cart';
+  let navigate: (() => void) | null = null;
   let onChange: (() => void) | null = null;
   const timers = new Map<number, () => void>();
   let nextTimer = 1;
@@ -39,9 +52,11 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
   const env: ReaderEnvironment = {
     url: () => url,
     initialUrl: () => initial ?? url,
-    read: vi.fn(() => reading),
-    isCart: (value) => value.endsWith('/cart'),
-    isOrderConfirmation: (value) => value.includes('thank-you'),
+    read: vi.fn(() => ({ page, reading })),
+    mode: modeOf,
+    onNavigate: (listener) => {
+      navigate = listener;
+    },
     send: vi.fn(async (message) => (message.framed ? { show: true } : { show: true, nonce: 'n'.repeat(32) })),
     observe: vi.fn((callback) => {
       onChange = callback;
@@ -68,8 +83,14 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
   return {
     env,
     frame,
-    setReading: (value: PageRead) => (reading = value),
+    setReading: (value: ManualRead) => (reading = value),
+    setPage: (value: typeof page) => (page = value),
     setUrl: (value: string) => (url = value),
+    /** A same-document navigation to `value` (history push, hash change). */
+    navigate: (value: string) => {
+      url = value;
+      navigate?.();
+    },
     setInitialUrl: (value: string) => (initial = value),
     removeFrame: () => (mounted = false),
     mutate: () => onChange?.(),
@@ -204,7 +225,7 @@ describe('automatic cart reader', () => {
     await pushed.flush();
     expect(pushed.env.send).not.toHaveBeenCalled();
   });
-  it('stops observing while hidden or after page hide, and leaves a cart reached by in-page navigation', async () => {
+  it('stops observing while hidden or after page hide, and leaves a cart left by in-page navigation', async () => {
     const t = environment();
     startAutoReader(t.env);
     await t.flush();
@@ -221,6 +242,97 @@ describe('automatic cart reader', () => {
     startAutoReader(u.env);
     u.pageHide();
     expect(u.observing()).toBe(false);
+  });
+});
+
+describe('the badge at any store (Phase 13c)', () => {
+  const generic = (amountCents: number): ManualRead => ({
+    status: 'found',
+    merchantId: 'generic-us-online',
+    currency: 'USD',
+    amountCents,
+    kind: 'estimated-total',
+    extractorVersion: 'generic-reader-v1',
+  });
+  it('reads a hinted page through the detector and sends the reading when it is a cart', async () => {
+    const t = environment();
+    t.setUrl('https://shop.example.com/basket');
+    t.setPage('cart');
+    t.setReading(generic(10000));
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledWith({ type: 'cart:reading', reading: generic(10000), framed: false });
+    expect(t.frame.show).toHaveBeenCalledWith('n'.repeat(32));
+    expect(t.observing()).toBe(true);
+  });
+  it('sends a withheld reading on a cart page (the worker shows the rates view)', async () => {
+    const t = environment();
+    t.setUrl('https://shop.example.com/basket');
+    t.setPage('checkout');
+    t.setReading({ status: 'unavailable', reason: 'withheld' });
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledWith({
+      type: 'cart:reading',
+      reading: { status: 'unavailable', reason: 'withheld' },
+      framed: false,
+    });
+  });
+  it('sends nothing and hides when the detector says the hinted page is not a cart, but keeps watching it', async () => {
+    const t = environment();
+    t.setUrl('https://shop.example.com/basket');
+    t.setPage('none');
+    t.setReading({ status: 'unavailable', reason: 'withheld' });
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.send).not.toHaveBeenCalled();
+    expect(t.frame.hide).toHaveBeenCalled();
+    expect(t.observing()).toBe(true);
+    // The cart renders later on the same URL.
+    t.setPage('cart');
+    t.setReading(generic(4200));
+    t.mutate();
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledExactlyOnceWith({
+      type: 'cart:reading',
+      reading: generic(4200),
+      framed: false,
+    });
+  });
+  it('reads nothing and observes nothing on a page with no hint, until a navigation reaches a cart; leaving hides it', async () => {
+    const t = environment();
+    t.setUrl('https://shop.example.com/');
+    t.setPage('cart');
+    t.setReading(generic(10000));
+    startAutoReader(t.env);
+    await t.flush();
+    expect(t.env.read).not.toHaveBeenCalled();
+    expect(t.env.observe).not.toHaveBeenCalled();
+    expect(t.env.send).not.toHaveBeenCalled();
+    // history.pushState('/basket'): the check waits one debounce for the page to render.
+    t.navigate('https://shop.example.com/basket');
+    expect(t.env.read).not.toHaveBeenCalled();
+    expect(t.pending()).toBe(1);
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledExactlyOnceWith({
+      type: 'cart:reading',
+      reading: generic(10000),
+      framed: false,
+    });
+    expect(t.frame.shown()).toBe(true);
+    expect(t.observing()).toBe(true);
+    // Back to the home page: hidden, no observer, no read.
+    (t.env.read as ReturnType<typeof vi.fn>).mockClear();
+    t.navigate('https://shop.example.com/');
+    await t.flush();
+    expect(t.frame.shown()).toBe(false);
+    expect(t.observing()).toBe(false);
+    expect(t.env.read).not.toHaveBeenCalled();
+    // And into the cart again: the reading is sent anew (the worker forgot it on navigation).
+    t.navigate('https://shop.example.com/basket');
+    await t.flush();
+    expect(t.env.send).toHaveBeenCalledTimes(2);
+    expect(t.frame.shown()).toBe(true);
   });
 });
 

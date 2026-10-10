@@ -43,6 +43,14 @@ describe('worker routing by sender', () => {
       tabId: 7,
       url: 'https://www.bestbuy.com/cart',
     });
+    // Phase 13c: any https site's top frame, not only the legacy stores'.
+    expect(
+      routeMessage({ type: 'cart:reading' }, { ...content, url: 'https://shop.example.com/basket' }, ids),
+    ).toEqual({
+      kind: 'content',
+      tabId: 7,
+      url: 'https://shop.example.com/basket',
+    });
     expect(routeMessage({ type: 'order:page' }, { ...content, frameId: 1 }, ids)).toEqual({ kind: 'deny' });
     expect(
       routeMessage({ type: 'cart:reading' }, { ...content, url: 'http://www.bestbuy.com/cart' }, ids),

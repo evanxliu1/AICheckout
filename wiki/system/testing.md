@@ -82,7 +82,8 @@ Both trigger on every `push` and `pull_request` (steps rechecked against the wor
 ## How the browser layer works
 
 - Extension specs load the unpacked build into Chromium. [`e2e/global-setup.ts`](../../extension/e2e/global-setup.ts) builds `dist-e2e` with `VITE_E2E_CATALOG_DATE` set to yesterday (UTC) so the bundled catalog is always valid; the release `dist/` used by package and release-asset specs is never re-dated.
-- Merchant pages are fixtures served at the real hosts through `context.route` ([`e2e/badge.spec.ts`](../../extension/e2e/badge.spec.ts)); no live retailer is contacted. [`e2e/hosts.ts`](../../extension/e2e/hosts.ts) derives the expected permission set from the adapters.
+- `lifecycle.spec.ts` shows activeTab access ending with navigation on an `http:` page, because every `https:` page is readable through the badge's host permission since Phase 13c.
+- Merchant pages are fixtures served at the real hosts through `context.route` ([`e2e/badge.spec.ts`](../../extension/e2e/badge.spec.ts); synthetic stores at `shop.example.com` in [`e2e/badge-any-store.spec.ts`](../../extension/e2e/badge-any-store.spec.ts)); no live retailer is contacted. [`e2e/hosts.ts`](../../extension/e2e/hosts.ts) pins the expected permission set (`https://*/*` since Phase 13c).
 - `e2e/lifecycle.spec.ts` covers popup closure and worker shutdown; `e2e/package.spec.ts` inspects the packaged zip's manifest and permissions.
 - Review and site specs start the compiled API on an ephemeral loopback port so pages load under production headers; review real-stack specs create and delete disposable local accounts.
 

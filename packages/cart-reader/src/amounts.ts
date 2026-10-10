@@ -39,6 +39,7 @@ export const DECIDING_MARKERS: Record<string, string> = {
   LE: 'EGP',
   'L.E.': 'EGP',
   'ج.م': 'EGP',
+  'ج م': 'EGP',
   KSh: 'KES',
   'د.إ': 'AED',
   'ر.س': 'SAR',

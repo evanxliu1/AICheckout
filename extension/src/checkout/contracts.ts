@@ -35,6 +35,7 @@ export const probeSchema = z.strictObject({
         'unsupported-currency',
         'page-loading',
         'withheld',
+        'not-a-cart',
       ]),
     }),
   ]),

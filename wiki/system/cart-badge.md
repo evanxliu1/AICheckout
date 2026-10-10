@@ -1,13 +1,13 @@
 ---
 type: System Component
 title: Cart badge
-description: The automatic cart badge (Phase 3b) — content script, sender-based worker routing, per-tab badge sessions, the isolated iframe UI, URL-only order detection and savings records.
+description: The automatic cart badge (Phase 3b, at any https store since Phase 13c) — content script on every https page, one reader per URL, sender-based worker routing, per-tab badge sessions, the isolated iframe UI with the amount and rates views, URL-only order detection and savings records at the legacy stores.
 status: stable
 tags: [system, extension, badge, privacy]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-03T03:05:00Z
-verified_commit: 7322dec
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-10T08:00:00Z
+verified_commit: 1c684a5
 sources:
   - resource: ../../extension/src/badge/content.ts
     title: Badge content script
@@ -29,13 +29,19 @@ sources:
     title: Savings math
   - resource: ../../extension/vite.config.ts
     title: Manifest generation for the badge
+  - resource: ../../extension/src/checkout/manual-reader.ts
+    title: readAnyCart (one reader per URL)
+  - resource: ../../extension/src/components/RatesResult.tsx
+    title: Rates view
+  - resource: ../product/phase-13c-cart-detection.md
+    title: Phase 13c plan
   - resource: ../archive/phase2-goal.md
     title: Phase 3b plan and decisions (archived)
 ---
 
 # Cart badge
 
-On a supported cart page the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right; clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
+On a cart or checkout page at any https store (Phase 13c, 2026-10-10, [plan](../product/phase-13c-cart-detection.md); the three legacy adapters' cart pages since Phase 3b) the extension shows, without a click, the best owned card and its estimated cash back in a small pill bottom-right, or, when the reader is not certain of the amount, the best card and its rate (the **rates view**, never a prompt for an amount); clicking expands a panel with every owned card ranked, the applied rule and conditions, a payment-method selector and an editable amount. Built on branch `phase3b-auto-badge` (PR #13) with follow-ups on `phase3b-followups` (PR #14); both merged to `main` on 2026-10-02 (`7322dec`). The content script never receives card or wallet data: it sends the adapter's reading to the worker and learns only `{show: boolean}`; card data reaches only the badge iframe, an extension page in a closed shadow root.
 
 Verified 2026-10-02 against `7322dec` by reading the code and running the extension unit tests (21 files, 378 tests pass, including `auto-reader.test.ts`, `badge-routing.test.ts`, `badge-service.test.ts`). The Stage 2 M6 changes (trimmed catalog in the `ready` view, catalog from the vault snapshot) were verified on branch `s2-m6-extension-state` with the unit tests and `e2e/badge.spec.ts` (passed), and merged with PR #26. Since PR #27 the badge ranks against the bundled 178-card `CATALOG_V3` (only the owned cards' slice reaches the iframe).
 
@@ -53,21 +59,27 @@ Ocean theme (branch `ui-ocean-theme`, merged with `main` on 2026-10-03; [decisio
 
 | Item | Value | Where |
 | --- | --- | --- |
-| Content-script reach | Union of adapters' `matchPatterns` (cart and order pages only), `run_at: document_idle`, top frame only | `badgeManifest` plugin in [`vite.config.ts`](../../extension/vite.config.ts) |
-| Iframe page | `src/badge/index.html`, web-accessible only on `https://<adapter host>/*` | same |
+| Content-script reach | `https://*/*` (Phase 13c), `run_at: document_idle`, top frame only; `host_permissions` `https://*/*` plus the catalog origin | `badgeManifest` plugin in [`vite.config.ts`](../../extension/vite.config.ts) |
+| Iframe page | `src/badge/index.html`, web-accessible on `https://*/*`, `use_dynamic_url: false` (kept: the worker routes `badge:*` by this exact URL and the content script cannot obtain a dynamic one; any site can therefore detect the extension by fetching the page; [decision](../decisions/2026-10-10-rates-view-reference-amount-and-spa-navigation.md)) | same |
+| Reader per URL | A legacy adapter's URL: that adapter (order pages and savings included); any other https page: `cartUrlHint(url, title)` first (null → no DOM read, no observer), then `readCartPage` (detector and reader in one pass) | [`content.ts`](../../extension/src/badge/content.ts), [`manual-reader.ts:readAnyCart`](../../extension/src/checkout/manual-reader.ts) |
+| Merchant | `merchantForCheckout(url)` on a legacy cart URL, else `merchantForTab(url)` (a legacy store's other pages name that store, every other site `generic-us-online`); generic readings carry `generic-reader-v1` | [`badge-service.ts:content`](../../extension/src/background/badge-service.ts) |
+| Rates view reference | `RATES_REFERENCE_CENTS` = 10,000 ($100.00): below every catalog cap, so an estimate's cents are its rate in basis points | [`contracts.ts`](../../extension/src/badge/contracts.ts) |
+| Single-page navigation | Navigation API `currententrychange` (fallback `popstate`, `hashchange`), then one debounce before the check | `content.ts:onNavigate`, `auto-reader.ts` |
+| Built content script | `dist/src/badge/content.js` 46,961 bytes (2026-10-10, after the 13c.3 review and re-check fixes; 44,268 before them; it bundles the detector and reader); the manual reader `dist/src/checkout/content.js` 42,757 bytes | `vite.config.ts` content-script plugin |
 | Debounce | 500 ms after DOM mutations | [`auto-reader.ts:DEBOUNCE_MS`](../../extension/src/badge/auto-reader.ts) |
 | Read budget | 120 changed readings sent per page load, then observation stops (unchanged readings do not count) | `auto-reader.ts:MAX_SENDS` |
 | Observed mutations | In `<body>`: `childList`, `subtree`, `characterData`, attributes `aria-busy`, `class`, `hidden`. On `<html>`: direct `childList` only, so removing the badge host is noticed at once | [`observe.ts:observeCart`](../../extension/src/badge/observe.ts) |
 | Per-tab session | `checkoutBadgeTabsV1` in `chrome.storage.session` | [`contracts.ts:BADGE_TABS_KEY`](../../extension/src/badge/contracts.ts) |
 | Order window | 3 h from the last recommendation, same tab, same merchant | `ORDER_WINDOW_MS` |
 | Host element | `<ai-checkout-badge>`, `position: fixed`, 16 px margin, `z-index: 2147483647`, all styles inline `!important`, appended to `<html>` (outside `<body>`) | [`frame.ts:createBadgeFrame`](../../extension/src/badge/frame.ts) |
-| Auto-mode engine inputs | `eligiblePurchase: 'eligible'`, `onlineRetail` from the merchant profile (`unknown` for a v1 catalog), payment path from the tab entry (default `card`) | [`badge-service.ts:autoPurchase`](../../extension/src/background/badge-service.ts) |
+| Auto-mode engine inputs | `eligiblePurchase: 'eligible'`, `onlineRetail` from the merchant profile (the engine's `GENERIC_MERCHANT_PROFILE` for `generic-us-online`; `unknown` for a v1 catalog), payment path from the tab entry (default `card`) | [`badge-service.ts:autoPurchase`](../../extension/src/background/badge-service.ts) |
+| Settings | `checkoutSettingsV1`: `disabledMerchants` (legacy ids), `showOnOtherStores` (default `true`), `disabledSites` (hostnames, ≤ 500); stored values from before 13c parse with the defaults | `contracts.ts:settingsSchema` |
 
 ## How it works
 
 ### Reading
 
-[`auto-reader.ts:startAutoReader`](../../extension/src/badge/auto-reader.ts) is DOM-free for testing; [`content.ts`](../../extension/src/badge/content.ts) supplies the page. On a cart URL it reads via `readCheckoutPage` (the same adapter interpreter as the popup, see [Extension](extension.md#site-adapters)), keys the reading, and sends `cart:reading` only when the key changes. It pauses while the tab is hidden and on `pagehide`; a `pageshow` from the back/forward cache (`persisted: true`) resumes it and re-sends the reading, because the navigation cleared it in the worker. It stops for good and hides the badge if a single-page navigation leaves the cart. An unchanged reading is not re-sent unless the worker wanted the badge shown and the page removed the frame; that re-send gets a new frame. An `unavailable` reading hides the pill unless the panel is expanded (the panel then says "Can't read this cart — enter the amount"). On an order-confirmation URL it sends `order:page` once and never reads the page.
+[`auto-reader.ts:startAutoReader`](../../extension/src/badge/auto-reader.ts) is DOM-free for testing; [`content.ts`](../../extension/src/badge/content.ts) supplies the page and the page **mode** per URL: `order` (a legacy adapter's order path), `legacy` (an adapter's cart URL, read via `readCheckoutPage`, the same interpreter as the popup, see [Extension](extension.md#site-adapters)), `generic` (any other URL whose URL or `document.title` carries a cart or checkout word, `cartUrlHint`), or `none` (nothing is read and no observer is attached). On a `legacy` or `generic` page it reads through `readAnyCart` (one pass: detection and reading), keys the reading, and sends `cart:reading` only when the key changes. A hinted page the detector calls `none` (a product page with an open drawer, an empty cart, `title-only`) sends nothing and hides the badge while the observer keeps watching the page. Same-document navigation (`onNavigate`) schedules a check one debounce later: entering a cart starts reading and attaches the observer, leaving it hides the badge and disconnects; the reader no longer stops for good when a navigation leaves the cart. It pauses while the tab is hidden and on `pagehide`; a `pageshow` from the back/forward cache (`persisted: true`) resumes it and re-sends the reading, because the navigation cleared it in the worker. An unchanged reading is not re-sent unless the worker wanted the badge shown and the page removed the frame; that re-send gets a new frame. An `unavailable` reading with reason `withheld`, `summary-missing` or `ambiguous-amount` (`RATES_VIEW_REASONS`: a cart whose amount is uncertain) shows the rates view; `page-loading`, `empty-cart`, `unsupported-currency` and `unsupported-page` hide the pill unless the panel is expanded. On an order-confirmation URL it sends `order:page` once and never reads the page (legacy stores only; generic thank-you pages are out of scope).
 
 ### Message routing
 
@@ -77,16 +89,16 @@ Ocean theme (branch `ui-ocean-theme`, merged with `main` on 2026-10-03; [decisio
 | --- | --- | --- |
 | `checkout:*`, `settings:*` | `sender.id` = this extension and URL exactly the popup or onboarding page | `page` (full API) |
 | `badge:*` (except `badge:changed`) | This extension, URL exactly `src/badge/index.html`, inside a tab, `frameId > 0` | `badge` with `tabId` from sender |
-| `cart:reading`, `order:page` | This extension's content script, `https:` URL, `frameId === 0`, inside a tab | `content` with `tabId`, `url` |
+| `cart:reading`, `order:page` | This extension's content script, any `https:` URL, `frameId === 0`, inside a tab | `content` with `tabId`, `url` |
 | anything else from those senders | | `deny` (`{ok: false}`) or `ignore` |
 
 ### Worker side
 
 [`badge-service.ts:createBadgeService`](../../extension/src/background/badge-service.ts) serialises work in one queue.
 
-- `content()` validates with `contentMessageSchema`, re-derives the merchant from the sender URL (a reading for another merchant is refused), updates the tab entry (`reading`, `unreadable`, clears a typed amount when the cart changes) and replies `show` only for a `found` reading on a non-dismissed, non-disabled site.
-- `view()` builds a `BadgeView`: `hidden`, `locked`, `damaged`, `no-cards`, `unreadable`, `unavailable`, `ready` (comparison, catalog slice, wallet), `order`, `recorded`. It reads the state and the catalog in effect from the vault's `snapshot()` (`{status, state, catalog}`; both null while locked or damaged). The `ready` view's catalog is [`badgeCatalog`](../../extension/src/background/badge-service.ts): only the owned cards, this merchant, their programs, the brands and gates their rules name and the sources they cite, never the whole catalog (a 20-card slice of a 1 MiB catalog is under 160 KiB, tested in `state-v3.test.ts`). Computing `ready` stores `recommendation {purchase, recommendedCardId, at}` for order detection.
-- `badge()` handles `badge:get`, `set-amount`, `set-payment` (Venmo too; the selector offers it only with catalog v3 terms, and `autoPurchase` compares a card payment if an older catalog is in effect), `dismiss` (for the tab's life), `disable-site` (adds to `disabledMerchants` in settings), `answer-order`, `open` (popup via `chrome.action.openPopup`, falling back to a tab; or onboarding).
+- `content()` validates with `contentMessageSchema`, re-derives the merchant from the sender URL (`merchantForCheckout`, else `merchantForTab`; a reading for another merchant, or a generic reading without `generic-reader-v1`, or an adapter reading without its adapter's version, is refused), records the tab's hostname (`host`, never the path), updates the tab entry (`reading`, `unreadable`, clears a typed amount when the cart changes) and replies `show` for a `found` reading or a rates-view reason on a visible site: not dismissed, a legacy store not in `disabledMerchants`, a generic store with `showOnOtherStores` on and its host not in `disabledSites`.
+- `view()` builds a `BadgeView`: `hidden`, `locked`, `damaged`, `no-cards`, `rates` (no amount read or typed: the comparison at `RATES_REFERENCE_CENTS`, catalog slice, wallet; replaced `unreadable` in 13c), `unavailable`, `ready` (comparison, catalog slice, wallet), `order`, `recorded`. It reads the state and the catalog in effect from the vault's `snapshot()` (`{status, state, catalog}`; both null while locked or damaged). The `ready` view's catalog is [`badgeCatalog`](../../extension/src/background/badge-service.ts): only the owned cards, this merchant, their programs, the brands and gates their rules name and the sources they cite, never the whole catalog (a 20-card slice of a 1 MiB catalog is under 160 KiB, tested in `state-v3.test.ts`). Computing `ready` stores `recommendation {purchase, recommendedCardId, at}` for order detection.
+- `badge()` handles `badge:get`, `set-amount`, `set-payment` (Venmo too; the selector offers it only with catalog v3 terms, and `autoPurchase` compares a card payment if an older catalog is in effect), `dismiss` (for the tab's life), `disable-site` (a legacy store's id to `disabledMerchants`; a generic store's host to `disabledSites`, never the shared generic id), `answer-order`, `open` (popup via `chrome.action.openPopup`, falling back to a tab; or onboarding).
 - `navigated(tabId)` clears the reading and typed amount; dismissal, payment choice and the pending recommendation survive. `removed(tabId)` deletes the entry.
 - Popup/onboarding writes trigger `badge:changed`, a runtime broadcast that reaches extension pages (the iframes), never content scripts.
 
@@ -94,7 +106,7 @@ Ocean theme (branch `ui-ocean-theme`, merged with `main` on 2026-10-03; [decisio
 
 [`frame.ts`](../../extension/src/badge/frame.ts) creates the host element with a **closed** shadow root holding a cross-origin `chrome-extension://` iframe, so page scripts can see the host but not its contents. The iframe ([`BadgeApp.tsx`](../../extension/src/badge/BadgeApp.tsx), [`client.ts`](../../extension/src/badge/client.ts)) talks to the worker via `chrome.runtime.sendMessage` and posts only `{source: 'ai-checkout-badge', type: 'size', width, height, expanded}` or `{type: 'hide'}` to `location.ancestorOrigins[0]`. The host accepts a message only if `event.source` is its iframe's window, `event.origin` is the extension origin, and the shape has exactly the expected keys with sizes in 0–4000.
 
-Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2 M7, `estimates.ts:pillReward`): `· {$x} in store rewards`, `· {$x} in points` (or miles; a published estimate reads `· est. {$x} in points`, spelled "estimated" in the accessible name; an issuer's or the shopper's value is named in the accessible name), and for a program without a value its units, `· {n} miles`; a range reads `$x–$y`, a $0 minimum `up to $y`; `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), `Can't read this cart — enter the amount`, `Did you pay with your recommended card?`.
+Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2 M7, `estimates.ts:pillReward`): `· {$x} in store rewards`, `· {$x} in points` (or miles; a published estimate reads `· est. {$x} in points`, spelled "estimated" in the accessible name; an issuer's or the shopper's value is named in the accessible name), and for a program without a value its units, `· {n} miles`; a range reads `$x–$y`, a $0 minimum `up to $y`; `Unlock to see your best card` (or `Unlock to record this order`), `Pick your cards to see your best card` (opens onboarding), the rates view `Use {card} · {rate}` (`estimates.ts:rateWording`: `2% back`, `1%–3% back` where conditions decide, `2 miles per $1 (est. 2%)`, units alone for a program without a value; accessible name "… at this store (AI Checkout). The cart amount was not read"), `Did you pay with your recommended card?`. The rates panel ([`RatesResult.tsx`](../../extension/src/components/RatesResult.tsx), shared with the popup) says the amount wasn't read and that rates don't depend on it, shows the engine's `rankingNote` when conditions could change the order and a cap note (`ratesCapped`) when an applied rule has a spend cap, lists the cards by rate, and keeps the optional amount field ("Amount (USD, optional)") and the payment selector; nothing asks for an amount.
 
 ### Order detection and savings
 
@@ -113,17 +125,18 @@ Pill texts by view: `Use {card} · {$x} back` for cash back; catalog v3 (Stage 2
 
 - Order-confirmation paths are unverified guesses for all three adapters (`orderConfirmation.verified: false`). A wrong path only means no savings prompt. Open until checked on real orders.
 - Recorded cart amounts are the last cart reading (subtotal or estimated total), not the charged total; rewards are guaranteed minimums. Both are labelled estimates in the UI.
-- The badge reads only inside the adapter's summary selector; it never reads order pages, item names, addresses or form values.
-- Settings default to `{disabledMerchants: []}` when missing or invalid; the badge is on for every supported site by default.
+- On a legacy cart URL the badge reads only inside the adapter's summary selector; elsewhere the generic reader reads visible summary text and currency hints ([Extension](extension.md#manual-cart-read-popup)). It never reads order pages, item names, addresses or form values, and only the reading leaves the page.
+- Settings default to `{disabledMerchants: [], showOnOtherStores: true, disabledSites: []}` when missing or invalid; the badge is on everywhere by default. `disabledSites` matches the exact lower-cased hostname.
 - Content scripts must stay free of Zod and wallet code: [`pages.ts`](../../extension/src/badge/pages.ts) and [`adapters/ids.ts`](../../extension/src/checkout/adapters/ids.ts) exist so the IIFE stays small.
-- Adding a merchant adapter automatically widens host permissions and content-script matches; `e2e/package.spec.ts` and [`e2e/hosts.ts`](../../extension/e2e/hosts.ts) pin the expected set.
+- Host permissions and content-script matches are `https://*/*` since 13c, independent of the adapters; `e2e/package.spec.ts`, `any-store.spec.ts`, `generic-read.spec.ts` and [`e2e/hosts.ts`](../../extension/e2e/hosts.ts) pin that set.
+- Privacy at any store: the content script makes no network requests and sends only the reading (`{status, merchantId, amountCents, kind, extractorVersion}` or a reason code); the worker stores per tab the merchant id, the hostname, the reading and the shopper's choices, never a URL path or page text; card data reaches only the badge iframe. `badge-any-store.spec.ts` checks the session storage for the fixture's path and text.
 
 ## Tests
 
 | Layer | Tests |
 | --- | --- |
-| Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume and `observeCart` host removal), `badge-routing.test.ts`, `badge-service.test.ts` |
-| Browser | `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no overflow at $99,999.99, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
+| Unit | `extension/tests/auto-reader.test.ts` (includes back/forward-cache resume, `observeCart` host removal, and since 13c the generic path: hinted page, withheld, detector `none`, navigation in and out of a cart with no read on unhinted pages), `badge-routing.test.ts` (any https host), `badge-service.test.ts` (generic merchant, version checks, rates view, `disabledSites`, the toggle, pre-13c settings), `rates-view.test.tsx` (`rateWording`, `ratesCapped`, `RatesResult`), `manual-reader.test.ts` (`readAnyCart`) |
+| Browser | `extension/e2e/badge-any-store.spec.ts` (Phase 13c, synthetic stores at `shop.example.com` and `other.example.com` through `context.route`): the amount view at the generic profile, the rates view and its panel (axe), a typed amount in the panel, no badge on a product page with an open drawer, an empty cart or a euro cart, single-page navigation into and out of a cart, "Not on this site" by host and the Settings switch, the "other stores" toggle with a legacy store unchanged, `https://*/*` as the only origin, nothing from the page in session storage. `extension/e2e/badge.spec.ts`: a catalog v3 badge (points pill with "est.", estimate label, a store card not accepted, Venmo, no overflow at $99,999.99, no inline styles, axe on pill and panel); onboarding, each supported cart, live updates on quantity change, closed shadow + cross-origin iframe, a removed host coming back without a body change, the covered-click status message, dismiss, per-site off, order savings, axe on badge and panel; no-cards and locked prompts. Fixture pages are served at the real hosts via `context.route`. |
 
 ## Related
 

@@ -187,6 +187,14 @@ export const requestSchema = z.discriminatedUnion('type', [
     expectedRevision: z.number().int().nonnegative(),
   }),
   z.strictObject({ type: z.literal('checkout:read-cart'), expectedRevision: z.number().int().nonnegative() }),
+  /** Read-only (Phase 13c): the owned cards ranked by rate at this store when no amount was read
+   * (compared at RATES_REFERENCE_CENTS, below every cap); nothing is stored. */
+  z.strictObject({
+    type: z.literal('checkout:rates'),
+    merchantId: purchaseSchema.shape.merchantId,
+    onlineRetail: purchaseSchema.shape.onlineRetail,
+    paymentPath: purchaseSchema.shape.paymentPath,
+  }),
   z.strictObject({
     type: z.literal('checkout:compare'),
     purchase: purchaseSchema,
