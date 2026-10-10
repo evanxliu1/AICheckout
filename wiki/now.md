@@ -34,7 +34,7 @@ As of 2026-10-10T22:30Z.
 
 ## Open questions and next steps
 
-**Wiki audit calls A1–A6 settled 2026-10-10** ([decision](decisions/2026-10-10-audit-calls.md)). Still open: D9 (licensing of future merchant data, eval labels and snapshots: MIT or proprietary), asked before 14.7.
+**Wiki audit calls A1–A6 settled 2026-10-10** ([decision](decisions/2026-10-10-audit-calls.md)). D9: merchant data, eval labels and snapshots stay MIT for now (Evan 2026-10-10, provisional).
 
 1. **Next catalog renewal before 2026-11-04T00:00Z** ([renewing](ops/catalog-release.md#renewing-a-catalog-before-it-expires)); plan it for about 2026-10-28 (Evan types `publish <version>`). Re-read the NerdWallet estimates (valid for catalogs verified up to 2026-11-01).
 2. Evan's call (asked 2026-10-07): allow known cart-only pages under `/checkout` (VTEX `/checkout/#/cart`, AbeBooks `/checkout/basket`) in any future capture; 11 stores were excluded as `would-need-forbidden-action`.

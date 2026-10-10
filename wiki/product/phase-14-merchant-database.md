@@ -72,7 +72,7 @@ All 2026-10-10:
    - the extension refreshes it, and the card catalog, weekly in the background (D8).
 7. **Growth.** After Release A, a shopper's tap on "Store not recognised? Suggest it" sends that store's domain. That button comes with Release A telemetry (Phase 15), not in Phase 14.
 
-**Still open:** D9, the licence of future merchant data, eval labels and snapshots (MIT like the code, or proprietary). It is asked before the first publish (14.7).
+**D9 (2026-10-10, provisional):** merchant data, eval labels and snapshots stay open source (MIT) for now. Evan: "not a set decision, can always change".
 
 ## 3. What a merchant record says
 
@@ -222,7 +222,7 @@ One branch and one PR per milestone, from the latest `main`. Each implementation
 | 14.4 | Candidates and pipeline | The frozen candidate list and split; merchant stages in `tools/catalog-pipeline`; the four subagent briefs; the `merchant-draft.1` prompt; the evidence-rule apply step; a dry run on 10 development stores | Dry run complete, cost measured | 1 day |
 | 14.5 | Seed | The pipeline on all ~500 candidates in packets of 25 | Every record agent-verified; release draft built | 2–3 days |
 | 14.6 | Measure | Gold labels on held-out, the one held-out run, URL match test, report | Report committed | ½ day |
-| 14.7 | Publish | D9 asked; Evan reviews the release in the review app; coordinator publishes on "publish merchants <version>"; the bundled snapshot updated to it | `GET /v1/merchants` serves it; the extension loads it | Evan's time |
+| 14.7 | Publish | Evan reviews the release in the review app; coordinator publishes on "publish merchants <version>"; the bundled snapshot updated to it | `GET /v1/merchants` serves it; the extension loads it | Evan's time |
 
 **Order:**
 - 14.1 and 14.4 start in parallel.
@@ -241,7 +241,7 @@ The sizes are guesses from Phases 13–13c; the total is roughly a week of worki
 | --- | --- |
 | Now | Approve this plan |
 | 14.2 | Nothing; `db-push` runs under the standing authorization |
-| 14.7 | Answer D9; review the release in the review app (only the deviations: bonus categories with evidence, brands, processors); type `publish merchants <version>` |
+| 14.7 | Review the release in the review app (only the deviations: bonus categories with evidence, brands, processors); type `publish merchants <version>` |
 | Any time | Change the evidence rule, the size or a store's record |
 
 ## 10. Risks and how the plan handles them
