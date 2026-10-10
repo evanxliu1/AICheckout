@@ -35,4 +35,4 @@ Evan, 2026-10-09 (answering the coordinator's question in chat): always on at in
 - Phase 17 keeps consented telemetry; its "optional automatic badge on all sites" is done by 13c.
 
 ## Status
-Accepted 2026-10-09 (Evan).
+Accepted 2026-10-09 (Evan). Built in 13c.2 on 2026-10-10; `use_dynamic_url` evaluated and kept `false` ([record](2026-10-10-rates-view-reference-amount-and-spa-navigation.md)).

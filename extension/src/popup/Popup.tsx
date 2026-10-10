@@ -170,8 +170,13 @@ export default function Popup({
       .then(([next, found]) => {
         if (cancelled) return;
         restore(next);
-        // An https store tab is read on open: a certain amount fills in, otherwise the rates view.
-        if (found.https && found.id && next.state.wallet.cards.length) void readCart(true, next, found.id);
+        // An https store tab is read on open: a certain amount fills in, otherwise the rates view. A
+        // cart already read, or a comparison saved for this store, is kept instead (reopening the popup
+        // must not discard it); "Read cart amount" re-reads.
+        const settled =
+          !!next.state.cart || (!!next.state.comparison && next.state.purchase?.merchantId === found.id);
+        if (found.https && found.id && next.state.wallet.cards.length && !settled)
+          void readCart(true, next, found.id);
       })
       .catch((err) => {
         if (!cancelled)

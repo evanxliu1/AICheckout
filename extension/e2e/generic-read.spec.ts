@@ -7,8 +7,8 @@ import { startNativePopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
 
 // Phase 13b: "Read cart amount" at a store with no adapter runs the generic reader (readCart) in
-// the injected manual reader. Shown USD fills the amount; another currency and a withheld read
-// leave it to the shopper; a legacy cart page is still the adapter's.
+// the injected manual reader. Shown USD fills the amount; another currency leaves it to the shopper;
+// a withheld read compares by rate (Phase 13c); a legacy cart page is still the adapter's.
 const row = (label: string, amount: string) => `<div><span>${label}</span><span>${amount}</span></div>`;
 const summary = (inner: string) =>
   `<!doctype html><meta charset="utf-8"><title>Checkout</title><h1>Checkout</h1><section>${inner}<button>Checkout</button></section>`;
@@ -71,16 +71,22 @@ test('reads a generic store’s cart total and compares it', async ({ browserNam
   );
 });
 
-test('asks for a typed amount when the reader withholds', async ({ browserName }, testInfo) => {
+test('compares by rate when the reader withholds, never asking for an amount (Phase 13c)', async ({
+  browserName,
+}, testInfo) => {
   expect(browserName).toBe('chromium');
-  // Two different totals in the summary: the reader is not certain and withholds.
+  // Two different totals in the summary: the reader is not certain and withholds. The popup read the
+  // tab when it opened (Phase 13c) and shows the rates view; "Read cart amount" re-reads to the same.
   await withStore(
     testInfo,
     'https://shop.example.com/cart',
     summary(row('Total', '$100.00') + row('Total', '$120.00')),
     async (popup) => {
       await popup.click('Read cart amount');
-      await expect.poll(popup.text).toContain('Enter the amount you will pay');
+      await expect.poll(popup.text).toContain('Best card by rate at Another U.S. online store');
+      expect(await popup.text()).toContain('The cart amount wasn’t read on this page');
+      expect(await popup.text()).toContain('2% back');
+      expect(await popup.text()).not.toMatch(/enter the amount you will pay/i);
       expect(await popup.evaluate("document.getElementById('purchase-amount').value")).toBe('');
       await popup.fill('purchase-amount', '120');
       await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
@@ -109,7 +115,8 @@ test('a legacy cart page is still read by its adapter, not the generic reader', 
 }, testInfo) => {
   expect(browserName).toBe('chromium');
   // A summary the generic reader would show, on Best Buy's cart URL: the adapter runs first and
-  // finds no Best Buy order summary. (checkout.spec.ts reads the real fixture through the adapter.)
+  // finds no Best Buy order summary, so the popup compares by rate at Best Buy (Phase 13c; the
+  // "summary missing" message is no longer shown). checkout.spec.ts reads the real fixture.
   await withStore(
     testInfo,
     'https://www.bestbuy.com/cart',
@@ -117,7 +124,8 @@ test('a legacy cart page is still read by its adapter, not the generic reader', 
     async (popup) => {
       expect(await popup.evaluate("document.getElementById('purchase-merchant').value")).toBe('best-buy-us');
       await popup.click('Read cart amount');
-      await expect.poll(popup.text).toContain('No readable order summary was found');
+      await expect.poll(popup.text).toContain('Best card by rate at Best Buy US');
+      expect(await popup.text()).not.toContain('Another U.S. online store purchase');
       expect(await popup.evaluate("document.getElementById('purchase-amount').value")).toBe('');
     },
   );

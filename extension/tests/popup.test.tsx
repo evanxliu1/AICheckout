@@ -205,6 +205,21 @@ describe('popup store from the open tab', () => {
     expect(read).toHaveBeenCalledTimes(2);
     expect(screen.queryByRole('alert')).toBeNull();
   });
+  it('keeps a saved comparison for the tab’s store instead of reading on open', async () => {
+    openOn('https://shop.example.com/cart');
+    render(<Popup />);
+    await fillPurchase();
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    cleanup();
+    read.mockClear();
+    render(<Popup />);
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect(read).not.toHaveBeenCalled();
+  });
   it('reads the cart on open on an https tab and fills a certain amount', async () => {
     openOn('https://shop.example.com/cart');
     read.mockResolvedValue({

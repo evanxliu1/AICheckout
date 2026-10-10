@@ -37,4 +37,4 @@ Coordinator's recommendation, within Evan's "no manual typing" and consistent wi
 - The ranking at an unknown amount can differ from the ranking at the real amount when caps or thresholds bind; the existing ranking note says so.
 
 ## Status
-Accepted 2026-10-09 (Evan's directive; option chosen by the coordinator, open to Evan's change).
+Accepted 2026-10-09 (Evan's directive; option chosen by the coordinator, open to Evan's change). Built in 13c.2 on 2026-10-10: the rates view ranks at $100 ([record](2026-10-10-rates-view-reference-amount-and-spa-navigation.md)).

@@ -85,13 +85,12 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
 
     await merchant.reload();
     await expect.poll(async () => (await readVaultState(worker)).cart).toBeNull();
+    // The reload invalidated the capture and its comparison; the popup reads the page again on open
+    // (Phase 13c) and shows a fresh, unconfirmed capture.
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read cart amount');
-    expect(await popup.text()).not.toContain('Your card estimate');
-    expect(await popup.text()).not.toContain('Read $27.23');
-    expect(await popup.evaluate("document.querySelector('input[type=checkbox]').checked")).toBe(false);
-    await popup.click('Read cart amount');
     await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    expect(await popup.text()).not.toContain('Your card estimate');
+    expect(await popup.evaluate("document.querySelector('input[type=checkbox]').checked")).toBe(false);
     await compareCapture(popup);
     await popup.close();
 
@@ -115,10 +114,8 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
     // Supported carts are readable through the badge's host permission, never other sites.
     expect(await canRead(cartTab)).toBe(true);
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read cart amount');
-    expect(await popup.text()).not.toContain('Your card estimate');
-    await popup.click('Read cart amount');
     await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    expect(await popup.text()).not.toContain('Your card estimate');
     await compareCapture(popup);
     await popup.close();
   } finally {

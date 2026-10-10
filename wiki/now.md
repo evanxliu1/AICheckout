@@ -4,13 +4,13 @@ title: Now
 description: Current state, active work, open questions and next steps. Rewritten at the end of every session.
 status: stable
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-10T01:10:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-10T08:00:00Z
 ---
 
 # Now
 
-As of 2026-10-10T01:10Z.
+As of 2026-10-10T08:00Z.
 
 ## Current state
 
@@ -28,7 +28,7 @@ As of 2026-10-10T01:10Z.
 
 ## Active work
 
-- **Phase 13c:** 13c.1 detector **done 2026-10-10** on `phase13c-cart-detection` (`packages/cart-reader/src/detect.ts`, `evals/reader/detect.mjs`; development quick loop: badge recall 93.0%, 0 false shows on `minicart-1` and `empty-cart`, hinted p95 10.9 ms; held-out A untouched, [plan progress](product/phase-13c-cart-detection.md#progress)). Next: 13c.2 badge everywhere (Fable 5.1 implementer; `readCartPage` gives detection and reading in one pass, `cartUrlHint` runs before any DOM work), 13c.3 independent review (Fable 5.1 reviewer), 13c.4 held-out detector run (`node evals/reader/detect.mjs --scored --split heldout-a --confirm-heldout-run 1`, once) and live home sweep (coordinator), 13c.5 reader coverage round, 13c.6 PR.
+- **Phase 13c:** 13c.1 detector **done 2026-10-10** (`packages/cart-reader/src/detect.ts`, `evals/reader/detect.mjs`; development quick loop: badge recall 93.0%, 0 false shows on `minicart-1` and `empty-cart`, hinted p95 10.9 ms; held-out A untouched). 13c.2 badge everywhere **done 2026-10-10** on `phase13c-cart-detection` ([plan progress](product/phase-13c-cart-detection.md#progress), [choices](decisions/2026-10-10-rates-view-reference-amount-and-spa-navigation.md)): `https://*/*`, one reader per URL, generic merchant and `disabledSites` in the worker, the rates view at $100 in the badge and popup, the popup's read on open, Navigation API for single-page carts, `e2e/badge-any-store.spec.ts`; gate green (lint, format, typecheck, 749 unit tests, build, browser suite). Next: 13c.3 independent review (Fable 5.1 reviewer; look at the "bag"-titled product page false show, the rates-view reasons set, the read-on-open skip rule), 13c.4 held-out detector run (`node evals/reader/detect.mjs --scored --split heldout-a --confirm-heldout-run 1`, once) and live home sweep (coordinator), 13c.5 reader coverage round, 13c.6 PR.
 
 ## Open questions and next steps
 

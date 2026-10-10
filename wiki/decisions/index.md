@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-10
+* [Phase 13c.2 implementation choices: rates at a $100 reference amount, Navigation API for single-page carts, static badge URL kept](./2026-10-10-rates-view-reference-amount-and-spa-navigation.md) — implementer: the rates view ranks with the engine at $100 (cents = basis points) and notes spend caps; `currententrychange` follows single-page carts; `use_dynamic_url` stays false because the worker routes by the static URL.
+
 ## 2026-10-09
 * [The automatic badge at any store, with access to all https sites at install](./2026-10-09-badge-on-all-sites.md) — Evan: `https://*/*` at install rather than an opt-in permission; Phase 13c, before Phase 14; Phase 15 docs widen.
 * [Never ask for a typed amount; the best card and its rate when the reader is not certain](./2026-10-09-never-ask-for-an-amount.md) — Evan: no manual typing; amounts still only when certain; rates view otherwise; category from the merchant profile, not the page.
