@@ -20,16 +20,10 @@ const invariant = (value, message) => {
   if (!value) throw new Error(message);
 };
 const same = (left, right) => JSON.stringify(left) === JSON.stringify(right);
-/** The automatic badge's reach comes from the bundled site adapters: their hosts and pages only. */
-const adapterDirectory = new URL('../src/checkout/adapters/', import.meta.url);
-const adapters = readdirSync(adapterDirectory)
-  .filter((name) => name.endsWith('.json'))
-  .sort()
-  .map((name) => JSON.parse(readFileSync(new URL(name, adapterDirectory), 'utf8')));
-export const BADGE_HOST_PERMISSIONS = [...new Set(adapters.flatMap((a) => a.match.hosts))]
-  .sort()
-  .map((host) => `https://${host}/*`);
-export const BADGE_MATCHES = adapters.flatMap((a) => a.matchPatterns);
+/** The automatic badge's reach (Phase 13c, decision 2026-10-09-badge-on-all-sites): every https site, so the
+ * badge can recognise a cart at any store. It must match `vite.config.ts`. */
+export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
+export const BADGE_MATCHES = ['https://*/*'];
 const PAGES = ['src/popup/index.html', 'src/badge/index.html', 'src/onboarding/index.html'];
 const manifestKeys = [
   'manifest_version',
@@ -112,7 +106,7 @@ export function inspectBuild(directory, expectedVersion) {
       same([...manifest.permissions].sort(), ['activeTab', 'scripting', 'storage']),
     'Unexpected extension permissions.',
   );
-  // Exactly the supported carts' hosts, plus at most one catalog origin (hosted builds).
+  // Exactly every https site, plus at most one catalog origin (hosted builds).
   invariant(
     Array.isArray(manifest.host_permissions) &&
       same(manifest.host_permissions.slice(0, BADGE_HOST_PERMISSIONS.length), BADGE_HOST_PERMISSIONS) &&

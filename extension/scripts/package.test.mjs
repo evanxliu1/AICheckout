@@ -105,7 +105,7 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
       m.host_permissions = [...BADGE_HOST_PERMISSIONS, 'https://user:password@catalog.example/*'];
     },
     (m) => {
-      // Another retailer's host is never added without an adapter.
+      // Nothing is added beyond every https site and one catalog origin.
       m.host_permissions = [
         ...BADGE_HOST_PERMISSIONS,
         'https://www.walmart.com/*',
@@ -204,26 +204,7 @@ test('missing references, private-key tripwires, dev clients and wrongly sized i
   assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Invalid 16px PNG/);
 });
 
-test('the badge reach is exactly these hosts and pages (widening it must change this test)', () => {
-  assert.deepEqual(BADGE_HOST_PERMISSIONS, [
-    'https://bestbuy.com/*',
-    'https://secure.newegg.com/*',
-    'https://www.amazon.com/*',
-    'https://www.bestbuy.com/*',
-  ]);
-  assert.deepEqual(BADGE_MATCHES, [
-    'https://www.amazon.com/gp/cart/view.html*',
-    'https://www.amazon.com/cart*',
-    'https://www.amazon.com/gp/buy/thankyou/*',
-    'https://www.amazon.com/checkout/*',
-    'https://www.bestbuy.com/cart*',
-    'https://bestbuy.com/cart*',
-    'https://www.bestbuy.com/checkout*',
-    'https://bestbuy.com/checkout*',
-    'https://secure.newegg.com/shop/cart*',
-    'https://secure.newegg.com/shop/checkout*',
-    'https://secure.newegg.com/shop/thankyou*',
-    'https://secure.newegg.com/shop/thank-you*',
-    'https://secure.newegg.com/shop/orderconfirmation*',
-  ]);
+test('the badge reach is exactly every https site (Phase 13c; changing it must change this test)', () => {
+  assert.deepEqual(BADGE_HOST_PERMISSIONS, ['https://*/*']);
+  assert.deepEqual(BADGE_MATCHES, ['https://*/*']);
 });
