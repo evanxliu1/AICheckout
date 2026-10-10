@@ -30,7 +30,7 @@ It is Evan Liu's portfolio project for LLM-engineering roles. The headline is a 
 | Reviewer (Evan) | Hosted review app; chat approval of each release (since 2026-10-05) | Source-cited drafts, diffs against the published catalog, explicit publish on his approval |
 | Recruiter / reader | Public site, results page, repo | Honest, reproducible numbers |
 
-Few real users are expected; quality and honesty of claims matter more than reach.
+Real users and usage metrics are goals since the Phase 10–17 plan and the 2026-10-10 data-collection decision ([decision](../decisions/2026-10-10-audit-calls.md)); quality and honesty of claims still come first. *(Until 2026-10-10: "Few real users are expected".)*
 
 ## What success means
 
@@ -47,7 +47,7 @@ Status per item: [roadmap](roadmap.md) and [now](../now.md).
 - An LLM call at checkout, or any model write path to the catalog.
 - Autonomous publication; broad scraping (Phase 12 captures a bounded, pre-registered sample of retail carts; it is not a crawler).
 - Non-U.S. cards, and recommendations in currencies other than USD (the Phase 12 reader eval reads totals worldwide with their currency; non-USD recommendations are a later phase).
-- Accounts for shoppers (cloud sync is a possible future phase, not planned work).
+- Accounts for shoppers: planned but not scheduled (Evan, 2026-10-10: "accounts later, once set up"); none before the MVP.
 
 ## Related
 
