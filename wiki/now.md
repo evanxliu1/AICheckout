@@ -5,16 +5,16 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T10:40:00Z
+  at: 2026-10-10T13:00:00Z
 ---
 
 # Now
 
-As of 2026-10-10T10:40Z.
+As of 2026-10-10T13:00Z.
 
 ## Current state
 
-- **`origin/main` is `6000085`** (PR #78, Phase 13b). Phases 7–13 and 13b are done; Phase 13c (cart detection and the badge at any store) is built, reviewed and measured on branch `phase13c-cart-detection`, PR pending ([plan](product/phase-13c-cart-detection.md), [roadmap](product/roadmap.md)).
+- **`origin/main` is `7a07113`** (PR #79, Phase 13c). Phases 7–13c are done; Phase 14 (merchant database) is planned ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)).
 - **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render last checked serving `e9fe387`; all 10 migrations on hosted ([hosting](ops/hosting.md)).
 - **Captures:** the main checkout holds every gitignored issuer capture ([capture folders](ops/catalog-release.md#capture-folders)) and the pane exports (`evals/merchants/capture/data/pane/`); `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them. Curation model: gpt-5.6-luna `xhigh`.
 - **Reader rules:** the reader shows an amount only when certain, otherwise withholds (rates only); generic reader only, no store configs. **Since 2026-10-08 (Evan) the ≥ 99% bar is a quality target, not a pass gate** ([decision](decisions/2026-10-08-pause-capture-quality-target.md)); results are reported with exact bounds, store counts and coverage (target 80% on `cart-1`).
@@ -28,7 +28,9 @@ As of 2026-10-10T10:40Z.
 
 ## Active work
 
-- **Phase 13c, PR pending** ([plan](product/phase-13c-cart-detection.md#progress), [report](../docs/evals/cart-detection-v1.md)). Built by Fable 5.1 implementers, independent Fable 5.1 reviews after each milestone (agent-verified), all must-fix and should-fix items applied. Detector held-out A run 1 (detector `9da996e`): badge recall 232/278 (83.5%), false shows 0/84 `minicart-1`, 0/133 `empty-cart`. Final detector `59dff8c` on development: recall 388/414 (93.7%), 0/119 and 0/189. Live home sweep: 0 false shows on 244 loaded sites (205 stores, 39 non-store). Reader coverage round (development only): 405 correct / 0 wrong / 317 withheld, `cart-1` 89.9% (was 86%), variants 0 wrong; the reader's held-out estimate stays v1 run 2. Gate: lint, format, typecheck, `npm test`, build, browser 21 passed / 3 skipped. Next: PR, merge after CI (Evan's go).
+- **Phase 13c merged 2026-10-10** (PR #79; [report](../docs/evals/cart-detection-v1.md)): the badge at any https store, the rates view, the popup reading on open; held-out detector recall 83.5% with 0 false shows; reader `cart-1` coverage 89.9% on development.
+- **Phase 14 planned 2026-10-10** ([plan](product/phase-14-merchant-database.md), [decision](decisions/2026-10-10-merchant-database-evidence.md)): about 500 stores, a bonus category only on issuer or corroborated evidence (otherwise the general rate), hosted releases, a seed pipeline. Next: 14.1 (schema and engine) and 14.4 (candidates and pipeline) in parallel.
+- **Data collection decided 2026-10-10** ([decision](decisions/2026-10-10-data-collection.md)): one onboarding opt-in, persistent random ID, exact amounts and owned cards, domains only on a tap, a minimal telemetry set in Release A.
 
 ## Open questions and next steps
 

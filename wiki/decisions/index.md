@@ -4,6 +4,8 @@ Dated records of choices, one per file, in the format **Context**, **Options con
 
 ## 2026-10-10
 * [Phase 13c.2 implementation choices: rates at a $100 reference amount, Navigation API for single-page carts, static badge URL kept](./2026-10-10-rates-view-reference-amount-and-spa-navigation.md) — implementer: the rates view ranks with the engine at $100 (cents = basis points) and notes spend caps; `currententrychange` follows single-page carts; `use_dynamic_url` stays false because the worker routes by the static URL.
+* [Data collection: one consent at onboarding, a persistent random ID, exact amounts and wallets, domains only on a tap, telemetry in Release A](./2026-10-10-data-collection.md) — Evan's answers to the 21 data-collection questions.
+* [Merchant database: about 500 stores, a category bonus only on issuer evidence or two agreeing public sources, otherwise the general rate](./2026-10-10-merchant-database-evidence.md) — Evan's Phase 14 calls; supersedes D5's ranges.
 
 ## 2026-10-09
 * [The automatic badge at any store, with access to all https sites at install](./2026-10-09-badge-on-all-sites.md) — Evan: `https://*/*` at install rather than an opt-in permission; Phase 13c, before Phase 14; Phase 15 docs widen.

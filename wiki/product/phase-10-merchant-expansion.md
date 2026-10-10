@@ -86,7 +86,7 @@ Each phase is one or more branches (`phaseN-<slug>`, one PR per branch) from the
 
 | # | Decision | Recommendation | Needed by | Status |
 | --- | --- | --- | --- | --- |
-| D1 | Telemetry is **off until the shopper agrees** on a dedicated screen; the opportunity event waits for the affiliate phase | Approve | Phase 17 | Open |
+| D1 | Telemetry is **off until the shopper agrees** on a dedicated screen; the opportunity event waits for the affiliate phase | Approve | Phase 17 | **Approved 2026-10-10** as one opt-in question at onboarding covering every metric ([decision](../decisions/2026-10-10-data-collection.md)) |
 | D2 | Merchant data as a **separate, versioned merchant release**; the coordinator publishes it on your chat "publish merchants <version>"; it carries profiles, categories, `processor` and `disabled` only (no store configs since 2026-10-06) | Approve | Phase 14 | Open |
 | D3 | All-sites access **optional**, asked on a click (not required at install) | Optional | Phase 17 | Open |
 | D4 | **Real-page capture:** one known item in a logged-out cart on ~150–200 top sites, non-Evan profile, no CAPTCHAs, monthly replays for a subset | Approve | Phase 10 | Approved 2026-10-05; since 2026-10-06 agent-driven in the browser pane, signed-in stores captured under guards, robots.txt recorded only, stop at 330 U.S. + 500 non-U.S. captured sites ([protocol `.8`](../../docs/evals/generic-reader-protocol.md#pane-capture-new-in-8)) |
@@ -96,7 +96,7 @@ Each phase is one or more branches (`phaseN-<slug>`, one PR per branch) from the
 | D8 | **Release A as Phase 15**, with weekly background refresh of catalog and merchant data (new disclosed network behaviour) | Approve | Phase 15 | Open |
 | D9 | **Licensing:** (a) MIT for everything; (b) MIT for code, future merchant data, eval labels and snapshots proprietary (files already published stay MIT) | a / b | Phase 14 | Open |
 | D10 | **LLM role:** merchant profiles and category evidence drafted by gpt-5.6-luna and measured | Approve | Phase 16 | Open |
-| D11 | **No automatic browsing data:** events never carry domains or merchants; the growth list comes from "Suggest this store" and "Report a problem" clicks | Approve | Phase 17 | Open |
+| D11 | **No automatic browsing data:** events never carry domains or merchants; the growth list comes from "Suggest this store" and "Report a problem" clicks | Approve | Phase 17 | **Approved 2026-10-10**: no automatic domains; domains only on a shopper's tap ([decision](../decisions/2026-10-10-data-collection.md)) |
 | D12 | **Affiliate hard rule:** never touch retailer affiliate links or cookies; offers only as labelled, user-initiated links in the extension | Approve | Phase 17 | Open |
 | D13 | **Release A keeps the automatic badge on Amazon, Best Buy and Newegg** (required hosts unchanged) until Release B | Keep / drop | Phase 15 | Open |
 | D14 | **Hosting:** stay on Render and Supabase free tiers until a usage trigger (weekly installs or egress) you set | Approve, with the trigger | Phase 15 | Open |

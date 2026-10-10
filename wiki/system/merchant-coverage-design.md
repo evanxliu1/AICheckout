@@ -96,6 +96,9 @@ Pre-registered on 2026-10-05 in [`docs/evals/generic-reader-protocol.md`](../../
 
 ## Category evidence
 
+**Superseded in part (Evan, 2026-10-10, [decision](../decisions/2026-10-10-merchant-database-evidence.md)):** weak evidence gives the general rate, never a range; a bonus category needs an issuer naming the store or two agreeing public sources (the store's official pages and a public merchant-code lookup); card statements are never used. The [Phase 14 plan](../product/phase-14-merchant-database.md) binds where this page differs.
+
+
 The bonus depends on the merchant category code the processor assigns; it is not public and varies by network and channel. Evidence classes: (1) issuer statements in captured card terms; (2) a network lookup (Mastercard merchant API: paid keys, a later decision and directive); (3) crowdsourced lookups, which may only corroborate, never copied; (4) business-type inference, `low`. A domain whose plausible category is a catalog bonus category (grocery, dining/delivery, drugstore, wholesale club, travel, department store, home improvement, electronics) needs class 1 or 2 evidence, otherwise its recommendation is a range; others default to `general-merchandise`.
 
 ## Permissions
