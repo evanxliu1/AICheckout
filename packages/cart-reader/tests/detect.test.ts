@@ -282,6 +282,29 @@ describe('detectCartPage', () => {
       page: 'none',
       reason: 'no-structure',
     });
+    // Re-check fixes: a hidden close control before a visible one still makes a drawer; any cart word in the popover's
+    // heading counts ("Added to your bag"); a fixed bottom bar holding a line (no close, no heading) is not a cart.
+    const closes = '<button style="display: none">Close</button><button aria-label="Close">×</button>';
+    expect(page(product + popover(closes), { url: 'https://a.example/shop/basket' })).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    expect(
+      page(product + popover('<h3>Added to your bag</h3>'), { url: 'https://a.example/shop/basket' }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    const bareBar = `<div style="position: fixed; bottom: 0; height: 120px">${item()}</div>`;
+    expect(
+      page(`<main><h1>Bags</h1><p>Sort by</p></main>${bareBar}`, { url: 'https://a.example/womens/bag' }),
+    ).toEqual({
+      page: 'none',
+      reason: 'no-structure',
+    });
+    // A sticky summary's promo field with a clear "×" button is not a drawer's close control.
+    const promo = `<main><h1>Your cart</h1>${item()}<aside style="position: fixed; top: 80px; height: 200px"><form><label>Promo code <input type="text"></label><button aria-label="Clear">×</button></form>${summary(row('Subtotal', '$20.00') + row('Total', '$20.00'))}</aside></main>`;
+    expect(page(promo)).toEqual({ page: 'cart', reason: 'url-summary' });
     // A summary made sticky by script (fixed, short, no heading or close control of its own) is the cart's.
     const sticky = `<main><h1>Your cart</h1>${item()}<aside style="position: fixed; top: 80px; height: 200px">${summary(row('Subtotal', '$20.00') + row('Total', '$20.00'))}</aside></main>`;
     expect(page(sticky)).toEqual({ page: 'cart', reason: 'url-summary' });
