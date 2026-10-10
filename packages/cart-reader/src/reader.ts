@@ -105,6 +105,8 @@ export type Ctx = {
   texts: Map<Element, string | null>;
   blocks: Map<Element, string>;
   visible: Map<Element, string>;
+  /** Open shadow roots of the page, nested ones included (filled by `analyze`). */
+  shadowRoots: ShadowRoot[];
 };
 
 /** Page-wide currency evidence, read lazily once: structured data (rule (b)) and currencies named in the text. */
@@ -165,6 +167,7 @@ export function analyze(
     texts: new Map(),
     blocks: new Map(),
     visible: new Map(),
+    shadowRoots: [],
   };
   // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways.
   if (document.body && view && ctx.layout && view.getComputedStyle(document.body).overflowX !== 'visible')
@@ -177,7 +180,7 @@ export function analyze(
   if (!document.body) return withhold('no-summary');
   const store = storefrontOf(options.url, root?.getAttribute('lang') ?? '');
   // Open shadow roots, nested ones included (a host inside a shadow tree is not in the document's own tree).
-  const shadowRoots: ShadowRoot[] = [];
+  const shadowRoots = ctx.shadowRoots;
   const findHosts = (scope: ParentNode) => {
     for (const el of scope.querySelectorAll('*'))
       if (el.shadowRoot) {

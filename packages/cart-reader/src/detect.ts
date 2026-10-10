@@ -149,7 +149,7 @@ const NOT_PAGE_RE =
   /\b(?:add|remove|delete|update|ajax|api|json|mini|count|quick|empty|clear|merge|share|saved|wishlist)\b|minicart/u;
 const PAGE_FILES = /\.(?:html?|php|aspx?|jsp|cfm|do|action)$/iu;
 const MAX_HEADING_TEXT = 80;
-const MAX_LINE_ITEM_TEXT = 600;
+const MAX_LINE_ITEM_TEXT = 800;
 const MAX_CONTROLS = 2000;
 
 export type UrlHint = { url: 'cart' | 'checkout' | null; title: 'cart' | 'checkout' | null };
@@ -244,10 +244,16 @@ export function readCartPage(
   if (!word) return none('title-only');
   if (reading.shown && reading.amountMinor === 0) return none('zero-total');
   // The reader's summary rows (visible, labelled, beside shipping, tax or a checkout control, not zero) in the main
-  // content. A summary of zeros is an empty cart's.
+  // content, whether or not the reader could show their amount. A summary of zeros is an empty cart's.
   const summary = rows.some(
     (r) =>
-      r.kind !== null && r.kind !== 'credit' && r.inSummary && !r.why && r.minor !== 0 && inMain(r.els[0]!),
+      r.kind !== null &&
+      r.kind !== 'credit' &&
+      r.inSummary &&
+      !(r.why ?? '').startsWith('hidden') &&
+      r.why !== 'struck' &&
+      r.minor !== 0 &&
+      inMain(r.els[0]!),
   );
   const items = summary ? false : hasLineItems(document, ctx);
   if (!summary && !items) return none('no-structure');
@@ -295,8 +301,7 @@ function headingWord(document: Document, ctx: Ctx): 'cart' | 'checkout' | null {
   };
   const main = document.querySelector('main, [role="main"]');
   if (main && consider(main.getAttribute('aria-label'))) return 'cart';
-  const headings = document.querySelectorAll('h1, h2, [role="heading"]');
-  for (const h of headings) {
+  for (const h of queryAll(document, ctx, 'h1, h2, [role="heading"]')) {
     if (h.nodeName !== 'H1' && h.nodeName !== 'H2') {
       const level = h.getAttribute('aria-level');
       if (level !== null && level !== '1' && level !== '2') continue;
@@ -312,7 +317,7 @@ function headingWord(document: Document, ctx: Ctx): 'cart' | 'checkout' | null {
  * the quantity) and a visible remove control, or either of them inside a block with a product image.
  */
 function hasLineItems(document: Document, ctx: Ctx): boolean {
-  const controls = document.querySelectorAll('input[type="number"], select, button, a, input[type="text"]');
+  const controls = queryAll(document, ctx, 'input[type="number"], select, button, a, input[type="text"]');
   let seen = 0;
   let qty = false;
   let remove = false;
@@ -330,15 +335,22 @@ function hasLineItems(document: Document, ctx: Ctx): boolean {
     if (isQty) qty = true;
     if (isRemove) remove = true;
     if (qty && remove) return true;
-    // The control sits in a product line: a small block within five levels holds an image.
+    // The control sits in a product line: a small block within seven levels holds an image.
     let a = parentOf(c);
-    for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 5; depth += 1) {
+    for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 7; depth += 1) {
       if (blockText(a, ctx).length > MAX_LINE_ITEM_TEXT) break;
       if (a.querySelector('img, picture') !== null) return true;
       a = parentOf(a);
     }
   }
   return false;
+}
+
+/** Elements matching a selector in the document and its open shadow roots. */
+function queryAll(document: Document, ctx: Ctx, selector: string): Element[] {
+  const out = [...document.querySelectorAll(selector)];
+  for (const sr of ctx.shadowRoots) out.push(...sr.querySelectorAll(selector));
+  return out;
 }
 
 const WISHLIST_RE = /wish|favou?rite|favorit|merkzettel|later|sp[äa]ter|plus tard|m[áa]s tarde|\bsave\b/u;
