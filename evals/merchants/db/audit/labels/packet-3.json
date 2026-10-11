@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "packet": 3,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/3/packet.json",
+      "evals/merchants/db/audit/packets/3/catalog-lists.json",
+      "evals/merchants/db/audit/packets/3/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/3/stores/casper.com.md",
+      "evals/merchants/db/audit/packets/3/stores/celebritycruises.com.md",
+      "evals/merchants/db/audit/packets/3/stores/checkout.stripe.com.md",
+      "evals/merchants/db/audit/packets/3/stores/chick-fil-a.com.md",
+      "evals/merchants/db/audit/packets/3/stores/chicos.com.md",
+      "evals/merchants/db/audit/packets/3/stores/choicehotels.com.md",
+      "evals/merchants/db/audit/packets/3/stores/clubwyndham.com.md",
+      "evals/merchants/db/audit/packets/3/stores/converse.com.md",
+      "evals/merchants/db/audit/packets/3/stores/costco.com.md",
+      "evals/merchants/db/audit/packets/3/stores/costplusdrugs.com.md",
+      "evals/merchants/db/audit/packets/3/stores/cricut.com.md",
+      "evals/merchants/db/audit/packets/3/stores/croatiaairlines.com.md",
+      "evals/merchants/db/audit/packets/3/stores/cvs.com.md",
+      "evals/merchants/db/audit/packets/3/stores/dairyqueen.com.md",
+      "evals/merchants/db/audit/packets/3/stores/dell.com.md",
+      "evals/merchants/db/audit/packets/3/stores/delta.com.md",
+      "evals/merchants/db/audit/packets/3/stores/dillards.com.md",
+      "evals/merchants/db/audit/packets/3/stores/disneyland.disney.go.com.md",
+      "evals/merchants/db/audit/packets/3/stores/disneyplus.com.md",
+      "evals/merchants/db/audit/packets/3/stores/disneystore.com.md",
+      "evals/merchants/db/audit/packets/3/stores/disneyworld.disney.go.com.md",
+      "evals/merchants/db/audit/packets/3/stores/dji.com.md",
+      "evals/merchants/db/audit/packets/3/stores/doordash.com.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "casper.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "casper.com-home", "quote": "Every mattress is designed, engineered and tested to solve real sleep needs.", "supports": "kind" },
+        { "source": "casper.com-home", "quote": "Free Mattress Delivery", "supports": "physicalGoods" }
+      ],
+      "notes": "Mattress and furniture seller; furniture stores are not home improvement. No issuer page names it."
+    },
+    {
+      "domain": "celebritycruises.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["celebrity-cruises"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "celebritycruises-com-page-1", "quote": "OUR SITE IS CURRENTLY DOWN FOR SCHEDULED MAINTENANCE.", "supports": "kind" },
+        { "source": "boa-royal-one-plus-pricing", "quote": "Royal Caribbean®, Celebrity Cruises® or Silversea® is identified as the merchant", "supports": "kind" },
+        { "source": "boa-royal-one-plus-pricing", "quote": "See RoyalCaribbean.com/royalone, CelebrityCruises.com/royalone or Silversea.com/royalone for the terms", "supports": "brand" },
+        { "source": "boa-royal-one-plus-product", "quote": "redeemable for $600 in onboard credit or cruise discounts", "supports": "physicalGoods" }
+      ],
+      "notes": "Store pages are a maintenance page; kind, goods and brand rest on the issuer co-brand terms naming the cruise line as merchant and its domain. The co-brand bonus is not a category."
+    },
+    {
+      "domain": "checkout.stripe.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "checkout-stripe-com-page-1", "quote": "Launch a secure, customizable, conversion-optimized checkout experience with Stripe Checkout.", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "chick-fil-a.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "chick-fil-a-com-page-1", "quote": "Chick-fil-A was the first restaurant to pair shopping and eating by opening in an Atlanta-area mall.", "supports": "category" },
+        { "source": "chick-fil-a-com-page-1", "quote": "As the first quick-service restaurant to introduce parent-friendly menus", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Yes, fast food restaurants are included in the restaurant rewards category.", "supports": "definition" }
+      ],
+      "notes": "The U.S. Bank fast-food list naming it is a hedged list of popular merchants, so issuer basis is not used."
+    },
+    {
+      "domain": "chicos.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["chicos"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "chicos-com-page-1", "quote": "We have over 500 boutiques across the U.S. with stylists ready to help you choose the perfect look.", "supports": "kind" },
+        { "source": "chicos-com-page-1", "quote": "Shipping & Processing", "supports": "physicalGoods" },
+        { "source": "synchrony-chicos-mastercard-partner", "quote": "back on Chico’s, Chico's Outlet and chicos.com purchases", "supports": "brand" }
+      ],
+      "notes": "Women's apparel boutique; the 7.5% is a co-brand card's own bonus, not a category."
+    },
+    {
+      "domain": "choicehotels.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["choice-hotels"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "choicehotels-com-page-1", "quote": "Access Denied", "supports": "kind" },
+        { "source": "wells-fargo-choice-privileges-pricing", "quote": "You must book these stays in one of the following ways: Visiting Choicehotels.com", "supports": "brand" },
+        { "source": "wells-fargo-choice-privileges-pricing", "quote": "You earn five points for every $1.00 you spend on stays at Eligible Locations", "supports": "physicalGoods" }
+      ],
+      "notes": "Store pages are access-denied; kind, goods and brand rest on the co-brand terms. They say stays at non-Choice hotels can be booked there too. Hotels are not a catalog bonus category."
+    },
+    {
+      "domain": "clubwyndham.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["club-wyndham"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "clubwyndham-com-page-1", "quote": "The club offers 100 resorts and 14,000 vacation ownership suites across North America", "supports": "kind" },
+        { "source": "clubwyndham-com-page-1", "quote": "©2026 Club Wyndham.", "supports": "brand" }
+      ],
+      "notes": "Captures are on clubwyndham.wyndhamdestinations.com. Page lists WorldMark, Shell Vacations Club and Margaritaville Vacation Club as sister brands but sells Club Wyndham only; co-brand bonuses ignored."
+    },
+    {
+      "domain": "converse.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [
+        { "source": "converse.com-home", "quote": "Access Denied", "supports": "kind" }
+      ],
+      "notes": "Only capture is an access-denied page and no issuer page names the store."
+    },
+    {
+      "domain": "costco.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["costco"],
+      "category": "wholesale-clubs",
+      "basis": "definition",
+      "quotes": [
+        { "source": "costco-com-page-1", "quote": "Costco is a membership warehouse club, dedicated to bringing our members the best possible prices on quality brand-name merchandise.", "supports": "category" },
+        { "source": "costco-com-page-2", "quote": "Costco.com Online Orders and Orders Delivered by Costco Logistics", "supports": "physicalGoods" },
+        { "source": "chase-rewards-category-faq", "quote": "sell in bulk, and concentrate on price appeal. These merchants sell a full range of household goods and merchandise, groceries", "supports": "definition" },
+        { "source": "chase-rewards-category-faq", "quote": "These merchants may or may not have membership requirements.", "supports": "definition" },
+        { "source": "chase-rewards-category-faq", "quote": "wholesale clubs such as Costco and BJs", "supports": "exclusion" }
+      ],
+      "notes": "The Chase definition used is truncated before its heading; its text reads as the wholesale-club definition. Supermarkets refused: Chase online grocery excludes Costco. The Citi 2% is a co-brand bonus."
+    },
+    {
+      "domain": "costplusdrugs.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "drugstores",
+      "basis": "definition",
+      "quotes": [
+        { "source": "costplusdrugs-com-page-1", "quote": "We use cookies to make our pharmacy website work properly and securely.", "supports": "category" },
+        { "source": "costplusdrugs-com-page-1", "quote": "How do you determine the retail price comparisons at other pharmacies?", "supports": "category" },
+        { "source": "costplusdrugs-com-page-1", "quote": "What are my shipping options?", "supports": "physicalGoods" },
+        { "source": "chase-rewards-category-faq", "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.", "supports": "definition" },
+        { "source": "discover-cashback-calendar", "quote": "Drug Store purchases include those made at stand-alone drug stores, pharmacies, and online pharmacies.", "supports": "definition" }
+      ],
+      "notes": "Online mail-order pharmacy; the business type is shown as 'our pharmacy website' and 'other pharmacies' rather than a standalone noun phrase. Page 2 is a bot wall."
+    },
+    {
+      "domain": "cricut.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "cricut.com-home", "quote": "Machines that precision-cut, write, draw & more", "supports": "kind" },
+        { "source": "cricut.com-home", "quote": "Shipping & Returns", "supports": "physicalGoods" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "croatiaairlines.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["croatia-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "croatiaairlines-com-page-1", "quote": "Croatia Airlines, the national air carrier, has been carrying passengers and cargo in domestic and international traffic for more than 30 years.", "supports": "kind" },
+        { "source": "croatiaairlines-com-page-1", "quote": "Book a ticket", "supports": "physicalGoods" }
+      ],
+      "notes": "Airline; transit definitions exclude airlines. Barclays Miles & More co-brand bonus ignored."
+    },
+    {
+      "domain": "cvs.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "drugstores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "cvs-com-page-1", "quote": "You can shop as a guest for nonprescription items.", "supports": "kind" },
+        { "source": "cvs-com-page-1", "quote": "We will collect shipping, billing and contact information for purposes of placing your order", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "The U.S. drugstore list is: CVS Pharmacy, DUANEreade, Rite Aid and Walgreens. Eligible purchases include those made in store and online.", "supports": "category" }
+      ],
+      "notes": "CVS is not a catalog brand."
+    },
+    {
+      "domain": "dairyqueen.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "dairyqueen-com-page-1", "quote": "TO BE THE WORLD'S FAVORITE QUICK-SERVICE RESTAURANT", "supports": "category" },
+        { "source": "dairyqueen-com-page-1", "quote": "1940: First Dairy Queen® restaurant opens in Joliet, Illinois.", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Yes, fast food restaurants are included in the restaurant rewards category.", "supports": "definition" }
+      ],
+      "notes": "The U.S. Bank fast-food list naming it is a hedged list, so issuer basis is not used. Page 2 is a bot wall."
+    },
+    {
+      "domain": "dell.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "dell-com-page-2", "quote": "Get expert help and product recommendations for new purchases from a sales advisor.", "supports": "kind" },
+        { "source": "dell-com-page-2", "quote": "How can I get free shipping?", "supports": "physicalGoods" }
+      ],
+      "notes": "Electronics refused: pages show a technology maker selling computers but no electronics-retailer noun phrase, and no issuer excerpt names Dell."
+    },
+    {
+      "domain": "delta.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["delta"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "delta-com-page-1", "quote": "Access Denied", "supports": "kind" },
+        { "source": "amex-delta-skymiles-reserve-pricing", "quote": "you can make changes or cancel your flight by accessing My Trips on delta.com prior to departure", "supports": "kind" },
+        { "source": "amex-delta-skymiles-reserve-pricing", "quote": "The trademarks Delta, SkyMiles, and the Delta logo are exclusive property of Delta Air Lines, Inc.", "supports": "brand" }
+      ],
+      "notes": "Store page is access-denied; kind, goods and brand rest on the Amex co-brand terms. Airline; no bonus category."
+    },
+    {
+      "domain": "dillards.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["dillards"],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "dillards-com-page-1", "quote": "Access Denied", "supports": "kind" },
+        { "source": "citi-dillards-mastercard-product", "quote": "The Dillard’s Credit Card is a rewards credit card for purchases at Dillard’s (in-store, online or by phone).", "supports": "kind" },
+        { "source": "citi-dillards-mastercard-product", "quote": "at Dillard’s stores or dillards.com on the day of account opening", "supports": "brand" },
+        { "source": "amex-rewards-info-retail", "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of department stores", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Century 21 Department Stores Dillard's J.C. Penney (JCP)", "supports": "category" }
+      ],
+      "notes": "All store pages are access-denied, so shipped or picked-up goods are not shown. The U.S. Bank department-store list is hedged; the Amex earn list is used."
+    },
+    {
+      "domain": "disneyland.disney.go.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [
+        { "source": "disneyland-disney-go-com-page-1", "quote": "Access Denied", "supports": "kind" }
+      ],
+      "notes": "All store pages are access-denied; the Chase Disney terms mention the Disneyland Resort only as a redemption location and do not name this domain."
+    },
+    {
+      "domain": "disneyplus.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["disney-plus"],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "disneyplus-com-page-1", "quote": "Multiple members of your household can stream on Disney+ at the same time.", "supports": "kind" },
+        { "source": "disneyplus-com-page-1", "quote": "Disney, Pixar, Marvel, Star Wars, & Nat Geo with Disney+.", "supports": "brand" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN", "supports": "category" }
+      ],
+      "notes": "The site also sells Hulu and ESPN bundles; only Disney+ is listed as its brand. Chase Disney co-brand earn and Amex statement credit are not used."
+    },
+    {
+      "domain": "disneystore.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["disney"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "disneystore-com-page-2", "quote": "Welcome to Disney Store Guest Services", "supports": "brand" },
+        { "source": "disneystore-com-page-2", "quote": "Free Shipping on orders of $85 or more!", "supports": "physicalGoods" },
+        { "source": "disney-inspire-visa-product", "quote": "online at Disney sites including DisneyStore.com, DisneyPlus.com, Hulu.com or Stream.ESPN.com", "supports": "brand" }
+      ],
+      "notes": "About page is access-denied; the support page shows the store. Co-brand discounts are not a category."
+    },
+    {
+      "domain": "disneyworld.disney.go.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [],
+      "notes": "No store page captured; the Chase Disney terms mention Walt Disney World Resort only as a redemption location and do not name this domain."
+    },
+    {
+      "domain": "dji.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "dji.com-home", "quote": "DJI Online Store", "supports": "kind" }
+      ],
+      "notes": "Homepage lists drones and cameras with Buy Now links but never mentions shipping or pickup. No issuer page names it."
+    },
+    {
+      "domain": "doordash.com",
+      "kind": "marketplace",
+      "physicalGoods": true,
+      "brandIds": ["doordash"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "doordash-com-page-1", "quote": "DoorDash offers a huge selection of restaurants and stores, from local favorites to popular chains.", "supports": "kind" },
+        { "source": "doordash-com-page-1", "quote": "Skip the errands and get electronics, clothing, beauty products, sporting goods, power tools, crafting supplies and more delivered.", "supports": "physicalGoods" },
+        { "source": "doordash-com-page-1", "quote": "© 2026 DoorDash", "supports": "brand" }
+      ],
+      "notes": "Dining refused: pages show a multi-category delivery marketplace with no restaurant-delivery noun phrase. Citi's unconditional delivery clause exists; U.S. Bank list hedged; Chase clause conditional; co-brand 4% ignored."
+    }
+  ]
+}

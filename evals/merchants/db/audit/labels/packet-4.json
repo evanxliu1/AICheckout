@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "packet": 4,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/4/packet.json",
+      "evals/merchants/db/audit/packets/4/catalog-lists.json",
+      "evals/merchants/db/audit/packets/4/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/4/stores/ecobee.com.md",
+      "evals/merchants/db/audit/packets/4/stores/eddiebauer.com.md",
+      "evals/merchants/db/audit/packets/4/stores/emirates.com.md",
+      "evals/merchants/db/audit/packets/4/stores/entertainmentearth.com.md",
+      "evals/merchants/db/audit/packets/4/stores/everlane.com.md",
+      "evals/merchants/db/audit/packets/4/stores/expedia.com.md",
+      "evals/merchants/db/audit/packets/4/stores/express.com.md",
+      "evals/merchants/db/audit/packets/4/stores/factory.jcrew.com.md",
+      "evals/merchants/db/audit/packets/4/stores/famousfootwear.com.md",
+      "evals/merchants/db/audit/packets/4/stores/farmandfleet.com.md",
+      "evals/merchants/db/audit/packets/4/stores/fentybeauty.com.md",
+      "evals/merchants/db/audit/packets/4/stores/fiveguys.com.md",
+      "evals/merchants/db/audit/packets/4/stores/flybreeze.com.md",
+      "evals/merchants/db/audit/packets/4/stores/flyfrontier.com.md",
+      "evals/merchants/db/audit/packets/4/stores/forever21.com.md",
+      "evals/merchants/db/audit/packets/4/stores/fubo.tv.md",
+      "evals/merchants/db/audit/packets/4/stores/gap.com.md",
+      "evals/merchants/db/audit/packets/4/stores/harborfreight.com.md",
+      "evals/merchants/db/audit/packets/4/stores/harley-davidson.com.md",
+      "evals/merchants/db/audit/packets/4/stores/hawaiianairlines.com.md",
+      "evals/merchants/db/audit/packets/4/stores/hilton.com.md",
+      "evals/merchants/db/audit/packets/4/stores/hm.com.md",
+      "evals/merchants/db/audit/packets/4/stores/hobbylobby.com.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "ecobee.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "ecobee.com-home", "quote": "Smart Thermostat Essential $139.99 Add to bag", "supports": "kind" },
+        { "source": "ecobee.com-home", "quote": "Free shipping Receive it in 3 to 7 business days.", "supports": "physicalGoods" },
+        { "source": "ecobee.com-home", "quote": "© 2026 ecobee. All rights reserved.", "supports": "brand" }
+      ],
+      "notes": "Smart-home device maker selling its own devices; no page names it an electronics store and no issuer names it, so no bonus category."
+    },
+    {
+      "domain": "eddiebauer.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["eddie-bauer"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "eddiebauer-com-page-1", "quote": "FREE SHIPPING $99+ | US ONLY", "supports": "physicalGoods" },
+        { "source": "eddiebauer-com-page-1", "quote": "© 2026 Eddie Bauer. All Rights Reserved", "supports": "brand" }
+      ],
+      "notes": "U.S. Bank lists Eddie Bauer under Select Clothing Stores, which is not a catalog category."
+    },
+    {
+      "domain": "emirates.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["emirates"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "emirates-com-page-1", "quote": "Book and manage your flights on the go.", "supports": "kind" },
+        { "source": "barclays-emirates-skywards-premium-pricing", "quote": "Emirates Spends are categorized as transactions made on emirates.com or at the Emirates Sales office.", "supports": "brand" }
+      ],
+      "notes": "Airline; airfare is not a catalog category. Co-brand card earning on Emirates is not a category basis."
+    },
+    {
+      "domain": "entertainmentearth.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "entertainmentearth.com-home", "quote": "At Entertainment Earth, we're more than just a store", "supports": "kind" },
+        { "source": "entertainmentearth.com-home", "quote": "Every item we ship is guaranteed to be in collector-worthy condition.", "supports": "physicalGoods" }
+      ],
+      "notes": "Toy and collectibles retailer; the entertainment category (tickets, live events) does not apply."
+    },
+    {
+      "domain": "everlane.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "everlane.com-home", "quote": "Visit one of our 11 stores and experience it for yourself.", "supports": "kind" },
+        { "source": "everlane.com-home", "quote": "RETURN POLICY SHIPPING INFO", "supports": "physicalGoods" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "expedia.com",
+      "kind": "cant-tell",
+      "physicalGoods": false,
+      "brandIds": ["expedia"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "wells-fargo-one-key-plus-product", "quote": "flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo", "supports": "physicalGoods" },
+        { "source": "wells-fargo-one-key-plus-product", "quote": "purchases where Expedia, Hotels.com, or Vrbo is not the merchant of record", "supports": "kind" }
+      ],
+      "notes": "Both store pages are bot walls. Issuer excerpts show travel bookings, sometimes with Expedia not the merchant of record, so merchant vs marketplace is unclear. BofA lists it only as a hedged travel example."
+    },
+    {
+      "domain": "express.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["express"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "express-com-page-1", "quote": "We will not accept a return or exchange if requested more than 30 days after the purchase or online shipping date.", "supports": "physicalGoods" },
+        { "source": "express-com-page-2", "quote": "© 2026 Express. All rights reserved.", "supports": "brand" }
+      ],
+      "notes": "Express company also runs Bonobos, which is not a catalog brand."
+    },
+    {
+      "domain": "factory.jcrew.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["j-crew-factory"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "factory-jcrew-com-page-2", "quote": "Free shipping on orders $99+", "supports": "physicalGoods" },
+        { "source": "factory-jcrew-com-page-1", "quote": "For your convenience, online purchases may be returned to a J.Crew Factory store.", "supports": "brand" }
+      ],
+      "notes": "Returns page mentions items delivered by Marketplace vendors, but the site sells mainly its own goods. Synchrony co-brand earning is not a category basis."
+    },
+    {
+      "domain": "famousfootwear.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "famousfootwear.com-home", "quote": "Free Store Pickup or Delivery powered by DoorDash.", "supports": "physicalGoods" },
+        { "source": "famousfootwear.com-home", "quote": "©2026 BG Retail, LLC. All Rights Reserved.", "supports": "kind" }
+      ],
+      "notes": "Shoe retailer reselling brands such as Nike and Timberland; no catalog brand."
+    },
+    {
+      "domain": "farmandfleet.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is a bot wall and no issuer page names the store; nothing supports a kind, goods flag, brand or bonus category."
+    },
+    {
+      "domain": "fentybeauty.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "fentybeauty.com-home", "quote": "ADD TO BAG Glossy Posse IX 4-Piece Lip Set", "supports": "kind" },
+        { "source": "fentybeauty.com-home", "quote": "Rihanna's vision of haircare, makeup, skincare + fragrance for all.", "supports": "brand" }
+      ],
+      "notes": "Cosmetics sold in a cart, but the captured text never shows shipping or pickup (the capture is truncated), so the goods flag is cant-tell under the strict rule."
+    },
+    {
+      "domain": "fiveguys.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "fiveguys-com-page-1", "quote": "we operate more than 1,900 restaurants worldwide", "supports": "category" },
+        { "source": "fiveguys-com-page-1", "quote": "Five Guys opened their doors in 1986 as a small, carry-out burger joint in Arlington, Virginia.", "supports": "kind" },
+        { "source": "amex-rewards-info-retail", "quote": "Yes, fast food restaurants are included in the restaurant rewards category.", "supports": "definition" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes purchases at cafes, bars, lounges, fast-food restaurants, restaurant delivery services, and take out restaurants.", "supports": "definition" }
+      ],
+      "notes": "Amex Gold names Five Guys only for a dining statement credit, which is not an issuer basis; category rests on the definition basis."
+    },
+    {
+      "domain": "flybreeze.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["breeze-airways"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "flybreeze-com-page-1", "quote": "Download the app to search, book and update flights seamlessly.", "supports": "kind" },
+        { "source": "flybreeze-com-page-1", "quote": "Copyright 2026 Breeze Airways. All rights reserved.", "supports": "brand" }
+      ],
+      "notes": "Airline; airfare is not a catalog category."
+    },
+    {
+      "domain": "flyfrontier.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["frontier-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "flyfrontier-com-page-2", "quote": "Use the Frontier mobile app to book and manage travel, check-in, and get your boarding pass quickly and easily.", "supports": "kind" },
+        { "source": "flyfrontier-com-page-1", "quote": "Copyright © 2026 Frontier Airlines | All Rights Reserved", "supports": "brand" }
+      ],
+      "notes": "Airline; a Frontier Store for branded merchandise is mentioned as coming soon. Airfare is not a catalog category."
+    },
+    {
+      "domain": "forever21.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["forever-21"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "forever21-com-page-1", "quote": "Shipping Policy Return Policy", "supports": "physicalGoods" },
+        { "source": "forever21-com-page-1", "quote": "FOREVER 21 MISSION LA-born and style-obsessed, we empower self-expression through standout fashion at unbeatable value.", "supports": "brand" }
+      ],
+      "notes": "Site copyright is Brands Online, LLC. U.S. Bank Select Clothing Stores is not a catalog category."
+    },
+    {
+      "domain": "fubo.tv",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "fubo-tv-page-1", "quote": "Fubo is the world's only sports-focused live TV streaming service", "supports": "kind" },
+        { "source": "us-bank-altitude-go-rewards-terms", "quote": "2 Points (1 base and 1 bonus Point) for every $1 on qualifying streaming subscription service purchases. Qualifying streaming subscription services are:", "supports": "category" },
+        { "source": "us-bank-altitude-go-rewards-terms", "quote": "Fandango at Home, FanDuel Sports Network, Fubo TV, Max, Hulu", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Disney+ ESPN Fubo TV HBO Max", "supports": "category" }
+      ],
+      "notes": "Named in the qualifying-streaming inclusion lists of U.S. Bank Altitude terms and Amex; Citi Strata also lists fuboTV."
+    },
+    {
+      "domain": "gap.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["gap", "old-navy", "banana-republic", "athleta"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "gap-com-page-1", "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.", "supports": "physicalGoods" },
+        { "source": "gap-com-page-1", "quote": "Gap Gap Factory Old Navy Banana Republic Athleta", "supports": "brand" }
+      ],
+      "notes": "Gap Inc. shared site selling four of its own catalog brands in one bag; listed each per the multi-brand rule. Encore co-brand earning is not a category basis."
+    },
+    {
+      "domain": "harborfreight.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["harbor-freight"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "synchrony-harbor-freight-credit-card-partner", "quote": "Yes, the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com.", "supports": "kind" },
+        { "source": "synchrony-harbor-freight-credit-card-partner", "quote": "bring your Harbor Freight Money reward certificate with you on your next trip to any Harbor Freight store", "supports": "brand" }
+      ],
+      "notes": "Store page is a bot wall, so its business type is not shown and the definition basis cannot apply (home improvement not granted). Kind and brand rest on the Synchrony co-brand page only."
+    },
+    {
+      "domain": "harley-davidson.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["harley-davidson"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "harley-davidson-com-page-2", "quote": "Harley-Davidson Motor Company administers the H-D® Online Store on behalf of and as agent for participating dealerships.", "supports": "kind" },
+        { "source": "harley-davidson-com-page-2", "quote": "Your order will be fulfilled and shipped by Harley-Davidson Motor Company as the agent for the Selling Dealer.", "supports": "physicalGoods" }
+      ],
+      "notes": "Online store sells as agent for dealerships (a Selling Dealer gets the sale) and the nav shows an H-D1 Marketplace; labelled merchant since H-D fulfils its own goods, but merchant vs marketplace is debatable."
+    },
+    {
+      "domain": "hawaiianairlines.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["hawaiian-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "hawaiianairlines-com-page-1", "quote": "Book Reservations Flights Deals", "supports": "kind" },
+        { "source": "hawaiianairlines-com-page-1", "quote": "© 2026 Hawaiian Airlines. All Rights Reserved", "supports": "brand" }
+      ],
+      "notes": "Airline; airfare is not a catalog category. Atmos co-brand earning is not a category basis."
+    },
+    {
+      "domain": "hilton.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["hilton"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "hilton-com-page-2", "quote": "Find out how to book, change, or cancel a stay.", "supports": "kind" },
+        { "source": "hilton-com-page-1", "quote": "Welcome to Hilton A leading global, hospitality company", "supports": "brand" }
+      ],
+      "notes": "Hotel company; the lookup lists Hilton Hotels under hotel codes, and hotels are not a catalog category."
+    },
+    {
+      "domain": "hm.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is an Access Denied error page and no issuer page names the store; nothing supports a kind, goods flag, brand or bonus category."
+    },
+    {
+      "domain": "hobbylobby.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "hobbylobby.com-home", "quote": "Free Shipping On Orders $59 Or More!", "supports": "physicalGoods" },
+        { "source": "hobbylobby.com-home", "quote": "Sale Valid Online & In-Store through October 17, 2026", "supports": "kind" }
+      ],
+      "notes": "Crafts and home decor retailer; home decor is not home improvement."
+    }
+  ]
+}

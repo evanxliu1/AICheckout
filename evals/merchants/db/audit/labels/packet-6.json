@@ -1,0 +1,333 @@
+{
+  "schemaVersion": 1,
+  "packet": 6,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/6/packet.json",
+      "evals/merchants/db/audit/packets/6/catalog-lists.json",
+      "evals/merchants/db/audit/packets/6/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/6/stores/levi.com.md",
+      "evals/merchants/db/audit/packets/6/stores/lidl.com.md",
+      "evals/merchants/db/audit/packets/6/stores/link.com.md",
+      "evals/merchants/db/audit/packets/6/stores/livingspaces.com.md",
+      "evals/merchants/db/audit/packets/6/stores/llbean.com.md",
+      "evals/merchants/db/audit/packets/6/stores/loft.com.md",
+      "evals/merchants/db/audit/packets/6/stores/lot.com.md",
+      "evals/merchants/db/audit/packets/6/stores/lowes.com.md",
+      "evals/merchants/db/audit/packets/6/stores/lufthansa.com.md",
+      "evals/merchants/db/audit/packets/6/stores/lyft.com.md",
+      "evals/merchants/db/audit/packets/6/stores/mackspw.com.md",
+      "evals/merchants/db/audit/packets/6/stores/macys.com.md",
+      "evals/merchants/db/audit/packets/6/stores/mango.com.md",
+      "evals/merchants/db/audit/packets/6/stores/margaritavillevacationclub.com.md",
+      "evals/merchants/db/audit/packets/6/stores/markandgraham.com.md",
+      "evals/merchants/db/audit/packets/6/stores/marketbasket.com.md",
+      "evals/merchants/db/audit/packets/6/stores/marriott.com.md",
+      "evals/merchants/db/audit/packets/6/stores/marshalls.com.md",
+      "evals/merchants/db/audit/packets/6/stores/max.com.md",
+      "evals/merchants/db/audit/packets/6/stores/menards.com.md",
+      "evals/merchants/db/audit/packets/6/stores/michaelkors.com.md",
+      "evals/merchants/db/audit/packets/6/stores/michaels.com.md",
+      "evals/merchants/db/audit/packets/6/stores/misfitsmarket.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "levi.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is an Access Denied page and no issuer page names the store; no basis can grant a bonus category, so default."
+    },
+    {
+      "domain": "lidl.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        { "source": "lidl-com-page-1", "quote": "have gotten us voted Best Supermarket in Newsweek by you, the readers!", "supports": "category" },
+        { "source": "lidl-com-page-1", "quote": "offer customers high-quality produce, meat, baked goods, household products and more at unbelievably low prices", "supports": "kind" },
+        { "source": "lidl-com-page-1", "quote": "Prices valid for in-store purchases only.", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods", "supports": "definition" }
+      ],
+      "notes": "Business type shown only through the 'Best Supermarket' award line plus grocery wording; pages never call it a superstore or discount store. Goods are sold in store."
+    },
+    {
+      "domain": "link.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "link-com-page-1", "quote": "Link is the wallet for what’s next.", "supports": "kind" },
+        { "source": "link-com-page-2", "quote": "Link is a simple and secure way to pay quickly on hundreds of thousands of businesses.", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "livingspaces.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "livingspaces.com-home", "quote": "Free Next-Day Shipping on Furniture!", "supports": "physicalGoods" },
+        { "source": "livingspaces.com-home", "quote": "© 2026 Living Spaces, All rights reserved.", "supports": "brand" }
+      ],
+      "notes": "Furniture store; furniture is not home improvement under the plan's meaning, and no issuer page names it."
+    },
+    {
+      "domain": "llbean.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["llbean"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "llbean-com-page-1", "quote": "LIMITED TIME: Free Shipping & Free Returns on Footwear!", "supports": "physicalGoods" },
+        { "source": "llbean-com-page-1", "quote": "L.L.Bean® is a registered trademark of L.L.Bean Inc. Copyright 2026.v24.1.424", "supports": "brand" }
+      ],
+      "notes": "The only issuer excerpt is the co-brand card's own 5% at L.L.Bean, which grants no category."
+    },
+    {
+      "domain": "loft.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is a PerimeterX bot wall and no issuer page names the store; no basis can grant a bonus category, so default."
+    },
+    {
+      "domain": "lot.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Both store captures are security blocks. The issuer excerpt names LOT Polish Airlines only as a co-brand partner and never ties it to lot.com, so brand and kind are not shown."
+    },
+    {
+      "domain": "lowes.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "definition",
+      "quotes": [
+        { "source": "lowes-com-page-1", "quote": "Lowe’s operates over 1,700 home improvement stores and employs approximately 300,000 associates.", "supports": "category" },
+        { "source": "lowes-com-page-1", "quote": "home delivery and parcel shipment", "supports": "physicalGoods" },
+        { "source": "discover-cashback-calendar", "quote": "Home Improvement Store purchases include online and in-store purchases at home improvement retail stores, building supply stores (e.g., lumber, paint and hardware stores)", "supports": "definition" }
+      ],
+      "notes": "Store page is the corporate.lowes.com business page; lowes.com itself was Access Denied. Synchrony excerpt is a co-brand card page only."
+    },
+    {
+      "domain": "lufthansa.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["lufthansa"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "lufthansa-com-page-1", "quote": "Rebookings and cancellations", "supports": "kind" },
+        { "source": "lufthansa-com-page-1", "quote": "General Conditions of Carriage USA", "supports": "physicalGoods" },
+        { "source": "lufthansa-com-page-1", "quote": "Lufthansa app", "supports": "brand" }
+      ],
+      "notes": "Airline; airlines are not a catalog category. Issuer excerpts are co-brand miles and lounge benefits only."
+    },
+    {
+      "domain": "lyft.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["lyft"],
+      "category": "transit",
+      "basis": "definition",
+      "quotes": [
+        { "source": "lyft-com-page-1", "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter.", "supports": "category" },
+        { "source": "lyft-com-page-1", "quote": "© 2026 Lyft, Inc.", "supports": "brand" },
+        { "source": "chase-rewards-category-faq", "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.", "supports": "definition" }
+      ],
+      "notes": "Pages never use the word rideshare; business type read from ride-hailing wording, which is weaker than a plain noun phrase. US Bank list is hedged; Citi and Barclays lines are statement credits. Chase excludes bike/scooter rentals."
+    },
+    {
+      "domain": "mackspw.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["macks-prairie-wings"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "capital-one-bass-pro-shops-club-card-pricing", "quote": "Mack's Prairie Wings store, through Mack's Prairie Wings catalogs, or online at www.mackspw.com", "supports": "brand" }
+      ],
+      "notes": "Both store captures are Access Denied; kind and brand rest on the co-brand card excerpt tying mackspw.com to Mack's Prairie Wings. That excerpt is a co-brand bonus and grants no category; goods not shown."
+    },
+    {
+      "domain": "macys.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["macys"],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "citi-macys-amex-product", "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com.", "supports": "brand" },
+        { "source": "amex-rewards-info-retail", "quote": "To earn additional rewards, purchases must be made at department stores included on our list of “select major department stores” that accept the Card", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Kohl's, Lord & Taylor, Macy's, Neiman Marcus, Nordstrom, Saks Fifth Avenue, Sears and Stein Mart. Eligible purchases include those made in store and online.", "supports": "category" }
+      ],
+      "notes": "Store captures are both access-denied pages; kind, goods and brand rest on the Citi co-brand excerpt. US Bank department-store list is hedged and not relied on."
+    },
+    {
+      "domain": "mango.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is an Access Denied page and no issuer page names the store; no basis can grant a bonus category, so default."
+    },
+    {
+      "domain": "margaritavillevacationclub.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["margaritaville-vacation-club"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "margaritavillevacationclub-com-page-1", "quote": "Margaritaville Vacation Club offers owners a lifetime of vacations inspired by Jimmy Buffett’s laid-back, adventurous lifestyle", "supports": "brand" },
+        { "source": "margaritavillevacationclub-com-page-1", "quote": "THIS ADVERTISING MATERIAL IS BEING USED FOR THE PURPOSE OF SOLICITING THE SALE OF TIME-SHARE PROPERTY", "supports": "physicalGoods" }
+      ],
+      "notes": "Timeshare vacation club; captured pages are on mgvc.wyndhamdestinations.com. Barclays Wyndham excerpts are a co-brand card's own bonus."
+    },
+    {
+      "domain": "markandgraham.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["mark-and-graham"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "markandgraham-com-page-1", "quote": "Even our name, Mark & Graham, is derived from our mission to help you make your mark with a monogram.", "supports": "brand" },
+        { "source": "markandgraham-com-page-2", "quote": "Items are shipped to 48 states and to Alaska, Hawaii and US Territories.", "supports": "physicalGoods" }
+      ],
+      "notes": "Personalized gifts and accessories; no issuer page names the store."
+    },
+    {
+      "domain": "marketbasket.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "marketbasket-com-page-1", "quote": "The Market Basket is a local, family-owned specialty market focused on delivering the best in gourmet food.", "supports": "kind" },
+        { "source": "marketbasket-com-page-1", "quote": "Gifts for any Occasion - We Can Ship!", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "other specialty food stores)", "supports": "exclusion" }
+      ],
+      "notes": "Refused supermarkets: store calls itself a specialty market (also 'gourmet grocery stores'), and Amex lists specialty food stores among non-supermarkets. Online shop sells gift baskets and entrée boxes."
+    },
+    {
+      "domain": "marriott.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["marriott"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "marriott-com-page-1", "quote": "our more than 30 leading brands and over 10,000 properties in 148 countries and territories", "supports": "kind" },
+        { "source": "marriott-com-page-1", "quote": "Hotels that bring destinations to life with bespoke programming and unparalleled service", "supports": "physicalGoods" },
+        { "source": "marriott-com-page-1", "quote": "© 1996 - 2026 Marriott International, Inc. All rights reserved.", "supports": "brand" }
+      ],
+      "notes": "Hotels are not a catalog category; Amex excerpt is a co-brand card's own terms; the sheet's Amex excerpt is truncated."
+    },
+    {
+      "domain": "marshalls.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["marshalls"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "marshalls-com-page-2", "quote": "© 2026 Marshalls", "supports": "brand" },
+        { "source": "synchrony-tjx-rewards-platinum-mastercard-partner", "quote": "TJX stores, inclusive of TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense, and online at tjmaxx.com, marshalls.com, sierra.com", "supports": "kind" }
+      ],
+      "notes": "Both store captures are error pages; goods not shown. Synchrony excerpt is a store card page and grants no category."
+    },
+    {
+      "domain": "max.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "max-com-page-1", "quote": "Manage an HBO Max subscription", "supports": "kind" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "To earn additional rewards on streaming subscription purchases, the purchase must be made from a provider that is included on our list", "supports": "category" }
+      ],
+      "notes": "Captured pages are help.hbomax.com and hbomax.com (the latter Access Denied); the issuers name 'HBO Max', not 'Max'. No catalog brand for HBO Max."
+    },
+    {
+      "domain": "menards.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "definition",
+      "quotes": [
+        { "source": "menards-com-page-1", "quote": "has more than 300 home improvement stores located in Illinois", "supports": "category" },
+        { "source": "menards-com-page-1", "quote": "carries a complete selection of high-quality, name brand merchandise, tools, materials and supplies for all home improvement needs", "supports": "physicalGoods" },
+        { "source": "discover-cashback-calendar", "quote": "Home Improvement Store purchases include online and in-store purchases at home improvement retail stores, building supply stores (e.g., lumber, paint and hardware stores)", "supports": "definition" }
+      ],
+      "notes": "Page also says most stores carry groceries for one-stop shopping, but never calls itself a superstore or discount store. Pages 2 and 3 captured empty."
+    },
+    {
+      "domain": "michaelkors.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is an Access Denied page and no issuer page names the store; no basis can grant a bonus category, so default."
+    },
+    {
+      "domain": "michaels.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Only capture is an Access Denied page and no issuer page names the store; no basis can grant a bonus category, so default."
+    },
+    {
+      "domain": "misfitsmarket.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        { "source": "misfitsmarket-com-page-1", "quote": "Sure, we’re an online grocery store", "supports": "category" },
+        { "source": "misfitsmarket-com-page-1", "quote": "Misfits Market has grown into a full-service grocery store", "supports": "category" },
+        { "source": "misfitsmarket-com-page-1", "quote": "Join today to start getting high-quality groceries delivered for less", "supports": "physicalGoods" },
+        { "source": "discover-cashback-calendar", "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services.", "supports": "definition" }
+      ],
+      "notes": "Online-only grocer with a 'Join' sign-up; pages do not say membership is required. Not a meal kit."
+    }
+  ]
+}

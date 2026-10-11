@@ -1,0 +1,583 @@
+{
+  "schemaVersion": 1,
+  "packet": 10,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/10/packet.json",
+      "evals/merchants/db/audit/packets/10/catalog-lists.json",
+      "evals/merchants/db/audit/packets/10/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/10/stores/united.com.md",
+      "evals/merchants/db/audit/packets/10/stores/venmo.com.md",
+      "evals/merchants/db/audit/packets/10/stores/verizon.com.md",
+      "evals/merchants/db/audit/packets/10/stores/virginatlantic.com.md",
+      "evals/merchants/db/audit/packets/10/stores/virginhotels.com.md",
+      "evals/merchants/db/audit/packets/10/stores/virginvoyages.com.md",
+      "evals/merchants/db/audit/packets/10/stores/vitacost.com.md",
+      "evals/merchants/db/audit/packets/10/stores/vrbo.com.md",
+      "evals/merchants/db/audit/packets/10/stores/walgreens.com.md",
+      "evals/merchants/db/audit/packets/10/stores/walmart.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wayfair.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wegmans.com.md",
+      "evals/merchants/db/audit/packets/10/stores/westelm.com.md",
+      "evals/merchants/db/audit/packets/10/stores/whatnot.com.md",
+      "evals/merchants/db/audit/packets/10/stores/whitehouseblackmarket.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wholefoodsmarket.com.md",
+      "evals/merchants/db/audit/packets/10/stores/williams-sonoma.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wingstop.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wmata.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wyndhamhotels.com.md",
+      "evals/merchants/db/audit/packets/10/stores/wyze.com.md",
+      "evals/merchants/db/audit/packets/10/stores/zappos.com.md",
+      "evals/merchants/db/audit/packets/10/stores/zip.co.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "united.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "united-airlines"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "united-quest-product",
+          "quote": "purchases their tickets from United with their card",
+          "supports": "kind"
+        },
+        {
+          "source": "united-quest-product",
+          "quote": "For complete details, please visit united.com/ChaseBag",
+          "supports": "brand"
+        }
+      ],
+      "notes": "No store page captured; kind, goods and brand rest on the Chase United co-brand excerpt only. Airline travel is no category in the list."
+    },
+    {
+      "domain": "venmo.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "venmo-com-page-1",
+          "quote": "Venmo has been an app for fast, safe, social payments between friends",
+          "supports": "kind"
+        },
+        {
+          "source": "venmo-com-page-2",
+          "quote": "Get through checkout quickly at thousands of apps and mobile websites with Venmo",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "verizon.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [
+        "verizon"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "verizon-com-page-1",
+          "quote": "© 2026 Verizon",
+          "supports": "brand"
+        },
+        {
+          "source": "synchrony-verizon-visa-card-rewards-terms",
+          "quote": "made at a Verizon operated store, Verizon online, over the phone with a Verizon representative",
+          "supports": "kind"
+        },
+        {
+          "source": "us-bank-cash-plus-sample-merchants",
+          "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®",
+          "supports": "exclusion"
+        }
+      ],
+      "notes": "Electronics refused (U.S. Bank excludes telecoms like Verizon). Devices are sold but no page shows them shipped or picked up, so goods is cant-tell."
+    },
+    {
+      "domain": "virginatlantic.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "virgin-atlantic"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "virginatlantic-com-page-1",
+          "quote": "Virgin Atlantic became renowned as the airline you flew if you wanted an adventure",
+          "supports": "kind"
+        },
+        {
+          "source": "virginatlantic-com-page-1",
+          "quote": "© 2026 Virgin Atlantic Airways Ltd. All rights reserved.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Airline; the lookup lists it under airline codes, which map to no category in the list."
+    },
+    {
+      "domain": "virginhotels.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "virgin-hotels"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "virginhotels-com-page-1",
+          "quote": "to make every stay, work or play, a breeze",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "virginhotels-com-page-1",
+          "quote": "Have an inspired time with Virgin Hotels.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Hotel stays; lodging is no category in the list."
+    },
+    {
+      "domain": "virginvoyages.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "virgin-voyages"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "virginvoyages-com-page-2",
+          "quote": "Over $1,000 in value - all included",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "virginvoyages-com-page-2",
+          "quote": "Virgin Voyages Cruise Brochure",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Cruise line; no category in the list."
+    },
+    {
+      "domain": "vitacost.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "vitacost.com-home",
+          "quote": "Free shipping over $30",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "vitacost.com-home",
+          "quote": "Vitacost Best Sellers",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Supplements, grocery and personal care online; pages never call it a pharmacy or grocery store, so no definition basis."
+    },
+    {
+      "domain": "vrbo.com",
+      "kind": "cant-tell",
+      "physicalGoods": false,
+      "brandIds": [
+        "vrbo"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "wells-fargo-one-key-plus-product",
+          "quote": "accommodation rentals, activities, car rentals, cruises, flights, hotels, and packages booked through the U.S. version of Expedia, Hotels.com, or Vrbo",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "wells-fargo-one-key-plus-product",
+          "quote": "Expedia, Hotels.com or Vrbo’s site or app",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Both store pages are bot walls; whether bookings are its own or third-party hosts is not shown."
+    },
+    {
+      "domain": "walgreens.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "walgreens"
+      ],
+      "category": "drugstores",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "the following list of drugstores that accept the Card: CVS Pharmacy DUANEreade Rite Aid Walgreens",
+          "supports": "category"
+        },
+        {
+          "source": "walgreens-com-page-1",
+          "quote": "Pickup (curbside, drive-thru or in store)",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "walgreens-com-page-1",
+          "quote": "© 2026 Walgreen Co. All rights reserved.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Issuer basis from the Amex select-major-drugstores earning list. Duane Reade stores are named in the co-brand terms but this site is not shown as their store."
+    },
+    {
+      "domain": "walmart.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [
+        "walmart"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "walmart-com-page-1",
+          "quote": "Walmart today is a people-led, tech-powered omnichannel retailer",
+          "supports": "kind"
+        },
+        {
+          "source": "walmart-com-page-1",
+          "quote": "© 2026 Walmart Inc. All Rights Reserved.",
+          "supports": "brand"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "Superstores (e.g., Target, Walmart)",
+          "supports": "exclusion"
+        }
+      ],
+      "notes": "Supermarkets refused: superstore exclusion. walmart.com help page is a bot wall; the issuer excerpt mentions third-party merchants on Walmart.com, so kind is a judgment. No page shows shipping or pickup for walmart.com."
+    },
+    {
+      "domain": "wayfair.com",
+      "kind": "cant-tell",
+      "physicalGoods": true,
+      "brandIds": [
+        "wayfair"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "citi-wayfair-mastercard-rewards-terms",
+          "quote": "when you use your card at Wayfair's family of websites, mobile applications, and physical retail stores",
+          "supports": "brand"
+        },
+        {
+          "source": "citi-wayfair-mastercard-rewards-terms",
+          "quote": "taxes and any shipping or delivery fees",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Store pages are bot walls. Home improvement refused: furnishings store, and the BoA merchant list naming Wayfair is a hedged examples list."
+    },
+    {
+      "domain": "wegmans.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "wegmans-com-page-1",
+          "quote": "Wegmans is a regional supermarket chain",
+          "supports": "category"
+        },
+        {
+          "source": "wegmans-com-page-1",
+          "quote": "Grocery Delivery & Pickup",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "discover-cashback-calendar",
+          "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "In-store pharmacy does not change the supermarket type. No issuer excerpt names Wegmans."
+    },
+    {
+      "domain": "westelm.com",
+      "kind": "cant-tell",
+      "physicalGoods": true,
+      "brandIds": [
+        "west-elm"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "capital-one-west-elm-key-rewards-visa-pricing",
+          "quote": "Pottery Barn Teen, west elm, Rejuvenation, and Mark & Graham stores, catalogs, or online",
+          "supports": "brand"
+        },
+        {
+          "source": "capital-one-west-elm-key-rewards-visa-pricing",
+          "quote": "Purchases will only qualify towards earning Rewards once they have shipped.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Both store pages are restriction/error pages; brand and goods rest on the co-brand terms only."
+    },
+    {
+      "domain": "whatnot.com",
+      "kind": "marketplace",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "whatnot.com-home",
+          "quote": "The Live Shopping Marketplace",
+          "supports": "kind"
+        },
+        {
+          "source": "whatnot.com-home",
+          "quote": "Shipping and Delivery",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "whitehouseblackmarket.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "white-house-black-market"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "whitehouseblackmarket-com-page-2",
+          "quote": "You're $125.00 away from FREE shipping.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "whitehouseblackmarket-com-page-1",
+          "quote": "I would like to receive communications from White House Black Market",
+          "supports": "brand"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "wholefoodsmarket.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "whole-foods-market"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "wholefoodsmarket-com-page-2",
+          "quote": "Shop for grocery delivery or pickup, get pantry essentials shipped to you",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "wholefoodsmarket-com-page-1",
+          "quote": "Copyright 2026 Whole Foods Market IP, Inc.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Supermarkets not granted: own pages say natural and organic foods and shopping for groceries but never name a business type (grocery store, supermarket); the grocery-store tagline is on an Amazon page, not the store page."
+    },
+    {
+      "domain": "williams-sonoma.com",
+      "kind": "cant-tell",
+      "physicalGoods": true,
+      "brandIds": [
+        "williams-sonoma"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "capital-one-key-rewards-visa-pricing",
+          "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma, Williams Sonoma Home, Pottery Barn",
+          "supports": "brand"
+        },
+        {
+          "source": "capital-one-key-rewards-visa-pricing",
+          "quote": "Purchases will only qualify towards earning Rewards once they have shipped.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Store pages are error pages. Home improvement refused: BoA lists Williams-Sonoma only as a hedged merchant example, and a home-goods store is not home improvement."
+    },
+    {
+      "domain": "wingstop.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "wingstop-com-page-1",
+          "quote": "Today there are more than 2,500 restaurants open across the globe.",
+          "supports": "category"
+        },
+        {
+          "source": "wingstop-com-page-1",
+          "quote": "What began as a small buffalo-style chicken wing restaurant in Garland, Texas",
+          "supports": "category"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "You will earn additional rewards in the U.S. restaurant category when you make a purchase at restaurants located in the U.S.",
+          "supports": "definition"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "wmata.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "transit",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "wmata-com-page-1",
+          "quote": "Metro is the transportation agency for the Washington, D.C. metropolitan area",
+          "supports": "category"
+        },
+        {
+          "source": "wmata-com-page-2",
+          "quote": "Smart Trip is how to pay for Metro Rail, Metro Bus, Metro parking garages and lots",
+          "supports": "category"
+        },
+        {
+          "source": "chase-rewards-category-faq",
+          "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "Fares and passes; a plastic fare card can be mailed but is a fare medium, so goods false."
+    },
+    {
+      "domain": "wyndhamhotels.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "wyndham-hotels"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "wyndhamhotels-com-page-1",
+          "quote": "Discover 8,000+ Hotels Across 25 Brands Around the World.",
+          "supports": "kind"
+        },
+        {
+          "source": "wyndhamhotels-com-page-1",
+          "quote": "ABOUT WYNDHAM HOTELS & RESORTS",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Hotel bookings; lodging is no category in the list."
+    },
+    {
+      "domain": "wyze.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "wyze.com-home",
+          "quote": "Fast, free shipping on orders over $59",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "wyze.com-home",
+          "quote": "Great technology accessible to everyone",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Sells its own cameras and smart-home devices; pages never call it an electronics store and no issuer names it."
+    },
+    {
+      "domain": "zappos.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "zappos.com-home",
+          "quote": "Zappos Homepage",
+          "supports": "kind"
+        },
+        {
+          "source": "zappos.com-home",
+          "quote": "Current Best Sellers",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Shoes and clothing with prices are listed, but the capture never shows shipping or pickup, so goods is cant-tell under the rule."
+    },
+    {
+      "domain": "zip.co",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "zip-co-page-1",
+          "quote": "Buy now, pay later anywhere",
+          "supports": "kind"
+        },
+        {
+          "source": "zip-co-page-1",
+          "quote": "Split big payments into not-so-big ones.",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "packet": 8,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/8/packet.json",
+      "evals/merchants/db/audit/packets/8/catalog-lists.json",
+      "evals/merchants/db/audit/packets/8/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/8/stores/plus.espn.com.md",
+      "evals/merchants/db/audit/packets/8/stores/popeyes.com.md",
+      "evals/merchants/db/audit/packets/8/stores/potterybarn.com.md",
+      "evals/merchants/db/audit/packets/8/stores/potterybarnkids.com.md",
+      "evals/merchants/db/audit/packets/8/stores/puma.com.md",
+      "evals/merchants/db/audit/packets/8/stores/quince.com.md",
+      "evals/merchants/db/audit/packets/8/stores/randalls.com.md",
+      "evals/merchants/db/audit/packets/8/stores/rci.com.md",
+      "evals/merchants/db/audit/packets/8/stores/rei.com.md",
+      "evals/merchants/db/audit/packets/8/stores/rejuvenation.com.md",
+      "evals/merchants/db/audit/packets/8/stores/rh.com.md",
+      "evals/merchants/db/audit/packets/8/stores/royalcaribbean.com.md",
+      "evals/merchants/db/audit/packets/8/stores/samsclub.com.md",
+      "evals/merchants/db/audit/packets/8/stores/scholastic.com.md",
+      "evals/merchants/db/audit/packets/8/stores/seagate.com.md",
+      "evals/merchants/db/audit/packets/8/stores/seaworld.com.md",
+      "evals/merchants/db/audit/packets/8/stores/sezzle.com.md",
+      "evals/merchants/db/audit/packets/8/stores/shellvacationsclub.com.md",
+      "evals/merchants/db/audit/packets/8/stores/sherwin-williams.com.md",
+      "evals/merchants/db/audit/packets/8/stores/shop.app.md",
+      "evals/merchants/db/audit/packets/8/stores/shutterfly.com.md",
+      "evals/merchants/db/audit/packets/8/stores/sierra.com.md",
+      "evals/merchants/db/audit/packets/8/stores/silversea.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "plus.espn.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["espn"],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "plus-espn-com-page-1", "quote": "All ESPN Networks, ESPN+ & NFL Network", "supports": "brand" },
+        { "source": "plus-espn-com-page-1", "quote": "Choose your plan Use the drop-down menu to compare plans. Switch or cancel* anytime.", "supports": "physicalGoods" },
+        { "source": "us-bank-altitude-go-rewards-terms", "quote": "2 Points (1 base and 1 bonus Point) for every $1 on qualifying streaming subscription service purchases.", "supports": "category" },
+        { "source": "us-bank-altitude-go-rewards-terms", "quote": "Qualifying streaming subscription services are: Amazon Music Unlimited, Amazon Prime Video, AMC+, Apple Music, Apple TV+, Audible, DirecTV Stream, Discovery+, Disney+, ESPN+,", "supports": "category" }
+      ],
+      "notes": "The issuer list names ESPN+; the site also sells Disney+/Hulu bundles, which bundle exclusions in some issuer terms could affect. Brand espn only; Disney+ and Hulu are resold in bundles."
+    },
+    {
+      "domain": "popeyes.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "popeyes-com-page-2", "quote": "Mobile Ordering and Mobile Payment are accepted at select Popeyes participating restaurants", "supports": "category" },
+        { "source": "popeyes-com-page-1", "quote": "Order Pickup Order Delivery Try out our crowd favorites", "supports": "kind" },
+        { "source": "amex-rewards-info-retail", "quote": "You will earn additional rewards in the U.S. restaurant category when you make a purchase at restaurants located in the U.S.", "supports": "definition" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "potterybarn.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "potterybarn-com-page-1", "quote": "Sorry, due to website restrictions we are unable to display the requested page.", "supports": "kind" }
+      ],
+      "notes": "Both store pages are bot walls. Issuer mentions are a co-brand card bonus and a hedged BoA merchant-examples list for home improvement & furnishings; neither grants a category, and a furniture store is not home improvement."
+    },
+    {
+      "domain": "potterybarnkids.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "potterybarnkids-com-page-1", "quote": "Sorry, due to website restrictions we are unable to display the requested page.", "supports": "kind" }
+      ],
+      "notes": "Store page is a bot wall; the only issuer mention is a co-brand card's own bonus, which grants no category and does not name this domain."
+    },
+    {
+      "domain": "puma.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "puma.com-home", "quote": "GET FREE SHIPPING ON ORDERS $60+", "supports": "physicalGoods" },
+        { "source": "puma.com-home", "quote": "© PUMA NORTH AMERICA, INC.", "supports": "kind" }
+      ],
+      "notes": "PUMA is not a catalog brand."
+    },
+    {
+      "domain": "quince.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "quince.com-home", "quote": "Free shipping & easy returns for 365 days.", "supports": "physicalGoods" },
+        { "source": "quince.com-home", "quote": "Our factory-direct model passes the savings to you.", "supports": "kind" }
+      ],
+      "notes": "Also lists some third-party branded items, but sells mainly its own goods."
+    },
+    {
+      "domain": "randalls.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        { "source": "randalls-com-page-1", "quote": "Together, the three men developed the concept of a discount supermarket.", "supports": "category" },
+        { "source": "randalls-com-page-1", "quote": "Order delivery, pickup & more.", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy", "supports": "definition" }
+      ],
+      "notes": "Business-type phrase is historical (\"discount supermarket\"); \"discount\" modifies supermarket, not a discount store. In-store pharmacy does not change the category."
+    },
+    {
+      "domain": "rci.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["rci"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "rci-com-page-1", "quote": "Today, RCI isn’t just the leader of vacation exchange. It’s an entire global travel network.", "supports": "kind" },
+        { "source": "rci-com-page-1", "quote": "© RCI, LLC. RCI and related marks are registered trademarks", "supports": "brand" }
+      ],
+      "notes": "Travel and timeshare-exchange memberships; the RCI card's 5X is a co-brand bonus, not a category."
+    },
+    {
+      "domain": "rei.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["rei"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "capital-one-rei-co-op-mastercard-pricing", "quote": "made at REI retail locations and REI.com.", "supports": "brand" }
+      ],
+      "notes": "No store page captured. Kind and brand rest on the co-brand issuer excerpt naming REI.com; it does not show goods shipped or picked up. Co-brand bonus grants no category."
+    },
+    {
+      "domain": "rejuvenation.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "rejuvenation-com-page-1", "quote": "Sorry, due to website restrictions we are unable to display the requested page.", "supports": "kind" }
+      ],
+      "notes": "Both store pages are bot walls; the only issuer mention is a co-brand card's own bonus, which grants no category and does not name this domain."
+    },
+    {
+      "domain": "rh.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "rh.com-home", "quote": "You don't have permission to access \"http://rh.com/\" on this server.", "supports": "kind" }
+      ],
+      "notes": "Store page is an access-denied error and no issuer names the store; nothing supports a bonus category."
+    },
+    {
+      "domain": "royalcaribbean.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["royal-caribbean"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "royalcaribbean-com-page-1", "quote": "OUR SYSTEM IS UNAVAILABLE DUE TO SCHEDULED MAINTENANCE.", "supports": "kind" },
+        { "source": "boa-royal-one-pricing", "quote": "logging into your guest account through the available website or mobile app for the Royal Caribbean Group® cruise line", "supports": "physicalGoods" },
+        { "source": "boa-royal-one-pricing", "quote": "See RoyalCaribbean.com/royalone, CelebrityCruises.com/royalone or Silversea.com/royalone for the terms and conditions", "supports": "brand" }
+      ],
+      "notes": "Store page is a maintenance notice; kind, goods and brand rest on the co-brand issuer excerpt (cruise line, RoyalCaribbean.com). Co-brand bonus grants no category."
+    },
+    {
+      "domain": "samsclub.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["sams-club"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "samsclub-com-page-2", "quote": "Free Curbside Pickup", "supports": "physicalGoods" },
+        { "source": "samsclub-com-page-2", "quote": "Free Shipping on Orders Over $50", "supports": "physicalGoods" },
+        { "source": "samsclub-com-page-1", "quote": "Join Sam's Club", "supports": "brand" }
+      ],
+      "notes": "wholesale-clubs refused: store pages show a paid membership club but never name it a warehouse/wholesale club, and the only issuer earning clauses are the Sam's Club co-brand card's own bonus."
+    },
+    {
+      "domain": "scholastic.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "scholastic.com-home", "quote": "Book Sets Under $30 Hundreds of Ideas to Build Their Home Library", "supports": "kind" }
+      ],
+      "notes": "Sells books, magazine subscriptions and digital learning; the homepage never shows shipping or pickup, so the goods flag is cant-tell."
+    },
+    {
+      "domain": "seagate.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "seagate.com-home", "quote": "Free standard shipping on all orders over $199", "supports": "physicalGoods" },
+        { "source": "seagate.com-home", "quote": "Seagate Store", "supports": "kind" }
+      ],
+      "notes": "Storage-drive maker's own store; its pages never call it an electronics store and no issuer names it, so electronics is not granted."
+    },
+    {
+      "domain": "seaworld.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "entertainment",
+      "basis": "definition",
+      "quotes": [
+        { "source": "seaworld-com-page-3", "quote": "SeaWorld San Diego: Theme Park, Water Park & Zoo in California", "supports": "category" },
+        { "source": "seaworld-com-page-1", "quote": "Shop tickets & passes", "supports": "physicalGoods" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.", "supports": "definition" }
+      ],
+      "notes": "Treats theme park as amusement park. Citi excludes tourist attractions and museums; SeaWorld calls itself a theme park, not an attraction. Merchandise is sold on a separate shop site."
+    },
+    {
+      "domain": "sezzle.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "sezzle-com-page-2", "quote": "Buy now, pay later with flexibility online or in-store.", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "shellvacationsclub.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["shell-vacations-club"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "shellvacationsclub-com-page-1", "quote": "Shell Vacations Club is a points-based reservation and exchange system", "supports": "kind" },
+        { "source": "shellvacationsclub-com-page-1", "quote": "©2011 - 2026 Shell Vacations, LLC.", "supports": "brand" }
+      ],
+      "notes": "Timeshare/vacation ownership; the Wyndham card's bonus is a co-brand bonus, not a category."
+    },
+    {
+      "domain": "sherwin-williams.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "definition",
+      "quotes": [
+        { "source": "sherwin-williams-com-page-1", "quote": "sold exclusively through a chain of more than 5,000 company operated stores and facilities", "supports": "physicalGoods" },
+        { "source": "sherwin-williams-com-page-1", "quote": "Paint Stores Group", "supports": "category" },
+        { "source": "boa-cash-back-category-choices", "quote": "home supply warehouse stores, lumber and building materials stores, paint and wallpaper stores, hardware stores", "supports": "definition" }
+      ],
+      "notes": "BoA lists Sherwin-Williams only in a hedged examples list (not used). Paint-store business type comes from a corporate page segment name; BoA excludes B2B merchants, but the site also serves homeowners."
+    },
+    {
+      "domain": "shop.app",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "shop-app-page-1", "quote": "Shop Pay is a wallet that helps you check out faster on participating stores", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "shutterfly.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "shutterfly.com-home", "quote": "Free Shipping on Orders $99+", "supports": "physicalGoods" },
+        { "source": "shutterfly.com-home", "quote": "Our best-in-class printing is done right here in the USA by our best-in-class people.", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "sierra.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["sierra"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "synchrony-tjx-rewards-platinum-mastercard-partner", "quote": "inclusive of TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense, and online at tjmaxx.com, marshalls.com, sierra.com.", "supports": "brand" }
+      ],
+      "notes": "Store page is an error stub; kind and brand rest on the TJX co-brand excerpt naming sierra.com. No goods shown shipped or picked up. Co-brand card grants no category."
+    },
+    {
+      "domain": "silversea.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["silversea"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "silversea-com-page-1", "quote": "With our small luxury ships you can explore the seven continents", "supports": "kind" },
+        { "source": "silversea-com-page-1", "quote": "© 2026 SILVERSEA CRUISES LTD.", "supports": "brand" }
+      ],
+      "notes": "Cruise line; the Royal ONE card bonus is a co-brand bonus, not a category."
+    }
+  ]
+}

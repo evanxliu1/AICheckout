@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "packet": 2,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/2/packet.json",
+      "evals/merchants/db/audit/packets/2/catalog-lists.json",
+      "evals/merchants/db/audit/packets/2/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/2/stores/att.com.md",
+      "evals/merchants/db/audit/packets/2/stores/audible.com.md",
+      "evals/merchants/db/audit/packets/2/stores/austrian.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bambulab.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bananarepublic.gap.com.md",
+      "evals/merchants/db/audit/packets/2/stores/barnesandnoble.com.md",
+      "evals/merchants/db/audit/packets/2/stores/basspro.com.md",
+      "evals/merchants/db/audit/packets/2/stores/beatsbydre.com.md",
+      "evals/merchants/db/audit/packets/2/stores/belk.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bestbuy.com.md",
+      "evals/merchants/db/audit/packets/2/stores/birchlane.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bjs.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bloomingdales.com.md",
+      "evals/merchants/db/audit/packets/2/stores/bolt.com.md",
+      "evals/merchants/db/audit/packets/2/stores/boscovs.com.md",
+      "evals/merchants/db/audit/packets/2/stores/britishairways.com.md",
+      "evals/merchants/db/audit/packets/2/stores/brusselsairlines.com.md",
+      "evals/merchants/db/audit/packets/2/stores/build.com.md",
+      "evals/merchants/db/audit/packets/2/stores/cabelas.com.md",
+      "evals/merchants/db/audit/packets/2/stores/capitalvacations.com.md",
+      "evals/merchants/db/audit/packets/2/stores/capsule.com.md",
+      "evals/merchants/db/audit/packets/2/stores/carnival.com.md",
+      "evals/merchants/db/audit/packets/2/stores/cash.app.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "att.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["att"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "att-com-page-1", "quote": "Welcome to AT&T Support", "supports": "brand" },
+        { "source": "att-com-page-1", "quote": "Return or exchange your wireless device", "supports": "physicalGoods" }
+      ],
+      "notes": "Wireless and internet carrier that also sells phones. The only AT&T earning clause is the AT&T Points Plus co-brand card's own bonus, so no bonus category. about.att.com capture is an access-denied page."
+    },
+    {
+      "domain": "audible.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["audible"],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "audible-com-page-1", "quote": "producing Originals, audiobooks and podcasts", "supports": "kind" },
+        { "source": "amex-rewards-info-retail", "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Apple Music Apple TV+ Audible", "supports": "category" }
+      ],
+      "notes": "Amex inclusion list names Audible. Chase Amazon and Prime Visa clauses are co-brand bonuses, not used."
+    },
+    {
+      "domain": "austrian.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["austrian-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "austrian-com-page-1", "quote": "Austrian Airlines is Austria's leading airline with a global route network of more than 120 destinations.", "supports": "brand" }
+      ],
+      "notes": "Airline; no listed category covers airfare. Barclays Lufthansa card clause is a co-brand bonus."
+    },
+    {
+      "domain": "bambulab.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "bambulab.com-home", "quote": "3D Printers Powerful Tools for Makers Buy now", "supports": "physicalGoods" }
+      ],
+      "notes": "Sells its own 3D printers and filament; shipping not stated outright. Page never calls itself an electronics retailer and no issuer names it."
+    },
+    {
+      "domain": "bananarepublic.gap.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["banana-republic"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "bananarepublic-gap-com-page-1", "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.", "supports": "physicalGoods" },
+        { "source": "bananarepublic-gap-com-page-1", "quote": "Unsubscribe from Banana Republic emails", "supports": "brand" }
+      ],
+      "notes": "Shared Gap Inc. checkout (Gap, Old Navy, Athleta also reachable); labelled Banana Republic only for this host. Encore card clauses are co-brand bonuses."
+    },
+    {
+      "domain": "barnesandnoble.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["barnes-and-noble"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "barnesandnoble-com-page-1", "quote": "Shipping and Returns Membership Store Pickup", "supports": "physicalGoods" },
+        { "source": "barnesandnoble-com-page-1", "quote": "Barnes & Noble Booksellers, Inc.", "supports": "brand" }
+      ],
+      "notes": "Bookseller; no bonus category. Header links Paper Source but the sheet does not show bn.com as Paper Source's store."
+    },
+    {
+      "domain": "basspro.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["bass-pro-shops"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "basspro-com-page-1", "quote": "Johnny Morris founded Bass Pro Shops in 1972", "supports": "brand" },
+        { "source": "basspro-com-page-1", "quote": "OMNICHANNEL RETAIL PREMIER DESTINATION STORES", "supports": "physicalGoods" },
+        { "source": "capital-one-bass-pro-shops-club-card-pricing", "quote": "Bass Pro Shops, Cabela's and Mack's Prairie Wings retail locations and restaurants", "supports": "kind" }
+      ],
+      "notes": "Captured page is the corporate about site; goods inferred from retail stores, no shipping text. CLUB card clauses are co-brand bonuses."
+    },
+    {
+      "domain": "beatsbydre.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "beatsbydre.com-home", "quote": "Seamless Shopping Through Apple", "supports": "kind" },
+        { "source": "beatsbydre.com-home", "quote": "Enjoy free two-day delivery on most in-stock items.", "supports": "physicalGoods" }
+      ],
+      "notes": "Brand site whose checkout goes through Apple; Beats and Apple are not catalog brands. No issuer names it; not shown as an electronics retailer."
+    },
+    {
+      "domain": "belk.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "synchrony-belk-rewards-mastercard-partner", "quote": "approximately 10 days after the order ships", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "To earn additional rewards, purchases must be made at department stores included on our list of “select major department stores”", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's", "supports": "category" }
+      ],
+      "notes": "Both store pages are bot walls; kind and goods taken from the Synchrony page. Belk is not a catalog brand."
+    },
+    {
+      "domain": "bestbuy.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["best-buy"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "bestbuy-com-page-1", "quote": "We have more than 1,000 stores and more than 85,000 employees in the United States and Canada.", "supports": "brand" },
+        { "source": "bestbuy-com-page-2", "quote": "Shipping, Delivery & Store Pickup", "supports": "physicalGoods" }
+      ],
+      "notes": "electronics refused: no sheet issuer clause names Best Buy for electronics; the U.S. Bank definitions mention is an example in a hedged list; store pages never say electronics retailer. Page also lists Sell on Best Buy Marketplace."
+    },
+    {
+      "domain": "birchlane.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": ["birch-lane"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "citi-wayfair-mastercard-product", "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold.", "supports": "brand" },
+        { "source": "citi-wayfair-mastercard-product", "quote": "can be used across the Wayfair Family of Brands websites, mobile applications and stores excluding outlet stores", "supports": "kind" }
+      ],
+      "notes": "Store page is a bot wall. Brand matched from domain label to the Citi Wayfair brand list; goods not shown. Furnishings would not be home improvement anyway."
+    },
+    {
+      "domain": "bjs.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [],
+      "notes": "Both store pages are access-denied and no issuer page in the sheet names the store. Shared definitions name BJ's only as an exclusion from supermarkets, which grants nothing."
+    },
+    {
+      "domain": "bloomingdales.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["bloomingdales"],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "citi-bloomingdales-amex-product", "quote": "a store credit card that you can use in Bloomingdale’s stores and to shop online on bloomingdales.com", "supports": "brand" },
+        { "source": "citi-bloomingdales-amex-product", "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store.", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of department stores", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Belk Bloomingdale's Bon Ton Stores", "supports": "category" }
+      ],
+      "notes": "Store pages are access-denied; facts from issuer pages. U.S. Bank list is hedged and not relied on."
+    },
+    {
+      "domain": "bolt.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "bolt-com-page-1", "quote": "Shop with Your Bolt Account Checkout as Guest", "supports": "kind" },
+        { "source": "bolt-com-page-1", "quote": "Custom Checkout Custom Payments", "supports": "kind" }
+      ],
+      "notes": "Checkout and payments network; the page also mentions a Bolt Swag Store, not treated as its business."
+    },
+    {
+      "domain": "boscovs.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "boscovs-com-page-1", "quote": "Free Store Pickup FAQs", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "To earn additional rewards, purchases must be made at department stores included on our list of “select major department stores”", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's", "supports": "category" }
+      ],
+      "notes": "Boscov's is not a catalog brand."
+    },
+    {
+      "domain": "britishairways.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["british-airways"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "british-airways-visa-signature-product", "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases.", "supports": "kind" }
+      ],
+      "notes": "Store page is a high-demand queue page. Airline identified from issuer pages and domain label; the Avios clauses are co-brand bonuses."
+    },
+    {
+      "domain": "brusselsairlines.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["brussels-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "brusselsairlines-com-page-1", "quote": "As Belgium’s home carrier and one of the five network airlines of the Lufthansa Group", "supports": "brand" }
+      ],
+      "notes": "Airline; Barclays Lufthansa card clause is a co-brand bonus. Second capture is a bot check."
+    },
+    {
+      "domain": "build.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [],
+      "notes": "Only capture is an access-denied page on fergusonhome.com; issuer excerpts are Discover pages matching the phrase 'Build credit', not this store."
+    },
+    {
+      "domain": "cabelas.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["cabelas"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "cabelas-com-page-1", "quote": "Can I Buy Online and Ship to the Retail Store?", "supports": "physicalGoods" },
+        { "source": "cabelas-com-page-1", "quote": "How Do I Get a Cabela's Catalog?", "supports": "brand" }
+      ],
+      "notes": "Homepage capture is access-denied. CLUB card clauses are co-brand bonuses."
+    },
+    {
+      "domain": "capitalvacations.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["capital-vacations"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "capitalvacations-com-page-1", "quote": "Capital Vacations is one of the largest and fastest-growing management, development, and timeshare vacation club companies in North America.", "supports": "brand" }
+      ],
+      "notes": "Timeshare and vacation club; Barclays card clauses are co-brand bonuses."
+    },
+    {
+      "domain": "capsule.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "drugstores",
+      "basis": "definition",
+      "quotes": [
+        { "source": "capsule-com-page-1", "quote": "We are a new kind of pharmacy", "supports": "category" },
+        { "source": "capsule-com-page-2", "quote": "The pharmacy that comes to you", "supports": "category" },
+        { "source": "capsule-com-page-1", "quote": "We bring your medications to your door.", "supports": "physicalGoods" },
+        { "source": "chase-rewards-category-faq", "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.", "supports": "definition" }
+      ],
+      "notes": "Delivery pharmacy. Discover's line on online pharmacies also covers it but sits on a quarterly calendar page, so Chase's definition is the one relied on. No exclusion applies."
+    },
+    {
+      "domain": "carnival.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["carnival-cruise-line"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "carnival-com-page-1", "quote": "Our official website is carnival.com", "supports": "brand" },
+        { "source": "carnival-com-page-1", "quote": "Our 29 ships operate cruises as short as a weekend, with others as long as a week or two.", "supports": "kind" }
+      ],
+      "notes": "Cruise line; no listed category covers cruises. Barclays Carnival card clause is a co-brand bonus."
+    },
+    {
+      "domain": "cash.app",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "cash-app-page-1", "quote": "Offers let you save money instantly when you use your Cash App Card at coffee shops, restaurants, and other merchants.", "supports": "kind" }
+      ],
+      "notes": "Payment app and wallet, not a store."
+    }
+  ]
+}
