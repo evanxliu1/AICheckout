@@ -1507,39 +1507,30 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       ).status,
     ).toBe('ready');
   });
-  it('a default record defers to a catalog-authored profile; a record with evidence overrides it', () => {
-    // Transitional rule (decision 2026-10-11): the seed's default Best Buy and Newegg records assert
-    // nothing, so the catalog's electronics profiles keep Cash+ and Edward Jones bonuses there.
+  it('a release record is always its own profile; a default Best Buy record pays no electronics bonus', () => {
+    // Evan, 2026-10-11: no transitional deferral to the catalog's profile for the legacy stores.
     const seed = MERCHANTS_V1.merchants.find((m) => m.id === 'best-buy-us')!;
-    const kept = releaseProfileFor(seed, CATALOG_V3);
-    expect(kept).toBe(CATALOG_V3.merchants.find((m) => m.id === 'best-buy-us'));
+    const profile = releaseProfileFor(seed, CATALOG_V3);
+    expect(profile).toEqual(recordToProfile(seed, CATALOG_V3));
+    expect(profile.expectedCategory).toBe('general-merchandise');
     const cashPlus = owned('us-bank-cash-plus', {
       choices: [
         { choiceId: 'five-percent-categories', optionIds: ['electronic-stores', 'department-stores'] },
       ],
     });
-    const catalogProfile = compareRewards(
-      CATALOG_V3,
-      { cards: [cashPlus], defaultCardId: null },
-      purchase(),
-      now,
-    );
-    expect(at(kept, [cashPlus])).toEqual(catalogProfile);
-    expect((catalogProfile as Comparison).estimates[0].maxRewardCents).toBe(500);
+    expect((at(profile, [cashPlus]) as Comparison).estimates[0].maxRewardCents).toBeLessThan(500);
     expect(
       statusOf(
-        first(kept, [owned('us-bank-edward-jones-triple-rewards')]),
+        first(profile, [owned('us-bank-edward-jones-triple-rewards')]),
         'edward-jones-triple-rewards-electronic-appliance-stores',
       ),
-    ).not.toBe('not-at-merchant');
+    ).toBe('not-at-merchant');
     const corroborated = record('best-buy-us', {
       brandIds: ['best-buy'],
       evidence: { basis: 'corroborated', sourceIds: ['a', 'b'] },
     });
     expect(releaseProfileFor(corroborated, CATALOG_V3)).toEqual(recordToProfile(corroborated, CATALOG_V3));
     expect(releaseProfileFor(record('walmart-us'), CATALOG_V3).id).toBe('walmart-us');
-    const generalBestBuy = recordToProfile(record('best-buy-us', { brandIds: ['best-buy'] }), CATALOG_V3);
-    expect((at(generalBestBuy, [cashPlus]) as Comparison).estimates[0].maxRewardCents).toBeLessThan(500);
     const genericNamed = recordToProfile(record(GENERIC_MERCHANT_ID, { physicalGoods: false }), CATALOG_V3);
     expect(statusOf(first(genericNamed, [owned('amex-blue-cash-everyday')]), 'bce-online-retail-v2')).toBe(
       'not-at-merchant',

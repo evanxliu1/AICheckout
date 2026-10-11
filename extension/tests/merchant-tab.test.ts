@@ -104,10 +104,11 @@ describe('storeProfile and merchantOption', () => {
     });
     expect(merchantOption(v3, 'kroger-us', fixture)).toEqual({ merchant: kroger });
   });
-  it('transitional rule: a default record at a legacy store keeps the catalog’s profile (Best Buy, Newegg electronics)', () => {
-    expect(storeProfile(v3, 'best-buy-us')).toBe(v3.merchants.find((m) => m.id === 'best-buy-us'));
-    expect(storeProfile(v3, 'newegg-us')?.expectedCategory).toBe('electronics');
-    expect(storeProfile(v3, 'amazon-us')).toBe(v3.merchants.find((m) => m.id === 'amazon-us'));
+  it('a default record at a legacy store is its own profile: general merchandise, brands kept (2026-10-11)', () => {
+    expect(storeProfile(v3, 'best-buy-us')?.expectedCategory).toBe('general-merchandise');
+    expect(storeProfile(v3, 'newegg-us')?.expectedCategory).toBe('general-merchandise');
+    expect(storeProfile(v3, 'best-buy-us')?.brandIds).toEqual(['best-buy']);
+    expect(storeProfile(v3, 'amazon-us')?.brandIds).toEqual(['amazon']);
   });
   it('gives the generic store its profile and nothing to processors, disabled records, unknown ids or older catalogs', () => {
     expect(storeProfile(v3, 'generic-us-online', fixture)?.id).toBe('generic-us-online');
