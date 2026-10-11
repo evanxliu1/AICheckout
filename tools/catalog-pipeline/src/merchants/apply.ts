@@ -75,7 +75,11 @@ export const ISSUER_CATEGORY_WORDS: Record<string, RegExp> = {
   entertainment: /\b(entertainment|tickets?|theat(?:er|re)s?|cinemas?|amusement)\b/i,
 };
 
-const CLAUSE_BREAK = /[;:.]|\b(?:but|excluding|except(?:ing)?|other than|not including)\b/i;
+/** Clause boundaries: a semicolon, a sentence end (a period before whitespace and a capital, not after an abbreviation
+ * such as U.S., e.g., Inc.), or a word that turns the rest into an exclusion. A colon is not a boundary ("The U.S.
+ * drugstore list is: CVS…" is one clause). */
+const CLAUSE_BREAK =
+  /;|(?<!\b(?:U\.S|U\.K|e\.g|i\.e|Inc|Co|Corp|Ltd|No|St|vs|etc))\.(?=\s+[A-Z])|\b(?:but|excluding|except(?:ing)?|other than|not including)\b/i;
 
 /** An issuer quote is category evidence for `category` only when one clause of it names this store (its name or
  * domain label, on word boundaries), says purchases earn (earn, rewards, cash back, points, a rate) and names that

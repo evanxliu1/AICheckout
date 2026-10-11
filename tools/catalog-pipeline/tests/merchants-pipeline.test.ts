@@ -593,5 +593,37 @@ describe('issuer quotes: earning statements only', () => {
     expect(
       issuerQuoteEarns('Krogers earn 3% at grocery stores', 'Kroger', 'kroger.com', 'supermarkets'),
     ).toBe(false);
+    // Abbreviations and colons do not break a clause.
+    expect(
+      issuerQuoteEarns('Earn 6% at U.S. supermarkets like Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
+    ).toBe(true);
+    expect(
+      issuerQuoteEarns('Earn 6% at US supermarkets like Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
+    ).toBe(true);
+    expect(
+      issuerQuoteEarns(
+        'Earn 6% at U.S. supermarkets. Kroger is excluded',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    // A definition or list sentence states no earning: not evidence on its own (the Amex drugstore FAQ line).
+    expect(
+      issuerQuoteEarns(
+        'The U.S. drugstore list is: CVS Pharmacy, Duane Reade, Rite Aid and Walgreens.',
+        'CVS',
+        'cvs.com',
+        'drugstores',
+      ),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'Earn 3% at U.S. drugstores: CVS Pharmacy, Duane Reade and Walgreens.',
+        'CVS',
+        'cvs.com',
+        'drugstores',
+      ),
+    ).toBe(true);
   });
 });
