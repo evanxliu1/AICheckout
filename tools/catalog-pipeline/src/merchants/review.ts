@@ -32,7 +32,7 @@ export interface ReviewInput {
     batch: string;
     domain: string;
     disputed: { field: string; reason: string | null }[];
-    reason?: 'defunct';
+    reason?: 'defunct' | 'out-of-scope';
   }[];
   /** Stores whose own pages were bot-walled: name and hosts rest on research and issuer captures. */
   botWalled: { batch: string; domain: string }[];
@@ -140,20 +140,20 @@ export function reviewMarkdown(input: ReviewInput): string {
     '',
     ...(input.botWalled.length ? input.botWalled.map((b) => `- ${b.batch}: ${b.domain}`) : ['None.']),
     '',
-    `## Excluded as defunct, parked or typo domains (${input.heldOut.filter((h) => h.reason === 'defunct').length})`,
+    `## Excluded: defunct, parked or typo domains, or out of scope (${input.heldOut.filter((h) => h.reason).length})`,
     '',
-    ...(input.heldOut.some((h) => h.reason === 'defunct')
+    ...(input.heldOut.some((h) => h.reason)
       ? input.heldOut
-          .filter((h) => h.reason === 'defunct')
-          .map((h) => `- ${h.batch}: ${h.domain} (${cell(h.disputed[0]?.reason ?? '')})`)
+          .filter((h) => h.reason)
+          .map((h) => `- ${h.batch}: ${h.domain} (${h.reason}: ${cell(h.disputed[0]?.reason ?? '')})`)
       : ['None.']),
     '',
-    `## Held out: disputed fields, for Evan (${input.heldOut.filter((h) => h.reason !== 'defunct').length})`,
+    `## Held out: disputed fields, for Evan (${input.heldOut.filter((h) => !h.reason).length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
     '| --- | --- | --- | --- |',
     ...input.heldOut
-      .filter((h) => h.reason !== 'defunct')
+      .filter((h) => !h.reason)
       .flatMap((h) =>
         h.disputed.map((d) => `| ${h.batch} | ${h.domain} | ${d.field} | ${cell(d.reason ?? '')} |`),
       ),

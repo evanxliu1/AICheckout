@@ -22,6 +22,20 @@
       "category": "general-merchandise"
     },
     {
+      "domain": "chargepoint.com",
+      "id": "chargepoint-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Describes a hardware portfolio; does not show goods sold or shipped to buyers. A ratings claim; does not show a charger sold or shipped through the site. Promotional tagline with no definition wording; not the issuer's statement of what the category includes. Lists a card's choice categories and doe"
+      },
+      "refused": {
+        "candidate": "ev-charging",
+        "reason": "no issuer definition quote covers ev-charging",
+        "notes": "ChargePoint primarily provides EV-charging services and network access, but its pages also describe hardware and a home charger, supporting physicalGoods=true. No catalog brand ID is available for ChargePoint."
+      }
+    },
+    {
       "domain": "chick-fil-a.com",
       "id": "chick-fil-a-us",
       "basis": "definition",
@@ -173,19 +187,6 @@
         {
           "field": "hosts",
           "reason": "cedarpoint.com only redirects; checkout is on sixflags.com, a host shared by every Six Flags park, so it belongs to Six Flags, not Cedar Point alone."
-        },
-        {
-          "field": "physicalGoods",
-          "reason": "Captures show park admission sales; the online shop appears only as a menu link (and sells gift cards); no goods shown shipped or picked up from the site."
-        }
-      ]
-    },
-    {
-      "domain": "chargepoint.com",
-      "disputed": [
-        {
-          "field": "physicalGoods",
-          "reason": "Captures mention hardware and a home charger but show no goods sold, shipped or picked up through the site; drivers pay for charging sessions."
         }
       ]
     },
@@ -201,10 +202,6 @@
     {
       "domain": "daveandbusters.com",
       "disputed": [
-        {
-          "field": "physicalGoods",
-          "reason": "The only goods quote is a Power Card (game credit card); no merchandise shown shipped or picked up."
-        },
         {
           "field": "candidateCategory",
           "reason": "Captures show a games-and-dining venue; no captured issuer definition of entertainment covers arcades or game venues, so entertainment is unsupported."

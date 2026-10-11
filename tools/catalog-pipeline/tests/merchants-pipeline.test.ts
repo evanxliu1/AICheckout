@@ -1488,11 +1488,113 @@ describe('seed rules (coordinator 2026-10-11)', () => {
       botWalled: [{ batch: 'seed-1', domain: 'bjs.com' }],
     });
     expect(text).toContain('- seed-1: bjs.com');
-    expect(text).toContain('- seed-1: bonton.com (parked domain)');
+    expect(text).toContain('- seed-1: bonton.com (defunct: parked domain)');
     expect(text).toContain(
       "| seed-1 | amazon.com | draft | the drafter's quotes failed the verbatim gate 3 times |",
     );
     expect(text).toContain('## Held out: disputed fields, for Evan (1)');
+  });
+});
+
+describe('seed decisions 2026-10-11 (second set)', () => {
+  const verdict = (field: VerifiedField, reason: string) => {
+    const v = confirmed();
+    v[field] = { verdict: 'disputed', reason };
+    return v;
+  };
+  it('2: a disputed null candidate gives a default record with its brands, never a hold-out', () => {
+    const out = applyStore(
+      input(
+        {
+          domain: 'lyft.com',
+          name: 'Lyft',
+          hosts: ['lyft.com'],
+          verification: verdict('candidateCategory', 'the captures support transit'),
+        },
+        { candidateCategory: null, physicalGoods: false, brandIds: ['lyft'], evidence: [] },
+      ),
+    );
+    expect(out.outcome).toBe('record');
+    expect(out.outcome === 'record' && out.record).toMatchObject({
+      category: 'general-merchandise',
+      brandIds: ['lyft'],
+    });
+    // A disputed non-null candidate still holds out.
+    const held = applyStore(input({ verification: verdict('candidateCategory', 'not a supermarket') }));
+    expect(held.outcome).toBe('held-out');
+  });
+  it('3: a physicalGoods dispute that states the value corrects the record; one that cannot settle it holds out', () => {
+    const cinema = applyStore(
+      input(
+        {
+          verification: verdict(
+            'physicalGoods',
+            'A movie theater selling tickets; the captures show only merchandise footer links.',
+          ),
+        },
+        { physicalGoods: true },
+      ),
+    );
+    expect(cinema.outcome === 'record' && cinema.record.physicalGoods).toBe(false);
+    const explicit = applyStore(
+      input(
+        { verification: verdict('physicalGoods', 'physicalGoods: true; groceries are delivered') },
+        { physicalGoods: false },
+      ),
+    );
+    expect(explicit.outcome === 'record' && explicit.record.physicalGoods).toBe(true);
+    const unsettled = applyStore(
+      input({
+        verification: verdict('physicalGoods', 'Both store pages are bot checks; no capture shows goods.'),
+      }),
+    );
+    expect(unsettled.outcome).toBe('held-out');
+    const charging = applyStore(
+      input({
+        verification: verdict('physicalGoods', 'drivers pay for charging sessions; no goods shipped'),
+      }),
+    );
+    expect(charging.outcome === 'record' && charging.record.physicalGoods).toBe(false);
+  });
+  it('4: a redirect-only domain is dropped from hosts, not held out', () => {
+    const out = applyStore(
+      input({
+        domain: 'max.com',
+        name: 'HBO Max',
+        hosts: ['max.com', 'hbomax.com'],
+        verification: verdict('hosts', 'max.com redirects to hbomax.com; drop max.com'),
+      }),
+    );
+    expect(out.outcome === 'record' && out.record.hosts).toEqual(['hbomax.com']);
+    expect(out.outcome === 'record' && out.record.id).toBe('max-us');
+    const nothingLeft = applyStore(
+      input({ verification: verdict('hosts', 'kroger.com redirects to another company') }),
+    );
+    expect(nothingLeft.outcome).toBe('held-out');
+  });
+  it('5 and 7: hedged lists are no issuer evidence; a U.S. Bank fast-food list counts for dining', () => {
+    expect(
+      issuerQuoteEarns(
+        'Popular merchants in this category include Instacart and Kroger grocery stores',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'Grocery stores: examples of merchants include Kroger',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    expect(issuerQuoteEarns('Fast Food: Arbys, Chick-fil-A, Chipotle', "Arby's", 'arbys.com', 'dining')).toBe(
+      true,
+    );
+    expect(
+      issuerQuoteEarns('Earn 3% at grocery stores including Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
+    ).toBe(true);
   });
 });
 

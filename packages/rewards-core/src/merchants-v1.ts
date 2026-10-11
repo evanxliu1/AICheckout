@@ -2,12 +2,12 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 165 records, 15 of them payment
+/** The bundled merchant release (schema 1): 168 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.seed.9',
+  version: '2026-10-11.seed.10',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -37,13 +37,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'store-page',
       capturedAt: '2026-10-11',
       sha256: '8c5e89501b135b39b1375832b5af01e405b8e455f9e93f320843925215824320',
-    },
-    {
-      id: 'amcplus-com-page-1',
-      url: 'https://www.amcplus.com/faqs',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '90a0a58cfec218aa231f45733e63d4f4b70c873b98bfe91668167ed95cf5bed0',
     },
     {
       id: 'amex-rewards-info-retail',
@@ -626,8 +619,19 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['amcplus.com'],
       kind: 'merchant',
       physicalGoods: false,
-      category: 'streaming',
-      evidence: { basis: 'issuer', sourceIds: ['amcplus-com-page-1', 'discover-cashback-calendar'] },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'amctheatres-us',
+      name: 'AMC Theatres',
+      hosts: ['amctheatres.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -987,6 +991,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['celebrity-cruises'],
+      disabled: false,
+    },
+    {
+      id: 'chargepoint-us',
+      name: 'ChargePoint',
+      hosts: ['chargepoint.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
       disabled: false,
     },
     {
@@ -2027,6 +2042,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'lyft-us',
+      name: 'Lyft',
+      hosts: ['lyft.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['lyft'],
+      disabled: false,
+    },
+    {
       id: 'mackspw-us',
       name: "Mack's Prairie Wings",
       hosts: ['mackspw.com'],
@@ -2177,7 +2203,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'merchant',
       physicalGoods: false,
       category: 'streaming',
-      evidence: { basis: 'issuer', sourceIds: ['citi-strata-rewards-terms', 'discover-cashback-calendar'] },
+      evidence: { basis: 'issuer', sourceIds: ['citi-strata-rewards-terms'] },
       brandIds: [],
       disabled: false,
     },

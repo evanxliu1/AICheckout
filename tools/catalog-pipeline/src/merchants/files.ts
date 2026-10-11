@@ -28,6 +28,8 @@ export const EVIDENCE_DIR = `${DB_DIR}/evidence`;
 export const RELEASE_CONFIG = `${DB_DIR}/release-config.json`;
 export const REVIEW_FILE = `${DB_DIR}/review.md`;
 export const TIER_A_MANIFEST = `${DB_DIR}/tier-a-manifest.json`;
+/** Stores excluded by coordinator decision (no record): `evals/merchants/db/exclusions.json`. */
+export const EXCLUSIONS_FILE = `${DB_DIR}/exclusions.json`;
 export const PROMPT_FILE = 'tools/catalog-pipeline/src/merchants/prompts/merchant-draft.2.md';
 export const PROMPT_VERSION = 'merchant-draft.2';
 export const RESEARCHER_AGENT = '.claude/agents/merchant-researcher.md';
@@ -51,6 +53,12 @@ export const draftHeldOut = (state: State, domain: string): boolean =>
  * excluded with reason `defunct`, no record. */
 export const DEFUNCT_WORDING =
   /\b(defunct|closed|parked|liquidat\w*|typo|no longer|ceased|out of business)\b/i;
+/** A verifier's `physicalGoods` reason that states the value: an explicit true/false, or the kinds of business the
+ * coordinator named as goods-free (tickets, admission, streaming, charging, game credit, services). */
+export const GOODS_FALSE_WORDING =
+  /\b(tickets?|admission|streaming|subscription|charging|game credit|services? only|charging sessions?)\b/i;
+export const GOODS_UNSETTLED_WORDING =
+  /\b(cannot be settled|unreachable|bot[- ]?check|bot[- ]?block|parked|no capture (?:describes|shows what)|empty|error page|help[- ]center)\b/i;
 export const BATCH_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const slug = z.string().regex(SLUG).max(120);
@@ -400,14 +408,22 @@ export const applyReportSchema = z.strictObject({
     z.strictObject({
       domain: domainSchema,
       disputed: z.array(z.strictObject({ field: z.string(), reason: note.nullable() })),
-      /** `defunct`: the verifier's reasons say the domain is defunct, parked or a typo; excluded, no record. */
-      reason: z.enum(['defunct']).optional(),
+      /** `defunct`: the verifier's reasons say the domain is defunct, parked or a typo; `out-of-scope`: listed in
+       * exclusions.json (no U.S. site). Both are excluded, no record. */
+      reason: z.enum(['defunct', 'out-of-scope']).optional(),
     }),
   ),
   /** Stores whose own pages were all bot-walled or missing (name and hosts from research and issuer captures). */
   botWalled: z.array(domainSchema).optional(),
 });
 export type ApplyReport = z.infer<typeof applyReportSchema>;
+
+export const exclusionsFileSchema = z.strictObject({
+  description: z.string(),
+  excluded: z.array(
+    z.strictObject({ domain: domainSchema, reason: z.enum(['out-of-scope']), note: z.string().max(300) }),
+  ),
+});
 
 export const releaseConfigSchema = z.strictObject({
   description: z.string(),

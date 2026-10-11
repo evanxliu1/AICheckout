@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b10",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14100,
+    "outputTokens": 368
+  },
+  "durationMs": 28701,
+  "draft": {
+    "domain": "swiss.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "swiss"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "swiss-com-page-1",
+        "quote": "Flight search",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "swiss-com-page-1",
+        "quote": "Flight search",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "swiss-com-page-1",
+        "quote": "SWISS in the USA",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "swiss-com-page-1",
+        "quote": "Flight search",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "items billed by Miles & More integrated airline partners as merchant of record",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "tickets purchased directly from eligible Miles & More integrated airline partners",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-platinum-pricing",
+        "quote": "Lufthansa Group flight (Lufthansa, SWISS and Austrian airlines)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants that provide transportation and related services are not included in this category, for example, airlines",
+        "supports": "category"
+      }
+    ],
+    "notes": "SWISS directly books its own flights and is a travel-service merchant, not a physical-goods retailer. Airlines are not among the listed categories, and the Chase transit definition expressly excludes airlines."
+  }
+}

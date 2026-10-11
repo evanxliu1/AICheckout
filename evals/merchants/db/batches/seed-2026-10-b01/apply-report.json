@@ -65,12 +65,6 @@
       "category": "general-merchandise"
     },
     {
-      "domain": "airdolomiti.eu",
-      "id": "airdolomiti-us",
-      "basis": "default",
-      "category": "general-merchandise"
-    },
-    {
       "domain": "airfrance.us",
       "id": "airfrance-us",
       "basis": "default",
@@ -109,8 +103,30 @@
     {
       "domain": "amcplus.com",
       "id": "amcplus-us",
-      "basis": "issuer",
-      "category": "streaming"
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Conditional catch-all (may be included); not a definition of what the streaming category includes. Citi's streaming list is closed and does not name AMC+, so this opener does not cover this store."
+      },
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": "Amex, Discover, and U.S. Bank identify AMC+ as a streaming service. Citi’s provided streaming-provider list omits AMC+, and issuer terms warn that third-party-billed subscriptions may not qualify."
+      }
+    },
+    {
+      "domain": "amctheatres.com",
+      "id": "amctheatres-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Footer link label; it does not show goods shipped or picked up from this host."
+      },
+      "refused": {
+        "candidate": "entertainment",
+        "reason": "no store-page quote shows a entertainment business type",
+        "notes": "AMC's page lists merchandise but does not explicitly state shipping or pickup; physicalGoods is inferred from that merchandise offering. Citi's Live Entertainment terms exclude movie theaters, but U.S. Bank explicitly lists AMC Theatres under Movie Theaters and Discover includes movie-theater tickets in Entertainment."
+      }
     },
     {
       "domain": "amtrak.com",
@@ -170,15 +186,21 @@
       ]
     },
     {
+      "domain": "airdolomiti.eu",
+      "disputed": [
+        {
+          "field": "scope",
+          "reason": "Italian airline, no U.S. site (researcher b01)"
+        }
+      ],
+      "reason": "out-of-scope"
+    },
+    {
       "domain": "alamodrafthouse.com",
       "disputed": [
         {
           "field": "name",
           "reason": "Captured pages call the business Alamo Drafthouse (and Alamo Drafthouse Theater); the word Cinema in the research name appears nowhere."
-        },
-        {
-          "field": "physicalGoods",
-          "reason": "A cinema selling tickets and in-seat dining; the captures show only a Shop AlamoMart link and news teasers, not goods shipped or picked up from this site."
         }
       ]
     },
@@ -188,15 +210,6 @@
         {
           "field": "draft",
           "reason": "the drafter's quotes failed the verbatim gate 3 times"
-        }
-      ]
-    },
-    {
-      "domain": "amctheatres.com",
-      "disputed": [
-        {
-          "field": "physicalGoods",
-          "reason": "A movie theater selling tickets; the captures show only Merchandise footer links, not goods shipped or picked up from this site."
         }
       ]
     }

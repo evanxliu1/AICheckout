@@ -17,9 +17,14 @@ import {
   RECORDS_DIR,
   RELEASE_CONFIG,
   DEFUNCT_WORDING,
+  EXCLUSIONS_FILE,
+  GOODS_FALSE_WORDING,
+  GOODS_UNSETTLED_WORDING,
   VERIFIED_FIELDS,
   applyReportSchema,
   draftHeldOut,
+  exclusionsFileSchema,
+  readJsonOrNull,
   draftFileSchema,
   loadBatch,
   manifestFileSchema,
@@ -94,6 +99,10 @@ export const DEFINITION_WORDING =
 /** Wording that makes a definition conditional ("included if they classify as a restaurant merchant"). */
 export const CONDITIONAL_WORDING =
   /\b(if|when|unless|provided|may|might|classif\w*|qualif\w*|depend\w*|eligible)\b/i;
+/** Hedged merchant lists ("popular merchants in this category", "examples of", "does not control how merchants are
+ * categorized") are no issuer evidence (coordinator, 2026-10-11). */
+export const HEDGED_WORDING =
+  /\b(popular merchants?|examples? of|for example|helpful guide|does not control|may include|typically|generally|among others)\b/i;
 /** A quarterly-calendar or rate line is no definition ("Earn 5% … April 1 to June 30, 2026"). */
 export const CALENDAR_WORDING =
   /\b(january|february|march|april|may|june|july|august|september|october|november|december|q[1-4]|quarter(?:ly)?|\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\b|\d+(?:\.\d+)?\s?%|\b\d+x\b/i;
@@ -101,7 +110,9 @@ export const CALENDAR_WORDING =
  * come from an issuer quote. */
 export const ISSUER_CATEGORY_WORDS: Record<string, RegExp> = {
   supermarkets: /\b(grocer(?:y|ies)|supermarkets?)\b/i,
-  dining: /\b(restaurants?|dining)\b/i,
+  // "Fast food" counts for dining because the only issuer with a fast-food option in the catalog (U.S. Bank Cash+,
+  // rule `cash-plus-fast-food`) maps it to the `dining` category (coordinator, 2026-10-11).
+  dining: /\b(restaurants?|dining|fast[- ]food)\b/i,
   drugstores: /\b(drug ?stores?|pharmac(?:y|ies))\b/i,
   streaming: /\bstreaming\b/i,
   gas: /\b(gas|fuel|gas stations?)\b/i,
@@ -248,7 +259,8 @@ export function issuerQuoteEarns(quote: string, name: string, domain: string, ca
         words.test(clause) &&
         (EARNING_WORDING.test(clause) || inclusionList(clause)) &&
         !EXCLUSION_WORDING.test(clause) &&
-        !CONDITIONAL_WORDING.test(clause),
+        !CONDITIONAL_WORDING.test(clause) &&
+        !HEDGED_WORDING.test(clause),
     );
 }
 
@@ -376,13 +388,45 @@ export function issuerConflicts(input: ApplyInput, category: string, citedIds: s
 
 /** The apply rule for one store. Pure: no files. `basis` is decided in one place. */
 export function applyStore(input: ApplyInput): ApplyOutcome {
-  const disputed = VERIFIED_FIELDS.filter(
-    (f) => f !== 'evidence' && input.verification[f].verdict === 'disputed',
-  ).map((field) => ({
+  const { draft: drafted } = input;
+  // A verifier's `physicalGoods` dispute that states the value (coordinator, 2026-10-11) corrects the draft instead
+  // of holding the record out; one that cannot settle it still holds out.
+  const goodsReason = input.verification.physicalGoods.reason ?? '';
+  const goodsValue =
+    input.verification.physicalGoods.verdict !== 'disputed'
+      ? null
+      : /\bfalse\b/i.test(goodsReason) ||
+          (GOODS_FALSE_WORDING.test(goodsReason) && !GOODS_UNSETTLED_WORDING.test(goodsReason))
+        ? false
+        : /\btrue\b/i.test(goodsReason)
+          ? true
+          : null;
+  const draft = goodsValue === null ? drafted : { ...drafted, physicalGoods: goodsValue };
+  // Hosts the verifier says only redirect ("max.com redirects to hbomax.com") are dropped, not held out: the matcher
+  // sees the final tab URL. The hosts dispute holds out only when nothing would be left.
+  const hostsReason = input.verification.hosts.reason ?? '';
+  const escapeHost = (h: string) => h.replace(/[.]/g, '\\.');
+  const redirectHosts =
+    input.verification.hosts.verdict === 'disputed' && /\bredirects?\b/i.test(hostsReason)
+      ? input.hosts.filter(
+          (h) =>
+            new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}(?![a-z0-9-])`, 'i').test(hostsReason) &&
+            !new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason),
+        )
+      : [];
+  const hosts = input.hosts.filter((h) => !redirectHosts.includes(h));
+  const hostsSettled = redirectHosts.length > 0 && hosts.length > 0;
+  const disputed = VERIFIED_FIELDS.filter((f) => {
+    if (f === 'evidence' || input.verification[f].verdict !== 'disputed') return false;
+    // A null candidate the verifier would raise stays default (coordinator, 2026-10-11): the rule is conservative.
+    if (f === 'candidateCategory' && drafted.candidateCategory === null) return false;
+    if (f === 'physicalGoods' && goodsValue !== null) return false;
+    if (f === 'hosts' && hostsSettled) return false;
+    return true;
+  }).map((field) => ({
     field: field as VerifiedField | 'processor',
     reason: input.verification[field].reason,
   }));
-  const { draft } = input;
   if (draft.kind === 'processor' && (draft.physicalGoods || draft.brandIds.length))
     disputed.push({ field: 'processor', reason: 'a processor sells no physical goods and has no brands' });
   if (disputed.length) return { outcome: 'held-out', disputed };
@@ -439,7 +483,7 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
   const record = merchantRecordSchema.parse({
     id: recordId(input.domain, draft.kind, input.id),
     name: input.name,
-    hosts: input.hosts,
+    hosts,
     kind: draft.kind,
     physicalGoods: draft.kind === 'processor' ? false : draft.physicalGoods,
     category: basis === 'default' ? 'general-merchandise' : candidate,
@@ -504,13 +548,30 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
     heldOut: [] as {
       domain: string;
       disputed: { field: string; reason: string | null }[];
-      reason?: 'defunct';
+      reason?: 'defunct' | 'out-of-scope';
     }[],
     botWalled: [] as string[],
   };
   const sourcesById = new Map(config.sources.map((s) => [s.id, s]));
   let newestCapture = config.verifiedAt.slice(0, 10);
+  const exclusions =
+    (await readJsonOrNull(join(env.root, EXCLUSIONS_FILE), exclusionsFileSchema))?.excluded ?? [];
   for (const store of batch.meta.stores) {
+    const excluded = exclusions.find((e) => e.domain === store.domain);
+    if (excluded) {
+      report.heldOut.push({
+        domain: store.domain,
+        disputed: [{ field: 'scope', reason: excluded.note }],
+        reason: excluded.reason,
+      });
+      batch.state.stores[store.domain] = {
+        ...batch.state.stores[store.domain],
+        apply: 'held-out',
+        heldOutFields: ['scope'],
+      };
+      env.log(`${store.domain}: EXCLUDED (${excluded.reason}).`);
+      continue;
+    }
     // Held out at the draft stage (the quotes failed the verbatim gate MAX_DRAFT_ATTEMPTS times): no record is
     // written, so an already-authored record of the same id (amazon-us from 14.1) stays in the release unchanged.
     if (draftHeldOut(batch.state, store.domain)) {
