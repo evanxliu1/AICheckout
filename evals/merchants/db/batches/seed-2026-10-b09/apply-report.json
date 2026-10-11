@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "appliedOn": "2026-10-11",
+  "records": [
+    {
+      "domain": "royalcaribbean.com",
+      "id": "royalcaribbean-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "safeway.com",
+      "id": "safeway-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "Safeway pages also mention pharmacy-related services, and Citi lists Safeway among merchants excluded from a gas bonus. However, its own page describes the business as a food and drug retailer, while issuer materials list Safeway under grocery merchants; supermarkets is the primary category."
+      }
+    },
+    {
+      "domain": "saksfifthavenue.com",
+      "id": "saksfifthavenue-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "department-stores",
+        "reason": "no store-page quote shows a department-stores business type",
+        "notes": "The store pages contain no rendered text. Saks Fifth Avenue is explicitly listed by Amex as a select major department store; no matching catalog brand ID exists. Physical-goods status is inferred conservatively from its department-store retail classification."
+      }
+    },
+    {
+      "domain": "samsclub.com",
+      "id": "samsclub-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A membership-tier button label on the join page; it does not plainly show a warehouse-club business type."
+      },
+      "refused": {
+        "candidate": "wholesale-clubs",
+        "reason": "no store-page quote shows a wholesale-clubs business type",
+        "notes": "The store pages do not explicitly say “wholesale club,” and no merchant-code lookup is provided; the category is inferred from club membership, Sam’s Club purchase treatment, and the issuer definition."
+      }
+    },
+    {
+      "domain": "samsung.com",
+      "id": "samsung-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Promotional U.S. Bank line about tech products with no store-type definition wording; not the issuer's statement of what the electronics category includes."
+      },
+      "refused": {
+        "candidate": "electronics",
+        "reason": "no store-page quote shows a electronics business type",
+        "notes": "Samsung is not present in the supplied catalog brand list, so no brand ID is available. The electronics classification is supported by Samsung’s own business description and the issuer’s tech-products definition."
+      }
+    },
+    {
+      "domain": "seamless.com",
+      "id": "seamless-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A help-center topic label; it does not plainly show the business type. Chase's separate Select food delivery category, not dining; it supports a different category than the drafted one. Lists seamless.com under Chase's Select food delivery category, a different category from dining. Amex's restauran"
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": "Seamless is a delivery marketplace for local restaurants, not a restaurant or listed catalog brand. Dining is supported by the store’s food-delivery description, Chase’s explicit Seamless listing, and Citi’s restaurant-delivery definition; issuer-specific coding may still vary."
+      }
+    },
+    {
+      "domain": "seatgeek.com",
+      "id": "seatgeek-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "entertainment",
+        "reason": "no store-page quote shows a entertainment business type",
+        "notes": "SeatGeek is a ticket marketplace rather than an official store for any catalog brand. Electronic ticket delivery supports classifying physicalGoods as false. Entertainment is supported by the ticket-marketplace description and issuer definitions covering live-event ticket purchases."
+      }
+    },
+    {
+      "domain": "seaworld.com",
+      "id": "seaworld-us",
+      "basis": "definition",
+      "category": "entertainment"
+    },
+    {
+      "domain": "shaws.com",
+      "id": "shaws-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Describes the original 1860 store's stock; it does not show goods sold, shipped or picked up through this site (the page's delivery and pickup line does)."
+      },
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "the store's own page shaws-com-page-1 calls it a superstore",
+        "notes": null
+      }
+    },
+    {
+      "domain": "shellvacationsclub.com",
+      "id": "shellvacationsclub-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "shipt.com",
+      "id": "shipt-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A shop-category navigation label beside alcohol, pet and electronics delivery; it does not plainly show a supermarket business type. A footer resource link; it does not plainly show the business type. Amex's supermarket definition describes stores selling food and household goods; it does not cover "
+      },
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "Shipt is a broader marketplace with electronics and household delivery, and no merchant-code lookup is provided. Supermarkets is based on its grocery-delivery business; actual MCC treatment may vary."
+      }
+    },
+    {
+      "domain": "shoprite.com",
+      "id": "shoprite-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "The store page contains only cookie text; classification relies on the issuer page listing ShopRite among supermarket merchants."
+      }
+    },
+    {
+      "domain": "sierra.com",
+      "id": "sierra-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "silversea.com",
+      "id": "silversea-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "siriusxm.com",
+      "id": "siriusxm-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": "The primary offering is recurring streaming subscriptions, but the help page also references purchased radios and shipping returns, so physicalGoods is true."
+      }
+    },
+    {
+      "domain": "sixflags.com",
+      "id": "sixflags-us",
+      "basis": "definition",
+      "category": "entertainment"
+    },
+    {
+      "domain": "sling.com",
+      "id": "sling-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "soma.com",
+      "id": "soma-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "sonicdrivein.com",
+      "id": "sonicdrivein-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "southwest.com",
+      "id": "southwest-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "spotify.com",
+      "id": "spotify-us",
+      "basis": "definition",
+      "category": "streaming"
+    }
+  ],
+  "heldOut": [
+    {
+      "domain": "saksoff5th.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Store closed online: the only capture is a notice that SaksOFF5TH.com is shutting down; no online sale or checkout on this host."
+        }
+      ],
+      "reason": "defunct"
+    },
+    {
+      "domain": "showtime.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "showtime.com redirects to paramountplus.com (a Showtime brand page on Paramount+); no Showtime sale or checkout on this host."
+        }
+      ]
+    },
+    {
+      "domain": "smithsfoodanddrug.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "No store page captured (timed out) and no issuer capture names Smith's, so research and an issuer capture do not agree on the store; the host cannot be settled."
+        },
+        {
+          "field": "kind",
+          "reason": "No store page captured and no issuer capture names Smith's; nothing in the captures shows what the site does."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture shows goods shipped or picked up: no store page was captured and no issuer capture names the store."
+        }
+      ]
+    },
+    {
+      "domain": "sony.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Both store pages are Access Denied and no issuer capture names Sony, so research and an issuer capture do not agree on the store; the host cannot be settled."
+        },
+        {
+          "field": "kind",
+          "reason": "Both store pages are Access Denied and no issuer capture names Sony; nothing shows what the site does."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture shows goods shipped or picked up: store pages are Access Denied and no issuer capture names the store."
+        }
+      ]
+    }
+  ],
+  "botWalled": [
+    "saksfifthavenue.com",
+    "sierra.com",
+    "smithsfoodanddrug.com",
+    "sony.com"
+  ]
+}

@@ -7,36 +7,31 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 13602,
-    "outputTokens": 423
+    "inputTokens": 13600,
+    "outputTokens": 404
   },
-  "durationMs": 38088,
+  "durationMs": 46714,
   "draft": {
     "domain": "starbucks.com",
     "kind": "merchant",
-    "physicalGoods": true,
+    "physicalGoods": false,
     "brandIds": [],
     "candidateCategory": "dining",
     "evidence": [
       {
         "sourceId": "starbucks-com-page-1",
-        "quote": "In 1987 we became a coffeehouse",
-        "supports": "category"
+        "quote": "Starbucks Coffee Company",
+        "supports": "kind"
       },
       {
         "sourceId": "starbucks-com-page-1",
-        "quote": "Cups & Merch",
-        "supports": "physicalGoods"
-      },
-      {
-        "sourceId": "starbucks-com-page-2",
-        "quote": "Drinks & Food",
+        "quote": "In 1987 we became a coffeehouse, dedicated to serving exceptional coffee with passion and care.",
         "supports": "category"
       },
       {
         "sourceId": "starbucks-com-page-2",
-        "quote": "Shopping Bag",
-        "supports": "kind"
+        "quote": "Find a café",
+        "supports": "category"
       },
       {
         "sourceId": "amex-rewards-info-retail",
@@ -69,6 +64,6 @@
         "supports": "definition"
       }
     ],
-    "notes": "Starbucks is not in the supplied catalog, so no brand ID applies. Dining is inferred from its coffeehouse/menu description and issuer definitions that include cafes; no Starbucks-specific merchant code is provided."
+    "notes": "Starbucks also lists at-home coffee and merchandise, but its core business is identified as a coffeehouse; physicalGoods is false under the explicit restaurant exclusion."
   }
 }
