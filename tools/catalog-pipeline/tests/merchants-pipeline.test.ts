@@ -163,6 +163,12 @@ describe('apply rule', () => {
       category: 'general-merchandise',
     });
     expect(recordId('shop.app', 'processor', 'shop-pay')).toBe('shop-pay');
+    // Subdomain stores keep their labels, so stores of one company never share an id.
+    expect(recordId('music.apple.com', 'merchant', null)).toBe('music-apple-us');
+    expect(recordId('athleta.gap.com', 'merchant', null)).toBe('athleta-gap-us');
+    expect(recordId('disneyland.disney.go.com', 'merchant', null)).toBe('disneyland-disney-go-us');
+    expect(recordId('checkout.stripe.com', 'processor', null)).toBe('checkout-stripe');
+    expect(recordId('kroger.com', 'merchant', null)).toBe('kroger-us');
     expect(recordId('bestbuy.com', 'merchant', 'best-buy-us')).toBe('best-buy-us');
   });
 

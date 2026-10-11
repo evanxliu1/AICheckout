@@ -2,12 +2,12 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 162 records, 15 of them payment
+/** The bundled merchant release (schema 1): 165 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.seed.8',
+  version: '2026-10-11.seed.9',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -654,17 +654,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'apple-us',
-      name: 'Apple Music',
-      hosts: ['music.apple.com'],
-      kind: 'merchant',
-      physicalGoods: false,
-      category: 'streaming',
-      evidence: { basis: 'issuer', sourceIds: ['citi-strata-rewards-terms', 'discover-cashback-calendar'] },
-      brandIds: [],
-      disabled: false,
-    },
-    {
       id: 'applebees-us',
       name: "Applebee's",
       hosts: ['applebees.com'],
@@ -704,6 +693,17 @@ export const MERCHANTS_V1: MerchantRelease = {
         ],
       },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'athleta-gap-us',
+      name: 'Athleta',
+      hosts: ['athleta.gap.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['athleta'],
       disabled: false,
     },
     {
@@ -759,6 +759,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'bananarepublic-gap-us',
+      name: 'Banana Republic',
+      hosts: ['bananarepublic.gap.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['banana-republic'],
       disabled: false,
     },
     {
@@ -1198,11 +1209,33 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'disneyland-disney-go-us',
+      name: 'Disneyland Resort',
+      hosts: ['disneyland.disney.go.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['disney'],
+      disabled: false,
+    },
+    {
       id: 'disneystore-us',
       name: 'Disney Store',
       hosts: ['disneystore.com'],
       kind: 'merchant',
       physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['disney'],
+      disabled: false,
+    },
+    {
+      id: 'disneyworld-disney-go-us',
+      name: 'Walt Disney World Resort',
+      hosts: ['disneyworld.disney.go.com'],
+      kind: 'merchant',
+      physicalGoods: false,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['disney'],
@@ -1305,6 +1338,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['express'],
+      disabled: false,
+    },
+    {
+      id: 'factory-jcrew-us',
+      name: 'J.Crew Factory',
+      hosts: ['factory.jcrew.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['j-crew-factory'],
       disabled: false,
     },
     {
@@ -1440,17 +1484,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'gap-us',
-      name: 'Athleta',
-      hosts: ['athleta.gap.com'],
-      kind: 'merchant',
-      physicalGoods: true,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
-      brandIds: ['athleta'],
-      disabled: false,
-    },
-    {
       id: 'giantfood-us',
       name: 'Giant Food',
       hosts: ['giantfood.com'],
@@ -1470,17 +1503,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
-      disabled: false,
-    },
-    {
-      id: 'go-us',
-      name: 'Disneyland Resort',
-      hosts: ['disneyland.disney.go.com'],
-      kind: 'merchant',
-      physicalGoods: false,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
-      brandIds: ['disney'],
       disabled: false,
     },
     {
@@ -2145,6 +2167,17 @@ export const MERCHANTS_V1: MerchantRelease = {
           'us-bank-cash-plus-sample-merchants',
         ],
       },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'music-apple-us',
+      name: 'Apple Music',
+      hosts: ['music.apple.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'streaming',
+      evidence: { basis: 'issuer', sourceIds: ['citi-strata-rewards-terms', 'discover-cashback-calendar'] },
       brandIds: [],
       disabled: false,
     },

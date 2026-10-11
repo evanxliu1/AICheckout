@@ -65,8 +65,16 @@ export type ApplyOutcome =
     }
   | { outcome: 'held-out'; disputed: { field: VerifiedField | 'processor'; reason: string | null }[] };
 
-export const recordId = (domain: string, kind: string, fixed: string | null): string =>
-  fixed ?? (kind === 'processor' ? domainLabel(domain) : `${domainLabel(domain)}-us`);
+/** The record id: the candidate's fixed id, else the domain's label (`kroger-us`, `paypal`). A store on a subdomain
+ * keeps every label down to the registrable one (`music-apple-us`, `athleta-gap-us`, `disneyland-disney-go-us`), so
+ * two stores of one company never share an id (seed 2026-10-11: athleta and bananarepublic both became `gap-us`). */
+export const recordId = (domain: string, kind: string, fixed: string | null): string => {
+  if (fixed) return fixed;
+  const label = domainLabel(domain);
+  const labels = domain.split('.');
+  const slug = labels.slice(0, labels.indexOf(label) + 1).join('-');
+  return kind === 'processor' ? slug : `${slug}-us`;
+};
 
 /** Words that make a clause an exclusion, a limit or a base rate rather than an earning statement. A bare "not"
  * catches "Not grocery stores:" lists. */
