@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 17058,
+    "outputTokens": 194
+  },
+  "durationMs": 20887,
+  "draft": {
+    "domain": "iberia.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "iberia"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "iberia-com-lookup-1",
+        "quote": "A merchant is a business that takes payments from a cardholder in exchange for goods or services.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "iberia-com-lookup-1",
+        "quote": "3102\tIBERIA",
+        "supports": "category"
+      },
+      {
+        "sourceId": "iberia-com-page-1",
+        "quote": "© Iberia 2024",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "iberia-visa-signature-product",
+        "quote": "Iberia flights",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The store pages were interrupted, but the lookup assigns Iberia MCC 3102 and issuer terms refer to Iberia flights. Airlines are not represented by a supplied category; the category is therefore null."
+  }
+}
