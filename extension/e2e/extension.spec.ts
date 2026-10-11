@@ -99,7 +99,7 @@ test('packaged wallet: offline comparison, browser restart, expiry, and deletion
     await startPopup(reopened);
     expect(await reopened.evaluate(() => chrome.storage.local.get(null))).toEqual({});
     const permissions = await reopened.evaluate(() => chrome.permissions.getAll());
-    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
+    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'alarms', 'scripting', 'storage']);
     expect(permissions.origins?.sort()).toEqual(BADGE_ORIGINS);
     expect(errors).toEqual([]);
   } finally {

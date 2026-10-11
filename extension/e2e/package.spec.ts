@@ -94,7 +94,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
       await expect.poll(popup.text).toContain('$0.40');
     } else await expect.poll(popup.text).toContain('These card terms have expired');
     const permissions = await worker.evaluate(() => chrome.permissions.getAll());
-    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
+    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'alarms', 'scripting', 'storage']);
     expect(permissions.origins?.sort()).toEqual(
       [...BADGE_ORIGINS, ...(inventory.catalogOrigin ? [`${inventory.catalogOrigin}/*`] : [])].sort(),
     );

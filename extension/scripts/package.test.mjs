@@ -96,6 +96,9 @@ test('unexpected permissions, entry paths and manifest capabilities cannot repla
       m.permissions.push('tabs');
     },
     (m) => {
+      m.permissions = m.permissions.filter((permission) => permission !== 'alarms');
+    },
+    (m) => {
       m.host_permissions = [...BADGE_HOST_PERMISSIONS, 'https://*.example.com/*'];
     },
     (m) => {

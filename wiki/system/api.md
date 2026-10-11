@@ -59,6 +59,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | Token pre-check | `POST /sources`, `POST /drafts`, `PUT /drafts/:id` and `POST …/extractions/:runId/apply` verify the bearer token in a `preParsing` hook, after the rate limit (whose `onRequest` hook `@fastify/rate-limit` adds after a route's own) and before the body is read: ES256/RS256 tokens against the project's JWKS (`/auth/v1/.well-known/jwks.json`, cached 10 min, unknown key IDs refetched at most once a minute; checks signature, `exp` (30 s skew), `role` `authenticated`, `sub`, and `iss` = `<SUPABASE_URL>/auth/v1`, else asks Auth); other tokens (HS256) or an unreadable JWKS fall back to `GET /auth/v1/user`, a valid answer cached 60 s by token hash; each call times out after 3 s. Invalid, or Auth 400/401/403 → 401 `sign_in_required`; any other Auth answer or a network failure → 503 `review_unavailable`. No extra env var ([decision](../decisions/2026-10-03-review-token-precheck.md)) |
 | Catalog read timeout | 7 s (`AbortSignal.timeout`) |
 | Catalog read cap | 2 MiB for the Data API row (`MAX_CATALOG_READ_BYTES`; JSONB text adds spaces); the catalog itself ≤ 1 MiB for v3 |
+| Merchants read cap | 4 MiB for the Data API row (`MAX_MERCHANTS_READ_BYTES`); the release itself ≤ 2 MiB (14.6) |
 | Request log fields | request ID, route template, method, status, duration (no bodies, tokens or source text) |
 
 ## Routes
@@ -67,12 +68,14 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | --- | --- | --- |
 | `GET /health` | [`app.ts:createApp`](../../apps/api/src/app.ts) | none; liveness only |
 | `GET /v1/catalog` | `createApp` + [`catalog-repository.ts:createCatalogRepository`](../../apps/api/src/catalog-repository.ts) | none |
+| `GET /v1/merchants` (14.6) | `createApp` + [`merchant-repository.ts:createMerchantRepository`](../../apps/api/src/merchant-repository.ts): the merchant head joined to its release, `no-store`, `nosniff`, 503 `merchants_unavailable` when unconfigured, unparseable or dated in the future | none |
 | `GET /v1/review/` | [`review-routes.ts:reviewRoutes`](../../apps/api/src/review-routes.ts) | bearer |
 | `GET /v1/review/drafts/:id` | `get_catalog_review_summary`: draft, head, snapshot, source metadata without text | bearer |
 | `GET /v1/review/drafts/:id/sources/:sourceId` | `get_catalog_review_source`: one capture attached to the draft, with text | bearer |
 | `POST /v1/review/sources` | | bearer |
 | `POST /v1/review/drafts`, `PUT /v1/review/drafts/:id` | | bearer |
 | `POST /v1/review/drafts/:id/publish` | | bearer |
+| `POST /v1/review/merchants/publish` (14.6) | `publish_merchant_release` with the whole release, the expected head sequence and hash and the note (`publishMerchantsInputSchema`); body ≤ 2 MiB + 16 KiB, token checked before the body is read | bearer |
 | `POST /v1/review/drafts/:id/extractions` | [`curation/service.ts:startReviewedExtraction`](../../apps/api/src/curation/service.ts) | bearer; 503 when curation disabled |
 | `GET /v1/review/drafts/:id/extractions[/:runId]` | [`curation/review.ts`](../../apps/api/src/curation/review.ts) | bearer |
 | `POST /v1/review/drafts/:id/extractions/:runId/apply` | | bearer |

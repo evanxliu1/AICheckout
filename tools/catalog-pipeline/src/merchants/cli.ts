@@ -8,6 +8,8 @@
 //   merchants accept research|verify --batch B --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--dry-run]
 //   merchants run capture|draft|apply|build --batch B [--only a.com,b.com]
 //   merchants review                                   rewrite evals/merchants/db/review.md
+//   merchants publish --version <v> [--offline] [--api <origin>]
+//                     [--confirm <v> --instruction-at <UTC time of Evan's "publish merchants <v>">]
 import { access, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -35,6 +37,8 @@ import type { MerchantAgentStage, MerchantCliStage } from './files.ts';
 import { accept, claim, openPacket } from './packets.ts';
 import { collectReview, reviewMarkdown, runBuild } from './review.ts';
 import { tierACommand } from './tier-a.ts';
+import { defaultMerchantPublishDeps, publishMerchants } from './publish.ts';
+import { DEFAULT_API, apiOrigin, sessionPathFrom } from '../session.ts';
 
 export const MERCHANTS_USAGE = `Usage: npm run pipeline -- merchants <command>
   candidates [--check]
@@ -44,7 +48,9 @@ export const MERCHANTS_USAGE = `Usage: npm run pipeline -- merchants <command>
   claim <${MERCHANT_AGENT_STAGES.join('|')}> --batch B [--release]
   accept <${MERCHANT_AGENT_STAGES.join('|')}> --batch B --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--dry-run]
   run <${MERCHANT_CLI_STAGES.join('|')}> --batch B [--only a.com,b.com]
-  review`;
+  review
+  publish --version <v> [--offline] [--api <origin>]
+  publish --version <v> --confirm <v> --instruction-at <UTC time of Evan's "publish merchants <v>">`;
 
 class UsageError extends Error {}
 
@@ -213,6 +219,11 @@ export async function merchantsMain(argv: string[], env: Env): Promise<number> {
         'duration-ms': { type: 'string' },
         tokens: { type: 'string' },
         'dry-run': { type: 'boolean', default: false },
+        version: { type: 'string' },
+        api: { type: 'string' },
+        confirm: { type: 'string' },
+        'instruction-at': { type: 'string' },
+        offline: { type: 'boolean', default: false },
       },
     });
     const oneBatch = async () => {
@@ -266,6 +277,19 @@ export async function merchantsMain(argv: string[], env: Env): Promise<number> {
         if (stage === 'draft') return await runDraft(env, batch, { only });
         return await runApply(env, batch);
       }
+      case 'publish':
+        if (positionals.length) throw new UsageError('publish takes no positional argument.');
+        return await publishMerchants(
+          env,
+          {
+            version: values.version,
+            confirm: values.confirm,
+            instructionAt: values['instruction-at'],
+            api: apiOrigin(values.api ?? env.env.AI_CHECKOUT_API ?? DEFAULT_API),
+            offline: values.offline,
+          },
+          defaultMerchantPublishDeps(sessionPathFrom(env.env)),
+        );
       case 'review': {
         const { writeFile } = await import('node:fs/promises');
         await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(await collectReview(env.root)));

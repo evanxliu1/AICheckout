@@ -16,6 +16,7 @@ import { migrateState, reconcileState } from './migrate';
 import type { AppState, CatalogCache, CheckoutResponse } from './contracts';
 import type { CartSnapshot } from '../checkout/contracts';
 import { catalogByVersion, CatalogUpdateError, currentCatalog, prepareCatalogUpdate } from './catalog';
+import { currentMerchants, MerchantUpdateError, prepareMerchantUpdate, readMerchantCache } from './merchants';
 import { enginePurchase, engineWallet, validateWallet } from './wallet';
 import { cardIndex, catalogSlice } from './catalog-slice';
 import {
@@ -23,11 +24,22 @@ import {
   CART_READ_TIMEOUT_MS,
   CATALOG_KEY,
   localDate,
+  MERCHANTS_KEY,
   RESULT_MAX_AGE_MS,
   STATE_KEY,
 } from './keys';
 
-export { CART_MAX_AGE_MS, CART_READ_TIMEOUT_MS, CATALOG_KEY, localDate, RESULT_MAX_AGE_MS, STATE_KEY };
+export {
+  CART_MAX_AGE_MS,
+  CART_READ_TIMEOUT_MS,
+  CATALOG_KEY,
+  localDate,
+  MERCHANTS_KEY,
+  RESULT_MAX_AGE_MS,
+  STATE_KEY,
+};
+/** What a background refresh (Phase 14.6) did for each release: `failed` schedules a retry. */
+export type RefreshOutcome = 'skipped' | 'ok' | 'failed';
 export interface CartReader {
   read: () => Promise<CartSnapshot>;
   validate: (snapshot: CartSnapshot) => Promise<void>;
@@ -74,10 +86,14 @@ export function createStateService(
   clock = Date.now,
   cartReader?: CartReader,
   fetchCatalog?: (signal: AbortSignal) => Promise<unknown>,
-  /** The merchant release whose records stand in for catalog profiles (Phase 14.2); the bundled one. */
+  /** The bundled merchant release (Phase 14.2); the cached hosted release replaces it when newer (14.6). */
   release: MerchantRelease = MERCHANTS_V1,
+  fetchMerchants?: (signal: AbortSignal) => Promise<unknown>,
 ) {
   let queue = Promise.resolve<unknown>(undefined);
+  /** The merchant release in effect for the request being handled; `load` sets it from the cache. Requests
+   * run one at a time (the queue), so no request sees another's release. */
+  let merchants: MerchantRelease = release;
   /** A comparison at a store: the release record's profile when the store has one. */
   const compare = (catalog: Catalog, state: AppState, purchase: Purchase, at: number) =>
     compareRewards(
@@ -85,7 +101,7 @@ export function createStateService(
       engineWallet(state.wallet, catalog),
       purchase,
       at,
-      merchantOption(catalog, purchase.merchantId, release),
+      merchantOption(catalog, purchase.merchantId, merchants),
     );
   const success = (
     state: AppState,
@@ -114,6 +130,7 @@ export function createStateService(
    * cache and the catalog in effect. */
   async function load(now: number): Promise<{ state: AppState; cache: CatalogCache; catalog: Catalog }> {
     await storage.remove(LEGACY_KEYS);
+    merchants = currentMerchants(await readMerchantCache(storage), release);
     // The cache is public and can be fetched again: an unreadable one is ignored (bundled terms).
     const storedCache = catalogCacheSchema.safeParse((await storage.get(CATALOG_KEY))[CATALOG_KEY]);
     const saved = (await storage.get(STATE_KEY))[STATE_KEY];
@@ -282,39 +299,16 @@ export function createStateService(
             ok: false,
             error: 'This development build receives card terms through extension updates.',
           };
-        const controller = new AbortController();
-        let timer: ReturnType<typeof setTimeout>;
-        let input: unknown;
+        // The merchant release is checked in the same action (Phase 14.6), whatever the catalog check's
+        // outcome; its own outcome never hides the card-terms notice or error, and a failure leaves the
+        // release in hand in effect.
+        let update: Awaited<ReturnType<typeof refreshCatalog>>;
         try {
-          input = await Promise.race([
-            fetchCatalog(controller.signal),
-            new Promise<never>((_, reject) => {
-              timer = setTimeout(() => {
-                controller.abort();
-                reject(
-                  new CatalogUpdateError('Checking card terms took too long. Your saved terms were kept.'),
-                );
-              }, CATALOG_TIMEOUT_MS);
-            }),
-          ]);
-        } catch (error) {
-          if (error instanceof CatalogUpdateError) throw error;
-          throw new CatalogUpdateError(
-            'Card terms could not be checked. Try again when connected; your saved terms were kept.',
-          );
+          update = await refreshCatalog(state, cache, timeoutMs);
         } finally {
-          clearTimeout(timer!);
-          controller.abort();
+          if (fetchMerchants) await refreshMerchants(timeoutMs).catch(() => undefined);
         }
-        const checkedAt = clock();
-        const update = prepareCatalogUpdate(state, cache, input, checkedAt);
-        // One write: the new cache and the wallet pruned for it land together or not at all.
-        await storage.set(
-          update.state
-            ? { [STATE_KEY]: update.state, [CATALOG_KEY]: update.cache }
-            : { [CATALOG_KEY]: update.cache },
-        );
-        return success(update.state ?? state, currentCatalog(update.cache, checkedAt), null, update.notice);
+        return success(update.state ?? state, currentCatalog(update.cache, clock()), null, update.notice);
       }
       if (request.type === 'checkout:save-wallet') {
         if (!validateWallet(request.wallet, catalog, clock()))
@@ -396,6 +390,57 @@ export function createStateService(
       };
     }
   }
+  /** One fetch bounded by `limit` ms; a timeout or any failure becomes an `Err` with a shopper-facing message. */
+  async function fetchBounded(
+    fetcher: (signal: AbortSignal) => Promise<unknown>,
+    limit: number,
+    Err: new (message: string) => Error,
+    subject: string,
+  ): Promise<unknown> {
+    const controller = new AbortController();
+    let timer: ReturnType<typeof setTimeout>;
+    try {
+      return await Promise.race([
+        fetcher(controller.signal),
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => {
+            controller.abort();
+            reject(new Err(`Checking ${subject} took too long. Your saved ${subject} were kept.`));
+          }, limit);
+        }),
+      ]);
+    } catch (caught) {
+      if (caught instanceof Err) throw caught;
+      throw new Err(
+        `${subject[0]!.toUpperCase()}${subject.slice(1)} could not be checked. Try again when connected; your saved ${subject} were kept.`,
+      );
+    } finally {
+      clearTimeout(timer!);
+      controller.abort();
+    }
+  }
+  /** Fetches the published catalog and commits the update: one write, so the new cache and the wallet
+   * pruned for it land together or not at all. Throws `CatalogUpdateError`. */
+  async function refreshCatalog(state: AppState, cache: CatalogCache, limit: number) {
+    const input = await fetchBounded(fetchCatalog!, limit, CatalogUpdateError, 'card terms');
+    const update = prepareCatalogUpdate(state, cache, input, clock());
+    await storage.set(
+      update.state
+        ? { [STATE_KEY]: update.state, [CATALOG_KEY]: update.cache }
+        : { [CATALOG_KEY]: update.cache },
+    );
+    return update;
+  }
+  /** Fetches the published merchant release and commits the cache (Phase 14.6). Throws `MerchantUpdateError`. */
+  async function refreshMerchants(limit: number) {
+    const input = await fetchBounded(fetchMerchants!, limit, MerchantUpdateError, 'store data');
+    const update = prepareMerchantUpdate(await readMerchantCache(storage), input, clock(), release);
+    await storage.set({ [MERCHANTS_KEY]: update.cache });
+    return update;
+  }
+  /** The popup's check waits at most CATALOG_TIMEOUT_MS; a background refresh can wait out a cold start. */
+  const timeoutMs = CATALOG_TIMEOUT_MS;
+
   const service = (request: unknown): Promise<CheckoutResponse> => {
     const task = queue.then(() => handle(request));
     queue = task.then(
@@ -409,6 +454,42 @@ export function createStateService(
     const task = queue.then(async () => {
       const { state, catalog } = await load(clock());
       return { state, catalog };
+    });
+    queue = task.then(
+      () => undefined,
+      () => undefined,
+    );
+    return task;
+  };
+  /** The weekly background refresh (Phase 14.6): the catalog (unless `catalog: false`, when the state cannot
+   * be read, as with a locked vault), then the merchant release, each on its own; a fetch that fails (the
+   * service asleep, offline) reports `failed` so the caller can retry later. Nothing is shown to the shopper;
+   * the next page load sees the releases in effect. */
+  service.refreshReleases = (
+    limit: number,
+    { catalog: refreshTheCatalog = true }: { catalog?: boolean } = {},
+  ): Promise<{ catalog: RefreshOutcome; merchants: RefreshOutcome }> => {
+    const task = queue.then(async () => {
+      let catalogOutcome: RefreshOutcome = 'skipped',
+        merchantOutcome: RefreshOutcome = 'skipped';
+      if (fetchCatalog && refreshTheCatalog) {
+        try {
+          const { state, cache } = await load(clock());
+          await refreshCatalog(state, cache, limit);
+          catalogOutcome = 'ok';
+        } catch {
+          catalogOutcome = 'failed';
+        }
+      }
+      if (fetchMerchants) {
+        try {
+          await refreshMerchants(limit);
+          merchantOutcome = 'ok';
+        } catch {
+          merchantOutcome = 'failed';
+        }
+      }
+      return { catalog: catalogOutcome, merchants: merchantOutcome };
     });
     queue = task.then(
       () => undefined,

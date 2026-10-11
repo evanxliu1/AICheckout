@@ -130,3 +130,28 @@ export const merchantReleaseSchema = z
     if (new TextEncoder().encode(JSON.stringify(release)).byteLength > MERCHANT_RELEASE_LIMITS.bytes)
       reject('Merchant release is too large.');
   }) satisfies z.ZodType<MerchantRelease>;
+
+/** A row of `public.merchant_releases` as the API serves it (14.6): the release, its sequence, the
+ * database's hash of the stored JSONB text (an identifier, not a signature) and when it was published.
+ * Mirrors `publishedReleaseSchema` for catalogs; there is no expiry, so the only window check is that the
+ * release was not published before it was verified. */
+export const publishedMerchantReleaseSchema = z
+  .strictObject({
+    sequence: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
+    release: merchantReleaseSchema,
+    version: z.string().min(1).max(80),
+    release_hash: z.string().regex(/^[a-f0-9]{64}$/),
+    published_at: z.iso.datetime({ offset: true }),
+  })
+  .superRefine((row, ctx) => {
+    if (row.version !== row.release.version)
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Release version disagrees with the merchant release version.',
+      });
+    if (Date.parse(row.published_at) < Date.parse(row.release.verifiedAt))
+      ctx.addIssue({ code: 'custom', message: 'Release was published before it was verified.' });
+  });
+export type PublishedMerchantRelease = z.infer<typeof publishedMerchantReleaseSchema>;
+/** `GET /v1/merchants`: the head release, or null before the first publication. */
+export const merchantsResponseSchema = z.strictObject({ release: publishedMerchantReleaseSchema.nullable() });

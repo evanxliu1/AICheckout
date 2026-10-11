@@ -5,6 +5,8 @@ import {
   catalogV1Schema,
   sourceSchema,
   publishedReleaseSchema,
+  MERCHANT_RELEASE_LIMITS,
+  merchantReleaseSchema,
 } from '@ai-checkout/rewards-core';
 
 export const MAX_REVIEW_RESPONSE_BYTES = 8 * 1024 * 1024;
@@ -52,6 +54,17 @@ export const publishInputSchema = z.strictObject({
   expectedHead: sequenceSchema,
   reviewNote: z.string().trim().min(10).max(2000),
 });
+
+/** `POST /v1/review/merchants/publish` (Phase 14.6): the whole merchant release, the head the caller
+ * saw (`sequence` and `release_hash`, both null before the first release) and the review note. */
+export const publishMerchantsInputSchema = z.strictObject({
+  release: merchantReleaseSchema,
+  expectedHead: sequenceSchema,
+  expectedHash: hashSchema.nullable(),
+  reviewNote: z.string().trim().min(10).max(2000),
+});
+/** Largest merchant publish body: a release of up to `MERCHANT_RELEASE_LIMITS.bytes` plus the other fields. */
+export const MAX_MERCHANT_PUBLISH_REQUEST_BYTES = MERCHANT_RELEASE_LIMITS.bytes + 16_384;
 
 export const sourceDocumentSchema = z.strictObject({
   id: z.uuid(),

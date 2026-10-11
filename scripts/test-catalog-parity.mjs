@@ -1,9 +1,19 @@
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import { CATALOG_V3 } from '../packages/rewards-core/src/catalog-v3.ts';
+import {
+  MERCHANT_RELEASE_LIMITS,
+  merchantReleaseSchema,
+} from '../packages/rewards-core/src/merchant-release.ts';
+import { MERCHANTS_V1 } from '../packages/rewards-core/src/merchants-v1.ts';
 import { catalogSchema } from '../packages/rewards-core/src/schema.ts';
 import { MERCHANT_CATEGORIES_V3, REWARD_CATEGORIES_V3 } from '../packages/rewards-core/src/types.ts';
-import { catalogCases, catalogV2Cases, catalogV3Cases } from '../packages/rewards-core/test-cases.ts';
+import {
+  catalogCases,
+  catalogV2Cases,
+  catalogV3Cases,
+  merchantReleaseCases,
+} from '../packages/rewards-core/test-cases.ts';
 import { CATALOG_V3_BYTE_BUDGET, jsonbTextBytes } from './lib/catalog-v3.mjs';
 
 // Local read-only comparison of both actual implementations against common domain cases.
@@ -17,13 +27,13 @@ const client = new pg.Client({
 });
 try {
   await client.connect();
-  const check = async (fn, cases) => {
+  const check = async (fn, cases, schema = catalogSchema) => {
     for (const { name, input, valid } of cases) {
       const result = await client.query(`select catalog_private.${fn}($1::jsonb) as valid`, [
         JSON.stringify(input),
       ]);
       assert.equal(result.rows[0].valid, valid, `Database ${fn}: ${name}`);
-      assert.equal(catalogSchema.safeParse(input).success, valid, `Shared runtime: ${name}`);
+      assert.equal(schema.safeParse(input).success, valid, `Shared runtime: ${name}`);
     }
   };
   // Each version's own validator, then the union entry point the table constraints use.
@@ -50,8 +60,24 @@ try {
   assert.equal(catalogSchema.safeParse(CATALOG_V3).success, true, 'Shared runtime: CATALOG_V3');
   assert.equal(real.rows[0].bytes, jsonbTextBytes(CATALOG_V3), 'CATALOG_V3 JSONB text size');
   assert.ok(real.rows[0].bytes <= CATALOG_V3_BYTE_BUDGET, 'CATALOG_V3 within 75% of 1 MiB as JSONB text');
+  // Merchant releases (Phase 14.6): the shared merchant cases through valid_merchant_release_v1 and the
+  // entry point the table CHECK uses; the bundled MERCHANTS_V1 passes both within the 2 MiB limit.
+  await check('valid_merchant_release_v1', merchantReleaseCases, merchantReleaseSchema);
+  await check('valid_merchant_release', merchantReleaseCases, merchantReleaseSchema);
+  const merchants = await client.query(
+    `select catalog_private.valid_merchant_release_v1($1::jsonb) as v1, catalog_private.valid_merchant_release($1::jsonb) as any,
+            octet_length($1::jsonb::text) as bytes`,
+    [JSON.stringify(MERCHANTS_V1)],
+  );
+  assert.equal(merchants.rows[0].v1, true, 'Database valid_merchant_release_v1: MERCHANTS_V1');
+  assert.equal(merchants.rows[0].any, true, 'Database valid_merchant_release: MERCHANTS_V1');
+  assert.equal(merchantReleaseSchema.safeParse(MERCHANTS_V1).success, true, 'Shared runtime: MERCHANTS_V1');
+  assert.ok(
+    merchants.rows[0].bytes <= MERCHANT_RELEASE_LIMITS.bytes,
+    'MERCHANTS_V1 within 2 MiB as JSONB text',
+  );
   console.log(
-    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, on the v3 category lists, and accept CATALOG_V3 (${real.rows[0].bytes} JSONB text bytes).`,
+    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, on the v3 category lists, and accept CATALOG_V3 (${real.rows[0].bytes} JSONB text bytes); and on ${merchantReleaseCases.length} merchant release cases, accepting MERCHANTS_V1 (${merchants.rows[0].bytes} JSONB text bytes).`,
   );
 } finally {
   await client.end();

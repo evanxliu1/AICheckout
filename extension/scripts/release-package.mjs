@@ -103,7 +103,8 @@ export function inspectBuild(directory, expectedVersion) {
   );
   invariant(
     Array.isArray(manifest.permissions) &&
-      same([...manifest.permissions].sort(), ['activeTab', 'scripting', 'storage']),
+      // `alarms` (Phase 14.6): the weekly catalog and merchant refresh; it shows no install warning.
+      same([...manifest.permissions].sort(), ['activeTab', 'alarms', 'scripting', 'storage']),
     'Unexpected extension permissions.',
   );
   // Exactly every https site, plus at most one catalog origin (hosted builds).

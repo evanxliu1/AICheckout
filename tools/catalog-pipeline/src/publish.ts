@@ -190,12 +190,18 @@ export function defaultCaptureFolders(root: string, ids: string[], manifests: Re
 
 const ISO_UTC = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?Z$/;
 
-/** Problems with --version, --confirm and --instruction-at (empty when fine). */
-export function instructionProblems(catalog: Catalog, options: PublishOptions, now: Date): string[] {
+/** Problems with --version, --confirm and --instruction-at (empty when fine). `bundled` names the constant
+ * whose version must be published (`CATALOG_V3`; `MERCHANTS_V1` for `merchants publish`). */
+export function instructionProblems(
+  current: { version: string },
+  options: Pick<PublishOptions, 'version' | 'confirm' | 'instructionAt'>,
+  now: Date,
+  bundled = 'CATALOG_V3',
+): string[] {
   const problems: string[] = [];
-  if (options.version !== catalog.version)
+  if (options.version !== current.version)
     problems.push(
-      `--version ${options.version} is not CATALOG_V3's version ${catalog.version} in this checkout`,
+      `--version ${options.version} is not ${bundled}'s version ${current.version} in this checkout`,
     );
   if (options.confirm !== undefined && options.confirm !== options.version)
     problems.push(`--confirm ${options.confirm} must equal --version ${options.version} exactly`);
@@ -217,13 +223,19 @@ export function instructionProblems(catalog: Catalog, options: PublishOptions, n
   return problems;
 }
 
-interface GitState {
+export interface GitState {
   head: string | null;
   originMain: string | null;
   problems: string[];
 }
 
-async function gitState(root: string, deps: PublishDeps, offline: boolean): Promise<GitState> {
+/** HEAD must be origin/main after a fetch, with no uncommitted changes under `paths`. */
+export async function gitState(
+  root: string,
+  deps: Pick<PublishDeps, 'git'>,
+  offline: boolean,
+  paths: readonly string[] = CLEAN_PATHS,
+): Promise<GitState> {
   const problems: string[] = [];
   if (offline) problems.push('origin/main was not fetched (--offline)');
   else if ((await deps.git(root, ['fetch', 'origin', 'main'])) === null)
@@ -233,11 +245,11 @@ async function gitState(root: string, deps: PublishDeps, offline: boolean): Prom
   if (!head || !originMain) problems.push('git rev-parse HEAD or origin/main failed');
   else if (head !== originMain)
     problems.push(`HEAD ${head.slice(0, 7)} is not origin/main ${originMain.slice(0, 7)}`);
-  const status = await deps.git(root, ['status', '--porcelain', '--', ...CLEAN_PATHS]);
+  const status = await deps.git(root, ['status', '--porcelain', '--', ...paths]);
   if (status === null) problems.push('git status failed');
   else if (status.trim())
     problems.push(
-      `uncommitted changes under ${CLEAN_PATHS.join(', ')}: ${status
+      `uncommitted changes under ${paths.join(', ')}: ${status
         .trim()
         .split('\n')
         .map((line) => line.trim())

@@ -8,6 +8,7 @@ export type ReviewOperation =
   | 'capture_catalog_source'
   | 'save_catalog_draft'
   | 'publish_catalog'
+  | 'publish_merchant_release'
   | 'get_curation_run'
   | 'list_draft_extractions'
   | 'get_draft_extraction'

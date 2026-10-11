@@ -45,6 +45,7 @@ Verified 2026-10-02 by reading the migrations and tests. Ten migrations are on `
 | `20260930225732_catalog_v2` | `valid_catalog_v2` mirroring `catalogV2Schema`; `valid_catalog` = v1 or v2; replaces CHECKs on `catalog_releases.catalog` and `drafts.catalog` |
 | `20261001010350_source_body_limit` | `source_documents.body` 1–120,000 chars (was 60,000), matching `MAX_SOURCE_BODY_CHARS` |
 | `20261002222425_catalog_v3` | `valid_catalog_v3` mirroring `catalogV3Schema`; `catalog_v3_reward_categories()`, `catalog_v3_merchant_categories()` (replaceable category lists), `catalog_v3_unconditional_rule()`; `valid_catalog` = v1, v2 or v3; `drafts.source_document_ids` ≤ 600 and `save_catalog_draft` to match; `source_documents.body` 1–250,000 chars |
+| `20261011111247_merchant_releases` | Phase 14.6 ([decision](../decisions/2026-10-11-hosted-merchant-release-details.md)): `public.merchant_releases` (immutable; generated `version` unique and `release_hash`), `public.merchant_head`, private `merchant_publications`; `valid_merchant_release_v1` mirroring `merchantReleaseSchema` (schema, evidence rule incl. `definition`, processor rules, unique ids and hosts, cited sources, 2 MiB) and `valid_merchant_release` (by `schemaVersion`); `publish_merchant_release(release, expected_head, expected_hash, note)` under `require_reviewer()`, idempotent for identical content; RLS: anon and authenticated read only. **Pushed to hosted by the coordinator after merge (pending)** |
 | `20261002230334_review_summary` | `get_catalog_review_summary(draft)`: the draft review with source metadata and `body_chars` instead of text; `get_catalog_review_source(draft, source)`: one capture attached to that draft (P0002 otherwise); public `SECURITY INVOKER` wrappers, execute for `authenticated` only. `get_catalog_review` unchanged ([decision](../decisions/2026-10-02-review-large-catalog.md)) |
 
 | Table | Key columns and constraints | Access |
@@ -55,6 +56,9 @@ Verified 2026-10-02 by reading the migrations and tests. Ten migrations are on `
 | `catalog_private.drafts` | `catalog` CHECK `valid_catalog`, generated `catalog_hash`, `source_document_ids uuid[]` (≤ 30; ≤ 600 after `catalog_v3`), `base_sequence`, `revision`, `status` (`draft`/`published`/`rejected`) | Reviewer RPCs |
 | `catalog_private.publications` | `release_sequence` PK, unique `draft_id`, `draft_revision`, `reviewed_by`, `review_note` (10–2000 chars) | Written by `publish_catalog` |
 | `catalog_private.reviewers` | Operator-provisioned membership | No self-enrollment |
+| `public.merchant_releases` (14.6) | `sequence` identity PK; `release jsonb` CHECK `valid_merchant_release`; generated `version` (unique), `release_hash` (SHA-256 of `release::text`); `published_at` | SELECT to `anon`, `authenticated`; no mutation grants |
+| `public.merchant_head` (14.6) | `singleton`, `release_sequence` FK | SELECT only; changed only by `publish_merchant_release` |
+| `catalog_private.merchant_publications` (14.6) | `release_sequence` PK, `reviewed_by`, `review_note` (10–2000 chars), `published_at` | Written by `publish_merchant_release` |
 
 `config.toml`: Postgres `major_version = 17`; Data API `schemas = ["public"]`; local `site_url` `http://127.0.0.1:3000`.
 
@@ -77,13 +81,17 @@ Every private operation calls `catalog_private.require_reviewer()` (or the curat
 
 Corrections are new drafts based on the current head; releases are never edited and the head never moves backwards.
 
+### Merchant publication (Phase 14.6)
+
+`publish_merchant_release(p_release, p_expected_head, p_expected_hash, p_review_note)` has no draft: the release (`merchant-release.1`, built and reviewed in the repository as `MERCHANTS_V1`) is the argument. It requires a note, re-validates the release, locks the head, returns the existing row when the version is already published with semantically identical content (`jsonb =`; a lost response can be retried) and raises `40001` for the same version with other content; `p_expected_head` and `p_expected_hash` must equal the head's `sequence` and `release_hash` (both null before the first release) or it raises `40001`; after the lock it re-checks the reviewer and refuses a release verified in the future (`22023`); then inserts the release and the publication and advances the head in one transaction. The CLI reads `GET /v1/merchants` for the expected head ([runbook](../ops/catalog-release.md#merchant-release-phase-146)).
+
 ### Curation ledger
 
 `aicheckout_curation_executor` has no login, no table grants and no publication or application permission; it may only claim, check and finish runs. A dedicated server login is granted membership at deployment; [`apps/api/src/curation/database.ts`](../../apps/api/src/curation/database.ts) verifies that on every connection. Claims lock the single `curation_policy` row, reserve the worst-case cost of all attempts against daily and lifetime micro-USD budgets, and enforce request-count and concurrency limits (free fixture runs included). Default policy: disabled, zero budget, no profiles seeded. `interrupt_curation_run` is operator-only recovery. Full procedure: [`supabase/CURATION.md`](../../supabase/CURATION.md); harness side: [Curation harness](curation-harness.md).
 
 ### Parity with Zod
 
-`valid_catalog_v1` / `valid_catalog_v2` / `valid_catalog_v3` mirror `catalogV1Schema` / `catalogV2Schema` / `catalogV3Schema` in [`packages/rewards-core/src/schema.ts`](../../packages/rewards-core/src/schema.ts) with `extensions.jsonb_matches_schema` plus imperative checks (size ≤ 262,144 bytes for v1/v2 and ≤ 1,048,576 for v3, IDs, base rule, rate bounds, references, dates). v3 checks categories against `catalog_v3_reward_categories()` / `catalog_v3_merchant_categories()` instead of a JSON-schema enum, so a later migration can extend them with `create or replace`. [`scripts/test-catalog-parity.mjs`](../../scripts/test-catalog-parity.mjs) (`npm run db:test:catalog`) runs the shared `catalogCases` (28), `catalogV2Cases` (53) and `catalogV3Cases` (101) from `packages/rewards-core/test-cases.ts` through both validators, requires agreement, and compares the two SQL category lists with `REWARD_CATEGORIES_V3` / `MERCHANT_CATEGORIES_V3`.
+`valid_catalog_v1` / `valid_catalog_v2` / `valid_catalog_v3` mirror `catalogV1Schema` / `catalogV2Schema` / `catalogV3Schema` in [`packages/rewards-core/src/schema.ts`](../../packages/rewards-core/src/schema.ts) with `extensions.jsonb_matches_schema` plus imperative checks (size ≤ 262,144 bytes for v1/v2 and ≤ 1,048,576 for v3, IDs, base rule, rate bounds, references, dates). v3 checks categories against `catalog_v3_reward_categories()` / `catalog_v3_merchant_categories()` instead of a JSON-schema enum, so a later migration can extend them with `create or replace`. [`scripts/test-catalog-parity.mjs`](../../scripts/test-catalog-parity.mjs) (`npm run db:test:catalog`) runs the shared `catalogCases` (28), `catalogV2Cases` (53) and `catalogV3Cases` (101) from `packages/rewards-core/test-cases.ts` through both validators, requires agreement, and compares the two SQL category lists with `REWARD_CATEGORIES_V3` / `MERCHANT_CATEGORIES_V3`. Since 14.6 it also runs the 57 `merchantReleaseCases` through `valid_merchant_release_v1`, `valid_merchant_release` and `merchantReleaseSchema`, and checks that the bundled `MERCHANTS_V1` passes both within 2 MiB of JSONB text. The SQL validator reuses `catalog_v3_merchant_categories()`.
 
 ### Seed
 
@@ -103,9 +111,9 @@ Corrections are new drafts based on the current head; releases are never edited 
 
 | Command | What |
 | --- | --- |
-| `npm run db:test` | pgTAP: `supabase/tests/catalog.test.sql`, `catalog_v2.test.sql`, `catalog_v3.test.sql`, `curation.test.sql`, `extraction_application.test.sql`, `review_summary.test.sql` |
+| `npm run db:test` | pgTAP: `supabase/tests/catalog.test.sql`, `catalog_v2.test.sql`, `catalog_v3.test.sql`, `curation.test.sql`, `extraction_application.test.sql`, `review_summary.test.sql`, `merchant_releases.test.sql` (14.6: validator cases, public read and no writes, non-reviewer refused, publish, head, idempotent retry, different content and stale head refused, revocation) |
 | `npm run db:test:concurrency` | Competing publication, expiry and session expiry while blocked (real row locks) |
-| `npm run db:test:catalog` | Zod/SQL parity |
+| `npm run db:test:catalog` | Zod/SQL parity (catalog v1–v3 and, since 14.6, merchant release 1) |
 | `npm run db:test:http` | Signed sessions through the Node API: capture, save, review (summary without text, one capture by ID), publish, stale approval 409, sign-out revocation |
 | `npm run db:test:curation[:http\|:application]` | Ledger races; compiled API with scoped login; concurrent application |
 | `npm run db:lint`, `npm run db:advisors` | `supabase db lint` on `public,catalog_private`; security advisors |

@@ -8,14 +8,14 @@ import { chmod, lstat, mkdir, readFile, rename, rm, writeFile } from 'node:fs/pr
 import { homedir } from 'node:os';
 import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { z } from 'zod';
-import { readBoundedJson } from '@ai-checkout/catalog-client';
+import { MAX_MERCHANTS_RESPONSE_BYTES, readBoundedJson } from '@ai-checkout/catalog-client';
 import {
   MAX_REVIEW_RESPONSE_BYTES,
   reviewConfigSchema,
   reviewQueueSchema,
 } from '@ai-checkout/catalog-review';
 import type { ReviewConfig, ReviewQueue } from '@ai-checkout/catalog-review';
-import { catalogResponseSchema } from '@ai-checkout/rewards-core';
+import { catalogResponseSchema, merchantsResponseSchema } from '@ai-checkout/rewards-core';
 
 export const DEFAULT_API = 'https://ai-checkout-api.onrender.com';
 export const LOGIN_COMMAND = '`npm run pipeline -- login`';
@@ -367,6 +367,21 @@ export type ReviewClient = ReturnType<typeof reviewClient>;
 export async function servedCatalog(deps: HttpDeps, api: string) {
   try {
     return { release: (await requestJson(deps, `${api}/v1/catalog`, catalogResponseSchema)).release };
+  } catch (error) {
+    if (error instanceof ApiError) return { release: null, error };
+    throw error;
+  }
+}
+/** The public `GET /v1/merchants` (Phase 14.6); null with the code when it answers an error. */
+export async function servedMerchants(deps: HttpDeps, api: string) {
+  try {
+    return {
+      release: (
+        await requestJson(deps, `${api}/v1/merchants`, merchantsResponseSchema, {
+          maxBytes: MAX_MERCHANTS_RESPONSE_BYTES,
+        })
+      ).release,
+    };
   } catch (error) {
     if (error instanceof ApiError) return { release: null, error };
     throw error;
