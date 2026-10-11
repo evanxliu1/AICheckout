@@ -127,13 +127,16 @@ describe('checkout browser boundary', () => {
       ]);
       await expect(validateActiveCheckout(snapshot)).rejects.toThrow('cart or page changed');
     });
-    it('names the tab’s store for a generic reading on a legacy site’s other pages', async () => {
-      probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/site/some-product');
-      await expect(readActiveCheckout()).resolves.toMatchObject({
-        merchantId: 'best-buy-us',
-        extractorVersion: 'generic-reader-v1',
-      });
+    it('resolves the tab’s store in the worker for a generic reading: a legacy site’s other pages, a release host (Phase 14.2)', async () => {
+      // The content script names the generic store; the snapshot carries the store matched for the tab.
       probe(generic, 'https://www.bestbuy.com/site/some-product');
+      const snapshot = await readActiveCheckout();
+      expect(snapshot).toMatchObject({ merchantId: 'best-buy-us', extractorVersion: 'generic-reader-v1' });
+      await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
+      probe(generic, 'https://smile.amazon.com/cart');
+      await expect(readActiveCheckout()).resolves.toMatchObject({ merchantId: 'amazon-us' });
+      // A reading that names the store itself is refused: only the worker names stores.
+      probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/site/some-product');
       await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
     });
     it('ties the reader version to the URL: generic on a legacy cart URL and an adapter version off it are rejected', async () => {

@@ -1,0 +1,136 @@
+// The tab's store against the merchant release (Phase 14.2). Worker and extension pages only: the
+// content scripts never carry the release (it is refreshed in the worker from 14.6 on, and ~500 records
+// on every https page would be waste); they send the legacy id on an adapter's URL and the generic id
+// elsewhere, and the worker resolves the store from the sender URL.
+import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from '@ai-checkout/rewards-core/generic-merchant';
+import {
+  buildMerchantIndex,
+  matchMerchant,
+  releaseProfileFor,
+} from '@ai-checkout/rewards-core/merchant-match';
+import type { MerchantIndex } from '@ai-checkout/rewards-core/merchant-match';
+import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
+import type { Catalog, MerchantProfileV3, MerchantRecord, MerchantRelease } from '@ai-checkout/rewards-core';
+import { isLegacyMerchant, MERCHANTS } from './merchants';
+
+// The bundled release, indexed once. Tests pass their own release.
+const bundledIndex = buildMerchantIndex(MERCHANTS_V1.merchants);
+const indexOf = (release: MerchantRelease): MerchantIndex =>
+  release === MERCHANTS_V1 ? bundledIndex : buildMerchantIndex(release.merchants);
+/** The release record with this id, if any. */
+export const releaseRecord = (
+  id: string,
+  release: MerchantRelease = MERCHANTS_V1,
+): MerchantRecord | undefined => release.merchants.find((m) => m.id === id);
+
+/** The name shown for a store id: a legacy store's adapter name, the generic store, or the bundled release
+ * record's name (Phase 14.2). */
+export function merchantName(id: string): string {
+  if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
+  if (isLegacyMerchant(id)) return MERCHANTS[id].name;
+  return releaseRecord(id)?.name ?? 'Unsupported merchant';
+}
+
+/** What a tab URL resolves to against the merchant release. `store`: a matched record (a merchant or
+ * marketplace); `generic`: no record, or a `disabled` one, so the engine's generic profile; `processor`:
+ * a payment page (no badge, no reader; the popup says it cannot compare there). */
+export interface TabStore {
+  kind: 'store' | 'generic' | 'processor';
+  /** The record's id, or `generic-us-online`. */
+  id: string;
+  /** The tab's hostname (lower case, no trailing dot): the per-site switch's key. Never the path. */
+  host: string;
+  name: string;
+}
+
+/** The store of a tab URL (Phase 14.2): the bundled release matched on the device by label-boundary host
+ * suffix (`secure.newegg.com` → `newegg-us`; `amazon.ca` never `amazon-us`), any other web page the engine's
+ * generic store, and null for a non-web page. The URL is never stored. */
+export function storeForTab(
+  rawUrl: string | undefined,
+  release: MerchantRelease = MERCHANTS_V1,
+): TabStore | null {
+  let url: URL;
+  try {
+    url = new URL(rawUrl ?? '');
+  } catch {
+    return null;
+  }
+  if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+  const host = url.hostname.toLowerCase().replace(/\.$/, '');
+  const match = matchMerchant(indexOf(release), url);
+  if (match && match.record.kind === 'processor')
+    return { kind: 'processor', id: match.record.id, host, name: match.record.name };
+  if (match && !match.record.disabled)
+    return {
+      kind: 'store',
+      id: match.record.id,
+      host,
+      name: isLegacyMerchant(match.record.id) ? MERCHANTS[match.record.id].name : match.record.name,
+    };
+  return { kind: 'generic', id: GENERIC_MERCHANT_ID, host, name: GENERIC_MERCHANT_PROFILE.name };
+}
+
+/** The merchant a reading of this tab names: the matched store or the generic store; null for a non-web
+ * page and for a payment processor's page, where nothing is read. */
+export function merchantForTab(
+  rawUrl: string | undefined,
+  release: MerchantRelease = MERCHANTS_V1,
+): string | null {
+  const store = storeForTab(rawUrl, release);
+  return store && store.kind !== 'processor' ? store.id : null;
+}
+
+/** The engine profile for a store id under a catalog v3: the release record's (`releaseProfileFor`: a
+ * `default` record defers to a profile the catalog authors), else the catalog's own, else the generic
+ * profile for the generic id. Undefined for processors, disabled records, unknown ids and v1/v2 catalogs
+ * (the engine then answers as before). */
+export function storeProfile(
+  catalog: Catalog,
+  merchantId: string,
+  release: MerchantRelease = MERCHANTS_V1,
+): MerchantProfileV3 | undefined {
+  if (catalog.schemaVersion !== 3) return undefined;
+  const record = releaseRecord(merchantId, release);
+  if (record && record.kind !== 'processor' && !record.disabled) return releaseProfileFor(record, catalog);
+  return (
+    catalog.merchants.find((m) => m.id === merchantId) ??
+    (merchantId === GENERIC_MERCHANT_ID ? GENERIC_MERCHANT_PROFILE : undefined)
+  );
+}
+
+/** The `compareRewards` option for a store: its profile, so a release record stands in for the catalog's. */
+export const merchantOption = (
+  catalog: Catalog,
+  merchantId: string,
+  release: MerchantRelease = MERCHANTS_V1,
+): { merchant?: MerchantProfileV3 } => ({ merchant: storeProfile(catalog, merchantId, release) });
+
+const CATEGORY_WORDING: Record<MerchantRecord['category'], string | null> = {
+  'general-merchandise': null,
+  electronics: 'an electronics store',
+  supermarkets: 'a supermarket',
+  gas: 'a gas station',
+  'ev-charging': 'an EV charging network',
+  dining: 'a restaurant',
+  drugstores: 'a drugstore',
+  entertainment: 'entertainment',
+  streaming: 'a streaming service',
+  transit: 'transit',
+  'department-stores': 'a department store',
+  'home-improvement': 'a home-improvement store',
+  'wholesale-clubs': 'a wholesale club',
+};
+/** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
+ * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile. */
+export function storeEvidence(merchantId: string, release: MerchantRelease = MERCHANTS_V1): string | null {
+  const record = releaseRecord(merchantId, release);
+  if (!record || record.evidence.basis === 'default' || record.disabled) return null;
+  const wording = CATEGORY_WORDING[record.category];
+  if (!wording) return null;
+  const basis =
+    record.evidence.basis === 'issuer'
+      ? 'named in card terms'
+      : 'its own store pages and a public merchant-code lookup agree';
+  return `Codes as ${wording} (${basis}).`;
+}

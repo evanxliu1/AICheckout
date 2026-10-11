@@ -6,7 +6,7 @@ import {
   storeEvidence,
   storeForTab,
   storeProfile,
-} from '../src/checkout/merchants';
+} from '../src/checkout/store-match';
 import { CATALOG_V3, MERCHANTS_V1, redateCatalog } from '../src/domain';
 import type { MerchantRelease } from '../src/domain';
 import { MERCHANT_RELEASE_FIXTURE } from '../../packages/rewards-core/test-cases';

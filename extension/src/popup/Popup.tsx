@@ -29,16 +29,15 @@ import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
+import { MERCHANT_IDS, isLegacyMerchant } from '../checkout/merchants';
 import {
-  MERCHANT_IDS,
-  isLegacyMerchant,
   merchantName,
   releaseRecord,
   storeEvidence,
   storeForTab,
   storeProfile,
-} from '../checkout/merchants';
-import type { TabStore } from '../checkout/merchants';
+} from '../checkout/store-match';
+import type { TabStore } from '../checkout/store-match';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
 /** The stores the popup always offers: the supported stores, then any other U.S. online store. A store
@@ -441,6 +440,10 @@ export default function Popup({
     }
   }
   const cart = cartId ? view?.state.cart : null;
+  // A saved store the release and the catalog no longer know is "this store", not "Unsupported merchant".
+  const storeName = merchantName(merchantId);
+  const storeLabel = storeName === 'Unsupported merchant' ? 'this store' : storeName;
+  const evidence = storeEvidence(merchantId);
   const unvalued = view ? unvaluedPrograms(view.catalog, view.state.wallet) : [];
   const ownedNames = (view?.state.wallet.cards ?? [])
     .map((c) => catalog?.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
@@ -563,7 +566,9 @@ export default function Popup({
                           }}
                         >
                           {!STORE_IDS.includes(merchantId) && (
-                            <option value={merchantId}>{merchantName(merchantId)}</option>
+                            <option value={merchantId}>
+                              {storeName === 'Unsupported merchant' ? 'Unsupported saved store' : storeName}
+                            </option>
                           )}
                           {STORE_IDS.map((id) => (
                             <option key={id} value={id}>
@@ -573,12 +578,12 @@ export default function Popup({
                         </Select>
                       )}
                     </Field>
-                    {storeEvidence(merchantId) && <p className="supporting">{storeEvidence(merchantId)}</p>}
+                    {evidence && <p className="supporting">{evidence}</p>}
                     {!catalogMerchantIds(view.catalog).includes(merchantId) &&
                       !storeProfile(view.catalog, merchantId) && (
                         <AlertInline color="warning" role="status">
-                          Your current card terms do not cover {merchantName(merchantId)}. Check for updated
-                          terms or an extension update.
+                          Your current card terms do not cover {storeLabel}. Check for updated terms or an
+                          extension update.
                         </AlertInline>
                       )}
                     <Button

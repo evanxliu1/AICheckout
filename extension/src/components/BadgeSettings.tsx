@@ -1,7 +1,8 @@
 // Per-site switch for the automatic cart badge.
 import { useEffect, useState } from 'react';
 import { AlertInline, Fieldset, Toggle } from '@ai-checkout/ui';
-import { MERCHANT_IDS, merchantName, type MerchantId } from '../checkout/merchants';
+import { MERCHANT_IDS, type MerchantId } from '../checkout/merchants';
+import { merchantName } from '../checkout/store-match';
 import type { Settings } from '../badge/contracts';
 import { getSettings, saveSettings } from '../state/settings-client';
 

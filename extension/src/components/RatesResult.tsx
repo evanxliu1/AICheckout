@@ -1,7 +1,7 @@
 // The rates view (Phase 13c): the owned cards ranked by rate when the cart amount was not read.
 // Shared by the badge panel and the popup. It never asks for an amount.
 import type { Catalog, Comparison } from '../domain';
-import { merchantName, storeEvidence } from '../checkout/merchants';
+import { merchantName, storeEvidence } from '../checkout/store-match';
 import { notAcceptedLines, rankingNote, rateWording, ratesCapped } from './estimates';
 
 export const RATES_INTRO =

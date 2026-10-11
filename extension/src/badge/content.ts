@@ -2,7 +2,7 @@
 // small IIFE (no zod, no wallet code). It never makes network requests. On a page whose URL and title
 // carry no cart or checkout word it reads nothing and observes nothing.
 import { cartUrlHint } from '@ai-checkout/cart-reader';
-import { merchantForCheckout, merchantForOrderConfirmation, storeForTab } from '../checkout/merchants';
+import { merchantForCheckout, merchantForOrderConfirmation } from '../checkout/merchants';
 import { readAnyCart } from '../checkout/manual-reader';
 import { startAutoReader } from './auto-reader';
 import type { PageMode } from './auto-reader';
@@ -15,8 +15,7 @@ const mode = (url: string): PageMode =>
     ? 'order'
     : merchantForCheckout(url)
       ? 'legacy'
-      : // A payment processor's page (Phase 14.2) is never read; any other hinted page is the generic reader's.
-        storeForTab(url)?.kind !== 'processor' && cartUrlHint(url, document.title)
+      : cartUrlHint(url, document.title)
         ? 'generic'
         : 'none';
 startAutoReader({

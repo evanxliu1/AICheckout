@@ -16,7 +16,7 @@ import {
   rowEmphasis,
   unavailableCopy,
 } from '../components/estimates';
-import { merchantName, storeEvidence } from '../checkout/merchants';
+import { merchantName, storeEvidence } from '../checkout/store-match';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
 

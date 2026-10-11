@@ -78,10 +78,10 @@ describe('manual reader (Phase 13b)', () => {
       reason: 'empty-cart',
     });
   });
-  it('names a legacy site’s store for a generic reading of its other (hinted) pages', () => {
+  it('names the generic store for a generic reading of a legacy site’s other (hinted) pages; the worker resolves the store (Phase 14.2)', () => {
     expect(page(summary(row('Total', '$100.00')), 'https://www.bestbuy.com/site/basket')).toMatchObject({
       status: 'found',
-      merchantId: 'best-buy-us',
+      merchantId: 'generic-us-online',
       extractorVersion: 'generic-reader-v1',
     });
   });

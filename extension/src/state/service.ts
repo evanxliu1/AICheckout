@@ -3,7 +3,7 @@ import { RATES_REFERENCE_CENTS } from '../badge/contracts';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
 import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
 import type { Catalog, MerchantRelease, Purchase } from '../domain';
-import { merchantOption } from '../checkout/merchants';
+import { merchantOption } from '../checkout/store-match';
 import {
   catalogCacheSchema,
   emptyCatalogCache,

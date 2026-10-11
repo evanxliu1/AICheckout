@@ -9,10 +9,9 @@ import {
   MERCHANTS,
   merchantForCheckout,
   merchantForOrderConfirmation,
-  merchantOption,
-  storeForTab,
-  storeProfile,
 } from '../checkout/merchants';
+import { merchantOption, storeForTab, storeProfile } from '../checkout/store-match';
+import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
 import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
 import type { MerchantRelease } from '../domain';
 import type { AppState, CheckoutResponse } from '../state/contracts';
@@ -207,8 +206,9 @@ export function createBadgeService({
         return { show: false };
       }
       // One reader per URL: a legacy adapter's cart URL names its store and carries its version; any
-      // other https page is the generic reader's, at the store the tab resolves to against the merchant
-      // release (Phase 14.2). A payment processor's page never shows the badge.
+      // other https page is the generic reader's, named `generic-us-online`, and the tab's store is the
+      // one the merchant release resolves for the sender URL (Phase 14.2: matched in the worker, so a
+      // refreshed release applies). A payment processor's page never shows the badge.
       const legacy = merchantForCheckout(url);
       const store = storeForTab(url, release);
       if (!store || store.kind === 'processor') return { show: false };
@@ -216,7 +216,7 @@ export function createBadgeService({
       const reading = message.data.reading;
       if (
         reading.status === 'found' &&
-        (reading.merchantId !== merchantId ||
+        (reading.merchantId !== (legacy ?? GENERIC_MERCHANT_ID) ||
           reading.extractorVersion !== (legacy ? MERCHANTS[legacy].extractorVersion : GENERIC_READER_VERSION))
       )
         return { show: false };

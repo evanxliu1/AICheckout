@@ -6,7 +6,8 @@ import WalletEditor from '../components/WalletEditor';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import type { Wallet } from '../domain';
-import { MERCHANT_IDS, merchantName } from '../checkout/merchants';
+import { MERCHANT_IDS } from '../checkout/merchants';
+import { merchantName } from '../checkout/store-match';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
 

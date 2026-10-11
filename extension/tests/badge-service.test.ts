@@ -178,8 +178,12 @@ describe('badge service at any store (Phase 13c)', () => {
     expect(await send(t, named, 4, GENERIC)).toEqual({ show: false });
     // A legacy cart URL takes only its adapter's reading.
     expect(await send(t, genericReading(10000), 5, cart)).toEqual({ show: false });
-    // A legacy store's other pages take a generic reading at that store's id.
-    expect(await send(t, named, 6, 'https://www.bestbuy.com/site/basket')).toMatchObject({ show: true });
+    // A legacy store's other pages take a generic reading, resolved to that store's id in the worker
+    // (Phase 14.2); a reading that names the store itself is refused.
+    expect(await send(t, named, 6, 'https://www.bestbuy.com/site/basket')).toEqual({ show: false });
+    expect(await send(t, genericReading(10000), 6, 'https://www.bestbuy.com/site/basket')).toMatchObject({
+      show: true,
+    });
     expect(((await view(t, 6)) as Extract<BadgeView, { kind: 'ready' }>).merchantId).toBe('best-buy-us');
   });
   it('shows the rates view when the amount was not read: ranked at $100, with rates, never a prompt', async () => {
@@ -264,9 +268,12 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
   });
   const ready = async (t: Setup, tab: number) =>
     (await view(t, tab)) as Extract<BadgeView, { kind: 'ready' }>;
-  it('names a matched store, keeps its id and host on the tab, and ranks with the record’s profile', async () => {
+  it('names a store known only to the worker’s release, keeps its id and host on the tab, and ranks with its profile', async () => {
+    // The content script carries no release: it sends `generic-us-online`; the worker resolves kroger-us.
     const t = setupWith({ wallet: walletBcp }, v3, MERCHANT_RELEASE_FIXTURE);
-    expect(await send(t, at('kroger-us'), 4, 'https://www.kroger.com/cart')).toMatchObject({ show: true });
+    expect(await send(t, genericReading(10000), 4, 'https://www.kroger.com/cart')).toMatchObject({
+      show: true,
+    });
     const v = await ready(t, 4);
     expect(v.merchantId).toBe('kroger-us');
     // A corroborated supermarket: Blue Cash Preferred's 6% applies (never at the generic profile).
@@ -279,9 +286,9 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     // The same reading at an unmatched store is the generic profile: Double Cash wins.
     expect(await send(t, genericReading(10000), 5, GENERIC)).toMatchObject({ show: true });
     expect((await ready(t, 5)).result.preferredCardId).toBe('citi-double-cash');
-    // A reading that names another store than the URL's is refused.
+    // A reading that names a store itself is refused, at that store's host or any other.
     expect(await send(t, at('kroger-us'), 6, GENERIC)).toEqual({ show: false });
-    expect(await send(t, genericReading(10000), 6, 'https://www.kroger.com/cart')).toEqual({ show: false });
+    expect(await send(t, at('kroger-us'), 6, 'https://www.kroger.com/cart')).toEqual({ show: false });
   });
   it('shows no badge on a payment processor’s page and records nothing for the tab', async () => {
     const t = setupWith({ wallet: walletBcp }, v3, MERCHANT_RELEASE_FIXTURE);
@@ -292,12 +299,13 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     expect(t.session.read()[BADGE_TABS_KEY]).toBeUndefined();
     // The bundled seed: Amazon Pay's hosts are processors while amazon.com is the store.
     const seed = setupWith({ wallet: walletBcp }, v3);
-    expect(await send(seed, at('amazon-us'), 4, 'https://pay.amazon.com/checkout/x')).toEqual({
+    expect(await send(seed, genericReading(10000), 4, 'https://pay.amazon.com/checkout/x')).toEqual({
       show: false,
     });
-    expect(await send(seed, at('amazon-us'), 5, 'https://www.amazon.com/some/cart')).toMatchObject({
+    expect(await send(seed, genericReading(10000), 5, 'https://www.amazon.com/some/cart')).toMatchObject({
       show: true,
     });
+    expect((await ready(seed, 5)).merchantId).toBe('amazon-us');
   });
   it('a disabled record is the generic store, switched off by its host', async () => {
     const t = setupWith({ wallet: walletBcp }, v3, MERCHANT_RELEASE_FIXTURE);
@@ -310,21 +318,26 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
   });
   it('"Not on this site" at a matched store records its host; the "other stores" toggle covers it too', async () => {
     const t = setupWith({ wallet: walletBcp }, v3, MERCHANT_RELEASE_FIXTURE);
-    await send(t, at('kroger-us'), 4, 'https://www.kroger.com/cart');
+    await send(t, genericReading(10000), 4, 'https://www.kroger.com/cart');
     await act(t, { type: 'badge:disable-site' }, 4);
     expect(t.local.read()[SETTINGS_KEY]).toMatchObject({
       disabledMerchants: [],
       disabledSites: ['www.kroger.com'],
     });
-    expect(await send(t, at('kroger-us'), 5, 'https://www.kroger.com/checkout')).toEqual({ show: false });
-    expect(await send(t, at('target-us'), 6, 'https://www.target.com/cart')).toMatchObject({ show: true });
+    expect(await send(t, genericReading(10000), 5, 'https://www.kroger.com/checkout')).toEqual({
+      show: false,
+    });
+    expect(await send(t, genericReading(10000), 6, 'https://www.target.com/cart')).toMatchObject({
+      show: true,
+    });
+    expect((await ready(t, 6)).merchantId).toBe('target-us');
     await t.badge.saveSettings({
       schemaVersion: 1,
       disabledMerchants: [],
       showOnOtherStores: false,
       disabledSites: ['www.kroger.com'],
     });
-    expect(await send(t, at('target-us'), 7, 'https://www.target.com/cart')).toEqual({ show: false });
+    expect(await send(t, genericReading(10000), 7, 'https://www.target.com/cart')).toEqual({ show: false });
   });
   it('transitional rule: the seed’s default Best Buy record keeps the catalog’s electronics profile', async () => {
     const cashPlus = {
@@ -340,7 +353,7 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
       ],
     };
     const seed = setupWith({ wallet: cashPlus }, v3);
-    await send(seed, at('best-buy-us'), 4, 'https://www.bestbuy.com/site/basket');
+    await send(seed, genericReading(10000), 4, 'https://www.bestbuy.com/site/basket');
     expect((await ready(seed, 4)).result.estimates[0].maxRewardCents).toBe(500);
     // A record with evidence overrides the catalog's profile: general merchandise, no electronics bonus.
     const evidenced: MerchantRelease = {
@@ -350,7 +363,7 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
       ),
     };
     const t = setupWith({ wallet: cashPlus }, v3, evidenced);
-    await send(t, at('best-buy-us'), 4, 'https://www.bestbuy.com/site/basket');
+    await send(t, genericReading(10000), 4, 'https://www.bestbuy.com/site/basket');
     expect((await ready(t, 4)).result.estimates[0].maxRewardCents).toBeLessThan(500);
   });
 });
