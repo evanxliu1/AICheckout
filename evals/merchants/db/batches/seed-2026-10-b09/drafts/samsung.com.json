@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16576,
+    "outputTokens": 176
+  },
+  "durationMs": 46699,
+  "draft": {
+    "domain": "samsung.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "electronics",
+    "evidence": [
+      {
+        "sourceId": "samsung-com-page-1",
+        "quote": "Buy Direct Get More",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "samsung-com-page-1",
+        "quote": "Galaxy Smartphone",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "samsung-com-page-1",
+        "quote": "Consumer Electronics",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "cash back on the latest tech products, including televisions, computers and phones.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Samsung is not present in the supplied catalog brand list, so no brand ID is available. The electronics classification is supported by Samsung’s own business description and the issuer’s tech-products definition."
+  }
+}

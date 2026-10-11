@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14634,
+    "outputTokens": 239
+  },
+  "durationMs": 36188,
+  "draft": {
+    "domain": "samsclub.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "sams-club"
+    ],
+    "candidateCategory": "wholesale-clubs",
+    "evidence": [
+      {
+        "sourceId": "samsclub-com-page-1",
+        "quote": "Join Sam's Club",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "samsclub-com-page-2",
+        "quote": "Free Shipping on Orders Over $50",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-sams-club-mastercard-partner",
+        "quote": "3% back in Sam’s Cash on Sam’s Club purchases for Plus members.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "samsclub-com-page-2",
+        "quote": "Join Club",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "These merchants sell a full range of household goods and merchandise, groceries, furniture, electronics, appliances, and auto supplies.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The store pages do not explicitly say “wholesale club,” and no merchant-code lookup is provided; the category is inferred from club membership, Sam’s Club purchase treatment, and the issuer definition."
+  }
+}
