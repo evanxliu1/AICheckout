@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13011,
+    "outputTokens": 268
+  },
+  "durationMs": 83878,
+  "draft": {
+    "domain": "amctheatres.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "amctheatres-com-page-1",
+        "quote": "the largest theatrical exhibitor in the United States and the world",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amctheatres-com-page-1",
+        "quote": "Movie Merchandise",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "amctheatres-com-page-1",
+        "quote": "the largest theatrical exhibitor in the United States and the world",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "AMC Theatres",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Catch the latest movies at most cinemas and earn cash back.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters,",
+        "supports": "definition"
+      }
+    ],
+    "notes": "AMC's page lists merchandise but does not explicitly state shipping or pickup; physicalGoods is inferred from that merchandise offering. Citi's Live Entertainment terms exclude movie theaters, but U.S. Bank explicitly lists AMC Theatres under Movie Theaters and Discover includes movie-theater tickets in Entertainment."
+  }
+}

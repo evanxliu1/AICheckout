@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16177,
+    "outputTokens": 232
+  },
+  "durationMs": 21430,
+  "draft": {
+    "domain": "allegiantair.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "allegiant"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "boa-allways-rewards-pricing",
+        "quote": "where Allegiant is the merchant of record",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "boa-allways-rewards-product",
+        "quote": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "boa-allways-rewards-product",
+        "quote": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "boa-premium-rewards-pricing",
+        "quote": "Purchases made with the following U.S. domestic airline carriers will not qualify for the Airline Incidental Statement Credit: Allegiant Air",
+        "supports": "category"
+      }
+    ],
+    "notes": "Allegiant is an airline/travel merchant, but the supplied categories have no airline or travel option. Transit is not a conservative fit for airfare, so candidateCategory is null."
+  }
+}

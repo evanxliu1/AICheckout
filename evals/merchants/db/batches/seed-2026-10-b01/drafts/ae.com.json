@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13933,
+    "outputTokens": 230
+  },
+  "durationMs": 20209,
+  "draft": {
+    "domain": "ae.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "american-eagle",
+      "aerie"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "ae-com-page-1",
+        "quote": "Store Pickup",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "ae-com-page-1",
+        "quote": "Returns + Exchanges",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "ae-com-page-1",
+        "quote": "Go to Shop AE homepage.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "ae-com-page-1",
+        "quote": "Go to Shop Aerie homepage.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Select Clothing Stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "standalone clothing stores.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "American Eagle Outfitters",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents identify American Eagle as a standalone clothing store. Clothing stores are not among the supplied candidate categories, so candidateCategory is null."
+  }
+}
