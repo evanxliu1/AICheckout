@@ -11,6 +11,7 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { clopperPearsonUpper } from '../../../reader/stats.mjs';
+import { runPaths } from './build-packets.mjs';
 import { checkLabels, loadPacket } from './check-labels.mjs';
 
 const ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
@@ -68,19 +69,20 @@ export function standsAfter(disagreement, verdict) {
   return verdict !== 'record';
 }
 
-export async function score() {
-  const population = await readJson(join(AUDIT, 'population.json'));
+export async function score(run = null) {
+  const paths = runPaths(run);
+  const population = await readJson(paths.population);
   const release = await readJson(join(DB, 'release.json'));
   const records = new Map(release.merchants.map((r) => [r.id, r]));
-  const adjudication = await readJsonOrNull(join(AUDIT, 'adjudication.json'));
+  const adjudication = await readJsonOrNull(paths.adjudication);
   const verdicts = new Map((adjudication?.decisions ?? []).map((d) => [`${d.domain}|${d.field}`, d]));
   const labels = new Map();
   const auditorModels = new Set();
   const gateErrors = [];
-  for (const name of (await readdir(join(AUDIT, 'labels')).catch(() => [])).filter((n) => /^packet-\d+\.json$/.test(n)).sort()) {
-    const file = await readJson(join(AUDIT, 'labels', name));
+  for (const name of (await readdir(paths.labelsDir).catch(() => [])).filter((n) => /^packet-\d+\.json$/.test(n)).sort()) {
+    const file = await readJson(join(paths.labelsDir, name));
     auditorModels.add(file.auditor?.model);
-    const packetDir = join(AUDIT, 'packets', String(file.packet));
+    const packetDir = join(paths.packetsDir, String(file.packet));
     const packet = await readJsonOrNull(join(packetDir, 'packet.json'));
     if (packet) {
       const { lists, sheets } = await loadPacket(packetDir);
@@ -135,7 +137,7 @@ export async function score() {
   }
 
   const counts = {};
-  for (const set of ['all', 'bonus', 'brands', 'processors', 'held-out', 'held-out-frozen', 'post-freeze']) {
+  for (const set of ['all', 'bonus', 'brands', 'processors', 'held-out', 'held-out-frozen', 'post-freeze', 'mcc-changed']) {
     const inSet = stores.filter((s) => s.sets.includes(set));
     const dis = disagreements.filter((d) => d.sets.includes(set));
     const by = (type, after, subtypes = null) =>
@@ -173,6 +175,7 @@ export async function score() {
   const comparison = {
     schemaVersion: 1,
     release: release.version,
+    ...(run ? { run } : {}),
     scoredOn: new Date().toISOString().slice(0, 10),
     auditorModels: [...auditorModels],
     adjudicated: adjudication ? { model: adjudication.adjudicator?.model ?? null, decisions: adjudication.decisions.length } : null,
@@ -182,9 +185,9 @@ export async function score() {
     disagreements,
     noRecord,
   };
-  await writeFile(join(AUDIT, 'comparison.json'), `${JSON.stringify(comparison, null, 1)}\n`);
+  await writeFile(paths.comparison, `${JSON.stringify(comparison, null, 1)}\n`);
   await writeFile(
-    join(AUDIT, 'adjudication-input.json'),
+    paths.adjudicationInput,
     `${JSON.stringify(
       {
         schemaVersion: 1,
@@ -200,7 +203,7 @@ export async function score() {
           recordQuotes: d.recordQuotes,
           auditorQuotes: d.auditorQuotes,
           auditorNotes: d.auditorNotes,
-          sheet: `evals/merchants/db/audit/packets/${d.packet}/stores/${d.domain}.md`,
+          sheet: `${paths.packetsRel}/${d.packet}/stores/${d.domain}.md`,
         })),
       },
       null,
@@ -219,11 +222,13 @@ function setsOf(entry, record) {
     sets.push('held-out');
     sets.push(entry.postFreeze ? 'post-freeze' : 'held-out-frozen');
   }
+  if (entry.reasons.includes('mcc-changed')) sets.push('mcc-changed');
   return sets;
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  const c = await score();
+  const runAt = process.argv.indexOf('--run');
+  const c = await score(runAt >= 0 ? process.argv[runAt + 1] : null);
   const line = (set) => {
     const s = c.counts[set];
     const b = s.after ?? s.before;

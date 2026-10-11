@@ -1171,6 +1171,13 @@ export const MERCHANT_RELEASE_FIXTURE: MerchantRelease = {
       capturedAt: '2026-10-05',
       sha256: 'e'.repeat(64),
     },
+    {
+      id: 'mcc-dataset-example',
+      url: 'https://opendata.example/purchase-card-transactions.csv',
+      kind: 'mcc-dataset',
+      capturedAt: '2026-10-10',
+      sha256: 'f'.repeat(64),
+    },
   ],
   merchants: [
     {
@@ -1226,6 +1233,17 @@ export const MERCHANT_RELEASE_FIXTURE: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['target'],
+      disabled: false,
+    },
+    {
+      id: 'coffee-us',
+      name: 'Coffee Chain',
+      hosts: ['coffee.example'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'dining',
+      evidence: { basis: 'mcc', sourceIds: ['mcc-dataset-example'] },
+      brandIds: [],
       disabled: false,
     },
     {
@@ -1306,6 +1324,12 @@ export const merchantReleaseCases: Case[] = [
   validRelease('definition evidence on a delivery marketplace for dining', (r) => {
     merchantOf(r, 'cvs-us').kind = 'marketplace';
     merchantOf(r, 'cvs-us').category = 'dining';
+  }),
+  validRelease('mcc evidence on a delivery marketplace for dining', (r) => {
+    merchantOf(r, 'coffee-us').kind = 'marketplace';
+  }),
+  validRelease('mcc evidence citing a dataset and a store page', (r) => {
+    merchantOf(r, 'coffee-us').evidence.sourceIds = ['mcc-dataset-example', 'kroger-about'];
   }),
   validRelease('source captured on the verification date', (r) => {
     r.sources[2].capturedAt = '2026-10-10';
@@ -1425,6 +1449,21 @@ export const merchantReleaseCases: Case[] = [
   }),
   invalidRelease('definition evidence on a marketplace outside dining', (r) => {
     merchantOf(r, 'cvs-us').kind = 'marketplace';
+  }),
+  invalidRelease('mcc evidence without a dataset', (r) => {
+    merchantOf(r, 'coffee-us').evidence.sourceIds = ['kroger-mcc'];
+    r.sources = r.sources.filter((s) => s.id !== 'mcc-dataset-example');
+  }),
+  invalidRelease('mcc evidence citing nothing', (r) => {
+    merchantOf(r, 'coffee-us').evidence.sourceIds = [];
+    r.sources = r.sources.filter((s) => s.id !== 'mcc-dataset-example');
+  }),
+  invalidRelease('mcc evidence on a marketplace outside dining', (r) => {
+    merchantOf(r, 'coffee-us').kind = 'marketplace';
+    merchantOf(r, 'coffee-us').category = 'supermarkets';
+  }),
+  invalidRelease('mcc evidence on a processor', (r) => {
+    merchantOf(r, 'coffee-us').kind = 'processor';
   }),
   invalidRelease('definition evidence on a processor', (r) => {
     merchantOf(r, 'cvs-us').kind = 'processor';

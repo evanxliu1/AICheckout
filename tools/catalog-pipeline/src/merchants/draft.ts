@@ -31,7 +31,13 @@ import { draftGate } from './packets.ts';
 
 export const DRAFT_MODEL = { model: 'gpt-5.6-luna', effort: 'xhigh' as const, attemptTimeoutMs: 600_000 };
 /** Characters of each document shown to the model (store pages first; the harness admits about 64k input tokens). */
-const DOC_LIMITS = { 'store-page': 14_000, 'mcc-lookup': 6_000, 'issuer-terms': 8_000 } as const;
+/** Datasets (`mcc-dataset`) never reach the drafter: the mcc basis is applied deterministically after the seed. */
+const DOC_LIMITS: Record<ManifestEntry['kind'], number> = {
+  'store-page': 14_000,
+  'mcc-lookup': 6_000,
+  'issuer-terms': 8_000,
+  'mcc-dataset': 0,
+};
 
 export interface DraftDocument {
   id: string;

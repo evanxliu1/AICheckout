@@ -6,7 +6,9 @@ import { join } from 'node:path';
 import { merchantRecordSchema } from '../../../../packages/rewards-core/src/merchant-release.ts';
 import type { MerchantRecord } from '../../../../packages/rewards-core/src/types.ts';
 import type { Env } from '../run.ts';
-import { FORUM_URL } from './apply.ts';
+import { refusedLookup } from './apply.ts';
+import { MCC_RESULTS, MIN_ROWS, mccResultsSchema } from './mcc.ts';
+import type { MccResults } from './mcc.ts';
 import {
   AUDIT_FIXES_FILE,
   BATCHES_DIR,
@@ -48,6 +50,8 @@ export interface ReviewInput {
   notes: string[];
   /** Records changed by the blind audit's adjudication (evals/merchants/db/audit/fixes.json, Phase 14.5). */
   fixes?: { release: string; id: string; field: string; from: string; to: string; reason: string }[];
+  /** The `mcc` basis run (evals/merchants/db/mcc/results.json, 2026-10-11): every store with matched rows. */
+  mcc?: MccResults;
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
   /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
    * an issuer listing the store under another category show here). */
@@ -65,6 +69,37 @@ export interface ReviewInput {
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
+
+/** The MCC evidence section: every store with at least MIN_ROWS matched rows in the public card-transaction
+ * datasets (store, rows, dominant category and share, minority codes, cross-issuer conflicts, outcome), stores with
+ * fewer rows counted. The datasets are in-person and card-not-present government purchasing, disclosed here. */
+export function mccSection(mcc: MccResults | undefined): string[] {
+  if (!mcc) return [];
+  const listed = mcc.stores.filter((s) => s.usable >= MIN_ROWS);
+  const few = mcc.stores.length - listed.length;
+  const pct = (share: number) => `${Math.round(share * 100)}%`;
+  const conflicts = (s: MccResults['stores'][number]) =>
+    [
+      ...s.conflicts.map(
+        (c) =>
+          `${c.description}${c.code ? ` (${c.code}` : ' ('}${c.category === 'general-merchandise' ? '' : `, ${c.category}`}) ×${c.rows}`,
+      ),
+      ...s.issuerConflicts.map((c) => `issuer: ${c}`),
+    ].join('<br>');
+  return [
+    `## MCC evidence: public card-transaction datasets, for Evan (${listed.length} stores with ${MIN_ROWS}+ rows; ${mcc.stores.filter((s) => s.outcome === 'granted').length} granted)`,
+    '',
+    `Run ${mcc.appliedOn} on ${mcc.datasets.map((d) => `${d.id} (${d.rows.toLocaleString('en-US')} rows)`).join(', ')}: openly licensed government purchase-card transactions (in-person and card-not-present government purchasing, not consumer online checkout). A store's rows are those whose merchant descriptor matches its committed descriptor rule (mcc/descriptors.json); fuel rows of a separate code are set aside; a category is granted at ${MIN_ROWS}+ rows with one category holding 80%+ of them, mapped through mcc/codes.json (Visa Merchant Data Standards Manual, April 2026). \`issuer\` evidence outranks the data (kept-issuer); a marketplace gets dining only; the store's own pages or the coordinator may veto. ${few} more stores matched fewer than ${MIN_ROWS} rows and are not listed; ${mcc.unmatched} records matched no row.`,
+    '',
+    '| Record | Rows (usable) | Dominant category | Share | Minority codes and issuer conflicts | Outcome |',
+    '| --- | --- | --- | --- | --- | --- |',
+    ...listed.map(
+      (s) =>
+        `| ${s.id} | ${s.rows} (${s.usable}${s.fuelRows ? `, ${s.fuelRows} fuel set aside` : ''}) | ${s.dominant?.category ?? ''}${s.dominant?.code ? ` (${s.dominant.code})` : ''} | ${s.dominant ? pct(s.dominant.share) : ''} | ${cell(conflicts(s))} | ${s.outcome}${s.reason ? `: ${cell(s.reason)}` : ''}${s.changed ? ` (was ${s.previous.category}, ${s.previous.basis})` : ''} |`,
+    ),
+    '',
+  ];
+}
 
 export function reviewMarkdown(input: ReviewInput): string {
   const sorted = [...input.records].sort((a, b) => a.id.localeCompare(b.id));
@@ -177,6 +212,7 @@ export function reviewMarkdown(input: ReviewInput): string {
         ]
       : ['None.']),
     '',
+    ...mccSection(input.mcc),
     `## Notes for Evan (${input.notes.length})`,
     '',
     ...(input.notes.length ? input.notes.map((n) => `- ${cell(n)}`) : ['None.']),
@@ -257,9 +293,12 @@ export async function collectReview(root: string): Promise<ReviewInput> {
       if (r.overridden?.length) overridden.push({ batch, domain: r.domain, id: r.id, changes: r.overridden });
     }
   }
-  const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
+  const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && refusedLookup(s.url));
   if (forum.length)
-    throw new Error(`forum threads are no merchant-code lookups: ${forum.map((s) => s.id).join(', ')}`);
+    throw new Error(
+      `forum threads and deep-link-forbidding hosts are no merchant-code lookups: ${forum.map((s) => s.id).join(', ')}`,
+    );
+  const mcc = await readJsonOrNull(join(root, MCC_RESULTS), mccResultsSchema);
   return {
     version: config.version,
     verifiedAt: config.verifiedAt,
@@ -275,6 +314,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     overridden,
     notes,
     fixes,
+    ...(mcc ? { mcc } : {}),
   };
 }
 

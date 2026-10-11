@@ -104,9 +104,10 @@ describe('storeProfile and merchantOption', () => {
     });
     expect(merchantOption(v3, 'kroger-us', fixture)).toEqual({ merchant: kroger });
   });
-  it('a default record at a legacy store is its own profile: general merchandise, brands kept (2026-10-11)', () => {
-    expect(storeProfile(v3, 'best-buy-us')?.expectedCategory).toBe('general-merchandise');
-    expect(storeProfile(v3, 'newegg-us')?.expectedCategory).toBe('general-merchandise');
+  it('a release record at a legacy store is its own profile: brands kept; Best Buy and Newegg are electronics on the mcc basis (2026-10-11)', () => {
+    expect(storeProfile(v3, 'best-buy-us')?.expectedCategory).toBe('electronics');
+    expect(storeProfile(v3, 'newegg-us')?.expectedCategory).toBe('electronics');
+    expect(storeProfile(v3, 'amazon-us')?.expectedCategory).toBe('general-merchandise');
     expect(storeProfile(v3, 'best-buy-us')?.brandIds).toEqual(['best-buy']);
     expect(storeProfile(v3, 'amazon-us')?.brandIds).toEqual(['amazon']);
   });
@@ -126,6 +127,7 @@ describe('storeEvidence', () => {
       'Codes as a supermarket (its own store pages and a public merchant-code lookup agree).',
     );
     expect(storeEvidence('whole-foods-us', fixture)).toBe('Codes as a supermarket (named in card terms).');
+    expect(storeEvidence('coffee-us', fixture)).toBe('Codes as a restaurant (public card-transaction data).');
   });
   it('names the issuer whose definition a definition record fits, without implying a partnership', () => {
     // The fixture's issuer source is synthetic (no catalog card cites it), so the wording falls back.
@@ -169,21 +171,23 @@ describe('storeEvidence', () => {
     for (const record of MERCHANTS_V1.merchants)
       if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
       else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
-    // The bundled release (2026-10-11.audit.2): CVS and Lowe's on issuer definitions (several issuers read as a
-    // list) and Audible named in Amex's card terms (the 14.5 audit fixes); Kroger, Whole Foods and Costco are on the
-    // default category after that audit and say nothing.
-    expect(storeEvidence('cvs-us')).toBe(
-      "Treated as a drugstore (its own pages; fits Discover's drugstore definition).",
-    );
+    // The bundled release (2026-10-11.mcc.1): CVS, Lowe's, Wegmans, Kroger and Whole Foods code as their category in
+    // the public card-transaction datasets (the mcc basis outranks their earlier definitions), Audible is named in
+    // Amex's card terms, Acme Markets still rests on a definition, and Costco stays on the default category (its
+    // wholesale-club rows are 76% of its usable rows, under the 80% bar).
+    expect(storeEvidence('cvs-us')).toBe('Codes as a drugstore (public card-transaction data).');
     expect(storeEvidence('lowes-us')).toBe(
-      "Treated as a home-improvement store (its own pages; fits Bank of America and Discover's home-improvement store definition).",
+      'Codes as a home-improvement store (public card-transaction data).',
     );
-    expect(storeEvidence('wegmans-us')).toMatch(
+    expect(storeEvidence('wegmans-us')).toBe('Codes as a supermarket (public card-transaction data).');
+    expect(storeEvidence('kroger-us')).toBe('Codes as a supermarket (public card-transaction data).');
+    expect(storeEvidence('wholefoodsmarket-us')).toBe(
+      'Codes as a supermarket (public card-transaction data).',
+    );
+    expect(storeEvidence('acmemarkets-us')).toMatch(
       /^Treated as a supermarket \(its own pages; fits .*supermarket definition\)\.$/,
     );
     expect(storeEvidence('audible-us')).toMatch(/^Codes as .* \(named in card terms\)\.$/);
-    expect(storeEvidence('kroger-us')).toBeNull();
-    expect(storeEvidence('wholefoodsmarket-us')).toBeNull();
     expect(storeEvidence('costco-us')).toBeNull();
   });
 });

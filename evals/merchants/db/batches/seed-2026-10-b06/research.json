@@ -13,10 +13,19 @@
     {
       "domain": "hyvee.com",
       "name": "Hy-Vee",
-      "hosts": ["hyvee.com", "hy-vee.com"],
+      "hosts": [
+        "hyvee.com",
+        "hy-vee.com"
+      ],
       "storePages": [
-        { "url": "https://www.hy-vee.com/corporate/our-company/", "note": "About Hy-Vee (our company)." },
-        { "url": "https://www.hy-vee.com/corporate/our-company/our-history/", "note": "Company history." }
+        {
+          "url": "https://www.hy-vee.com/corporate/our-company/",
+          "note": "About Hy-Vee (our company)."
+        },
+        {
+          "url": "https://www.hy-vee.com/corporate/our-company/our-history/",
+          "note": "Company history."
+        }
       ],
       "lookupPages": [],
       "notes": "www.hyvee.com redirects to www.hy-vee.com, where the store sells and checks out. Plain requests got 403; pages located through search and a fetch."
@@ -24,34 +33,58 @@
     {
       "domain": "iberia.com",
       "name": "Iberia",
-      "hosts": ["iberia.com"],
+      "hosts": [
+        "iberia.com"
+      ],
       "storePages": [
-        { "url": "https://www.iberia.com/us/", "note": "U.S. site home; returned 403 to plain requests, not fetched." },
-        { "url": "https://www.iberia.com/us/contact", "note": "U.S. contact page, cited by a third-party guide; not fetched (403)." }
+        {
+          "url": "https://www.iberia.com/us/",
+          "note": "U.S. site home; returned 403 to plain requests, not fetched."
+        },
+        {
+          "url": "https://www.iberia.com/us/contact",
+          "note": "U.S. contact page, cited by a third-party guide; not fetched (403)."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming Iberia; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming Iberia; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "Spanish airline with a U.S. locale (iberia.com/us). Every iberia.com page returned 403 to plain and fetch requests."
     },
     {
       "domain": "ihg.com",
       "name": "IHG Hotels & Resorts",
-      "hosts": ["ihg.com"],
+      "hosts": [
+        "ihg.com"
+      ],
       "storePages": [
-        { "url": "https://www.ihg.com/hotels/us/en/customer-care/faq", "note": "Customer care FAQ (U.S. English); found via search, 403 to direct fetch." }
+        {
+          "url": "https://www.ihg.com/hotels/us/en/customer-care/faq",
+          "note": "Customer care FAQ (U.S. English); found via search, 403 to direct fetch."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv code table names IHG hotel brands (Holiday Inn, Inter-Continental, Crowne Plaza), not IHG itself; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Fiserv code table names IHG hotel brands (Holiday Inn, Inter-Continental, Crowne Plaza), not IHG itself; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "Hotel group website selling stays at its branded hotels."
     },
     {
       "domain": "ihop.com",
       "name": "IHOP",
-      "hosts": ["ihop.com"],
+      "hosts": [
+        "ihop.com"
+      ],
       "storePages": [
-        { "url": "https://www.ihop.com/en/about-ihop", "note": "About IHOP; found via search, 403 to direct fetch." }
+        {
+          "url": "https://www.ihop.com/en/about-ihop",
+          "note": "About IHOP; found via search, 403 to direct fetch."
+        }
       ],
       "lookupPages": [],
       "notes": "Restaurants franchised by affiliates of Dine Brands Global."
@@ -59,10 +92,18 @@
     {
       "domain": "jcrew.com",
       "name": "J.Crew",
-      "hosts": ["jcrew.com"],
+      "hosts": [
+        "jcrew.com"
+      ],
       "storePages": [
-        { "url": "https://www.jcrew.com/help/customer-service", "note": "Customer service and FAQ." },
-        { "url": "https://www.jcrew.com/company/aboutus", "note": "About J.Crew, linked from the help page." }
+        {
+          "url": "https://www.jcrew.com/help/customer-service",
+          "note": "Customer service and FAQ."
+        },
+        {
+          "url": "https://www.jcrew.com/company/aboutus",
+          "note": "About J.Crew, linked from the help page."
+        }
       ],
       "lookupPages": [],
       "notes": null
@@ -70,10 +111,18 @@
     {
       "domain": "jetblue.com",
       "name": "JetBlue",
-      "hosts": ["jetblue.com"],
+      "hosts": [
+        "jetblue.com"
+      ],
       "storePages": [
-        { "url": "https://www.jetblue.com/help", "note": "Help center." },
-        { "url": "https://www.jetblue.com/our-company", "note": "Our company, linked from the help page." }
+        {
+          "url": "https://www.jetblue.com/help",
+          "note": "Help center."
+        },
+        {
+          "url": "https://www.jetblue.com/our-company",
+          "note": "Our company, linked from the help page."
+        }
       ],
       "lookupPages": [],
       "notes": "The Fiserv airline code table checked for other carriers does not name JetBlue."
@@ -81,10 +130,18 @@
     {
       "domain": "jetbluevacations.com",
       "name": "JetBlue Vacations",
-      "hosts": ["jetbluevacations.com"],
+      "hosts": [
+        "jetbluevacations.com"
+      ],
       "storePages": [
-        { "url": "https://www.jetbluevacations.com/help", "note": "FAQ describing vacation packages." },
-        { "url": "https://www.jetbluevacations.com/why-jetblue-vacations", "note": "Our standards page." }
+        {
+          "url": "https://www.jetbluevacations.com/help",
+          "note": "FAQ describing vacation packages."
+        },
+        {
+          "url": "https://www.jetbluevacations.com/why-jetblue-vacations",
+          "note": "Our standards page."
+        }
       ],
       "lookupPages": [],
       "notes": "Packages book on jetbluevacations.com/shopping; the FAQ also points to jetblue.com/vacations for booking."
@@ -92,10 +149,18 @@
     {
       "domain": "jewelosco.com",
       "name": "Jewel-Osco",
-      "hosts": ["jewelosco.com"],
+      "hosts": [
+        "jewelosco.com"
+      ],
       "storePages": [
-        { "url": "https://www.jewelosco.com/about-us.html", "note": "About us." },
-        { "url": "https://www.jewelosco.com/faq.html", "note": "FAQ." }
+        {
+          "url": "https://www.jewelosco.com/about-us.html",
+          "note": "About us."
+        },
+        {
+          "url": "https://www.jewelosco.com/faq.html",
+          "note": "FAQ."
+        }
       ],
       "lookupPages": [],
       "notes": "Albertsons Companies banner; policies link to albertsonscompanies.com."
@@ -103,10 +168,18 @@
     {
       "domain": "jimmyjohns.com",
       "name": "Jimmy John's",
-      "hosts": ["jimmyjohns.com"],
+      "hosts": [
+        "jimmyjohns.com"
+      ],
       "storePages": [
-        { "url": "https://www.jimmyjohns.com/company-history", "note": "Company history (/about-us redirects here)." },
-        { "url": "https://www.jimmyjohns.com/faq", "note": "FAQ." }
+        {
+          "url": "https://www.jimmyjohns.com/company-history",
+          "note": "Company history (/about-us redirects here)."
+        },
+        {
+          "url": "https://www.jimmyjohns.com/faq",
+          "note": "FAQ."
+        }
       ],
       "lookupPages": [],
       "notes": null
@@ -114,9 +187,14 @@
     {
       "domain": "josbank.com",
       "name": "Jos. A. Bank",
-      "hosts": ["josbank.com"],
+      "hosts": [
+        "josbank.com"
+      ],
       "storePages": [
-        { "url": "https://www.josbank.com/company-information", "note": "Company information; found via search, direct requests timed out." }
+        {
+          "url": "https://www.josbank.com/company-information",
+          "note": "Company information; found via search, direct requests timed out."
+        }
       ],
       "lookupPages": [],
       "notes": "Part of Tailored Brands."
@@ -124,9 +202,14 @@
     {
       "domain": "jossandmain.com",
       "name": "Joss & Main",
-      "hosts": ["jossandmain.com"],
+      "hosts": [
+        "jossandmain.com"
+      ],
       "storePages": [
-        { "url": "https://www.jossandmain.com/help", "note": "Help center; returned 429 to plain requests, not fetched." }
+        {
+          "url": "https://www.jossandmain.com/help",
+          "note": "Help center; returned 429 to plain requests, not fetched."
+        }
       ],
       "lookupPages": [],
       "notes": "Wayfair brand selling online. Only the help path was located; the site rate-limited every request."
@@ -134,10 +217,18 @@
     {
       "domain": "kfc.com",
       "name": "KFC",
-      "hosts": ["kfc.com"],
+      "hosts": [
+        "kfc.com"
+      ],
       "storePages": [
-        { "url": "https://www.kfc.com/about", "note": "About KFC (U.S.); 403 to plain requests, not fetched." },
-        { "url": "https://global.kfc.com/company", "note": "KFC global company page." }
+        {
+          "url": "https://www.kfc.com/about",
+          "note": "About KFC (U.S.); 403 to plain requests, not fetched."
+        },
+        {
+          "url": "https://global.kfc.com/company",
+          "note": "KFC global company page."
+        }
       ],
       "lookupPages": [],
       "notes": "Yum! Brands chain; www.kfc.com is the U.S. site with online ordering."
@@ -145,10 +236,18 @@
     {
       "domain": "kingsoopers.com",
       "name": "King Soopers",
-      "hosts": ["kingsoopers.com"],
+      "hosts": [
+        "kingsoopers.com"
+      ],
       "storePages": [
-        { "url": "https://www.kingsoopers.com/stores/search", "note": "Store locator (Kroger banner pattern); requests timed out, not fetched." },
-        { "url": "https://www.kingsoopers.com/stores/grocery/co/denver/king-soopers/620/00150", "note": "A Denver store page found via search." }
+        {
+          "url": "https://www.kingsoopers.com/stores/search",
+          "note": "Store locator (Kroger banner pattern); requests timed out, not fetched."
+        },
+        {
+          "url": "https://www.kingsoopers.com/stores/grocery/co/denver/king-soopers/620/00150",
+          "note": "A Denver store page found via search."
+        }
       ],
       "lookupPages": [],
       "notes": "Kroger banner in Colorado and Wyoming. No about or FAQ page on kingsoopers.com was found."
@@ -156,11 +255,22 @@
     {
       "domain": "kinneydrugs.com",
       "name": "Kinney Drugs",
-      "hosts": ["kinneydrugs.com"],
+      "hosts": [
+        "kinneydrugs.com"
+      ],
       "storePages": [
-        { "url": "https://www.kinneydrugs.com/pharmacy/prescriptions/", "note": "Pharmacy and prescriptions." },
-        { "url": "https://www.kinneydrugs.com/locations/", "note": "Store locations." },
-        { "url": "https://www.kinneydrugs.com/contact-us/", "note": "Contact us." }
+        {
+          "url": "https://www.kinneydrugs.com/pharmacy/prescriptions/",
+          "note": "Pharmacy and prescriptions."
+        },
+        {
+          "url": "https://www.kinneydrugs.com/locations/",
+          "note": "Store locations."
+        },
+        {
+          "url": "https://www.kinneydrugs.com/contact-us/",
+          "note": "Contact us."
+        }
       ],
       "lookupPages": [],
       "notes": "Online shop runs on shop.kinneydrugs.com. No about page found on the site."
@@ -168,23 +278,42 @@
     {
       "domain": "klm.us",
       "name": "KLM Royal Dutch Airlines",
-      "hosts": ["klm.us"],
+      "hosts": [
+        "klm.us"
+      ],
       "storePages": [
-        { "url": "https://www.klm.us/", "note": "KLM U.S. site home; requests timed out, not fetched." },
-        { "url": "https://www.klm.us/information/corporate/history", "note": "Corporate history, by the path KLM uses on klm.fr; not fetched." }
+        {
+          "url": "https://www.klm.us/",
+          "note": "KLM U.S. site home; requests timed out, not fetched."
+        },
+        {
+          "url": "https://www.klm.us/information/corporate/history",
+          "note": "Corporate history, by the path KLM uses on klm.fr; not fetched."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming KLM; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming KLM; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "Dutch airline; klm.us resolves to KLM's Akamai host. KLM also sells on klm.com, not listed."
     },
     {
       "domain": "kohls.com",
       "name": "Kohl's",
-      "hosts": ["kohls.com"],
+      "hosts": [
+        "kohls.com"
+      ],
       "storePages": [
-        { "url": "https://www.kohls.com/faq/article/623", "note": "Customer service FAQ article found via search; 403 to direct fetch." },
-        { "url": "https://corporate.kohls.com/contact-us", "note": "Corporate contact page listing customer service lines." }
+        {
+          "url": "https://www.kohls.com/faq/article/623",
+          "note": "Customer service FAQ article found via search; 403 to direct fetch."
+        },
+        {
+          "url": "https://corporate.kohls.com/contact-us",
+          "note": "Corporate contact page listing customer service lines."
+        }
       ],
       "lookupPages": [],
       "notes": "Every kohls.com request returned 403."
@@ -192,22 +321,38 @@
     {
       "domain": "koreanair.com",
       "name": "Korean Air",
-      "hosts": ["koreanair.com"],
+      "hosts": [
+        "koreanair.com"
+      ],
       "storePages": [
-        { "url": "https://www.koreanair.com/contents/footer/about-us/who-we-are/overview/greetings?hl=en", "note": "Who we are (about us); found via search." }
+        {
+          "url": "https://www.koreanair.com/contents/footer/about-us/who-we-are/overview/greetings?hl=en",
+          "note": "Who we are (about us); found via search."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming Korean Air; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming Korean Air; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "South Korean airline selling to U.S. buyers on koreanair.com."
     },
     {
       "domain": "lenovo.com",
       "name": "Lenovo",
-      "hosts": ["lenovo.com"],
+      "hosts": [
+        "lenovo.com"
+      ],
       "storePages": [
-        { "url": "https://www.lenovo.com/us/en/about/", "note": "About Lenovo (U.S. site)." },
-        { "url": "https://www.lenovo.com/us/en/shopping-faq/", "note": "Shopping FAQ." }
+        {
+          "url": "https://www.lenovo.com/us/en/about/",
+          "note": "About Lenovo (U.S. site)."
+        },
+        {
+          "url": "https://www.lenovo.com/us/en/shopping-faq/",
+          "note": "Shopping FAQ."
+        }
       ],
       "lookupPages": [],
       "notes": null
@@ -215,11 +360,22 @@
     {
       "domain": "lidl.com",
       "name": "Lidl",
-      "hosts": ["lidl.com"],
+      "hosts": [
+        "lidl.com"
+      ],
       "storePages": [
-        { "url": "https://www.lidl.com/c/about-us/s10089074", "note": "About us (Lidl US)." },
-        { "url": "https://www.lidl.com/s/en-US/stores/", "note": "Store locator." },
-        { "url": "https://help.lidl.com/SelfServiceUS/s/", "note": "U.S. help center." }
+        {
+          "url": "https://www.lidl.com/c/about-us/s10089074",
+          "note": "About us (Lidl US)."
+        },
+        {
+          "url": "https://www.lidl.com/s/en-US/stores/",
+          "note": "Store locator."
+        },
+        {
+          "url": "https://help.lidl.com/SelfServiceUS/s/",
+          "note": "U.S. help center."
+        }
       ],
       "lookupPages": [],
       "notes": null
@@ -227,10 +383,18 @@
     {
       "domain": "livenation.com",
       "name": "Live Nation",
-      "hosts": ["livenation.com"],
+      "hosts": [
+        "livenation.com"
+      ],
       "storePages": [
-        { "url": "https://www.livenation.com/about", "note": "Landing page with company links." },
-        { "url": "https://help.livenation.com/hc/en-us", "note": "Help center (livenation.com/help redirects here)." }
+        {
+          "url": "https://www.livenation.com/about",
+          "note": "Landing page with company links."
+        },
+        {
+          "url": "https://help.livenation.com/hc/en-us",
+          "note": "Help center (livenation.com/help redirects here)."
+        }
       ],
       "lookupPages": [],
       "notes": "Event pages link out to ticketmaster.com for tickets; ticketmaster.com is not listed as a host."
@@ -238,11 +402,22 @@
     {
       "domain": "llbean.com",
       "name": "L.L.Bean",
-      "hosts": ["llbean.com"],
+      "hosts": [
+        "llbean.com"
+      ],
       "storePages": [
-        { "url": "https://www.llbean.com/llb/shop/516917", "note": "Our company." },
-        { "url": "https://www.llbean.com/llb/shop/20010459", "note": "Company history timeline." },
-        { "url": "https://help.llbean.com/", "note": "Help center." }
+        {
+          "url": "https://www.llbean.com/llb/shop/516917",
+          "note": "Our company."
+        },
+        {
+          "url": "https://www.llbean.com/llb/shop/20010459",
+          "note": "Company history timeline."
+        },
+        {
+          "url": "https://help.llbean.com/",
+          "note": "Help center."
+        }
       ],
       "lookupPages": [],
       "notes": "Images load from llbean.net, a CDN; not listed as a host."
@@ -250,50 +425,94 @@
     {
       "domain": "lot.com",
       "name": "LOT Polish Airlines",
-      "hosts": ["lot.com"],
+      "hosts": [
+        "lot.com"
+      ],
       "storePages": [
-        { "url": "https://www.lot.com/us/en/about-us", "note": "About us (U.S. English); a WAF block page was served, not verified." },
-        { "url": "https://www.lot.com/us/en/help-center", "note": "Help center (U.S. English); not verified." }
+        {
+          "url": "https://www.lot.com/us/en/about-us",
+          "note": "About us (U.S. English); a WAF block page was served, not verified."
+        },
+        {
+          "url": "https://www.lot.com/us/en/help-center",
+          "note": "Help center (U.S. English); not verified."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming LOT (Poland); URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming LOT (Poland); URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "Polish airline with a U.S. locale on lot.com/us/en. Akamai blocked every request."
     },
     {
       "domain": "lufthansa.com",
       "name": "Lufthansa",
-      "hosts": ["lufthansa.com"],
+      "hosts": [
+        "lufthansa.com"
+      ],
       "storePages": [
-        { "url": "https://www.lufthansa.com/us/en/help-and-contact", "note": "Help and contact (U.S. English); found via search, 403 to fetch." },
-        { "url": "https://www.lufthansa.com/us/en/support/help", "note": "Support help page (U.S. English); found via search." }
+        {
+          "url": "https://www.lufthansa.com/us/en/help-and-contact",
+          "note": "Help and contact (U.S. English); found via search, 403 to fetch."
+        },
+        {
+          "url": "https://www.lufthansa.com/us/en/support/help",
+          "note": "Support help page (U.S. English); found via search."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming Lufthansa; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming Lufthansa; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "German airline with a U.S. locale on lufthansa.com/us/en."
     },
     {
       "domain": "luxair.lu",
       "name": "Luxair",
-      "hosts": ["luxair.lu"],
+      "hosts": [
+        "luxair.lu"
+      ],
       "storePages": [
-        { "url": "https://www.luxair.lu/en/luxairgroup/about-us/", "note": "About Luxair group." },
-        { "url": "https://www.luxair.lu/en/faq/", "note": "FAQ." }
+        {
+          "url": "https://www.luxair.lu/en/luxairgroup/about-us/",
+          "note": "About Luxair group."
+        },
+        {
+          "url": "https://www.luxair.lu/en/faq/",
+          "note": "FAQ."
+        }
       ],
       "lookupPages": [
-        { "url": "https://docs.fiserv.dev/public/docs/merchant-category-codes", "note": "Fiserv developer docs code table naming Luxair; URL only." }
+        {
+          "url": "https://usa.visa.com/dam/VCOM/download/merchants/visa-merchant-data-standards-manual.pdf",
+          "note": "Visa Merchant Data Standards Manual (April 2026) airline and lodging code table naming Luxair; URL only. Replaced 2026-10-11: the Fiserv table first cited forbids deep links; the Visa manual names the same brand."
+        }
       ],
       "notes": "Luxembourg airline; site root redirects to luxair.lu/en/. No U.S. locale seen."
     },
     {
       "domain": "lyft.com",
       "name": "Lyft",
-      "hosts": ["lyft.com"],
+      "hosts": [
+        "lyft.com"
+      ],
       "storePages": [
-        { "url": "https://www.lyft.com/rider", "note": "Rider page describing the service." },
-        { "url": "https://help.lyft.com/hc/en-us/rider/categories/2872191865", "note": "Rider help center." },
-        { "url": "https://www.lyft.com/press", "note": "Press page." }
+        {
+          "url": "https://www.lyft.com/rider",
+          "note": "Rider page describing the service."
+        },
+        {
+          "url": "https://help.lyft.com/hc/en-us/rider/categories/2872191865",
+          "note": "Rider help center."
+        },
+        {
+          "url": "https://www.lyft.com/press",
+          "note": "Press page."
+        }
       ],
       "lookupPages": [],
       "notes": "Rides are booked and paid mostly in the Lyft app; lyft.com/about returned 404."

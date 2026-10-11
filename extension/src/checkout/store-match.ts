@@ -147,7 +147,8 @@ const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
 /** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
  * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile.
  * A `definition` record reads "Treated as", naming the issuer whose category definition the store's own pages fit
- * ("Codes as" is for `issuer` and `corroborated` only); no partnership is implied. */
+ * ("Codes as" is for `issuer`, `mcc` and `corroborated`; an `mcc` record reads "public card-transaction
+ * data", the openly licensed government purchase-card datasets, 2026-10-11); no partnership is implied. */
 export function storeEvidence(
   merchantId: string,
   release: MerchantRelease = inEffect,
@@ -175,6 +176,8 @@ export function storeEvidence(
   const basis =
     record.evidence.basis === 'issuer'
       ? 'named in card terms'
-      : 'its own store pages and a public merchant-code lookup agree';
+      : record.evidence.basis === 'mcc'
+        ? 'public card-transaction data'
+        : 'its own store pages and a public merchant-code lookup agree';
   return `Codes as ${wording} (${basis}).`;
 }

@@ -7,10 +7,16 @@
 // around its name. Nothing derived from a draft, a verification, a record or review.md goes into a sheet. The
 // issuers' category definitions are one shared file per packet, mined from the fixed definition pages.
 //
-//   node evals/merchants/db/audit/build-packets.mjs [--size 25]
+//   node evals/merchants/db/audit/build-packets.mjs [--size 25] [--run mcc]
 //
 // Writes evals/merchants/db/audit/population.json (committed: domains, tiers, reasons, capture counts) and
 // evals/merchants/db/audit/packets/<n>/ (gitignored: capture text).
+//
+// `--run mcc` (2026-10-11, the mcc basis): the population is every record the `pipeline merchants mcc` run changed
+// (evals/merchants/db/mcc/results.json, `changed: true`); files are population-mcc.json, packets-mcc/ and
+// labels-mcc/. Each sheet then also carries an "mcc-evidence" section: the matched merchant descriptors with their
+// dataset category descriptions and row counts, raw data from the public datasets, never the run's outcome; the
+// packet also gets the committed code map (mcc-codes.json) so the auditor can map a description to a category.
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,7 +34,20 @@ import { domainLabel } from '../../../../tools/catalog-pipeline/src/merchants/ca
 export const ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
 const DB = join(ROOT, 'evals/merchants/db');
 export const AUDIT_DIR = join(DB, 'audit');
-const PACKETS_DIR = join(AUDIT_DIR, 'packets');
+/** File names of a run: the 14.5 audit (no suffix) or a named re-audit (`-mcc`). */
+export const runPaths = (run) => {
+  const suffix = run ? `-${run}` : '';
+  return {
+    packetsDir: join(AUDIT_DIR, `packets${suffix}`),
+    packetsRel: `evals/merchants/db/audit/packets${suffix}`,
+    labelsDir: join(AUDIT_DIR, `labels${suffix}`),
+    labelsRel: `evals/merchants/db/audit/labels${suffix}`,
+    population: join(AUDIT_DIR, `population${suffix}.json`),
+    comparison: join(AUDIT_DIR, `comparison${suffix}.json`),
+    adjudicationInput: join(AUDIT_DIR, `adjudication-input${suffix}.json`),
+    adjudication: join(AUDIT_DIR, `adjudication${suffix}.json`),
+  };
+};
 const AGENT_FILE = '.claude/agents/merchant-auditor.md';
 /** The one held-out record that changed after the freeze (seed run rules, freeze honesty). */
 export const POST_FREEZE = ['gap.com'];
@@ -87,8 +106,10 @@ const cut = (text, max) =>
 
 const section = (heading, body) => [`## ${heading}`, '', '```', body.trim(), '```', ''];
 
-export async function buildPopulation() {
+export async function buildPopulation(run = null) {
   const release = await readJson(join(DB, 'release.json'));
+  const mccResults = run === 'mcc' ? await readJson(join(DB, 'mcc/results.json')) : null;
+  const mccChanged = new Set((mccResults?.stores ?? []).filter((s) => s.changed).map((s) => s.id));
   const heldout = (await readJson(join(ROOT, 'evals/merchants/pipeline-heldout-domains.json'))).domains;
   const candidates = (await readJson(join(DB, 'candidates.json'))).candidates;
   const byDomain = new Map(candidates.map((c) => [c.domain, c]));
@@ -108,23 +129,46 @@ export async function buildPopulation() {
     if (!entry.reasons.includes(reason)) entry.reasons.push(reason);
     population.set(domain, entry);
   };
-  for (const record of release.merchants) {
-    const { domain } = domains.get(record.id);
-    if (record.evidence.basis !== 'default') add(domain, 'bonus-category', record);
-    if (record.brandIds.length) add(domain, 'brands', record);
-    if (record.kind === 'processor') add(domain, 'processor', record);
-  }
-  for (const h of heldout) {
-    const record = release.merchants.find((r) => domains.get(r.id).domain === h.domain) ?? null;
-    add(h.domain, 'held-out', record);
+  if (mccResults) {
+    for (const record of release.merchants)
+      if (mccChanged.has(record.id)) add(domains.get(record.id).domain, 'mcc-changed', record);
+  } else {
+    for (const record of release.merchants) {
+      const { domain } = domains.get(record.id);
+      if (record.evidence.basis !== 'default') add(domain, 'bonus-category', record);
+      if (record.brandIds.length) add(domain, 'brands', record);
+      if (record.kind === 'processor') add(domain, 'processor', record);
+    }
+    for (const h of heldout) {
+      const record = release.merchants.find((r) => domains.get(r.id).domain === h.domain) ?? null;
+      add(h.domain, 'held-out', record);
+    }
   }
   return {
     release,
+    mccResults,
     population: [...population.values()].sort((a, b) => a.domain.localeCompare(b.domain)),
   };
 }
 
-async function storeSheet(entry, release, issuerCaptures) {
+/** The MCC evidence section of a sheet: the store's matched descriptors (merchant descriptor | dataset category
+ * description) with row counts per dataset and the description tally. Raw data only: nothing says what the run
+ * granted. */
+export function mccEvidenceSection(result) {
+  const lines = [
+    `Rows of the public card-transaction datasets whose merchant descriptor matched this store's descriptor rule (${result.rows} rows: ${Object.entries(result.byDataset)
+      .map(([id, n]) => `${id} ${n}`)
+      .join(', ')}). Each line is "MERCHANT DESCRIPTOR | MCC DESCRIPTION" as the dataset gives it, with its row count. The code map is in mcc-codes.json.`,
+    '',
+    ...result.descriptors.map((d) => `${d.text}  [${d.rows} rows]`),
+    '',
+    'Description tally (normalised):',
+    ...Object.entries(result.byDescription).map(([d, n]) => `${d}: ${n}`),
+  ];
+  return section('mcc-evidence (public card-transaction datasets, matched rows)', lines.join('\n'));
+}
+
+async function storeSheet(entry, release, issuerCaptures, mccResult = null) {
   const record = release.merchants.find((r) => r.id === entry.recordId) ?? null;
   // The needle for the issuer and lookup excerpts is the record's display name: for tier B the research name the
   // verifier confirmed (so one verified field reaches the sheet as a search term, never as a label), for tier A the
@@ -200,6 +244,7 @@ async function storeSheet(entry, release, issuerCaptures) {
     }
   }
   if (!counts.issuerExcerpts) lines.push('## issuer pages', '', 'No issuer page names this store.', '');
+  if (mccResult) lines.push(...mccEvidenceSection(mccResult));
   return { text: lines.join('\n'), counts };
 }
 
@@ -227,9 +272,12 @@ async function issuerDefinitions(issuerCaptures) {
 export async function main(argv = process.argv.slice(2)) {
   const sizeAt = argv.indexOf('--size');
   const size = sizeAt >= 0 ? Number(argv[sizeAt + 1]) : 25;
-  const { release, population } = await buildPopulation();
+  const runAt = argv.indexOf('--run');
+  const run = runAt >= 0 ? argv[runAt + 1] : null;
+  const paths = runPaths(run);
+  const { release, population, mccResults } = await buildPopulation(run);
   const issuerCaptures = await listIssuerCaptures(ROOT);
-  await rm(PACKETS_DIR, { recursive: true, force: true });
+  await rm(paths.packetsDir, { recursive: true, force: true });
   const packets = Math.ceil(population.length / size);
   const per = Math.ceil(population.length / packets);
   const definitions = await issuerDefinitions(issuerCaptures);
@@ -241,15 +289,21 @@ export async function main(argv = process.argv.slice(2)) {
     null,
     2,
   );
+  const codes = mccResults ? await readFile(join(DB, 'mcc/codes.json'), 'utf8') : null;
   for (let n = 1; n <= packets; n += 1) {
     const stores = population.slice((n - 1) * per, n * per);
-    const dir = join(PACKETS_DIR, String(n));
+    const dir = join(paths.packetsDir, String(n));
     await mkdir(join(dir, 'stores'), { recursive: true });
     await writeFile(join(dir, 'issuer-definitions.md'), definitions);
     await writeFile(join(dir, 'catalog-lists.json'), lists);
     const inputs = [AGENT_FILE, relative(ROOT, join(dir, 'catalog-lists.json')), relative(ROOT, join(dir, 'issuer-definitions.md'))];
+    if (codes) {
+      await writeFile(join(dir, 'mcc-codes.json'), codes);
+      inputs.push(relative(ROOT, join(dir, 'mcc-codes.json')));
+    }
     for (const entry of stores) {
-      const { text, counts } = await storeSheet(entry, release, issuerCaptures);
+      const mccResult = mccResults?.stores.find((s) => s.id === entry.recordId) ?? null;
+      const { text, counts } = await storeSheet(entry, release, issuerCaptures, mccResult);
       entry.captures = counts;
       entry.packet = n;
       const path = join(dir, 'stores', `${entry.domain}.md`);
@@ -265,20 +319,21 @@ export async function main(argv = process.argv.slice(2)) {
           release: release.version,
           domains: stores.map((s) => s.domain),
           inputs,
-          output: `evals/merchants/db/audit/labels/packet-${n}.json`,
+          output: `${paths.labelsRel}/packet-${n}.json`,
         },
         null,
         2,
       ),
     );
   }
-  await mkdir(join(AUDIT_DIR, 'labels'), { recursive: true });
+  await mkdir(paths.labelsDir, { recursive: true });
   await writeFile(
-    join(AUDIT_DIR, 'population.json'),
+    paths.population,
     `${JSON.stringify(
       {
         schemaVersion: 1,
         release: release.version,
+        ...(run ? { run } : {}),
         builtOn: new Date().toISOString().slice(0, 10),
         packets,
         stores: population,

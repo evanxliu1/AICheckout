@@ -96,7 +96,10 @@ test('checkLabels: order, ids, verbatim quotes, the 25-word limit and forbidden 
   bad.stores[1].quotes.push({ source: 'a-com-page-1', quote: 'w '.repeat(26).trim(), supports: 'kind' });
   bad.stores[0].brandIds = ['nobody'];
   bad.auditor.filesRead.push('evals/merchants/db/records/a-us.json');
+  bad.auditor.filesRead.push('evals/merchants/db/mcc/results.json');
+  bad.auditor.filesRead.push('evals/merchants/db/audit/labels-mcc/packet-1.json');
   const errors = checkLabels({ packet, labels: bad, sheets, lists });
+  assert.equal(errors.filter((e) => e.includes('must not read')).length, 3);
   assert.ok(errors.some((e) => e.includes('domains must be')));
   assert.ok(errors.some((e) => e.includes('not found verbatim')));
   assert.ok(errors.some((e) => e.includes('over 25 words')));
@@ -110,8 +113,9 @@ test('checkLabels: a bonus needs a non-default basis and quotes; cant-tell needs
   const sheets = new Map([['a.com', new Map()]]);
   const base = { schemaVersion: 1, packet: 1, provenance: 'agent-verified', auditor: { agent: 'merchant-auditor', model: 'm', date: '2026-10-11', filesRead: ['x'] } };
   const run = (store) => checkLabels({ packet, labels: { ...base, stores: [label({ domain: 'a.com', ...store })] }, sheets, lists });
-  assert.ok(run({ category: 'dining', basis: 'default' }).some((e) => e.includes('needs issuer, corroborated or definition')));
-  assert.ok(run({ category: 'dining', basis: 'issuer', quotes: [] }).some((e) => e.includes('needs a category or definition quote')));
+  assert.ok(run({ category: 'dining', basis: 'default' }).some((e) => e.includes('needs issuer, mcc, corroborated or definition')));
+  assert.ok(run({ category: 'dining', basis: 'issuer', quotes: [] }).some((e) => e.includes('needs a category, definition or mcc quote')));
+  assert.ok(run({ category: 'dining', basis: 'mcc', quotes: [{ source: 'x', quote: 'q', supports: 'category' }] }).some((e) => e.includes('mcc basis needs a descriptor quote')));
   assert.ok(run({ category: 'cant-tell', basis: 'default' }).some((e) => e.includes('null when the category')));
   assert.ok(run({ category: 'general-merchandise', basis: 'definition' }).some((e) => e.includes('general-merchandise is default')));
 });

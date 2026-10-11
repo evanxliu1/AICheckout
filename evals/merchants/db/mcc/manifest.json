@@ -1,0 +1,298 @@
+{
+  "description": "Openly licensed public card-transaction datasets behind the `mcc` evidence basis (2026-10-11). The files are downloaded to the gitignored evals/merchants/db/mcc-data/ and never committed; `pipeline merchants mcc` verifies every hash and row count here. Each dataset is one release source (kind `mcc-dataset`); its sha256 is the file's SHA-256, or for several files the SHA-256 of the per-file hashes joined by newlines in path order. Excluded on licence grounds: Delaware (public-domain label only in portal metadata), Indiana (personal, news, nonprofit or academic use only), Oklahoma FY2025 and FY2026 (no licence shown).",
+  "fetchedOn": "2026-10-11",
+  "datasets": [
+    {
+      "id": "mcc-dataset-dc",
+      "publisher": "Government of the District of Columbia, Office of the Chief Technology Officer (Open Data DC)",
+      "title": "Purchase Card Transactions",
+      "url": "https://opendata.dc.gov/datasets/DCGIS::purchase-card-transactions",
+      "downloadUrl": "https://opendata.dc.gov/api/download/v1/items/92842dceac234b9ca1a8266fcfd57de7/csv?layers=50",
+      "licence": {
+        "name": "CC0 1.0 (public domain dedication)",
+        "quote": "the District waives all rights to the data worldwide under copyright law",
+        "seenAt": "dc.gov Terms and Conditions of Use for District Data, linked from the dataset page; attribution requested, not required. The data.gov record of the same dataset says CC BY 4.0."
+      },
+      "channel": "District government purchase-card transactions 2009–2026, in-person and card-not-present, as the card program reported them; monthly refresh, so the file hash dates the fetch.",
+      "columns": {
+        "merchant": "VENDOR_NAME",
+        "description": "MCC_DESCRIPTION"
+      },
+      "format": "csv",
+      "files": [
+        {
+          "path": "dc/purchase-card-transactions.csv",
+          "sha256": "da4b94903a3a599111de486571879c0eaad5be4e2a9892e7ebea9e6aa19d514a",
+          "rows": 639306
+        }
+      ],
+      "sha256": "da4b94903a3a599111de486571879c0eaad5be4e2a9892e7ebea9e6aa19d514a"
+    },
+    {
+      "id": "mcc-dataset-ok-fy2022",
+      "publisher": "State of Oklahoma, Office of Management and Enterprise Services (data.ok.gov)",
+      "title": "Purchase Card (PCard) Fiscal Year 2022",
+      "url": "https://data.ok.gov/dataset/pcard-fy-2022",
+      "licence": {
+        "name": "Creative Commons Attribution (CC BY)",
+        "quote": "Creative Commons Attribution",
+        "seenAt": "Licence field of the dataset page on data.ok.gov (FY2022, FY2023 and FY2024 pages); FY2025 and FY2026 show no licence and are not used."
+      },
+      "channel": "State agency and higher-education purchase-card transactions, July 2021 to June 2022, one CSV per month; in-person and card-not-present.",
+      "columns": {
+        "merchant": "MERCHANT",
+        "description": "MCC_DESCRIPTION"
+      },
+      "format": "csv",
+      "files": [
+        {
+          "path": "ok-fy2022/18bdeef9_pcard_public_202111.csv",
+          "sha256": "25efd52a3fc30c9420cbeacf27b2efcf38174ea88160cc8e58244edb2acf09c8",
+          "rows": 30501
+        },
+        {
+          "path": "ok-fy2022/223b6515_pcard_public_202203.csv",
+          "sha256": "af5c494fc1047984b8ab463797a3f203740a8e5e042f57b6e517e809a6e1c599",
+          "rows": 27519
+        },
+        {
+          "path": "ok-fy2022/248a1abd_pcard_public_202110.csv",
+          "sha256": "14f0a1b33181089e3841a58e0f937959687689eb5fb824b0c29650d0ec1b33f2",
+          "rows": 33616
+        },
+        {
+          "path": "ok-fy2022/257b9f59_pcard_public_20211001081026.csv",
+          "sha256": "cd8565d1c3ffc8dfde1c57da47f76b4f3c0454f10bbc26deebf1c1240fad08ac",
+          "rows": 33182
+        },
+        {
+          "path": "ok-fy2022/507c08f1_pcard_public_202203.csv",
+          "sha256": "b1ef0ca991ca963e49b5e30f18596f0d427c0ed7f65bc5c91aecd9a1a35efca4",
+          "rows": 35632
+        },
+        {
+          "path": "ok-fy2022/57a67f52_pcard_public_202205.csv",
+          "sha256": "c86b2370014dcf0644d912d86cc6a1724d25f7c72b8f0c980d5ce43b3748b259",
+          "rows": 33568
+        },
+        {
+          "path": "ok-fy2022/7f5d180c_pcard_public_202112.csv",
+          "sha256": "882e82e717c36fc847164e675ad407a6d8bae5452a5a3b173fa185844474d258",
+          "rows": 27530
+        },
+        {
+          "path": "ok-fy2022/9a2b53b9_pcard_public_20210901080953.csv",
+          "sha256": "61041aeda57caaaa951564a77e52190adf21d3072369b24155ce6380d249b467",
+          "rows": 33966
+        },
+        {
+          "path": "ok-fy2022/b879732c_pcard_public_202206.csv",
+          "sha256": "6b2189c23a4e0d32eaa21fcff6781cf39f4657c190a29a77573324b97a5e7fbb",
+          "rows": 32631
+        },
+        {
+          "path": "ok-fy2022/d8bbf175_pcard_public_20220210100203.csv",
+          "sha256": "0b9dbd5b959c36709115601b585ecec40ef13f9d239a6ad05d97570fec51eb80",
+          "rows": 29068
+        },
+        {
+          "path": "ok-fy2022/eaf0dd15_pcard_public_202204.csv",
+          "sha256": "91c317872673aaa56203004d10e0802adbf07b0141f99a7b84b75e3a5cfb8fc0",
+          "rows": 35681
+        },
+        {
+          "path": "ok-fy2022/f13c1447_pcard_public_20210802070831.csv",
+          "sha256": "c6615be4ea4d7f9b4d48c8e0f84c09d5d6c5d7409f6c2aaacdcf269e1ebaa541",
+          "rows": 29830
+        }
+      ],
+      "sha256": "236f33d1fdd0f7782778b5bebe0f53cf5a3979f9d93990b7aa7cd034b0314a73"
+    },
+    {
+      "id": "mcc-dataset-ok-fy2023",
+      "publisher": "State of Oklahoma, Office of Management and Enterprise Services (data.ok.gov)",
+      "title": "Purchase Card (PCard) Fiscal Year 2023",
+      "url": "https://data.ok.gov/dataset/purchase-card-pcard-fiscal-year-2023",
+      "licence": {
+        "name": "Creative Commons Attribution (CC BY)",
+        "quote": "Creative Commons Attribution",
+        "seenAt": "Licence field of the dataset page on data.ok.gov."
+      },
+      "channel": "State agency and higher-education purchase-card transactions, July 2022 to June 2023, one CSV per month; in-person and card-not-present.",
+      "columns": {
+        "merchant": "MERCHANT",
+        "description": "MCC_DESCRIPTION"
+      },
+      "format": "csv",
+      "files": [
+        {
+          "path": "ok-fy2023/pcard_public_202207.csv",
+          "sha256": "3f8cab7407276caf21336397ebbcdc4cbac047da83ecb68bb70fba207316dede",
+          "rows": 29138
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202208.csv",
+          "sha256": "972f341e3bca710acf2cfa0e95827ca44c30734cee43ee84683efcd052981449",
+          "rows": 36173
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202210.csv",
+          "sha256": "1689effd4dacff6336adbd835e992e162c2a2626c1c665e123244c084bcea128",
+          "rows": 35118
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202211.csv",
+          "sha256": "a5961eb07af5e4d40de43726b8ded47d9188a76e2f78d216c20ad967be7fa0cc",
+          "rows": 36828
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202212.csv",
+          "sha256": "2f87e94302c4640775efc5bda102c75841b3faa3b5cdd575a858c9b6f89ad5fd",
+          "rows": 30641
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202301.csv",
+          "sha256": "896471cc8e9836dae933347c90c5b259f54b8553a4875657ceb5dc933105827e",
+          "rows": 28728
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202302.csv",
+          "sha256": "64d5098c495abe83ff3188da8e3aedb0539ebfcc86744ca29275097220b024ac",
+          "rows": 32750
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202303.csv",
+          "sha256": "f0a5bdf31a6b0fb0a94cc42552733f406727e206e2e08f4a5bdc31f2229a11d7",
+          "rows": 32898
+        },
+        {
+          "path": "ok-fy2023/pcard_public_20230413050436.csv",
+          "sha256": "129e84e0cc758ae3477b1a6fd83bbabb7cb30096caa8088dfc44292622366d95",
+          "rows": 38844
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202305.csv",
+          "sha256": "490a705da0166dc779307419f90344191e1c849ac89e210306260877cb4018ef",
+          "rows": 36223
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202306.csv",
+          "sha256": "0c96e380bd0f62b8f2ae00fdab9214fb35aad71654d232d84db5e5d092102f32",
+          "rows": 36443
+        },
+        {
+          "path": "ok-fy2023/pcard_public_202307.csv",
+          "sha256": "bd53676d1ca214071b39451850720fa4f54cf164513dbf0c2fc96fa75e86ffa0",
+          "rows": 34279
+        }
+      ],
+      "sha256": "816d5660fdb595d41f5407076213ee1d88d71d3dbdccab1eda38d487f56a20b8"
+    },
+    {
+      "id": "mcc-dataset-ok-fy2024",
+      "publisher": "State of Oklahoma, Office of Management and Enterprise Services (data.ok.gov)",
+      "title": "Purchase Card (PCard) Fiscal Year 2024",
+      "url": "https://data.ok.gov/dataset/purchase-card-pcard-fiscal-year-2024",
+      "licence": {
+        "name": "Creative Commons Attribution (CC BY)",
+        "quote": "Creative Commons Attribution",
+        "seenAt": "Licence field of the dataset page on data.ok.gov."
+      },
+      "channel": "State agency and higher-education purchase-card transactions, July 2023 to June 2024, one CSV per month; in-person and card-not-present.",
+      "columns": {
+        "merchant": "MERCHANT",
+        "description": "MCC_DESCRIPTION"
+      },
+      "format": "csv",
+      "files": [
+        {
+          "path": "ok-fy2024/pcard_public_202308.csv",
+          "sha256": "4549aa5b59840c8422e9045c40e9bfb2f2f8ef542ebb2577a9c4d9590016f9b1",
+          "rows": 31997
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202309.csv",
+          "sha256": "6a13fcf4647d6c4140978c71a49686f6a822326c541912bbd5fd1034def78993",
+          "rows": 37393
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202310.csv",
+          "sha256": "293461bdaf466346caf350d24ea083b3ec0469472ed91be95757770aa91c400c",
+          "rows": 35310
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202311.csv",
+          "sha256": "af6673d516b542e4dcad392d90635fe75be03b0df04b2552a8d66039f5a9cb1b",
+          "rows": 38516
+        },
+        {
+          "path": "ok-fy2024/pcard_public_20231216120157.csv",
+          "sha256": "d0e5bdb44a116af23f38e4a164abcb16683950b3dad781f7bc61f2772f9df940",
+          "rows": 31252
+        },
+        {
+          "path": "ok-fy2024/pcard_public_20240110070114.csv",
+          "sha256": "ff5703cf8a58e6e60dde537ae8f1e93f7104f56fd1f20bde32537997a1c7dcec",
+          "rows": 27539
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202402.csv",
+          "sha256": "2b8d1bb8bb175a41eac483d6bf08d38bb737e5cd4d35e8c26dc906c894e24ae1",
+          "rows": 33719
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202403.csv",
+          "sha256": "a65c88cf93118d60907feab4205421d6adc7b4e33ebda5fd15559795692ea0f2",
+          "rows": 36582
+        },
+        {
+          "path": "ok-fy2024/pcard_public_20240430060408.csv",
+          "sha256": "17d053f761db478c0c3fb0d88d0356c18083aac9748e6bde30e04143fdd4c2a8",
+          "rows": 37593
+        },
+        {
+          "path": "ok-fy2024/pcard_public_20240506120520.csv",
+          "sha256": "bdd40cdb3c58d0d78d710b130e1695a34de3be462f760ea226fd08f299fdfba4",
+          "rows": 40771
+        },
+        {
+          "path": "ok-fy2024/pcard_public_202406.csv",
+          "sha256": "e9fb5855db0dd77cd8354dbe1e1dab825212d97b85aba25837aaba400295368e",
+          "rows": 33328
+        },
+        {
+          "path": "ok-fy2024/pcard_public_20240603110640.csv",
+          "sha256": "57b3cc07b099690729e56b57fa07770e8a20daf9bd747c88bdab794e39840daa",
+          "rows": 37889
+        }
+      ],
+      "sha256": "546340a321973b3555f5495005ceda5b45df55afbef83c9e6290d2278cb524da"
+    },
+    {
+      "id": "mcc-dataset-gsa-2020q3",
+      "publisher": "U.S. General Services Administration (GSA SmartPay), via catalog.data.gov",
+      "title": "GSA Purchase Card Transactions, April–June 2020 (3rd quarter, US Bank)",
+      "url": "https://catalog.data.gov/dataset/gsa-purchase-card-transactions-apr-june-2020-3rd-qtr-us-bank",
+      "licence": {
+        "name": "CC0 1.0 (Creative Commons CCZero)",
+        "quote": "Creative Commons CCZero",
+        "seenAt": "License field of the data.gov record."
+      },
+      "channel": "Federal agency purchase-card transactions with the numeric MCC and its description; the one quarterly file the data.gov catalogue served on 2026-10-11 (its API refused the listing of the other 27).",
+      "columns": {
+        "merchant": "Merchant Name",
+        "description": "MCC Description",
+        "code": "MCC"
+      },
+      "format": "xlsx",
+      "files": [
+        {
+          "path": "gsa/us-bank-pc-qtr3-2020.xlsx",
+          "sha256": "beea018d17e96ff2341695fb7c62c97e2122199f4a1a2df6652d4361e12cb44f",
+          "rows": 6913
+        }
+      ],
+      "sha256": "beea018d17e96ff2341695fb7c62c97e2122199f4a1a2df6652d4361e12cb44f"
+    }
+  ]
+}

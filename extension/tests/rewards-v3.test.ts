@@ -1508,8 +1508,12 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     ).toBe('ready');
   });
   it('a release record is always its own profile; a default Best Buy record pays no electronics bonus', () => {
-    // Evan, 2026-10-11: no transitional deferral to the catalog's profile for the legacy stores.
-    const seed = MERCHANTS_V1.merchants.find((m) => m.id === 'best-buy-us')!;
+    // Evan, 2026-10-11: no transitional deferral to the catalog's profile for the legacy stores. The bundled record
+    // is electronics on the mcc basis since 2026-10-11.mcc.1; a default record of the same store pays no bonus.
+    const bundled = MERCHANTS_V1.merchants.find((m) => m.id === 'best-buy-us')!;
+    expect(releaseProfileFor(bundled, CATALOG_V3)).toEqual(recordToProfile(bundled, CATALOG_V3));
+    expect(bundled).toMatchObject({ category: 'electronics', evidence: { basis: 'mcc' } });
+    const seed = record('best-buy-us', { brandIds: ['best-buy'] });
     const profile = releaseProfileFor(seed, CATALOG_V3);
     expect(profile).toEqual(recordToProfile(seed, CATALOG_V3));
     expect(profile.expectedCategory).toBe('general-merchandise');

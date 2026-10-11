@@ -209,6 +209,11 @@ export const DELIVERY_WORDING = /\b(deliver(?:y|ies|ed)|takeout|take-out)\b/i;
 /** A merchant-code lookup page that is a forum or community thread is no lookup (the research gate refuses them;
  * apply and build refuse one that slipped through before the gate). */
 export const FORUM_URL = /forum|community|reddit|thread|discussion|myfico/i;
+/** Lookup hosts whose terms forbid deep links (Fiserv's developer portal, 2026-10-11): never cited; the 15 batch
+ * citations of its code table were replaced by the Visa Merchant Data Standards Manual, which names the same
+ * carriers and hotel brands. */
+export const REFUSED_LOOKUP_URL = /fiserv\.dev|fiserv\.com/i;
+export const refusedLookup = (url: string): boolean => FORUM_URL.test(url) || REFUSED_LOOKUP_URL.test(url);
 
 /** Clause boundaries: a semicolon, a sentence end (a period before whitespace and a capital, not after an abbreviation
  * such as U.S., e.g., Inc.), or a word that turns the rest into an exclusion. A colon is not a boundary ("The U.S.
@@ -499,8 +504,8 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       : [];
   const evidenceDisputed = disputedReasons.length > 0;
   const confirmedDraft = { ...draft, evidence: confirmedEvidence };
-  // Forum threads are no merchant-code lookups (researched before the research gate refused them).
-  const sources = input.sources.filter((s) => !(s.kind === 'mcc-lookup' && FORUM_URL.test(s.url)));
+  // Forum threads and hosts whose terms forbid deep links are no merchant-code lookups.
+  const sources = input.sources.filter((s) => !(s.kind === 'mcc-lookup' && refusedLookup(s.url)));
   const byId = new Map(sources.map((s) => [s.id, s]));
   const candidate = draft.candidateCategory;
   const categoryQuotes = confirmedEvidence.filter((e) => {

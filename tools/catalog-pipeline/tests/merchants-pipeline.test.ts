@@ -1,6 +1,6 @@
 // The merchant pipeline (Phase 14.3): the apply rule and the hold-out rule (pure), the tier gates of the candidate list,
 // the research and verify gates, and the two agent files. Synthetic data only.
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { CATALOG_V3 } from '../../../packages/rewards-core/src/catalog-v3.ts';
@@ -30,10 +30,28 @@ import {
 } from '../src/merchants/files.ts';
 import type { VerifiedField } from '../src/merchants/files.ts';
 import { displayName, tierARecord } from '../src/merchants/tier-a.ts';
-import { reviewMarkdown } from '../src/merchants/review.ts';
+import { mccSection, reviewMarkdown } from '../src/merchants/review.ts';
+import {
+  candidates,
+  codeFor,
+  compileCodes,
+  csvRows,
+  decide,
+  derivePattern,
+  descriptorFor,
+  descriptorMatches,
+  mccCodesSchema,
+  mccDescriptorsSchema,
+  mccManifestSchema,
+  normalText,
+  pageVeto,
+} from '../src/merchants/mcc.ts';
+import type { Descriptor, MccResults } from '../src/merchants/mcc.ts';
+import type { MerchantRecord } from '../../../packages/rewards-core/src/types.ts';
 import { definitionWindows, nameMatcher, windows } from '../src/merchants/capture.ts';
 import { REPO_ROOT } from '../src/root.ts';
 
+const wordCount = (s: string) => s.trim().split(/\s+/).filter(Boolean).length;
 const confirmed = () =>
   Object.fromEntries(
     VERIFIED_FIELDS.map((f) => [f, { verdict: 'confirmed' as const, reason: null }]),
@@ -2150,5 +2168,322 @@ describe('issuer quotes: earning statements only', () => {
         'drugstores',
       ),
     ).toBe(true);
+  });
+});
+
+describe('mcc basis (Evan 2026-10-11: "fix the big names, i think we should use MCC codes")', () => {
+  const codesFile = JSON.parse(readFileSync(join(REPO_ROOT, 'evals/merchants/db/mcc/codes.json'), 'utf8'));
+  const codes = compileCodes(mccCodesSchema.parse(codesFile));
+  const counts = (entries: [string, number][]) => new Map(entries);
+  const record = (name: string, extra: Partial<MerchantRecord> = {}): MerchantRecord => ({
+    id: 'x-us',
+    name,
+    hosts: ['x.com'],
+    kind: 'merchant',
+    physicalGoods: true,
+    category: 'general-merchandise',
+    evidence: { basis: 'default', sourceIds: [] },
+    brandIds: [],
+    disabled: false,
+    ...extra,
+  });
+  it('derives a word-boundary descriptor pattern from the record name; short names need a hand-written one', () => {
+    const matches = (name: string, merchant: string, overrides = {}) => {
+      const d = descriptorFor(record(name), overrides);
+      return d ? descriptorMatches(d, normalText(merchant)) : null;
+    };
+    expect(derivePattern('Best Buy')).toBe('BEST ?BUY');
+    expect(derivePattern("Domino's")).toBe('DOMINO ?S');
+    expect(derivePattern('Amazon.com, Inc.')).toBe('AMAZON');
+    expect(derivePattern('Gap')).toBeNull();
+    expect(derivePattern('H&M')).toBeNull();
+    expect(matches('Best Buy', 'BESTBUY.COM 00123')).toBe(true);
+    expect(matches('Best Buy', 'BEST BUY #0456')).toBe(true);
+    expect(matches("Domino's", 'DOMINOS 7788 PIZZA')).toBe(true);
+    expect(matches("Domino's", "DOMINO'S #1234")).toBe(true);
+    expect(matches("Domino's", 'DOMINO SUGAR CO')).toBe(false);
+    expect(matches("McDonald's", 'MCDONALD SAFETY EQUIPMENT')).toBe(false);
+    expect(matches('Kroger', 'KROGER FUEL #0123')).toBe(true);
+    expect(matches('Kroger', 'KROGERS MARKET')).toBe(false);
+    expect(matches('Netflix', 'NETFLIX.COM')).toBe(true);
+    expect(matches('Gap', 'GAP 1234')).toBeNull();
+    // Overrides: explicit patterns and excludes; skip removes the record from matching.
+    expect(
+      matches('Whole Foods Market', 'WHOLEFDS MKT 10234', {
+        'x-us': { patterns: ['WHOLE ?FOODS', 'WHOLEFDS'] },
+      }),
+    ).toBe(true);
+    expect(matches('Whole Foods Market', 'WHOLEFDS MKT 10234')).toBe(false);
+    expect(matches("Domino's", 'DOMINOS CAR WASH', { 'x-us': { excludes: ['CAR ?WASH'] } })).toBe(false);
+    expect(descriptorFor(record('Max'), { 'x-us': { skip: 'a common word' } })).toBeNull();
+    expect(() => descriptorFor(record('Peacock'), { 'x-us': { patterns: ['(PEACOCK|PCOCK) TV'] } })).toThrow(
+      /literal token/,
+    );
+  });
+  it('routes rows to descriptors by anchor prefixes, so "LOWES 1234" reaches "LOWE ?S"', () => {
+    const lowes = descriptorFor(record("Lowe's", { id: 'lowes-us' }), {})!;
+    const index = new Map<string, Descriptor[]>();
+    for (const t of lowes.tokens) index.set(t, [lowes]);
+    expect(candidates(normalText('LOWES #01234'), index)).toEqual([lowes]);
+    expect(candidates(normalText('LOWE S #0456'), index)).toEqual([lowes]);
+    expect(candidates(normalText('FLOWERS BY LO'), index)).toEqual([]);
+    expect(descriptorMatches(lowes, normalText('LOWES #01234'))).toBe(true);
+    expect(descriptorMatches(lowes, normalText('COLLIFLOWER INC'))).toBe(false);
+  });
+  it('maps dataset descriptions to Visa codes and catalog categories', () => {
+    expect(codeFor(normalText('Grocery Stores, Supermarkets'), codes)).toMatchObject({
+      code: 5411,
+      category: 'supermarkets',
+    });
+    expect(codeFor('GROCERY STORES SUPERMARKETS', codes)?.code).toBe(5411);
+    expect(codeFor('FAST FOOD RESTAURANTS', codes)).toMatchObject({ code: 5814, category: 'dining' });
+    expect(codeFor('CABLE SATELLITE OTHER PAY TV RADIO SE', codes)).toMatchObject({
+      code: 4899,
+      category: 'streaming',
+    });
+    expect(codeFor('CABLE AND OTHER PAY TELEVISION', codes)?.code).toBe(4899);
+    expect(codeFor('ELECTRONIC SALES', codes)).toMatchObject({ code: 5732, category: 'electronics' });
+    expect(codeFor('COMPUTER SOFTWARE STORES', codes)).toMatchObject({ code: 5734, category: 'electronics' });
+    expect(codeFor('COMPUTERS COMPUTER PERIPHERAL EQUIPMENT SOFTWARE', codes)).toBeNull();
+    expect(codeFor('WHOLESALE CLUBS', codes)?.category).toBe('wholesale-clubs');
+    expect(codeFor('DISCOUNT STORES', codes)?.category).toBe('general-merchandise');
+    expect(codeFor('DIRECT MARKETING CONTINUITY SUBSCRIPTION MERCHANTS', codes)).toMatchObject({
+      code: 5968,
+      category: 'general-merchandise',
+    });
+    expect(codeFor('TAXICABS LIMOUSINES', codes)?.category).toBe('transit');
+    expect(codeFor('AUTOMATED FUEL DISPENSERS', codes)).toMatchObject({ code: 5542, category: 'gas' });
+    expect(codeFor('SOMETHING ELSE ENTIRELY', codes)).toBeNull();
+    // Every code in the map has a Visa title and a known category; fuel codes are in the map.
+    for (const fuel of codesFile.fuelCodes)
+      expect(
+        codes.some((c) => c.code === fuel),
+        String(fuel),
+      ).toBe(true);
+  });
+  it('grants at 10+ usable rows with 80%+ in one bonus category; fuel rows are set aside, not conflicts', () => {
+    const fuel = codesFile.fuelCodes;
+    const kroger = decide(
+      counts([
+        ['GROCERY STORES SUPERMARKETS', 20],
+        ['AUTOMATED FUEL DISPENSERS', 4],
+      ]),
+      codes,
+      fuel,
+    );
+    expect(kroger).toMatchObject({ rows: 24, fuelRows: 4, usable: 20, outcome: 'granted' });
+    expect(kroger.dominant).toMatchObject({ category: 'supermarkets', share: 1, code: 5411 });
+    expect(kroger.conflicts).toEqual([]);
+    // Nine usable rows: too few, even at 100%.
+    expect(
+      decide(
+        counts([
+          ['GROCERY STORES SUPERMARKETS', 9],
+          ['AUTOMATED FUEL DISPENSERS', 2],
+        ]),
+        codes,
+        fuel,
+      ).outcome,
+    ).toBe('too-few-rows');
+    // Mostly fuel: a gas station, not a grocer with pumps.
+    expect(
+      decide(
+        counts([
+          ['GROCERY STORES SUPERMARKETS', 9],
+          ['AUTOMATED FUEL DISPENSERS', 40],
+        ]),
+        codes,
+        fuel,
+      ),
+    ).toMatchObject({ outcome: 'granted', dominant: { category: 'gas' } });
+    // Target: discount stores and grocery split; nothing dominant.
+    const target = decide(
+      counts([
+        ['DISCOUNT STORES', 1712],
+        ['GROCERY STORES SUPERMARKETS', 1124],
+      ]),
+      codes,
+      fuel,
+    );
+    expect(target.outcome).toBe('not-dominant');
+    expect(target.dominant?.category).toBe('general-merchandise');
+    // Walmart: dominant but general merchandise.
+    expect(
+      decide(
+        counts([
+          ['DISCOUNT STORES', 7456],
+          ['GROCERY STORES SUPERMARKETS', 63],
+        ]),
+        codes,
+        fuel,
+      ).outcome,
+    ).toBe('no-bonus-code');
+    // Netflix: 4899 with a 5968 minority reported as a conflict.
+    const netflix = decide(
+      counts([
+        ['CABLE SATELLITE OTHER PAY TV RADIO SE', 45],
+        ['DIRECT MARKETING CONTINUITY SUBSCRIPTION MERCHANTS', 5],
+      ]),
+      codes,
+      fuel,
+    );
+    expect(netflix.outcome).toBe('granted');
+    expect(netflix.dominant?.share).toBeCloseTo(0.9);
+    expect(netflix.conflicts).toEqual([
+      {
+        description: 'DIRECT MARKETING CONTINUITY SUBSCRIPTION MERCHANTS',
+        code: 5968,
+        category: 'general-merchandise',
+        rows: 5,
+      },
+    ]);
+    // Panera: fast food and restaurants are both dining.
+    expect(
+      decide(
+        counts([
+          ['FAST FOOD RESTAURANTS', 60],
+          ['EATING PLACES RESTAURANTS', 40],
+        ]),
+        codes,
+        fuel,
+      ),
+    ).toMatchObject({ outcome: 'granted', dominant: { category: 'dining', share: 1 } });
+    // A gas station: fuel is the dominant category over every row, so nothing is set aside.
+    const shell = decide(
+      counts([
+        ['SERVICE STATIONS', 50],
+        ['MISC FOOD STORES SPECIALITY CONVENIENCE', 5],
+      ]),
+      codes,
+      fuel,
+    );
+    expect(shell).toMatchObject({
+      fuelRows: 0,
+      usable: 55,
+      outcome: 'granted',
+      dominant: { category: 'gas' },
+    });
+    // 79% is not 80%.
+    expect(
+      decide(
+        counts([
+          ['FAST FOOD RESTAURANTS', 79],
+          ['CAR WASHES', 21],
+        ]),
+        codes,
+        fuel,
+      ).outcome,
+    ).toBe('not-dominant');
+    expect(decide(new Map(), codes, fuel).outcome).toBe('too-few-rows');
+  });
+  it('the superstore guard: a supermarket or drugstore grant is vetoed by the store’s own pages, other categories are not', () => {
+    expect(
+      pageVeto('supermarkets', { 'x-page-1': 'Our membership warehouse club saves you money.' }),
+    ).toMatch(/membership warehouse/);
+    expect(
+      pageVeto('supermarkets', { 'x-page-1': 'Shop groceries online for pickup or delivery.' }),
+    ).toBeNull();
+    expect(pageVeto('drugstores', { 'x-page-1': 'A discount store with a pharmacy counter.' })).toMatch(
+      /discount store/,
+    );
+    expect(pageVeto('dining', { 'x-page-1': 'Our restaurants are inside department stores.' })).toBeNull();
+    expect(pageVeto('supermarkets', {})).toBeNull();
+  });
+  it('parses CSV rows with quotes, embedded commas, CRLF and a BOM', async () => {
+    const dir = join(REPO_ROOT, 'tools/catalog-pipeline/tests/.tmp-mcc');
+    const { mkdirSync, writeFileSync, rmSync } = await import('node:fs');
+    mkdirSync(dir, { recursive: true });
+    const path = join(dir, 'rows.csv');
+    writeFileSync(path, '﻿A,B,C\r\n1,"x, y","say ""hi"""\r\n2,,\n3,"multi\nline",z\n');
+    const rows: string[][] = [];
+    for await (const row of csvRows(path)) rows.push(row);
+    rmSync(dir, { recursive: true, force: true });
+    expect(rows).toEqual([
+      ['A', 'B', 'C'],
+      ['1', 'x, y', 'say "hi"'],
+      ['2', '', ''],
+      ['3', 'multi\nline', 'z'],
+    ]);
+  });
+  it('review.md lists every store with 10+ rows, its share, minority codes and outcome, and counts the rest', () => {
+    const results: MccResults = {
+      schemaVersion: 1,
+      version: '2026-10-11.mcc.1',
+      appliedOn: '2026-10-11',
+      datasets: [{ id: 'mcc-dataset-dc', rows: 639000, files: 1 }],
+      unmatched: 300,
+      stores: [
+        {
+          id: 'kroger-us',
+          name: 'Kroger',
+          rows: 24,
+          fuelRows: 4,
+          usable: 20,
+          byDataset: { 'mcc-dataset-dc': 24 },
+          byDescription: { 'GROCERY STORES SUPERMARKETS': 20, 'AUTOMATED FUEL DISPENSERS': 4 },
+          descriptors: [{ text: 'KROGER #239 | GROCERY STORES SUPERMARKETS', rows: 2 }],
+          dominant: {
+            category: 'supermarkets',
+            share: 1,
+            code: 5411,
+            description: 'GROCERY STORES SUPERMARKETS',
+          },
+          conflicts: [],
+          issuerConflicts: ['chase-rewards-category-faq: excludes: "synthetic sentence"'],
+          outcome: 'granted',
+          reason: null,
+          previous: { basis: 'default', category: 'general-merchandise' },
+          changed: true,
+        },
+        {
+          id: 'tiny-us',
+          name: 'Tiny',
+          rows: 3,
+          fuelRows: 0,
+          usable: 3,
+          byDataset: { 'mcc-dataset-dc': 3 },
+          byDescription: { 'FAST FOOD RESTAURANTS': 3 },
+          descriptors: [],
+          dominant: { category: 'dining', share: 1, code: 5814, description: 'FAST FOOD RESTAURANTS' },
+          conflicts: [],
+          issuerConflicts: [],
+          outcome: 'too-few-rows',
+          reason: null,
+          previous: { basis: 'default', category: 'general-merchandise' },
+          changed: false,
+        },
+      ],
+    };
+    const text = mccSection(results).join('\n');
+    expect(text).toContain(
+      '## MCC evidence: public card-transaction datasets, for Evan (1 stores with 10+ rows; 1 granted)',
+    );
+    expect(text).toContain(
+      '| kroger-us | 24 (20, 4 fuel set aside) | supermarkets (5411) | 100% | issuer: chase-rewards-category-faq: excludes: "synthetic sentence" | granted (was general-merchandise, default) |',
+    );
+    expect(text).not.toContain('tiny-us');
+    expect(text).toContain('1 more stores matched fewer than 10 rows');
+    expect(text).toContain('300 records matched no row');
+    expect(mccSection(undefined)).toEqual([]);
+  });
+  it('the committed data files parse, name only existing records, and the Visa manual is the code source', () => {
+    const descriptors = mccDescriptorsSchema.parse(
+      JSON.parse(readFileSync(join(REPO_ROOT, 'evals/merchants/db/mcc/descriptors.json'), 'utf8')),
+    );
+    for (const id of Object.keys(descriptors.stores))
+      expect(existsSync(join(REPO_ROOT, 'evals/merchants/db/records', `${id}.json`)), id).toBe(true);
+    const manifest = mccManifestSchema.parse(
+      JSON.parse(readFileSync(join(REPO_ROOT, 'evals/merchants/db/mcc/manifest.json'), 'utf8')),
+    );
+    for (const d of manifest.datasets) {
+      expect(d.id).toMatch(/^mcc-dataset-/);
+      expect(wordCount(d.licence.quote)).toBeLessThanOrEqual(25);
+      expect(d.sha256, d.id).toMatch(/^[0-9a-f]{64}$/);
+    }
+    expect(codesFile.visaManual.url).toMatch(/^https:\/\/usa\.visa\.com\//);
+    expect(wordCount(codesFile.visaManual.streamingGuidance)).toBeLessThanOrEqual(25);
+    expect(readFileSync(join(REPO_ROOT, 'evals/merchants/db/release-config.json'), 'utf8')).not.toMatch(
+      /fiserv/i,
+    );
   });
 });
