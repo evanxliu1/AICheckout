@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "packet": 5,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/5/packet.json",
+      "evals/merchants/db/audit/packets/5/catalog-lists.json",
+      "evals/merchants/db/audit/packets/5/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/5/stores/homedepot.com.md",
+      "evals/merchants/db/audit/packets/5/stores/houzz.com.md",
+      "evals/merchants/db/audit/packets/5/stores/hsn.com.md",
+      "evals/merchants/db/audit/packets/5/stores/hulu.com.md",
+      "evals/merchants/db/audit/packets/5/stores/hyatt.com.md",
+      "evals/merchants/db/audit/packets/5/stores/hyvee.com.md",
+      "evals/merchants/db/audit/packets/5/stores/iberia.com.md",
+      "evals/merchants/db/audit/packets/5/stores/ifit.com.md",
+      "evals/merchants/db/audit/packets/5/stores/ihg.com.md",
+      "evals/merchants/db/audit/packets/5/stores/ihop.com.md",
+      "evals/merchants/db/audit/packets/5/stores/instacart.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jcpenney.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jcrew.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jetblue.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jetbluevacations.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jewelosco.com.md",
+      "evals/merchants/db/audit/packets/5/stores/josbank.com.md",
+      "evals/merchants/db/audit/packets/5/stores/jossandmain.com.md",
+      "evals/merchants/db/audit/packets/5/stores/kinneydrugs.com.md",
+      "evals/merchants/db/audit/packets/5/stores/klarna.com.md",
+      "evals/merchants/db/audit/packets/5/stores/klm.us.md",
+      "evals/merchants/db/audit/packets/5/stores/koreanair.com.md",
+      "evals/merchants/db/audit/packets/5/stores/kroger.com.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "homedepot.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "homedepot-com-page-1",
+          "quote": "Today, we’re proud to be the world’s largest home improvement retailer.",
+          "supports": "category"
+        },
+        {
+          "source": "homedepot-com-page-1",
+          "quote": "an e-commerce business that offers more than one million products for the DIY customer",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "boa-cash-back-category-choices",
+          "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores, lumber and building materials stores",
+          "supports": "definition"
+        }
+      ],
+      "notes": "BoA lists The Home Depot only under 'Merchant examples*' (hedged), so not issuer basis. Store page 1 is the corporate about page; page 2 is an error page."
+    },
+    {
+      "domain": "houzz.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "houzz.com-home",
+          "quote": "Find inspiration, products and the pros to make it happen — all in one place",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Homepage shows pro-finder, design ideas and Houzz Pro software; no shop or checkout of goods is shown, so kind and goods are unclear."
+    },
+    {
+      "domain": "hsn.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [],
+      "notes": "Only capture is an Access Denied page; no issuer page names the store."
+    },
+    {
+      "domain": "hulu.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "hulu"
+      ],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "hulu-com-page-1",
+          "quote": "Hulu is a leading premium on-demand and live streaming service in the U.S.",
+          "supports": "kind"
+        },
+        {
+          "source": "hulu-com-page-1",
+          "quote": "Hulu is available as a standalone streaming service",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "hulu-com-page-1",
+          "quote": "Visit hulu.com to subscribe or learn more about the service.",
+          "supports": "brand"
+        },
+        {
+          "source": "citi-strata-rewards-terms",
+          "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu,",
+          "supports": "category"
+        }
+      ],
+      "notes": "Disney Premier rate is a co-brand card bonus and the Amex Blue Cash Everyday mention is a statement credit; neither used. Citi Select Streaming Services inclusion list (a self-select category) and Amex streaming list name Hulu."
+    },
+    {
+      "domain": "hyatt.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "hyatt"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "hyatt-com-lookup-1",
+          "quote": "HYATT HOTEL",
+          "supports": "kind"
+        },
+        {
+          "source": "hyatt-com-page-1",
+          "quote": "For reservation assistance, please call:",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "world-of-hyatt-product",
+          "quote": "earning up to 9X total points per $1 at Hyatt hotels and resorts.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Both store pages are error pages; kind, goods and brand rest on the hotel MCC lookup and issuer excerpts naming Hyatt hotels. Hotels are not a catalog category; co-brand card rate not used."
+    },
+    {
+      "domain": "hyvee.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "hyvee-com-page-1",
+          "quote": "Voted #1 Best Grocery Store in America - USA TODAY, 2024",
+          "supports": "category"
+        },
+        {
+          "source": "hyvee-com-page-1",
+          "quote": "Hy-Vee operates more than 550 retail locations across nine Midwestern states.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods",
+          "supports": "definition"
+        }
+      ],
+      "notes": "Amex 'Examples of merchants*' and U.S. Bank 'popular merchants' lists name Hy-Vee but are hedged, so not issuer basis. History page calls the 1930 origin a 'small general store'; not treated as a general-merchandise self-description."
+    },
+    {
+      "domain": "iberia.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "iberia"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "iberia-com-page-1",
+          "quote": "© Iberia 2024",
+          "supports": "brand"
+        },
+        {
+          "source": "iberia-visa-signature-product",
+          "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases.*",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "iberia-com-lookup-1",
+          "quote": "IBERIA",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Store pages are connection-error pages. Airline per issuer excerpts and the airline MCC lookup; airlines are not a catalog category and the co-brand Avios rate is not used."
+    },
+    {
+      "domain": "ifit.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "ifit.com-home",
+          "quote": "We are a leading provider of large exercise equipment in the United States. We make NordicTrack, ProForm and Freemotion machines used by millions.",
+          "supports": "kind"
+        },
+        {
+          "source": "ifit.com-home",
+          "quote": "Get the iFIT membership that's right for you",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Homepage centres on workout memberships and says it makes equipment, but shows no shipping or pickup of goods."
+    },
+    {
+      "domain": "ihg.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "ihg-hotels"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "chase-sapphire-reserve-product",
+          "quote": "prepaid Chase Travel hotel bookings for stays with IHG Hotels & Resorts",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Only store page is Access Denied. Hotel company per issuer excerpt; brand and kind rest on that excerpt naming IHG Hotels & Resorts, not on the store's own page."
+    },
+    {
+      "domain": "ihop.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "ihop-com-page-1",
+          "quote": "the IHOP family restaurant chain has served our world-famous pancakes and a wide variety of breakfast, lunch, and dinner items",
+          "supports": "category"
+        },
+        {
+          "source": "chase-rewards-category-faq",
+          "quote": "This category's merchants’ primary business is sit-down or eat-in dining, including fast food restaurants and fine dining establishments.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "U.S. Bank names IHOP only in a hedged 'popular merchants' list, so not issuer basis."
+    },
+    {
+      "domain": "instacart.com",
+      "kind": "marketplace",
+      "physicalGoods": true,
+      "brandIds": [
+        "instacart"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "instacart-com-page-1",
+          "quote": "By powering the future of grocery with our retail partners, we give everyone access to the food they love",
+          "supports": "kind"
+        },
+        {
+          "source": "instacart-com-page-2",
+          "quote": "Orders placed on Instacart.com or the Instacart app are fully managed by Instacart, from browsing and checkout to shopping and delivery.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "instacart-com-page-1",
+          "quote": "© 2026, Maplebear Inc. dba Instacart.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Supermarkets refused: Instacart Mastercard 5% is a co-brand bonus, U.S. Bank list is hedged, and a delivery marketplace qualifies on definition only for dining."
+    },
+    {
+      "domain": "jcpenney.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "jcpenney"
+      ],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's, Century 21 Department Stores, Dillard’s, J.C. Penney (JCP)",
+          "supports": "category"
+        },
+        {
+          "source": "synchrony-jcpenney-mastercard-partner",
+          "quote": "Your JCPenney Credit Card or JCPenney Mastercard can be used at all JCPenney Stores, and jcp.com.",
+          "supports": "kind"
+        },
+        {
+          "source": "synchrony-jcpenney-mastercard-product",
+          "quote": "Free Shipping on orders of $49 or more.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "No store page captured; kind, goods and brand rest on issuer excerpts about JCPenney. Amex select major department stores list names J.C. Penney (JCP)."
+    },
+    {
+      "domain": "jcrew.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "j-crew"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "jcrew-com-page-2",
+          "quote": "We make modern classics with character.",
+          "supports": "kind"
+        },
+        {
+          "source": "jcrew-com-page-1",
+          "quote": "Don’t forget, J.Crew loyalty members get free shipping, always!*",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "jcrew-com-page-1",
+          "quote": "© 2026 J.Crew",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Clothing is not a catalog category (U.S. Bank Select Clothing Stores is not one). Site also mentions Marketplace vendors; J.Crew Factory is a separate brand and not listed."
+    },
+    {
+      "domain": "jetblue.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "jetblue"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "jetblue-com-page-2",
+          "quote": "Born at JFK in 2000, JetBlue is now a global, award-winning travel company.",
+          "supports": "kind"
+        },
+        {
+          "source": "jetblue-com-page-2",
+          "quote": "We come to work each day with a mission of bringing humanity back to air travel.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "jetblue-com-page-1",
+          "quote": "©2026 JetBlue Airways",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Airline; airlines are not a catalog category. Barclays 6X is a co-brand card bonus. ShopBlue merchandise is a side line."
+    },
+    {
+      "domain": "jetbluevacations.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "jetblue-vacations"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "jetbluevacations-com-page-1",
+          "quote": "A JetBlue Vacations package is a customizable travel package that includes roundtrip flights on JetBlue, hotel and/or cruise and/or a rental car.",
+          "supports": "kind"
+        },
+        {
+          "source": "jetbluevacations-com-page-2",
+          "quote": "bundling flights + hotel, flights + cruise, and even hotel + points is a great way to enjoy extra savings and perks.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Travel packages; no catalog category. Barclays JetBlue Vacations rate is a co-brand card bonus."
+    },
+    {
+      "domain": "jewelosco.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "jewelosco-com-page-1",
+          "quote": "As Jewel acquired other supply chains and Chicago-area grocery stores, the company began operating under the name Jewel Food stores.",
+          "supports": "category"
+        },
+        {
+          "source": "jewelosco-com-page-1",
+          "quote": "Order delivery, pickup & more.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods",
+          "supports": "definition"
+        }
+      ],
+      "notes": "Combined Jewel food / Osco drug stores; the in-store pharmacy does not stop it being a supermarket. U.S. Bank list naming Jewel-Osco is hedged, so not issuer basis."
+    },
+    {
+      "domain": "josbank.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "cant-tell",
+      "basis": null,
+      "quotes": [],
+      "notes": "No store page captured and no issuer page names the store; the sheet shows nothing."
+    },
+    {
+      "domain": "jossandmain.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [
+        "joss-and-main"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "citi-wayfair-mastercard-product",
+          "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Store capture is a press-and-hold bot wall; brand and kind rest on the Citi Wayfair excerpt. Furnishings are not home improvement; Wayfair card rewards are a co-brand bonus."
+    },
+    {
+      "domain": "kinneydrugs.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "drugstores",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "kinneydrugs-com-page-1",
+          "quote": "bring it into your nearest Kinney Drugs pharmacy today",
+          "supports": "category"
+        },
+        {
+          "source": "kinneydrugs-com-page-1",
+          "quote": "we will deliver other store items (excluding alcohol products) along with your prescription.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "chase-rewards-category-faq",
+          "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "No issuer page names the store; Amex drugstore list does not include it."
+    },
+    {
+      "domain": "klarna.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "klarna-com-page-1",
+          "quote": "Today, Klarna is the everyday money app that helps 120m people manage spending, payments, and rewards*",
+          "supports": "kind"
+        },
+        {
+          "source": "barclays-gap-encore-mastercard-pricing",
+          "quote": "If you make a Qualifying Purchase using a payment platform such as Afterpay, Klarna, PayPal or TikTok",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "klm.us",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "klm"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "boa-air-france-klm-pricing",
+          "quote": "Earned miles can be redeemed for flights booked directly through Air France or KLM",
+          "supports": "kind"
+        },
+        {
+          "source": "boa-air-france-klm-product",
+          "quote": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "No store page captured; airline identity and brand rest on issuer excerpts. Co-brand mileage rate not used; airlines are not a catalog category."
+    },
+    {
+      "domain": "koreanair.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "korean-air"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "skypass-visa-cards",
+          "quote": "Use of the coupon is subject to all koreanair.com purchase rules and regulations.",
+          "supports": "brand"
+        },
+        {
+          "source": "skypass-visa-cards",
+          "quote": "Coupon is valid for flights operated and marketed by Korean Air",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "No store page captured; airline per co-brand issuer excerpts only. Airlines are not a catalog category."
+    },
+    {
+      "domain": "kroger.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "kroger-com-page-2",
+          "quote": "We offer several ways to shop for groceries online.",
+          "supports": "kind"
+        },
+        {
+          "source": "kroger-com-page-3",
+          "quote": "A delivery driver will drop your groceries off on your doorstep.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Supermarkets refused: captured pages show grocery pickup/delivery but no business-type noun phrase (grocery store, supermarket); U.S. Bank lists are hedged; no lookup. Citi Costco excerpt concerns gas earn only."
+    }
+  ]
+}

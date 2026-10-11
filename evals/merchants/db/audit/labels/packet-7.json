@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 1,
+  "packet": 7,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/7/packet.json",
+      "evals/merchants/db/audit/packets/7/catalog-lists.json",
+      "evals/merchants/db/audit/packets/7/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/7/stores/music.apple.com.md",
+      "evals/merchants/db/audit/packets/7/stores/ncl.com.md",
+      "evals/merchants/db/audit/packets/7/stores/netgear.com.md",
+      "evals/merchants/db/audit/packets/7/stores/newegg.com.md",
+      "evals/merchants/db/audit/packets/7/stores/nike.com.md",
+      "evals/merchants/db/audit/packets/7/stores/nordstromrack.com.md",
+      "evals/merchants/db/audit/packets/7/stores/officedepot.com.md",
+      "evals/merchants/db/audit/packets/7/stores/oldnavy.gap.com.md",
+      "evals/merchants/db/audit/packets/7/stores/olivegarden.com.md",
+      "evals/merchants/db/audit/packets/7/stores/on.com.md",
+      "evals/merchants/db/audit/packets/7/stores/onstar.com.md",
+      "evals/merchants/db/audit/packets/7/stores/ouraring.com.md",
+      "evals/merchants/db/audit/packets/7/stores/pandora.com.md",
+      "evals/merchants/db/audit/packets/7/stores/papajohns.com.md",
+      "evals/merchants/db/audit/packets/7/stores/papersource.com.md",
+      "evals/merchants/db/audit/packets/7/stores/patagonia.com.md",
+      "evals/merchants/db/audit/packets/7/stores/paulaschoice.com.md",
+      "evals/merchants/db/audit/packets/7/stores/pay.amazon.com.md",
+      "evals/merchants/db/audit/packets/7/stores/pay.google.com.md",
+      "evals/merchants/db/audit/packets/7/stores/paypal.com.md",
+      "evals/merchants/db/audit/packets/7/stores/pbteen.com.md",
+      "evals/merchants/db/audit/packets/7/stores/perigold.com.md",
+      "evals/merchants/db/audit/packets/7/stores/philo.com.md",
+      "evals/merchants/db/audit/check-labels.mjs"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "music.apple.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "music-apple-com-page-1",
+          "quote": "Listen to the lineup and get ready for the replay at 2 am PT.",
+          "supports": "kind"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "To earn additional rewards on streaming subscription purchases, the purchase must be made from a provider that is included on our list",
+          "supports": "category"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "AMC+ Apple Music Apple TV+",
+          "supports": "category"
+        }
+      ],
+      "notes": "Store page is the Apple Music web player; no price or plan page captured. Apple is not a catalog brand."
+    },
+    {
+      "domain": "ncl.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "norwegian-cruise-line"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "ncl-com-page-1",
+          "quote": "Norwegian Cruise Line has been the premier innovator in the cruise line industry for over 58 years.",
+          "supports": "kind"
+        },
+        {
+          "source": "ncl-com-page-1",
+          "quote": "© 2026 NCL (Bahamas) Ltd.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Cruise line; no bonus category in the list fits. BoA Norwegian card bonus is a co-brand card's own bonus."
+    },
+    {
+      "domain": "netgear.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "netgear.com-home",
+          "quote": "May be applied to all NETGEAR products, excluding services, ProAV, Imperfect Box, and Refurbished items.",
+          "supports": "kind"
+        },
+        {
+          "source": "netgear.com-home",
+          "quote": "Shipping & Returns",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Maker of networking hardware selling its own products; pages never call it an electronics store and no issuer names it."
+    },
+    {
+      "domain": "newegg.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "newegg"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "newegg-com-page-1",
+          "quote": "Millions of components and the deepest hardware catalog online.",
+          "supports": "kind"
+        },
+        {
+          "source": "newegg-com-page-1",
+          "quote": "Return My Item",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "newegg-com-page-1",
+          "quote": "Newegg Commerce, Inc. (NASDAQ: NEGG) was founded in 2001",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Sells as itself but also hosts third-party sellers (Marketplace items); share not shown. Only issuer mention is the Newegg store card's own discount. No electronics definition basis."
+    },
+    {
+      "domain": "nike.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "nike.com-home",
+          "quote": "Shipping and Delivery",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "nike.com-home",
+          "quote": "© 2026 Nike, Inc. All Rights Reserved.",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "nordstromrack.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "nordstromrack-com-page-1",
+          "quote": "Nordstrom Rack is part of Nordstrom, Inc.",
+          "supports": "kind"
+        },
+        {
+          "source": "nordstromrack-com-page-1",
+          "quote": "We will email you as items in your order ship",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "department-stores refused: only U.S. Bank names Nordstrom Rack, in a hedged 'popular merchants' list; Amex list names Nordstrom, not Nordstrom Rack."
+    },
+    {
+      "domain": "officedepot.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "No store page captured and no issuer page names the store; nothing could grant a bonus category."
+    },
+    {
+      "domain": "oldnavy.gap.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "old-navy",
+        "gap",
+        "banana-republic",
+        "athleta"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "oldnavy-gap-com-page-1",
+          "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.",
+          "supports": "brand"
+        },
+        {
+          "source": "oldnavy-gap-com-page-2",
+          "quote": "© 2026 Old Navy, LLC",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Old Navy storefront with shared Gap Inc. bag across Gap, Old Navy, Banana Republic, Athleta. Barclays Encore excerpts are co-brand card terms only."
+    },
+    {
+      "domain": "olivegarden.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "olivegarden-com-page-1",
+          "quote": "With more than 900 restaurants nationwide",
+          "supports": "category"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "You will earn additional rewards in the U.S. restaurant category when you make a purchase at restaurants located in the U.S.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "U.S. Bank names Olive Garden only in hedged lists, so issuer basis not used."
+    },
+    {
+      "domain": "on.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "on.com-home",
+          "quote": "Apparel and shoes for however you train.",
+          "supports": "kind"
+        },
+        {
+          "source": "on.com-home",
+          "quote": "Enjoy 10% off your first order when you spend $125 or more.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "onstar.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [
+        "onstar"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "onstar-com-page-2",
+          "quote": "OnStar plans and pricing",
+          "supports": "kind"
+        },
+        {
+          "source": "onstar-com-page-2",
+          "quote": "Starting at $49.99/mo.",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Subscription plans for vehicles. One page is an access-denied error. Barclays GM card bonus on OnStar is a co-brand card's own bonus."
+    },
+    {
+      "domain": "ouraring.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "ouraring.com-home",
+          "quote": "Get a clearer picture of your health with the world's smallest smart ring.",
+          "supports": "kind"
+        },
+        {
+          "source": "ouraring.com-home",
+          "quote": "My Orders",
+          "supports": "physicalGoods"
+        }
+      ],
+      "notes": "Amex Platinum mention is a statement credit, not a category."
+    },
+    {
+      "domain": "pandora.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "pandora-com-page-1",
+          "quote": "the largest ad-supported audio entertainment streaming service in the U.S.",
+          "supports": "kind"
+        },
+        {
+          "source": "pandora-com-page-2",
+          "quote": "Pandora Premium $11.99 / month",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "To earn additional rewards on streaming subscription purchases, the purchase must be made from a provider that is included on our list",
+          "supports": "category"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "Netflix Pandora Paramount+",
+          "supports": "category"
+        }
+      ],
+      "notes": "Pandora is a SiriusXM subsidiary but its site is not SiriusXM's store, so no brand id."
+    },
+    {
+      "domain": "papajohns.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "papajohns-com-page-1",
+          "quote": "Offers good for a limited time at participating U.S. Papa Johns restaurants.",
+          "supports": "category"
+        },
+        {
+          "source": "amex-rewards-info-retail",
+          "quote": "You will earn additional rewards in the U.S. restaurant category when you make a purchase at restaurants located in the U.S.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "Pizza restaurant chain with delivery; no issuer page names it."
+    },
+    {
+      "domain": "papersource.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "paper-source"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "papersource-com-page-1",
+          "quote": "Free Standard Shipping $60+",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "papersource-com-page-1",
+          "quote": "In 2026, we now have 107 stores across 27 states in America.",
+          "supports": "kind"
+        },
+        {
+          "source": "papersource-com-page-1",
+          "quote": "© PAPER SOURCE 2026",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Barclays Barnes & Noble card 5% is a co-brand card's own bonus."
+    },
+    {
+      "domain": "patagonia.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "patagonia.com-home",
+          "quote": "This page will automatically refresh and bring you into the website as soon as we can handle it.",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Capture is a holding/queue page; what the store sells is not shown. Patagonia is no catalog brand."
+    },
+    {
+      "domain": "paulaschoice.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "paulaschoice.com-home",
+          "quote": "Free Shipping on $35+",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "paulaschoice.com-home",
+          "quote": "Smart, Safe Skin Care Since 1995",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "pay.amazon.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "pay-amazon-com-page-3",
+          "quote": "Amazon Pay provides payment solutions that let people use the payment instruments stored in their Amazon accounts",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Wallet/payment service, not the Amazon store; Prime Visa terms exclude Amazon Pay purchases from 5%."
+    },
+    {
+      "domain": "pay.google.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "pay-google-com-page-1",
+          "quote": "Check out with a click everywhere you see the Buy with Google Pay button.",
+          "supports": "kind"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "paypal.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "paypal-com-page-1",
+          "quote": "Speed through checkout online and in stores.",
+          "supports": "kind"
+        }
+      ],
+      "notes": "PayPal Cashback Mastercard terms are a co-brand card's own bonus."
+    },
+    {
+      "domain": "pbteen.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "pbteen-com-page-1",
+          "quote": "Sorry, due to website restrictions we are unable to display the requested page.",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Capture is an error page. Likely Pottery Barn Teen but the sheet does not tie the domain to it. Capital One Key Rewards 5% is a co-brand card's own bonus."
+    },
+    {
+      "domain": "perigold.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": [
+        "perigold"
+      ],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        {
+          "source": "perigold-com-page-1",
+          "quote": "Press & Hold to confirm you are",
+          "supports": "kind"
+        },
+        {
+          "source": "citi-wayfair-mastercard-product",
+          "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold.",
+          "supports": "brand"
+        }
+      ],
+      "notes": "Both captures are bot walls; brand from the domain label matching the catalog name. Wayfair card rewards are a co-brand card's own bonus."
+    },
+    {
+      "domain": "philo.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "definition",
+      "quotes": [
+        {
+          "source": "philo-com-page-1",
+          "quote": "Philo is a live television streaming service that offers consumers flexible, entertainment-focused plans starting at $25/month.",
+          "supports": "category"
+        },
+        {
+          "source": "us-bank-cash-plus-sample-merchants",
+          "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
+          "supports": "definition"
+        }
+      ],
+      "notes": "No issuer names Philo; Amex and Citi streaming lists are closed lists without it. Definition is U.S. Bank's TV, Internet & Streaming category statement."
+    }
+  ]
+}

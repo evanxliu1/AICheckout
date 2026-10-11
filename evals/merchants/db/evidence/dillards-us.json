@@ -1,8 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "dillards-us",
-  "basis": "default",
+  "basis": "issuer",
   "quotes": [
+    {
+      "sourceId": "dillards-com-page-1",
+      "kind": "store-page",
+      "supports": "kind",
+      "quote": "Access Denied"
+    },
     {
       "sourceId": "citi-dillards-mastercard-product",
       "kind": "issuer-terms",
@@ -13,21 +19,21 @@
       "sourceId": "citi-dillards-mastercard-product",
       "kind": "issuer-terms",
       "supports": "brand",
-      "quote": "Dillard’s is a registered trademark of Dillard’s, Inc."
+      "quote": "at Dillard’s stores or dillards.com on the day of account opening"
     },
     {
       "sourceId": "amex-rewards-info-retail",
       "kind": "issuer-terms",
       "supports": "category",
-      "quote": "U.S. Select Major Department Stores"
+      "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of department stores"
     },
     {
       "sourceId": "amex-rewards-info-retail",
       "kind": "issuer-terms",
       "supports": "category",
-      "quote": "Dillard's"
+      "quote": "Century 21 Department Stores Dillard's J.C. Penney (JCP)"
     }
   ],
-  "batch": "seed-2026-10-b03",
+  "batch": "audit-2026-10",
   "appliedOn": "2026-10-11"
 }

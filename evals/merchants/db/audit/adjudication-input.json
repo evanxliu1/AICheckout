@@ -1,0 +1,1229 @@
+{
+ "schemaVersion": 1,
+ "release": "2026-10-11.seed.17",
+ "note": "One item per disagreement between the release record and the blind auditor. The adjudicator reads both sides' quotes (and the packet sheet for context) and writes adjudication.json: { domain, field, verdict: record | auditor | neither, reason }.",
+ "items": [
+  {
+   "domain": "aldi.us",
+   "recordId": "aldi-us",
+   "field": "category",
+   "type": "wrong-bonus",
+   "record": "supermarkets (definition)",
+   "auditor": "general-merchandise (default)",
+   "recordQuotes": [
+    {
+     "sourceId": "aldi-us-page-2",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "ALDI Grocery Delivery"
+    },
+    {
+     "sourceId": "aldi-us-page-2",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "An employee will deliver your groceries direct to your door."
+    },
+    {
+     "sourceId": "aldi-us-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "fresh groceries and ALDI items"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "ALDI"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "A supermarket offers a wide variety of food and household products"
+    },
+    {
+     "sourceId": "boa-customized-cash-rewards-pricing",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "on Net Purchases made at eligible grocery stores and wholesale clubs, supermarkets, meat and seafood stores, candy, nut or confection stores, dairy stores, and bakeries."
+    },
+    {
+     "sourceId": "chase-rewards-category-faq",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "category includes purchases for grocery pickup and delivery that are placed online with grocery stores"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services."
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Check off your grocery list and earn cash back at most grocery stores and supermarkets."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "aldi-us-page-2",
+     "quote": "An employee will deliver your groceries direct to your door.",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "Examples of merchants* that accept the Card and where you can earn additional rewards include:",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "Supermarkets refused: Amex names ALDI only in an 'Examples of merchants' list (hedged), and the pages say grocery delivery but never call ALDI a grocery store or supermarket.",
+   "sheet": "evals/merchants/db/audit/packets/1/stores/aldi.us.md"
+  },
+  {
+   "domain": "amazon.com",
+   "recordId": "amazon-us",
+   "field": "kind",
+   "type": "wrong-kind",
+   "record": "merchant",
+   "auditor": "marketplace",
+   "recordQuotes": [],
+   "auditorQuotes": [
+    {
+     "source": "amazon-com-page-1",
+     "quote": "Start a Selling Account",
+     "supports": "kind"
+    },
+    {
+     "source": "amazon-com-page-1",
+     "quote": "Track packages and get delivery updates",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "amazon-com-page-1",
+     "quote": "Welcome to Amazon Customer Service",
+     "supports": "brand"
+    }
+   ],
+   "auditorNotes": "Sells as itself and hosts third-party sellers; the sheet cannot show which is 'mostly'. Prime Visa 5% is a co-brand bonus. Whole Foods/Audible appear as departments, not listed as brands.",
+   "sheet": "evals/merchants/db/audit/packets/1/stores/amazon.com.md"
+  },
+  {
+   "domain": "audible.com",
+   "recordId": "audible-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "streaming (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "audible-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "producing Originals, audiobooks and podcasts that inspire imaginations and bring new ideas and voices to our millions of listeners around the globe each day."
+    },
+    {
+     "sourceId": "audible-com-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "Learn about the Audible Standard Membership"
+    },
+    {
+     "sourceId": "audible-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "At Audible, we believe stories can inspire compassion and change."
+    },
+    {
+     "sourceId": "audible-com-page-2",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Purchases & returns"
+    },
+    {
+     "sourceId": "audible-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "Audible has reinvented a media category and is the driving force behind the audio entertainment revolution."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Audible"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Audible"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV, Audible"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "audible-com-page-1",
+     "quote": "producing Originals, audiobooks and podcasts",
+     "supports": "kind"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions",
+     "supports": "category"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "Apple Music Apple TV+ Audible",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "Amex inclusion list names Audible. Chase Amazon and Prime Visa clauses are co-brand bonuses, not used.",
+   "sheet": "evals/merchants/db/audit/packets/2/stores/audible.com.md"
+  },
+  {
+   "domain": "bloomingdales.com",
+   "recordId": "bloomingdales-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "department-stores (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "citi-bloomingdales-amex-product",
+     "kind": "issuer-terms",
+     "supports": "kind",
+     "quote": "The Bloomingdale’s Credit Card is a store credit card that you can use in Bloomingdale’s stores and to shop online on bloomingdales.com."
+    },
+    {
+     "sourceId": "citi-bloomingdales-amex-product",
+     "kind": "issuer-terms",
+     "supports": "physicalGoods",
+     "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store."
+    },
+    {
+     "sourceId": "citi-bloomingdales-amex-product",
+     "kind": "issuer-terms",
+     "supports": "brand",
+     "quote": "The Bloomingdale’s Credit Card is a store credit card that you can use in Bloomingdale’s stores and to shop online on bloomingdales.com."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "the purchases must be made at a department store that is included on our list of \"select major department stores\""
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Bloomingdale's"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Bloomingdale's"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "citi-bloomingdales-amex-product",
+     "quote": "a store credit card that you can use in Bloomingdale’s stores and to shop online on bloomingdales.com",
+     "supports": "brand"
+    },
+    {
+     "source": "citi-bloomingdales-amex-product",
+     "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store.",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of department stores",
+     "supports": "category"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "Belk Bloomingdale's Bon Ton Stores",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "Store pages are access-denied; facts from issuer pages. U.S. Bank list is hedged and not relied on.",
+   "sheet": "evals/merchants/db/audit/packets/2/stores/bloomingdales.com.md"
+  },
+  {
+   "domain": "costco.com",
+   "recordId": "costco-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "wholesale-clubs (definition)",
+   "recordQuotes": [
+    {
+     "sourceId": "costco-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Costco is a membership warehouse club"
+    },
+    {
+     "sourceId": "costco-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "quality brand-name merchandise."
+    },
+    {
+     "sourceId": "costco-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "Costco Wholesale Corporation"
+    },
+    {
+     "sourceId": "costco-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "Costco is a membership warehouse club"
+    },
+    {
+     "sourceId": "chase-rewards-category-faq",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "These merchants sell a full range of household goods and merchandise, groceries, furniture, electronics, appliances, and auto supplies."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "costco-com-page-1",
+     "quote": "Costco is a membership warehouse club, dedicated to bringing our members the best possible prices on quality brand-name merchandise.",
+     "supports": "category"
+    },
+    {
+     "source": "costco-com-page-2",
+     "quote": "Costco.com Online Orders and Orders Delivered by Costco Logistics",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "chase-rewards-category-faq",
+     "quote": "sell in bulk, and concentrate on price appeal. These merchants sell a full range of household goods and merchandise, groceries",
+     "supports": "definition"
+    },
+    {
+     "source": "chase-rewards-category-faq",
+     "quote": "These merchants may or may not have membership requirements.",
+     "supports": "definition"
+    },
+    {
+     "source": "chase-rewards-category-faq",
+     "quote": "wholesale clubs such as Costco and BJs",
+     "supports": "exclusion"
+    }
+   ],
+   "auditorNotes": "The Chase definition used is truncated before its heading; its text reads as the wholesale-club definition. Supermarkets refused: Chase online grocery excludes Costco. The Citi 2% is a co-brand bonus.",
+   "sheet": "evals/merchants/db/audit/packets/3/stores/costco.com.md"
+  },
+  {
+   "domain": "dillards.com",
+   "recordId": "dillards-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "department-stores (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "citi-dillards-mastercard-product",
+     "kind": "issuer-terms",
+     "supports": "kind",
+     "quote": "The Dillard’s Credit Card is a rewards credit card for purchases at Dillard’s (in-store, online or by phone)."
+    },
+    {
+     "sourceId": "citi-dillards-mastercard-product",
+     "kind": "issuer-terms",
+     "supports": "brand",
+     "quote": "Dillard’s is a registered trademark of Dillard’s, Inc."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "U.S. Select Major Department Stores"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Dillard's"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "dillards-com-page-1",
+     "quote": "Access Denied",
+     "supports": "kind"
+    },
+    {
+     "source": "citi-dillards-mastercard-product",
+     "quote": "The Dillard’s Credit Card is a rewards credit card for purchases at Dillard’s (in-store, online or by phone).",
+     "supports": "kind"
+    },
+    {
+     "source": "citi-dillards-mastercard-product",
+     "quote": "at Dillard’s stores or dillards.com on the day of account opening",
+     "supports": "brand"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of department stores",
+     "supports": "category"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "Century 21 Department Stores Dillard's J.C. Penney (JCP)",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "All store pages are access-denied, so shipped or picked-up goods are not shown. The U.S. Bank department-store list is hedged; the Amex earn list is used.",
+   "sheet": "evals/merchants/db/audit/packets/3/stores/dillards.com.md"
+  },
+  {
+   "domain": "disneyplus.com",
+   "recordId": "disneyplus-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "streaming (issuer)",
+   "recordQuotes": [],
+   "auditorQuotes": [
+    {
+     "source": "disneyplus-com-page-1",
+     "quote": "Multiple members of your household can stream on Disney+ at the same time.",
+     "supports": "kind"
+    },
+    {
+     "source": "disneyplus-com-page-1",
+     "quote": "Disney, Pixar, Marvel, Star Wars, & Nat Geo with Disney+.",
+     "supports": "brand"
+    },
+    {
+     "source": "citi-strata-rewards-terms",
+     "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "The site also sells Hulu and ESPN bundles; only Disney+ is listed as its brand. Chase Disney co-brand earn and Amex statement credit are not used.",
+   "sheet": "evals/merchants/db/audit/packets/3/stores/disneyplus.com.md"
+  },
+  {
+   "domain": "gap.com",
+   "recordId": "gap-us",
+   "field": "brandIds",
+   "type": "wrong-brand",
+   "record": "gap",
+   "auditor": "gap, old-navy, banana-republic, athleta",
+   "recordQuotes": [],
+   "auditorQuotes": [
+    {
+     "source": "gap-com-page-1",
+     "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "gap-com-page-1",
+     "quote": "Gap Gap Factory Old Navy Banana Republic Athleta",
+     "supports": "brand"
+    }
+   ],
+   "auditorNotes": "Gap Inc. shared site selling four of its own catalog brands in one bag; listed each per the multi-brand rule. Encore co-brand earning is not a category basis.",
+   "sheet": "evals/merchants/db/audit/packets/4/stores/gap.com.md"
+  },
+  {
+   "domain": "jcpenney.com",
+   "recordId": "jcpenney-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "department-stores (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "synchrony-jcpenney-mastercard-partner",
+     "kind": "issuer-terms",
+     "supports": "kind",
+     "quote": "Your JCPenney Credit Card or JCPenney Mastercard can be used at all JCPenney Stores, and jcp.com."
+    },
+    {
+     "sourceId": "synchrony-jcpenney-mastercard-product",
+     "kind": "issuer-terms",
+     "supports": "physicalGoods",
+     "quote": "qualifying furniture, mattress, jewelry"
+    },
+    {
+     "sourceId": "synchrony-jcpenney-mastercard-partner",
+     "kind": "issuer-terms",
+     "supports": "brand",
+     "quote": "Your JCPenney Credit Card or JCPenney Mastercard can be used at all JCPenney Stores, and jcp.com."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "J.C. Penney (JCP)"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's, Century 21 Department Stores, Dillard’s, J.C. Penney (JCP)",
+     "supports": "category"
+    },
+    {
+     "source": "synchrony-jcpenney-mastercard-partner",
+     "quote": "Your JCPenney Credit Card or JCPenney Mastercard can be used at all JCPenney Stores, and jcp.com.",
+     "supports": "kind"
+    },
+    {
+     "source": "synchrony-jcpenney-mastercard-product",
+     "quote": "Free Shipping on orders of $49 or more.",
+     "supports": "physicalGoods"
+    }
+   ],
+   "auditorNotes": "No store page captured; kind, goods and brand rest on issuer excerpts about JCPenney. Amex select major department stores list names J.C. Penney (JCP).",
+   "sheet": "evals/merchants/db/audit/packets/5/stores/jcpenney.com.md"
+  },
+  {
+   "domain": "kroger.com",
+   "recordId": "kroger-us",
+   "field": "category",
+   "type": "wrong-bonus",
+   "record": "supermarkets (definition)",
+   "auditor": "general-merchandise (default)",
+   "recordQuotes": [
+    {
+     "sourceId": "kroger-com-page-2",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Pickup is our online ordering service."
+    },
+    {
+     "sourceId": "kroger-com-page-2",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Our associates will even bring out your purchases and load them into your car."
+    },
+    {
+     "sourceId": "kroger-com-page-2",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "We offer several ways to shop for groceries online."
+    },
+    {
+     "sourceId": "kroger-com-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "Simply shop online for the products you need and pick up your order at the store you choose!"
+    },
+    {
+     "sourceId": "kroger-com-page-3",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "A delivery driver will drop your groceries off on your doorstep."
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Check off your grocery list and earn cash back at most grocery stores and supermarkets."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "A supermarket offers a wide variety of food and household products"
+    },
+    {
+     "sourceId": "boa-customized-cash-rewards-pricing",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "on Net Purchases made at eligible grocery stores and wholesale clubs, supermarkets"
+    },
+    {
+     "sourceId": "chase-rewards-category-faq",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "kroger-com-page-2",
+     "quote": "We offer several ways to shop for groceries online.",
+     "supports": "kind"
+    },
+    {
+     "source": "kroger-com-page-3",
+     "quote": "A delivery driver will drop your groceries off on your doorstep.",
+     "supports": "physicalGoods"
+    }
+   ],
+   "auditorNotes": "Supermarkets refused: captured pages show grocery pickup/delivery but no business-type noun phrase (grocery store, supermarket); U.S. Bank lists are hedged; no lookup. Citi Costco excerpt concerns gas earn only.",
+   "sheet": "evals/merchants/db/audit/packets/5/stores/kroger.com.md"
+  },
+  {
+   "domain": "lyft.com",
+   "recordId": "lyft-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "transit (definition)",
+   "recordQuotes": [
+    {
+     "sourceId": "lyft-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "they’ll get access to convenient, reliable Lyft rides"
+    },
+    {
+     "sourceId": "lyft-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter."
+    },
+    {
+     "sourceId": "lyft-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "© 2026 Lyft, Inc."
+    },
+    {
+     "sourceId": "lyft-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter."
+    },
+    {
+     "sourceId": "lyft-com-page-2",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "Riding with Lyft"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "lyft-com-page-1",
+     "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter.",
+     "supports": "category"
+    },
+    {
+     "source": "lyft-com-page-1",
+     "quote": "© 2026 Lyft, Inc.",
+     "supports": "brand"
+    },
+    {
+     "source": "chase-rewards-category-faq",
+     "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+     "supports": "definition"
+    }
+   ],
+   "auditorNotes": "Pages never use the word rideshare; business type read from ride-hailing wording, which is weaker than a plain noun phrase. US Bank list is hedged; Citi and Barclays lines are statement credits. Chase excludes bike/scooter rentals.",
+   "sheet": "evals/merchants/db/audit/packets/6/stores/lyft.com.md"
+  },
+  {
+   "domain": "macys.com",
+   "recordId": "macys-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "department-stores (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "citi-macys-amex-product",
+     "kind": "issuer-terms",
+     "supports": "kind",
+     "quote": "The Macy’s Credit Card can only be used to purchase merchandise at Macy’s stores, Macy’s Backstage or macys.com."
+    },
+    {
+     "sourceId": "citi-macys-amex-product",
+     "kind": "issuer-terms",
+     "supports": "physicalGoods",
+     "quote": "purchase merchandise at Macy’s stores, Macy’s Backstage or macys.com."
+    },
+    {
+     "sourceId": "citi-macys-amex-product",
+     "kind": "issuer-terms",
+     "supports": "brand",
+     "quote": "Open a Macy’s Card and get 30% off macys.com purchases today2."
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Lord & Taylor\nMacy's\nNeiman Marcus"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "the purchases must be made at a department store that is included on our list of \"select major department stores\""
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "citi-macys-amex-product",
+     "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com.",
+     "supports": "brand"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "To earn additional rewards, purchases must be made at department stores included on our list of “select major department stores” that accept the Card",
+     "supports": "category"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "Kohl's, Lord & Taylor, Macy's, Neiman Marcus, Nordstrom, Saks Fifth Avenue, Sears and Stein Mart. Eligible purchases include those made in store and online.",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "Store captures are both access-denied pages; kind, goods and brand rest on the Citi co-brand excerpt. US Bank department-store list is hedged and not relied on.",
+   "sheet": "evals/merchants/db/audit/packets/6/stores/macys.com.md"
+  },
+  {
+   "domain": "marketbasket.com",
+   "recordId": "marketbasket-us",
+   "field": "category",
+   "type": "wrong-bonus",
+   "record": "supermarkets (definition)",
+   "auditor": "general-merchandise (default)",
+   "recordQuotes": [
+    {
+     "sourceId": "marketbasket-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "The Market Basket is a local, family-owned specialty market focused on delivering the best in gourmet food."
+    },
+    {
+     "sourceId": "marketbasket-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "The Market Basket is still recognized as one of New Jersey’s best gourmet grocery stores"
+    },
+    {
+     "sourceId": "marketbasket-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "Gifts for any Occasion - We Can Ship!"
+    },
+    {
+     "sourceId": "boa-customized-cash-rewards-pricing",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "on Net Purchases made at eligible grocery stores and wholesale clubs, supermarkets"
+    },
+    {
+     "sourceId": "chase-rewards-category-faq",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services."
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Check off your grocery list and earn cash back at most grocery stores and supermarkets."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "marketbasket-com-page-1",
+     "quote": "The Market Basket is a local, family-owned specialty market focused on delivering the best in gourmet food.",
+     "supports": "kind"
+    },
+    {
+     "source": "marketbasket-com-page-1",
+     "quote": "Gifts for any Occasion - We Can Ship!",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "other specialty food stores)",
+     "supports": "exclusion"
+    }
+   ],
+   "auditorNotes": "Refused supermarkets: store calls itself a specialty market (also 'gourmet grocery stores'), and Amex lists specialty food stores among non-supermarkets. Online shop sells gift baskets and entrée boxes.",
+   "sheet": "evals/merchants/db/audit/packets/6/stores/marketbasket.com.md"
+  },
+  {
+   "domain": "oldnavy.gap.com",
+   "recordId": "oldnavy-gap-us",
+   "field": "brandIds",
+   "type": "wrong-brand",
+   "record": "old-navy",
+   "auditor": "old-navy, gap, banana-republic, athleta",
+   "recordQuotes": [
+    {
+     "sourceId": "oldnavy-gap-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it."
+    },
+    {
+     "sourceId": "oldnavy-gap-com-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "Mid-Rise Wow Boot-Cut Jeans"
+    },
+    {
+     "sourceId": "oldnavy-gap-com-page-2",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "© 2026 Old Navy, LLC"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "shop at standalone clothing stores."
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Old Navy"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "oldnavy-gap-com-page-1",
+     "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.",
+     "supports": "brand"
+    },
+    {
+     "source": "oldnavy-gap-com-page-2",
+     "quote": "© 2026 Old Navy, LLC",
+     "supports": "brand"
+    }
+   ],
+   "auditorNotes": "Old Navy storefront with shared Gap Inc. bag across Gap, Old Navy, Banana Republic, Athleta. Barclays Encore excerpts are co-brand card terms only.",
+   "sheet": "evals/merchants/db/audit/packets/7/stores/oldnavy.gap.com.md"
+  },
+  {
+   "domain": "plus.espn.com",
+   "recordId": "plus-espn-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "streaming (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "plus-espn-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Fans who want ESPN+ exclusively may subscribe to the ESPN Select plan."
+    },
+    {
+     "sourceId": "plus-espn-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "ESPN+ is a service that features over 30,000 live events across college, international soccer, golf, tennis, combat, and the full ESPN Originals library."
+    },
+    {
+     "sourceId": "plus-espn-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "ESPN+ is available to fans in both our ESPN Select and Unlimited Plans."
+    },
+    {
+     "sourceId": "plus-espn-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "The ESPN App is the exclusive streaming home for CW Sports live events"
+    },
+    {
+     "sourceId": "us-bank-altitude-connect-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Qualifying streaming subscription services are: Amazon Music Unlimited, Amazon Prime Video, AMC+, Apple Music, Apple TV+, Audible, DirecTV Stream, Discovery+, Disney+, ESPN+,"
+    },
+    {
+     "sourceId": "us-bank-altitude-go-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Qualifying streaming subscription services are: Amazon Music Unlimited, Amazon Prime Video, AMC+, Apple Music, Apple TV+, Audible, DirecTV Stream, Discovery+, Disney+, ESPN+,"
+    },
+    {
+     "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Qualifying streaming subscription services are: Amazon Music Unlimited, Amazon Prime Video, AMC+, Apple Music, Apple TV+, Audible, DirecTV Stream, Discovery+, Disney+, ESPN+,"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:"
+    },
+    {
+     "sourceId": "citi-strata-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Includes the following streaming providers:"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "plus-espn-com-page-1",
+     "quote": "All ESPN Networks, ESPN+ & NFL Network",
+     "supports": "brand"
+    },
+    {
+     "source": "plus-espn-com-page-1",
+     "quote": "Choose your plan Use the drop-down menu to compare plans. Switch or cancel* anytime.",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "us-bank-altitude-go-rewards-terms",
+     "quote": "2 Points (1 base and 1 bonus Point) for every $1 on qualifying streaming subscription service purchases.",
+     "supports": "category"
+    },
+    {
+     "source": "us-bank-altitude-go-rewards-terms",
+     "quote": "Qualifying streaming subscription services are: Amazon Music Unlimited, Amazon Prime Video, AMC+, Apple Music, Apple TV+, Audible, DirecTV Stream, Discovery+, Disney+, ESPN+,",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "The issuer list names ESPN+; the site also sells Disney+/Hulu bundles, which bundle exclusions in some issuer terms could affect. Brand espn only; Disney+ and Hulu are resold in bundles.",
+   "sheet": "evals/merchants/db/audit/packets/8/stores/plus.espn.com.md"
+  },
+  {
+   "domain": "sherwin-williams.com",
+   "recordId": "sherwin-williams-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "home-improvement (definition)",
+   "recordQuotes": [
+    {
+     "sourceId": "sherwin-williams-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "The Company’s Sherwin-Williams® branded products are sold exclusively through a chain of more than 5,000 company operated stores"
+    },
+    {
+     "sourceId": "sherwin-williams-com-page-1",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "The Sherwin-Williams Company delivers the best in paint and coatings products to the world."
+    },
+    {
+     "sourceId": "sherwin-williams-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "A Global Leader in Paints and Coatings"
+    },
+    {
+     "sourceId": "sherwin-williams-com-page-2",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "Paints & Supplies"
+    },
+    {
+     "sourceId": "boa-cash-back-category-choices",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "paint and wallpaper stores"
+    },
+    {
+     "sourceId": "boa-cash-back-category-choices",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Sherwin-Williams"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Home Improvement Store purchases include online and in-store purchases at home improvement retail stores, building supply stores"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "sherwin-williams-com-page-1",
+     "quote": "sold exclusively through a chain of more than 5,000 company operated stores and facilities",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "sherwin-williams-com-page-1",
+     "quote": "Paint Stores Group",
+     "supports": "category"
+    },
+    {
+     "source": "boa-cash-back-category-choices",
+     "quote": "home supply warehouse stores, lumber and building materials stores, paint and wallpaper stores, hardware stores",
+     "supports": "definition"
+    }
+   ],
+   "auditorNotes": "BoA lists Sherwin-Williams only in a hedged examples list (not used). Paint-store business type comes from a corporate page segment name; BoA excludes B2B merchants, but the site also serves homeowners.",
+   "sheet": "evals/merchants/db/audit/packets/8/stores/sherwin-williams.com.md"
+  },
+  {
+   "domain": "siriusxm.com",
+   "recordId": "siriusxm-us",
+   "field": "category",
+   "type": "missed-bonus",
+   "record": "general-merchandise (default)",
+   "auditor": "streaming (issuer)",
+   "recordQuotes": [
+    {
+     "sourceId": "siriusxm-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Subscribe now and get your first 3 months for $1."
+    },
+    {
+     "sourceId": "siriusxm-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "All our popular plans include streaming with the SiriusXM app."
+    },
+    {
+     "sourceId": "siriusxm-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "Only on SiriusXM."
+    },
+    {
+     "sourceId": "siriusxm-com-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "Do I pay for shipping if I return a purchased item to SiriusXM?"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "SiriusXM Streaming and Satellite"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:"
+    },
+    {
+     "sourceId": "citi-strata-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Starz, SiriusXM, Tidal, YouTube Premium, and YouTube TV."
+    },
+    {
+     "sourceId": "citi-strata-rewards-terms",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Includes the following streaming providers:"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Netflix, Pandora, Paramount Plus, Peacock, SiriusXM, Sling TV, Spotify, Starz, YouTube Music"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV, Audible,"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Music Streaming\nAmazon Music\nPandora\nSpotify\nApple Music\nSiriusXM®"
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services."
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "siriusxm-com-page-1",
+     "quote": "Includes radio service and listening with the SiriusXM app on your devices.",
+     "supports": "kind"
+    },
+    {
+     "source": "siriusxm-com-page-1",
+     "quote": "The subscription plan you choose will AUTOMATICALLY RENEW and you will be charged at then-current rates for that plan until you cancel.",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "siriusxm-com-page-2",
+     "quote": "©2026 Sirius XM Radio LLC",
+     "supports": "brand"
+    },
+    {
+     "source": "citi-strata-rewards-terms",
+     "quote": "Includes the following streaming providers:",
+     "supports": "category"
+    },
+    {
+     "source": "citi-strata-rewards-terms",
+     "quote": "Sling TV, Spotify, Starz, SiriusXM, Tidal, YouTube Premium, and YouTube TV.",
+     "supports": "category"
+    },
+    {
+     "source": "amex-rewards-info-retail",
+     "quote": "SiriusXM Streaming and Satellite",
+     "supports": "category"
+    }
+   ],
+   "auditorNotes": "Subscription audio service; the help page also mentions radios and a merch store, but the plans page is subscriptions. Citi and Amex list SiriusXM in their streaming inclusion lists.",
+   "sheet": "evals/merchants/db/audit/packets/9/stores/siriusxm.com.md"
+  },
+  {
+   "domain": "whatnot.com",
+   "recordId": "whatnot-us",
+   "field": "kind",
+   "type": "wrong-kind",
+   "record": "merchant",
+   "auditor": "marketplace",
+   "recordQuotes": [],
+   "auditorQuotes": [
+    {
+     "source": "whatnot.com-home",
+     "quote": "The Live Shopping Marketplace",
+     "supports": "kind"
+    },
+    {
+     "source": "whatnot.com-home",
+     "quote": "Shipping and Delivery",
+     "supports": "physicalGoods"
+    }
+   ],
+   "auditorNotes": null,
+   "sheet": "evals/merchants/db/audit/packets/10/stores/whatnot.com.md"
+  },
+  {
+   "domain": "wholefoodsmarket.com",
+   "recordId": "wholefoodsmarket-us",
+   "field": "category",
+   "type": "wrong-bonus",
+   "record": "supermarkets (definition)",
+   "auditor": "general-merchandise (default)",
+   "recordQuotes": [
+    {
+     "sourceId": "wholefoodsmarket-com-page-1",
+     "kind": "store-page",
+     "supports": "kind",
+     "quote": "Whole Foods Market has more than 500 retail and non-retail locations in the US, Canada and UK"
+    },
+    {
+     "sourceId": "wholefoodsmarket-com-page-1",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "shopping for groceries"
+    },
+    {
+     "sourceId": "wholefoodsmarket-com-page-1",
+     "kind": "store-page",
+     "supports": "brand",
+     "quote": "Copyright 2026 Whole Foods Market IP, Inc."
+    },
+    {
+     "sourceId": "wholefoodsmarket-com-page-2",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "Shop for grocery delivery or pickup"
+    },
+    {
+     "sourceId": "wholefoodsmarket-com-page-2",
+     "kind": "store-page",
+     "supports": "physicalGoods",
+     "quote": "pantry essentials shipped to you"
+    },
+    {
+     "sourceId": "wholefoodsmarket-com-page-3",
+     "kind": "store-page",
+     "supports": "category",
+     "quote": "How do I order groceries online?"
+    },
+    {
+     "sourceId": "amex-rewards-info-retail",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "A supermarket offers a wide variety of food and household products"
+    },
+    {
+     "sourceId": "boa-customized-cash-rewards-pricing",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "on Net Purchases made at eligible grocery stores and wholesale clubs, supermarkets"
+    },
+    {
+     "sourceId": "chase-rewards-category-faq",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores"
+    },
+    {
+     "sourceId": "discover-cashback-calendar",
+     "kind": "issuer-terms",
+     "supports": "definition",
+     "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services."
+    },
+    {
+     "sourceId": "us-bank-cash-plus-sample-merchants",
+     "kind": "issuer-terms",
+     "supports": "category",
+     "quote": "Whole Foods Market"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "wholefoodsmarket-com-page-2",
+     "quote": "Shop for grocery delivery or pickup, get pantry essentials shipped to you",
+     "supports": "physicalGoods"
+    },
+    {
+     "source": "wholefoodsmarket-com-page-1",
+     "quote": "Copyright 2026 Whole Foods Market IP, Inc.",
+     "supports": "brand"
+    }
+   ],
+   "auditorNotes": "Supermarkets not granted: own pages say natural and organic foods and shopping for groceries but never name a business type (grocery store, supermarket); the grocery-store tagline is on an Amazon page, not the store page.",
+   "sheet": "evals/merchants/db/audit/packets/10/stores/wholefoodsmarket.com.md"
+  }
+ ]
+}

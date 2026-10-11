@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "packet": 1,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets/1/packet.json",
+      "evals/merchants/db/audit/packets/1/catalog-lists.json",
+      "evals/merchants/db/audit/packets/1/issuer-definitions.md",
+      "evals/merchants/db/audit/packets/1/stores/aa.com.md",
+      "evals/merchants/db/audit/packets/1/stores/academy.com.md",
+      "evals/merchants/db/audit/packets/1/stores/acmemarkets.com.md",
+      "evals/merchants/db/audit/packets/1/stores/adoreme.com.md",
+      "evals/merchants/db/audit/packets/1/stores/ae.com.md",
+      "evals/merchants/db/audit/packets/1/stores/aerlingus.com.md",
+      "evals/merchants/db/audit/packets/1/stores/aeropostale.com.md",
+      "evals/merchants/db/audit/packets/1/stores/affirm.com.md",
+      "evals/merchants/db/audit/packets/1/stores/afterpay.com.md",
+      "evals/merchants/db/audit/packets/1/stores/aircanada.com.md",
+      "evals/merchants/db/audit/packets/1/stores/airfrance.us.md",
+      "evals/merchants/db/audit/packets/1/stores/alaskaair.com.md",
+      "evals/merchants/db/audit/packets/1/stores/albertsons.com.md",
+      "evals/merchants/db/audit/packets/1/stores/aldi.us.md",
+      "evals/merchants/db/audit/packets/1/stores/allegiantair.com.md",
+      "evals/merchants/db/audit/packets/1/stores/allmodern.com.md",
+      "evals/merchants/db/audit/packets/1/stores/amazon.com.md",
+      "evals/merchants/db/audit/packets/1/stores/anntaylor.com.md",
+      "evals/merchants/db/audit/packets/1/stores/apple.com.md",
+      "evals/merchants/db/audit/packets/1/stores/applebees.com.md",
+      "evals/merchants/db/audit/packets/1/stores/arbys.com.md",
+      "evals/merchants/db/audit/packets/1/stores/athleta.gap.com.md",
+      "evals/merchants/db/audit/packets/1/stores/athome.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "aa.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["american-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "aa-com-page-2", "quote": "We're dedicated to providing a positive travel experience for all customers.", "supports": "kind" },
+        { "source": "aa-com-page-2", "quote": "Reservations & tickets", "supports": "physicalGoods" },
+        { "source": "aa-com-page-1", "quote": "American Airlines Group Inc.", "supports": "brand" }
+      ],
+      "notes": "Airline; no catalog category covers airfare. Co-brand AAdvantage card earn on American Airlines purchases is the card's own bonus."
+    },
+    {
+      "domain": "academy.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "No store page captured; issuer excerpts only match a 'Skills academy' nav link. Category is default for lack of any basis, not from evidence of what the store sells."
+    },
+    {
+      "domain": "acmemarkets.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        { "source": "acmemarkets-com-page-1", "quote": "Your Favorite Local Supermarket", "supports": "category" },
+        { "source": "acmemarkets-com-page-2", "quote": "Delivery to your home or business", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods", "supports": "definition" }
+      ],
+      "notes": "No issuer excerpt names the store. In-store pharmacy does not change the supermarket call."
+    },
+    {
+      "domain": "adoreme.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "adoreme.com-home", "quote": "Lingerie designed to make you feel good.", "supports": "kind" },
+        { "source": "adoreme.com-home", "quote": "FREE Shipping for A-List members on orders $75+.", "supports": "physicalGoods" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "ae.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["american-eagle", "aerie"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "ae-com-page-1", "quote": "Go to Shop AE homepage.", "supports": "brand" },
+        { "source": "ae-com-page-1", "quote": "Go to Shop Aerie homepage.", "supports": "brand" },
+        { "source": "ae-com-page-1", "quote": "Why is my order arriving in multiple packages?", "supports": "physicalGoods" }
+      ],
+      "notes": "Pages say AE/AEO, not the full name American Eagle. U.S. Bank lists American Eagle Outfitters only under Select Clothing Stores, which is not a catalog category."
+    },
+    {
+      "domain": "aerlingus.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Both store pages are bot walls. Issuer and lookup excerpts show Aer Lingus is an airline, but nothing shows this site; airline earn is co-brand card bonus."
+    },
+    {
+      "domain": "aeropostale.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["aeropostale"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "aeropostale-com-page-1", "quote": "© 2026 Aéropostale. All Rights Reserved.", "supports": "brand" },
+        { "source": "aeropostale-com-page-1", "quote": "Buy 1, Get 1 Free Jeans + Free Shipping", "supports": "physicalGoods" }
+      ],
+      "notes": "U.S. Bank Select Clothing Stores list names it; not a catalog category."
+    },
+    {
+      "domain": "affirm.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "affirm-com-page-2", "quote": "Pay with Affirm at millions of stores", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "afterpay.com",
+      "kind": "processor",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "afterpay-com-page-2", "quote": "Pay in 4 interest-free installments at partner brands.", "supports": "kind" }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "aircanada.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["air-canada"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "aircanada-com-page-2", "quote": "Air Canada is Canada's largest airline", "supports": "brand" },
+        { "source": "aircanada-com-page-2", "quote": "BOOK A FLIGHT", "supports": "physicalGoods" }
+      ],
+      "notes": "Captured pages are the Canada English edition. Airline; no catalog category covers airfare."
+    },
+    {
+      "domain": "airfrance.us",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "No store page captured. Issuer and lookup excerpts show Air France is an airline but nothing shows this domain; airline earn is a co-brand card bonus."
+    },
+    {
+      "domain": "alaskaair.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["alaska-airlines"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "alaskaair-com-page-2", "quote": "At Alaska Airlines, we care about empowering you to have the best travel experience possible.", "supports": "brand" },
+        { "source": "alaskaair-com-page-2", "quote": "Change, cancel, or update your flight:", "supports": "physicalGoods" }
+      ],
+      "notes": "Page 1 is a CAPTCHA wall; page 2 shows the airline. Site also links Hawaiian Airlines help, not its store."
+    },
+    {
+      "domain": "albertsons.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "definition",
+      "quotes": [
+        { "source": "albertsons-com-page-2", "quote": "grocery delivery and pickup services provided only by the Albertsons Companies family of grocery store banners", "supports": "category" },
+        { "source": "albertsons-com-page-2", "quote": "Delivery to your home or business", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods", "supports": "definition" }
+      ],
+      "notes": "U.S. Bank names Albertsons only in a hedged 'popular merchants' list, so not issuer basis. Page 1 also calls the parent a food and drug retailer."
+    },
+    {
+      "domain": "aldi.us",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "aldi-us-page-2", "quote": "An employee will deliver your groceries direct to your door.", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "Examples of merchants* that accept the Card and where you can earn additional rewards include:", "supports": "category" }
+      ],
+      "notes": "Supermarkets refused: Amex names ALDI only in an 'Examples of merchants' list (hedged), and the pages say grocery delivery but never call ALDI a grocery store or supermarket."
+    },
+    {
+      "domain": "allegiantair.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Both store pages are Cloudflare bot walls. BofA excerpts point to allegiantair.com for program terms and show Allegiant travel, but no store page shows the site."
+    },
+    {
+      "domain": "allmodern.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Both store pages are bot walls. Citi excerpt only says AllModern is in the Wayfair Family of Brands."
+    },
+    {
+      "domain": "amazon.com",
+      "kind": "marketplace",
+      "physicalGoods": true,
+      "brandIds": ["amazon"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "amazon-com-page-1", "quote": "Start a Selling Account", "supports": "kind" },
+        { "source": "amazon-com-page-1", "quote": "Track packages and get delivery updates", "supports": "physicalGoods" },
+        { "source": "amazon-com-page-1", "quote": "Welcome to Amazon Customer Service", "supports": "brand" }
+      ],
+      "notes": "Sells as itself and hosts third-party sellers; the sheet cannot show which is 'mostly'. Prime Visa 5% is a co-brand bonus. Whole Foods/Audible appear as departments, not listed as brands."
+    },
+    {
+      "domain": "anntaylor.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [],
+      "notes": "Store page is a PerimeterX bot wall. U.S. Bank lists Ann Taylor under Select Clothing Stores, not a catalog category."
+    },
+    {
+      "domain": "apple.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "apple-com-page-1", "quote": "Shop the Apple Online Store", "supports": "kind" },
+        { "source": "apple-com-page-1", "quote": "Track Shipments", "supports": "physicalGoods" }
+      ],
+      "notes": "Electronics not granted: no issuer excerpt in the sheet names Apple with an earn clause (U.S. Bank 'Apple Store' is a hedged list), and pages never call it an electronics store."
+    },
+    {
+      "domain": "applebees.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "applebees-com-page-1", "quote": "Applebee’s Grill + Bar is seeking qualified candidates to develop restaurants in new and existing markets", "supports": "category" },
+        { "source": "applebees-com-page-2", "quote": "Our entire menu is available for takeout!", "supports": "physicalGoods" },
+        { "source": "chase-rewards-category-faq", "quote": "This category's merchants’ primary business is sit-down or eat-in dining, including fast food restaurants and fine dining establishments.", "supports": "definition" }
+      ],
+      "notes": "U.S. Bank says full-service restaurants 'like Applebee's' are in Restaurants and lists it among 'popular merchants'; both are example/hedged, so not issuer basis."
+    },
+    {
+      "domain": "arbys.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "arbys-com-page-1", "quote": "Arby's Fast Crafted® restaurant services feature a unique blend of quick-serve speed", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Yes, fast food restaurants are included in the restaurant rewards category.", "supports": "definition" }
+      ],
+      "notes": "U.S. Bank lists Arby's in a hedged 'popular merchants' Fast Food list, so not issuer basis."
+    },
+    {
+      "domain": "athleta.gap.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["athleta"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "athleta-gap-com-page-1", "quote": "Unsubscribe from Athleta emails", "supports": "brand" },
+        { "source": "athleta-gap-com-page-1", "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.", "supports": "physicalGoods" }
+      ],
+      "notes": "Shared Gap Inc. cart also sells Gap, Old Navy and Banana Republic; listed only Athleta for this subdomain. Encore points are a co-brand bonus."
+    },
+    {
+      "domain": "athome.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["at-home"],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "athome-com-page-1", "quote": "At Home", "supports": "brand" },
+        { "source": "athome-com-page-2", "quote": "You can return items shipped to your home at your local store for free", "supports": "physicalGoods" }
+      ],
+      "notes": "Home improvement refused: pages show home goods (mattresses, sofas, pillows) but no business-type noun phrase, and a home-decor store is not home improvement."
+    }
+  ]
+}
