@@ -2,12 +2,12 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 141 records, 15 of them payment
+/** The bundled merchant release (schema 1): 142 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.seed.6',
+  version: '2026-10-11.seed.7',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -2055,6 +2055,17 @@ export const MERCHANTS_V1: MerchantRelease = {
         ],
       },
       brandIds: ['whole-foods-market'],
+      disabled: false,
+    },
+    {
+      id: 'youtube-us',
+      name: 'YouTube',
+      hosts: ['youtube.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
       disabled: false,
     },
     {
