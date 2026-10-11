@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16045,
+    "outputTokens": 290
+  },
+  "durationMs": 21196,
+  "draft": {
+    "domain": "wayfair.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "wayfair"
+    ],
+    "candidateCategory": "home-improvement",
+    "evidence": [
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Furniture stores (e.g., Wayfair.com)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Furniture stores (e.g., Wayfair.com)",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "qualifying items",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Wayfair",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "home furnishing stores, home appliance stores and floor covering stores",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The store pages only show a bot challenge, so classification relies on issuer documents. Wayfair may sell broad merchandise, but Bank of America explicitly lists it under Home Improvement & Furnishings."
+  }
+}

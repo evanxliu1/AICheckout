@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12875,
+    "outputTokens": 172
+  },
+  "durationMs": 9632,
+  "draft": {
+    "domain": "saksfifthavenue.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "U.S. Select Major Department Stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Saks Fifth Avenue",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Eligible purchases include those made in store and online.",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The store pages contain no rendered text. Saks Fifth Avenue is explicitly listed by Amex as a select major department store; no matching catalog brand ID exists. Physical-goods status is inferred conservatively from its department-store retail classification."
+  }
+}

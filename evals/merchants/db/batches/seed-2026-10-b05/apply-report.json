@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "appliedOn": "2026-10-11",
+  "records": [
+    {
+      "domain": "fubo.tv",
+      "id": "fubo-tv-us",
+      "basis": "definition",
+      "category": "streaming"
+    },
+    {
+      "domain": "gamestop.com",
+      "id": "gamestop-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "giantfood.com",
+      "id": "giantfood-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "The store page lists supermarket departments but does not explicitly use the word supermarket, and no lookup page names Giant Food. No catalog brand matches Giant Food."
+      }
+    },
+    {
+      "domain": "giantfoodstores.com",
+      "id": "giantfoodstores-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "The documents identify GIANT as a food-store chain but provide no merchant-code lookup page. No catalog brand is shown as the official store."
+      }
+    },
+    {
+      "domain": "greyhound.com",
+      "id": "greyhound-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A help-page tips heading; it does not plainly state the business type. Says tickets are sold but names no business type (bus line); not a business-type statement. Bank of America Travel definition; travel is a different category from the drafted transit."
+      },
+      "refused": {
+        "candidate": "transit",
+        "reason": "no store-page quote shows a transit business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "grubhub.com",
+      "id": "grubhub-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A COVID-era help-topic phrase; it does not show the site is a restaurant marketplace. Defines Chase's separate Select food delivery category, not its dining category; a different category from the drafted dining. Names Grubhub in Chase's separate Select food delivery list, not as earning in dining. "
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": "Grubhub is explicitly identified as a food-delivery merchant, supporting marketplace classification and the dining category. No catalog brand ID corresponds to Grubhub."
+      }
+    },
+    {
+      "domain": "hannaford.com",
+      "id": "hannaford-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "harborfreight.com",
+      "id": "harborfreight-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "harley-davidson.com",
+      "id": "harley-davidson-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "overridden": [
+        "kind → merchant: Harley-Davidson sells as itself; the captures show no third-party sellers"
+      ]
+    },
+    {
+      "domain": "harristeeter.com",
+      "id": "harristeeter-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "hawaiianairlines.com",
+      "id": "hawaiianairlines-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "hilton.com",
+      "id": "hilton-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "hp.com",
+      "id": "hp-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A navigation department label; it does not plainly show an electronics retailer. Names example merchants (Best Buy, Fry's) rather than a business type; not a definition covering HP's kind of store."
+      },
+      "refused": {
+        "candidate": "electronics",
+        "reason": "no store-page quote shows a electronics business type",
+        "notes": "HP is not included in the provided catalog brand list, so no brand ID applies."
+      }
+    },
+    {
+      "domain": "hulu.com",
+      "id": "hulu-us",
+      "basis": "definition",
+      "category": "streaming",
+      "conflicts": [
+        "disney-premier-visa-rewards-terms: lists the store under another category: \"Qualifying Purchases made with your Card at: - Disney+, Hulu and ESPN gift card and · Disney Locations in the U.S., or subscription card purchases …\"",
+        "disney-premier-visa-rewards-terms: lists the store under another category: \"Purchase, you will earn 1 Rewards Dollar. $100 - For example, if you spend $100 multiplied by 1% or .01 equals 1 Rewards Dollar. on …\""
+      ]
+    },
+    {
+      "domain": "hyatt.com",
+      "id": "hyatt-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    }
+  ],
+  "heldOut": [
+    {
+      "domain": "gm.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Both store pages are Access Denied and research says gm.com is a corporate site whose vehicle shopping links out to brand domains; no capture shows a purchase or checkout on gm.com."
+        }
+      ]
+    },
+    {
+      "domain": "goodneighborpharmacy.com",
+      "disputed": [
+        {
+          "field": "name",
+          "reason": "Site unreachable (no store capture) and no issuer capture names Good Neighbor Pharmacy; the name cannot be settled from the captures."
+        },
+        {
+          "field": "hosts",
+          "reason": "Site unreachable on 2026-10-10 (connection refused); research reports a banner of independent pharmacies with no online checkout, so no capture shows a sale on this host."
+        },
+        {
+          "field": "kind",
+          "reason": "No store capture and no issuer capture names the store; what the site does cannot be settled."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture shows goods shipped or picked up: the site was unreachable and no issuer capture names the store."
+        }
+      ]
+    },
+    {
+      "domain": "gopuff.com",
+      "disputed": [
+        {
+          "field": "kind",
+          "reason": "The only content is a help-center menu (second page Not Acceptable); it does not show whether Gopuff sells its own goods or runs a marketplace."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "The captures show only help-center links (customer and delivery-partner support); no goods shown shipped or picked up."
+        }
+      ]
+    },
+    {
+      "domain": "healthmart.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Research and the capture show a pharmacy finder for independently owned franchise pharmacies and no cart or checkout; no capture shows a sale on healthmart.com."
+        }
+      ]
+    },
+    {
+      "domain": "heb.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "All three store pages are bot-block error pages and no issuer capture names H-E-B, so research and an issuer capture do not agree on the store; the host cannot be settled."
+        },
+        {
+          "field": "kind",
+          "reason": "All store pages are bot-block error pages and no issuer capture names H-E-B; nothing shows what the site does."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture shows goods shipped or picked up: store pages are bot-block errors and no issuer capture names the store."
+        }
+      ]
+    },
+    {
+      "domain": "hkexpress.com",
+      "disputed": [
+        {
+          "field": "scope",
+          "reason": "Hong Kong carrier, no U.S. locale (researcher b05)"
+        }
+      ],
+      "reason": "out-of-scope"
+    },
+    {
+      "domain": "homegoods.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Research saw no cart or checkout, the capture is an error page, and the TJX card page lists online use only at tjmaxx.com, marshalls.com and sierra.com; no capture shows a sale on homegoods.com."
+        }
+      ]
+    },
+    {
+      "domain": "homesense.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Both captures are error pages, research saw no cart or checkout, and the TJX card page lists online use only at tjmaxx.com, marshalls.com and sierra.com; no capture shows a sale on homesense.com."
+        }
+      ]
+    },
+    {
+      "domain": "hotels.com",
+      "disputed": [
+        {
+          "field": "name",
+          "reason": "No store page was captured (rate-limited) and no issuer capture names Hotels.com; the name cannot be settled from the captures."
+        },
+        {
+          "field": "hosts",
+          "reason": "No store page captured and no issuer capture names the store or this host; the checkout host cannot be settled."
+        },
+        {
+          "field": "kind",
+          "reason": "The only kind quote is a generic Chase line that does not name Hotels.com; nothing in the captures shows what this site does."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture describes what this site sells; the quote is a generic Chase line not naming the store."
+        },
+        {
+          "field": "brandIds",
+          "reason": "No capture names Hotels.com, so the hotels-com brand cannot be tied to this domain from the captures."
+        }
+      ]
+    },
+    {
+      "domain": "hy-veepharmacy.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "hy-veepharmacy.com only redirects, and hy-vee.com is the whole Hy-Vee grocer site, not a separate pharmacy store; listing it would map all grocer purchases to this record."
+        },
+        {
+          "field": "candidateCategory",
+          "reason": "The pharmacy is a section of the Hy-Vee grocer; Chase excludes grocery stores with onsite pharmacies and Discover says pharmacies inside other retail stores may not qualify."
+        }
+      ]
+    }
+  ],
+  "botWalled": [
+    "giantfoodstores.com",
+    "gm.com",
+    "goodneighborpharmacy.com",
+    "harborfreight.com",
+    "homegoods.com",
+    "homesense.com",
+    "hotels.com",
+    "hyatt.com"
+  ]
+}

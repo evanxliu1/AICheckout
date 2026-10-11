@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14917,
+    "outputTokens": 275
+  },
+  "durationMs": 50549,
+  "draft": {
+    "domain": "lot.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "lot-polish-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Eligible Purchases are items billed by Miles & More integrated airline partners as merchant of record.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "tickets purchased directly from eligible Miles & More integrated airline partners",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "LOT Polish Airlines",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS (subject to modifications).",
+        "supports": "category"
+      },
+      {
+        "sourceId": "lot-com-lookup-1",
+        "quote": "3182 LOT (POLAND)",
+        "supports": "category"
+      }
+    ],
+    "notes": "The store pages were blocked. Available documents identify LOT as an airline, but the allowed categories contain no airline or travel category, so candidateCategory is null."
+  }
+}

@@ -4,7 +4,7 @@
 // general-merchandise with default evidence, no brands. The homepage text is a gitignored capture; its hash goes to
 // evals/merchants/db/tier-a-manifest.json.
 //   pipeline merchants tier-a [--only a.com,b.com] [--limit N]
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
 import { merchantRecordSchema } from '../../../../packages/rewards-core/src/merchant-release.ts';
@@ -25,6 +25,10 @@ const NAME = merchantRecordSchema.shape.name;
 /** The capture script's bot-wall pattern (scripts/capture-issuer-pages.mjs). */
 const BOT_WALL =
   /access denied|captcha|unusual (traffic|activity)|are you a robot|request (was )?blocked|verify you are human|enable javascript to/i;
+/** Titles a bot wall serves with HTTP 200 (seed 2026-10-11: "Access to this page has been denied.", "Just a moment...",
+ * "Pardon Our Interruption"): no name comes from such a page. */
+export const WALL_TITLE =
+  /access to this page has been denied|just a moment|pardon our interruption|attention required|access denied|are you a robot|robot or human|security check|verify you are human|one more step|checking your browser|please wait/i;
 
 /** The record name from the homepage's own metadata, or the domain's label capitalised. Names are cut at the first
  * separator ("Kroger | Shop Groceries" → "Kroger"), restricted to the record charset and 60 characters. */
@@ -40,14 +44,45 @@ export function displayName(meta: HomepageMeta, domain: string): { name: string;
       .trim();
     return NAME.safeParse(kept).success ? kept : null;
   };
+  const label = domainLabel(domain);
+  const fallback = { name: label.charAt(0).toUpperCase() + label.slice(1), source: 'domain-label' };
+  if ([meta.ogSiteName, meta.applicationName, meta.title].some((v) => v && WALL_TITLE.test(v)))
+    return fallback;
   const candidates: [string, string | null][] = [
     ['og:site_name', clean(meta.ogSiteName)],
     ['application-name', clean(meta.applicationName)],
-    ['title', clean(meta.title)],
   ];
   for (const [source, name] of candidates) if (name) return { name, source };
-  const label = domainLabel(domain);
-  return { name: label.charAt(0).toUpperCase() + label.slice(1), source: 'domain-label' };
+  // A title is often a tagline ("Shoes, Sneakers, Boots, & Clothing + FREE SHIPPING"): take the segment that names
+  // the brand (its label), else the label itself when the title reads like a tagline (long, list-like, no brand word).
+  const title = meta.title;
+  if (title) {
+    const normalLabel = label.replace(/-/g, '');
+    const segments = title
+      .split(/\s+[|–—:·•-]\s+|\s[|•·]\s|\s+-\s+/)
+      .map((seg) => clean(seg))
+      .filter((seg): seg is string => seg !== null);
+    const brandSegment = segments.find(
+      (seg) =>
+        seg.length <= 40 &&
+        seg
+          .replace(/[^a-z0-9]/gi, '')
+          .toLowerCase()
+          .includes(normalLabel),
+    );
+    if (brandSegment) return { name: brandSegment, source: 'title' };
+    const first = segments[0];
+    const tagline =
+      !first ||
+      first.length > 40 ||
+      (first.match(/[,&+]/g) ?? []).length >= 2 ||
+      !first
+        .replace(/[^a-z0-9]/gi, '')
+        .toLowerCase()
+        .includes(normalLabel);
+    if (!tagline) return { name: first, source: 'title' };
+  }
+  return fallback;
 }
 
 export function tierARecord(domain: string, name: string, id = `${domainLabel(domain)}-us`): MerchantRecord {
@@ -158,12 +193,31 @@ export async function tierACommand(
   const capturesDir = join(env.root, DB_DIR, 'tier-a-captures');
   await mkdir(capturesDir, { recursive: true });
   const today = env.now().toISOString().slice(0, 10);
+  // A tier-A domain a tier-B record already lists as a host (hy-vee.com under hyvee-us, seed 2026-10-11) gets no
+  // second record: hosts are unique across the release.
+  const covered = new Set<string>();
+  for (const name of (await readdir(join(env.root, RECORDS_DIR)).catch(() => [] as string[])).filter((n) =>
+    n.endsWith('.json'),
+  )) {
+    const record = JSON.parse(await readFile(join(env.root, RECORDS_DIR, name), 'utf8')) as {
+      id: string;
+      hosts: string[];
+    };
+    for (const host of record.hosts) covered.add(`${host}|${record.id}`);
+  }
+  const coveredBy = (domain: string, id: string) =>
+    [...covered].find((c) => c.startsWith(`${domain}|`) && !c.endsWith(`|${id}`))?.split('|')[1];
   let failed = 0;
   for (const candidate of todo) {
     const refused = hostGate(candidate.domain);
     if (refused) {
       env.log(`${candidate.domain}: refused (${refused}).`);
       failed += 1;
+      continue;
+    }
+    const owner = coveredBy(candidate.domain, tierARecord(candidate.domain, 'x', candidate.id).id);
+    if (owner) {
+      env.log(`${candidate.domain}: already a host of ${owner}; no tier-A record.`);
       continue;
     }
     try {
@@ -187,10 +241,27 @@ export async function tierACommand(
       await writeJsonAtomic(join(env.root, RECORDS_DIR, `${record.id}.json`), record);
       env.log(`${candidate.domain}: ${record.id} "${name}" (${source}, HTTP ${status}, robots ${robots}).`);
     } catch (error) {
+      // A homepage that cannot be fetched at all (timeouts, protocol or certificate errors) says nothing about the
+      // store either: the record is still written with the domain label (seed 2026-10-11: 14 of 332), marked
+      // `(failed)` in the manifest, and counted as failed in the log.
       failed += 1;
-      env.log(
-        `${candidate.domain}: FAILED ${error instanceof Error ? error.message.split('\n')[0] : String(error)}`,
+      const message = error instanceof Error ? error.message.split('\n')[0] : String(error);
+      const { name, source } = displayName(
+        { ogSiteName: null, applicationName: null, title: null },
+        candidate.domain,
       );
+      const record = tierARecord(candidate.domain, name, candidate.id);
+      manifest.stores[candidate.domain] = {
+        url: `https://${candidate.domain}/`,
+        capturedOn: today,
+        sha256: sha256Hex(''),
+        length: 0,
+        nameSource: `${source} (failed: ${message.slice(0, 80)})`,
+        status: 0,
+        robots: 'unknown',
+      };
+      await writeJsonAtomic(join(env.root, RECORDS_DIR, `${record.id}.json`), record);
+      env.log(`${candidate.domain}: FAILED ${message}; default record "${name}" written from the label.`);
     }
     await writeJsonAtomic(manifestPath, manifest);
   }

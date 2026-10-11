@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "appliedOn": "2026-10-11",
+  "records": [
+    {
+      "domain": "apple.com",
+      "id": "apple-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "electronics",
+        "reason": "no store-page quote shows a electronics business type",
+        "notes": "Apple is not present in the supplied catalog brand list, so no brand ID can be assigned."
+      }
+    },
+    {
+      "domain": "barnesandnoble.com",
+      "id": "barnesandnoble-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "birchlane.com",
+      "id": "birchlane-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "cabelas.com",
+      "id": "cabelas-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "dell.com",
+      "id": "dell-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "electronics",
+        "reason": "no store-page quote shows a electronics business type",
+        "notes": "Dell is not included in the catalog brand list. No lookup page directly names Dell; electronics is inferred from its computer/accessory offerings and the issuer’s tech-products definition."
+      }
+    },
+    {
+      "domain": "gap.com",
+      "id": "gap-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "fallback": "default-from-research"
+    },
+    {
+      "domain": "homedepot.com",
+      "id": "homedepot-us",
+      "basis": "definition",
+      "category": "home-improvement"
+    },
+    {
+      "domain": "jcpenney.com",
+      "id": "jcpenney-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "An Amex section heading; it does not name JCPenney or say purchases there earn (quote 4 does that). A restriction to Amex's listed stores rather than a statement of what the category includes; no JCPenney store page was captured to show the business type."
+      },
+      "refused": {
+        "candidate": "department-stores",
+        "reason": "no store-page quote shows a department-stores business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "sherwin-williams.com",
+      "id": "sherwin-williams-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "home-improvement",
+        "reason": "no store-page quote shows a home-improvement business type",
+        "notes": "Sherwin-Williams is not present in the supplied catalog brand list, so no brand ID can be assigned."
+      }
+    },
+    {
+      "domain": "target.com",
+      "id": "target-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    }
+  ],
+  "heldOut": [
+    {
+      "domain": "build.com",
+      "disputed": [
+        {
+          "field": "name",
+          "reason": "No capture names Ferguson Home: the only store page is an access-denied error and no issuer capture names the store; the name is not the domain label."
+        },
+        {
+          "field": "hosts",
+          "reason": "build.com redirects to fergusonhome.com (research notes and the captured URL); a redirect-only domain is not where the store sells or checks out."
+        },
+        {
+          "field": "kind",
+          "reason": "The only store page is an access-denied error and no issuer capture names the store; what the site does cannot be settled from the captures."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture shows goods shipped or picked up: the store page is access denied and no issuer capture names the store."
+        }
+      ]
+    },
+    {
+      "domain": "nordstromrack.com",
+      "disputed": [
+        {
+          "field": "draft",
+          "reason": "the drafter's quotes failed the verbatim gate 3 times"
+        }
+      ]
+    }
+  ],
+  "botWalled": [
+    "birchlane.com",
+    "build.com",
+    "jcpenney.com"
+  ]
+}

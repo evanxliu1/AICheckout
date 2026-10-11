@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18500,
+    "outputTokens": 318
+  },
+  "durationMs": 43919,
+  "draft": {
+    "domain": "harley-davidson.com",
+    "kind": "marketplace",
+    "physicalGoods": true,
+    "brandIds": [
+      "harley-davidson"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "harley-davidson-com-page-2",
+        "quote": "Harley-Davidson Motor Company administers the H-D® Online Store on behalf of and as agent for participating dealerships.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "harley-davidson-com-page-2",
+        "quote": "The Selling Dealer is the dealership that will receive credit for your purchases, and that is officially responsible for the sales that fill your orders",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "harley-davidson-com-page-2",
+        "quote": "Products shipped to the dealer are usually available within 5 - 7 days.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "harley-davidson-com-page-1",
+        "quote": "HARLEY-DAVIDSON, HARLEY, H-D, and the Bar and Shield Logo are among the trademarks of Harley-Davidson Motor Company, Inc.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "harley-davidson-com-page-1",
+        "quote": "MOTORCYCLES",
+        "supports": "category"
+      },
+      {
+        "sourceId": "harley-davidson-com-page-2",
+        "quote": "MOTORCYCLE SALES",
+        "supports": "category"
+      }
+    ],
+    "notes": "The FAQ assigns online-store sales responsibility to participating dealerships, supporting marketplace classification despite the Harley-branded storefront. Motorcycle retail is not one of the supplied categories, so candidateCategory is null."
+  }
+}

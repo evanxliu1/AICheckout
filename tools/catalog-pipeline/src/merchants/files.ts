@@ -28,8 +28,10 @@ export const EVIDENCE_DIR = `${DB_DIR}/evidence`;
 export const RELEASE_CONFIG = `${DB_DIR}/release-config.json`;
 export const REVIEW_FILE = `${DB_DIR}/review.md`;
 export const TIER_A_MANIFEST = `${DB_DIR}/tier-a-manifest.json`;
-export const PROMPT_FILE = 'tools/catalog-pipeline/src/merchants/prompts/merchant-draft.1.md';
-export const PROMPT_VERSION = 'merchant-draft.1';
+/** Stores excluded by coordinator decision (no record): `evals/merchants/db/exclusions.json`. */
+export const EXCLUSIONS_FILE = `${DB_DIR}/exclusions.json`;
+export const PROMPT_FILE = 'tools/catalog-pipeline/src/merchants/prompts/merchant-draft.2.md';
+export const PROMPT_VERSION = 'merchant-draft.2';
 export const RESEARCHER_AGENT = '.claude/agents/merchant-researcher.md';
 export const VERIFIER_AGENT = '.claude/agents/merchant-verifier.md';
 export const MERCHANT_AGENTS = { research: 'merchant-researcher', verify: 'merchant-verifier' } as const;
@@ -42,6 +44,21 @@ export type MerchantStage = (typeof MERCHANT_STAGES)[number];
 /** Stores per tier-B packet (plan section 6). */
 export const PACKET_SIZE = 25;
 export const MAX_QUOTE_WORDS = 25;
+/** Failed draft gates after which a store is held out of the batch (coordinator, 2026-10-11). */
+export const MAX_DRAFT_ATTEMPTS = 3;
+/** A store the draft stage holds out: skipped by verify and listed as held out by apply. */
+export const draftHeldOut = (state: State, domain: string): boolean =>
+  state.stores[domain]?.draft?.status === 'held-out';
+/** The verifier's reasons that mark a defunct, parked or typo domain (coordinator, 2026-10-11): such a store is
+ * excluded with reason `defunct`, no record. */
+export const DEFUNCT_WORDING =
+  /\b(defunct|closed|parked|liquidat\w*|typo|no longer|ceased|out of business)\b/i;
+/** A verifier's `physicalGoods` reason that states the value: an explicit true/false, or the kinds of business the
+ * coordinator named as goods-free (tickets, admission, streaming, charging, game credit, services). */
+export const GOODS_FALSE_WORDING =
+  /\b(tickets?|admission|streaming|subscription|charging|game credit|services? only|charging sessions?)\b/i;
+export const GOODS_UNSETTLED_WORDING =
+  /\b(cannot be settled|unreachable|bot[- ]?check|bot[- ]?block|parked|no capture (?:describes|shows what)|empty|error page|help[- ]center)\b/i;
 export const BATCH_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const slug = z.string().regex(SLUG).max(120);
@@ -143,7 +160,9 @@ export type StageRecord = z.infer<typeof stageRecordSchema>;
 const storeStateSchema = z.strictObject({
   draft: z
     .strictObject({
-      status: z.enum(['done', 'failed-gate', 'provider-error', 'timeout']),
+      /** `held-out`: the quotes failed the verbatim gate `MAX_DRAFT_ATTEMPTS` times (coordinator, 2026-10-11). */
+      status: z.enum(['done', 'failed-gate', 'provider-error', 'timeout', 'held-out']),
+      attempts: z.int().nonnegative().optional(),
       inputTokens: z.int().nonnegative(),
       outputTokens: z.int().nonnegative(),
       durationMs: z.int().nonnegative(),
@@ -215,7 +234,8 @@ export const manifestEntrySchema = sourceEntrySchema.extend({
 export const manifestFileSchema = z.looseObject({ sources: z.array(manifestEntrySchema) });
 export type ManifestEntry = z.infer<typeof manifestEntrySchema>;
 
-export const DRAFT_SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category'] as const;
+/** `definition` (prompt 2): an issuer's published definition of a category, quoted from its own page. */
+export const DRAFT_SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category', 'definition'] as const;
 /** What luna returns per store (the Codex output schema is `draftJsonSchema`). The model never sets `category`;
  * it proposes `candidateCategory` and apply decides from the evidence rule. */
 export const draftSchema = z.strictObject({
@@ -232,7 +252,7 @@ export const draftSchema = z.strictObject({
         supports: z.enum(DRAFT_SUPPORTS),
       }),
     )
-    .max(12),
+    .max(16),
   notes: z.string().max(600).nullable(),
 });
 export type Draft = z.infer<typeof draftSchema>;
@@ -247,6 +267,9 @@ export const draftFileSchema = z.strictObject({
   usage: z.strictObject({ inputTokens: z.int().nonnegative(), outputTokens: z.int().nonnegative() }),
   durationMs: z.int().nonnegative(),
   draft: draftSchema,
+  /** A catalog-brand store whose drafts failed the gate three times gets a default draft from research (name, hosts,
+   * the candidate list's brands, no quotes) for the verifier to confirm (coordinator, 2026-10-11). */
+  fallback: z.literal('default-from-research').optional(),
 });
 export type DraftFile = z.infer<typeof draftFileSchema>;
 export const draftJsonSchema = {
@@ -291,6 +314,9 @@ const verdictSchema = z.strictObject({
   /** Required for `disputed`: the verifier's own words. */
   reason: note.nullable(),
 });
+/** One verdict per drafted evidence quote, in the draft's order (review 2026-10-11): apply uses confirmed quotes only,
+ * so one bad quote no longer spoils a record whose other quotes satisfy the rule. */
+export const quoteVerdictSchema = verdictSchema.extend({ index: z.int().nonnegative() });
 export const verificationFileSchema = z.strictObject({
   schemaVersion: z.literal(1),
   packetId: z.uuid(),
@@ -312,6 +338,8 @@ export const verificationFileSchema = z.strictObject({
             typeof verdictSchema
           >,
         ),
+        /** Per-quote verdicts; `fields.evidence` is their summary (disputed when any quote is). */
+        quotes: z.array(quoteVerdictSchema),
       }),
     )
     .min(1),
@@ -367,16 +395,58 @@ export const applyReportSchema = z.strictObject({
       category: z.string(),
       /** The verifier disputed `evidence` alone: shipped on the default category, listed for Evan. */
       downgraded: z.strictObject({ reason: note.nullable() }).optional(),
+      /** A drafted candidate the evidence rule refused, with the rule's reason and the drafter's notes. */
+      refused: z
+        .strictObject({
+          candidate: z.string(),
+          reason: z.string().max(300),
+          notes: z.string().max(600).nullable(),
+        })
+        .optional(),
+      /** Cross-issuer conflicts of a granted category, for Evan (source id and a sentence of 25 words or fewer). */
+      conflicts: z.array(z.string().max(400)).optional(),
+      /** The record came from a default draft built from research after three failed draft gates. */
+      fallback: z.literal('default-from-research').optional(),
+      /** Hosts the verifier could not confirm, dropped from the record (the rest confirmed). */
+      droppedHosts: z.array(domainSchema).optional(),
+      /** A coordinator field correction from overrides.json was applied. */
+      overridden: z.array(z.string().max(300)).optional(),
     }),
   ),
   heldOut: z.array(
     z.strictObject({
       domain: domainSchema,
       disputed: z.array(z.strictObject({ field: z.string(), reason: note.nullable() })),
+      /** `defunct`: the verifier's reasons say the domain is defunct, parked or a typo; `out-of-scope`: listed in
+       * exclusions.json (no U.S. site). Both are excluded, no record. */
+      reason: z.enum(['defunct', 'out-of-scope']).optional(),
     }),
   ),
+  /** Stores whose own pages were all bot-walled or missing (name and hosts from research and issuer captures). */
+  botWalled: z.array(domainSchema).optional(),
 });
 export type ApplyReport = z.infer<typeof applyReportSchema>;
+
+/** Coordinator field corrections (`evals/merchants/db/overrides.json`), applied after the rule and listed in review.md. */
+export const OVERRIDES_FILE = `${DB_DIR}/overrides.json`;
+export const overridesFileSchema = z.strictObject({
+  description: z.string(),
+  fields: z.array(
+    z.strictObject({
+      domain: domainSchema,
+      physicalGoods: z.boolean().optional(),
+      kind: z.enum(MERCHANT_KINDS).optional(),
+      reason: z.string().max(300),
+    }),
+  ),
+  notes: z.array(z.string().max(400)),
+});
+export const exclusionsFileSchema = z.strictObject({
+  description: z.string(),
+  excluded: z.array(
+    z.strictObject({ domain: domainSchema, reason: z.enum(['out-of-scope']), note: z.string().max(300) }),
+  ),
+});
 
 export const releaseConfigSchema = z.strictObject({
   description: z.string(),

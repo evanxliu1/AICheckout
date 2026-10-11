@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15593,
+    "outputTokens": 178
+  },
+  "durationMs": 42282,
+  "draft": {
+    "domain": "athome.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "at-home"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "athome-com-page-1",
+        "quote": "We do not provide exchanges, but you're welcome to return any unwanted product and purchase new items.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "athome-com-page-2",
+        "quote": "You can return items shipped to your home at your local store for free",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-at-home-mastercard-partner",
+        "quote": "To view your At Home Design Rewards® point balance, visit Athome.com",
+        "supports": "brand"
+      }
+    ],
+    "notes": "The documents establish a branded store selling shipped products, but provide no merchant-code lookup or plain business-type statement; category is conservatively null."
+  }
+}

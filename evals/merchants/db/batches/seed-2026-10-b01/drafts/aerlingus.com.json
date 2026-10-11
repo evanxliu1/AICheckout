@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16529,
+    "outputTokens": 199
+  },
+  "durationMs": 26036,
+  "draft": {
+    "domain": "aerlingus.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "aer-lingus"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "aerlingus-com-lookup-1",
+        "quote": "3043\tAER LINGUS",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "aer-lingus-visa-signature-product",
+        "quote": "Aer Lingus Visa Signature® Credit Card",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "aer-lingus-visa-signature-product",
+        "quote": "flight purchases",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "aerlingus-com-lookup-1",
+        "quote": "3043\tAER LINGUS",
+        "supports": "category"
+      }
+    ],
+    "notes": "The store pages were blocked by a bot challenge. The lookup identifies Aer Lingus as an airline, and airline travel is not represented by the supplied categories, so candidateCategory is null."
+  }
+}

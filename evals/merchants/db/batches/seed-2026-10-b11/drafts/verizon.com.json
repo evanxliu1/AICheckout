@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 19585,
+    "outputTokens": 304
+  },
+  "durationMs": 20173,
+  "draft": {
+    "domain": "verizon.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "verizon"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "verizon-com-page-2",
+        "quote": "Shop\nDevices",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "Verizon purchases include purchases of devices and accessories",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "The Rewards Program is managed, provided and operated by Verizon.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "made at a Verizon operated store, Verizon online",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-partner",
+        "quote": "Earn 4% on Verizon purchases",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-product",
+        "quote": "Verizon store purchases (excluding bill payment)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®",
+        "supports": "category"
+      }
+    ],
+    "notes": "Verizon sells devices and accessories, but the documents identify it as a telecom/wireless provider rather than a listed retail category. U.S. Bank expressly excludes electronics purchases from telecom companies like Verizon, so candidateCategory is null."
+  }
+}

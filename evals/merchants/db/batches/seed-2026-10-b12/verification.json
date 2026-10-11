@@ -1,0 +1,828 @@
+{
+  "schemaVersion": 1,
+  "packetId": "bed1fac5-f7b8-4b29-b6c5-7fd8b04f2063",
+  "batch": "seed-2026-10-b12",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "merchant-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-verifier.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/packets/verify.1.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/research.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/manifest.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/catalog-lists.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/youtube.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/affirm.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/afterpay.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/bolt.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/cash.app.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/checkout.stripe.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/klarna.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/link.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/pay.google.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/sezzle.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/shop.app.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/splitit.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/venmo.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/verify/zip.co.md",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/youtube.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/affirm.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/afterpay.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/bolt.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/cash.app.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/checkout.stripe.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/klarna.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/link.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/pay.google.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/sezzle.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/shop.app.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/splitit.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/venmo.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/drafts/zip.co.json",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/youtube-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/youtube-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/youtube-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/affirm-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/affirm-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/afterpay-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/afterpay-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/bolt-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/cash-app-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/cash-app-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/checkout-stripe-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/klarna-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/klarna-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/link-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/link-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/pay-amazon-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/pay-amazon-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/pay-amazon-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/pay-google-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/sezzle-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/sezzle-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/shop-app-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/shop-app-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/splitit-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/splitit-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/venmo-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/venmo-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/zip-co-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/zip-co-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/zip-co-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-platinum-pricing.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-rewards-info-retail.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/discover-cashback-calendar.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-onepay-cashrewards-card-product.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-onepay-cashrewards-card-rewards-terms.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-cash-back-category-choices.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-customized-cash-rewards-pricing.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/chase-rewards-category-faq.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/citi-costco-anywhere-visa-categories.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/citi-strata-rewards-terms.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/us-bank-cash-plus-product.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/us-bank-cash-plus-sample-merchants.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/us-bank-edward-jones-triple-rewards-categories.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/wells-fargo-autograph-categories.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/wells-fargo-choice-privileges-rewards-terms.windows.youtube.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-newegg-store-credit-card-categories.windows.affirm.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-air-france-klm-pricing.windows.affirm.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-allways-rewards-pricing.windows.affirm.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-atmos-rewards-ascent-pricing.windows.affirm.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/boa-atmos-rewards-summit-pricing.windows.affirm.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-athleta-encore-mastercard-pricing.windows.afterpay.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-banana-republic-encore-mastercard-pricing.windows.afterpay.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-gap-encore-mastercard-pricing.windows.afterpay.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-old-navy-encore-mastercard-pricing.windows.afterpay.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-belk-rewards-mastercard-partner.windows.afterpay.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-athleta-encore-mastercard-pricing.windows.klarna.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-banana-republic-encore-mastercard-pricing.windows.klarna.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-gap-encore-mastercard-pricing.windows.klarna.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/barclays-old-navy-encore-mastercard-pricing.windows.klarna.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amazon-visa-product.windows.link.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/prime-visa-product.windows.link.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/united-quest-product.windows.link.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/chase-freedom-flex-product.windows.link.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/chase-freedom-unlimited-product.windows.link.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/prime-visa-rewards-terms.windows.pay.amazon.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amazon-store-card-product.windows.pay.amazon.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-amazon-store-card-pricing.windows.pay.amazon.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-blue-cash-everyday-terms.windows.pay.amazon.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-blue-cash-preferred-terms.windows.pay.amazon.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-sams-club-mastercard-partner.windows.pay.google.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-tjx-rewards-platinum-mastercard-partner.windows.pay.google.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-venmo-credit-card-product.windows.pay.google.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/us-bank-elan-fidelity-rewards-product.windows.pay.google.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-carecredit-rewards-mastercard-product.windows.pay.google.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-venmo-credit-card-rewards-terms.windows.venmo.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-venmo-credit-card-product.windows.venmo.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-newegg-store-credit-card-categories.windows.venmo.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-blue-cash-everyday-terms.windows.venmo.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/amex-blue-cash-preferred-terms.windows.venmo.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/us-bank-elan-fidelity-rewards-product.windows.zip.co.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/state-farm-credit-cards.windows.zip.co.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/synchrony-verizon-visa-card-partner.windows.zip.co.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/wells-fargo-autograph-journey-pricing.windows.zip.co.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/captures/wells-fargo-autograph-pricing.windows.zip.co.txt",
+      "evals/merchants/db/batches/seed-2026-10-b12/batch.json"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "youtube.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 9,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 10,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "affirm.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "afterpay.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "bolt.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "cash.app",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "checkout.stripe.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "klarna.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "link.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "pay.google.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "sezzle.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "shop.app",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "splitit.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "venmo.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "zip.co",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    }
+  ]
+}

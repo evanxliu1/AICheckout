@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16425,
+    "outputTokens": 236
+  },
+  "durationMs": 53667,
+  "draft": {
+    "domain": "att.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "att"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "att-com-page-1",
+        "quote": "Shop",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "att-com-page-1",
+        "quote": "Cell phones",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "att-com-page-1",
+        "quote": "Welcome to AT&T Support",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "att-com-page-1",
+        "quote": "Wireless",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-att-points-plus-rewards-terms",
+        "quote": "2 ThankYou® Points for every $1 spent on AT&T products and services",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®",
+        "supports": "category"
+      }
+    ],
+    "notes": "AT&T sells physical devices directly, but its business is wireless/internet services rather than an eligible category. The U.S. Bank issuer page explicitly excludes electronics purchases from telecom companies like AT&T, so candidateCategory is null."
+  }
+}

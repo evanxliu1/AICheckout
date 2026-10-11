@@ -1,0 +1,2094 @@
+{
+  "schemaVersion": 1,
+  "packetId": "eb04efd7-63ce-433e-84e2-fbbc71d5f733",
+  "batch": "seed-2026-10-b03",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "merchant-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      ".claude/agents/merchant-verifier.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/research.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/manifest.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/catalog-lists.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/capsule.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/carnival.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/cathaypacific.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/cedarpoint.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/celebritycruises.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/chargepoint.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/chick-fil-a.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/chicos.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/chilis.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/chipotle.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/choicehotels.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/cinemark.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/clubwyndham.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/costplusdrugs.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/croatiaairlines.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/crunchyroll.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/crutchfield.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/dairyqueen.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/daveandbusters.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/dillards.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/directbuy.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/discoveryplus.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/disneyland.disney.go.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/disneyplus.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/disneystore.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/capsule.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/carnival.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/cathaypacific.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/cedarpoint.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/celebritycruises.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/chargepoint.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/chick-fil-a.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/chicos.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/chilis.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/chipotle.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/choicehotels.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/cinemark.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/clubwyndham.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/costplusdrugs.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/croatiaairlines.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/crunchyroll.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/crutchfield.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/dairyqueen.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/daveandbusters.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/dillards.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/directbuy.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/discoveryplus.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneyland.disney.go.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneyplus.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneystore.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/capsule-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/capsule-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/capsule-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/carnival-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/carnival-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/cedarpoint-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/cedarpoint-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/cedarpoint-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/celebritycruises-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/celebritycruises-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chargepoint-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chargepoint-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chargepoint-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chick-fil-a-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chick-fil-a-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chicos-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chilis-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chipotle-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chipotle-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/choicehotels-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/choicehotels-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/cinemark-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/cinemark-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/clubwyndham-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/clubwyndham-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/costplusdrugs-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/costplusdrugs-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/croatiaairlines-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/croatiaairlines-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/crunchyroll-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/crunchyroll-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/crutchfield-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/crutchfield-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/dairyqueen-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/dairyqueen-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/daveandbusters-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/daveandbusters-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/dillards-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/dillards-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/dillards-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/directbuy-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/directbuy-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discoveryplus-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discoveryplus-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneyland-disney-go-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneyland-disney-go-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneyland-disney-go-com-page-3.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneyplus-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneyplus-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneystore-com-page-1.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disneystore-com-page-2.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.capsule.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-carnival-rewards-mastercard-pricing.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-carnival-rewards-mastercard-product.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.carnival.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.cathaypacific.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.cedarpoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-royal-one-plus-pricing.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-royal-one-pricing.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-royal-one-plus-product.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-royal-one-product.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.celebritycruises.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.chargepoint.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.chick-fil-a.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/synchrony-chicos-mastercard-partner.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.chicos.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.chilis.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.chipotle.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-pricing.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-select-pricing.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-select-rewards-terms.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-select-product.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.choicehotels.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.cinemark.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-wyndham-rewards-earner-plus-pricing.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-wyndham-rewards-earner-premier-pricing.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-wyndham-rewards-earner-pricing.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.clubwyndham.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.costplusdrugs.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/barclays-lufthansa-miles-more-world-elite-pricing.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.croatiaairlines.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.crunchyroll.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.crutchfield.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.dairyqueen.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.daveandbusters.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-dillards-mastercard-product.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.dillards.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.directbuy.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-altitude-connect-rewards-terms.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-altitude-go-rewards-terms.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-altitude-go-secured-rewards-terms.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.discoveryplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-premier-visa-rewards-terms.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.disneyland.disney.go.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-premier-visa-rewards-terms.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-blue-cash-everyday-terms.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-blue-cash-preferred-terms.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-inspire-visa-product.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-platinum-pricing.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.disneyplus.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-inspire-visa-product.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-premier-visa-product.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-visa-product.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/disney-premier-visa-rewards-terms.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/amex-rewards-info-retail.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-cash-back-category-choices.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/boa-customized-cash-rewards-pricing.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/chase-rewards-category-faq.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-costco-anywhere-visa-categories.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/citi-strata-rewards-terms.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/discover-cashback-calendar.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-product.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-cash-plus-sample-merchants.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.disneystore.com.txt",
+      "evals/merchants/db/batches/seed-2026-10-b03/packets/verify.2.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/capture-report.json"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "capsule.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 5 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "disputed",
+          "reason": "Amex select-drugstore list does not name Capsule; it cannot support the category for this store."
+        }
+      ]
+    },
+    {
+      "domain": "carnival.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 4 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "disputed",
+          "reason": "Bank of America Travel definition that does not name Carnival; Travel is not the drafted (null) category, so it supports no drafted category."
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "cathaypacific.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "disputed",
+          "reason": "Store pages were unreachable and no issuer capture names Cathay Pacific or cathaypacific.com, so research and an issuer capture do not agree; the host cannot be confirmed at all."
+        },
+        "kind": {
+          "verdict": "disputed",
+          "reason": "Store pages were unreachable and no issuer capture names the store; what the site does cannot be settled from the captures."
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "Store pages were unreachable and no capture describes what the site sells; the value cannot be settled from the captures."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": []
+    },
+    {
+      "domain": "cedarpoint.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "disputed",
+          "reason": "cedarpoint.com redirects to sixflags.com; sixflags.com is the Six Flags site shared by every Six Flags park, another company's domain, not a Cedar Point host."
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "physicalGoods: false; sells park admission tickets and passes; the online shop is only a menu link (gift cards), no goods shown shipped or picked up."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 2, 3, 5, 6 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "disputed",
+          "reason": "A menu link only; it does not show goods shipped or picked up."
+        },
+        {
+          "index": 3,
+          "verdict": "disputed",
+          "reason": "Card acceptance at in-park gift shops; does not show goods sold through the site."
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "disputed",
+          "reason": "A navigation heading; does not plainly show the business type."
+        },
+        {
+          "index": 6,
+          "verdict": "disputed",
+          "reason": "Definition of Bank of America's Travel category, not the drafted entertainment category."
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "celebritycruises.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 3 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "disputed",
+          "reason": "Definition of a Travel category; the draft has no candidate category, so it supports no drafted category."
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "chargepoint.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "physicalGoods: false; drivers find, charge and pay for EV charging sessions; no hardware shown sold, shipped or picked up through the site."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 1, 2, 6, 9 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "disputed",
+          "reason": "Describes a hardware portfolio; does not show goods sold or shipped to buyers."
+        },
+        {
+          "index": 2,
+          "verdict": "disputed",
+          "reason": "A ratings claim; does not show a charger sold or shipped through the site."
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 9,
+          "verdict": "disputed",
+          "reason": "Lists a card's choice categories and does not name ChargePoint; cannot support the category for this store."
+        }
+      ]
+    },
+    {
+      "domain": "chick-fil-a.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 5, 7 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 9,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 10,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "chicos.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "chilis.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 3, 7 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        }
+      ]
+    },
+    {
+      "domain": "chipotle.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 3, 4, 6, 8 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "disputed",
+          "reason": "An FAQ topic label; does not plainly show the business type."
+        },
+        {
+          "index": 4,
+          "verdict": "disputed",
+          "reason": "A category heading that does not name Chipotle and is not a definition."
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 9,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 10,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 11,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "choicehotels.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "cinemark.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "clubwyndham.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "disputed",
+          "reason": "clubwyndham.com redirects to clubwyndham.wyndhamdestinations.com (research note; every capture is on that subdomain); the subdomain stands as the store host."
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "costplusdrugs.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "croatiaairlines.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "crunchyroll.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "Captures show only an error page and a help center listing a Store topic; neither shows goods shipped or picked up nor rules them out, so the value cannot be settled."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "crutchfield.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "dairyqueen.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 4, 6 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "disputed",
+          "reason": "Promotional tagline with no definition wording; not the issuer's statement of what the category includes."
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 9,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "daveandbusters.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "physicalGoods: false; sells game play, food and drink and event bookings; the only goods quote is a Power Card (game credit), not merchandise shipped."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "disputed",
+          "reason": "Captures show a games-and-dining venue; no captured issuer definition of entertainment covers arcades or game venues, so entertainment is unsupported."
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 0, 2, 4, 5 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "disputed",
+          "reason": "Navigation labels; do not plainly show the business type."
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "disputed",
+          "reason": "A stored-value game card, not physical goods shipped or picked up."
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "disputed",
+          "reason": "Covers movie-theater and similar ticket purchases; does not cover an arcade-and-restaurant venue."
+        },
+        {
+          "index": 5,
+          "verdict": "disputed",
+          "reason": "Live-entertainment ticketing (concerts, parks); does not cover an arcade-and-restaurant venue."
+        }
+      ]
+    },
+    {
+      "domain": "dillards.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "directbuy.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "discoveryplus.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 11, 12 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 5,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 6,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 7,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 8,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 9,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 10,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 11,
+          "verdict": "disputed",
+          "reason": "Citi's closed list of streaming providers does not include discovery+; it does not support the category for this store."
+        },
+        {
+          "index": 12,
+          "verdict": "disputed",
+          "reason": "Discover's examples list of select streaming services does not name discovery+."
+        },
+        {
+          "index": 13,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "domain": "disneyland.disney.go.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "disputed",
+          "reason": "Quotes 2 disputed; see quotes."
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "disputed",
+          "reason": "Definition of Citi's live-entertainment category; the draft has no candidate category, so it supports no drafted category."
+        }
+      ]
+    },
+    {
+      "domain": "disneyplus.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "physicalGoods: false; sells Disney+ streaming subscriptions and bundles; nothing is shipped or picked up."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": []
+    },
+    {
+      "domain": "disneystore.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": [
+        {
+          "index": 0,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 1,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 2,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 3,
+          "verdict": "confirmed",
+          "reason": null
+        },
+        {
+          "index": 4,
+          "verdict": "confirmed",
+          "reason": null
+        }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
-import { domainLabel } from './candidates.ts';
+import { storeNamed } from './apply.ts';
 import {
   loadBatch,
   manifestFileSchema,
@@ -78,14 +78,9 @@ export async function listIssuerCaptures(root: string): Promise<IssuerCapture[]>
   return [...byId.values()];
 }
 
-/** Word-boundary, case-insensitive match of the store's name (and its domain label when 5+ letters). */
-export function nameMatcher(name: string, domain: string): RegExp {
-  const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const variants = new Set([name.trim()]);
-  const label = domainLabel(domain);
-  if (label.length >= 5) variants.add(label);
-  return new RegExp(`(?<![A-Za-z0-9])(?:${[...variants].map(escape).join('|')})(?![A-Za-z0-9])`, 'i');
-}
+/** Word-boundary, case-insensitive match of the store's name (hyphens inside it optional: "Wal-Mart") and its
+ * domain label when 5+ letters; the apply rule's `storeNamed`. */
+export const nameMatcher = (name: string, domain: string): RegExp => storeNamed(name, domain);
 
 /** Text windows (±WINDOW characters) around every match, merged when they overlap; at most `max` windows. */
 export function windows(text: string, matcher: RegExp, span = 500, max = 6): string[] {
@@ -105,7 +100,51 @@ export function windows(text: string, matcher: RegExp, span = 500, max = 6): str
   return ranges.map(([s, e]) => text.slice(s, e));
 }
 
+/** Wording an issuer uses when it says what a category covers. */
+const DEFINITION_WORDING = /\b(includ\w*|defin\w*|categor\w*|such as|list|means|consist\w*)\b/i;
+/** Words of the catalog's bonus categories as issuers write them (the apply rule's `ISSUER_CATEGORY_WORDS`, kept
+ * here so capture does not import apply). */
+const CATEGORY_WORDING =
+  /\b(grocer(?:y|ies)|supermarkets?|restaurants?|dining|drug ?stores?|pharmac(?:y|ies)|streaming|gas stations?|ev charging|transit|rideshare|department stores?|home improvement|hardware stores?|wholesale clubs?|warehouse clubs?|electronics|entertainment)\b/i;
+
+/** Sentences of an issuer capture that define a category (a category word with definition wording), ±`span`
+ * characters, merged when they overlap, at most `max`: the drafter's `definition` quotes come from here (prompt
+ * merchant-draft.2), since the name windows alone miss a definition the page states away from the store's name. */
+export function definitionWindows(text: string, span = 200, max = 8): string[] {
+  const ranges: [number, number][] = [];
+  const sentence = /[^.;\n]*[.;\n]?/g;
+  for (const match of text.matchAll(sentence)) {
+    const s = match[0];
+    if (!s.trim() || !CATEGORY_WORDING.test(s) || !DEFINITION_WORDING.test(s)) continue;
+    const start = Math.max(0, match.index - span);
+    const end = Math.min(text.length, match.index + s.length + span);
+    const last = ranges[ranges.length - 1];
+    if (last && start <= last[1]) last[1] = end;
+    else ranges.push([start, end]);
+    if (ranges.length >= max) break;
+  }
+  return ranges.map(([s, e]) => text.slice(s, e));
+}
+
 export const MAX_ISSUER_SOURCES = 5;
+/** Issuer pages that define their bonus categories (review 2026-10-11): attached to every non-processor store, named
+ * or not, as issuer sources, so a store the issuers never name still sees the definitions (Lowe's and Chase's
+ * home-improvement definition). The fixed set is the catalog's category pages; a mined capture's own definition
+ * sentences are shown by `definitionWindows` anyway. */
+export const DEFINITION_PAGES = [
+  'amex-rewards-info-retail',
+  'boa-cash-back-category-choices',
+  'boa-customized-cash-rewards-pricing',
+  'chase-rewards-category-faq',
+  'citi-costco-anywhere-visa-categories',
+  'citi-strata-rewards-terms',
+  'discover-cashback-calendar',
+  'us-bank-cash-plus-product',
+  'us-bank-cash-plus-sample-merchants',
+  'us-bank-edward-jones-triple-rewards-categories',
+  'wells-fargo-autograph-categories',
+  'wells-fargo-choice-privileges-rewards-terms',
+] as const;
 
 export async function runCapture(
   env: Env,
@@ -174,7 +213,15 @@ export async function runCapture(
       if (count) hits.push({ capture, text, count });
     }
     hits.sort((a, b) => b.count - a.count || a.capture.id.localeCompare(b.capture.id));
-    for (const { capture, text } of hits.slice(0, MAX_ISSUER_SOURCES)) {
+    const chosen = hits.slice(0, MAX_ISSUER_SOURCES);
+    const processor = batch.meta.stores.find((s) => s.domain === store.domain)?.groups.includes('processors');
+    if (!processor)
+      for (const id of DEFINITION_PAGES) {
+        const capture = issuerCaptures.find((c) => c.id === id);
+        if (capture && !chosen.some((h) => h.capture.id === id))
+          chosen.push({ capture, text: await readFile(capture.path, 'utf8'), count: 0 });
+      }
+    for (const { capture, text } of chosen) {
       const id = capture.id;
       await copyFile(capture.path, join(batch.dir, 'captures', `${id}.txt`));
       await writeFile(
@@ -198,19 +245,27 @@ export async function runCapture(
   }
   await writeJsonAtomic(join(batch.dir, 'manifest.json'), { schemaVersion: 1, sources: entries });
   const captured = entries.filter((e) => e.kind !== 'issuer-terms').length;
+  // A page that could not be fetched is a dropped source (plan section 6: "every cited URL captured or the source is
+  // dropped"), not a failed stage: the script exits 1 for it, the manifest omits it, and the stage is done when the
+  // manifest exists. Stores left without a store page are named so the verifier and Evan can see them.
+  const done = manifest !== null;
+  const withoutPage = stores
+    .filter((s) => !entries.some((e) => e.domain === s.domain && e.kind === 'store-page'))
+    .map((s) => s.domain);
+  if (withoutPage.length) env.log(`capture: no store page captured for ${withoutPage.join(', ')}.`);
   const now = env.now();
   batch.state.stages.capture = {
-    status: code === 0 ? 'done' : 'failed-gate',
+    status: done ? 'done' : 'failed-gate',
     finishedAt: now.toISOString(),
     attempts: (batch.state.stages.capture.attempts ?? 0) + 1,
   };
-  if (code === 0)
+  if (done)
     batch.state.stages.draft = { status: batch.state.stages.draft.status === 'done' ? 'stale' : 'pending' };
   await writeState(batch.dir, batch.state, now);
   env.log(
-    `capture: ${captured} of ${sources.length} pages captured, ${mined} issuer captures mined (${issuerCaptures.length} searched). ${code === 0 ? '' : 'Some pages failed; see capture-report.json.'}`,
+    `capture: ${captured} of ${sources.length} pages captured, ${mined} issuer captures mined (${issuerCaptures.length} searched). ${code === 0 ? '' : 'Some pages failed and were dropped; see capture-report.json.'}`,
   );
-  return code;
+  return done ? 0 : 1;
 }
 
 export { type Batch };

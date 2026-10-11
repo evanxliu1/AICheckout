@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14305,
+    "outputTokens": 249
+  },
+  "durationMs": 20145,
+  "draft": {
+    "domain": "belk.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "synchrony-belk-rewards-mastercard-partner",
+        "quote": "Use your Belk Rewards™ credit card at checkout — in a Belk store, on belk.com, or in the Belk mobile app.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "synchrony-belk-rewards-mastercard-partner",
+        "quote": "Free shipping benefits on belk.com purchases vary by tier:",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "The department stores must have these specific names: Bealls, Belk",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "purchases must be made at a department store that is included on our list of \"select major department stores\"",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Belk is not present in the supplied catalog brand list, so brandIds is empty. The store-page documents are bot-challenge text, but issuer pages establish Belk.com purchases and Belk as a department store."
+  }
+}

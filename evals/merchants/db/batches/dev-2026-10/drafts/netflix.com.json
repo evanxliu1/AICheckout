@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 9523,
-    "outputTokens": 436
+    "inputTokens": 17620,
+    "outputTokens": 657
   },
-  "durationMs": 47700,
+  "durationMs": 72314,
   "draft": {
     "domain": "netflix.com",
     "kind": "merchant",
@@ -34,6 +34,11 @@
         "supports": "physicalGoods"
       },
       {
+        "sourceId": "netflix-com-page-2",
+        "quote": "Unlimited ad-free movies, TV shows, and games",
+        "supports": "category"
+      },
+      {
         "sourceId": "netflix-com-lookup-1",
         "quote": "Netflix, Peacock, and Hulu all use MCC 4899 (Cable and other pay television)",
         "supports": "category"
@@ -50,25 +55,50 @@
       },
       {
         "sourceId": "amex-rewards-info-retail",
-        "quote": "Select U.S. Streaming Subscriptions",
+        "quote": "NBA League Pass\nNetflix\nPandora\nParamount+",
         "supports": "category"
       },
       {
-        "sourceId": "boa-cash-back-category-choices",
-        "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app).",
-        "supports": "category"
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "streaming subscription purchases, the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
       },
       {
         "sourceId": "boa-cash-back-category-choices",
-        "quote": "Merchant examples*\nAmazon\nComcast\nEtsy\nNetflix",
+        "quote": "Merchant examples*\nAmazon\nComcast\nEtsy\nNetflix\nNordstrom",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Hulu, MLB.TV, NBA League Pass, Netflix",
         "supports": "category"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
         "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "MLB.TV, Netflix, Pandora, Paramount Plus, Peacock",
         "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "TV or Movie Streaming\nDisney+\nNetflix\nYouTube",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
+        "supports": "definition"
       }
     ],
-    "notes": "Bank of America lists Netflix as an online-shopping merchant example, but the store, MCC lookup, and other issuer pages identify it as streaming. No Netflix brand ID appears in the catalog."
+    "notes": "Netflix’s corporate page uses broad entertainment language, while its plans and multiple issuer sources identify monthly streaming subscriptions. One issuer lists Netflix under Online Shopping, and the lookup reports MCC 4899 cable/pay television. No catalog brand matches Netflix."
   }
 }

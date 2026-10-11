@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 19167,
+    "outputTokens": 304
+  },
+  "durationMs": 32974,
+  "draft": {
+    "domain": "hawaiianairlines.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "hawaiian-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "hawaiianairlines-com-page-1",
+        "quote": "Fly Hawaiian",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "hawaiianairlines-com-page-1",
+        "quote": "© 2026 Hawaiian Airlines. All Rights Reserved",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "hawaiianairlines-com-lookup-1",
+        "quote": "HAWAIIAN AIR",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-atmos-rewards-ascent-pricing",
+        "quote": "billed by Alaska Airlines or Hawaiian Airlines as the merchant of record",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "boa-atmos-rewards-ascent-pricing",
+        "quote": "Hawaiian Airlines tickets",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "boa-atmos-rewards-ascent-product",
+        "quote": "Alaska Airlines or Hawaiian Airlines flight",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-atmos-rewards-summit-pricing",
+        "quote": "Hawaiian Airlines tickets",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-atmos-rewards-summit-product",
+        "quote": "Alaska Airlines or Hawaiian Airlines flight",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents consistently identify Hawaiian Airlines as an airline selling flights and tickets, not physical goods. Airlines are not represented by any supplied candidate category, so the category is null."
+  }
+}

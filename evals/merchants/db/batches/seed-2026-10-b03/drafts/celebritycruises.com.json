@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15177,
+    "outputTokens": 287
+  },
+  "durationMs": 84220,
+  "draft": {
+    "domain": "celebritycruises.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "celebrity-cruises"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "boa-royal-one-plus-pricing",
+        "quote": "Royal Caribbean®, Celebrity Cruises® or Silversea® is identified as the merchant",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "boa-royal-one-plus-product",
+        "quote": "4 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "boa-royal-one-plus-pricing",
+        "quote": "cruise line corresponding to your cruise vacation",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Car rentals, cruise lines, taxi & rideshare services (including shared bikes and scooters), limousines, parking garages and toll-related purchases are not included.",
+        "supports": "category"
+      }
+    ],
+    "notes": "The store pages were unavailable. Issuer documents identify Celebrity Cruises as a cruise merchant; cruises are travel, but travel is not among the supplied categories. Cruise lines are expressly excluded from transit, so candidateCategory is null."
+  }
+}

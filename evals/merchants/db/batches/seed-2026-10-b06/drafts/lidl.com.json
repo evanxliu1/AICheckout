@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14274,
+    "outputTokens": 493
+  },
+  "durationMs": 56663,
+  "draft": {
+    "domain": "lidl.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "supermarkets",
+    "evidence": [
+      {
+        "sourceId": "lidl-com-page-1",
+        "quote": "Today, our award-winning products are available in more than 190 Lidl stores across the East Coast.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "lidl-com-page-1",
+        "quote": "You’ll find anything from comfy sweatpants to cast iron cookware and more.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "lidl-com-page-1",
+        "quote": "Best Supermarket in Newsweek",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "A supermarket offers a wide variety of food and household products",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-customized-cash-rewards-pricing",
+        "quote": "eligible grocery stores and wholesale clubs, supermarkets, meat and seafood stores, candy, nut or confection stores, dairy stores, and bakeries.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "earn cash back at most grocery stores and supermarkets.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "(Superstores, convenience stores, warehouse clubs, and meal-kit delivery services are NOT considered supermarkets.)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-customized-cash-rewards-pricing",
+        "quote": "Excluded from this Bonus Category are superstores and smaller stores (like drug stores) that sell groceries and other products.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Some merchants that sell grocery items are not included in this category",
+        "supports": "category"
+      }
+    ],
+    "notes": "Lidl’s own page explicitly calls it a supermarket and describes grocery and household merchandise. No lookup page names Lidl’s MCC. Some issuers exclude superstores, discount stores, or larger mixed-goods stores, but none explicitly classifies Lidl that way; supermarkets is therefore the best candidate. Lidl is not in the supplied brand catalog."
+  }
+}

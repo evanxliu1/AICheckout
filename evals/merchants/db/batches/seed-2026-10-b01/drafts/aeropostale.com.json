@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14621,
+    "outputTokens": 182
+  },
+  "durationMs": 12197,
+  "draft": {
+    "domain": "aeropostale.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "aeropostale"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "aeropostale-com-page-1",
+        "quote": "Shop All Women's Jeans",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "aeropostale-com-page-1",
+        "quote": "About Aéropostale",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "standalone clothing stores.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Aeropostale®",
+        "supports": "category"
+      }
+    ],
+    "notes": "Aeropostale is identified as a standalone clothing store. Clothing is not one of the permitted candidate categories, so candidateCategory is null."
+  }
+}

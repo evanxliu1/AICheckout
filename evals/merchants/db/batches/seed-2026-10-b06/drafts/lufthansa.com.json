@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18307,
+    "outputTokens": 341
+  },
+  "durationMs": 26959,
+  "draft": {
+    "domain": "lufthansa.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "lufthansa"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Eligible Purchases are items billed by Miles & More integrated airline partners as merchant of record.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "lufthansa-com-page-1",
+        "quote": "Lufthansa",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "2X on Ticket Purchases",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "lufthansa-com-page-1",
+        "quote": "Lufthansa Group Airlines",
+        "supports": "category"
+      },
+      {
+        "sourceId": "lufthansa-com-lookup-1",
+        "quote": "3008 LUFTHANSA",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-platinum-pricing",
+        "quote": "Lufthansa Group flight (Lufthansa, SWISS and Austrian airlines)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "are not included in this category, for example, airlines",
+        "supports": "category"
+      }
+    ],
+    "notes": "Lufthansa is identified as an airline and airline-ticket merchant. Airlines are not among the supplied business categories; the Chase transit definition expressly excludes airlines, so candidateCategory is null."
+  }
+}

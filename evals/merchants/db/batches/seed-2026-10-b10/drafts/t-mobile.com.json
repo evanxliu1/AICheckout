@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b10",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18054,
+    "outputTokens": 261
+  },
+  "durationMs": 30914,
+  "draft": {
+    "domain": "t-mobile.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "t-mobile"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "t-mobile-com-page-1",
+        "quote": "We deliver outstanding wireless experiences.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "t-mobile-com-page-2",
+        "quote": "WIRELESS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "t-mobile-com-page-1",
+        "quote": "Phones & devices",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "capital-one-t-mobile-visa-product",
+        "quote": "made online at T-Mobile.com and in the T-Life app, and at T-Mobile stores and Authorized Retailers",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "t-mobile-com-page-1",
+        "quote": "T-Mobile, the T logo, Magenta and the magenta color are registered trademarks of Deutsche Telekom AG.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®",
+        "supports": "category"
+      }
+    ],
+    "notes": "T-Mobile primarily provides wireless service and sells phones and devices, but wireless/telecom is not an available category. The issuer guidance excludes electronics purchases from telecom companies, so candidateCategory is null."
+  }
+}

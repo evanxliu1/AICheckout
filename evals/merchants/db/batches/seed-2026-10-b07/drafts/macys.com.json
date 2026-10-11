@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14521,
+    "outputTokens": 238
+  },
+  "durationMs": 33891,
+  "draft": {
+    "domain": "macys.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "macys"
+    ],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "citi-macys-amex-product",
+        "quote": "The Macy’s Credit Card can only be used to purchase merchandise at Macy’s stores, Macy’s Backstage or macys.com.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-macys-amex-product",
+        "quote": "purchase merchandise at Macy’s stores, Macy’s Backstage or macys.com.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "citi-macys-amex-product",
+        "quote": "Open a Macy’s Card and get 30% off macys.com purchases today2.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Lord & Taylor\nMacy's\nNeiman Marcus",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchases must be made at a department store that is included on our list of \"select major department stores\"",
+        "supports": "definition"
+      }
+    ],
+    "notes": null
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15841,
+    "outputTokens": 286
+  },
+  "durationMs": 23075,
+  "draft": {
+    "domain": "livenation.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "livenation-com-page-2",
+        "quote": "TICKETING",
+        "supports": "category"
+      },
+      {
+        "sourceId": "livenation-com-page-2",
+        "quote": "How do I sign up and access tickets through an artist’s presale?",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "citi-aadvantage-globe-rewards-terms",
+        "quote": "a purchase must be made directly on livenation.com or ticketmaster.com",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-aadvantage-globe-rewards-terms",
+        "quote": "the purchase must be fulfilled by Live Nation or Ticketmaster.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events), theatrical promoters, concert promoters",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Live Nation is not among the provided catalog brands. The supplied About page has no rendered text; classification relies on the help page and issuer terms."
+  }
+}

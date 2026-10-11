@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 27207,
+    "outputTokens": 253
+  },
+  "durationMs": 50479,
+  "draft": {
+    "domain": "universalorlando.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events), theatrical promoters, concert promoters, amusement parks",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts, amusement parks",
+        "supports": "category"
+      }
+    ],
+    "notes": "The supplied Universal Orlando page bodies contain no rendered text identifying its merchant code. Issuers cover amusement parks under both Entertainment and Travel, so the category remains conservatively null."
+  }
+}

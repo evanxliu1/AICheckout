@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12347,
+    "outputTokens": 266
+  },
+  "durationMs": 55328,
+  "draft": {
+    "domain": "seatgeek.com",
+    "kind": "marketplace",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "seatgeek-com-page-2",
+        "quote": "How do I sell tickets on the SeatGeek Marketplace?",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "seatgeek-com-page-2",
+        "quote": "How do I sell tickets on the SeatGeek Marketplace?",
+        "supports": "category"
+      },
+      {
+        "sourceId": "seatgeek-com-page-2",
+        "quote": "Mobile transfer ticket delivery is a way tickets are delivered electronically through a venue or ...",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events)",
+        "supports": "definition"
+      }
+    ],
+    "notes": "SeatGeek is a ticket marketplace rather than an official store for any catalog brand. Electronic ticket delivery supports classifying physicalGoods as false. Entertainment is supported by the ticket-marketplace description and issuer definitions covering live-event ticket purchases."
+  }
+}

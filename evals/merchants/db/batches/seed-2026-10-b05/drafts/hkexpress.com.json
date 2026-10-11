@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13808,
+    "outputTokens": 231
+  },
+  "durationMs": 24899,
+  "draft": {
+    "domain": "hkexpress.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "hk-express"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "hkexpress-com-page-1",
+        "quote": "At HK Express,",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "hkexpress-com-page-1",
+        "quote": "since transforming into a low-cost carrier.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "hkexpress-com-page-1",
+        "quote": "convenient and affordable flight options.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-cathay-world-elite-mastercard-partner",
+        "quote": "Earn 3 Asia Miles per $1 spent on Cathay and HK Express purchases.1",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "not included in this category, for example, airlines, hotels, car rental agencies",
+        "supports": "category"
+      }
+    ],
+    "notes": "HK Express sells airline travel rather than physical goods. Airlines are not represented by the supplied categories, and the Chase document expressly excludes airlines from local transit, so candidateCategory is null."
+  }
+}

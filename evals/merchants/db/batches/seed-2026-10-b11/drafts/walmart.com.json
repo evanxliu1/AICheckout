@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 26416,
+    "outputTokens": 602
+  },
+  "durationMs": 115213,
+  "draft": {
+    "domain": "walmart.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "walmart"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "walmart-com-page-1",
+        "quote": "Walmart today is a people-led, tech-powered omnichannel retailer dedicated to helping people save money and live better.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "walmart-com-page-1",
+        "quote": "Our unrivaled global supply chain moves more than 100 billion items per year.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "walmart-com-page-1",
+        "quote": "© 2026 Walmart Inc. All Rights Reserved.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "walmart-com-page-1",
+        "quote": "Walmart today is a people-led, tech-powered omnichannel retailer dedicated to helping people save money and live better.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+        "quote": "“Walmart” means Walmart retail stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+        "quote": "Purchases made through third-party merchants on Walmart.com or the Walmart app are not treated as Walmart Purchases for purposes of earning OnePay Points.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Major retailers (e.g., Amazon.com, Walmart.com)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Superstores (e.g., Target, Walmart)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "larger stores that sell a wide variety of goods and groceries like Walmart and Target",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "All purchases made from Walmart or Target are not eligible.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-product",
+        "quote": "discount stores/supercenters such as Target and Walmart",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "discount stores/supercenters such as Target and Walmart and wholesale clubs are excluded.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-product",
+        "quote": "Gas station and electric vehicle charging station purchases at discount stores/supercenters, wholesale clubs and grocery stores/supermarkets will only earn 1% cash back.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+        "quote": "discount stores/supercenters such as Target and Walmart are excluded.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Walmart is a general/discount superstore, so the conservative category is null. Some issuer materials list Walmart as an online-retail example, while others exclude Walmart or superstores from grocery and gas/EV categories. Walmart.com has third-party sellers, but the documents do not show that they predominate."
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b10",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13683,
+    "outputTokens": 300
+  },
+  "durationMs": 34736,
+  "draft": {
+    "domain": "tractorsupply.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "tractor-supply"
+    ],
+    "candidateCategory": "home-improvement",
+    "evidence": [
+      {
+        "sourceId": "tractorsupply-com-page-1",
+        "quote": "In store and online, Tractor Supply provides what customers need",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "tractorsupply-com-page-1",
+        "quote": "Riding Mowers",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "tractorsupply-com-page-1",
+        "quote": "Tractor Supply Company (NASDAQ: TSCO)",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "tractorsupply-com-page-1",
+        "quote": "Tractor Supply is the largest rural lifestyle retailer in the U.S.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores, lumber and building materials stores",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Home Improvement Store purchases include online and in-store purchases at home improvement retail stores, building supply stores (e.g., lumber, paint and hardware stores)",
+        "supports": "definition"
+      }
+    ],
+    "notes": "No merchant-code lookup or issuer statement explicitly classifies Tractor Supply. Home-improvement is inferred from its rural-lifestyle retail business and the issuer definitions covering home-supply, hardware, building-supply, and related stores."
+  }
+}

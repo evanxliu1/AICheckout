@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13390,
+    "outputTokens": 281
+  },
+  "durationMs": 54904,
+  "draft": {
+    "domain": "capsule.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "drugstores",
+    "evidence": [
+      {
+        "sourceId": "capsule-com-page-1",
+        "quote": "We are a new kind of pharmacy",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "capsule-com-page-1",
+        "quote": "We are a new kind of pharmacy",
+        "supports": "category"
+      },
+      {
+        "sourceId": "capsule-com-page-2",
+        "quote": "We deliver your medication whenever you need it.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Drug Store purchases include those made at stand-alone drug stores, pharmacies, and online pharmacies.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "You will earn additional rewards ONLY for purchases made in the U.S. at the following list of drugstores that accept the Card:",
+        "supports": "category"
+      }
+    ],
+    "notes": "Capsule's pages clearly identify it as a pharmacy delivering medication. The Amex select-major-drugstore list names other chains and does not include Capsule, but Chase and Discover definitions explicitly cover pharmacies and online pharmacies."
+  }
+}

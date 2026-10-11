@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b08",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13512,
+    "outputTokens": 214
+  },
+  "durationMs": 9284,
+  "draft": {
+    "domain": "perigold.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "perigold"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "The Wayfair Credit Card can only be used for purchases at Wayfair’s Family of Brands websites, mobile applications, and stores excluding outlet stores",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-wayfair-mastercard-product",
+        "quote": "Offer not available for purchases at Perigold or at Wayfair outlet stores.",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The store pages are blocked by a human-verification screen and do not describe the business type. Citi identifies Perigold as a Wayfair Family brand and refers to purchases there; no listed category is established."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 21788,
+    "outputTokens": 364
+  },
+  "durationMs": 34770,
+  "draft": {
+    "domain": "silversea.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "silversea"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "silversea-com-page-2",
+        "quote": "Book now to enjoy special savings on a wide selection of voyages.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "silversea-com-page-2",
+        "quote": "Our exclusive offers make your all-inclusive luxury cruise even better.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "silversea-com-page-2",
+        "quote": "© 2026 SILVERSEA CRUISES LTD.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "silversea-com-page-1",
+        "quote": "FIND A CRUISE",
+        "supports": "category"
+      },
+      {
+        "sourceId": "silversea-com-page-2",
+        "quote": "VIEW 1,189 CRUISES",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants that provide transportation and related services are not included in this category, for example, airlines, hotels, car rental agencies, cruise lines",
+        "supports": "category"
+      }
+    ],
+    "notes": "Silversea sells its own cruise voyages, which are services rather than physical goods. Issuer guidance places cruises under Travel, but Travel is not an available category; cruise lines are also excluded from Transit."
+  }
+}

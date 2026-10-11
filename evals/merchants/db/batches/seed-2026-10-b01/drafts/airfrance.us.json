@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 17338,
+    "outputTokens": 218
+  },
+  "durationMs": 12934,
+  "draft": {
+    "domain": "airfrance.us",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "air-france"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "airfrance-us-lookup-1",
+        "quote": "3007 AIR FRANCE",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-air-france-klm-pricing",
+        "quote": "made directly with Air France",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "boa-air-france-klm-pricing",
+        "quote": "flights booked directly through Air France",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "boa-air-france-klm-product",
+        "quote": "eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-air-france-klm-product",
+        "quote": "Earn 3 Miles for every $1 spent on eligible Air France",
+        "supports": "brand"
+      }
+    ],
+    "notes": "Air France is a direct airline merchant selling flights, not physical goods. Airlines are not among the provided candidate categories, so candidateCategory is null."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12336,
+    "outputTokens": 189
+  },
+  "durationMs": 15375,
+  "draft": {
+    "domain": "shoprite.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "supermarkets",
+    "evidence": [
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Examples of merchants* that accept the Card and where you can earn additional rewards include:",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "ShopRite",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "food and household products",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The store page contains only cookie text; classification relies on the issuer page listing ShopRite among supermarket merchants."
+  }
+}

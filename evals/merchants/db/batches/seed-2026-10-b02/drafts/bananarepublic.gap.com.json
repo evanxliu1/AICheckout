@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18128,
+    "outputTokens": 282
+  },
+  "durationMs": 57603,
+  "draft": {
+    "domain": "bananarepublic.gap.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "banana-republic"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "bananarepublic-gap-com-page-1",
+        "quote": "If it's too big, too bright, or just not you, we're happy to help you return or exchange your purchase.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "bananarepublic-gap-com-page-1",
+        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "bananarepublic-gap-com-page-1",
+        "quote": "© 2026 Banana Republic, LLC",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "bananarepublic-gap-com-page-1",
+        "quote": "MEN'S CLOTHING",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Select Clothing Stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+        "quote": "Apparel/clothing stores sell clothing, accessories and other apparel.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The documents identify an apparel/clothing retailer, but apparel is not an allowed category and Banana Republic is not a full-line department store, so candidateCategory is null."
+  }
+}

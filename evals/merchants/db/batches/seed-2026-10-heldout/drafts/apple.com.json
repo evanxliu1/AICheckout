@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 20042,
+    "outputTokens": 166
+  },
+  "durationMs": 44532,
+  "draft": {
+    "domain": "apple.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "electronics",
+    "evidence": [
+      {
+        "sourceId": "apple-com-page-2",
+        "quote": "Come see the best of Apple at our stores.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "apple-com-page-2",
+        "quote": "Shop our products and get expert advice in person.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Apple Store",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "latest tech products, including televisions, computers and phones.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Apple is not present in the supplied catalog brand list, so no brand ID can be assigned."
+  }
+}

@@ -1157,6 +1157,20 @@ export const MERCHANT_RELEASE_FIXTURE: MerchantRelease = {
       capturedAt: '2026-10-10',
       sha256: 'c'.repeat(64),
     },
+    {
+      id: 'cvs-about',
+      url: 'https://pharmacy.example/about',
+      kind: 'store-page',
+      capturedAt: '2026-10-09',
+      sha256: 'd'.repeat(64),
+    },
+    {
+      id: 'issuer-category-definitions',
+      url: 'https://issuer.example/categories',
+      kind: 'issuer-terms',
+      capturedAt: '2026-10-05',
+      sha256: 'e'.repeat(64),
+    },
   ],
   merchants: [
     {
@@ -1189,6 +1203,17 @@ export const MERCHANT_RELEASE_FIXTURE: MerchantRelease = {
       physicalGoods: true,
       category: 'supermarkets',
       evidence: { basis: 'corroborated', sourceIds: ['kroger-about', 'kroger-mcc'] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'cvs-us',
+      name: 'CVS Pharmacy',
+      hosts: ['cvs.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'drugstores',
+      evidence: { basis: 'definition', sourceIds: ['cvs-about', 'issuer-category-definitions'] },
       brandIds: [],
       disabled: false,
     },
@@ -1277,6 +1302,10 @@ export const merchantReleaseCases: Case[] = [
     merchantOf(r, 'kroger-us').evidence = { basis: 'default', sourceIds: [] };
     merchantOf(r, 'kroger-us').category = 'general-merchandise';
     r.sources = r.sources.filter((s) => !s.id.startsWith('kroger-'));
+  }),
+  validRelease('definition evidence on a delivery marketplace for dining', (r) => {
+    merchantOf(r, 'cvs-us').kind = 'marketplace';
+    merchantOf(r, 'cvs-us').category = 'dining';
   }),
   validRelease('source captured on the verification date', (r) => {
     r.sources[2].capturedAt = '2026-10-10';
@@ -1384,6 +1413,22 @@ export const merchantReleaseCases: Case[] = [
   }),
   invalidRelease('corroborated evidence from a lookup alone', (r) => {
     merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-mcc'];
+  }),
+  invalidRelease('definition evidence from a store page alone', (r) => {
+    merchantOf(r, 'cvs-us').evidence.sourceIds = ['cvs-about'];
+  }),
+  invalidRelease('definition evidence from issuer terms alone', (r) => {
+    merchantOf(r, 'cvs-us').evidence.sourceIds = ['issuer-category-definitions'];
+  }),
+  invalidRelease('definition evidence from a store page and a lookup', (r) => {
+    merchantOf(r, 'cvs-us').evidence.sourceIds = ['cvs-about', 'kroger-mcc'];
+  }),
+  invalidRelease('definition evidence on a marketplace outside dining', (r) => {
+    merchantOf(r, 'cvs-us').kind = 'marketplace';
+  }),
+  invalidRelease('definition evidence on a processor', (r) => {
+    merchantOf(r, 'cvs-us').kind = 'processor';
+    merchantOf(r, 'cvs-us').physicalGoods = false;
   }),
   invalidRelease('unknown source id', (r) => {
     merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-about', 'missing'];

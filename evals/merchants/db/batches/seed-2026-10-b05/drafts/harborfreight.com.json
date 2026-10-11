@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12535,
+    "outputTokens": 197
+  },
+  "durationMs": 13685,
+  "draft": {
+    "domain": "harborfreight.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "harbor-freight"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "synchrony-harbor-freight-credit-card-partner",
+        "quote": "Yes, the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "synchrony-harbor-freight-credit-card-partner",
+        "quote": "Can I use my Harbor Freight Money towards all merchandise?",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-harbor-freight-credit-card-partner",
+        "quote": "Harbor Freight Tools Credit Card",
+        "supports": "brand"
+      }
+    ],
+    "notes": "The store page is blocked by a bot challenge. The documents establish Harbor Freight purchases and merchandise but do not state a merchant category or MCC, so candidateCategory is conservatively null."
+  }
+}

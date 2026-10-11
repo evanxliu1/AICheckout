@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "packetId": "cfc21781-75d6-4d90-914c-0dc38650188e",
+  "batch": "seed-2026-10-b12",
+  "researchedOn": "2026-10-10",
+  "provenance": {
+    "generatedBy": "merchant-researcher",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-10",
+    "status": "agent-research-unverified"
+  },
+  "stores": [
+    {
+      "domain": "youtube.com",
+      "name": "YouTube",
+      "hosts": ["youtube.com"],
+      "storePages": [
+        { "url": "https://www.youtube.com/premium", "note": "YouTube Premium membership page." },
+        { "url": "https://www.youtube.com/howyoutubeworks/", "note": "How YouTube works overview." },
+        { "url": "https://www.youtube.com/about/", "note": "About YouTube; redirects to about.youtube." }
+      ],
+      "lookupPages": [],
+      "notes": "Google service; paid memberships are billed by Google. The about page is served on about.youtube, a YouTube-owned domain with no checkout."
+    },
+    {
+      "domain": "affirm.com",
+      "name": "Affirm",
+      "hosts": ["affirm.com"],
+      "storePages": [
+        { "url": "https://www.affirm.com/about", "note": "About Affirm." },
+        { "url": "https://www.affirm.com/how-it-works", "note": "How Affirm works for shoppers." }
+      ],
+      "lookupPages": [],
+      "notes": null
+    },
+    {
+      "domain": "afterpay.com",
+      "name": "Afterpay",
+      "hosts": ["afterpay.com"],
+      "storePages": [
+        { "url": "https://www.afterpay.com/en-US", "note": "Afterpay U.S. home page." },
+        { "url": "https://www.afterpay.com/en-US/how-it-works", "note": "How Afterpay works for U.S. shoppers." }
+      ],
+      "lookupPages": [],
+      "notes": "Block, Inc. service, also branded Cash App Afterpay in the U.S."
+    },
+    {
+      "domain": "bolt.com",
+      "name": "Bolt",
+      "hosts": ["bolt.com", "boltapp.com"],
+      "storePages": [
+        { "url": "https://help.boltapp.com/shoppers/", "note": "Bolt shopper help center; says bolt.com is moving to boltapp.com." }
+      ],
+      "lookupPages": [],
+      "notes": "On 2026-10-10 www.bolt.com redirected to a domain broker listing; help.bolt.com and the shopper help moved to boltapp.com, and account.bolt.com still served a Bolt page. boltapp.com root was bot-walled."
+    },
+    {
+      "domain": "cash.app",
+      "name": "Cash App Pay",
+      "hosts": ["cash.app"],
+      "storePages": [
+        { "url": "https://cash.app/help/us/en-us/6409-cash-app-pay", "note": "Cash App help article on Cash App Pay." },
+        { "url": "https://cash.app/help", "note": "Cash App help center." }
+      ],
+      "lookupPages": [],
+      "notes": "Block, Inc. service; Cash App Pay is the checkout method of Cash App."
+    },
+    {
+      "domain": "checkout.stripe.com",
+      "name": "Stripe Checkout",
+      "hosts": ["checkout.stripe.com"],
+      "storePages": [
+        { "url": "https://checkout.stripe.com", "note": "Hosted checkout host; the root redirects to Stripe's Checkout product page on stripe.com." }
+      ],
+      "lookupPages": [],
+      "notes": "Stripe-hosted payment pages for many merchants; the product page lives at stripe.com/payments/checkout, outside this host."
+    },
+    {
+      "domain": "klarna.com",
+      "name": "Klarna",
+      "hosts": ["klarna.com"],
+      "storePages": [
+        { "url": "https://www.klarna.com/us/about-us/", "note": "About Klarna, U.S. site." },
+        { "url": "https://www.klarna.com/us/what-is-klarna/", "note": "What is Klarna, U.S. site." }
+      ],
+      "lookupPages": [],
+      "notes": null
+    },
+    {
+      "domain": "link.com",
+      "name": "Link",
+      "hosts": ["link.com"],
+      "storePages": [
+        { "url": "https://link.com/", "note": "Link home page." },
+        { "url": "https://support.link.com/", "note": "Link help and support." }
+      ],
+      "lookupPages": [],
+      "notes": "Stripe's saved-payment wallet; link.com/faq redirects to support.stripe.com."
+    },
+    {
+      "domain": "pay.amazon.com",
+      "name": "Amazon Pay",
+      "hosts": ["pay.amazon.com", "payments.amazon.com", "apx-security.amazon.com"],
+      "storePages": [
+        { "url": "https://pay.amazon.com", "note": "Amazon Pay home page." },
+        { "url": "https://pay.amazon.com/how-it-works", "note": "How Amazon Pay works." },
+        { "url": "https://pay.amazon.com/help", "note": "Amazon Pay help." }
+      ],
+      "lookupPages": [],
+      "notes": "Hosts are subdomains of amazon.com; the bare amazon.com store is a separate record."
+    },
+    {
+      "domain": "pay.google.com",
+      "name": "Google Pay",
+      "hosts": ["pay.google.com"],
+      "storePages": [
+        { "url": "https://pay.google.com/about/", "note": "About Google Pay." }
+      ],
+      "lookupPages": [],
+      "notes": "The pay.google.com root redirected to wallet.google.com on 2026-10-10; wallet.google.com not added as a host."
+    },
+    {
+      "domain": "sezzle.com",
+      "name": "Sezzle",
+      "hosts": ["sezzle.com"],
+      "storePages": [
+        { "url": "https://sezzle.com/about", "note": "About Sezzle." },
+        { "url": "https://sezzle.com/how-it-works", "note": "How Sezzle works." }
+      ],
+      "lookupPages": [],
+      "notes": null
+    },
+    {
+      "domain": "shop.app",
+      "name": "Shop Pay",
+      "hosts": ["shop.app", "pay.shopify.com"],
+      "storePages": [
+        { "url": "https://help.shop.app/en/shop/shop-pay/overview", "note": "Shop help: Shop Pay overview." },
+        { "url": "https://help.shop.app/en/shop/shop-pay", "note": "Shop help: Shop Pay section." }
+      ],
+      "lookupPages": [],
+      "notes": "Shopify's wallet. shop.app root returned 429 to scripted requests on 2026-10-10. pay.shopify.com root returned 404."
+    },
+    {
+      "domain": "splitit.com",
+      "name": "Splitit",
+      "hosts": ["splitit.com"],
+      "storePages": [
+        { "url": "https://www.splitit.com/", "note": "Splitit home page (shopper page redirects here)." },
+        { "url": "https://www.splitit.com/business/about/", "note": "About Splitit." }
+      ],
+      "lookupPages": [],
+      "notes": "Installments on the shopper's existing credit card."
+    },
+    {
+      "domain": "venmo.com",
+      "name": "Venmo",
+      "hosts": ["venmo.com"],
+      "storePages": [
+        { "url": "https://venmo.com/about/us", "note": "About Venmo." },
+        { "url": "https://venmo.com/pay/in-apps-and-online", "note": "Paying with Venmo in apps and online." }
+      ],
+      "lookupPages": [],
+      "notes": "PayPal, Inc. service; site assets and licenses are served from paypal.com, which is not added as a host."
+    },
+    {
+      "domain": "zip.co",
+      "name": "Zip",
+      "hosts": ["zip.co"],
+      "storePages": [
+        { "url": "https://zip.co/us", "note": "Zip U.S. home page." },
+        { "url": "https://zip.co/us/how-it-works", "note": "How Zip works, U.S." },
+        { "url": "https://zip.co/about-us", "note": "About Zip Co." }
+      ],
+      "lookupPages": [],
+      "notes": "Zip Co Limited is Australian; zip.co/us is its U.S. service (formerly Quadpay)."
+    }
+  ],
+  "questions": [
+    "Bolt: www.bolt.com redirected to a domain broker listing on 2026-10-10 and Bolt's help says it is moving to boltapp.com. Keep bolt.com, switch the record to boltapp.com, or both (hosts list both for now)?",
+    "Venmo checkout on merchant sites may run in a PayPal-served window on paypal.com. Should paypal.com hosts map to Venmo, to a PayPal record, or neither?",
+    "Google Pay: pay.google.com root redirects to wallet.google.com. Add wallet.google.com as a Google Pay host?",
+    "Halocard has merchant pages naming YouTube and Venmo with code sections, but its terms bar automated access, so they were not cited. Allow citing them?"
+  ]
+}

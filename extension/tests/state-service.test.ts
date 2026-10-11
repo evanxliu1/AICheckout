@@ -96,18 +96,27 @@ describe('comparisons at a merchant release store (Phase 14.2)', () => {
     expect(
       (rates.comparison as { estimates: { minRewardCents: number }[] }).estimates[0].minRewardCents,
     ).toBe(600);
-    // The bundled release (since the 14.3 dry run) has its own default Kroger record: general merchandise,
-    // so the fixture's corroborated supermarket bonus does not apply there.
+    // The bundled release (2026-10-11.dev.5) has Kroger as a supermarket on the definition basis, so the same
+    // 6% applies there; Lowe's (home improvement) gets no supermarket bonus.
     const bundled = createStateService(storage, () => now);
     const plain = success(await bundled({ type: 'checkout:compare', expectedRevision: 2, purchase: kroger }))
       .comparison as { status: string; estimates: { minRewardCents: number }[] };
     expect(plain.status).toBe('ready');
-    expect(plain.estimates[0].minRewardCents).toBeLessThan(600);
+    expect(plain.estimates[0].minRewardCents).toBe(600);
+    const lowes = success(
+      await bundled({
+        type: 'checkout:compare',
+        expectedRevision: 3,
+        purchase: { ...kroger, merchantId: 'lowes-us' },
+      }),
+    ).comparison as { status: string; estimates: { minRewardCents: number }[] };
+    expect(lowes.status).toBe('ready');
+    expect(lowes.estimates[0].minRewardCents).toBeLessThan(600);
     expect(
       success(
         await bundled({
           type: 'checkout:compare',
-          expectedRevision: 3,
+          expectedRevision: 4,
           purchase: { ...kroger, merchantId: 'not-a-store-us' },
         }),
       ).comparison,

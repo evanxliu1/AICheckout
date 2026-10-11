@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15874,
+    "outputTokens": 307
+  },
+  "durationMs": 54584,
+  "draft": {
+    "domain": "ventrachicago.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "transit",
+    "evidence": [
+      {
+        "sourceId": "ventrachicago-com-page-2",
+        "quote": "Ventra Tickets: Single-ride and one-day passes.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "ventrachicago-com-page-2",
+        "quote": "If you ordered your Ventra Card online, by phone or via the Ventra app and it arrived in the mail",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "ventrachicago-com-page-2",
+        "quote": "Ventra is the convenient fare payment system for CTA, Pace and Metra that allows customers to pay for train and bus rides throughout Chicagoland.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Local transit and commuting",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Select transit includes car rentals, ferries, commuter railways, subways",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Ventra primarily sells transit fares and tickets, but the documents also describe reusable Ventra Cards ordered online and arriving by mail; that tangible product supports physicalGoods=true."
+  }
+}

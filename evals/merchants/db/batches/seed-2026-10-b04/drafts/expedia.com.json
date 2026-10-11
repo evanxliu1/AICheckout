@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b04",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14574,
+    "outputTokens": 248
+  },
+  "durationMs": 28018,
+  "draft": {
+    "domain": "expedia.com",
+    "kind": "marketplace",
+    "physicalGoods": false,
+    "brandIds": [
+      "expedia"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "wells-fargo-one-key-product",
+        "quote": "where Expedia, Hotels.com, or Vrbo is not the merchant of record.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "wells-fargo-one-key-product",
+        "quote": "charges made directly by the travel supplier after the booking is made",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "wells-fargo-one-key-product",
+        "quote": "eligible accommodation rentals, activities, car rentals, cruises, flights, hotels, and packages",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "wells-fargo-one-key-product",
+        "quote": "on Expedia",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The store pages are bot-challenge pages. Issuer terms describe Expedia travel bookings involving third-party suppliers and identify Expedia with Travel, but Travel is not an allowed candidate category, so candidateCategory is null."
+  }
+}

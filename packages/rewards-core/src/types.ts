@@ -305,9 +305,11 @@ export type Catalog = CatalogV1 | CatalogV2 | CatalogV3;
  * Separate from the catalog; matched on the device by `merchant-match.ts`. */
 export const MERCHANT_KINDS = ['merchant', 'marketplace', 'processor'] as const;
 export type MerchantKind = (typeof MERCHANT_KINDS)[number];
-/** Why a record's category is what it is: the issuer names the store, the store's own pages and a
- * public merchant-code lookup agree, or neither (then `general-merchandise`). */
-export const MERCHANT_EVIDENCE_BASES = ['issuer', 'corroborated', 'default'] as const;
+/** Why a record's category is what it is: the issuer names the store as earning in the category, the
+ * store's own pages and a public merchant-code lookup agree, the store's own pages show a business type
+ * that an issuer's published category definition covers (`definition`, 2026-10-11), or none of these
+ * (then `general-merchandise`). */
+export const MERCHANT_EVIDENCE_BASES = ['issuer', 'corroborated', 'definition', 'default'] as const;
 export type MerchantEvidenceBasis = (typeof MERCHANT_EVIDENCE_BASES)[number];
 export const MERCHANT_SOURCE_KINDS = ['issuer-terms', 'store-page', 'mcc-lookup'] as const;
 export type MerchantSourceKind = (typeof MERCHANT_SOURCE_KINDS)[number];

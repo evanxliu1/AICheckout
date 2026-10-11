@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16931,
+    "outputTokens": 293
+  },
+  "durationMs": 44783,
+  "draft": {
+    "domain": "carnival.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "carnival-cruise-line"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "carnival-com-page-1",
+        "quote": "Carnival Cruise Line — “The World's Most Popular Cruise Line®”",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "carnival-com-page-1",
+        "quote": "Our 29 ships operate cruises",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "carnival-com-page-1",
+        "quote": "fun vacations at sea and ashore!",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "barclays-carnival-rewards-mastercard-pricing",
+        "quote": "A “Qualifying Carnival Cruise Booking Purchase” is a Carnival Cruise",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants that provide transportation and related services are not included in this category, for example, airlines, hotels, car rental agencies, cruise lines",
+        "supports": "category"
+      }
+    ],
+    "notes": "Cruises are travel services, not physical goods. Travel is not among the supplied categories; Bank of America places cruises under Travel, while Chase excludes cruise lines from Local transit."
+  }
+}

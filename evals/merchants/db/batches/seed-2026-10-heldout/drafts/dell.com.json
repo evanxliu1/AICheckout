@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 17923,
+    "outputTokens": 214
+  },
+  "durationMs": 52860,
+  "draft": {
+    "domain": "dell.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "electronics",
+    "evidence": [
+      {
+        "sourceId": "dell-com-page-1",
+        "quote": "The pricing available on this site is Dell’s pricing for online purchases only.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "dell-com-page-1",
+        "quote": "Expedited Delivery not available on certain TVs, monitors, batteries and adapters",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "dell-com-page-1",
+        "quote": "Computers & Accessories",
+        "supports": "category"
+      },
+      {
+        "sourceId": "dell-com-page-2",
+        "quote": "Computers & Accessories",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "latest tech products, including televisions, computers and phones.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Dell is not included in the catalog brand list. No lookup page directly names Dell; electronics is inferred from its computer/accessory offerings and the issuer’s tech-products definition."
+  }
+}

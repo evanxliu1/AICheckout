@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 19964,
+    "outputTokens": 291
+  },
+  "durationMs": 19388,
+  "draft": {
+    "domain": "aircanada.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "air-canada"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "aircanada-com-page-1",
+        "quote": "Air Canada is Canada's largest airline and the largest provider of scheduled passenger services",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "aircanada-com-page-2",
+        "quote": "provides direct service to six continents.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "aircanada-com-page-1",
+        "quote": "Air Canada is Canada's largest airline",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "aircanada-com-page-1",
+        "quote": "Air Canada is Canada's largest airline and the largest provider of scheduled passenger services",
+        "supports": "category"
+      },
+      {
+        "sourceId": "aircanada-com-page-2",
+        "quote": "Air Canada is Canada's largest airline, the country’s flag carrier",
+        "supports": "category"
+      },
+      {
+        "sourceId": "aircanada-com-lookup-1",
+        "quote": "3009 AIR CANADA",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "for example, airlines, hotels, car rental agencies, cruise lines, travel agencies",
+        "supports": "category"
+      }
+    ],
+    "notes": "Air Canada is an airline and sells travel services, not physical goods. The allowed categories have no airline or general travel category; the Chase transit description explicitly excludes airlines, so candidateCategory is null."
+  }
+}

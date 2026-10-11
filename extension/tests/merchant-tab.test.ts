@@ -127,6 +127,34 @@ describe('storeEvidence', () => {
     );
     expect(storeEvidence('whole-foods-us', fixture)).toBe('Codes as a supermarket (named in card terms).');
   });
+  it('names the issuer whose definition a definition record fits, without implying a partnership', () => {
+    // The fixture's issuer source is synthetic (no catalog card cites it), so the wording falls back.
+    expect(storeEvidence('cvs-us', fixture)).toBe(
+      "Treated as a drugstore (its own pages; fits an issuer's drugstore definition).",
+    );
+    const catalog = {
+      ...v3,
+      cards: [
+        {
+          ...v3.cards[0],
+          issuer: 'American Express',
+          rules: [{ ...v3.cards[0].rules[0], sourceIds: ['issuer-category-definitions'] }],
+        },
+      ],
+    } as typeof v3;
+    expect(storeEvidence('cvs-us', fixture, catalog)).toBe(
+      "Treated as a drugstore (its own pages; fits American Express's drugstore definition).",
+    );
+    const dining: MerchantRelease = {
+      ...fixture,
+      merchants: fixture.merchants.map((m) =>
+        m.id === 'cvs-us' ? { ...m, kind: 'marketplace', category: 'dining' } : m,
+      ),
+    };
+    expect(storeEvidence('cvs-us', dining, catalog)).toBe(
+      "Treated as a restaurant (its own pages; fits American Express's restaurant definition).",
+    );
+  });
   it('says nothing for default records, the generic store, processors and unknown ids', () => {
     for (const id of [
       'amazon-us',
@@ -138,6 +166,22 @@ describe('storeEvidence', () => {
       'x',
     ])
       expect(storeEvidence(id, fixture), id).toBeNull();
-    for (const record of MERCHANTS_V1.merchants) expect(storeEvidence(record.id)).toBeNull();
+    for (const record of MERCHANTS_V1.merchants)
+      if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
+      else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
+    // The bundled dev release (2026-10-11.dev.5): Kroger, Whole Foods, CVS and Lowe's on issuer definitions.
+    // Several issuers read as a list.
+    expect(storeEvidence('wholefoodsmarket-us')).toBe(
+      "Treated as a supermarket (its own pages; fits Bank of America, Chase and Discover's supermarket definition).",
+    );
+    expect(storeEvidence('cvs-us')).toBe(
+      "Treated as a drugstore (its own pages; fits Discover's drugstore definition).",
+    );
+    expect(storeEvidence('lowes-us')).toBe(
+      "Treated as a home-improvement store (its own pages; fits Bank of America and Discover's home-improvement store definition).",
+    );
+    expect(storeEvidence('kroger-us')).toMatch(
+      /^Treated as a supermarket \(its own pages; fits .*supermarket definition\)\.$/,
+    );
   });
 });

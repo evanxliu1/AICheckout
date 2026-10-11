@@ -67,7 +67,8 @@ describe('bundled site adapters', () => {
     ])
       expect(merchantForTab(url)).toBeNull();
     expect(merchantName('generic-us-online')).toBe('Another U.S. online store');
-    expect(merchantName('walmart-us')).toBe('Unsupported merchant');
+    expect(merchantName('walmart-us')).toBe('Walmart'); // a bundled store since the 14.4 seed
+    expect(merchantName('not-a-store-us')).toBe('Unsupported merchant');
   });
   it('rejects overlong paths before any pattern runs', () => {
     expect(merchantForCheckout(`https://www.amazon.com/cart${'/'.repeat(300)}`)).toBeNull();

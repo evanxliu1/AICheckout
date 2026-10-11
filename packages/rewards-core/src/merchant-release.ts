@@ -56,8 +56,10 @@ export const merchantRecordSchema = z.strictObject({
  * device. Invariants: unique ids, sources and hosts (across every record, so the longest matching host
  * is always one record); every cited source resolves; the evidence rule (`default` cites nothing and
  * is `general-merchandise`; `issuer` cites issuer terms; `corroborated` cites a store page and a
- * merchant-code lookup); every source is cited by some record; a processor sells no physical goods, has
- * `default` evidence and no brands; no source captured after `verifiedAt`; at most 2 MiB. */
+ * merchant-code lookup; `definition` cites a store page and issuer terms, and on a marketplace only for
+ * `dining`, where an issuer's definition may name delivery services); every source is cited by some
+ * record; a processor sells no physical goods, has `default` evidence and no brands; no source captured
+ * after `verifiedAt`; at most 2 MiB. */
 export const merchantReleaseSchema = z
   .strictObject({
     schemaVersion: z.literal(1),
@@ -104,6 +106,16 @@ export const merchantReleaseSchema = z
           'evidence',
           'sourceIds',
         ]);
+      else if (basis === 'definition') {
+        if (!(kinds.has('store-page') && kinds.has('issuer-terms')))
+          reject('Definition evidence cites a store page and issuer terms.', [
+            ...path,
+            'evidence',
+            'sourceIds',
+          ]);
+        if (merchant.kind === 'marketplace' && merchant.category !== 'dining')
+          reject('Definition evidence on a marketplace is for dining only.', [...path, 'category']);
+      }
       if (merchant.kind === 'processor') {
         if (merchant.physicalGoods)
           reject('A processor sells no physical goods.', [...path, 'physicalGoods']);

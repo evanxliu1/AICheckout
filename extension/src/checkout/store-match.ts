@@ -10,7 +10,14 @@ import {
 } from '@ai-checkout/rewards-core/merchant-match';
 import type { MerchantIndex } from '@ai-checkout/rewards-core/merchant-match';
 import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
-import type { Catalog, MerchantProfileV3, MerchantRecord, MerchantRelease } from '@ai-checkout/rewards-core';
+import { CATALOG_V3 } from '@ai-checkout/rewards-core';
+import type {
+  Catalog,
+  CatalogV3,
+  MerchantProfileV3,
+  MerchantRecord,
+  MerchantRelease,
+} from '@ai-checkout/rewards-core';
 import { isLegacyMerchant, MERCHANTS } from './merchants';
 
 // The bundled release, indexed once. Tests pass their own release.
@@ -121,13 +128,39 @@ const CATEGORY_WORDING: Record<MerchantRecord['category'], string | null> = {
   'home-improvement': 'a home-improvement store',
   'wholesale-clubs': 'a wholesale club',
 };
+/** The issuer whose terms a cited issuer source is: the catalog card citing that source id (the release reuses
+ * the catalog's source ids for issuer pages), else null. */
+const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
+  catalog.cards.find((card) => card.rules.some((rule) => rule.sourceIds.includes(sourceId)))?.issuer ?? null;
+
 /** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
- * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile. */
-export function storeEvidence(merchantId: string, release: MerchantRelease = MERCHANTS_V1): string | null {
+ * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile.
+ * A `definition` record reads "Treated as", naming the issuer whose category definition the store's own pages fit
+ * ("Codes as" is for `issuer` and `corroborated` only); no partnership is implied. */
+export function storeEvidence(
+  merchantId: string,
+  release: MerchantRelease = MERCHANTS_V1,
+  catalog: CatalogV3 = CATALOG_V3,
+): string | null {
   const record = releaseRecord(merchantId, release);
   if (!record || record.evidence.basis === 'default' || record.disabled) return null;
   const wording = CATEGORY_WORDING[record.category];
   if (!wording) return null;
+  if (record.evidence.basis === 'definition') {
+    const issuerSources = new Set(release.sources.filter((s) => s.kind === 'issuer-terms').map((s) => s.id));
+    const issuers = [
+      ...new Set(
+        record.evidence.sourceIds
+          .filter((id) => issuerSources.has(id))
+          .map((id) => issuerOf(id, catalog))
+          .filter((name): name is string => name !== null),
+      ),
+    ];
+    const list = issuers.length > 1 ? `${issuers.slice(0, -1).join(', ')} and ${issuers.at(-1)}` : issuers[0];
+    const whose = issuers.length ? `${list}'s` : "an issuer's";
+    const noun = wording.replace(/^an? /, '');
+    return `Treated as ${wording} (its own pages; fits ${whose} ${noun} definition).`;
+  }
   const basis =
     record.evidence.basis === 'issuer'
       ? 'named in card terms'

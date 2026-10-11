@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 19605,
+    "outputTokens": 231
+  },
+  "durationMs": 23530,
+  "draft": {
+    "domain": "oldnavy.gap.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "old-navy"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "oldnavy-gap-com-page-1",
+        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want it.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "oldnavy-gap-com-page-2",
+        "quote": "Mid-Rise Wow Boot-Cut Jeans",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "oldnavy-gap-com-page-2",
+        "quote": "© 2026 Old Navy, LLC",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "shop at standalone clothing stores.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Old Navy",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents identify Old Navy as a clothing/apparel retailer. Apparel is not among the supplied candidate categories, so the category is null; it is not evidenced as a full-line department store."
+  }
+}

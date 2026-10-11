@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12640,
+    "outputTokens": 165
+  },
+  "durationMs": 10704,
+  "draft": {
+    "domain": "neimanmarcus.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the following list of department stores that accept the Card and have these specific names:",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Neiman Marcus",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Eligible purchases include those made in store and online.",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The issuer document identifies Neiman Marcus as a qualifying department store. The store-page documents contain no usable page text, and no catalog brand id matches Neiman Marcus."
+  }
+}

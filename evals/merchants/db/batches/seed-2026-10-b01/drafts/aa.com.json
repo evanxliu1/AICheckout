@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b01",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 25055,
+    "outputTokens": 181
+  },
+  "durationMs": 18834,
+  "draft": {
+    "domain": "aa.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "american-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "aa-com-page-1",
+        "quote": "American Airlines Group & American Airlines",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "aa-com-page-2",
+        "quote": "Reservations & tickets",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "aa-com-lookup-1",
+        "quote": "AMERICAN AIRLINES",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants that provide transportation and related services are not included in this category, for example, airlines,",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents identify aa.com as American Airlines, an airline selling travel and tickets. Airlines are not among the available candidate categories, and the transit definition excludes airlines."
+  }
+}

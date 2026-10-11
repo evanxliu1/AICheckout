@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 17885,
+    "outputTokens": 281
+  },
+  "durationMs": 68019,
+  "draft": {
+    "domain": "bestbuy.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "best-buy"
+    ],
+    "candidateCategory": "electronics",
+    "evidence": [
+      {
+        "sourceId": "bestbuy-com-page-1",
+        "quote": "At Best Buy, our purpose is to enrich lives through technology.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "bestbuy-com-page-2",
+        "quote": "Get peace of mind when you buy new tech or appliances.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "bestbuy-com-page-2",
+        "quote": "Shipping, Delivery & Store Pickup",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "citi-my-best-buy-visa-product",
+        "quote": "The My Best Buy® Credit Card offered by Best Buy® and Citibank allows you to access reward and financing options for your Best Buy® Purchases.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Includes most online purchases from merchants like Bestbuy.com and Frys.com.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Make even smarter buys when you earn cash back on the latest tech products, including televisions, computers and phones.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Best Buy mentions a marketplace, but the documents do not establish that third-party sellers are the site's primary model; classified as a merchant."
+  }
+}

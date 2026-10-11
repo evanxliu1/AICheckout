@@ -6,17 +6,14 @@
     {
       "domain": "kroger.com",
       "id": "kroger-us",
-      "basis": "default",
-      "category": "general-merchandise",
-      "downgraded": {
-        "reason": "Both Citi quotes come from Citi's list of superstores, supermarkets and warehouse clubs EXCLUDED from the Costco card's 4% gas earn; an exclusion list does not show purchases at Kroger earn in supermarkets. Store-page and U.S. Bank quotes are fine."
-      }
+      "basis": "definition",
+      "category": "supermarkets"
     },
     {
       "domain": "cvs.com",
       "id": "cvs-us",
-      "basis": "default",
-      "category": "general-merchandise"
+      "basis": "definition",
+      "category": "drugstores"
     },
     {
       "domain": "netflix.com",
@@ -24,7 +21,12 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "Bank of America quotes name Netflix as a merchant example of its Online Shopping category, a different category than streaming. The U.S. Bank Altitude Go quotes describe a $15 statement credit, not earning. Citi Strata and store quotes are fine."
+        "reason": "Corporate about-page tagline about entertainment; it does not show a streaming subscription business type (the plans page quote does). Forum post by a user, not an MCC lookup source; it reports a cable/pay-TV code (4899), not streaming. Names Netflix only for a $15 statement credit on streaming purc"
+      },
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": "Netflix’s corporate page uses broad entertainment language, while its plans and multiple issuer sources identify monthly streaming subscriptions. One issuer lists Netflix under Online Shopping, and the lookup reports MCC 4899 cable/pay television. No catalog brand matches Netflix."
       }
     },
     {
@@ -33,8 +35,30 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "The Instacart Mastercard quote is a co-brand bonus on Instacart.com and app purchases; it does not say Instacart purchases earn in a supermarkets or grocery category. Store-page quotes are fine."
+        "reason": "A U.S. Bank category heading that does not name Instacart; as a category quote it supports nothing about this store. Amex's supermarket definition describes stores selling food and household goods; it does not cover a grocery-delivery marketplace like Instacart. BoA's grocery definition lists store "
+      },
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "a marketplace gets a category only for dining",
+        "notes": "Instacart is a grocery-delivery marketplace using retail partners rather than a supermarket operating its own inventory. Its own grocery-delivery description and U.S. Bank’s grocery-delivery merchant list support the supermarket category; the issuer definitions vary in scope."
       }
+    },
+    {
+      "domain": "costco.com",
+      "id": "costco-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Chase names Costco here as an exclusion from its online grocery category, not as earning in wholesale clubs."
+      },
+      "refused": {
+        "candidate": "wholesale-clubs",
+        "reason": "no issuer definition quote covers wholesale-clubs",
+        "notes": "Costco also operates gasoline, pharmacy, travel, and other departments, but its own description identifies the business as a membership warehouse club; Chase expressly excludes Costco from online grocery."
+      },
+      "droppedHosts": [
+        "costcobusinessdelivery.com"
+      ]
     },
     {
       "domain": "delta.com",
@@ -51,8 +75,16 @@
     {
       "domain": "wholefoodsmarket.com",
       "id": "wholefoodsmarket-us",
-      "basis": "default",
-      "category": "general-merchandise"
+      "basis": "definition",
+      "category": "supermarkets",
+      "conflicts": [
+        "prime-visa-rewards-terms: lists the store under another category: \"purchases of Whole Foods Market products and services through third-party sites such as · lottery tickets, casino gaming chips, race track Eventbrite, Instacart, Google Express …\"",
+        "prime-visa-rewards-terms: lists the store under another category: \"cards (including through buyatab.com), event · person-to-person money transfers and account- tickets or classes, (vi) purchases from certain funding transactions that transfer currency third-party vendors …\"",
+        "prime-visa-rewards-terms: lists the store under another category: \"Amazon.com/amazonvisa/benefits, (iii) purchases made at international Whole Foods Markets, (iv) › 5% back for each $1 spent on purchases made using purchases of Whole Foods …\"",
+        "amazon-visa-product: lists the store under another category: \"Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases,* unlimited 2% back at gas stations, restaurants, and on local …\"",
+        "prime-visa-product: lists the store under another category: \"Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases with an eligible Prime membership, unlimited 2% back at gas …\"",
+        "prime-visa-product: lists the store under another category: \"Rewards & Benefits NEW CARDMEMBER OFFER $150 Amazon Gift Card on approval Prime members, get a $150 Amazon Gift Card instantly loaded into your Amazon …\""
+      ]
     },
     {
       "domain": "ubereats.com",
@@ -60,25 +92,23 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "The Instacart Mastercard quote is about orders on Instacart powered by Uber Eats, not purchases on ubereats.com. Chase names ubereats.com under its separate Select food delivery category, not restaurants/dining. The U.S. Bank Restaurants list entry and store quotes are fine."
+        "reason": "Chase's separate Select food delivery category, not dining; it supports a different category than the drafted one. Lists ubereats.com under Chase's Select food delivery category, a different category from dining. Conditional on classifying as a restaurant merchant, and the same Chase page puts ubere"
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": null
       }
     },
     {
       "domain": "lowes.com",
       "id": "lowes-us",
-      "basis": "default",
-      "category": "general-merchandise"
+      "basis": "definition",
+      "category": "home-improvement"
     }
   ],
-  "heldOut": [
-    {
-      "domain": "costco.com",
-      "disputed": [
-        {
-          "field": "hosts",
-          "reason": "costcobusinessdelivery.com does not appear in any capture; the store pages mention Business Delivery and Costco Business Center orders but never that domain, so the second host cannot be confirmed."
-        }
-      ]
-    }
+  "heldOut": [],
+  "botWalled": [
+    "delta.com"
   ]
 }

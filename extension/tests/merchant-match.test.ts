@@ -139,7 +139,9 @@ describe('the bundled release on the device', () => {
     expect(at('https://checkout.stripe.com/c/pay/cs_123')!.kind).toBe('processor');
   });
   it('leaves other stores to the generic profile', () => {
-    expect(at('https://www.walmart.com/cart')).toBeUndefined();
+    // Since the 14.4 seed walmart.com is a bundled store (default category, brand walmart).
+    expect(at('https://www.walmart.com/cart')).toMatchObject({ id: 'walmart-us', brandIds: ['walmart'] });
+    expect(at('https://www.example-unknown-store.com/cart')).toBeUndefined();
     expect(at('https://www.amazon.ca/')).toBeUndefined();
     expect(at('https://www.stripe.com/')).toBeUndefined();
   });

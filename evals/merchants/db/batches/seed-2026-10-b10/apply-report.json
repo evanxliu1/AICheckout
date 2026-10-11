@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b10",
+  "appliedOn": "2026-10-11",
+  "records": [
+    {
+      "domain": "sprouts.com",
+      "id": "sprouts-us",
+      "basis": "definition",
+      "category": "supermarkets"
+    },
+    {
+      "domain": "starbucks.com",
+      "id": "starbucks-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "The company name only; it does not show what the site sells. Promotional Bank of America dining line with no definition wording; not the issuer statement of what the category includes."
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": "Starbucks also lists at-home coffee and merchandise, but its core business is identified as a coffeehouse; physicalGoods is false under the explicit restaurant exclusion."
+      }
+    },
+    {
+      "domain": "starz.com",
+      "id": "starz-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "stopandshop.com",
+      "id": "stopandshop-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Intro to Amex gas station examples; it is not about this store and supports no field."
+      },
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "stubhub.com",
+      "id": "stubhub-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "entertainment",
+        "reason": "no store-page quote shows a entertainment business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "subway.com",
+      "id": "subway-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "U.S. Bank names Subway as an exclusion from its Restaurants category; an exclusion is not earning evidence. Generic fast-food promotional line, not about this store; it shows food items, which does not support physicalGoods false. Promotional U.S. Bank fast-food line with no business-type definition"
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": "No store-owned page or lookup page was provided. U.S. Bank separates fast food from its narrower Restaurants section but explicitly identifies Subway as a fast-food restaurant; this is mapped to dining. Subway has no matching catalog brand id."
+      }
+    },
+    {
+      "domain": "suncountry.com",
+      "id": "suncountry-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "swiss.com",
+      "id": "swiss-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "t-mobile.com",
+      "id": "t-mobile-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "tacobell.com",
+      "id": "tacobell-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "talbots.com",
+      "id": "talbots-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "tesla.com",
+      "id": "tesla-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "ev-charging",
+        "reason": "no store-page quote shows a ev-charging business type",
+        "notes": "Tesla’s own pages were access denied, so the documents do not directly describe its goods or business. The issuer sample lists Tesla Inc in the gas/EV-charging section. Tesla is not included in the supplied catalog brand list."
+      }
+    },
+    {
+      "domain": "thrivemarket.com",
+      "id": "thrivemarket-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "the store's own page thrivemarket-com-page-1 calls it a annual membership",
+        "notes": "The issuers do not name Thrive Market specifically; the supermarket classification is based on its grocery-order descriptions and issuer definitions. Membership fees may code differently from merchandise orders."
+      }
+    },
+    {
+      "domain": "ticketmaster.com",
+      "id": "ticketmaster-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Bank of America names Ticketmaster as an Online Shopping example, a different category from entertainment."
+      },
+      "refused": {
+        "candidate": "entertainment",
+        "reason": "no store-page quote shows a entertainment business type",
+        "notes": "Ticketmaster’s pages explicitly call it a ticket marketplace and describe third-party resale, so marketplace is favored, though some direct purchases are described as fulfilled by Ticketmaster. Bank of America lists Ticketmaster under Online Shopping, which is not an available category; issuer definitions support Entertainment."
+      }
+    },
+    {
+      "domain": "tidal.com",
+      "id": "tidal-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Discover's streaming examples do not name TIDAL; the open-ended tail is hedged, so it does not cover this store."
+      },
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "tjmaxx.tjx.com",
+      "id": "tjmaxx-tjx-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "tomthumb.com",
+      "id": "tomthumb-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": "Tom Thumb also offers pharmacy services, but the supplied pages present Grocery as its store type. Chase excludes grocery stores with onsite pharmacies from the drugstore category; Amex excludes supermarkets that sell gasoline, which the pages do not mention."
+      }
+    },
+    {
+      "domain": "topgolf.com",
+      "id": "topgolf-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "tractorsupply.com",
+      "id": "tractorsupply-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Rural lifestyle retailer is not plainly a home-improvement business type. Quoted part names home supply, lumber, paint and hardware stores; it does not cover the rural lifestyle retailer the store pages show."
+      },
+      "refused": {
+        "candidate": "home-improvement",
+        "reason": "no store-page quote shows a home-improvement business type",
+        "notes": "No merchant-code lookup or issuer statement explicitly classifies Tractor Supply. Home-improvement is inferred from its rural-lifestyle retail business and the issuer definitions covering home-supply, hardware, building-supply, and related stores."
+      }
+    },
+    {
+      "domain": "truevalue.com",
+      "id": "truevalue-us",
+      "basis": "definition",
+      "category": "home-improvement"
+    },
+    {
+      "domain": "trycaviar.com",
+      "id": "trycaviar-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "tv.apple.com",
+      "id": "tv-apple-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Citi's streaming provider list is closed and does not name Apple TV, so it does not cover this store."
+      },
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": "Issuer lists use the legacy name “Apple TV+”; the store page says Apple TV+ is now called Apple TV. No catalog brand id exists for Apple."
+      }
+    },
+    {
+      "domain": "uber.com",
+      "id": "uber-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Bank of America's Travel category, broader than transit, and a promotional line; not a transit definition."
+      },
+      "refused": {
+        "candidate": "transit",
+        "reason": "no store-page quote shows a transit business type",
+        "notes": "Uber also offers Uber Eats and Uber One, so transaction coding can vary; the direct Uber evidence here places it in Ground Transportation."
+      }
+    },
+    {
+      "domain": "united.com",
+      "id": "united-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    }
+  ],
+  "heldOut": [
+    {
+      "domain": "traderjoes.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "traderjoes.com has no online ordering (research: no checkout seen; pages Access Denied); no sale or checkout on this host."
+        }
+      ]
+    }
+  ],
+  "botWalled": [
+    "stopandshop.com",
+    "subway.com",
+    "suncountry.com",
+    "tesla.com",
+    "tidal.com",
+    "tjmaxx.tjx.com",
+    "traderjoes.com",
+    "united.com"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14803,
+    "outputTokens": 184
+  },
+  "durationMs": 33461,
+  "draft": {
+    "domain": "nordstrom.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "nordstrom-com-page-1",
+        "quote": "Offering compelling clothing, shoes and accessories for women, men and kids",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "nordstrom-com-page-1",
+        "quote": "the leading fashion retailer we are today",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Nordstrom",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchases must be made at a department store that is included on our list of \"select major department stores\"",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Nordstrom is not present in the supplied catalog brand list, so no brand ID is assigned."
+  }
+}

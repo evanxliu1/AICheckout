@@ -6,15 +6,18 @@ import { join } from 'node:path';
 import { merchantRecordSchema } from '../../../../packages/rewards-core/src/merchant-release.ts';
 import type { MerchantRecord } from '../../../../packages/rewards-core/src/types.ts';
 import type { Env } from '../run.ts';
+import { FORUM_URL } from './apply.ts';
 import {
   BATCHES_DIR,
   EVIDENCE_DIR,
+  OVERRIDES_FILE,
   RECORDS_DIR,
   RELEASE_CONFIG,
   REVIEW_FILE,
   applyReportSchema,
   evidenceFileSchema,
   loadBatch,
+  overridesFileSchema,
   readJson,
   readJsonOrNull,
   releaseConfigSchema,
@@ -27,8 +30,34 @@ export interface ReviewInput {
   verifiedAt: string;
   records: MerchantRecord[];
   evidence: Map<string, EvidenceFile>;
-  heldOut: { batch: string; domain: string; disputed: { field: string; reason: string | null }[] }[];
+  heldOut: {
+    batch: string;
+    domain: string;
+    disputed: { field: string; reason: string | null }[];
+    reason?: 'defunct' | 'out-of-scope';
+  }[];
+  /** Stores whose own pages were bot-walled: name and hosts rest on research and issuer captures. */
+  botWalled: { batch: string; domain: string }[];
+  /** Default records built from research after three failed draft gates, and hosts dropped on the verifier's word. */
+  fallbacks: { batch: string; domain: string; id: string }[];
+  droppedHosts: { batch: string; domain: string; id: string; hosts: string[] }[];
+  /** Coordinator field corrections applied (overrides.json) and notes for Evan. */
+  overridden: { batch: string; domain: string; id: string; changes: string[] }[];
+  notes: string[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
+  /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
+   * an issuer listing the store under another category show here). */
+  refused: {
+    batch: string;
+    domain: string;
+    id: string;
+    candidate: string;
+    reason: string;
+    notes: string | null;
+  }[];
+  /** Granted categories another issuer contradicts (excludes the store or lists it elsewhere); the record follows
+   * the rule. */
+  conflicts: { batch: string; domain: string; id: string; category: string; conflict: string }[];
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -58,9 +87,14 @@ export function reviewMarkdown(input: ReviewInput): string {
     '| Record | Hosts | Category | Basis | Evidence (source: quote) |',
     '| --- | --- | --- | --- | --- |',
     ...categories.map((r) => {
+      // Only the cited sources' quotes: a definition record shows its store-page and issuer definition quotes.
       const quotes = (input.evidence.get(r.id)?.quotes ?? [])
-        .filter((q) => q.supports === 'category')
-        .map((q) => `${q.sourceId} (${q.kind}): "${cell(q.quote)}"`)
+        .filter((q) => r.evidence.sourceIds.includes(q.sourceId))
+        .filter((q) => q.supports === 'category' || q.supports === 'definition')
+        .map(
+          (q) =>
+            `${q.sourceId} (${q.kind}${q.supports === 'definition' ? ', definition' : ''}): "${cell(q.quote)}"`,
+        )
         .join('<br>');
       return `| ${r.id} | ${r.hosts.join(', ')} | ${r.category} | ${r.evidence.basis} | ${quotes} |`;
     }),
@@ -93,13 +127,66 @@ export function reviewMarkdown(input: ReviewInput): string {
     '| --- | --- | --- | --- |',
     ...input.downgraded.map((d) => `| ${d.batch} | ${d.domain} | ${d.id} | ${cell(d.reason ?? '')} |`),
     '',
-    `## Held out: disputed fields, for Evan (${input.heldOut.length})`,
+    `## Candidates the evidence rule refused, for Evan (${input.refused.length})`,
+    '',
+    "| Batch | Store | Record | Candidate | Rule's reason | Drafter's notes |",
+    '| --- | --- | --- | --- | --- | --- |',
+    ...input.refused.map(
+      (r) =>
+        `| ${r.batch} | ${r.domain} | ${r.id} | ${r.candidate} | ${cell(r.reason)} | ${cell(r.notes ?? '')} |`,
+    ),
+    '',
+    `## Conflicts: a granted category another issuer contradicts, for Evan (${input.conflicts.length})`,
+    '',
+    '| Batch | Store | Record | Category | Issuer sentence |',
+    '| --- | --- | --- | --- | --- |',
+    ...input.conflicts.map(
+      (c) => `| ${c.batch} | ${c.domain} | ${c.id} | ${c.category} | ${cell(c.conflict)} |`,
+    ),
+    '',
+    `## Bot-walled stores: name and hosts from research and issuer captures (${input.botWalled.length})`,
+    '',
+    ...(input.botWalled.length ? input.botWalled.map((b) => `- ${b.batch}: ${b.domain}`) : ['None.']),
+    '',
+    `## Default records from research after three failed draft gates (${input.fallbacks.length})`,
+    '',
+    ...(input.fallbacks.length
+      ? input.fallbacks.map((f) => `- ${f.batch}: ${f.domain} (${f.id})`)
+      : ['None.']),
+    '',
+    `## Coordinator field corrections (overrides.json) (${input.overridden.length})`,
+    '',
+    ...(input.overridden.length
+      ? input.overridden.map((o) => `- ${o.batch}: ${o.id}: ${cell(o.changes.join('; '))}`)
+      : ['None.']),
+    '',
+    `## Notes for Evan (${input.notes.length})`,
+    '',
+    ...(input.notes.length ? input.notes.map((n) => `- ${cell(n)}`) : ['None.']),
+    '',
+    `## Hosts dropped on the verifier's word (${input.droppedHosts.length})`,
+    '',
+    ...(input.droppedHosts.length
+      ? input.droppedHosts.map((d) => `- ${d.batch}: ${d.id} dropped ${d.hosts.join(', ')}`)
+      : ['None.']),
+    '',
+    `## Excluded: defunct, parked or typo domains, or out of scope (${input.heldOut.filter((h) => h.reason).length})`,
+    '',
+    ...(input.heldOut.some((h) => h.reason)
+      ? input.heldOut
+          .filter((h) => h.reason)
+          .map((h) => `- ${h.batch}: ${h.domain} (${h.reason}: ${cell(h.disputed[0]?.reason ?? '')})`)
+      : ['None.']),
+    '',
+    `## Held out: disputed fields, for Evan (${input.heldOut.filter((h) => !h.reason).length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
     '| --- | --- | --- | --- |',
-    ...input.heldOut.flatMap((h) =>
-      h.disputed.map((d) => `| ${h.batch} | ${h.domain} | ${d.field} | ${cell(d.reason ?? '')} |`),
-    ),
+    ...input.heldOut
+      .filter((h) => !h.reason)
+      .flatMap((h) =>
+        h.disputed.map((d) => `| ${h.batch} | ${h.domain} | ${d.field} | ${cell(d.reason ?? '')} |`),
+      ),
     '',
   ];
   return lines.join('\n');
@@ -121,25 +208,66 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   }
   const heldOut: ReviewInput['heldOut'] = [];
   const downgraded: ReviewInput['downgraded'] = [];
+  const refused: ReviewInput['refused'] = [];
+  const conflicts: ReviewInput['conflicts'] = [];
+  const botWalled: ReviewInput['botWalled'] = [];
+  const fallbacks: ReviewInput['fallbacks'] = [];
+  const droppedHosts: ReviewInput['droppedHosts'] = [];
+  const overridden: ReviewInput['overridden'] = [];
+  const notes = (await readJsonOrNull(join(root, OVERRIDES_FILE), overridesFileSchema))?.notes ?? [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
       applyReportSchema,
     );
-    for (const h of report?.heldOut ?? []) heldOut.push({ batch, domain: h.domain, disputed: h.disputed });
-    for (const r of report?.records ?? [])
+    for (const h of report?.heldOut ?? [])
+      heldOut.push({
+        batch,
+        domain: h.domain,
+        disputed: h.disputed,
+        ...(h.reason ? { reason: h.reason } : {}),
+      });
+    for (const domain of report?.botWalled ?? []) botWalled.push({ batch, domain });
+    for (const r of report?.records ?? []) {
       if (r.downgraded) downgraded.push({ batch, domain: r.domain, id: r.id, reason: r.downgraded.reason });
+      if (r.refused) refused.push({ batch, domain: r.domain, id: r.id, ...r.refused });
+      for (const conflict of r.conflicts ?? [])
+        conflicts.push({ batch, domain: r.domain, id: r.id, category: r.category, conflict });
+      if (r.fallback) fallbacks.push({ batch, domain: r.domain, id: r.id });
+      if (r.droppedHosts?.length)
+        droppedHosts.push({ batch, domain: r.domain, id: r.id, hosts: r.droppedHosts });
+      if (r.overridden?.length) overridden.push({ batch, domain: r.domain, id: r.id, changes: r.overridden });
+    }
   }
-  return { version: config.version, verifiedAt: config.verifiedAt, records, evidence, heldOut, downgraded };
+  const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
+  if (forum.length)
+    throw new Error(`forum threads are no merchant-code lookups: ${forum.map((s) => s.id).join(', ')}`);
+  return {
+    version: config.version,
+    verifiedAt: config.verifiedAt,
+    records,
+    evidence,
+    heldOut,
+    downgraded,
+    refused,
+    conflicts,
+    botWalled,
+    fallbacks,
+    droppedHosts,
+    overridden,
+    notes,
+  };
 }
 
 export async function runBuild(env: Env, batchId?: string): Promise<number> {
+  // Refuses a release that cites a forum thread as a lookup before anything is written.
+  const review = await collectReview(env.root);
   const code = await env.exec('node', ['scripts/build-merchants-v1.mjs']);
   if (code !== 0) {
     env.log('build: the release is invalid; fix the records first.');
     return code;
   }
-  await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(await collectReview(env.root)));
+  await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(review));
   env.log(`Wrote ${REVIEW_FILE}.`);
   if (batchId) {
     const batch = await loadBatch(env.root, batchId);

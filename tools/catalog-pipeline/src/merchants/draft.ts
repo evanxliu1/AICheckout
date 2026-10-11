@@ -1,5 +1,6 @@
 // Stage 3, draft: gpt-5.6-luna at xhigh through `codex exec` (local subscription, apps/api/src/curation/codex.ts), one
-// call per store, from the captures only, with the prompt file merchant-draft.1. The reply is gated (Zod, quotes
+// call per store, from the captures only, with the prompt file merchant-draft.2 (issuer captures as the windows around
+// the store's name plus the windows around the issuer's category definitions). The reply is gated (Zod, quotes
 // verbatim and at most 25 words, catalog brands, the store's own sources) and written to drafts/<domain>.json; the raw
 // reply goes to the gitignored traces/. Refused under CI or RENDER. The model proposes `candidateCategory`; it never
 // sets `category` (apply does, from the evidence rule).
@@ -11,6 +12,7 @@ import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
 import {
+  MAX_DRAFT_ATTEMPTS,
   PROMPT_FILE,
   PROMPT_VERSION,
   draftFileSchema,
@@ -23,11 +25,13 @@ import {
   writeState,
 } from './files.ts';
 import type { Batch, ManifestEntry } from './files.ts';
+import { definitionWindows } from './capture.ts';
+import { loadCandidates } from './candidates.ts';
 import { draftGate } from './packets.ts';
 
 export const DRAFT_MODEL = { model: 'gpt-5.6-luna', effort: 'xhigh' as const, attemptTimeoutMs: 600_000 };
 /** Characters of each document shown to the model (store pages first; the harness admits about 64k input tokens). */
-const DOC_LIMITS = { 'store-page': 14_000, 'mcc-lookup': 6_000, 'issuer-terms': 5_000 } as const;
+const DOC_LIMITS = { 'store-page': 14_000, 'mcc-lookup': 6_000, 'issuer-terms': 8_000 } as const;
 
 export interface DraftDocument {
   id: string;
@@ -88,20 +92,29 @@ export async function runDraft(
     if (only && !only.includes(store.domain)) continue;
     const existing = batch.state.stores[store.domain]?.draft;
     if (existing?.status === 'done' && batch.state.stages.draft.status !== 'stale' && !only) continue;
+    if (existing?.status === 'held-out') {
+      env.log(`${store.domain}: held out after ${existing.attempts} failed draft gates; not re-drafted.`);
+      continue;
+    }
     const documents: DraftDocument[] = [];
     for (const source of manifest.sources.filter((s) => s.domain === store.domain)) {
-      const windowsPath = join(batch.dir, 'captures', `${source.id}.windows.${store.domain}.txt`);
-      const text =
-        source.kind === 'issuer-terms'
-          ? await readFile(windowsPath, 'utf8').catch(() =>
-              readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8'),
-            )
-          : await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8');
+      const full = await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8');
+      let text = full;
+      if (source.kind === 'issuer-terms') {
+        const named = await readFile(
+          join(batch.dir, 'captures', `${source.id}.windows.${store.domain}.txt`),
+          'utf8',
+        ).catch(() => full);
+        const definitions = definitionWindows(full).join('\n\n[…]\n\n');
+        text = definitions
+          ? `${named}\n\n[category definitions elsewhere on this page]\n\n${definitions}`
+          : named;
+      }
       documents.push({ id: source.id, kind: source.kind, url: source.url, text });
     }
     const started = Date.now();
     const user = userMessage(store.domain, store.name, store.hosts, documents);
-    let status: 'done' | 'failed-gate' | 'provider-error' | 'timeout' = 'done';
+    let status: 'done' | 'failed-gate' | 'provider-error' | 'timeout' | 'held-out' = 'done';
     let usage = { inputTokens: 0, outputTokens: 0 };
     try {
       const reply = (await provider.invoke({
@@ -149,11 +162,52 @@ export async function runDraft(
       status = /timeout|abort/i.test(message) ? 'timeout' : 'provider-error';
       env.log(`${store.domain}: ${status} (${message.split('\n')[0]})`);
     }
-    if (status !== 'done') failed += 1;
+    const attempts = (existing?.attempts ?? 0) + 1;
+    if (status === 'failed-gate' && attempts >= MAX_DRAFT_ATTEMPTS) {
+      // A catalog-brand store needs no quotes for a default record: a default draft from research (name, hosts, the
+      // candidate list's brands) goes to the verifier instead of a hold-out (coordinator, 2026-10-11).
+      const candidate = (await loadCandidates(env.root)).candidates.find((c) => c.domain === store.domain);
+      if (candidate?.brandIds?.length && !candidate.id) {
+        await writeJsonAtomic(
+          join(batch.dir, 'drafts', `${store.domain}.json`),
+          draftFileSchema.parse({
+            schemaVersion: 1,
+            batch: batch.id,
+            promptVersion: PROMPT_VERSION,
+            promptSha256,
+            model: 'none',
+            effort: 'none',
+            draftedOn: env.now().toISOString().slice(0, 10),
+            usage: { inputTokens: 0, outputTokens: 0 },
+            durationMs: 0,
+            fallback: 'default-from-research',
+            draft: {
+              domain: store.domain,
+              kind: 'merchant',
+              physicalGoods: true,
+              brandIds: candidate.brandIds,
+              candidateCategory: null,
+              evidence: [],
+              notes: `Default draft from research after ${attempts} failed draft gates; brands from the candidate list.`,
+            },
+          }),
+        );
+        status = 'done';
+        env.log(
+          `${store.domain}: default draft from research after ${attempts} failed draft gates (brands ${candidate.brandIds.join(', ')}).`,
+        );
+      } else {
+        status = 'held-out';
+        env.log(
+          `${store.domain}: HELD OUT after ${attempts} failed draft gates (coordinator rule, 2026-10-11).`,
+        );
+      }
+    } else if (status !== 'done') failed += 1;
     batch.state.stores[store.domain] = {
       ...batch.state.stores[store.domain],
       draft: {
         status,
+        attempts,
         inputTokens: usage.inputTokens,
         outputTokens: usage.outputTokens,
         durationMs: Date.now() - started,
@@ -165,7 +219,10 @@ export async function runDraft(
       `${store.domain}: ${status} in ${Math.round((Date.now() - started) / 1000)} s, ${usage.inputTokens} in / ${usage.outputTokens} out tokens.`,
     );
   }
-  const all = research.stores.every((s) => batch.state.stores[s.domain]?.draft?.status === 'done');
+  // Done when every store is drafted or held out after MAX_DRAFT_ATTEMPTS failed gates.
+  const all = research.stores.every((s) =>
+    ['done', 'held-out'].includes(batch.state.stores[s.domain]?.draft?.status ?? ''),
+  );
   const now = env.now();
   batch.state.stages.draft = {
     status: all ? 'done' : 'failed-gate',

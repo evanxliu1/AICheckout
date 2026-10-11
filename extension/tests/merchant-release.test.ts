@@ -18,7 +18,7 @@ describe('merchant release schema', () => {
   });
   it('covers every evidence basis and kind in the fixture', () => {
     expect(new Set(MERCHANT_RELEASE_FIXTURE.merchants.map((m) => m.evidence.basis))).toEqual(
-      new Set(['issuer', 'corroborated', 'default']),
+      new Set(['issuer', 'corroborated', 'definition', 'default']),
     );
     expect(MERCHANT_RELEASE_FIXTURE.merchants.some((m) => m.kind === 'processor')).toBe(true);
     expect(MERCHANT_RELEASE_FIXTURE.merchants.some((m) => m.disabled)).toBe(true);
@@ -32,7 +32,9 @@ describe('merchant release schema', () => {
 describe('bundled merchant release', () => {
   it('is valid and small', () => {
     expect(merchantReleaseSchema.parse(MERCHANTS_V1)).toEqual(MERCHANTS_V1);
-    expect(new TextEncoder().encode(JSON.stringify(MERCHANTS_V1)).byteLength).toBeLessThan(16_384);
+    // The seed grows toward ~700 records (plan: about 500 stores, at most 2 MiB); well under 512 KiB keeps it
+    // a small bundled file.
+    expect(new TextEncoder().encode(JSON.stringify(MERCHANTS_V1)).byteLength).toBeLessThan(512 * 1024);
   });
   it('keeps the three legacy ids with their catalog brands', () => {
     for (const legacy of CATALOG_V3.merchants) {
