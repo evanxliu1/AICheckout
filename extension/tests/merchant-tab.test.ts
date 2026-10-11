@@ -127,7 +127,9 @@ describe('storeEvidence', () => {
       'Codes as a supermarket (its own store pages and a public merchant-code lookup agree).',
     );
     expect(storeEvidence('whole-foods-us', fixture)).toBe('Codes as a supermarket (named in card terms).');
-    expect(storeEvidence('coffee-us', fixture)).toBe('Codes as a restaurant (public card-transaction data).');
+    expect(storeEvidence('coffee-us', fixture)).toBe(
+      'Codes as a restaurant in public purchase-card data (mostly in-store).',
+    );
   });
   it('names the issuer whose definition a definition record fits, without implying a partnership', () => {
     // The fixture's issuer source is synthetic (no catalog card cites it), so the wording falls back.
@@ -172,17 +174,23 @@ describe('storeEvidence', () => {
       if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
       else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
     // The bundled release (2026-10-11.mcc.1): CVS, Lowe's, Wegmans, Kroger and Whole Foods code as their category in
-    // the public card-transaction datasets (the mcc basis outranks their earlier definitions), Audible is named in
+    // the public purchase-card datasets (the mcc basis outranks their earlier definitions), Audible is named in
     // Amex's card terms, Acme Markets still rests on a definition, and Costco stays on the default category (its
     // wholesale-club rows are 76% of its usable rows, under the 80% bar).
-    expect(storeEvidence('cvs-us')).toBe('Codes as a drugstore (public card-transaction data).');
-    expect(storeEvidence('lowes-us')).toBe(
-      'Codes as a home-improvement store (public card-transaction data).',
+    expect(storeEvidence('cvs-us')).toBe(
+      'Codes as a drugstore in public purchase-card data (mostly in-store).',
     );
-    expect(storeEvidence('wegmans-us')).toBe('Codes as a supermarket (public card-transaction data).');
-    expect(storeEvidence('kroger-us')).toBe('Codes as a supermarket (public card-transaction data).');
+    expect(storeEvidence('lowes-us')).toBe(
+      'Codes as a home-improvement store in public purchase-card data (mostly in-store).',
+    );
+    expect(storeEvidence('wegmans-us')).toBe(
+      'Codes as a supermarket in public purchase-card data (mostly in-store).',
+    );
+    expect(storeEvidence('kroger-us')).toBe(
+      'Codes as a supermarket in public purchase-card data (mostly in-store).',
+    );
     expect(storeEvidence('wholefoodsmarket-us')).toBe(
-      'Codes as a supermarket (public card-transaction data).',
+      'Codes as a supermarket in public purchase-card data (mostly in-store).',
     );
     expect(storeEvidence('acmemarkets-us')).toMatch(
       /^Treated as a supermarket \(its own pages; fits .*supermarket definition\)\.$/,

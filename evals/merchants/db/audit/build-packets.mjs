@@ -7,14 +7,14 @@
 // around its name. Nothing derived from a draft, a verification, a record or review.md goes into a sheet. The
 // issuers' category definitions are one shared file per packet, mined from the fixed definition pages.
 //
-//   node evals/merchants/db/audit/build-packets.mjs [--size 25] [--run mcc]
+//   node evals/merchants/db/audit/build-packets.mjs [--size 25] [--run mcc] [--since <release.json>]
 //
 // Writes evals/merchants/db/audit/population.json (committed: domains, tiers, reasons, capture counts) and
 // evals/merchants/db/audit/packets/<n>/ (gitignored: capture text).
 //
 // `--run mcc` (2026-10-11, the mcc basis): the population is every record the `pipeline merchants mcc` run changed
-// (evals/merchants/db/mcc/results.json, `changed: true`); files are population-mcc.json, packets-mcc/ and
-// labels-mcc/. Each sheet then also carries an "mcc-evidence" section: the matched merchant descriptors with their
+// (evals/merchants/db/mcc/results.json, `changed: true`), or with `--since <release.json>` every record whose
+// category differs from that earlier release; files are population-<run>.json, packets-<run>/ and labels-<run>/. Each sheet then also carries an "mcc-evidence" section: the matched merchant descriptors with their
 // dataset category descriptions and row counts, raw data from the public datasets, never the run's outcome; the
 // packet also gets the committed code map (mcc-codes.json) so the auditor can map a description to a category.
 import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
@@ -106,10 +106,16 @@ const cut = (text, max) =>
 
 const section = (heading, body) => [`## ${heading}`, '', '```', body.trim(), '```', ''];
 
-export async function buildPopulation(run = null) {
+export async function buildPopulation(run = null, since = null) {
   const release = await readJson(join(DB, 'release.json'));
-  const mccResults = run === 'mcc' ? await readJson(join(DB, 'mcc/results.json')) : null;
-  const mccChanged = new Set((mccResults?.stores ?? []).filter((s) => s.changed).map((s) => s.id));
+  const mccResults = run?.startsWith('mcc') ? await readJson(join(DB, 'mcc/results.json')) : null;
+  // `since`: a previous release.json; the population is then the records whose category differs from it.
+  const previous = since ? new Map((await readJson(since)).merchants.map((m) => [m.id, m.category])) : null;
+  const mccChanged = new Set(
+    previous
+      ? release.merchants.filter((m) => previous.get(m.id) !== m.category).map((m) => m.id)
+      : (mccResults?.stores ?? []).filter((s) => s.changed).map((s) => s.id),
+  );
   const heldout = (await readJson(join(ROOT, 'evals/merchants/pipeline-heldout-domains.json'))).domains;
   const candidates = (await readJson(join(DB, 'candidates.json'))).candidates;
   const byDomain = new Map(candidates.map((c) => [c.domain, c]));
@@ -274,8 +280,9 @@ export async function main(argv = process.argv.slice(2)) {
   const size = sizeAt >= 0 ? Number(argv[sizeAt + 1]) : 25;
   const runAt = argv.indexOf('--run');
   const run = runAt >= 0 ? argv[runAt + 1] : null;
+  const sinceAt = argv.indexOf('--since');
   const paths = runPaths(run);
-  const { release, population, mccResults } = await buildPopulation(run);
+  const { release, population, mccResults } = await buildPopulation(run, sinceAt >= 0 ? argv[sinceAt + 1] : null);
   const issuerCaptures = await listIssuerCaptures(ROOT);
   await rm(paths.packetsDir, { recursive: true, force: true });
   const packets = Math.ceil(population.length / size);

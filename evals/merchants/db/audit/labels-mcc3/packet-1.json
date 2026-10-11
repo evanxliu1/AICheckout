@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "packet": 1,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      "evals/merchants/db/audit/packets-mcc3/1/packet.json",
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets-mcc3/1/catalog-lists.json",
+      "evals/merchants/db/audit/packets-mcc3/1/issuer-definitions.md",
+      "evals/merchants/db/audit/packets-mcc3/1/mcc-codes.json",
+      "evals/merchants/db/audit/packets-mcc3/1/stores/bambulab.com.md",
+      "evals/merchants/db/audit/packets-mcc3/1/stores/starbucks.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "bambulab.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "general-merchandise",
+      "basis": "default",
+      "quotes": [
+        { "source": "bambulab.com-home", "quote": "The G.O.A.T of Entry-Level 3D Printers", "supports": "physicalGoods" },
+        { "source": "bambulab.com-home", "quote": "Authorized Reseller", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "US.STORE.BAMBULAB.COM | MISCELLANEOUS GENERAL MERCHANDISE STORES", "supports": "mcc" },
+        { "source": "mcc-evidence", "quote": "SP BAMBULAB.US | ELECTRONIC SALES", "supports": "mcc" }
+      ],
+      "notes": "Refused electronics (mcc): 45/55 rows (82%) code 5732, but the 10 rows of this domain's own web-store descriptor code 5399, so the online channel disagrees. No issuer or definition basis; pages show no shipping wording."
+    },
+    {
+      "domain": "starbucks.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "definition",
+      "quotes": [
+        { "source": "starbucks-com-page-1", "quote": "In 1987 we became a coffeehouse, dedicated to serving exceptional coffee with passion and care.", "supports": "category" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes purchases at cafes, bars, lounges, fast-food restaurants, restaurant delivery services, and take out restaurants.", "supports": "definition" },
+        { "source": "mcc-evidence", "quote": "STARBUCKS CARD RELOAD | Convenience, Deli, Specialty Food Stores", "supports": "mcc" },
+        { "source": "starbucks-com-page-2", "quote": "Find a café", "supports": "kind" }
+      ],
+      "notes": "mcc not used: online-channel rows (card reload 6 rows, 5499; 800-number 6 rows, 5814) do not all code dining; CashStar gift rows are another business. Dining granted on definition (coffeehouse/cafe)."
+    }
+  ]
+}

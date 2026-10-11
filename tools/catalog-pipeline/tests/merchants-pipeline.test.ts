@@ -37,14 +37,18 @@ import {
   compileCodes,
   csvRows,
   decide,
+  deliveryExclusions,
   derivePattern,
   descriptorFor,
   descriptorMatches,
+  isOnline,
   mccCodesSchema,
   mccDescriptorsSchema,
   mccManifestSchema,
   normalText,
   pageVeto,
+  streamingVeto,
+  xlsxRows,
 } from '../src/merchants/mcc.ts';
 import type { Descriptor, MccResults } from '../src/merchants/mcc.ts';
 import type { MerchantRecord } from '../../../packages/rewards-core/src/types.ts';
@@ -2421,7 +2425,10 @@ describe('mcc basis (Evan 2026-10-11: "fix the big names, i think we should use 
           usable: 20,
           byDataset: { 'mcc-dataset-dc': 24 },
           byDescription: { 'GROCERY STORES SUPERMARKETS': 20, 'AUTOMATED FUEL DISPENSERS': 4 },
-          descriptors: [{ text: 'KROGER #239 | GROCERY STORES SUPERMARKETS', rows: 2 }],
+          descriptors: [
+            { text: 'KROGER #239 | GROCERY STORES SUPERMARKETS', rows: 2, dataset: 'mcc-dataset-dc' },
+          ],
+          online: null,
           dominant: {
             category: 'supermarkets',
             share: 1,
@@ -2444,6 +2451,7 @@ describe('mcc basis (Evan 2026-10-11: "fix the big names, i think we should use 
           byDataset: { 'mcc-dataset-dc': 3 },
           byDescription: { 'FAST FOOD RESTAURANTS': 3 },
           descriptors: [],
+          online: null,
           dominant: { category: 'dining', share: 1, code: 5814, description: 'FAST FOOD RESTAURANTS' },
           conflicts: [],
           issuerConflicts: [],
@@ -2465,6 +2473,189 @@ describe('mcc basis (Evan 2026-10-11: "fix the big names, i think we should use 
     expect(text).toContain('1 more stores matched fewer than 10 rows');
     expect(text).toContain('300 records matched no row');
     expect(mccSection(undefined)).toEqual([]);
+  });
+  it('review fixes 2026-10-11: online-channel rows that disagree refuse the grant; agreeing or few rows do not', () => {
+    const fuel = codesFile.fuelCodes;
+    const starbucks = decide(
+      counts([
+        ['FAST FOOD RESTAURANTS', 389],
+        ['POI FUNDING TRANSACTIONS EXCLUDING MONEYSEND', 32],
+        ['CONVENIENCE DELI SPECIALTY FOOD STORES', 6],
+      ]),
+      codes,
+      fuel,
+      counts([
+        ['POI FUNDING TRANSACTIONS EXCLUDING MONEYSEND', 32],
+        ['CONVENIENCE DELI SPECIALTY FOOD STORES', 6],
+      ]),
+    );
+    expect(starbucks.outcome).toBe('online-disagrees');
+    expect(starbucks.online).toMatchObject({ rows: 38, category: 'general-merchandise' });
+    // Best Buy: its .com rows are electronics too.
+    expect(
+      decide(counts([['ELECTRONIC SALES', 2900]]), codes, fuel, counts([['ELECTRONIC SALES', 1200]])),
+    ).toMatchObject({ outcome: 'granted', online: { rows: 1200, category: 'electronics', share: 1 } });
+    // Fewer than five online rows never decide.
+    expect(
+      decide(
+        counts([
+          ['FAST FOOD RESTAURANTS', 100],
+          ['DISCOUNT STORES', 4],
+        ]),
+        codes,
+        fuel,
+        counts([['DISCOUNT STORES', 4]]),
+      ).outcome,
+    ).toBe('granted');
+    // Online rows are read through the same fuel rule.
+    expect(
+      decide(
+        counts([
+          ['GROCERY STORES SUPERMARKETS', 50],
+          ['AUTOMATED FUEL DISPENSERS', 20],
+        ]),
+        codes,
+        fuel,
+        counts([['AUTOMATED FUEL DISPENSERS', 6]]),
+      ).outcome,
+    ).toBe('granted');
+    const bambu = descriptorFor(record('Bambu Lab', { id: 'bambulab-us', hosts: ['bambulab.com'] }), {})!;
+    expect(isOnline(bambu, normalText('US.STORE.BAMBULAB.COM'))).toBe(true);
+    expect(isOnline(bambu, normalText('SP BAMBULAB.US'))).toBe(false);
+    expect(isOnline(bambu, normalText('CHIPOTLE ONLINE'))).toBe(true);
+    expect(isOnline(bambu, normalText('WWW.KOHLS.COM #0873'))).toBe(true);
+    expect(isOnline(bambu, normalText('KROGER #239'))).toBe(false);
+  });
+  it('review fixes 2026-10-11: 4899 backs streaming only for a streaming service, never a cable, satellite, internet or phone provider', () => {
+    const service = { name: 'Netflix', physicalGoods: false };
+    expect(streamingVeto(service, ['NETFLIX.COM | CABLE SATELLITE OTHER PAY TELEVISION'], {})).toBeNull();
+    expect(
+      streamingVeto(service, ['NETFLIX.COM | CABLE SATELLITE OTHER PAY TELEVISION'], {
+        p1: `${'x '.repeat(160)} Watch on 2 supported devices at a time. Movies and TV shows.`,
+      }),
+    ).toBeNull();
+    expect(
+      streamingVeto(service, ['NETFLIX.COM | CABLE SATELLITE OTHER PAY TELEVISION'], {
+        p1: `${'x '.repeat(160)} We sell cable modems and routers.`,
+      }),
+    ).toMatch(/show no streaming service/);
+    // A short bot-wall page is not readable and does not veto.
+    expect(streamingVeto(service, ['NETFLIX.COM | X'], { p1: 'Access Denied' })).toBeNull();
+    expect(
+      streamingVeto(
+        { name: 'Xfinity', physicalGoods: false },
+        ['COMCAST XFINITY | CABLE SATELLITE OTHER PAY TELEVISION'],
+        {},
+      ),
+    ).toMatch(/cable, satellite, internet or phone provider/);
+    expect(streamingVeto({ name: 'Spectrum', physicalGoods: false }, [], {})).toMatch(/provider/);
+    expect(streamingVeto({ name: 'DIRECTV', physicalGoods: false }, [], {})).toMatch(/provider/);
+    expect(streamingVeto({ name: 'Verizon', physicalGoods: false }, [], {})).toMatch(/provider/);
+    expect(
+      streamingVeto({ name: 'Best Buy', physicalGoods: true }, ['BESTBUY.COM | CABLE SATELLITE'], {}),
+    ).toMatch(/physical goods/);
+  });
+  it('review fixes 2026-10-11: every issuer sentence excluding delivery from dining is listed for a delivery marketplace', () => {
+    const texts = {
+      'chase-rewards-category-faq':
+        'Restaurants: merchants whose primary business is sit-down or eat-in dining. Third-party delivery services are not included in the dining category unless they classify as a restaurant merchant. Gas stations earn 1%.',
+      'amex-rewards-info-retail': 'Restaurants, including takeout and delivery, earn 4 points.',
+      'citi-strata-rewards-terms': 'Short sentence; not delivery.',
+    };
+    const out = deliveryExclusions(texts);
+    expect(out).toHaveLength(1);
+    // Chase's real wording is conditional, not an exclusion; it is listed too.
+    expect(
+      deliveryExclusions({
+        chase:
+          'Dining merchants serve food. Delivery and takeout services will be included if they classify as a restaurant merchant. Next.',
+      })[0],
+    ).toMatch(/^chase: conditions delivery from dining: "Delivery and takeout services will be included if/);
+    expect(out[0]).toMatch(
+      /^chase-rewards-category-faq: excludes delivery from dining: "Third-party delivery services are not included/,
+    );
+    expect(deliveryExclusions({})).toEqual([]);
+  });
+  it('review fixes 2026-10-11: Walmart and Target are read and vetoed; Wendy\u2019s software-store franchise and AMC music rows are excluded', () => {
+    const descriptors = mccDescriptorsSchema.parse(
+      JSON.parse(readFileSync(join(REPO_ROOT, 'evals/merchants/db/mcc/descriptors.json'), 'utf8')),
+    ).stores;
+    const walmart = descriptorFor(
+      record('Walmart', { id: 'walmart-us', hosts: ['walmart.com'] }),
+      descriptors,
+    )!;
+    expect(descriptorMatches(walmart, normalText('WAL-MART #1234'))).toBe(true);
+    expect(descriptorMatches(walmart, normalText('WALMART.COM 8009666546'))).toBe(true);
+    expect(descriptors['walmart-us'].veto).toMatch(/never get supermarkets/);
+    expect(descriptors['target-us'].veto).toMatch(/never get supermarkets/);
+    const wendys = descriptorFor(record("Wendy's", { id: 'wendys-us', hosts: ['wendys.com'] }), descriptors)!;
+    expect(descriptorMatches(wendys, normalText('WENDYS / PITTSBURG STA'))).toBe(false);
+    expect(descriptorMatches(wendys, normalText("WENDY'S #4191"))).toBe(true);
+    const amc = descriptorFor(
+      record('AMC Theatres', { id: 'amctheatres-us', hosts: ['amctheatres.com'] }),
+      descriptors,
+    )!;
+    expect(descriptorMatches(amc, normalText('SQ *AMC MUSIC LLC'))).toBe(false);
+    expect(descriptorMatches(amc, normalText('AMC #1234 ROBINSON'))).toBe(true);
+    expect(descriptorMatches(amc, normalText('AMC ONLINE 2342'))).toBe(true);
+  });
+  it('reads the first worksheet of an .xlsx (stored zip, shared strings, sparse cells)', () => {
+    const files: [string, string][] = [
+      ['[Content_Types].xml', '<Types/>'],
+      [
+        'xl/sharedStrings.xml',
+        '<sst><si><t>Merchant Name</t></si><si><t>MCC Description</t></si><si><t>BEST BUY 00123</t></si><si><t>ELECTRONIC SALES</t></si></sst>',
+      ],
+      [
+        'xl/worksheets/sheet1.xml',
+        '<worksheet><sheetData><row r="1"><c r="A1" t="s"><v>0</v></c><c r="C1" t="s"><v>1</v></c></row><row r="2"><c r="A2" t="s"><v>2</v></c><c r="B2"><v>5732</v></c><c r="C2" t="s"><v>3</v></c></row></sheetData></worksheet>',
+      ],
+    ];
+    const parts: Buffer[] = [];
+    const central: Buffer[] = [];
+    let offset = 0;
+    const crc = (buf: Buffer) => {
+      let c = ~0;
+      for (const b of buf) {
+        c ^= b;
+        for (let k = 0; k < 8; k += 1) c = c & 1 ? (c >>> 1) ^ 0xedb88320 : c >>> 1;
+      }
+      return ~c >>> 0;
+    };
+    for (const [name, content] of files) {
+      const data = Buffer.from(content);
+      const nameBuf = Buffer.from(name);
+      const local = Buffer.alloc(30);
+      local.writeUInt32LE(0x04034b50, 0);
+      local.writeUInt16LE(20, 4);
+      local.writeUInt32LE(crc(data), 14);
+      local.writeUInt32LE(data.length, 18);
+      local.writeUInt32LE(data.length, 22);
+      local.writeUInt16LE(nameBuf.length, 26);
+      const entry = Buffer.alloc(46);
+      entry.writeUInt32LE(0x02014b50, 0);
+      entry.writeUInt32LE(crc(data), 16);
+      entry.writeUInt32LE(data.length, 20);
+      entry.writeUInt32LE(data.length, 24);
+      entry.writeUInt16LE(nameBuf.length, 28);
+      entry.writeUInt32LE(offset, 42);
+      central.push(Buffer.concat([entry, nameBuf]));
+      parts.push(local, nameBuf, data);
+      offset += local.length + nameBuf.length + data.length;
+    }
+    const centralBuf = Buffer.concat(central);
+    const eocd = Buffer.alloc(22);
+    eocd.writeUInt32LE(0x06054b50, 0);
+    eocd.writeUInt16LE(files.length, 8);
+    eocd.writeUInt16LE(files.length, 10);
+    eocd.writeUInt32LE(centralBuf.length, 12);
+    eocd.writeUInt32LE(offset, 16);
+    const rows = xlsxRows(Buffer.concat([...parts, centralBuf, eocd]));
+    expect(rows).toEqual([
+      ['Merchant Name', '', 'MCC Description'],
+      ['BEST BUY 00123', '5732', 'ELECTRONIC SALES'],
+    ]);
+    expect(() => xlsxRows(Buffer.from('not a zip'))).toThrow(/zip/);
   });
   it('the committed data files parse, name only existing records, and the Visa manual is the code source', () => {
     const descriptors = mccDescriptorsSchema.parse(

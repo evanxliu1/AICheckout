@@ -7,7 +7,7 @@ import type { MerchantRelease } from './types.ts';
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.mcc.2',
+  version: '2026-10-11.mcc.3',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -1049,8 +1049,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['bambulab.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'electronics',
-      evidence: { basis: 'mcc', sourceIds: ['mcc-dataset-ok-fy2023', 'mcc-dataset-ok-fy2024'] },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -3367,10 +3367,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'merchant',
       physicalGoods: true,
       category: 'supermarkets',
-      evidence: {
-        basis: 'mcc',
-        sourceIds: ['mcc-dataset-dc', 'mcc-dataset-ok-fy2023', 'mcc-dataset-ok-fy2024'],
-      },
+      evidence: { basis: 'mcc', sourceIds: ['mcc-dataset-dc', 'mcc-dataset-ok-fy2023'] },
       brandIds: [],
       disabled: false,
     },
@@ -4071,12 +4068,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'supermarkets',
       evidence: {
         basis: 'mcc',
-        sourceIds: [
-          'mcc-dataset-dc',
-          'mcc-dataset-ok-fy2022',
-          'mcc-dataset-ok-fy2023',
-          'mcc-dataset-ok-fy2024',
-        ],
+        sourceIds: ['mcc-dataset-ok-fy2022', 'mcc-dataset-ok-fy2023', 'mcc-dataset-ok-fy2024'],
       },
       brandIds: [],
       disabled: false,
@@ -6471,16 +6463,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['starbucks.com'],
       kind: 'merchant',
       physicalGoods: false,
-      category: 'dining',
-      evidence: {
-        basis: 'mcc',
-        sourceIds: [
-          'mcc-dataset-dc',
-          'mcc-dataset-ok-fy2022',
-          'mcc-dataset-ok-fy2023',
-          'mcc-dataset-ok-fy2024',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },

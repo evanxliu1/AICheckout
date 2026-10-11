@@ -19,7 +19,15 @@ import { MERCHANT_CATEGORIES_V3 } from '../../../../packages/rewards-core/src/ty
 import type { MerchantRecord, MerchantSource } from '../../../../packages/rewards-core/src/types.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
-import { CATEGORY_EXCLUDED_TYPES, issuerConflicts } from './apply.ts';
+import {
+  CATEGORY_EXCLUDED_TYPES,
+  CONDITIONAL_WORDING,
+  DELIVERY_WORDING,
+  EXCLUSION_WORDING,
+  ISSUER_CATEGORY_WORDS,
+  issuerConflicts,
+} from './apply.ts';
+import { DEFINITION_PAGES, listIssuerCaptures } from './capture.ts';
 import {
   BATCHES_DIR,
   DB_DIR,
@@ -45,6 +53,19 @@ export const MCC_BATCH = 'mcc-2026-10';
 /** The grant thresholds (coordinator, 2026-10-11). */
 export const MIN_ROWS = 10;
 export const MIN_SHARE = 0.8;
+/** Card-not-present check (review 2026-10-11): rows whose descriptor shows an online channel are the best evidence
+ * for online checkout; when at least this many exist and their dominant category differs, the grant is refused. */
+export const MIN_ONLINE_ROWS = 5;
+/** Web, app and card-not-present markers in a descriptor: a web host or online tag, a toll-free phone number (a
+ * mail or phone order), a gift card, e-gift or reload purchase. */
+export const ONLINE_WORDING =
+  /(?<![A-Z0-9])(WWW|COM|ONLINE|CNP|ECOM|ECOMM|ECOMMERCE|INTERNET|NET|APP|E ?GIFT|GIFT|GFT|RELOAD|CASHSTAR|8(?:00|88|77|66|55|44|33) [0-9]{3} [0-9]{4})(?![A-Z0-9])/;
+/** Cable, satellite, internet and phone providers code 4899 too and never get `streaming` from it (review 2026-10-11). */
+export const TELECOM_WORDING =
+  /(?<![A-Z0-9])(COMCAST|XFINITY|DIRECTV|DIRECT TV|DISH NETWORK|DISH|SPECTRUM|CHARTER COMMUNICATIONS|COX COMMUNICATIONS|COX CABLE|VERIZON|FIOS|AT T|ATT|T MOBILE|TMOBILE|FRONTIER COMMUNICATIONS|OPTIMUM|CENTURYLINK|LUMEN|MEDIACOM|SUDDENLINK|ALTICE|CABLE ONE|SPARKLIGHT|WOW INTERNET|RCN|ASTOUND|BRIGHTSPEED|WINDSTREAM)(?![A-Z0-9])/;
+/** What a streaming service's own pages say (subscription video or audio), read over the full store-page captures. */
+export const STREAMING_PAGE_WORDING =
+  /\b(stream\w*|watch (?:on|in|anywhere|tv|movies|shows|unlimited)|movies and tv shows|tv shows|series,? films|films and games|podcasts|on[- ]demand|ad-supported|audio|listen(?:ing)?)\b/i;
 
 const hex = z.string().regex(/^[0-9a-f]{64}$/);
 const sourceId = z
@@ -137,6 +158,8 @@ export const mccDescriptorsSchema = z.strictObject({
       veto: z.string().max(300).optional(),
       /** The record is not matched at all (a name that is a common word). */
       skip: z.string().max(300).optional(),
+      /** A coordinator note listed beside the store's conflicts in review.md (Whole Foods checks out on amazon.com). */
+      note: z.string().max(400).optional(),
     }),
   ),
 });
@@ -159,8 +182,11 @@ export const mccResultsSchema = z.strictObject({
       byDataset: z.record(z.string(), z.int()),
       /** Normalised description → rows, every description seen. */
       byDescription: z.record(z.string(), z.int()),
-      /** The most frequent matched descriptors ("MERCHANT | DESCRIPTION", raw fields), for review and audit. */
-      descriptors: z.array(z.strictObject({ text: z.string(), rows: z.int() })),
+      /** The most frequent matched descriptors ("MERCHANT | DESCRIPTION", raw fields; at most 12, never rows) with
+       * the dataset each came from, for review, audit and the per-dataset evidence quote. */
+      descriptors: z.array(z.strictObject({ text: z.string(), rows: z.int(), dataset: z.string() })),
+      /** The card-not-present rows (online channel in the descriptor): count and their dominant category. */
+      online: z.strictObject({ rows: z.int(), category: z.string(), share: z.number() }).nullable(),
       dominant: z
         .strictObject({
           category: z.string(),
@@ -189,6 +215,7 @@ export const mccResultsSchema = z.strictObject({
         'too-few-rows',
         'not-dominant',
         'no-bonus-code',
+        'online-disagrees',
       ]),
       reason: z.string().max(400).nullable(),
       previous: z.strictObject({ basis: z.string(), category: z.string() }),
@@ -231,6 +258,8 @@ export interface Descriptor {
   id: string;
   patterns: RegExp[];
   excludes: RegExp[];
+  /** The record's hosts, normalised ("STARBUCKS COM"): a descriptor naming one is an online-channel row. */
+  hosts: string[];
   /** Tokens a descriptor must contain for the patterns to be tried (the first token of each pattern). */
   tokens: string[];
 }
@@ -260,6 +289,7 @@ export function descriptorFor(
     id: record.id,
     patterns: sources.map(bounded),
     excludes: (override?.excludes ?? []).map(bounded),
+    hosts: record.hosts.map((h) => normalText(h.replace(/^www\./, ''))),
     tokens,
   };
 }
@@ -267,6 +297,10 @@ export function descriptorFor(
 /** Whether a normalised merchant descriptor is this store's. */
 export const descriptorMatches = (d: Descriptor, merchant: string): boolean =>
   d.patterns.some((p) => p.test(merchant)) && !d.excludes.some((p) => p.test(merchant));
+/** Whether a normalised descriptor shows an online channel: a web, app or card-not-present marker, or the store's own
+ * host ("WWW COSTCO COM", "CHIPOTLE ONLINE", "US STORE BAMBULAB COM"). */
+export const isOnline = (d: Descriptor, merchant: string): boolean =>
+  ONLINE_WORDING.test(merchant) || d.hosts.some((h) => merchant.includes(h));
 
 export interface CodeEntry {
   code: number;
@@ -288,20 +322,18 @@ export interface Decision {
   usable: number;
   dominant: MccStoreResult['dominant'];
   conflicts: MccStoreResult['conflicts'];
-  outcome: 'granted' | 'too-few-rows' | 'not-dominant' | 'no-bonus-code';
+  online: MccStoreResult['online'];
+  outcome: 'granted' | 'too-few-rows' | 'not-dominant' | 'no-bonus-code' | 'online-disagrees';
 }
 
-/** The grant rule on a store's description counts (pure). Fuel rows (a grocer's pumps) are set aside unless fuel is
- * itself the dominant category over every row (a gas station); then at least `MIN_ROWS` usable rows and a dominant
- * category of at least `MIN_SHARE` of them, and that category must be a bonus category. Minority descriptions are
- * reported as conflicts. */
-export function decide(
+/** Rows grouped by catalog category through the code map, fuel codes set aside unless fuel dominates. */
+function categorise(
   byDescription: Map<string, number>,
   codes: CodeEntry[],
-  fuelCodes: number[],
-): Decision {
-  const fuel = new Set(fuelCodes);
-  const perCategory = new Map<string, number>();
+  fuel: Set<number>,
+  /** Set fuel rows aside (false for a gas station, where fuel is the business); decided over every row. */
+  setAsideFuel: boolean | null = null,
+) {
   const perDescription = [...byDescription.entries()].map(([description, rows]) => {
     const entry = codeFor(description, codes);
     return {
@@ -312,20 +344,45 @@ export function decide(
     };
   });
   const rows = perDescription.reduce((n, d) => n + d.rows, 0);
+  const perCategory = new Map<string, number>();
   for (const d of perDescription) perCategory.set(d.category, (perCategory.get(d.category) ?? 0) + d.rows);
   const top = (counts: Map<string, number>) =>
     [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0];
-  const overall = top(perCategory);
-  const gasDominant = overall?.[0] === 'gas';
+  const gasDominant = setAsideFuel === null ? top(perCategory)?.[0] === 'gas' : !setAsideFuel;
   const kept = gasDominant
     ? perDescription
     : perDescription.filter((d) => d.code === null || !fuel.has(d.code));
-  const fuelRows = rows - kept.reduce((n, d) => n + d.rows, 0);
-  const usable = rows - fuelRows;
+  const usable = kept.reduce((n, d) => n + d.rows, 0);
   const categories = new Map<string, number>();
   for (const d of kept) categories.set(d.category, (categories.get(d.category) ?? 0) + d.rows);
-  const best = top(categories);
-  if (!best) return { rows, fuelRows, usable, dominant: null, conflicts: [], outcome: 'too-few-rows' };
+  return { rows, kept, usable, best: top(categories), gasDominant };
+}
+
+/** The grant rule on a store's description counts (pure). Fuel rows (a grocer's pumps) are set aside unless fuel is
+ * itself the dominant category over every row (a gas station); then at least `MIN_ROWS` usable rows and a dominant
+ * category of at least `MIN_SHARE` of them, and that category must be a bonus category. Minority descriptions are
+ * reported as conflicts. */
+export function decide(
+  byDescription: Map<string, number>,
+  codes: CodeEntry[],
+  fuelCodes: number[],
+  onlineByDescription: Map<string, number> = new Map(),
+): Decision {
+  const fuel = new Set(fuelCodes);
+  const { rows, kept, usable, best, gasDominant } = categorise(byDescription, codes, fuel);
+  const fuelRows = rows - usable;
+  // The online rows follow the store's own fuel rule: a grocer's online fuel rows are set aside too.
+  const onlineGroup = categorise(onlineByDescription, codes, fuel, !gasDominant);
+  const online =
+    onlineGroup.best && onlineGroup.usable
+      ? {
+          rows: onlineGroup.usable,
+          category: onlineGroup.best[0],
+          share: onlineGroup.best[1] / onlineGroup.usable,
+        }
+      : null;
+  if (!best)
+    return { rows, fuelRows, usable, dominant: null, conflicts: [], online, outcome: 'too-few-rows' };
   const [category, count] = best;
   const lead = kept.filter((d) => d.category === category).sort((a, b) => b.rows - a.rows)[0];
   const dominant = {
@@ -345,8 +402,52 @@ export function decide(
         ? 'not-dominant'
         : category === 'general-merchandise'
           ? 'no-bonus-code'
-          : 'granted';
-  return { rows, fuelRows, usable, dominant, conflicts, outcome };
+          : online && online.rows >= MIN_ONLINE_ROWS && online.category !== category
+            ? 'online-disagrees'
+            : 'granted';
+  return { rows, fuelRows, usable, dominant, conflicts, online, outcome };
+}
+
+/** The streaming guard (review 2026-10-11): 4899 backs `streaming` only for a service (no physical goods) whose name
+ * and descriptors are not a cable, satellite, internet or phone provider and whose own readable pages, when there
+ * are any, show a subscription video or audio service. Returns the refusal reason or null. */
+export function streamingVeto(
+  record: Pick<MerchantRecord, 'name' | 'physicalGoods'>,
+  descriptors: string[],
+  storeTexts: Record<string, string>,
+): string | null {
+  const texts = [normalText(record.name), ...descriptors.map((d) => normalText(d.split(' | ')[0]))];
+  const telecom = texts.find((t) => TELECOM_WORDING.test(t));
+  if (telecom)
+    return `a cable, satellite, internet or phone provider codes 4899 too ("${telecom.slice(0, 40)}")`;
+  if (record.physicalGoods) return 'a store selling physical goods is no streaming service';
+  const readable = Object.entries(storeTexts).filter(([, t]) => t.trim().length >= 300);
+  if (readable.length && !readable.some(([, t]) => STREAMING_PAGE_WORDING.test(t)))
+    return `the store's own pages (${readable.map(([id]) => id).join(', ')}) show no streaming service`;
+  return null;
+}
+
+/** Issuer definition sentences that exclude third-party or delivery services from dining, from the fixed definition
+ * pages: listed as conflicts for every delivery marketplace granted dining (review 2026-10-11; Chase's FAQ and the
+ * like, not only the sentences naming the store). */
+export function deliveryExclusions(definitionTexts: Record<string, string>): string[] {
+  const out: string[] = [];
+  const dining = ISSUER_CATEGORY_WORDS.dining;
+  for (const [id, text] of Object.entries(definitionTexts))
+    for (const sentence of text.split(/;|\n\s*\n|(?<!\b(?:U\.S|e\.g|i\.e|Inc|Co|etc))\.(?=\s+[A-Z])/)) {
+      if (!dining.test(sentence) || !DELIVERY_WORDING.test(sentence)) continue;
+      const excludes = EXCLUSION_WORDING.test(sentence);
+      // Chase: "Delivery and takeout services will be included if they classify as a restaurant merchant".
+      const conditional = !excludes && CONDITIONAL_WORDING.test(sentence);
+      if (!excludes && !conditional) continue;
+      if (!/\b(third[- ]party|delivery (?:and takeout )?services?|food delivery)\b/i.test(sentence)) continue;
+      const words = sentence.trim().split(/\s+/).filter(Boolean);
+      if (words.length < 6) continue;
+      out.push(
+        `${id}: ${excludes ? 'excludes' : 'conditions'} delivery from dining: "${words.slice(0, 25).join(' ')}${words.length > 25 ? ' …' : ''}"`,
+      );
+    }
+  return out;
 }
 
 /** RFC 4180 rows from a CSV file, streamed; a leading BOM is dropped. */
@@ -466,10 +567,14 @@ export function candidates(normalMerchant: string, byToken: Map<string, Descript
 
 interface Tally {
   byDescription: Map<string, number>;
+  /** Descriptions of the card-not-present rows (online channel in the descriptor). */
+  onlineByDescription: Map<string, number>;
   byDataset: Map<string, number>;
-  descriptors: Map<string, number>;
+  /** "MERCHANT | DESCRIPTION" → dataset and rows; every distinct descriptor is counted, the top ones are kept. */
+  descriptors: Map<string, { dataset: string; rows: number }>;
 }
-const DESCRIPTOR_CAP = 60;
+/** How many descriptors results.json keeps per store (the top by count; never the rows). */
+export const DESCRIPTOR_CAP = 12;
 
 /** Pools every dataset row into the records whose descriptor rule it matches. Returns the tallies by record id and
  * the row count per dataset; verifies (or fills) the manifest's hashes and row counts. */
@@ -493,14 +598,21 @@ export async function pool(
       seen.add(d);
       const tally = tallies.get(d.id) ?? {
         byDescription: new Map(),
+        onlineByDescription: new Map(),
         byDataset: new Map(),
         descriptors: new Map(),
       };
       tally.byDescription.set(normalDescription, (tally.byDescription.get(normalDescription) ?? 0) + 1);
+      if (isOnline(d, normalMerchant))
+        tally.onlineByDescription.set(
+          normalDescription,
+          (tally.onlineByDescription.get(normalDescription) ?? 0) + 1,
+        );
       tally.byDataset.set(datasetId, (tally.byDataset.get(datasetId) ?? 0) + 1);
       const text = `${merchant.replace(/\s+/g, ' ').trim()} | ${description.replace(/\s+/g, ' ').trim()}`;
-      if (tally.descriptors.has(text) || tally.descriptors.size < DESCRIPTOR_CAP)
-        tally.descriptors.set(text, (tally.descriptors.get(text) ?? 0) + 1);
+      const key = `${datasetId}\n${text}`;
+      const seenBefore = tally.descriptors.get(key);
+      tally.descriptors.set(key, { dataset: datasetId, rows: (seenBefore?.rows ?? 0) + 1 });
       tallies.set(d.id, tally);
     }
   };
@@ -610,6 +722,14 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
   const { tallies, rows, manifest: verified } = await pool(env.root, manifest, descriptors, env.log);
   const compiled = compileCodes(codes);
   const batches = await batchOf(env.root);
+  const issuerCaptures = await listIssuerCaptures(env.root);
+  const definitionTexts: Record<string, string> = {};
+  for (const id of DEFINITION_PAGES) {
+    const capture = issuerCaptures.find((c) => c.id === id);
+    const text = capture ? await readFile(capture.path, 'utf8').catch(() => null) : null;
+    if (text) definitionTexts[id] = text;
+  }
+  const deliveryConflicts = deliveryExclusions(definitionTexts);
   const today = env.now().toISOString().slice(0, 10);
   const results: MccStoreResult[] = [];
   const sourcesById = new Map(config.sources.map((s) => [s.id, s]));
@@ -621,14 +741,20 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
   for (const record of records) {
     const tally = tallies.get(record.id);
     if (!tally) continue;
-    const decision = decide(tally.byDescription, compiled, codes.fuelCodes);
+    const decision = decide(tally.byDescription, compiled, codes.fuelCodes, tally.onlineByDescription);
     const previous = { basis: record.evidence.basis, category: record.category };
     let outcome: MccStoreResult['outcome'] = decision.outcome;
     let reason: string | null = null;
-    let issuerSentences: string[] = [];
+    const override = overrides[record.id];
+    const issuerSentences: string[] = override?.note ? [`note: ${override.note}`] : [];
     const category = decision.dominant?.category ?? null;
+    const topDescriptors = [...tally.descriptors.entries()]
+      .sort((a, b) => b[1].rows - a[1].rows || a[0].localeCompare(b[0]))
+      .slice(0, DESCRIPTOR_CAP)
+      .map(([key, v]) => ({ text: key.split('\n')[1], rows: v.rows, dataset: v.dataset }));
+    if (outcome === 'online-disagrees' && decision.online)
+      reason = `${decision.online.rows} online-channel rows code as ${decision.online.category} (${Math.round(decision.online.share * 100)}%), not ${category}`;
     if (outcome === 'granted' && category) {
-      const override = overrides[record.id];
       const located = batches.get(record.id);
       const storeTexts: Record<string, string> = {};
       const issuerTexts: Record<string, string> = {};
@@ -656,7 +782,16 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
           }
         }
       }
-      const veto = override?.veto ?? pageVeto(category, storeTexts);
+      const veto =
+        override?.veto ??
+        pageVeto(category, storeTexts) ??
+        (category === 'streaming'
+          ? streamingVeto(
+              record,
+              topDescriptors.map((d) => d.text),
+              storeTexts,
+            )
+          : null);
       if (record.kind === 'processor') outcome = 'processor';
       else if (record.kind === 'marketplace' && category !== 'dining') {
         outcome = 'marketplace';
@@ -671,32 +806,46 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
             ? 'issuer evidence is stronger; the data agrees'
             : `issuer evidence is stronger; the data says ${category}`;
       }
+      if (outcome === 'granted' && record.kind === 'marketplace') issuerSentences.push(...deliveryConflicts);
       if (outcome === 'granted' && located) {
-        issuerSentences = issuerConflicts(
-          {
-            domain: located.domain,
-            id: record.id,
-            name: record.name,
-            hosts: record.hosts,
-            draft: {
+        issuerSentences.push(
+          ...issuerConflicts(
+            {
               domain: located.domain,
-              kind: record.kind,
-              physicalGoods: record.physicalGoods,
-              brandIds: record.brandIds,
-              candidateCategory: null,
-              evidence: [],
-              notes: null,
+              id: record.id,
+              name: record.name,
+              hosts: record.hosts,
+              draft: {
+                domain: located.domain,
+                kind: record.kind,
+                physicalGoods: record.physicalGoods,
+                brandIds: record.brandIds,
+                candidateCategory: null,
+                evidence: [],
+                notes: null,
+              },
+              verification: {} as never,
+              sources,
+              issuerTexts,
             },
-            verification: {} as never,
-            sources,
-            issuerTexts,
-          },
-          category,
-          [],
+            category,
+            [],
+          ),
         );
       }
     }
-    const datasetIds = [...tally.byDataset.keys()].sort();
+    // The cited datasets are those with at least one row of the granted category (a dataset holding only a grocer's
+    // fuel rows is matched but not cited), each quoted from its own rows.
+    const inCategory = new Set(
+      [...tally.descriptors.entries()]
+        .filter(
+          ([key]) =>
+            codeFor(normalText(key.split('\n')[1].split(' | ').slice(1).join(' | ')), compiled)?.category ===
+            category,
+        )
+        .map(([, v]) => v.dataset),
+    );
+    const datasetIds = [...tally.byDataset.keys()].filter((id) => inCategory.has(id)).sort();
     let next: MerchantRecord;
     if (outcome === 'granted' && category) {
       next = {
@@ -716,18 +865,23 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
         merchantRecordSchema.parse(next),
       );
       if (next.evidence.basis === 'mcc') {
+        // One quote per dataset, from that dataset's own rows (review 2026-10-11): its most frequent descriptor whose
+        // description maps to the granted category.
         const quotes: EvidenceFile['quotes'] = datasetIds.map((id) => {
           const lead = [...tally.descriptors.entries()]
             .filter(
-              ([text]) =>
-                codeFor(normalText(text.split(' | ').slice(1).join(' | ')), compiled)?.category === category,
+              ([key, v]) =>
+                v.dataset === id &&
+                codeFor(normalText(key.split('\n')[1].split(' | ').slice(1).join(' | ')), compiled)
+                  ?.category === category,
             )
-            .sort((a, b) => b[1] - a[1])[0];
+            .sort((a, b) => b[1].rows - a[1].rows || a[0].localeCompare(b[0]))[0];
+          if (!lead) throw new Error(`${record.id}: ${id} has no row of the granted category ${category}`);
           return {
             sourceId: id,
             kind: 'mcc-dataset',
             supports: 'category',
-            quote: (lead?.[0] ?? decision.dominant!.description).slice(0, 400),
+            quote: lead[0].split('\n')[1].slice(0, 400),
           };
         });
         await writeJsonAtomic(
@@ -752,12 +906,10 @@ export async function runMcc(env: Env, { version }: { version?: string }): Promi
       usable: decision.usable,
       byDataset: Object.fromEntries([...tally.byDataset.entries()].sort()),
       byDescription: Object.fromEntries([...tally.byDescription.entries()].sort((a, b) => b[1] - a[1])),
-      descriptors: [...tally.descriptors.entries()]
-        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-        .slice(0, 12)
-        .map(([text, n]) => ({ text, rows: n })),
+      descriptors: topDescriptors,
       dominant: decision.dominant,
       conflicts: decision.conflicts,
+      online: decision.online,
       issuerConflicts: issuerSentences,
       outcome,
       reason,

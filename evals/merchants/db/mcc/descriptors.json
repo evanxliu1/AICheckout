@@ -1,11 +1,24 @@
 {
   "description": "Per-store descriptor rules for the `mcc` basis (2026-10-11). By default a record's rows are the dataset rows whose merchant descriptor contains the record's name on word boundaries (tokens in order, punctuation and spaces optional; see derivePattern in tools/catalog-pipeline/src/merchants/mcc.ts). An entry replaces that pattern (`patterns`, regular expressions on the upper-case, space-normalised descriptor), drops rows of other businesses that share the name (`excludes`), refuses the data's category for the store (`veto`, with the reason) or leaves the record unmatched (`skip`, a name that is a common word). Evidence-matching rules of the eval pipeline, not store configs in the extension.",
   "stores": {
-    "wholefoodsmarket-us": {
+    "amctheatres-us": {
       "patterns": [
-        "WHOLE ?FOODS",
-        "WHOLEFDS",
-        "WFM"
+        "AMC (THEAT[A-Z]*|ONLINE|CARD PROCESSING|GROUP|MAZZA|[0-9]+)"
+      ]
+    },
+    "best-buy-us": {
+      "patterns": [
+        "BEST ?BUY"
+      ]
+    },
+    "costco-us": {
+      "patterns": [
+        "COSTCO"
+      ]
+    },
+    "disneyplus-us": {
+      "patterns": [
+        "DISNEY ?PLUS"
       ]
     },
     "dominos-us": {
@@ -15,10 +28,23 @@
         "DOMINO FOODS"
       ]
     },
-    "peacocktv-us": {
+    "doordash-us": {
       "patterns": [
-        "PEACOCK ?TV",
-        "PEACOCKTV"
+        "DOORDASH",
+        "DD DOORDASH"
+      ]
+    },
+    "ebay-us": {
+      "veto": "eBay is an online marketplace of third-party sellers by its own pages; the department-store code (5311) is the platform's acquiring code, not a full-line department store, and the issuers' department-store definitions name full-line stores (coordinator rule 4: the store's own pages veto). For Evan."
+    },
+    "grubhub-us": {
+      "patterns": [
+        "GRUBHUB[A-Z]*"
+      ]
+    },
+    "nordstrom-us": {
+      "excludes": [
+        "NORDSTROM (CAFE|EBAR|GRILL|RESTAURANT|BISTRO|MARKETPLACE CAFE)"
       ]
     },
     "paramountplus-us": {
@@ -27,20 +53,10 @@
         "PARAMOUNT\\+"
       ]
     },
-    "nordstrom-us": {
-      "excludes": [
-        "NORDSTROM (CAFE|EBAR|GRILL|RESTAURANT|BISTRO|MARKETPLACE CAFE)"
-      ]
-    },
-    "ubereats-us": {
+    "peacocktv-us": {
       "patterns": [
-        "UBER ?EATS"
-      ]
-    },
-    "uber-us": {
-      "excludes": [
-        "UBER ?EATS",
-        "UBEREATS"
+        "PEACOCK ?TV",
+        "PEACOCKTV"
       ]
     },
     "samsclub-us": {
@@ -49,42 +65,38 @@
         "SAM S CLUB"
       ]
     },
-    "best-buy-us": {
-      "patterns": [
-        "BEST ?BUY"
-      ]
+    "target-us": {
+      "veto": "A discount store (Evan, 2026-10-11: Walmart and Target never get supermarkets from the data); its rows split between discount stores and grocery."
     },
-    "doordash-us": {
-      "patterns": [
-        "DOORDASH",
-        "DD DOORDASH"
-      ]
-    },
-    "costco-us": {
-      "patterns": [
-        "COSTCO"
-      ]
-    },
-    "amctheatres-us": {
-      "patterns": [
-        "AMC"
-      ],
+    "uber-us": {
       "excludes": [
-        "AMC MUSIC"
+        "UBER ?EATS",
+        "UBEREATS"
       ]
     },
-    "grubhub-us": {
+    "ubereats-us": {
       "patterns": [
-        "GRUBHUB[A-Z]*"
+        "UBER ?EATS"
       ]
     },
-    "disneyplus-us": {
+    "walmart-us": {
       "patterns": [
-        "DISNEY ?PLUS"
+        "WAL ?MART"
+      ],
+      "veto": "A superstore and discount store (Evan, 2026-10-11: Walmart and Target never get supermarkets from the data); its rows code as discount stores anyway."
+    },
+    "wendys-us": {
+      "excludes": [
+        "PITTSBURG STA"
       ]
     },
-    "ebay-us": {
-      "veto": "eBay is an online marketplace of third-party sellers by its own pages; the department-store code (5311) is the platform's acquiring code, not a full-line department store, and the issuers' department-store definitions name full-line stores (coordinator rule 4: the store's own pages veto). For Evan."
+    "wholefoodsmarket-us": {
+      "patterns": [
+        "WHOLE ?FOODS",
+        "WHOLEFDS",
+        "WFM"
+      ],
+      "note": "wholefoodsmarket.com orders check out on amazon.com (the Amazon record decides there); the grocery rows are its stores."
     }
   }
 }

@@ -80,16 +80,19 @@ export function mccSection(mcc: MccResults | undefined): string[] {
   const pct = (share: number) => `${Math.round(share * 100)}%`;
   const conflicts = (s: MccResults['stores'][number]) =>
     [
+      ...(s.online
+        ? [`online rows: ${s.online.rows}, ${Math.round(s.online.share * 100)}% ${s.online.category}`]
+        : []),
       ...s.conflicts.map(
         (c) =>
           `${c.description}${c.code ? ` (${c.code}` : ' ('}${c.category === 'general-merchandise' ? '' : `, ${c.category}`}) ×${c.rows}`,
       ),
-      ...s.issuerConflicts.map((c) => `issuer: ${c}`),
+      ...s.issuerConflicts.map((c) => (c.startsWith('note:') ? c : `issuer: ${c}`)),
     ].join('<br>');
   return [
     `## MCC evidence: public card-transaction datasets, for Evan (${listed.length} stores with ${MIN_ROWS}+ rows; ${mcc.stores.filter((s) => s.outcome === 'granted').length} granted)`,
     '',
-    `Run ${mcc.appliedOn} on ${mcc.datasets.map((d) => `${d.id} (${d.rows.toLocaleString('en-US')} rows)`).join(', ')}: openly licensed government purchase-card transactions (in-person and card-not-present government purchasing, not consumer online checkout). A store's rows are those whose merchant descriptor matches its committed descriptor rule (mcc/descriptors.json); fuel rows of a separate code are set aside; a category is granted at ${MIN_ROWS}+ rows with one category holding 80%+ of them, mapped through mcc/codes.json (Visa Merchant Data Standards Manual, April 2026). \`issuer\` evidence outranks the data (kept-issuer); a marketplace gets dining only; the store's own pages or the coordinator may veto. ${few} more stores matched fewer than ${MIN_ROWS} rows and are not listed; ${mcc.unmatched} records matched no row.`,
+    `Run ${mcc.appliedOn} on ${mcc.datasets.map((d) => `${d.id} (${d.rows.toLocaleString('en-US')} rows)`).join(', ')}: openly licensed government purchase-card transactions (in-person and card-not-present government purchasing, not consumer online checkout). A store's rows are those whose merchant descriptor matches its committed descriptor rule (mcc/descriptors.json); fuel rows of a separate code are set aside; a category is granted at ${MIN_ROWS}+ rows with one category holding 80%+ of them, mapped through mcc/codes.json (Visa Merchant Data Standards Manual, April 2026). \`issuer\` evidence outranks the data (kept-issuer); a marketplace gets dining only; the store's own pages or the coordinator may veto; rows whose descriptor shows an online channel (WWW, .COM, ONLINE, the store's own host) are the best evidence for online checkout, and 5 or more of them disagreeing with the dominant category refuse the grant (online-disagrees); 4899 backs streaming only for a streaming service, never a cable, satellite, internet or phone provider. ${few} more stores matched fewer than ${MIN_ROWS} rows and are not listed; ${mcc.unmatched} records matched no row.`,
     '',
     '| Record | Rows (usable) | Dominant category | Share | Minority codes and issuer conflicts | Outcome |',
     '| --- | --- | --- | --- | --- | --- |',
