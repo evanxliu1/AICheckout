@@ -77,7 +77,11 @@ export const recordId = (domain: string, kind: string, fixed: string | null): st
   if (fixed) return fixed;
   const label = domainLabel(domain);
   const labels = domain.split('.');
-  const slug = labels.slice(0, labels.indexOf(label) + 1).join('-');
+  const at = labels.indexOf(label);
+  // A public suffix other than .com stays in the id (pandora.net → pandora-net-us), so pandora.com and pandora.net
+  // never share one (seed 2026-10-11: the tier-A pandora.net record overwrote the tier-B pandora.com one).
+  const suffix = labels.slice(at + 1).join('-');
+  const slug = [...labels.slice(0, at + 1), ...(suffix === 'com' ? [] : [suffix])].join('-');
   return kind === 'processor' ? slug : `${slug}-us`;
 };
 

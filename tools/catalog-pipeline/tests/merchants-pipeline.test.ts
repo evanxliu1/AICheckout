@@ -169,6 +169,12 @@ describe('apply rule', () => {
     expect(recordId('disneyland.disney.go.com', 'merchant', null)).toBe('disneyland-disney-go-us');
     expect(recordId('checkout.stripe.com', 'processor', null)).toBe('checkout-stripe');
     expect(recordId('kroger.com', 'merchant', null)).toBe('kroger-us');
+    // A public suffix other than .com stays in the id.
+    expect(recordId('pandora.net', 'merchant', null)).toBe('pandora-net-us');
+    expect(recordId('pandora.com', 'merchant', null)).toBe('pandora-us');
+    expect(recordId('bart.gov', 'merchant', null)).toBe('bart-gov-us');
+    expect(recordId('zip.co', 'processor', null)).toBe('zip-co');
+    expect(recordId('example.co.uk', 'merchant', null)).toBe('example-co-uk-us');
     expect(recordId('bestbuy.com', 'merchant', 'best-buy-us')).toBe('best-buy-us');
   });
 
