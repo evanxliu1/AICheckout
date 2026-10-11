@@ -49,3 +49,5 @@ As chosen; built on branch `phase14-2-extension` (not pushed), all gates green a
 
 ## Status
 Accepted 2026-10-11 (UTC; the 2026-10-10 session) by the 14.2 implementer (Fable 5.1); amended the same day after the independent review (matching moved out of the content scripts, "this store" wording, axe on the payment-page state); agent-verified by tests. Open to Evan's change.
+
+Superseded in part 2026-10-11: Evan declined the transitional `releaseProfileFor` rule ("No need, we can drop for now"); a release record is always its own profile.

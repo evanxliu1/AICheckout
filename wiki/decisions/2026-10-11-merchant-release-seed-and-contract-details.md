@@ -48,3 +48,5 @@ As chosen. The seed release is `2026-10-10.seed.1`: 18 records, all `default`, n
 
 ## Status
 Accepted 2026-10-11 (UTC; the 2026-10-10 session) by the 14.1 implementer (Fable 5.1), amended the same day after the independent review (transitional rule, processor rules, Amazon Pay hosts); agent-verified by tests. The transitional rule awaits Evan's confirmation; Evan may change any seed record.
+
+Superseded in part 2026-10-11: Evan declined the transitional `releaseProfileFor` rule ("No need, we can drop for now"); a release record is always its own profile.

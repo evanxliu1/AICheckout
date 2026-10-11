@@ -53,19 +53,14 @@ export function matchMerchant(
   return null;
 }
 
-/** The profile the engine should use for a matched record, given the catalog in effect. A `default` record
- * asserts nothing about the store, so where the catalog authors its own profile for that id (the three
- * legacy stores) the catalog's profile stands; a record with evidence, or one the catalog does not know,
- * becomes the profile (`recordToProfile`). Transitional (decision 2026-10-11): it retires itself once 14.4
- * gives those stores evidence. */
+/** The profile the engine should use for a matched record, given the catalog in effect: always the record's
+ * own (`recordToProfile`). Until 2026-10-11 a `default` record deferred to a catalog-authored profile for the
+ * three legacy stores; Evan dropped that on 2026-10-11 (decision 2026-10-11-merchant-release-seed-and-contract-
+ * details), so Best Buy and Newegg have no electronics bonus until their records carry evidence. */
 export function releaseProfileFor(
   record: MerchantRecord,
   catalog: { brands: readonly { id: string }[]; merchants: readonly MerchantProfileV3[] },
 ): MerchantProfileV3 {
-  if (record.evidence.basis === 'default') {
-    const authored = catalog.merchants.find((m) => m.id === record.id);
-    if (authored) return authored;
-  }
   return recordToProfile(record, catalog);
 }
 
