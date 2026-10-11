@@ -96,9 +96,21 @@ describe('comparisons at a merchant release store (Phase 14.2)', () => {
     expect(
       (rates.comparison as { estimates: { minRewardCents: number }[] }).estimates[0].minRewardCents,
     ).toBe(600);
+    // The bundled release (since the 14.3 dry run) has its own default Kroger record: general merchandise,
+    // so the fixture's corroborated supermarket bonus does not apply there.
     const bundled = createStateService(storage, () => now);
+    const plain = success(await bundled({ type: 'checkout:compare', expectedRevision: 2, purchase: kroger }))
+      .comparison as { status: string; estimates: { minRewardCents: number }[] };
+    expect(plain.status).toBe('ready');
+    expect(plain.estimates[0].minRewardCents).toBeLessThan(600);
     expect(
-      success(await bundled({ type: 'checkout:compare', expectedRevision: 2, purchase: kroger })).comparison,
+      success(
+        await bundled({
+          type: 'checkout:compare',
+          expectedRevision: 3,
+          purchase: { ...kroger, merchantId: 'not-a-store-us' },
+        }),
+      ).comparison,
     ).toMatchObject({ status: 'unavailable', reason: 'unsupported-merchant' });
   });
   it('asks for no typed amount when reading is unavailable (A5)', async () => {

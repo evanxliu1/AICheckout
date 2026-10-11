@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "packetId": "75dc1991-f871-47e0-a9d8-123cbb78eefb",
+  "batch": "dev-2026-10",
+  "researchedOn": "2026-10-10",
+  "provenance": {
+    "generatedBy": "merchant-researcher",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-10",
+    "status": "agent-research-unverified"
+  },
+  "stores": [
+    {
+      "domain": "kroger.com",
+      "name": "Kroger",
+      "hosts": ["kroger.com"],
+      "storePages": [
+        { "url": "https://www.kroger.com/hc/help", "note": "Customer Help Center (contact, FAQs, refunds)." },
+        { "url": "https://www.kroger.com/hc/help/faqs/ways-to-shop/pickup", "note": "Pickup FAQ: online ordering and store pickup." },
+        { "url": "https://www.kroger.com/hc/help/faqs/ways-to-shop/delivery", "note": "Delivery FAQ for online orders." }
+      ],
+      "lookupPages": [],
+      "notes": "Corporate site is thekrogerco.com (not a checkout host, so not listed). Delivery help also served on delivery.kroger.com, covered by kroger.com."
+    },
+    {
+      "domain": "cvs.com",
+      "name": "CVS Pharmacy",
+      "hosts": ["cvs.com"],
+      "storePages": [
+        { "url": "https://www.cvs.com/retail/help/help_faq", "note": "Main help FAQ." },
+        { "url": "https://www.cvs.com/retail/help/help-subtopic-online-shopping-faqs", "note": "Online shopping FAQs (prices, coupons, gift cards, FSA items)." }
+      ],
+      "lookupPages": [],
+      "notes": "Specialty pharmacy runs on a separate site (cvsspecialty.com), not listed as a host."
+    },
+    {
+      "domain": "netflix.com",
+      "name": "Netflix",
+      "hosts": ["netflix.com"],
+      "storePages": [
+        { "url": "https://about.netflix.com/en", "note": "About Netflix homepage." },
+        { "url": "https://help.netflix.com/en/node/24926", "note": "Help Center: plans and pricing." }
+      ],
+      "lookupPages": [
+        {
+          "url": "https://ficoforums.myfico.com/t5/Credit-Cards/Discover-2023-Q1-Categories-Grocery-Drug-Stores-Streaming/m-p/6631170",
+          "note": "Community forum thread with cardholder reports naming Netflix's merchant coding; URL only."
+        }
+      ],
+      "notes": "Subscription service; checkout is in-account on netflix.com."
+    },
+    {
+      "domain": "instacart.com",
+      "name": "Instacart",
+      "hosts": ["instacart.com"],
+      "storePages": [
+        { "url": "https://company.instacart.com/", "note": "Company page (www.instacart.com/company redirects here)." },
+        { "url": "https://www.instacart.com/help/section/809794019/1992925010", "note": "Help Center: get help with orders." }
+      ],
+      "lookupPages": [],
+      "notes": "Instacart also serves retailer-branded storefronts on instacart.com subdomains (for example a grocer's name.instacart.com); those are covered by the instacart.com host."
+    },
+    {
+      "domain": "costco.com",
+      "name": "Costco Wholesale",
+      "hosts": ["costco.com", "costcobusinessdelivery.com"],
+      "storePages": [
+        { "url": "https://www.costco.com/company-information.html", "note": "Company information page." },
+        { "url": "https://customerservice.costco.com/app/answers/answer_view/a_id/8162/~/contact-us", "note": "Customer service contact page." }
+      ],
+      "lookupPages": [],
+      "notes": "costcobusinessdelivery.com is Costco Business Center online shopping (Costco footer). Costco Travel uses its own domain and was not listed."
+    },
+    {
+      "domain": "delta.com",
+      "name": "Delta Air Lines",
+      "hosts": ["delta.com"],
+      "storePages": [
+        { "url": "https://www.delta.com/us/en/about-delta/overview", "note": "About Delta overview." }
+      ],
+      "lookupPages": [],
+      "notes": "Corporate news and investor pages live on news.delta.com and ir.delta.com, subdomains of delta.com."
+    },
+    {
+      "domain": "paypal.com",
+      "name": "PayPal",
+      "hosts": ["paypal.com"],
+      "storePages": [
+        { "url": "https://www.paypal.com/us/digital-wallet/how-paypal-works", "note": "What PayPal is and how it works (U.S.)." },
+        { "url": "https://www.paypal.com/us/webapps/mpp/social-innovation", "note": "Who we are: mission and values." }
+      ],
+      "lookupPages": [],
+      "notes": "The U.S. About page on paypal.com redirects to about.pypl.com, which is not a paypal.com host, so it is not cited."
+    },
+    {
+      "domain": "wholefoodsmarket.com",
+      "name": "Whole Foods Market",
+      "hosts": ["wholefoodsmarket.com"],
+      "storePages": [
+        { "url": "https://www.wholefoodsmarket.com/company-info", "note": "Company information page." },
+        { "url": "https://www.wholefoodsmarket.com/online-ordering", "note": "Online ordering: grocery, catering and shipping." },
+        { "url": "https://www.wholefoodsmarket.com/customer-service/topics/grocery-delivery-and-pickup", "note": "FAQ: grocery delivery and pickup." }
+      ],
+      "lookupPages": [],
+      "notes": "Site directs U.S. grocery delivery and pickup to Amazon; Amazon sign-in prompts appear. Catering and shipping order online on wholefoodsmarket.com."
+    },
+    {
+      "domain": "ubereats.com",
+      "name": "Uber Eats",
+      "hosts": ["ubereats.com"],
+      "storePages": [
+        { "url": "https://about.ubereats.com/us/en/", "note": "About Uber Eats (U.S.)." },
+        { "url": "https://about.ubereats.com/how-it-works/uber-eats-gift-card/", "note": "How it works: Uber Eats gift cards." }
+      ],
+      "lookupPages": [],
+      "notes": "Help center is on help.uber.com (parent company Uber), not on ubereats.com, so it is not cited or listed as a host."
+    },
+    {
+      "domain": "lowes.com",
+      "name": "Lowe's",
+      "hosts": ["lowes.com"],
+      "storePages": [
+        { "url": "https://corporate.lowes.com/who-we-are/our-business", "note": "Corporate: our business." },
+        { "url": "https://www.lowes.com/l/help", "note": "Help and customer service (blocked automated fetch with 403; found via search)." }
+      ],
+      "lookupPages": [],
+      "notes": null
+    }
+  ],
+  "questions": [
+    "Whole Foods: U.S. grocery delivery and pickup are ordered through Amazon (amazon.com). Should amazon.com purchases ever map to this store, or does wholefoodsmarket.com stay its only host?",
+    "Uber Eats: should uber.com (help, Uber One) count as an Uber Eats host? Left out because it is shared with Uber rides.",
+    "Costco: confirm costcobusinessdelivery.com belongs under the costco.com store rather than a separate store; sameday.costco.com is Instacart-powered same-day delivery.",
+    "Lookup pages: few public U.S. merchant-code lookup pages name these stores; classification.codes terms restrict public sharing and cardexpress.in covers India only, so both were skipped."
+  ]
+}

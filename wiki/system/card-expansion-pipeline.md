@@ -149,7 +149,7 @@ The pipeline is maintainer tooling. It may import product packages (`@ai-checkou
 
 ## Merchant pipeline (Phase 16)
 
-The second pipeline (merchant profiles, category evidence and brand links; no site adapters or store configs since 2026-10-06) reuses the pattern — batch directory, text-free state, hashing, packets, gates, `status`/`next`/`accept`/`handoff`, skill and subagents — and ends in a merchant release published on Evan's approval. Its shared core is designed when Phase 16 starts, not in v1. **Update 2026-10-10:** [Phase 14](../product/phase-14-merchant-database.md) builds a small version first (luna drafts, Claude subagents verify) to seed about 500 stores; Phase 16 hardens and scales it. Plan (Phases 10–17, approved 2026-10-05): [merchant coverage plan](../product/phase-10-merchant-expansion.md).
+The second pipeline (merchant profiles, category evidence and brand links; no site adapters or store configs since 2026-10-06) reuses the pattern — batch directory, text-free state, hashing, packets, gates, `status`/`next`/`accept`/`handoff`, skill and subagents — and ends in a merchant release published on Evan's approval. Its shared core is designed when Phase 16 starts, not in v1. **Update 2026-10-10:** [Phase 14](../product/phase-14-merchant-database.md) builds a small version first (luna drafts, Claude subagents verify) to seed about 500 stores; Phase 16 hardens and scales it. Built 2026-10-11 as `pipeline merchants` ([merchant pipeline](merchant-pipeline.md)). Plan (Phases 10–17, approved 2026-10-05): [merchant coverage plan](../product/phase-10-merchant-expansion.md).
 
 ## History
 
