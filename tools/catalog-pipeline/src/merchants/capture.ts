@@ -245,19 +245,27 @@ export async function runCapture(
   }
   await writeJsonAtomic(join(batch.dir, 'manifest.json'), { schemaVersion: 1, sources: entries });
   const captured = entries.filter((e) => e.kind !== 'issuer-terms').length;
+  // A page that could not be fetched is a dropped source (plan section 6: "every cited URL captured or the source is
+  // dropped"), not a failed stage: the script exits 1 for it, the manifest omits it, and the stage is done when the
+  // manifest exists. Stores left without a store page are named so the verifier and Evan can see them.
+  const done = manifest !== null;
+  const withoutPage = stores
+    .filter((s) => !entries.some((e) => e.domain === s.domain && e.kind === 'store-page'))
+    .map((s) => s.domain);
+  if (withoutPage.length) env.log(`capture: no store page captured for ${withoutPage.join(', ')}.`);
   const now = env.now();
   batch.state.stages.capture = {
-    status: code === 0 ? 'done' : 'failed-gate',
+    status: done ? 'done' : 'failed-gate',
     finishedAt: now.toISOString(),
     attempts: (batch.state.stages.capture.attempts ?? 0) + 1,
   };
-  if (code === 0)
+  if (done)
     batch.state.stages.draft = { status: batch.state.stages.draft.status === 'done' ? 'stale' : 'pending' };
   await writeState(batch.dir, batch.state, now);
   env.log(
-    `capture: ${captured} of ${sources.length} pages captured, ${mined} issuer captures mined (${issuerCaptures.length} searched). ${code === 0 ? '' : 'Some pages failed; see capture-report.json.'}`,
+    `capture: ${captured} of ${sources.length} pages captured, ${mined} issuer captures mined (${issuerCaptures.length} searched). ${code === 0 ? '' : 'Some pages failed and were dropped; see capture-report.json.'}`,
   );
-  return code;
+  return done ? 0 : 1;
 }
 
 export { type Batch };
