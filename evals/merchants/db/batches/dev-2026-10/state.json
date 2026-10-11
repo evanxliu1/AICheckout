@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "updatedAt": "2026-10-11T01:27:42.391Z",
+  "updatedAt": "2026-10-11T01:36:27.183Z",
   "stages": {
     "research": {
       "status": "done",
@@ -27,13 +27,25 @@
       "inputSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5"
     },
     "verify": {
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-10-11T01:36:26.426Z",
+      "attempts": 1,
+      "packetId": "6cd974c1-8dd1-41ac-8e5f-a2a5e9e23828",
+      "agentRun": "ae0000e72c72419e6",
+      "model": "claude-opus-5-5",
+      "acceptedAt": "2026-10-11T01:36:26.426Z",
+      "inputSha256": "85b9349a56cc9db560f32407bcb5d77ef0873ec2e7db5691ebf853381384f318",
+      "tokens": 385449,
+      "durationMs": 305771
     },
     "apply": {
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-10-11T01:36:26.726Z",
+      "attempts": 1
     },
     "build": {
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-10-11T01:36:27.183Z"
     }
   },
   "stores": {
@@ -44,7 +56,11 @@
         "outputTokens": 313,
         "durationMs": 21512,
         "finishedAt": "2026-10-11T01:21:42.185Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "evidence"
+      ]
     },
     "cvs.com": {
       "draft": {
@@ -53,7 +69,8 @@
         "outputTokens": 195,
         "durationMs": 8848,
         "finishedAt": "2026-10-11T01:27:42.389Z"
-      }
+      },
+      "apply": "record"
     },
     "netflix.com": {
       "draft": {
@@ -62,7 +79,11 @@
         "outputTokens": 436,
         "durationMs": 47707,
         "finishedAt": "2026-10-11T01:22:41.443Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "evidence"
+      ]
     },
     "instacart.com": {
       "draft": {
@@ -71,7 +92,11 @@
         "outputTokens": 257,
         "durationMs": 43175,
         "finishedAt": "2026-10-11T01:23:24.621Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "evidence"
+      ]
     },
     "costco.com": {
       "draft": {
@@ -80,7 +105,12 @@
         "outputTokens": 291,
         "durationMs": 24314,
         "finishedAt": "2026-10-11T01:23:48.938Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "hosts",
+        "evidence"
+      ]
     },
     "delta.com": {
       "draft": {
@@ -89,7 +119,8 @@
         "outputTokens": 302,
         "durationMs": 49073,
         "finishedAt": "2026-10-11T01:24:38.014Z"
-      }
+      },
+      "apply": "record"
     },
     "paypal.com": {
       "draft": {
@@ -98,7 +129,8 @@
         "outputTokens": 69,
         "durationMs": 4570,
         "finishedAt": "2026-10-11T01:24:42.586Z"
-      }
+      },
+      "apply": "record"
     },
     "wholefoodsmarket.com": {
       "draft": {
@@ -107,7 +139,8 @@
         "outputTokens": 180,
         "durationMs": 42983,
         "finishedAt": "2026-10-11T01:25:25.572Z"
-      }
+      },
+      "apply": "record"
     },
     "ubereats.com": {
       "draft": {
@@ -116,7 +149,11 @@
         "outputTokens": 315,
         "durationMs": 103418,
         "finishedAt": "2026-10-11T01:27:08.996Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "evidence"
+      ]
     },
     "lowes.com": {
       "draft": {
@@ -125,7 +162,8 @@
         "outputTokens": 120,
         "durationMs": 7136,
         "finishedAt": "2026-10-11T01:27:16.135Z"
-      }
+      },
+      "apply": "record"
     }
   }
 }

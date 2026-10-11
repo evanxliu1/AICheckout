@@ -68,7 +68,20 @@ The merchant database ([plan](../product/phase-14-merchant-database.md)) is buil
 
 ## Dry run (development batch `dev-2026-10`)
 
-Filled in by the 14.3 implementer after the run; see the plan's [Progress](../product/phase-14-merchant-database.md#progress) for the summary and [now](../now.md) for what is next.
+Run 2026-10-11 (UTC) on kroger.com, cvs.com, netflix.com, instacart.com, costco.com, delta.com, paypal.com, wholefoodsmarket.com, ubereats.com and lowes.com (none held out). Subagents were general-purpose Opus runs reading the agent files (the new agent types were not registered in that session).
+
+| Stage | Measured |
+| --- | --- |
+| Research (Opus) | 95,707 tokens, 233 s for 10 stores; 1 store with a lookup page (netflix, a forum thread); classification.codes skipped (terms) |
+| Capture | 22 store and lookup pages (delta 444 and a lowes page 403 bot-walled); 39 issuer captures mined from 338 catalog captures |
+| Draft (gpt-5.6-luna `xhigh`) | 10 of 10 after one prompt tuning: 97,286 input / 2,478 output tokens, 353 s model time, 5–123 s per store; the quote gate refused 3 non-verbatim quotes (an added period, a layout-interrupted sentence, two dropped words) |
+| Verify (Opus) | run 1 (brief without the issuer-exclusion row): 155,321 tokens, 170 s, 9 of 10 confirmed; run 2 (final brief): 385,449 tokens excluding cache reads (6.97M cached), 306 s, 5 of 10 confirmed, 62 quotes checked |
+| Apply | 5 records: `cvs-us` drugstores (`issuer`, Amex retail info), `delta-us` default with brand `delta` and no goods, `paypal` processor, `wholefoodsmarket-us` default with brand `whole-foods-market`, `lowes-us` default. 5 held out on disputed `evidence`: kroger (Citi quotes are a gas-exclusion list), netflix (Online Shopping example, a statement credit), instacart (co-brand bonus, not a category), costco (also `hosts`: costcobusinessdelivery.com in no capture), ubereats (Chase's separate food-delivery category; an Instacart quote). No store reached `corroborated` |
+| Build | release `2026-10-11.dev.1`, 22 records; `review.md` lists 1 bonus category, 5 brand records, 15 processors, 2 services, 5 held-out stores |
+
+What the apply rule changed against the drafts: cvs kept its drafted drugstores on the Amex quote; every other drafted category would have fallen to `default` anyway under `issuerQuoteEarns` (the kroger, costco, netflix, ubereats and instacart issuer quotes are exclusions, other categories or do not name the store), and no store had both a store page and a lookup. The verifier's convention questions for Evan: does an issuer's dedicated food-delivery category support `dining`; may `name` and `hosts` be settled from issuer captures when the store page is bot-walled (delta); should kroger, lowes and paypal carry their co-brand cards as brands (none is a catalog brand today).
+
+**Projected full seed:** tier B 312 stores ≈ 13 research and 13 verify packets: research ≈ 3.0M and verify ≈ 12M Claude tokens at the dry run's per-store rates (verify dominated by re-reading captures; cache reads excluded), luna ≈ 3.0M input / 80k output tokens and about 3 hours of model time; tier A 380 homepage renders with no model. The plan's 4–8M Claude estimate holds for research plus drafts; verification at 25 stores per packet is the cost to watch.
 
 ## Gotchas
 
