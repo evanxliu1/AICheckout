@@ -198,7 +198,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     expect(await popup.text()).not.toContain('Your card estimate');
     expect(await popup.text()).not.toContain('$0.54');
     const permissions = await restarted.evaluate(() => chrome.permissions.getAll());
-    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'scripting', 'storage']);
+    expect(permissions.permissions?.sort()).toEqual(['activeTab', 'alarms', 'scripting', 'storage']);
     expect(permissions.origins?.sort()).toEqual(BADGE_ORIGINS);
     await popup.close();
   } finally {

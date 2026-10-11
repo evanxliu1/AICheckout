@@ -62,7 +62,8 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     release: {
       ...MERCHANTS_V1,
       version: '2026-10-11.browser.2',
-      verifiedAt: new Date(Date.now() - 86_400_000).toISOString().slice(0, 10) + 'T00:00:00Z',
+      // Today (UTC): not before any bundled source's capture date, and not before the bundled release.
+      verifiedAt: new Date().toISOString().slice(0, 10) + 'T00:00:00Z',
       merchants: [
         ...MERCHANTS_V1.merchants,
         {
@@ -170,8 +171,8 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     expect((await readCatalogCache(page))?.release?.sequence).toBe(2);
     expect((await readMerchantCache(page))?.release?.sequence).toBe(2);
     expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(3);
-    // The first two checks reached the merchant route too; the 503 check stops at the catalog.
-    expect(requests.filter((request) => request.url === '/v1/merchants').length).toBeGreaterThanOrEqual(2);
+    // Only the successful check reached the merchant route: a refused or failed catalog check stops there.
+    expect(requests.filter((request) => request.url === '/v1/merchants')).toHaveLength(1);
     expect(
       requests.every(
         (request) =>
