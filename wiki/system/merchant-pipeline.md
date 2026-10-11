@@ -84,3 +84,4 @@ Filled in by the 14.3 implementer after the run; see the plan's [Progress](../pr
 * [Merchants](../domain/merchants.md)
 * [Rewards engine: merchant release contract](rewards-engine.md#merchant-release-contract-phase-141)
 * [Live model runs](../ops/live-model-runs.md)
+* [Decision: 14.3 details](../decisions/2026-10-11-merchant-pipeline-14-3-details.md)

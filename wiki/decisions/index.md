@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-11
+* [Merchant pipeline 14.3 details: 692 candidates, the prompt kept in the pipeline, dry-run records enter the release, held-out domains refused by init, blocked homepages fall back to the label, strict research schema instead of a key blacklist](./2026-10-11-merchant-pipeline-14-3-details.md) — 14.3 implementer's choices the plan left open and what the dry run forced.
 * [Merchant release 14.1 details: the seed keeps Best Buy and Newegg on the default category, fifteen processor hosts hand-picked, strict version format, evidence rule and processor flag enforced in Zod, recordToProfile Zod-free](./2026-10-11-merchant-release-seed-and-contract-details.md) — 14.1 implementer's choices the plan left open; the seed applies the evidence rule honestly, so the two electronics stores wait for 14.4's evidence.
 
 ## 2026-10-10
