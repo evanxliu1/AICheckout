@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-fable-5-1
-  at: 2026-10-11T02:30:00Z
+  at: 2026-10-11T03:30:00Z
 ---
 
 # Now
@@ -14,7 +14,7 @@ As of 2026-10-11T02:30Z.
 
 ## Current state
 
-- **`origin/main` is `cd92987`** (PR #82, Phase 14.1 merged). Phases 7–13c are done; Phase 14 (merchant database) is in progress ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)): 14.1 merged, 14.2 built on branch `phase14-2-extension` (not pushed), 14.3 in progress in the `../AICheckout-14-3` worktree.
+- **`origin/main` is `cd92987`** (PR #82, Phase 14.1 merged). Phases 7–13c are done; Phase 14 (merchant database) is in progress ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)): 14.1 merged, 14.2 built on branch `phase14-2-extension` (not pushed), the dropped transitional rule and its browser-spec follow-up on `phase14-strict-legacy-profiles` (PR #84), 14.3 in progress in the `../AICheckout-14-3` worktree.
 - **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render checked 2026-10-10: `/health` 200 and the catalog served; all 10 migrations on hosted ([hosting](ops/hosting.md)).
 - **Captures:** the main checkout holds every gitignored issuer capture ([capture folders](ops/catalog-release.md#capture-folders)) and the pane exports (`evals/merchants/capture/data/pane/`); `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them. Curation model: gpt-5.6-luna `xhigh`.
 - **Reader rules:** the reader shows an amount only when certain, otherwise withholds (rates only); generic reader only, no store configs. **Since 2026-10-08 (Evan) the ≥ 99% bar is a quality target, not a pass gate** ([decision](decisions/2026-10-08-pause-capture-quality-target.md)); results are reported with exact bounds, store counts and coverage (target 80% on `cart-1`).
