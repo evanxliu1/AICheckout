@@ -281,6 +281,35 @@ describe('popup store from the open tab', () => {
     expect(read).not.toHaveBeenCalled();
   });
 });
+describe('popup on the merchant release (Phase 14.2)', () => {
+  it('says it cannot compare on a payment processor’s page, reads nothing and keeps the saved store', async () => {
+    openOn('https://www.paypal.com/checkoutnow?token=x');
+    read.mockRejectedValue(new Error(READ_COPY['payment-page']));
+    render(<Popup />);
+    expect(await screen.findByText(/PayPal is a payment page, not the store’s/)).toBeTruthy();
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(read).not.toHaveBeenCalled();
+    expect(merchantValue()).toBe('best-buy-us');
+    expect(screen.queryByRole('alert')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
+    expect((await screen.findByRole('alert')).textContent).toMatch(/payment page/);
+  });
+  it('never asks for a typed amount in any read message (A5)', async () => {
+    openOn('https://shop.example.com/cart');
+    render(<Popup />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    for (const reason of ['empty-cart', 'summary-missing', 'ambiguous-amount', 'unsupported-page'] as const) {
+      read.mockRejectedValue(new Error(READ_COPY[reason]));
+      fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
+      await vi.waitFor(() => expect(read).toHaveBeenCalled());
+      await screen.findByLabelText('Purchase amount (USD)');
+      expect(screen.queryByText(/enter the amount|manually/i)).toBeNull();
+      read.mockClear();
+    }
+    expect(Object.values(READ_COPY).join(' ')).not.toMatch(/enter the amount|manually/i);
+    expect(await screen.findByText(READ_COPY['unsupported-page'])).toBeTruthy();
+  });
+});
 describe('offline comparison popup', () => {
   it('changes manual merchant without carrying the old amount, confirmation or result across', async () => {
     render(<Popup />);

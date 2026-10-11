@@ -2,7 +2,8 @@
 // https hosts through context.route (no real store is contacted): the amount view, the rates view when
 // the reader withholds, no badge on a product page with an open cart drawer, an empty cart or a non-USD
 // cart, single-page navigation into and out of a cart, the "other stores" toggle and the per-site
-// switch, a legacy store unchanged, and axe on the badge.
+// switch, a legacy store unchanged, and axe on the badge. Phase 14.2: a store named from the bundled
+// merchant release on a page its adapter does not cover, and no badge on a payment processor's page.
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type BrowserContext, type Frame, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -63,6 +64,11 @@ const fixtures: Record<string, string> = {
   ),
   'https://shop.example.com/': SPA,
   'https://other.example.com/cart': page('Basket', cartBody(USD_ROWS, 'Your basket')),
+  // A seed store (amazon.com) on a subdomain and path its adapter does not cover: the generic reader at
+  // the store's own id. A processor (pay.amazon.com, paypal.com): a cart-like page that is never read.
+  'https://smile.amazon.com/cart': page('Your cart', cartBody(USD_ROWS)),
+  'https://pay.amazon.com/checkout/x': page('Checkout', cartBody(USD_ROWS, 'Review your order')),
+  'https://www.paypal.com/checkoutnow': page('Checkout', cartBody(USD_ROWS, 'Pay with PayPal')),
 };
 
 async function launch(testInfo: { outputPath: (name: string) => string }) {
@@ -72,12 +78,15 @@ async function launch(testInfo: { outputPath: (name: string) => string }) {
     viewport: { width: 1280, height: 800 },
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
-  await context.route(/^https:\/\/(shop|other)\.example\.com\//, (route) => {
-    const body = fixtures[route.request().url()];
-    return body
-      ? route.fulfill({ contentType: 'text/html', body })
-      : route.fulfill({ status: 404, body: 'not found' });
-  });
+  await context.route(
+    /^https:\/\/((shop|other)\.example\.com|smile\.amazon\.com|pay\.amazon\.com|www\.paypal\.com)\//,
+    (route) => {
+      const body = fixtures[route.request().url()];
+      return body
+        ? route.fulfill({ contentType: 'text/html', body })
+        : route.fulfill({ status: 404, body: 'not found' });
+    },
+  );
   await context.route(/^https:\/\/www\.bestbuy\.com\//, (route) =>
     route.request().url() === 'https://www.bestbuy.com/cart'
       ? route.fulfill({
@@ -202,6 +211,24 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
       'https://shop.example.com/cart?view=empty',
       'https://shop.example.com/cart?view=eur',
     ]) {
+      const p = await context.newPage();
+      await p.goto(url);
+      await expectNoBadge(p);
+      await p.close();
+    }
+
+    // A store from the merchant release (Phase 14.2): named in the panel, its id and host on the tab.
+    const named = await context.newPage();
+    await named.goto('https://smile.amazon.com/cart');
+    badge = await badgeFrame(named);
+    await badge.getByRole('button', { name: /\$3\.00 back on this cart/ }).click();
+    await expect(badge.getByText('Based on $100.00 cart estimated total at Amazon US.')).toBeVisible();
+    const namedTabs = JSON.stringify(await worker.evaluate(() => chrome.storage.session.get(null)));
+    expect(namedTabs).toContain('"merchantId":"amazon-us"');
+    expect(namedTabs).toContain('smile.amazon.com');
+    await named.close();
+    // No badge on a payment processor's page, cart-like or not (Amazon Pay's host beats amazon.com).
+    for (const url of ['https://pay.amazon.com/checkout/x', 'https://www.paypal.com/checkoutnow']) {
       const p = await context.newPage();
       await p.goto(url);
       await expectNoBadge(p);

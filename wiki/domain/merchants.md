@@ -78,7 +78,7 @@ Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_
 
 ## Merchant release records (Phase 14.1)
 
-Since milestone 14.1 (2026-10-10) a second source of profiles exists beside the catalog: the merchant release (`merchant-release.1`, [contract](../system/rewards-engine.md#merchant-release-contract-phase-141), [plan](../product/phase-14-merchant-database.md#3-what-a-merchant-record-says)). A record says who a website is (`hosts`, `name`), its `kind` (`merchant`, `marketplace`, `processor`), whether it sells `physicalGoods`, its `category` with the `evidence` behind it (`issuer`, `corroborated` or `default`), the catalog `brandIds` whose official store it is, and a remote `disabled` switch. A matched record becomes a `MerchantProfileV3` (`recordToProfile`: online U.S. store, no MCC) that the engine takes as `{ merchant }`; the extension wires this in 14.2.
+Since milestone 14.1 (2026-10-10) a second source of profiles exists beside the catalog: the merchant release (`merchant-release.1`, [contract](../system/rewards-engine.md#merchant-release-contract-phase-141), [plan](../product/phase-14-merchant-database.md#3-what-a-merchant-record-says)). A record says who a website is (`hosts`, `name`), its `kind` (`merchant`, `marketplace`, `processor`), whether it sells `physicalGoods`, its `category` with the `evidence` behind it (`issuer`, `corroborated` or `default`), the catalog `brandIds` whose official store it is, and a remote `disabled` switch. A matched record becomes a `MerchantProfileV3` (`recordToProfile`: online U.S. store, no MCC) that the engine takes as `{ merchant }`. Since 14.2 (2026-10-11) the extension matches every tab against the bundled release and passes that profile at every comparison; a `processor` page gets no badge, no reader and a popup notice; a `disabled` record is the generic store ([Extension](../system/extension.md#store-matching-phase-142), [Cart badge](../system/cart-badge.md), [decision](../decisions/2026-10-11-extension-on-the-merchant-release.md)).
 
 **Seed release `2026-10-10.seed.1`** (`MERCHANTS_V1`, authored in [`evals/merchants/db/records/`](../../evals/merchants/db/records/), [decision](../decisions/2026-10-11-merchant-release-seed-and-contract-details.md)):
 
@@ -89,13 +89,13 @@ Since milestone 14.1 (2026-10-10) a second source of profiles exists beside the 
 | `newegg-us` | `newegg.com` | merchant | yes | general-merchandise (`default`, as Best Buy) | `newegg` |
 | 15 processors: `paypal`, `venmo`, `shop-pay` (`shop.app`, `pay.shopify.com`), `klarna`, `affirm`, `afterpay`, `bolt`, `amazon-pay` (`pay.amazon.com`, `payments.amazon.com`, `apx-security.amazon.com`), `sezzle`, `zip` (`zip.co`), `stripe-checkout` (`checkout.stripe.com`), `link`, `google-pay` (`pay.google.com`), `cash-app-pay` (`cash.app`), `splitit` | as listed, else `<id>.com` | processor | no | general-merchandise (`default`) | none |
 
-No record has sources or a bonus category yet; 14.4 adds them. The processor hosts are hand-authored and unverified until 14.3.
+No record has sources or a bonus category yet; 14.4 adds them, and with them the badge's and popup's evidence line ("Codes as a supermarket (…)") and the first stores named beyond the three legacy ones. The processor hosts are hand-authored and unverified until 14.3.
 
 ## Gotchas
 
 - The research report recommends the label "community, medium-low confidence". The catalog stores `low`.
 - The seed merchant release gives Best Buy and Newegg no category, while the catalog v3 profiles say `electronics`. `releaseProfileFor` (transitional, [decision](../decisions/2026-10-11-merchant-release-seed-and-contract-details.md), pending Evan's confirmation) keeps the catalog's profile for a `default` record the catalog authors, so the Cash+ and Edward Jones electronics bonuses stay until 14.4 gives those stores evidence.
-- At a generic store the online-retail answer defaults to "Eligible", so a BCE-style online-retail bonus applies unless the shopper changes it; a payment processor page (PayPal, Shop Pay) also gets the generic answer.
+- At a generic store, and at a release store, the online-retail answer defaults to "Eligible", so a BCE-style online-retail bonus applies unless the shopper changes it (a record with `physicalGoods: false` blocks the rule in the engine regardless). Since 14.2 a payment processor page (PayPal, Shop Pay) is compared nowhere: the popup says it is a payment page and the badge stays hidden.
 - Browser cart observations do not show how a transaction will post. The shopper's `onlineRetail` answer and the payment path decide whether BCE's 3% is certain or a range.
 
 ## Related

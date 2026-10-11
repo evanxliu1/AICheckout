@@ -4,6 +4,7 @@ import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import type { CheckoutResponse } from '../src/state/contracts';
 import { CATALOG_V3 } from '../src/domain';
+import { MERCHANT_RELEASE_FIXTURE } from '../../packages/rewards-core/test-cases';
 
 let data: Record<string, unknown>;
 let now: number;
@@ -49,6 +50,63 @@ async function compare() {
   success(await handle({ type: 'checkout:save-wallet', expectedRevision: 0, wallet }));
   return success(await handle({ type: 'checkout:compare', expectedRevision: 1, purchase: purchase() }));
 }
+describe('comparisons at a merchant release store (Phase 14.2)', () => {
+  const bcp = {
+    defaultCardId: 'amex-blue-cash-preferred',
+    cards: [
+      {
+        cardId: 'amex-blue-cash-preferred',
+        usage: [
+          {
+            ruleId: 'bcp-supermarkets-v2',
+            calendarYear: 2026,
+            recordedOn: localDate(Date.parse(CATALOG_V3.verifiedAt) + 39 * 3_600_000),
+            spentCents: 0,
+            activation: 'unknown',
+          },
+        ],
+      },
+    ],
+  };
+  it('passes the record’s profile to the engine for compare and rates; without the record the id is unsupported', async () => {
+    const handle = createStateService(storage, () => now, undefined, undefined, MERCHANT_RELEASE_FIXTURE);
+    success(await handle({ type: 'checkout:save-wallet', expectedRevision: 0, wallet: bcp }));
+    const kroger = { ...purchase(), merchantId: 'kroger-us', onlineRetail: 'eligible' };
+    const compared = success(
+      await handle({ type: 'checkout:compare', expectedRevision: 1, purchase: kroger }),
+    );
+    expect(compared.comparison).toMatchObject({
+      status: 'ready',
+      preferredCardId: 'amex-blue-cash-preferred',
+    });
+    expect(
+      (compared.comparison as { estimates: { minRewardCents: number }[] }).estimates[0].minRewardCents,
+    ).toBe(600);
+    // The saved comparison is recomputed with the same profile on the next read.
+    const again = success(await handle({ type: 'checkout:get-state' }));
+    expect(again.comparison).toMatchObject({ status: 'ready', preferredCardId: 'amex-blue-cash-preferred' });
+    const rates = success(
+      await handle({
+        type: 'checkout:rates',
+        merchantId: 'kroger-us',
+        onlineRetail: 'eligible',
+        paymentPath: 'card',
+      }),
+    );
+    expect(
+      (rates.comparison as { estimates: { minRewardCents: number }[] }).estimates[0].minRewardCents,
+    ).toBe(600);
+    const bundled = createStateService(storage, () => now);
+    expect(
+      success(await bundled({ type: 'checkout:compare', expectedRevision: 2, purchase: kroger })).comparison,
+    ).toMatchObject({ status: 'unavailable', reason: 'unsupported-merchant' });
+  });
+  it('asks for no typed amount when reading is unavailable (A5)', async () => {
+    const handle = createStateService(storage, () => now);
+    const result = await handle({ type: 'checkout:read-cart', expectedRevision: 0 });
+    expect(result).toEqual({ ok: false, error: 'Cart reading is unavailable in this build.' });
+  });
+});
 describe('durable worker state', () => {
   it('starts empty without manufacturing a wallet', async () => {
     expect(

@@ -1,7 +1,7 @@
 // The rates view (Phase 13c): the owned cards ranked by rate when the cart amount was not read.
 // Shared by the badge panel and the popup. It never asks for an amount.
 import type { Catalog, Comparison } from '../domain';
-import { merchantName } from '../checkout/merchants';
+import { merchantName, storeEvidence } from '../checkout/store-match';
 import { notAcceptedLines, rankingNote, rateWording, ratesCapped } from './estimates';
 
 export const RATES_INTRO =
@@ -22,6 +22,7 @@ export default function RatesResult({
   headingId?: string;
 }) {
   const capped = ratesCapped(result, catalog);
+  const evidence = storeEvidence(merchantId);
   return (
     <div className="space-y-3">
       {headingId && (
@@ -29,6 +30,7 @@ export default function RatesResult({
           Best card by rate at {merchantName(merchantId)}
         </h3>
       )}
+      {evidence && <p className="supporting">{evidence}</p>}
       <p className="supporting">
         {RATES_INTRO}
         {capped || result.rankingMayChange ? ', unless a condition below applies.' : '.'}

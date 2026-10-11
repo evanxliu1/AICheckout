@@ -1,6 +1,8 @@
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
-import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout, merchantForTab } from './merchants';
+import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
+import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout } from './merchants';
+import { storeForTab } from './store-match';
 import { READ_COPY } from './read-copy';
 
 /** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
@@ -17,12 +19,14 @@ async function activeTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.id === undefined || !tab.url)
     throw new Error('Open the extension from the store tab using its toolbar button, then try again.');
-  if (!merchantForTab(tab.url)) throw new Error(copy['unsupported-page']);
-  return { id: tab.id, url: tab.url };
+  const store = storeForTab(tab.url);
+  if (!store) throw new Error(copy['unsupported-page']);
+  if (store.kind === 'processor') throw new Error(copy['payment-page']);
+  return { id: tab.id, url: tab.url, merchantId: store.id };
 }
-/** The merchant a reading of this URL must name: the legacy adapter's store on its cart pages, else
- * the store the popup resolves for the tab (readManualCart does the same split). */
-const expectedMerchant = (url: string) => merchantForCheckout(url) ?? merchantForTab(url);
+/** The merchant a reading of this URL must name: the legacy adapter's store on its cart pages, else the
+ * generic id (readManualCart does the same split); the snapshot carries the tab's store instead. */
+const expectedMerchant = (url: string) => merchantForCheckout(url) ?? GENERIC_MERCHANT_ID;
 /** The reader version a reading of this URL must carry: the adapter's on its cart pages, else the generic one. */
 const expectedVersion = (url: string) => {
   const legacy = merchantForCheckout(url);
@@ -63,9 +67,10 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
       result.reading.extractorVersion !== expectedVersion(tab.url)
     )
       throw new Error(changed);
-    const { merchantId, currency, amountCents, kind, extractorVersion } = result.reading;
+    const { currency, amountCents, kind, extractorVersion } = result.reading;
     return {
-      merchantId,
+      // The store the worker resolved for the tab (a release record, a legacy store or the generic one).
+      merchantId: tab.merchantId,
       currency,
       amountCents,
       kind,
@@ -79,7 +84,7 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
   } catch (error) {
     if (error instanceof Error && [changed, ...Object.values(copy)].includes(error.message)) throw error;
     throw new Error(
-      'Chrome could not read this page. Reopen the extension from the cart’s toolbar button, or enter the amount manually. This page can’t be read; enter the amount manually.',
+      'Chrome could not read this page. Reopen the extension from the cart’s tab and read it again.',
     );
   }
 }
@@ -94,7 +99,7 @@ export async function validateActiveCheckout(snapshot: CartSnapshot): Promise<vo
       current.id !== tab.id ||
       current.url !== tab.url ||
       result.url !== tab.url ||
-      result.reading.merchantId !== snapshot.merchantId ||
+      tab.merchantId !== snapshot.merchantId ||
       result.reading.merchantId !== expectedMerchant(tab.url) ||
       result.reading.amountCents !== snapshot.amountCents ||
       result.reading.kind !== snapshot.kind ||

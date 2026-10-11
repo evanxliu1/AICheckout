@@ -5,7 +5,9 @@ import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant'
 
 const readingFields = z.strictObject({
   status: z.literal('found'),
-  merchantId: z.enum([...MERCHANT_IDS, GENERIC_MERCHANT_ID]),
+  /** A legacy store, the generic store, or (snapshots only, Phase 14.2) a merchant release record the
+   * worker resolved from the tab's URL. */
+  merchantId: z.string().min(1).max(100),
   currency: z.literal('USD'),
   amountCents: z.number().int().positive().max(MAX_AMOUNT_CENTS),
   kind: z.enum(['total', 'estimated-total', 'subtotal']),
@@ -20,7 +22,11 @@ const matchingReader = (value: { merchantId: string; extractorVersion: string })
   value.extractorVersion === GENERIC_READER_VERSION ||
   (Object.hasOwn(MERCHANTS, value.merchantId) &&
     value.extractorVersion === MERCHANTS[value.merchantId as MerchantId].extractorVersion);
-const reading = readingFields.refine(matchingReader, 'Reader version does not match merchant.');
+/** A reading from a content script names only a legacy store (its adapter's URL) or the generic store;
+ * the worker maps the generic one to the tab's release store. */
+const reading = readingFields
+  .extend({ merchantId: z.enum([...MERCHANT_IDS, GENERIC_MERCHANT_ID]) })
+  .refine(matchingReader, 'Reader version does not match merchant.');
 export const probeSchema = z.strictObject({
   url: z.string().url().max(4096),
   reading: z.discriminatedUnion('status', [

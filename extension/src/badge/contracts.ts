@@ -5,7 +5,6 @@ import { z } from 'zod';
 import { MAX_AMOUNT_CENTS, PAYMENT_PATHS_V3 } from '../domain';
 import type { Catalog, Comparison, PaymentPathV3, UnavailableComparison, Wallet } from '../domain';
 import { MERCHANT_IDS } from '../checkout/merchants';
-import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
 import { probeSchema } from '../checkout/contracts';
 import { purchaseSchema } from '../state/contracts';
 
@@ -17,8 +16,9 @@ export { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from './pages';
 
 const money = z.number().int().min(0).max(MAX_AMOUNT_CENTS);
 const merchantId = z.enum(MERCHANT_IDS);
-/** A badge tab's store: a legacy store, or the generic profile at any other site (Phase 13c). */
-const badgeMerchantId = z.enum([...MERCHANT_IDS, GENERIC_MERCHANT_ID]);
+/** A badge tab's store: a legacy store, a merchant release record (Phase 14.2), or the generic profile
+ * at any other site (Phase 13c). */
+const badgeMerchantId = z.string().min(1).max(100);
 /** A hostname the shopper turned the badge off for (lower case, no port, ≤ 253 chars). */
 const host = z
   .string()

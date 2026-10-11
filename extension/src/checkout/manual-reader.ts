@@ -1,11 +1,13 @@
 import { readCartPage } from '@ai-checkout/cart-reader';
 import type { PageKind, ReadingKind } from '@ai-checkout/cart-reader';
-import { GENERIC_READER_VERSION, merchantForCheckout, merchantForTab } from './merchants';
+import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
+import { GENERIC_READER_VERSION, isWebUrl, merchantForCheckout } from './merchants';
 import { readCheckoutPage } from './page-reader';
 import type { AmountKind, PageRead } from './page-reader';
 
 /** What a reader hands the popup or the badge: a legacy adapter read, or a generic read of any other
- * http(s) page (merchant = the store resolved for the tab, usually the generic profile). */
+ * http(s) page, named `generic-us-online`; the worker resolves the tab's store against the merchant
+ * release (Phase 14.2, `store-match.ts`) and refuses a reading that names anything else. */
 export type ManualRead =
   | PageRead
   | {
@@ -34,8 +36,7 @@ export function readAnyCart(
   url: string,
 ): { page: PageKind | 'legacy'; reading: ManualRead } {
   if (merchantForCheckout(url)) return { page: 'legacy', reading: readCheckoutPage(document, url) };
-  const merchantId = merchantForTab(url);
-  if (!merchantId) return { page: 'none', reading: { status: 'unavailable', reason: 'unsupported-page' } };
+  if (!isWebUrl(url)) return { page: 'none', reading: { status: 'unavailable', reason: 'unsupported-page' } };
   let page: PageKind, reading;
   try {
     ({
@@ -56,7 +57,7 @@ export function readAnyCart(
     page,
     reading: {
       status: 'found',
-      merchantId,
+      merchantId: GENERIC_MERCHANT_ID,
       currency: 'USD',
       amountCents: reading.amountMinor,
       kind: KIND[reading.kind],
