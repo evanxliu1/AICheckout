@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b04",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15407,
+    "outputTokens": 331
+  },
+  "durationMs": 42942,
+  "draft": {
+    "domain": "fandango.com",
+    "kind": "marketplace",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "fandango-com-page-1",
+        "quote": "Fandango’s partners are the nation’s leading exhibitors",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "fandango-com-page-1",
+        "quote": "movie ticketing to 31,000 U.S. screens",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "fandango-com-page-1",
+        "quote": "movie ticketing to 31,000 U.S. screens",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Movie Theaters",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Fandango.com®",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Catch the latest movies at most cinemas and earn cash back.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Marketplace classification is inferred from Fandango’s partner-exhibitor ticketing model. Citi’s Live Entertainment rules exclude movie theaters, but Discover and U.S. Bank explicitly place movie theaters/Fandango.com in the entertainment category."
+  }
+}

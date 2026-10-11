@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b04",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18378,
+    "outputTokens": 231
+  },
+  "durationMs": 26740,
+  "draft": {
+    "domain": "emirates.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "emirates"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "emirates-com-page-1",
+        "quote": "Emirates connects the world to, and through, our global hub in Dubai.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "emirates-com-page-1",
+        "quote": "We operate modern, efficient and comfortable aircraft",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "emirates-com-page-1",
+        "quote": "delivers award-winning services to our customers across six continents every day.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "emirates-com-page-2",
+        "quote": "Book flights",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "not included in this category, for example, airlines,",
+        "supports": "category"
+      }
+    ],
+    "notes": "Emirates is an airline/travel merchant offering services rather than physical goods. The category list has no airline or travel category, and Chase excludes airlines from Local transit, so candidateCategory is null."
+  }
+}

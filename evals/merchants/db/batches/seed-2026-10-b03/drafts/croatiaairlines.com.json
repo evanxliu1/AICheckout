@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13004,
+    "outputTokens": 314
+  },
+  "durationMs": 24652,
+  "draft": {
+    "domain": "croatiaairlines.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "croatia-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "croatiaairlines-com-page-1",
+        "quote": "Croatia Airlines, the national air carrier",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "croatiaairlines-com-page-1",
+        "quote": "Book a ticket",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "croatiaairlines-com-page-1",
+        "quote": "Book a ticket",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Eligible Purchases are items billed by Miles & More integrated airline partners as merchant of record.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "airlines, hotels, car rental agencies, cruise lines, travel agencies, discount travel sites, vacation clubs, tour operators, bike or scooter rentals and car sharing.",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents identify the site as an airline selling tickets. Airlines are not included in the supplied Transit definition; Chase expressly excludes airlines from local transit, and no airline/travel category is available."
+  }
+}

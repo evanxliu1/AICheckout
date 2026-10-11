@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13057,
+    "outputTokens": 177
+  },
+  "durationMs": 70855,
+  "draft": {
+    "domain": "disneyland.disney.go.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "disney"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "disney-premier-visa-rewards-terms",
+        "quote": "the Disneyland Resort",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "disney-premier-visa-rewards-terms",
+        "quote": "Disney Locations in the U.S.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "disney-premier-visa-rewards-terms",
+        "quote": "if you are visiting a Disney property",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The store pages are Access Denied, and no merchant-code lookup names Disneyland's category. Issuer text identifies a Disney visitor property but does not classify this site under an available merchant category, so category is conservatively null."
+  }
+}

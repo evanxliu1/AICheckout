@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13888,
+    "outputTokens": 261
+  },
+  "durationMs": 117541,
+  "draft": {
+    "domain": "costplusdrugs.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "drugstores",
+    "evidence": [
+      {
+        "sourceId": "costplusdrugs-com-page-1",
+        "quote": "Can I get all my medications here?",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "costplusdrugs-com-page-1",
+        "quote": "We use cookies to make our pharmacy website work properly and securely.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "costplusdrugs-com-page-1",
+        "quote": "What kind of medications require refrigerated or insulated shipping?",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Drug Store purchases include those made at stand-alone drug stores, pharmacies, and online pharmacies.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Cost Plus Drugs is clearly an online pharmacy that ships medications. No lookup page or direct issuer earning example names it. Amex’s narrower select-major-drugstore list does not name Cost Plus Drugs, but Chase and Discover definitions cover pharmacies and online pharmacies."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b04",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 25567,
+    "outputTokens": 232
+  },
+  "durationMs": 29505,
+  "draft": {
+    "domain": "express.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "express"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "express-com-page-1",
+        "quote": "We’re happy to accept returns and exchanges for items purchased in our U.S. Retail stores and online based on the following requirements:",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "express-com-page-1",
+        "quote": "Merchandise must be returned in its original condition, unwashed and unworn (this does not include merchandise that is defective).",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "express-com-page-1",
+        "quote": "Women's Clothing",
+        "supports": "category"
+      },
+      {
+        "sourceId": "express-com-page-2",
+        "quote": "We inspire self-expression through both brands—Express and Bonobos.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Express®",
+        "supports": "category"
+      }
+    ],
+    "notes": "Express is clearly its own clothing retailer, and the issuer source lists it under Select Clothing Stores. Clothing is not an available candidate category, so candidateCategory is null."
+  }
+}
