@@ -13,7 +13,7 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools evals/merchants/capture evals/merchants/labels evals/merchants/variants evals/reader",
+    "lint": "eslint extension/src extension/tests extension/e2e extension/scripts packages apps scripts tools evals/merchants/capture evals/merchants/labels evals/merchants/variants evals/merchants/db/audit evals/reader",
     "typecheck": "npm run typecheck --workspaces --if-present && tsc --noEmit -p evals/reader/tsconfig.json",
     "test": "npm run test --workspaces --if-present && npm run test:scripts",
     "build": "npm run build --workspaces --if-present",

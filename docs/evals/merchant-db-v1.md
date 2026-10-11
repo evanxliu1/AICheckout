@@ -1,0 +1,137 @@
+# Merchant database v1: blind audit, 2026-10-11
+
+Phase 14.5 of the [merchant database plan](../../wiki/product/phase-14-merchant-database.md) (section 7). The release under audit is `2026-10-11.seed.17`, the bundled `MERCHANTS_V1` built by Phase 14.4 on 2026-10-11 and merged as PR #86 (`c5802843`). The extension matches every tab's host against this release on the device and passes the matched record's profile (kind, goods flag, category, brands) to the rewards engine; a wrong bonus category is the costly error, because it recommends a card for a bonus the store will not pay.
+
+- **Built** by the 14.4 pipeline: gpt-5.6-luna drafts, a Claude `merchant-verifier` check of every field and quote, a deterministic apply rule that grants a bonus category only on `issuer`, `corroborated` or `definition` evidence ([pipeline](../../wiki/system/merchant-pipeline.md)).
+- **Audited** 2026-10-11 by a blind `merchant-auditor` ([agent file](../../.claude/agents/merchant-auditor.md)) that saw only the captured pages and issuer excerpts of each store and the written rules, never a draft, verification, record or `review.md`; disagreements were adjudicated by a third agent ([method](../../wiki/decisions/2026-10-11-merchant-audit-method.md)). All labels are agent labels (`agent-verified`); no human labelled a store.
+- **The numbers below are the pre-fix numbers** of `2026-10-11.seed.17`. The fixes the adjudication calls for are listed in [Fixes](#fixes) and applied to the release in a separate commit after this report, as the plan requires.
+
+## What the release contains
+
+| | `2026-10-11.seed.17` |
+| --- | ---: |
+| Records | 641 (merchant 607, marketplace 19, processor 15); 648 hosts; no record disabled |
+| Evidence basis | `default` 595, `definition` 41, `issuer` 5, `corroborated` 0 |
+| Bonus categories (46) | supermarkets 13, dining 12, streaming 7 (5 `definition`, 2 `issuer`), drugstores 5 (4 + 1), home-improvement 4, department-stores 2 (`issuer`), entertainment 2, transit 1 |
+| Records with brands | 120, naming 119 of the catalog's 140 brands |
+| Records with `physicalGoods: false` | 140 (125 services and 15 processors) |
+| Cited sources | 68 (58 store pages, 10 issuer pages); captures gitignored, hashes committed |
+| Size | release JSON 249,019 bytes; `merchants-v1.ts` 209,561 bytes (limit 2 MiB) |
+
+**How it was built.** 692 frozen candidates: tier A (380 long-tail domains) got deterministic default records from a homepage render, named from `og:site_name` (132), `<title>` (106) or `application-name` (3), else the domain label (139, of them 99 bot-walled renders and 16 unfetchable pages). Tier B (312 domains in 13 batches of up to 25, plus the 10-store development batch) went through research, capture, draft, verify and apply. Not in the release: 42 held-out field disputes in `review.md` (stores whose name, hosts, kind or goods flag the verifier could not confirm, mostly bot-walled sites; the count is of table rows, a store may have several), 9 excluded domains (5 defunct, parked or typo domains, 4 airlines with no U.S. site), 3 draft hold-outs after three failed verbatim gates (amazon.com and pay.amazon.com keep their 14.1 records; nordstromrack.com has none). `review.md` also lists for Evan 65 downgraded records (a disputed quote and no basis left), 98 candidates the rule refused, 13 cross-issuer conflicts and 76 bot-walled stores.
+
+**The 60 frozen held-out domains** ([list](../../evals/merchants/pipeline-heldout-domains.json), frozen 2026-10-06) became: 48 tier-A default records with no brands; 6 tier-B default records with a brand (target, barnesandnoble, gap, jcpenney, birchlane, cabelas); 3 tier-B default records with no brand (apple, dell, sherwin-williams); 1 bonus record (homedepot, home-improvement on `definition`); 2 with no record (nordstromrack.com, draft held out; build.com, held out: redirects to fergusonhome.com and nothing confirmable). The held-out batch was built last with the rules frozen at `seed.13`; the coordinator's third decision set then changed four apply rules and one held-out record changed, **gap-us** (from held out to a default record with brand `gap`), which is reported separately below as post-freeze ([seed run rules](../../wiki/decisions/2026-10-11-seed-run-rules.md)).
+
+## Audit method
+
+**Population: 230 stores**, the union of every record whose basis is not `default` (46), every record with brands (120), the 15 processors and the 60 held-out domains; 228 have a record, 2 do not. Mapping record → store domain comes from the batches' apply reports, then the candidate list (`population.json`).
+
+**Packets.** `build-packets.mjs` wrote 10 packets of 23 stores (gitignored, capture text). Each store's sheet holds only: its own captured store pages in full (tier B: the batch's store-page captures, at most three, 8,000 characters each; tier A: the homepage render), excerpts of any merchant-code lookup page around the store's name, and excerpts of the issuer pages around the store's name (the batch's name windows; for tier-A stores, mined from the catalog's issuer captures the way the pipeline does). Each packet also carries `issuer-definitions.md` (the definition sentences of the 12 fixed issuer definition pages, ±250 characters) and the catalog's brand and category lists. Nothing derived from a draft, verification, record or review entered a sheet; the domain is the only identifier.
+
+**Labeller.** The `merchant-auditor` agent file states the four bases and their conditions (issuer inclusion lists count, hedged and conditional wording does not; the excluded kinds of store; a business type as a noun phrase; a delivery marketplace only for dining), the kind, goods and category meanings, and a blindness rule naming the files it may never open. It labels kind, `physicalGoods`, brands, category with basis and the quotes it relies on, or `cant-tell`. Ten general-purpose Opus subagents (`claude-opus-5-5`; the agent type was not registered in the session, each read the file first) ran one packet each; a gate (`check-labels.mjs`) checked every file: the packet's domains in order, brand and category ids, every quote found verbatim in the named sheet section and at most 25 words, a bonus with a non-default basis and quotes, and `filesRead` naming no forbidden file and no other packet. All 230 stores were labelled; 488 quotes.
+
+**Comparison** (`score.mjs`, deterministic): wrong bonus category = a record with a bonus category whose auditor label is another category or `general-merchandise` (an auditor `cant-tell` on a bonus record would be counted separately; none occurred); missed bonus = a default record the auditor gives a bonus; wrong brand = brand sets differ (auditor adds, drops or differs); wrong kind and wrong goods flag likewise. A `cant-tell` is never a disagreement; it is counted per field. Bounds are exact one-sided 95% Clopper–Pearson upper bounds (`evals/reader/stats.mjs`).
+
+**Adjudication.** Every disagreement (19) went to a third, separate Opus subagent with the auditor's rules, both sides' quotes (the record's committed evidence quotes, the auditor's quotes and notes) and the blind sheet, never the records, evidence files or pipeline reasoning. Its verdict per item is `record`, `auditor` or `neither`; a record error stands after adjudication unless the verdict is `record`, a missed bonus stands only when it is `auditor`. Verdicts: 3 `record`, 16 `auditor`, 0 `neither`.
+
+## Results
+
+Denominators are the plan's: bonus records for the wrong-bonus rate, default records for missed bonuses, brand records for brands, every store for kind and goods. "Before" is the raw comparison, "after" the counts standing after adjudication.
+
+### All 228 audited records
+
+| Measure | Before adjudication | After adjudication | 95% upper bound (after) |
+| --- | ---: | ---: | ---: |
+| **Wrong bonus category** | 4 / 46 (8.7%) | **4 / 46 (8.7%)** | **18.8%** |
+| Missed bonus category | 11 / 182 | 9 / 182 (4.9%) | 8.8% |
+| Wrong brand set | 2 / 120 (both: auditor adds brands) | 2 / 120 (1.7%) | 5.2% |
+| Wrong kind | 2 / 228 | 1 / 228 (0.4%) | 2.1% |
+| Wrong goods flag | 0 / 228 | 0 / 228 | 1.3% |
+| Auditor `cant-tell` | kind 39, goods 50, brands 31, category 11 | | |
+
+Against the plan's targets (reporting targets, not gates): wrong bonus category **4, target 0**; wrong brand **2, target 0**; wrong kind **1, target 0**; wrong goods flag 0; missed bonuses 9 (reported, costs value not trust).
+
+By category: the auditor agreed with all 12 dining, 5 drugstore, 7 streaming, 4 home-improvement, 2 department-store, 2 entertainment and 1 transit record; it disagreed with 4 of the 13 supermarket records (all four refused, none moved to another category). Of the 182 default records the auditor agreed with 160, would grant a bonus to 11 and could not tell for 11.
+
+### The 15 processors and the 120 brand records
+
+All 15 processors: kind `processor` confirmed, no goods, no brands, no category; no `cant-tell`. Brand records: 2 wrong brand sets (below), 0 wrong kinds after adjudication (amazon.com went to the record), 9 missed bonuses; 15 brand `cant-tell` values, all stores whose pages are bot walls and whose issuer excerpts do not tie the domain to the brand.
+
+### The 60 frozen held-out domains
+
+58 have a record (57 frozen + gap-us post-freeze); nordstromrack.com and build.com have none. Frozen 57, after adjudication: wrong bonus **0 / 1** (homedepot-us confirmed, bound 95% on one record); missed bonus **1 / 56** (jcpenney-us, department stores on Amex's list); wrong brand **0 / 57**; wrong kind **1 / 57** (whatnot-us is a live-shopping marketplace, the record says merchant); wrong goods 0. `cant-tell`: kind 18, goods 24, brands 16, category 6 (the long tail's homepages are often bot walls). Before adjudication the frozen set had the same counts plus the sherwin-williams missed bonus, which the adjudicator gave to the record. The two stores without a record: the auditor labelled nordstromrack.com `merchant`, goods, no brand, `general-merchandise` (U.S. Bank names it only in a hedged list) and build.com `cant-tell` on every field (its only capture is an access-denied page).
+
+**Post-freeze, gap-us** (changed after the held-out batch was first applied): the record carries brand `gap`; the auditor and the adjudicator read gap.com's "buy online from one brand or all four" line as a shared checkout for Gap, Old Navy, Banana Republic and Athleta, so the brand set is wrong by one adds-three disagreement. Category, kind and goods agree.
+
+### Every disagreement and its adjudication
+
+| Store | Field | Record | Auditor | Verdict | Adjudicator's reason (shortened) |
+| --- | --- | --- | --- | --- | --- |
+| aldi.us | category | supermarkets (`definition`) | general-merchandise | auditor | Amex names ALDI only in an "Examples of merchants" list with "not a complete list"; its pages show delivery and pickup wording, never a grocery-store or supermarket noun phrase |
+| kroger.com | category | supermarkets (`definition`) | general-merchandise | auditor | Help pages describe pickup and delivery of groceries but never a business type as a noun phrase; U.S. Bank's mention is "may qualify" and hedged lists |
+| marketbasket.com | category | supermarkets (`definition`) | general-merchandise | auditor | Calls itself a "specialty market" of gourmet food, which Amex excludes from supermarkets; sells gift baskets and catering |
+| wholefoodsmarket.com | category | supermarkets (`definition`) | general-merchandise | auditor | Its pages mention shopping for groceries and grocery delivery, never a grocery-store or supermarket noun phrase; U.S. Bank's list is hedged |
+| audible.com | category | general-merchandise | streaming (`issuer`) | auditor | Amex's Select U.S. Streaming Subscriptions list limits earning to its providers and names Audible |
+| bloomingdales.com | category | general-merchandise | department-stores (`issuer`) | auditor | Amex earns "ONLY" at the listed department stores; the list names Bloomingdale's |
+| dillards.com | category | general-merchandise | department-stores (`issuer`) | auditor | The same Amex list names Dillard's |
+| macys.com | category | general-merchandise | department-stores (`issuer`) | auditor | The same Amex list names Macy's |
+| jcpenney.com (held out) | category | general-merchandise | department-stores (`issuer`) | auditor | The same Amex list names J.C. Penney (JCP); no store page is needed for an issuer basis |
+| disneyplus.com | category | general-merchandise | streaming (`issuer`) | auditor | Citi Strata "Includes the following streaming providers: … Disney+"; Amex's list too |
+| plus.espn.com | category | general-merchandise | streaming (`issuer`) | auditor | U.S. Bank Altitude: 2 points on qualifying streaming subscriptions, "Qualifying … are: … ESPN+" |
+| siriusxm.com | category | general-merchandise | streaming (`issuer`) | auditor | Citi Strata and Amex streaming lists name SiriusXM |
+| costco.com | category | general-merchandise | wholesale-clubs (`definition`) | auditor | Its page: "a membership warehouse club"; Chase's paragraph on bulk sellers that may require membership covers the type. The adjudicator's closest call: the paragraph's heading is cut off in the capture |
+| lyft.com | category | general-merchandise | transit (`definition`) | **record** | Lyft's pages never say rideshare or taxi; "Get a ride" shows no business type under the rule |
+| sherwin-williams.com (held out) | category | general-merchandise | home-improvement (`definition`) | **record** | A paint maker's pages; "Paint Stores Group" is a revenue-segment label; Bank of America's mention is a hedged examples list |
+| gap.com (post-freeze) | brands | gap | gap, old-navy, banana-republic, athleta | auditor | The page says customers buy from one brand or all four in one order: a shared checkout for the four catalog brands |
+| oldnavy.gap.com | brands | old-navy | old-navy, gap, banana-republic, athleta | auditor | The same line on the Old Navy host |
+| amazon.com | kind | merchant | marketplace | **record** | The pages show Amazon hosts sellers, not that it is mostly third-party sellers |
+| whatnot.com (held out) | kind | merchant | marketplace | auditor | "The Live Shopping Marketplace", inviting visitors to become sellers |
+
+Full reasons: [`adjudication.json`](../../evals/merchants/db/audit/adjudication.json); labels: [`labels/`](../../evals/merchants/db/audit/labels/); comparison: [`comparison.json`](../../evals/merchants/db/audit/comparison.json).
+
+**What the disagreements say about the pipeline.** The four wrong supermarket records are all `definition` records whose store-page business-type test passed on department or service wording ("Grocery Pickup & Delivery", "shop for groceries online", "specialty market") that the written rule, read by the auditor and the adjudicator, does not accept as a business-type noun phrase, or on a page the issuer's own definition excludes (specialty food stores). The rule's lexical test (`BUSINESS_TYPE_WORDS`, three words or more) over-grants there. The nine missed bonuses go the other way: eight rest on issuer inclusion lists (Amex's "select major department stores" and "Select U.S. Streaming Subscriptions", Citi Strata's and U.S. Bank Altitude's streaming lists) that the rule accepts in principle but the verifier disputed as "a restriction to Amex's listed stores rather than a definition" or the drafter never quoted; the ninth is Costco's wholesale-club definition, which the rule refused because Chase's paragraph names no wholesale-club word. The two brand disagreements are one reading of Gap Inc.'s shared checkout line. The convention questions the ten auditors raised (whether a store with no usable page is `cant-tell` or `default` on the category, which they split 11 to the rest; whether kind and brand may rest on a co-brand issuer page when the store page is a bot wall, which most did; whether a product page without shipping wording shows physical goods) are in their packet reports and are for Evan.
+
+## URL match
+
+`extension/tests/merchant-url-set.test.ts` on the bundled release (`url-test-set.json` built by `build-url-set.mjs`; the expectation is the longest authored host that is a label-boundary suffix of the URL's host and shares its registrable domain):
+
+| Set | URLs | Matched a store | Wrong store matches |
+| --- | ---: | ---: | ---: |
+| Every release host × 6 subdomain forms (bare, `www.`, `secure.`, `checkout.`, `www.secure.`, `a.b.c.`) × 6 checkout-like paths | 23,328 | 23,328 to the authoring record (or the longer authored subdomain record) | **0** |
+| The frozen reader set's U.S. cart-state URLs (pane records, `us` stream; product, cart and empty-cart pages) | 367 | 365 (2 stores are not in the release) | **0** |
+| Look-alike traps: `amazon.ca`, `amazon.co.uk`, `target.com.au`, `walmartmoney.com`, `wal-mart.com`, `kroger.com.mx`, `notnewegg.com`, `newegg.com.evil.example`, deep subdomains of look-alikes, punycode and Unicode look-alikes (`xn--trget-gra.com`, Cyrillic `аmazon.com`), redirect-only or dropped domains (`jcp.com`, `cedarpoint.com`, `vudu.com`, `build.com`, `showtime.com`, `worldmarktheclub.com`, `costcobusinessdelivery.com`, `oldnavy.com`, `clubwyndham.com`, `nordstromrack.com`, `hy-veepharmacy.com`), unknown stores | 33 | 0 | **0** |
+
+Match time stays under a millisecond per URL (`merchant-match.test.ts`). One finding for the candidate list rather than the matcher: the tier-A record `google-us` authors `google.com` (from the frame's top-stores bucket, a bot-walled render named from the label), so every Google page matches a default "Google" store; the profile is the generic one, so no reward changes, but the badge would name the store on a Google cart page.
+
+## Cost
+
+| Stage | Claude tokens | Model time | Notes |
+| --- | ---: | ---: | --- |
+| Seed research (14 batches incl. development) | 972,422 | 93 min | `merchant-researcher`, `claude-opus-5-5`, from the batch `state.json` files |
+| Seed verify | 1,614,835 | 64 min | `merchant-verifier`, `claude-opus-5-5` |
+| Seed drafts (gpt-5.6-luna `xhigh`) | 4,636,300 in / 88,779 out | 222 min | Codex, subscription; the state files hold each store's last accepted attempt |
+| Audit labels, 10 packets | 1,919,001 | 32 min | general-purpose Opus subagents reading the agent file; 155k–220k per packet ([runs.json](../../evals/merchants/db/audit/runs.json)) |
+| Adjudication, 19 items | 131,810 | 2.4 min | one Opus subagent |
+
+No paid API calls; everything ran locally on subscription CLIs.
+
+## Limits
+
+- **Single labeller, single adjudicator, all models.** Each store was labelled once by one Opus run and each disagreement decided by one Opus run; no human read a store. The labels and verdicts are `agent-verified`. The auditor and the pipeline's verifier are the same model family, so shared blind spots are possible.
+- **Blindness is procedural.** The auditor's packets contain nothing from the release, and the gate refuses a `filesRead` that names a forbidden file, but the subagents ran in the repository with read access; the rule is instruction and audit trail, not a sandbox.
+- **Public sources only; no transaction data.** Nothing here shows how a store's charges actually code at a card network. An issuer's list or definition and a store's own page are the best public evidence; a store on no list, with no definition covering it, gets the general rate by design.
+- **Bot walls.** 10 audited stores had no store page and 58 had a page under 300 characters (a bot wall or error page); 39 `cant-tell` kinds, 50 goods flags and 31 brand sets follow from that. For those stores the release's kind, goods and brand values rest on the research and issuer captures, which the auditor could confirm only when an issuer page names the domain.
+- **Captures were truncated** to 8,000 characters per store page and 10,000 characters of issuer excerpts per store (80 of 230 sheets were cut), so an exclusion or business-type sentence deep in a page may have been invisible to the auditor.
+- **One release, one run.** The audit was run once, after the full build, on `2026-10-11.seed.17`; the pipeline was not tuned on the audited stores. The fixes below are the only changes the audit makes.
+- The URL test's expectation function uses the same label-boundary logic as the matcher with an independent registrable-domain check; it cannot find a host that should not have been authored (such as `google.com`), only hosts matched to the wrong record.
+
+## Fixes
+
+Under the plan, records the adjudication finds wrong are fixed after this report records the pre-fix numbers. The 16 adjudicated changes, applied by `evals/merchants/db/audit/apply-adjudication.mjs` in the next commit as release `2026-10-11.audit.1`:
+
+- **Downgraded to `general-merchandise`, `default`** (wrong bonus category): aldi-us, kroger-us, marketbasket-us, wholefoodsmarket-us.
+- **Bonus category added** (missed bonus, on the auditor's quotes as evidence, sources cited from the batch manifests): audible-us, disneyplus-us, plus-espn-us, siriusxm-us → streaming (`issuer`); bloomingdales-us, dillards-us, macys-us, jcpenney-us → department-stores (`issuer`); costco-us → wholesale-clubs (`definition`).
+- **Brands**: gap-us and oldnavy-gap-us carry gap, old-navy, banana-republic and athleta.
+- **Kind**: whatnot-us → marketplace.
+
+The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-williams-us default) change nothing. The fixes commit updates `review.md` (an Audit fixes section) and this section with the final state.
