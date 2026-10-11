@@ -6,26 +6,31 @@
     {
       "domain": "kroger.com",
       "id": "kroger-us",
-      "basis": "definition",
-      "category": "supermarkets"
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "evidence[7] and [8] cite Citi's list of stores excluded from its 4% gas earn; an exclusion list naming Kroger, not a statement that Kroger purchases earn as supermarkets."
+      }
     },
     {
       "domain": "cvs.com",
       "id": "cvs-us",
-      "basis": "definition",
-      "category": "drugstores"
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "drugstores",
+        "reason": "no issuer definition quote covers drugstores",
+        "notes": "CVS is not included in the provided catalog brand list, so no brand ID is assigned."
+      }
     },
     {
       "domain": "netflix.com",
       "id": "netflix-us",
-      "basis": "corroborated",
-      "category": "streaming"
-    },
-    {
-      "domain": "instacart.com",
-      "id": "instacart-us",
       "basis": "default",
-      "category": "general-merchandise"
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "evidence[4] is a forum post giving Netflix's code as cable and pay television, not streaming; evidence[5] is a U.S. Bank streaming statement credit, not an earning statement."
+      }
     },
     {
       "domain": "delta.com",
@@ -42,11 +47,8 @@
     {
       "domain": "wholefoodsmarket.com",
       "id": "wholefoodsmarket-us",
-      "basis": "default",
-      "category": "general-merchandise",
-      "downgraded": {
-        "reason": "Issuer quotes do not show supermarkets earning: the Amazon Visa quote is a co-brand bonus for Amazon, Audible and Whole Foods as named merchants, and the Amazon store-card quote is a site tagline, not an earn statement."
-      }
+      "basis": "definition",
+      "category": "supermarkets"
     },
     {
       "domain": "ubereats.com",
@@ -54,23 +56,32 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "The Chase quote names Uber Eats in its separate select food delivery category, not dining; Chase lists dining as purchases directly from a restaurant, so that quote supports a different category than drafted."
+        "reason": "evidence[6] is an Amex Uber One membership credit, not a dining earn; evidence[7] is about orders on Instacart; evidence[4]/[5] are Chase's separate select food delivery category, not dining."
       }
     },
     {
       "domain": "lowes.com",
       "id": "lowes-us",
-      "basis": "default",
-      "category": "general-merchandise"
+      "basis": "definition",
+      "category": "home-improvement"
     }
   ],
   "heldOut": [
+    {
+      "domain": "instacart.com",
+      "disputed": [
+        {
+          "field": "physicalGoods",
+          "reason": "The captures show grocery orders shopped and delivered to the customer (grocery delivery, produce, dairy, meat departments), so goods are delivered; false does not match the captures."
+        }
+      ]
+    },
     {
       "domain": "costco.com",
       "disputed": [
         {
           "field": "hosts",
-          "reason": "costcobusinessdelivery.com is not shown in any Costco capture; the pages mention Business Delivery and Business Center orders but never name that domain, so the host cannot be confirmed from captures."
+          "reason": "costcobusinessdelivery.com does not appear in any capture; the store pages show only a 'Business Delivery' link label, so the host cannot be settled from the captures."
         }
       ]
     }

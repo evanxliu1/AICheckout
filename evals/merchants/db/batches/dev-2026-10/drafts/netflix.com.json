@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 13332,
-    "outputTokens": 561
+    "inputTokens": 15730,
+    "outputTokens": 459
   },
-  "durationMs": 43411,
+  "durationMs": 130883,
   "draft": {
     "domain": "netflix.com",
     "kind": "merchant",
@@ -49,9 +49,9 @@
         "supports": "category"
       },
       {
-        "sourceId": "us-bank-altitude-go-secured-product",
-        "quote": "Plus, a $15 credit for annual streaming service purchases such as Netflix and Spotify®.3",
-        "supports": "category"
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
       },
       {
         "sourceId": "amex-rewards-info-retail",
@@ -60,30 +60,30 @@
       },
       {
         "sourceId": "citi-strata-rewards-terms",
-        "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
-        "supports": "category"
-      },
-      {
-        "sourceId": "us-bank-altitude-go-product",
-        "quote": "eligible streaming service purchases, such as Netflix, Hulu, Apple Music",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "us-bank-altitude-go-secured-product",
-        "quote": "eligible streaming service purchases, such as Netflix, Hulu, Apple Music",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "amex-rewards-info-retail",
-        "quote": "streaming subscription purchases, the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "quote": "Includes the following streaming providers:",
         "supports": "definition"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
-        "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
+        "quote": "Netflix",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
         "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "TV or Movie Streaming",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Netflix",
+        "supports": "category"
       }
     ],
-    "notes": "The lookup describes Netflix as MCC 4899 (cable and other pay television), while issuer terms explicitly include Netflix as a streaming service. No Netflix brand id exists in the supplied catalog."
+    "notes": "Netflix is not among the supplied catalog brand IDs. The lookup labels its MCC as “Cable and other pay television,” while issuer sources explicitly list Netflix as a streaming provider."
   }
 }

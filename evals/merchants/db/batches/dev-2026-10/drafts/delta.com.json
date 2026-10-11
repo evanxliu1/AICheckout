@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 13615,
-    "outputTokens": 230
+    "inputTokens": 17860,
+    "outputTokens": 293
   },
-  "durationMs": 19525,
+  "durationMs": 15712,
   "draft": {
     "domain": "delta.com",
     "kind": "merchant",
@@ -21,26 +21,36 @@
     "candidateCategory": null,
     "evidence": [
       {
-        "sourceId": "amex-delta-skymiles-reserve-product",
-        "quote": "Made directly with Delta.‡",
+        "sourceId": "amex-delta-skymiles-gold-pricing",
+        "quote": "Delta flight purchases are limited to purchases of Delta-marketed flights made on delta.com or with Delta Reservations.",
         "supports": "kind"
       },
       {
         "sourceId": "amex-delta-skymiles-gold-pricing",
-        "quote": "Delta flight purchases are limited to purchases of Delta-marketed flights made on delta.com or with Delta Reservations.",
+        "quote": "The Credit is only valid for payment of tickets, including fare, surcharge and government-imposed taxes and fees imposed on ticket purchases.",
         "supports": "physicalGoods"
       },
       {
-        "sourceId": "amex-delta-skymiles-reserve-pricing",
+        "sourceId": "amex-delta-skymiles-gold-pricing",
         "quote": "The trademarks Delta, SkyMiles, and the Delta logo are exclusive property of Delta Air Lines, Inc.",
         "supports": "brand"
       },
       {
-        "sourceId": "amex-delta-skymiles-gold-pricing",
-        "quote": "Delta flight purchases",
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Delta Airlines",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "airlines, hotels, car rental agencies, cruise lines",
         "supports": "category"
       }
     ],
-    "notes": "The store page was inaccessible, but issuer documents identify direct Delta flight purchases. Air travel has no matching listed category; transit is defined narrowly as rideshare, rail, fares, parking, and tolls, so candidateCategory is null."
+    "notes": "Delta is an airline/travel merchant, but airline travel is not an available category. Chase also lists airlines as excluded from local transit, so candidateCategory is null."
   }
 }

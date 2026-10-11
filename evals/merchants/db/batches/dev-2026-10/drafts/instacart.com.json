@@ -7,18 +7,18 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 10624,
-    "outputTokens": 308
+    "inputTokens": 14933,
+    "outputTokens": 465
   },
-  "durationMs": 24460,
+  "durationMs": 51517,
   "draft": {
     "domain": "instacart.com",
     "kind": "marketplace",
-    "physicalGoods": true,
+    "physicalGoods": false,
     "brandIds": [
       "instacart"
     ],
-    "candidateCategory": null,
+    "candidateCategory": "supermarkets",
     "evidence": [
       {
         "sourceId": "instacart-com-page-1",
@@ -28,11 +28,21 @@
       {
         "sourceId": "instacart-com-page-2",
         "quote": "Instacart powers many grocery delivery orders",
-        "supports": "physicalGoods"
+        "supports": "category"
       },
       {
         "sourceId": "instacart-com-page-2",
         "quote": "Instacart powers the shopping and delivery, but your account, payment, and order details live with the retailer.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "instacart-com-page-2",
+        "quote": "Get deliveries with Instacart",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "instacart-mastercard-product",
+        "quote": "from more than 1,500 retail brands and 80,000+ stores across 14,000+ cities in North America.",
         "supports": "kind"
       },
       {
@@ -41,21 +51,31 @@
         "supports": "brand"
       },
       {
-        "sourceId": "instacart-com-page-1",
-        "quote": "By powering the future of grocery with our retail partners",
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Grocery stores and grocery delivery",
         "supports": "category"
       },
       {
-        "sourceId": "instacart-com-page-2",
-        "quote": "Instacart powers many grocery delivery orders",
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Instacart",
         "supports": "category"
       },
       {
-        "sourceId": "instacart-mastercard-product",
-        "quote": "from more than 1,500 retail brands and 80,000+ stores across 14,000+ cities in North America.",
-        "supports": "kind"
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores, specialty food stores or delivery service merchants",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "A supermarket offers a wide variety of food and household products such as meat, fresh produce, dairy, canned and packaged goods",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Check off your grocery list and earn cash back at most grocery stores and supermarkets.",
+        "supports": "definition"
       }
     ],
-    "notes": "Instacart’s pages clearly describe grocery delivery through retail partners, but no lookup page or issuer supermarket classification/definition is provided; candidateCategory is therefore null."
+    "notes": "Instacart is a multi-retailer grocery-delivery marketplace rather than a supermarket operating its own inventory. Issuer material supports grocery-delivery categorization, although Instacart also lists non-grocery departments and no merchant-code lookup is provided."
   }
 }
