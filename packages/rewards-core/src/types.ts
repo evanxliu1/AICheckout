@@ -341,8 +341,8 @@ export interface MerchantRecord {
 export interface MerchantRelease {
   schemaVersion: 1;
   version: string;
-  /** The newest capture date among the cited sources; no `expiresAt` (the catalog's own expiry stops
-   * an abandoned install). */
+  /** Verification time; no cited source is captured after it (the builder sets it to the newest capture
+   * date). No `expiresAt`: the catalog's own expiry stops an abandoned install. */
   verifiedAt: string;
   sources: MerchantSource[];
   merchants: MerchantRecord[];

@@ -3,6 +3,7 @@ import {
   CATALOG_V2,
   CATALOG_V3,
   GENERIC_MERCHANT_ID,
+  MERCHANTS_V1,
   GENERIC_MERCHANT_PROFILE,
   MAX_AMOUNT_CENTS,
   RULE_STATUSES_V3,
@@ -11,6 +12,7 @@ import {
   catalogV3Schema,
   compareRewards,
   recordToProfile,
+  releaseProfileFor,
   ruleCoversMerchant,
   usageInputs,
 } from '../src/domain';
@@ -1505,8 +1507,12 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       ).status,
     ).toBe('ready');
   });
-  it('overrides a catalog profile and the generic one at their own ids', () => {
-    const generalBestBuy = recordToProfile(record('best-buy-us', { brandIds: ['best-buy'] }), CATALOG_V3);
+  it('a default record defers to a catalog-authored profile; a record with evidence overrides it', () => {
+    // Transitional rule (decision 2026-10-11): the seed's default Best Buy and Newegg records assert
+    // nothing, so the catalog's electronics profiles keep Cash+ and Edward Jones bonuses there.
+    const seed = MERCHANTS_V1.merchants.find((m) => m.id === 'best-buy-us')!;
+    const kept = releaseProfileFor(seed, CATALOG_V3);
+    expect(kept).toBe(CATALOG_V3.merchants.find((m) => m.id === 'best-buy-us'));
     const cashPlus = owned('us-bank-cash-plus', {
       choices: [
         { choiceId: 'five-percent-categories', optionIds: ['electronic-stores', 'department-stores'] },
@@ -1518,12 +1524,22 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       purchase(),
       now,
     );
-    const released = at(generalBestBuy, [cashPlus]);
-    expect(catalogProfile.status).toBe('ready');
-    expect(released.status).toBe('ready');
-    expect((released as Comparison).estimates[0].maxRewardCents).toBeLessThan(
-      (catalogProfile as Comparison).estimates[0].maxRewardCents,
-    );
+    expect(at(kept, [cashPlus])).toEqual(catalogProfile);
+    expect((catalogProfile as Comparison).estimates[0].maxRewardCents).toBe(500);
+    expect(
+      statusOf(
+        first(kept, [owned('us-bank-edward-jones-triple-rewards')]),
+        'edward-jones-triple-rewards-electronic-appliance-stores',
+      ),
+    ).not.toBe('not-at-merchant');
+    const corroborated = record('best-buy-us', {
+      brandIds: ['best-buy'],
+      evidence: { basis: 'corroborated', sourceIds: ['a', 'b'] },
+    });
+    expect(releaseProfileFor(corroborated, CATALOG_V3)).toEqual(recordToProfile(corroborated, CATALOG_V3));
+    expect(releaseProfileFor(record('walmart-us'), CATALOG_V3).id).toBe('walmart-us');
+    const generalBestBuy = recordToProfile(record('best-buy-us', { brandIds: ['best-buy'] }), CATALOG_V3);
+    expect((at(generalBestBuy, [cashPlus]) as Comparison).estimates[0].maxRewardCents).toBeLessThan(500);
     const genericNamed = recordToProfile(record(GENERIC_MERCHANT_ID, { physicalGoods: false }), CATALOG_V3);
     expect(statusOf(first(genericNamed, [owned('amex-blue-cash-everyday')]), 'bce-online-retail-v2')).toBe(
       'not-at-merchant',

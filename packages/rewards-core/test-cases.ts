@@ -1276,6 +1276,7 @@ export const merchantReleaseCases: Case[] = [
   validRelease('a verified store page alone keeps the default category', (r) => {
     merchantOf(r, 'kroger-us').evidence = { basis: 'default', sourceIds: [] };
     merchantOf(r, 'kroger-us').category = 'general-merchandise';
+    r.sources = r.sources.filter((s) => !s.id.startsWith('kroger-'));
   }),
   validRelease('source captured on the verification date', (r) => {
     r.sources[2].capturedAt = '2026-10-10';
@@ -1404,6 +1405,15 @@ export const merchantReleaseCases: Case[] = [
   }),
   invalidRelease('a processor selling physical goods', (r) => {
     merchantOf(r, 'paypal').physicalGoods = true;
+  }),
+  invalidRelease('a processor with evidence', (r) => {
+    merchantOf(r, 'paypal').evidence = { basis: 'issuer', sourceIds: ['issuer-amazon-terms'] };
+  }),
+  invalidRelease('a processor with a brand', (r) => {
+    merchantOf(r, 'paypal').brandIds = ['amazon'];
+  }),
+  invalidRelease('a source no record cites', (r) => {
+    r.sources.push({ ...r.sources[0], id: 'uncited' });
   }),
   invalidRelease('duplicate brand id', (r) => {
     merchantOf(r, 'target-us').brandIds = ['target', 'target'];

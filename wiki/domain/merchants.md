@@ -87,14 +87,14 @@ Since milestone 14.1 (2026-10-10) a second source of profiles exists beside the 
 | `amazon-us` | `amazon.com` | merchant | yes | general-merchandise (`default`) | `amazon` |
 | `best-buy-us` | `bestbuy.com` | merchant | yes | general-merchandise (`default`; the catalog's `electronics` rests on a lookup alone, so under the evidence rule the release says nothing until 14.4 captures a store page) | `best-buy` |
 | `newegg-us` | `newegg.com` | merchant | yes | general-merchandise (`default`, as Best Buy) | `newegg` |
-| 15 processors: `paypal`, `venmo`, `shop-pay` (`shop.app`, `pay.shopify.com`), `klarna`, `affirm`, `afterpay`, `bolt`, `amazon-pay` (`pay.amazon.com`), `sezzle`, `zip` (`zip.co`), `stripe-checkout` (`checkout.stripe.com`), `link`, `google-pay` (`pay.google.com`), `cash-app-pay` (`cash.app`), `splitit` | as listed, else `<id>.com` | processor | no | general-merchandise (`default`) | none |
+| 15 processors: `paypal`, `venmo`, `shop-pay` (`shop.app`, `pay.shopify.com`), `klarna`, `affirm`, `afterpay`, `bolt`, `amazon-pay` (`pay.amazon.com`, `payments.amazon.com`, `apx-security.amazon.com`), `sezzle`, `zip` (`zip.co`), `stripe-checkout` (`checkout.stripe.com`), `link`, `google-pay` (`pay.google.com`), `cash-app-pay` (`cash.app`), `splitit` | as listed, else `<id>.com` | processor | no | general-merchandise (`default`) | none |
 
 No record has sources or a bonus category yet; 14.4 adds them. The processor hosts are hand-authored and unverified until 14.3.
 
 ## Gotchas
 
 - The research report recommends the label "community, medium-low confidence". The catalog stores `low`.
-- The seed merchant release gives Best Buy and Newegg no category, while the catalog v3 profiles say `electronics`: once the extension passes the release profile (14.2) the Cash+ and Edward Jones electronics bonuses pause there until 14.4 supplies evidence, unless 14.2 keeps the catalog profile for the three legacy ids.
+- The seed merchant release gives Best Buy and Newegg no category, while the catalog v3 profiles say `electronics`. `releaseProfileFor` (transitional, [decision](../decisions/2026-10-11-merchant-release-seed-and-contract-details.md), pending Evan's confirmation) keeps the catalog's profile for a `default` record the catalog authors, so the Cash+ and Edward Jones electronics bonuses stay until 14.4 gives those stores evidence.
 - At a generic store the online-retail answer defaults to "Eligible", so a BCE-style online-retail bonus applies unless the shopper changes it; a payment processor page (PayPal, Shop Pay) also gets the generic answer.
 - Browser cart observations do not show how a transaction will post. The shopper's `onlineRetail` answer and the payment path decide whether BCE's 3% is certain or a range.
 

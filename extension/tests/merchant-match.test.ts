@@ -86,7 +86,7 @@ describe('matchMerchant', () => {
   it('prefers the longest authored host', () => {
     expect(idAt('https://pay.amazon.com/checkout')).toBe('amazon-pay');
     expect(idAt('https://www.pay.amazon.com/')).toBe('amazon-pay');
-    expect(idAt('https://payments.amazon.com/')).toBe('amazon-us');
+    expect(idAt('https://music.amazon.com/')).toBe('amazon-us');
   });
   it('matches punycode and Unicode hosts alike and keeps look-alikes apart', () => {
     expect(idAt('https://tärget.example/')).toBe('unicode-store');
@@ -134,6 +134,8 @@ describe('the bundled release on the device', () => {
     expect(at('https://www.paypal.com/checkoutnow')!.kind).toBe('processor');
     expect(at('https://shop.app/checkout/123')!.kind).toBe('processor');
     expect(at('https://pay.amazon.com/')!.id).toBe('amazon-pay');
+    expect(at('https://payments.amazon.com/checkout')!.id).toBe('amazon-pay');
+    expect(at('https://apx-security.amazon.com/')!.id).toBe('amazon-pay');
     expect(at('https://checkout.stripe.com/c/pay/cs_123')!.kind).toBe('processor');
   });
   it('leaves other stores to the generic profile', () => {

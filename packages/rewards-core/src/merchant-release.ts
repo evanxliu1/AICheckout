@@ -56,8 +56,8 @@ export const merchantRecordSchema = z.strictObject({
  * device. Invariants: unique ids, sources and hosts (across every record, so the longest matching host
  * is always one record); every cited source resolves; the evidence rule (`default` cites nothing and
  * is `general-merchandise`; `issuer` cites issuer terms; `corroborated` cites a store page and a
- * merchant-code lookup); a processor sells no physical goods; no source captured after `verifiedAt`;
- * at most 2 MiB. */
+ * merchant-code lookup); every source is cited by some record; a processor sells no physical goods, has
+ * `default` evidence and no brands; no source captured after `verifiedAt`; at most 2 MiB. */
 export const merchantReleaseSchema = z
   .strictObject({
     schemaVersion: z.literal(1),
@@ -104,8 +104,16 @@ export const merchantReleaseSchema = z
           'evidence',
           'sourceIds',
         ]);
-      if (merchant.kind === 'processor' && merchant.physicalGoods)
-        reject('A processor sells no physical goods.', [...path, 'physicalGoods']);
+      if (merchant.kind === 'processor') {
+        if (merchant.physicalGoods)
+          reject('A processor sells no physical goods.', [...path, 'physicalGoods']);
+        if (basis !== 'default') reject('A processor has default evidence.', [...path, 'evidence', 'basis']);
+        if (merchant.brandIds.length > 0) reject('A processor has no brands.', [...path, 'brandIds']);
+      }
+    });
+    const cited = new Set(release.merchants.flatMap((m) => m.evidence.sourceIds));
+    release.sources.forEach((source, i) => {
+      if (!cited.has(source.id)) reject(`Source ${source.id} is cited by no record.`, ['sources', i]);
     });
     if (new TextEncoder().encode(JSON.stringify(release)).byteLength > MERCHANT_RELEASE_LIMITS.bytes)
       reject('Merchant release is too large.');

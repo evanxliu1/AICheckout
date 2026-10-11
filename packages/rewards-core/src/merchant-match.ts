@@ -20,8 +20,8 @@ export function merchantHost(url: string | URL): string | null {
   return host;
 }
 
-/** Builds the lookup once per release. A host authored twice (the schema forbids it) goes to the
- * processor record, so a payment page is never shown as a store. */
+/** Builds the lookup once per release. A host authored twice (the schema forbids it, so this is defence in
+ * depth) goes to the processor record, so a payment page is never shown as a store. */
 export function buildMerchantIndex(records: readonly MerchantRecord[]): MerchantIndex {
   const index: MerchantIndex = new Map();
   for (const record of records)
@@ -51,6 +51,22 @@ export function matchMerchant(
     if (record) return { record, host: candidate };
   }
   return null;
+}
+
+/** The profile the engine should use for a matched record, given the catalog in effect. A `default` record
+ * asserts nothing about the store, so where the catalog authors its own profile for that id (the three
+ * legacy stores) the catalog's profile stands; a record with evidence, or one the catalog does not know,
+ * becomes the profile (`recordToProfile`). Transitional (decision 2026-10-11): it retires itself once 14.4
+ * gives those stores evidence. */
+export function releaseProfileFor(
+  record: MerchantRecord,
+  catalog: { brands: readonly { id: string }[]; merchants: readonly MerchantProfileV3[] },
+): MerchantProfileV3 {
+  if (record.evidence.basis === 'default') {
+    const authored = catalog.merchants.find((m) => m.id === record.id);
+    if (authored) return authored;
+  }
+  return recordToProfile(record, catalog);
 }
 
 /** The engine profile for a matched record: an online U.S. store (every record is one in this release),

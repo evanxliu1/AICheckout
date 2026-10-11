@@ -36,7 +36,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     {
       id: 'amazon-pay',
       name: 'Amazon Pay',
-      hosts: ['pay.amazon.com'],
+      hosts: ['pay.amazon.com', 'payments.amazon.com', 'apx-security.amazon.com'],
       kind: 'processor',
       physicalGoods: false,
       category: 'general-merchandise',
