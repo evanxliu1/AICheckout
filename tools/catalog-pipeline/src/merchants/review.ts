@@ -28,7 +28,14 @@ export interface ReviewInput {
   verifiedAt: string;
   records: MerchantRecord[];
   evidence: Map<string, EvidenceFile>;
-  heldOut: { batch: string; domain: string; disputed: { field: string; reason: string | null }[] }[];
+  heldOut: {
+    batch: string;
+    domain: string;
+    disputed: { field: string; reason: string | null }[];
+    reason?: 'defunct';
+  }[];
+  /** Stores whose own pages were bot-walled: name and hosts rest on research and issuer captures. */
+  botWalled: { batch: string; domain: string }[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
   /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
    * an issuer listing the store under another category show here). */
@@ -129,13 +136,27 @@ export function reviewMarkdown(input: ReviewInput): string {
       (c) => `| ${c.batch} | ${c.domain} | ${c.id} | ${c.category} | ${cell(c.conflict)} |`,
     ),
     '',
-    `## Held out: disputed fields, for Evan (${input.heldOut.length})`,
+    `## Bot-walled stores: name and hosts from research and issuer captures (${input.botWalled.length})`,
+    '',
+    ...(input.botWalled.length ? input.botWalled.map((b) => `- ${b.batch}: ${b.domain}`) : ['None.']),
+    '',
+    `## Excluded as defunct, parked or typo domains (${input.heldOut.filter((h) => h.reason === 'defunct').length})`,
+    '',
+    ...(input.heldOut.some((h) => h.reason === 'defunct')
+      ? input.heldOut
+          .filter((h) => h.reason === 'defunct')
+          .map((h) => `- ${h.batch}: ${h.domain} (${cell(h.disputed[0]?.reason ?? '')})`)
+      : ['None.']),
+    '',
+    `## Held out: disputed fields, for Evan (${input.heldOut.filter((h) => h.reason !== 'defunct').length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
     '| --- | --- | --- | --- |',
-    ...input.heldOut.flatMap((h) =>
-      h.disputed.map((d) => `| ${h.batch} | ${h.domain} | ${d.field} | ${cell(d.reason ?? '')} |`),
-    ),
+    ...input.heldOut
+      .filter((h) => h.reason !== 'defunct')
+      .flatMap((h) =>
+        h.disputed.map((d) => `| ${h.batch} | ${h.domain} | ${d.field} | ${cell(d.reason ?? '')} |`),
+      ),
     '',
   ];
   return lines.join('\n');
@@ -159,12 +180,20 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   const downgraded: ReviewInput['downgraded'] = [];
   const refused: ReviewInput['refused'] = [];
   const conflicts: ReviewInput['conflicts'] = [];
+  const botWalled: ReviewInput['botWalled'] = [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
       applyReportSchema,
     );
-    for (const h of report?.heldOut ?? []) heldOut.push({ batch, domain: h.domain, disputed: h.disputed });
+    for (const h of report?.heldOut ?? [])
+      heldOut.push({
+        batch,
+        domain: h.domain,
+        disputed: h.disputed,
+        ...(h.reason ? { reason: h.reason } : {}),
+      });
+    for (const domain of report?.botWalled ?? []) botWalled.push({ batch, domain });
     for (const r of report?.records ?? []) {
       if (r.downgraded) downgraded.push({ batch, domain: r.domain, id: r.id, reason: r.downgraded.reason });
       if (r.refused) refused.push({ batch, domain: r.domain, id: r.id, ...r.refused });
@@ -184,6 +213,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     downgraded,
     refused,
     conflicts,
+    botWalled,
   };
 }
 

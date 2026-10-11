@@ -12,6 +12,7 @@ import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
 import {
+  MAX_DRAFT_ATTEMPTS,
   PROMPT_FILE,
   PROMPT_VERSION,
   draftFileSchema,
@@ -90,6 +91,10 @@ export async function runDraft(
     if (only && !only.includes(store.domain)) continue;
     const existing = batch.state.stores[store.domain]?.draft;
     if (existing?.status === 'done' && batch.state.stages.draft.status !== 'stale' && !only) continue;
+    if (existing?.status === 'held-out') {
+      env.log(`${store.domain}: held out after ${existing.attempts} failed draft gates; not re-drafted.`);
+      continue;
+    }
     const documents: DraftDocument[] = [];
     for (const source of manifest.sources.filter((s) => s.domain === store.domain)) {
       const full = await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8');
@@ -108,7 +113,7 @@ export async function runDraft(
     }
     const started = Date.now();
     const user = userMessage(store.domain, store.name, store.hosts, documents);
-    let status: 'done' | 'failed-gate' | 'provider-error' | 'timeout' = 'done';
+    let status: 'done' | 'failed-gate' | 'provider-error' | 'timeout' | 'held-out' = 'done';
     let usage = { inputTokens: 0, outputTokens: 0 };
     try {
       const reply = (await provider.invoke({
@@ -156,11 +161,18 @@ export async function runDraft(
       status = /timeout|abort/i.test(message) ? 'timeout' : 'provider-error';
       env.log(`${store.domain}: ${status} (${message.split('\n')[0]})`);
     }
-    if (status !== 'done') failed += 1;
+    const attempts = (existing?.attempts ?? 0) + 1;
+    if (status === 'failed-gate' && attempts >= MAX_DRAFT_ATTEMPTS) {
+      status = 'held-out';
+      env.log(
+        `${store.domain}: HELD OUT after ${attempts} failed draft gates (coordinator rule, 2026-10-11).`,
+      );
+    } else if (status !== 'done') failed += 1;
     batch.state.stores[store.domain] = {
       ...batch.state.stores[store.domain],
       draft: {
         status,
+        attempts,
         inputTokens: usage.inputTokens,
         outputTokens: usage.outputTokens,
         durationMs: Date.now() - started,
@@ -172,7 +184,10 @@ export async function runDraft(
       `${store.domain}: ${status} in ${Math.round((Date.now() - started) / 1000)} s, ${usage.inputTokens} in / ${usage.outputTokens} out tokens.`,
     );
   }
-  const all = research.stores.every((s) => batch.state.stores[s.domain]?.draft?.status === 'done');
+  // Done when every store is drafted or held out after MAX_DRAFT_ATTEMPTS failed gates.
+  const all = research.stores.every((s) =>
+    ['done', 'held-out'].includes(batch.state.stores[s.domain]?.draft?.status ?? ''),
+  );
   const now = env.now();
   batch.state.stages.draft = {
     status: all ? 'done' : 'failed-gate',

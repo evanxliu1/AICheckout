@@ -15,6 +15,7 @@ import { hostGate } from './candidates.ts';
 import {
   MERCHANT_AGENTS,
   RESEARCHER_AGENT,
+  draftHeldOut,
   VERIFIED_FIELDS,
   VERIFIER_AGENT,
   draftFileSchema,
@@ -73,6 +74,7 @@ async function writeVerifySheets(batch: Batch): Promise<string[]> {
   });
   const out = [lists];
   for (const store of batch.meta.stores) {
+    if (draftHeldOut(batch.state, store.domain)) continue;
     const file = await readJsonOrNull(join(batch.dir, `drafts/${store.domain}.json`), draftFileSchema);
     if (!file) continue;
     const d = file.draft;
@@ -125,7 +127,9 @@ async function inputsOf(batch: Batch, stage: MerchantAgentStage): Promise<string
     at('research.json'),
     at('manifest.json'),
     ...(await writeVerifySheets(batch)),
-    ...batch.meta.stores.map((s) => at(`drafts/${s.domain}.json`)),
+    ...batch.meta.stores
+      .filter((s) => !draftHeldOut(batch.state, s.domain))
+      .map((s) => at(`drafts/${s.domain}.json`)),
     ...captures,
   ];
 }
@@ -176,7 +180,7 @@ export async function claim(
     stage,
     n,
     agent: MERCHANT_AGENTS[stage],
-    domains: batch.meta.stores.map((s) => s.domain),
+    domains: batch.meta.stores.filter((s) => !draftHeldOut(batch.state, s.domain)).map((s) => s.domain),
     inputs,
     output,
     claimedAt: now,
@@ -240,7 +244,9 @@ export function verifyGate(
   const errors: string[] = [];
   if (file.packetId !== packet.packetId) errors.push('packetId: not this packet');
   if (file.batch !== batch.id) errors.push('batch: not this batch');
-  const expected = new Set(batch.meta.stores.map((s) => s.domain));
+  const expected = new Set(
+    batch.meta.stores.filter((s) => !draftHeldOut(batch.state, s.domain)).map((s) => s.domain),
+  );
   const seen = new Set<string>();
   for (const store of file.stores) {
     const at = `stores[${store.domain}]`;
@@ -357,12 +363,13 @@ export async function accept(
       else if (stage === 'research') errors.push(...researchGate(parsed.data as ResearchFile, batch, packet));
       else {
         const drafts = new Map<string, DraftFile>();
-        for (const store of batch.meta.stores) {
+        const verified = batch.meta.stores.filter((s) => !draftHeldOut(batch.state, s.domain));
+        for (const store of verified) {
           const draft = await readJsonOrNull(join(batch.dir, `drafts/${store.domain}.json`), draftFileSchema);
           if (draft) drafts.set(store.domain, draft);
         }
         errors.push(...verifyGate(parsed.data as VerificationFile, batch, packet, drafts));
-        for (const store of batch.meta.stores) errors.push(...(await draftGate(batch, store.domain)));
+        for (const store of verified) errors.push(...(await draftGate(batch, store.domain)));
       }
     }
   }

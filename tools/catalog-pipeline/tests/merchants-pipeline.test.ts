@@ -20,8 +20,10 @@ import {
 import type { ApplyInput } from '../src/merchants/apply.ts';
 import { brandNameGate, buildCandidates, domainLabel, hostGate } from '../src/merchants/candidates.ts';
 import {
+  DEFUNCT_WORDING,
   MERCHANT_AGENTS,
   VERIFIED_FIELDS,
+  draftHeldOut,
   quoteIn,
   researchFileSchema,
   verificationFileSchema,
@@ -481,6 +483,7 @@ describe('review.md', () => {
         },
       ],
       conflicts: [],
+      botWalled: [],
     });
     expect(text).toContain(
       '| dev-1 | z.com | z-us | dining | synthetic refusal | Chase lists it under food delivery |',
@@ -803,6 +806,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
       downgraded: [],
       refused: [],
       conflicts: [],
+      botWalled: [],
     });
     expect(text).toContain('| kroger-us | kroger.com | supermarkets | definition |');
     expect(text).toContain('Grocery Pickup');
@@ -1410,8 +1414,79 @@ describe('re-check probes (2026-10-11)', () => {
           conflict: 'x: excludes: "y"',
         },
       ],
+      botWalled: [],
     });
     expect(text).toContain('| dev-1 | kroger.com | kroger-us | supermarkets | x: excludes: "y" |');
+  });
+});
+
+describe('seed rules (coordinator 2026-10-11)', () => {
+  it('a store held out at the draft stage is recognised from state; review.md lists bot-walled and defunct stores', () => {
+    const state = {
+      schemaVersion: 1 as const,
+      batch: 'seed-1',
+      updatedAt: '2026-10-11T00:00:00Z',
+      stages: {} as never,
+      stores: {
+        'amazon.com': {
+          draft: {
+            status: 'held-out' as const,
+            attempts: 3,
+            inputTokens: 1,
+            outputTokens: 1,
+            durationMs: 1,
+            finishedAt: '2026-10-11T00:00:00Z',
+          },
+        },
+        'kroger.com': {
+          draft: {
+            status: 'done' as const,
+            attempts: 1,
+            inputTokens: 1,
+            outputTokens: 1,
+            durationMs: 1,
+            finishedAt: '2026-10-11T00:00:00Z',
+          },
+        },
+      },
+    };
+    expect(draftHeldOut(state, 'amazon.com')).toBe(true);
+    expect(draftHeldOut(state, 'kroger.com')).toBe(false);
+    expect(draftHeldOut(state, 'other.com')).toBe(false);
+    expect(DEFUNCT_WORDING.test('Bartell Drugs closed in 2025; the domain points to a Rite Aid server')).toBe(
+      true,
+    );
+    expect(DEFUNCT_WORDING.test('a GoDaddy Auctions parked-domain page')).toBe(true);
+    expect(DEFUNCT_WORDING.test('costcobusinessdelivery.com appears in no capture')).toBe(false);
+    const text = reviewMarkdown({
+      version: 'v',
+      verifiedAt: '2026-10-11T00:00:00Z',
+      records: [],
+      evidence: new Map(),
+      heldOut: [
+        {
+          batch: 'seed-1',
+          domain: 'bonton.com',
+          disputed: [{ field: 'hosts', reason: 'parked domain' }],
+          reason: 'defunct',
+        },
+        {
+          batch: 'seed-1',
+          domain: 'amazon.com',
+          disputed: [{ field: 'draft', reason: "the drafter's quotes failed the verbatim gate 3 times" }],
+        },
+      ],
+      downgraded: [],
+      refused: [],
+      conflicts: [],
+      botWalled: [{ batch: 'seed-1', domain: 'bjs.com' }],
+    });
+    expect(text).toContain('- seed-1: bjs.com');
+    expect(text).toContain('- seed-1: bonton.com (parked domain)');
+    expect(text).toContain(
+      "| seed-1 | amazon.com | draft | the drafter's quotes failed the verbatim gate 3 times |",
+    );
+    expect(text).toContain('## Held out: disputed fields, for Evan (1)');
   });
 });
 

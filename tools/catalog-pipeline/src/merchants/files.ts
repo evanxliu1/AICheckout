@@ -42,6 +42,15 @@ export type MerchantStage = (typeof MERCHANT_STAGES)[number];
 /** Stores per tier-B packet (plan section 6). */
 export const PACKET_SIZE = 25;
 export const MAX_QUOTE_WORDS = 25;
+/** Failed draft gates after which a store is held out of the batch (coordinator, 2026-10-11). */
+export const MAX_DRAFT_ATTEMPTS = 3;
+/** A store the draft stage holds out: skipped by verify and listed as held out by apply. */
+export const draftHeldOut = (state: State, domain: string): boolean =>
+  state.stores[domain]?.draft?.status === 'held-out';
+/** The verifier's reasons that mark a defunct, parked or typo domain (coordinator, 2026-10-11): such a store is
+ * excluded with reason `defunct`, no record. */
+export const DEFUNCT_WORDING =
+  /\b(defunct|closed|parked|liquidat\w*|typo|no longer|ceased|out of business)\b/i;
 export const BATCH_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const slug = z.string().regex(SLUG).max(120);
@@ -143,7 +152,9 @@ export type StageRecord = z.infer<typeof stageRecordSchema>;
 const storeStateSchema = z.strictObject({
   draft: z
     .strictObject({
-      status: z.enum(['done', 'failed-gate', 'provider-error', 'timeout']),
+      /** `held-out`: the quotes failed the verbatim gate `MAX_DRAFT_ATTEMPTS` times (coordinator, 2026-10-11). */
+      status: z.enum(['done', 'failed-gate', 'provider-error', 'timeout', 'held-out']),
+      attempts: z.int().nonnegative().optional(),
       inputTokens: z.int().nonnegative(),
       outputTokens: z.int().nonnegative(),
       durationMs: z.int().nonnegative(),
@@ -389,8 +400,12 @@ export const applyReportSchema = z.strictObject({
     z.strictObject({
       domain: domainSchema,
       disputed: z.array(z.strictObject({ field: z.string(), reason: note.nullable() })),
+      /** `defunct`: the verifier's reasons say the domain is defunct, parked or a typo; excluded, no record. */
+      reason: z.enum(['defunct']).optional(),
     }),
   ),
+  /** Stores whose own pages were all bot-walled or missing (name and hosts from research and issuer captures). */
+  botWalled: z.array(domainSchema).optional(),
 });
 export type ApplyReport = z.infer<typeof applyReportSchema>;
 

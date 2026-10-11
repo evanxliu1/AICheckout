@@ -16,8 +16,10 @@ import {
   EVIDENCE_DIR,
   RECORDS_DIR,
   RELEASE_CONFIG,
+  DEFUNCT_WORDING,
   VERIFIED_FIELDS,
   applyReportSchema,
+  draftHeldOut,
   draftFileSchema,
   loadBatch,
   manifestFileSchema,
@@ -491,11 +493,34 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       refused?: { candidate: string; reason: string; notes: string | null };
       conflicts?: string[];
     }[],
-    heldOut: [] as { domain: string; disputed: { field: string; reason: string | null }[] }[],
+    heldOut: [] as {
+      domain: string;
+      disputed: { field: string; reason: string | null }[];
+      reason?: 'defunct';
+    }[],
+    botWalled: [] as string[],
   };
   const sourcesById = new Map(config.sources.map((s) => [s.id, s]));
   let newestCapture = config.verifiedAt.slice(0, 10);
   for (const store of batch.meta.stores) {
+    // Held out at the draft stage (the quotes failed the verbatim gate MAX_DRAFT_ATTEMPTS times): no record is
+    // written, so an already-authored record of the same id (amazon-us from 14.1) stays in the release unchanged.
+    if (draftHeldOut(batch.state, store.domain)) {
+      const attempts = batch.state.stores[store.domain]?.draft?.attempts ?? 0;
+      report.heldOut.push({
+        domain: store.domain,
+        disputed: [
+          { field: 'draft', reason: `the drafter's quotes failed the verbatim gate ${attempts} times` },
+        ],
+      });
+      batch.state.stores[store.domain] = {
+        ...batch.state.stores[store.domain],
+        apply: 'held-out',
+        heldOutFields: ['draft'],
+      };
+      env.log(`${store.domain}: HELD OUT (draft).`);
+      continue;
+    }
     const researched = research.stores.find((s) => s.domain === store.domain);
     const verified = verification.stores.find((s) => s.domain === store.domain);
     if (!researched || !verified) {
@@ -531,8 +556,16 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       issuerTexts,
       storeTexts,
     });
+    // Bot-walled: no usable store page (every store-page capture missing or under 300 characters).
+    const pages = sources.filter((s) => s.kind === 'store-page');
+    if (!pages.some((s) => (storeTexts[s.id]?.length ?? 0) >= 300)) report.botWalled.push(store.domain);
     if (outcome.outcome === 'held-out') {
-      report.heldOut.push({ domain: store.domain, disputed: outcome.disputed });
+      const defunct = outcome.disputed.some((d) => d.reason !== null && DEFUNCT_WORDING.test(d.reason));
+      report.heldOut.push({
+        domain: store.domain,
+        disputed: outcome.disputed,
+        ...(defunct ? { reason: 'defunct' as const } : {}),
+      });
       batch.state.stores[store.domain] = {
         ...batch.state.stores[store.domain],
         apply: 'held-out',
