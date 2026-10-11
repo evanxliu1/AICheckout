@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "seed-2026-10-b03",
-  "updatedAt": "2026-10-11T06:23:37.214Z",
+  "updatedAt": "2026-10-11T06:26:21.998Z",
   "stages": {
     "research": {
       "status": "done",
@@ -21,7 +21,10 @@
       "attempts": 1
     },
     "draft": {
-      "status": "pending"
+      "status": "failed-gate",
+      "finishedAt": "2026-10-11T06:26:21.998Z",
+      "attempts": 1,
+      "inputSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec"
     },
     "verify": {
       "status": "pending"
@@ -262,6 +265,26 @@
         "outputTokens": 177,
         "durationMs": 70862,
         "finishedAt": "2026-10-11T06:23:37.214Z"
+      }
+    },
+    "disneyplus.com": {
+      "draft": {
+        "status": "failed-gate",
+        "attempts": 1,
+        "inputTokens": 20354,
+        "outputTokens": 390,
+        "durationMs": 121277,
+        "finishedAt": "2026-10-11T06:25:38.503Z"
+      }
+    },
+    "disneystore.com": {
+      "draft": {
+        "status": "done",
+        "attempts": 1,
+        "inputTokens": 15233,
+        "outputTokens": 201,
+        "durationMs": 43486,
+        "finishedAt": "2026-10-11T06:26:21.996Z"
       }
     }
   }
