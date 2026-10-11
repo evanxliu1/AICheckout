@@ -22,6 +22,9 @@ export interface HomepageMeta {
 }
 
 const NAME = merchantRecordSchema.shape.name;
+/** The capture script's bot-wall pattern (scripts/capture-issuer-pages.mjs). */
+const BOT_WALL =
+  /access denied|captcha|unusual (traffic|activity)|are you a robot|request (was )?blocked|verify you are human|enable javascript to/i;
 
 /** The record name from the homepage's own metadata, or the domain's label capitalised. Names are cut at the first
  * separator ("Kroger | Shop Groceries" → "Kroger"), restricted to the record charset and 60 characters. */
@@ -87,7 +90,13 @@ export async function captureHomepage(domain: string): Promise<{
   const { chromium } = await import('@playwright/test');
   const browser = await chromium.launch({ headless: true });
   try {
-    const context = await browser.newContext({ locale: 'en-US', timezoneId: 'America/New_York' });
+    const context = await browser.newContext({
+      viewport: { width: 1280, height: 1600 },
+      locale: 'en-US',
+      timezoneId: 'America/New_York',
+      userAgent:
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+    });
     const page = await context.newPage();
     const url = `https://${domain}/`;
     let robots: 'allowed' | 'disallowed' | 'unknown' = 'unknown';
@@ -156,7 +165,11 @@ export async function tierACommand(env: Env, options: { only?: string[]; limit?:
     }
     try {
       const { meta, text, status, robots } = await captureHomepage(candidate.domain);
-      const { name, source } = displayName(meta, candidate.domain);
+      // A bot wall, error page or empty render says nothing about the store: the name falls back to the label.
+      const blocked = status >= 400 || text.trim().length < 200 || BOT_WALL.test(text.slice(0, 3000));
+      const { name, source } = blocked
+        ? displayName({ ogSiteName: null, applicationName: null, title: null }, candidate.domain)
+        : displayName(meta, candidate.domain);
       const record = tierARecord(candidate.domain, name, candidate.id);
       await writeFile(join(capturesDir, `${candidate.domain}.txt`), text);
       manifest.stores[candidate.domain] = {
@@ -164,7 +177,7 @@ export async function tierACommand(env: Env, options: { only?: string[]; limit?:
         capturedOn: today,
         sha256: sha256Hex(text),
         length: text.length,
-        nameSource: source,
+        nameSource: blocked ? `${source} (blocked)` : source,
         status,
         robots,
       };
