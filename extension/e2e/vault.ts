@@ -87,6 +87,17 @@ export async function readCatalogCache(target: InspectionTarget): Promise<Catalo
     undefined,
   );
 }
+/** The cached merchant release (Phase 14.6): `checkoutMerchantsV1`, plain like the catalog cache. */
+export async function readMerchantCache(
+  target: InspectionTarget,
+): Promise<{ release: { sequence: number } | null; lastCheckedAt: number | null } | undefined> {
+  return target.evaluate(
+    async () =>
+      (await chrome.storage.local.get('checkoutMerchantsV1')).checkoutMerchantsV1 as
+        { release: { sequence: number } | null; lastCheckedAt: number | null } | undefined,
+    undefined,
+  );
+}
 export async function writeCatalogCache(target: InspectionTarget, cache: CatalogCache) {
   await target.evaluate((next) => chrome.storage.local.set({ checkoutCatalogV1: next }), cache);
 }

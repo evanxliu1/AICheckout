@@ -7,6 +7,7 @@ import {
 } from './contracts';
 import type { CheckoutResponse, StoredAppState } from './contracts';
 import { CATALOG_KEY, createStateService, pageResponse, STATE_KEY } from './service';
+import { MERCHANTS_KEY } from './keys';
 import { currentCatalog } from './catalog';
 import type { CartReader, StateStorage } from './service';
 import {
@@ -40,6 +41,7 @@ export function createVaultService(
   clock = Date.now,
   cartReader?: CartReader,
   fetchCatalog?: (signal: AbortSignal) => Promise<unknown>,
+  fetchMerchants?: (signal: AbortSignal) => Promise<unknown>,
 ) {
   let queue = Promise.resolve<unknown>(undefined);
   const record = async () => (await local.get(STATE_KEY))[STATE_KEY];
@@ -75,11 +77,12 @@ export function createVaultService(
   }
   /** Plain state (or nothing yet) when the vault is off; the decrypted envelope when it is on. */
   const isPlain = (saved: unknown) => saved === undefined || storedAppStateSchema.safeParse(saved).success;
-  /** The catalog cache is public: never encrypted, readable while locked. It is written in the same
-   * `local.set` as the state it belongs with, so both change together or not at all. */
+  /** The catalog and merchant caches are public: never encrypted, readable while locked. The catalog
+   * cache is written in the same `local.set` as the state it belongs with, so both change together or not
+   * at all. */
   const protectedStorage: StateStorage = {
     get: async (key) => {
-      if (key === CATALOG_KEY) return local.get(CATALOG_KEY);
+      if (key === CATALOG_KEY || key === MERCHANTS_KEY) return local.get(key);
       if (key !== STATE_KEY) throw new Error('Unsupported state key.');
       const saved = await record();
       if (isPlain(saved)) return saved === undefined ? {} : { [STATE_KEY]: saved };
@@ -88,10 +91,11 @@ export function createVaultService(
     },
     set: async (items) => {
       const keys = Object.keys(items);
-      if (!keys.length || keys.some((key) => key !== STATE_KEY && key !== CATALOG_KEY))
+      if (!keys.length || keys.some((key) => ![STATE_KEY, CATALOG_KEY, MERCHANTS_KEY].includes(key)))
         throw new Error('Unsupported state write.');
       const write: Record<string, unknown> = {};
       if (Object.hasOwn(items, CATALOG_KEY)) write[CATALOG_KEY] = items[CATALOG_KEY];
+      if (Object.hasOwn(items, MERCHANTS_KEY)) write[MERCHANTS_KEY] = items[MERCHANTS_KEY];
       if (Object.hasOwn(items, STATE_KEY)) {
         const state = appStateSchema.parse(items[STATE_KEY]);
         if (isPlain(await record())) write[STATE_KEY] = state;
@@ -105,7 +109,14 @@ export function createVaultService(
     remove: (keys) => local.remove(keys),
     clear,
   };
-  const stateService = createStateService(protectedStorage, clock, cartReader, fetchCatalog);
+  const stateService = createStateService(
+    protectedStorage,
+    clock,
+    cartReader,
+    fetchCatalog,
+    undefined,
+    fetchMerchants,
+  );
   function serial<T>(operation: () => Promise<T>): Promise<T> {
     const task = queue.then(operation);
     queue = task.then(
@@ -212,6 +223,9 @@ export function createVaultService(
       if (current === 'unlocked' || current === 'unprotected') await stateService.invalidateTab(tabId);
       // Locked captures are validated against the exact tab/document and age on unlock/use.
     });
+  /** The weekly background refresh (Phase 14.6). A locked vault makes the catalog refresh fail (the wallet
+   * cannot be reconciled); the merchant release, public data, still refreshes. */
+  service.refreshReleases = (limit: number) => serial(() => stateService.refreshReleases(limit));
   /** The current status and, when readable, the saved state and the catalog in effect. For the
    * badge, which only reads. */
   service.snapshot = () =>

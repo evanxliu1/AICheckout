@@ -1,7 +1,7 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest, RequestPayload } from 'fastify';
 import rateLimit from '@fastify/rate-limit';
 import { z } from 'zod';
-import { publishedReleaseSchema } from '@ai-checkout/rewards-core';
+import { publishedMerchantReleaseSchema, publishedReleaseSchema } from '@ai-checkout/rewards-core';
 import {
   captureSourceInputSchema,
   createDraftInputSchema,
@@ -13,8 +13,10 @@ import {
   reviewQueueSchema,
   reviewSummarySchema,
   startExtractionInputSchema,
+  publishMerchantsInputSchema,
   MAX_CAPTURE_REQUEST_BYTES,
   MAX_DRAFT_REQUEST_BYTES,
+  MAX_MERCHANT_PUBLISH_REQUEST_BYTES,
   MAX_CAPTURES_PER_MINUTE,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
@@ -270,4 +272,23 @@ export async function reviewRoutes(
       }),
     );
   });
+  // Merchant releases (Phase 14.6) have no drafts: the pipeline CLI publishes the whole release, built
+  // and reviewed in the repository, on Evan's chat instruction. The body can be 2 MiB, so the token is
+  // checked before it is read; the database re-validates the release and checks the expected head.
+  app.post(
+    '/merchants/publish',
+    { bodyLimit: MAX_MERCHANT_PUBLISH_REQUEST_BYTES, preParsing: signedIn },
+    async (request) => {
+      input(z.strictObject({}), request.query);
+      const value = input(publishMerchantsInputSchema, request.body);
+      return publishedMerchantReleaseSchema.parse(
+        await rpc('publish_merchant_release', bearer(request), {
+          p_release: value.release,
+          p_expected_head: value.expectedHead,
+          p_expected_hash: value.expectedHash,
+          p_review_note: value.reviewNote,
+        }),
+      );
+    },
+  );
 }

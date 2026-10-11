@@ -17,6 +17,7 @@ import type { MerchantRelease } from '../domain';
 import type { AppState, CheckoutResponse } from '../state/contracts';
 import type { StateStorage } from '../state/service';
 import { localDate } from '../state/keys';
+import { currentMerchants, readMerchantCache } from '../state/merchants';
 import { enginePurchase, engineWallet } from '../state/wallet';
 import { catalogSlice } from '../state/catalog-slice';
 import type { VaultStatus } from '../state/vault-contracts';
@@ -48,7 +49,7 @@ export interface BadgeDeps {
   open: (target: 'popup' | 'onboarding') => Promise<void>;
   /** Tells badge iframes (never content scripts) that a tab's view may have changed; null: all tabs. */
   notify: (tabId: number | null) => void;
-  /** The merchant release matched on the device (Phase 14.2); the bundled one. */
+  /** The bundled merchant release (Phase 14.2); the cached hosted release replaces it when newer (14.6). */
   release?: MerchantRelease;
 }
 
@@ -147,6 +148,8 @@ export function createBadgeService({
     const parsed = settingsSchema.safeParse((await local.get(SETTINGS_KEY))[SETTINGS_KEY]);
     return parsed.success ? parsed.data : defaultSettings();
   }
+  /** The merchant release in effect (Phase 14.6): the cached hosted release when newer, else the bundled one. */
+  const merchants = async () => currentMerchants(await readMerchantCache(local), release);
   /** Not dismissed in this tab, and not switched off: a legacy store by its id, any other store (a
    * release record or the generic store) by the "other stores" toggle and its host (Phase 13c, 14.2). */
   const visible = (entry: TabEntry, current: Settings) =>
@@ -210,7 +213,7 @@ export function createBadgeService({
       // one the merchant release resolves for the sender URL (Phase 14.2: matched in the worker, so a
       // refreshed release applies). A payment processor's page never shows the badge.
       const legacy = merchantForCheckout(url);
-      const store = storeForTab(url, release);
+      const store = storeForTab(url, await merchants());
       if (!store || store.kind === 'processor') return { show: false };
       const merchantId = legacy ?? store.id;
       const reading = message.data.reading;
@@ -278,6 +281,7 @@ export function createBadgeService({
     if (!state.wallet.cards.length) return { kind: 'no-cards' };
     const amountCents = entry.amountOverrideCents ?? entry.reading?.amountCents;
     const now = clock();
+    const inEffect = await merchants();
     // No amount read or typed: the cards ranked by rate at the reference amount (never a prompt).
     const purchase = autoPurchase(
       catalog,
@@ -285,14 +289,14 @@ export function createBadgeService({
       amountCents ?? RATES_REFERENCE_CENTS,
       entry.paymentPath,
       now,
-      release,
+      inEffect,
     );
     const result = compareRewards(
       catalog,
       engineWallet(state.wallet, catalog),
       purchase,
       now,
-      merchantOption(catalog, entry.merchantId, release),
+      merchantOption(catalog, entry.merchantId, inEffect),
     );
     if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
     if (!amountCents)

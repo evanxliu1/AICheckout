@@ -1,5 +1,5 @@
 import Fastify, { LogController } from 'fastify';
-import { catalogResponseSchema } from '@ai-checkout/rewards-core';
+import { catalogResponseSchema, merchantsResponseSchema } from '@ai-checkout/rewards-core';
 import { reviewRoutes } from './review-routes.ts';
 import type { ReviewRpc } from './review-repository.ts';
 import type { VerifyToken } from './review-auth.ts';
@@ -10,6 +10,7 @@ import type { CurationExecution } from './curation/service.ts';
 
 export function createApp({
   readCatalog,
+  readMerchants,
   clock = Date.now,
   logging = false,
   reviewRpc,
@@ -23,6 +24,8 @@ export function createApp({
   curationLimit,
 }: {
   readCatalog: () => Promise<unknown>;
+  /** The head merchant release (Phase 14.6); `/v1/merchants` answers 503 while it is not configured. */
+  readMerchants?: () => Promise<unknown>;
   clock?: () => number;
   logging?: boolean;
   reviewRpc?: ReviewRpc;
@@ -89,6 +92,26 @@ export function createApp({
       return body;
     } catch {
       return reply.code(503).send({ error: 'catalog_unavailable' });
+    }
+  });
+  // Like /v1/catalog: public, never cached, fails closed. A merchant release has no expiry; it is unusable
+  // when it does not parse or claims a verification or publication time in the future.
+  app.get('/v1/merchants', async (_request, reply) => {
+    reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
+    try {
+      if (!readMerchants) throw new Error('merchants not configured');
+      const body = merchantsResponseSchema.parse({ release: await readMerchants() });
+      const now = clock(),
+        release = body.release;
+      if (
+        release &&
+        (Date.parse(release.release.verifiedAt) > now || Date.parse(release.published_at) > now)
+      ) {
+        return reply.code(503).send({ error: 'merchants_unavailable' });
+      }
+      return body;
+    } catch {
+      return reply.code(503).send({ error: 'merchants_unavailable' });
     }
   });
   app.setErrorHandler((_error, request, reply) => {

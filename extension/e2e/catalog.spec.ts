@@ -4,14 +4,16 @@ import { execFileSync } from 'node:child_process';
 import { createServer } from 'node:https';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { deleteVault, readCatalogCache, startPopup } from './vault';
+import { deleteVault, readCatalogCache, readMerchantCache, startPopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 import type { PublishedRelease } from '../../packages/rewards-core/src/schema';
+import type { PublishedMerchantRelease } from '../../packages/rewards-core/src/merchant-release';
+import { MERCHANTS_V1 } from '../../packages/rewards-core/src/merchants-v1';
 import { addCard } from './wallet';
 
-test('published catalog: HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
+test('published catalog and merchants: HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
   browserName,
 }, testInfo) => {
   test.skip(!process.env.CATALOG_E2E, 'Requires the isolated catalog-enabled build.');
@@ -53,8 +55,35 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
   // Fixture values are not claims about real issuer offers.
   release.catalog.cards[0].shortName = 'Updated test card';
   release.catalog.cards[0].rules[0].rateBps = 200;
+  // A hosted merchant release (Phase 14.6) verified after the bundled one, with one store the bundle lacks.
+  const merchants: PublishedMerchantRelease = {
+    sequence: 2,
+    version: '2026-10-11.browser.2',
+    release: {
+      ...MERCHANTS_V1,
+      version: '2026-10-11.browser.2',
+      verifiedAt: new Date(Date.now() - 86_400_000).toISOString().slice(0, 10) + 'T00:00:00Z',
+      merchants: [
+        ...MERCHANTS_V1.merchants,
+        {
+          id: 'hosted-only-us',
+          name: 'Hosted Only Store',
+          hosts: ['hosted-only.example'],
+          kind: 'merchant',
+          physicalGoods: true,
+          category: 'general-merchandise',
+          evidence: { basis: 'default', sourceIds: [] },
+          brandIds: [],
+          disabled: false,
+        },
+      ],
+    },
+    release_hash: '2'.repeat(64),
+    published_at: new Date().toISOString(),
+  };
   let response: unknown = { release },
     responseStatus = 200;
+  let merchantResponse: unknown = { release: merchants };
   const requests: { url?: string; cookie?: string; authorization?: string; referer?: string }[] = [];
   const server = createServer({ key: readFileSync(key), cert: readFileSync(cert) }, (request, reply) => {
     requests.push({
@@ -63,8 +92,9 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
       authorization: request.headers.authorization,
       referer: request.headers.referer,
     });
+    const body = request.url === '/v1/merchants' ? merchantResponse : response;
     reply.writeHead(responseStatus, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-    reply.end(JSON.stringify(response));
+    reply.end(JSON.stringify(body));
   });
   await new Promise<void>((done, reject) => {
     server.once('error', reject);
@@ -102,6 +132,11 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
     await expect(page.getByText('$1.50', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('status')).toContainText('Card terms updated');
+    // The same check fetched the merchant release and cached it; the worker now knows the hosted-only store.
+    await expect.poll(async () => (await readMerchantCache(page))?.release?.sequence).toBe(2);
+    expect(await worker.evaluate(() => chrome.alarms.getAll())).toEqual([
+      expect.objectContaining({ name: 'refresh-releases', periodInMinutes: 7 * 24 * 60 }),
+    ]);
     await expect(page.getByText('$1.50', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('checkbox', { name: /I confirmed the amount/ })).not.toBeChecked();
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
@@ -118,17 +153,32 @@ test('published catalog: HTTPS refresh, changed rules, rollback rejection, offli
         catalog: { ...release.catalog, version: 'synthetic.browser.1' },
       },
     };
+    // A rolled-back merchant release is refused the same way; the cached one stays.
+    merchantResponse = {
+      release: {
+        ...merchants,
+        sequence: 1,
+        version: '2026-10-11.browser.1',
+        release: { ...merchants.release, version: '2026-10-11.browser.1' },
+      },
+    };
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('alert')).toContainText('older release');
     responseStatus = 503;
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('alert')).toContainText('could not be checked');
     expect((await readCatalogCache(page))?.release?.sequence).toBe(2);
-    expect(requests).toHaveLength(3);
+    expect((await readMerchantCache(page))?.release?.sequence).toBe(2);
+    expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(3);
+    // The first two checks reached the merchant route too; the 503 check stops at the catalog.
+    expect(requests.filter((request) => request.url === '/v1/merchants').length).toBeGreaterThanOrEqual(2);
     expect(
       requests.every(
         (request) =>
-          request.url === '/v1/catalog' && !request.cookie && !request.authorization && !request.referer,
+          ['/v1/catalog', '/v1/merchants'].includes(request.url ?? '') &&
+          !request.cookie &&
+          !request.authorization &&
+          !request.referer,
       ),
     ).toBe(true);
 

@@ -1,8 +1,16 @@
-import { CATALOG_V3_LIMITS, catalogResponseSchema } from '@ai-checkout/rewards-core';
+import {
+  CATALOG_V3_LIMITS,
+  MERCHANT_RELEASE_LIMITS,
+  catalogResponseSchema,
+  merchantsResponseSchema,
+} from '@ai-checkout/rewards-core';
 
 export const CATALOG_TIMEOUT_MS = 8000;
 /** The largest catalog (schema 3: 1 MiB of `JSON.stringify` bytes) plus the release envelope. */
 export const MAX_RESPONSE_BYTES = CATALOG_V3_LIMITS.bytes + 2048;
+
+/** The largest merchant release (2 MiB of `JSON.stringify` bytes) plus the release envelope (Phase 14.6). */
+export const MAX_MERCHANTS_RESPONSE_BYTES = MERCHANT_RELEASE_LIMITS.bytes + 2048;
 
 export async function readBoundedJson(response: Response, maxBytes = MAX_RESPONSE_BYTES): Promise<unknown> {
   if (!response.ok || !/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') ?? '')) {
@@ -39,7 +47,7 @@ export async function readBoundedJson(response: Response, maxBytes = MAX_RESPONS
 }
 
 /** Fixed URL and bounded request: no cookies, referrer, wallet, amount, or page URL. */
-export function createCatalogFetcher(url: string, fetcher: typeof fetch = fetch) {
+function createFetcher<T>(url: string, fetcher: typeof fetch, parse: (body: unknown) => T, maxBytes: number) {
   const endpoint = new URL(url);
   if (
     endpoint.protocol !== 'https:' ||
@@ -59,6 +67,18 @@ export function createCatalogFetcher(url: string, fetcher: typeof fetch = fetch)
       cache: 'no-store',
       headers: { Accept: 'application/json' },
     });
-    return catalogResponseSchema.parse(await readBoundedJson(response));
+    return parse(await readBoundedJson(response, maxBytes));
   };
+}
+export function createCatalogFetcher(url: string, fetcher: typeof fetch = fetch) {
+  return createFetcher(url, fetcher, (body) => catalogResponseSchema.parse(body), MAX_RESPONSE_BYTES);
+}
+/** `GET /v1/merchants` (Phase 14.6): the same fixed-URL, bounded request as the catalog's. */
+export function createMerchantFetcher(url: string, fetcher: typeof fetch = fetch) {
+  return createFetcher(
+    url,
+    fetcher,
+    (body) => merchantsResponseSchema.parse(body),
+    MAX_MERCHANTS_RESPONSE_BYTES,
+  );
 }

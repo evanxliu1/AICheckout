@@ -20,18 +20,29 @@ import type {
 } from '@ai-checkout/rewards-core';
 import { isLegacyMerchant, MERCHANTS } from './merchants';
 
-// The bundled release, indexed once. Tests pass their own release.
-const bundledIndex = buildMerchantIndex(MERCHANTS_V1.merchants);
-const indexOf = (release: MerchantRelease): MerchantIndex =>
-  release === MERCHANTS_V1 ? bundledIndex : buildMerchantIndex(release.merchants);
+/** The release in effect in this document: the bundled one until a page calls `setMerchantsInEffect` with the
+ * cached hosted release when it is newer (Phase 14.6, `state/merchants-page.ts`). The worker does not use
+ * this default: it reads the cache on every request and passes the release explicitly. */
+let inEffect: MerchantRelease = MERCHANTS_V1;
+export function setMerchantsInEffect(release: MerchantRelease) {
+  inEffect = release;
+}
+// Each release is indexed once (the bundled one, the one in effect and any a test passes).
+const indexes = new WeakMap<MerchantRelease, MerchantIndex>();
+const indexOf = (release: MerchantRelease): MerchantIndex => {
+  let index = indexes.get(release);
+  if (!index) {
+    index = buildMerchantIndex(release.merchants);
+    indexes.set(release, index);
+  }
+  return index;
+};
 /** The release record with this id, if any. */
-export const releaseRecord = (
-  id: string,
-  release: MerchantRelease = MERCHANTS_V1,
-): MerchantRecord | undefined => release.merchants.find((m) => m.id === id);
+export const releaseRecord = (id: string, release: MerchantRelease = inEffect): MerchantRecord | undefined =>
+  release.merchants.find((m) => m.id === id);
 
-/** The name shown for a store id: a legacy store's adapter name, the generic store, or the bundled release
- * record's name (Phase 14.2). */
+/** The name shown for a store id: a legacy store's adapter name, the generic store, or the release record's
+ * name (Phase 14.2). */
 export function merchantName(id: string): string {
   if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
   if (isLegacyMerchant(id)) return MERCHANTS[id].name;
@@ -55,7 +66,7 @@ export interface TabStore {
  * generic store, and null for a non-web page. The URL is never stored. */
 export function storeForTab(
   rawUrl: string | undefined,
-  release: MerchantRelease = MERCHANTS_V1,
+  release: MerchantRelease = inEffect,
 ): TabStore | null {
   let url: URL;
   try {
@@ -82,7 +93,7 @@ export function storeForTab(
  * page and for a payment processor's page, where nothing is read. */
 export function merchantForTab(
   rawUrl: string | undefined,
-  release: MerchantRelease = MERCHANTS_V1,
+  release: MerchantRelease = inEffect,
 ): string | null {
   const store = storeForTab(rawUrl, release);
   return store && store.kind !== 'processor' ? store.id : null;
@@ -95,7 +106,7 @@ export function merchantForTab(
 export function storeProfile(
   catalog: Catalog,
   merchantId: string,
-  release: MerchantRelease = MERCHANTS_V1,
+  release: MerchantRelease = inEffect,
 ): MerchantProfileV3 | undefined {
   if (catalog.schemaVersion !== 3) return undefined;
   const record = releaseRecord(merchantId, release);
@@ -110,7 +121,7 @@ export function storeProfile(
 export const merchantOption = (
   catalog: Catalog,
   merchantId: string,
-  release: MerchantRelease = MERCHANTS_V1,
+  release: MerchantRelease = inEffect,
 ): { merchant?: MerchantProfileV3 } => ({ merchant: storeProfile(catalog, merchantId, release) });
 
 const CATEGORY_WORDING: Record<MerchantRecord['category'], string | null> = {
@@ -139,7 +150,7 @@ const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
  * ("Codes as" is for `issuer` and `corroborated` only); no partnership is implied. */
 export function storeEvidence(
   merchantId: string,
-  release: MerchantRelease = MERCHANTS_V1,
+  release: MerchantRelease = inEffect,
   catalog: CatalogV3 = CATALOG_V3,
 ): string | null {
   const record = releaseRecord(merchantId, release);

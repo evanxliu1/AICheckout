@@ -48,6 +48,13 @@ interface Release {
   catalog_hash: string;
   published_at: string;
 }
+interface MerchantRow {
+  sequence: number;
+  release: { version: string };
+  version: string;
+  release_hash: string;
+  published_at: string;
+}
 
 export interface Hosted {
   fetch: typeof fetch;
@@ -59,6 +66,11 @@ export interface Hosted {
   reviewer: boolean;
   head: number | null;
   release: Release | null;
+  /** The merchant head (Phase 14.6); `merchantPublishes` are the publish bodies received. */
+  merchantRelease: MerchantRow | null;
+  merchantPublishes: unknown[];
+  /** Answer `GET /v1/merchants` with 503 (no release) regardless of the head. */
+  merchantsDown: boolean;
   drafts: Map<string, Draft>;
   docs: Map<string, Doc>;
   /** Answer the next /v1/review/sources requests with 429 (Retry-After seconds). */
@@ -70,6 +82,7 @@ export interface Hosted {
   addDraft: (catalog: unknown, base: number | null, sourceIds?: string[]) => Draft;
   addDoc: (source: { id: string; title: string; url: string; checkedOn: string }, body: string) => Doc;
   setRelease: (catalog: { version: string }) => void;
+  setMerchantRelease: (release: { version: string }) => void;
 }
 
 const json = (status: number, value: unknown, headers: Record<string, string> = {}) =>
@@ -90,6 +103,9 @@ export function hosted(): Hosted {
     reviewer: true,
     head: null,
     release: null,
+    merchantRelease: null,
+    merchantPublishes: [],
+    merchantsDown: false,
     drafts: new Map(),
     docs: new Map(),
     rateLimits: [],
@@ -143,6 +159,16 @@ export function hosted(): Hosted {
         version: catalog.version,
         catalog_hash: jsonSha256(catalog),
         published_at: state.publishedAt,
+      };
+    },
+    setMerchantRelease: (release) => {
+      state.merchantRelease = {
+        sequence: (state.merchantRelease?.sequence ?? 0) + 1,
+        release,
+        version: release.version,
+        release_hash: jsonSha256(release),
+        // After the merchant fixture's verification date (a release cannot be published before it was verified).
+        published_at: '2026-10-11T12:00:00.000Z',
       };
     },
   };
@@ -200,6 +226,10 @@ export function hosted(): Hosted {
     if (url.pathname === '/review/config.json')
       return json(200, { supabaseUrl: SUPABASE, publishableKey: PUBLISHABLE_KEY });
     if (url.pathname === '/v1/catalog') return json(200, { release: state.release });
+    if (url.pathname === '/v1/merchants')
+      return state.merchantsDown
+        ? json(503, { error: 'merchants_unavailable' })
+        : json(200, { release: state.merchantRelease });
     if (!url.pathname.startsWith('/v1/review/')) return json(404, { error: 'not_found' });
     const token = headers.get('authorization')?.replace(/^Bearer /, '') ?? '';
     if (state.expireAccessAfter !== null && state.expireAccessAfter-- <= 0) {
@@ -225,6 +255,21 @@ export function hosted(): Hosted {
       });
     if (method === 'POST' && path === '/drafts')
       return json(200, state.addDraft(body.catalog, body.baseSequence, body.sourceDocumentIds));
+    if (method === 'POST' && path === '/merchants/publish') {
+      state.merchantPublishes.push(body);
+      const head = state.merchantRelease;
+      if (head && head.version === body.release.version)
+        return jsonSha256(head.release) === jsonSha256(body.release)
+          ? json(200, head)
+          : json(409, { error: 'review_changed' });
+      if (
+        (head?.sequence ?? null) !== body.expectedHead ||
+        (head?.release_hash ?? null) !== body.expectedHash
+      )
+        return json(409, { error: 'review_changed' });
+      state.setMerchantRelease(body.release);
+      return json(200, state.merchantRelease);
+    }
     if (method === 'POST' && path === '/sources') {
       const wait = state.rateLimits.shift();
       if (wait !== undefined)

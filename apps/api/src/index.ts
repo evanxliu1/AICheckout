@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { createApp } from './app.ts';
 import { createCatalogRepository } from './catalog-repository.ts';
+import { createMerchantRepository } from './merchant-repository.ts';
 import { createReviewRepository } from './review-repository.ts';
 import { createTokenVerifier } from './review-auth.ts';
 import { createCurationDatabase } from './curation/database.ts';
@@ -78,6 +79,7 @@ if (env.data.CURATION_ADAPTER !== 'disabled') {
 }
 const app = createApp({
   readCatalog: createCatalogRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
+  readMerchants: createMerchantRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
   reviewRpc: createReviewRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
   verifyReviewToken: createTokenVerifier(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
   logging: true,

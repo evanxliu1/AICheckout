@@ -5,6 +5,8 @@
 export const STATE_KEY = 'checkoutStateV1';
 /** The cached published catalog (`CatalogCache`), always plain: public data, up to 1 MiB. */
 export const CATALOG_KEY = 'checkoutCatalogV1';
+/** The cached published merchant release (`MerchantCache`, Phase 14.6), always plain: public data, up to 2 MiB. */
+export const MERCHANTS_KEY = 'checkoutMerchantsV1';
 export const RESULT_MAX_AGE_MS = 15 * 60 * 1000;
 export const CART_MAX_AGE_MS = 5 * 60 * 1000;
 export const CART_READ_TIMEOUT_MS = 8_000;

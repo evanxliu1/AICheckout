@@ -27,6 +27,7 @@ async function background(accessFails?: 'local' | 'session') {
       sendMessage: vi.fn(async () => undefined),
     },
     action: { openPopup: vi.fn() },
+    alarms: { create: vi.fn(async () => undefined), onAlarm: { addListener: vi.fn() } },
     storage: Object.fromEntries(
       ['local', 'session'].map((area) => [
         area,
