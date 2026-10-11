@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b10",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 17437,
+    "outputTokens": 330
+  },
+  "durationMs": 184423,
+  "draft": {
+    "domain": "ticketmaster.com",
+    "kind": "marketplace",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "ticketmaster-com-page-1",
+        "quote": "Official Ticket Marketplace of the NBA.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "ticketmaster-com-page-2",
+        "quote": "Third-Party Resale Tickets: Everything You Need to Know",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "ticketmaster-com-page-1",
+        "quote": "Browse Broadway tickets and discover upcoming shows.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "ticketmaster-com-page-1",
+        "quote": "get tickets at the Official Ticket Marketplace of the NBA.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "ticketmaster-com-page-2",
+        "quote": "Buy Tickets",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events), theatrical promoters, concert promoters",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Ticketmaster",
+        "supports": "category"
+      }
+    ],
+    "notes": "Ticketmaster’s pages explicitly call it a ticket marketplace and describe third-party resale, so marketplace is favored, though some direct purchases are described as fulfilled by Ticketmaster. Bank of America lists Ticketmaster under Online Shopping, which is not an available category; issuer definitions support Entertainment."
+  }
+}

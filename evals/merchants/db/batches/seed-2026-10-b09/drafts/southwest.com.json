@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 21596,
+    "outputTokens": 439
+  },
+  "durationMs": 25360,
+  "draft": {
+    "domain": "southwest.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "southwest-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "southwest-com-page-1",
+        "quote": "To be the world's most loved, most efficient, and most profitable airline.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "southwest-com-page-1",
+        "quote": "To connect People to what's important in their lives through friendly, reliable, and low-cost air travel.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "southwest-com-page-1",
+        "quote": "About Southwest Airlines®",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "southwest-com-page-1",
+        "quote": "Book your next flight",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "southwest-com-page-2",
+        "quote": "All Southwest flights feature assigned seating!",
+        "supports": "category"
+      },
+      {
+        "sourceId": "southwest-com-lookup-1",
+        "quote": "3066 SOUTHWEST",
+        "supports": "category"
+      },
+      {
+        "sourceId": "southwest-rapid-rewards-premier-product",
+        "quote": "Earn 3 points for each dollar spent on Southwest Airlines purchases.*",
+        "supports": "category"
+      },
+      {
+        "sourceId": "southwest-rapid-rewards-priority-product",
+        "quote": "Earn 4 points for each dollar spent on Southwest Airlines purchases.*",
+        "supports": "category"
+      },
+      {
+        "sourceId": "southwest-rapid-rewards-plus-product",
+        "quote": "Earn 2 points for each dollar spent on Southwest Airlines purchases.*",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "not included in this category, for example, airlines, hotels, car rental agencies, cruise lines, travel agencies, discount travel sites,",
+        "supports": "category"
+      }
+    ],
+    "notes": "Southwest is plainly an airline and air-travel merchant, but no airline or travel category is available. Chase explicitly excludes airlines from its local transit category, so transit is not appropriate."
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16495,
+    "outputTokens": 483
+  },
+  "durationMs": 50991,
+  "draft": {
+    "domain": "siriusxm.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "siriusxm"
+    ],
+    "candidateCategory": "streaming",
+    "evidence": [
+      {
+        "sourceId": "siriusxm-com-page-1",
+        "quote": "Subscribe now and get your first 3 months for $1.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "siriusxm-com-page-1",
+        "quote": "All our popular plans include streaming with the SiriusXM app.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "siriusxm-com-page-1",
+        "quote": "Only on SiriusXM.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "siriusxm-com-page-2",
+        "quote": "Do I pay for shipping if I return a purchased item to SiriusXM?",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "SiriusXM Streaming and Satellite",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Starz, SiriusXM, Tidal, YouTube Premium, and YouTube TV.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes the following streaming providers:",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Netflix, Pandora, Paramount Plus, Peacock, SiriusXM, Sling TV, Spotify, Starz, YouTube Music",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV, Audible,",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Music Streaming\nAmazon Music\nPandora\nSpotify\nApple Music\nSiriusXM®",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The primary offering is recurring streaming subscriptions, but the help page also references purchased radios and shipping returns, so physicalGoods is true."
+  }
+}

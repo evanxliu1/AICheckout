@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b08",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12970,
+    "outputTokens": 238
+  },
+  "durationMs": 42337,
+  "draft": {
+    "domain": "regmovies.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "entertainment",
+    "evidence": [
+      {
+        "sourceId": "regmovies-com-page-1",
+        "quote": "operates one of the largest and most geographically diverse theatre circuits in the United States",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "regmovies-com-page-1",
+        "quote": "operates one of the largest and most geographically diverse theatre circuits in the United States",
+        "supports": "category"
+      },
+      {
+        "sourceId": "regmovies-com-page-2",
+        "quote": "Tickets & Cancellations",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Regal Cinemas",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The site mentions physical gift cards and Regal merchandise, but identifies Regal primarily as a theatre circuit; physicalGoods is treated as false under the ticket/entertainment rule. Citi separately excludes movie theaters from Live Entertainment, while Discover explicitly includes movie-theater tickets in Entertainment."
+  }
+}

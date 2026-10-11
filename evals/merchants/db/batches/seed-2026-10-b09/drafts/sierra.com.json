@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b09",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12704,
+    "outputTokens": 263
+  },
+  "durationMs": 9953,
+  "draft": {
+    "domain": "sierra.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "sierra"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "sierra-com-page-1",
+        "quote": "Shop\nSierra\n Online",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "sierra-com-page-1",
+        "quote": "Shop\nSierra\n Online",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+        "quote": "TJX stores, inclusive of TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+        "quote": "online at tjmaxx.com, marshalls.com, sierra.com",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+        "quote": "In Store (TJ Maxx, Marshalls, HomeGoods, Sierra, and Homesense)",
+        "supports": "category"
+      }
+    ],
+    "notes": "The supplied Sierra page is a sparse error page and does not describe its merchandise. Physical goods are inferred from its identification as a TJX store with in-store and online shopping; no document supports a more specific category."
+  }
+}
