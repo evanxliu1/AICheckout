@@ -7,21 +7,21 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 12087,
-    "outputTokens": 238
+    "inputTokens": 27207,
+    "outputTokens": 253
   },
-  "durationMs": 27975,
+  "durationMs": 50479,
   "draft": {
     "domain": "universalorlando.com",
     "kind": "merchant",
     "physicalGoods": false,
     "brandIds": [],
-    "candidateCategory": "entertainment",
+    "candidateCategory": null,
     "evidence": [
       {
-        "sourceId": "universalorlando-com-page-3",
-        "quote": "tickets-packages",
-        "supports": "physicalGoods"
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events), theatrical promoters, concert promoters, amusement parks",
+        "supports": "definition"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
@@ -29,11 +29,11 @@
         "supports": "definition"
       },
       {
-        "sourceId": "discover-cashback-calendar",
-        "quote": "Entertainment purchases include ticket purchases at movie theaters, sports promoters (professional and semi-professional live events), theatrical promoters, concert promoters, amusement parks, tourist attractions, aquariums, zoos, dance halls, record stores, video rental locations, pool halls and bowling alleys.",
-        "supports": "definition"
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts, amusement parks",
+        "supports": "category"
       }
     ],
-    "notes": "The supplied store-page bodies contain no rendered text or merchant-code lookup. The tickets-packages URL and issuer definitions covering amusement parks support Entertainment, but no issuer directly names Universal Orlando; BofA also describes amusement parks under Travel, so coding may warrant review."
+    "notes": "The supplied Universal Orlando page bodies contain no rendered text identifying its merchant code. Issuers cover amusement parks under both Entertainment and Travel, so the category remains conservatively null."
   }
 }

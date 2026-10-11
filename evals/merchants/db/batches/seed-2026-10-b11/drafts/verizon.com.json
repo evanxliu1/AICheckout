@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 19583,
-    "outputTokens": 222
+    "inputTokens": 19585,
+    "outputTokens": 304
   },
-  "durationMs": 76905,
+  "durationMs": 20173,
   "draft": {
     "domain": "verizon.com",
     "kind": "merchant",
@@ -22,30 +22,40 @@
     "evidence": [
       {
         "sourceId": "verizon-com-page-2",
-        "quote": "Shop\nDevices\nApple iPhone 18 Pro",
-        "supports": "physicalGoods"
-      },
-      {
-        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
-        "quote": "Verizon operated store, Verizon online",
+        "quote": "Shop\nDevices",
         "supports": "kind"
       },
       {
         "sourceId": "synchrony-verizon-visa-card-rewards-terms",
-        "quote": "Verizon operated store, Verizon online",
+        "quote": "Verizon purchases include purchases of devices and accessories",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "The Rewards Program is managed, provided and operated by Verizon.",
         "supports": "brand"
       },
       {
-        "sourceId": "verizon-com-page-1",
-        "quote": "Mobile Plans\nMobile Devices\nHome Services",
+        "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+        "quote": "made at a Verizon operated store, Verizon online",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-partner",
+        "quote": "Earn 4% on Verizon purchases",
+        "supports": "category"
+      },
+      {
+        "sourceId": "synchrony-verizon-visa-card-product",
+        "quote": "Verizon store purchases (excluding bill payment)",
         "supports": "category"
       },
       {
         "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®.",
+        "quote": "Does not include electronics purchases from telecom companies like Verizon or AT&T®",
         "supports": "category"
       }
     ],
-    "notes": "Verizon sells devices online, but an issuer explicitly excludes electronics purchases from telecom companies like Verizon; telecom is not a listed candidate category."
+    "notes": "Verizon sells devices and accessories, but the documents identify it as a telecom/wireless provider rather than a listed retail category. U.S. Bank expressly excludes electronics purchases from telecom companies like Verizon, so candidateCategory is null."
   }
 }
