@@ -58,6 +58,8 @@ async function inputsOf(batch: Batch, stage: MerchantAgentStage): Promise<string
   const captures = (manifest?.sources ?? []).map((s) => at(`captures/${s.id}.txt`));
   return [
     join(batch.root, VERIFIER_AGENT),
+    join(batch.root, 'packages/rewards-core/src/catalog-v3.ts'),
+    join(batch.root, 'packages/rewards-core/src/types.ts'),
     at('research.json'),
     at('manifest.json'),
     ...batch.meta.stores.map((s) => at(`drafts/${s.domain}.json`)),

@@ -25,7 +25,7 @@ The draft (`drafts/<domain>.json`, field `draft`) was written by gpt-5.6-luna fr
 | `physicalGoods` | `true` only when the captures show goods shipped or picked up; `false` for services, travel, subscriptions, tickets, restaurants, processors |
 | `brandIds` | Every id names a catalog brand whose official store this site is (not a brand it resells); none missing that the captures prove |
 | `candidateCategory` | The category (or null) is what the captures support under the plan's definitions; a plain general retailer is null |
-| `evidence` | Every quote is verbatim in the named capture (`captures/<sourceId>.txt`), at most 25 words, and supports what it claims |
+| `evidence` | Every quote is verbatim in the named capture (`captures/<sourceId>.txt`), at most 25 words, and supports what it claims. An issuer quote supports `category` only if it names this store and says purchases there EARN in the drafted category; dispute `evidence` when an issuer quote names the store as an exclusion ("superstores like Costco excluded", "excluding Walmart and Target"), as a non-qualifying example, or as an example of a different category than the drafted one |
 
 A field you cannot settle from the captures is `disputed`, with the reason. **Any disputed field holds the whole record out of the release** (there is no adjudicator; Evan decides), so dispute what is wrong or unsupported, not what is merely incomplete.
 

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { CATALOG_V3 } from '../../../packages/rewards-core/src/catalog-v3.ts';
-import { applyStore, recordId } from '../src/merchants/apply.ts';
+import { applyStore, issuerQuoteEarns, recordId } from '../src/merchants/apply.ts';
 import type { ApplyInput } from '../src/merchants/apply.ts';
 import { brandNameGate, buildCandidates, domainLabel, hostGate } from '../src/merchants/candidates.ts';
 import {
@@ -94,7 +94,7 @@ describe('apply rule', () => {
           evidence: [
             {
               sourceId: 'chase-freedom-flex-rewards-terms',
-              quote: 'fake issuer words',
+              quote: 'fake issuer words at Kroger earn',
               supports: 'category',
             },
           ],
@@ -461,5 +461,59 @@ describe('merchant agent files', () => {
   it('the researcher never signs in or types; the verifier has no web tools', () => {
     expect(read('.claude/agents/merchant-researcher.md')).toMatch(/Never sign in.*CAPTCHA/s);
     expect(frontmatter(read('.claude/agents/merchant-verifier.md')).tools).not.toMatch(/Web/);
+  });
+});
+
+describe('issuer quotes: earning statements only', () => {
+  const issuer = 'us-bank-cash-plus-sample-merchants';
+  const issuerSources: ApplyInput['sources'] = [
+    {
+      id: issuer,
+      kind: 'issuer-terms',
+      url: 'https://www.usbank.com/terms',
+      capturedOn: '2026-10-05',
+      sha256: 'd'.repeat(64),
+    },
+  ];
+  const withQuote = (quote: string, domain = 'costco.com', name = 'Costco') =>
+    applyStore(
+      input(
+        { domain, name, hosts: [domain], sources: issuerSources },
+        {
+          candidateCategory: 'wholesale-clubs',
+          evidence: [{ sourceId: issuer, quote, supports: 'category' }],
+        },
+      ),
+    );
+  it('an exclusion naming the store gives no issuer category', () => {
+    for (const quote of [
+      'purchases at discount stores like Wal-Mart, Target and Costco do not qualify.',
+      'superstores like Costco excluded',
+      'Grocery stores, excluding Walmart and Target and Costco',
+      'Costco purchases are not eligible for the bonus',
+    ]) {
+      const out = withQuote(quote);
+      expect(out.outcome === 'record' && out.record.evidence, quote).toEqual({
+        basis: 'default',
+        sourceIds: [],
+      });
+      expect(out.outcome === 'record' && out.record.category, quote).toBe('general-merchandise');
+    }
+  });
+  it('a quote that does not name the store is not issuer evidence for it', () => {
+    const out = withQuote('Superstores, Supermarkets and Warehouse Clubs earn 2%');
+    expect(out.outcome === 'record' && out.record.evidence.basis).toBe('default');
+  });
+  it('an earning statement naming the store gives the issuer basis', () => {
+    const out = withQuote('wholesale clubs such as Costco and BJs earn 3% cash back');
+    expect(out.outcome === 'record' && out.record.evidence).toEqual({ basis: 'issuer', sourceIds: [issuer] });
+    expect(
+      issuerQuoteEarns(
+        'Some grocery stores like Kroger may qualify for 2% in the grocery category',
+        'Kroger',
+        'kroger.com',
+      ),
+    ).toBe(true);
+    expect(issuerQuoteEarns('Krogers nearby', 'Kroger', 'kroger.com')).toBe(false);
   });
 });

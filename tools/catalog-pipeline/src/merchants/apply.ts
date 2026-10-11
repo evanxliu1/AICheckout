@@ -50,6 +50,22 @@ export type ApplyOutcome =
 export const recordId = (domain: string, kind: string, fixed: string | null): string =>
   fixed ?? (kind === 'processor' ? domainLabel(domain) : `${domainLabel(domain)}-us`);
 
+/** Words that make an issuer sentence an exclusion or a limit rather than an earning statement. */
+export const EXCLUSION_WORDING =
+  /\b(exclud\w*|except\w*|not (?:includ|qualif|eligib|earn|count)\w*|do(?:es)? not|don't|doesn't|aren't|are not|is not|isn't|ineligible|will not)\b/i;
+
+/** An issuer quote is category evidence only when it names this store (its name or domain label, on word
+ * boundaries) and says purchases there earn, not that they are excluded or limited ("superstores like Costco
+ * excluded", "excluding Walmart and Target"). A quote naming the store under another category is still a
+ * naming quote; the verifier disputes `evidence` when the category named is not the drafted one. */
+export function issuerQuoteEarns(quote: string, name: string, domain: string): boolean {
+  const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const label = domainLabel(domain);
+  const names = [name.trim(), ...(label.length >= 5 ? [label] : [])].map(escape);
+  const named = new RegExp(`(?<![A-Za-z0-9])(?:${names.join('|')})(?![A-Za-z0-9])`, 'i').test(quote);
+  return named && !EXCLUSION_WORDING.test(quote);
+}
+
 /** The apply rule for one store. Pure: no files. */
 export function applyStore(input: ApplyInput): ApplyOutcome {
   const disputed = VERIFIED_FIELDS.filter((f) => input.verification[f].verdict === 'disputed').map(
@@ -63,7 +79,12 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
     disputed.push({ field: 'processor', reason: 'a processor sells no physical goods and has no brands' });
   if (disputed.length) return { outcome: 'held-out', disputed };
   const byId = new Map(input.sources.map((s) => [s.id, s]));
-  const categoryQuotes = draft.evidence.filter((e) => e.supports === 'category' && byId.has(e.sourceId));
+  const categoryQuotes = draft.evidence.filter(
+    (e) =>
+      e.supports === 'category' &&
+      byId.has(e.sourceId) &&
+      (byId.get(e.sourceId)!.kind !== 'issuer-terms' || issuerQuoteEarns(e.quote, input.name, input.domain)),
+  );
   const kinds = new Set(categoryQuotes.map((e) => byId.get(e.sourceId)!.kind));
   let basis: MerchantRecord['evidence']['basis'] = 'default';
   if (
