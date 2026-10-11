@@ -252,6 +252,13 @@ describe('merchants publish --confirm', () => {
     expect(other.output()).toContain('the session is for');
     expect(other.server.merchantPublishes).toEqual([]);
   });
+  it('refuses when /v1/merchants answers 503, because the head is unknown', async () => {
+    const s = await setup();
+    s.server.merchantsDown = true;
+    expect(await s.run({ confirm: VERSION, instructionAt: INSTRUCTION })).toBe(1);
+    expect(s.output()).toContain('the head is unknown, nothing was sent');
+    expect(s.server.merchantPublishes).toEqual([]);
+  });
   it('reports a 409 from the API as an error without a token', async () => {
     const s = await setup();
     s.server.setMerchantRelease(EARLIER);

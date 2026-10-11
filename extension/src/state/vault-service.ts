@@ -223,9 +223,16 @@ export function createVaultService(
       if (current === 'unlocked' || current === 'unprotected') await stateService.invalidateTab(tabId);
       // Locked captures are validated against the exact tab/document and age on unlock/use.
     });
-  /** The weekly background refresh (Phase 14.6). A locked vault makes the catalog refresh fail (the wallet
-   * cannot be reconciled); the merchant release, public data, still refreshes. */
-  service.refreshReleases = (limit: number) => serial(() => stateService.refreshReleases(limit));
+  /** The weekly background refresh (Phase 14.6). With a locked or damaged vault the catalog step is skipped
+   * (the wallet cannot be reconciled; no retry is worth scheduling); the merchant release, public data,
+   * still refreshes. */
+  service.refreshReleases = (limit: number) =>
+    serial(async () => {
+      const current = await status();
+      return stateService.refreshReleases(limit, {
+        catalog: current === 'unlocked' || current === 'unprotected',
+      });
+    });
   /** The current status and, when readable, the saved state and the catalog in effect. For the
    * badge, which only reads. */
   service.snapshot = () =>

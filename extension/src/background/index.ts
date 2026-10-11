@@ -28,13 +28,22 @@ const handle = createVaultService(
 export const REFRESH_ALARM = 'refresh-releases';
 export const REFRESH_RETRY_ALARM = 'refresh-releases-retry';
 export const REFRESH_PERIOD_MINUTES = 7 * 24 * 60;
+/** A new install refreshes soon after the first start, then weekly. */
+export const REFRESH_FIRST_MINUTES = 2;
 export const REFRESH_RETRY_MINUTES = 5;
 export const REFRESH_TIMEOUT_MS = 90_000;
-function scheduleRefresh() {
-  if (!fetchPublishedCatalog && !fetchPublishedMerchants) return;
-  void chrome.alarms
-    ?.create(REFRESH_ALARM, { periodInMinutes: REFRESH_PERIOD_MINUTES })
-    .catch(() => undefined);
+/** Creates the weekly alarm once: an existing alarm is kept, so browser restarts never reset its period. */
+async function scheduleRefresh() {
+  if ((!fetchPublishedCatalog && !fetchPublishedMerchants) || !chrome.alarms) return;
+  try {
+    if (await chrome.alarms.get(REFRESH_ALARM)) return;
+    await chrome.alarms.create(REFRESH_ALARM, {
+      delayInMinutes: REFRESH_FIRST_MINUTES,
+      periodInMinutes: REFRESH_PERIOD_MINUTES,
+    });
+  } catch {
+    // Without the alarm, "Check for updated terms" still refreshes both releases.
+  }
 }
 chrome.alarms?.onAlarm.addListener((alarm) => {
   if (alarm.name !== REFRESH_ALARM && alarm.name !== REFRESH_RETRY_ALARM) return;
@@ -48,7 +57,7 @@ chrome.alarms?.onAlarm.addListener((alarm) => {
     })
     .catch(() => undefined);
 });
-chrome.runtime.onStartup?.addListener(scheduleRefresh);
+chrome.runtime.onStartup?.addListener(() => void scheduleRefresh());
 /** Badge iframes refresh their view on this broadcast. Runtime messages never reach content scripts. */
 function notify(tabId: number | null) {
   void chrome.runtime.sendMessage({ type: 'badge:changed', tabId }).catch(() => undefined);
@@ -135,7 +144,7 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 });
 chrome.runtime.onInstalled.addListener((details) => {
   void restrictStorage().catch(() => undefined);
-  scheduleRefresh();
+  void scheduleRefresh();
   // First install: pick cards in a full tab, so the badge has something to compare.
   if (details.reason === 'install')
     void chrome.tabs.create({ url: chrome.runtime.getURL(ONBOARDING_PAGE) }).catch(() => undefined);

@@ -136,6 +136,7 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     // The same check fetched the merchant release and cached it; the worker now knows the hosted-only store.
     await expect.poll(async () => (await readMerchantCache(page))?.release?.sequence).toBe(2);
     expect(await worker.evaluate(() => chrome.alarms.getAll())).toEqual([
+      // Created once at install with a short first delay; browser restarts keep it (never re-created).
       expect.objectContaining({ name: 'refresh-releases', periodInMinutes: 7 * 24 * 60 }),
     ]);
     await expect(page.getByText('$1.50', { exact: true })).toHaveCount(0);
@@ -171,8 +172,8 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     expect((await readCatalogCache(page))?.release?.sequence).toBe(2);
     expect((await readMerchantCache(page))?.release?.sequence).toBe(2);
     expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(3);
-    // Only the successful check reached the merchant route: a refused or failed catalog check stops there.
-    expect(requests.filter((request) => request.url === '/v1/merchants')).toHaveLength(1);
+    // Every check also reached the merchant route, whatever the catalog check's outcome.
+    expect(requests.filter((request) => request.url === '/v1/merchants')).toHaveLength(3);
     expect(
       requests.every(
         (request) =>

@@ -29,12 +29,35 @@ export function currentMerchants(
   return Date.parse(cached.verifiedAt) >= Date.parse(bundled.verifiedAt) ? cached : bundled;
 }
 
+/** The last cache parsed, keyed by its row's `release_hash` and `lastCheckedAt`: the worker reads the cache
+ * on every request and a badge message, and a 2 MiB release is not worth re-validating each time. The same
+ * object is returned while the stored row is unchanged, so the host index memoized per release object in
+ * `store-match.ts` is reused too. */
+let memo: { key: string; cache: MerchantCache } | undefined;
+const memoKey = (raw: unknown): string | undefined => {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const { release, lastCheckedAt } = raw as { release?: unknown; lastCheckedAt?: unknown };
+  const hash =
+    release && typeof release === 'object' ? (release as { release_hash?: unknown }).release_hash : null;
+  if (hash !== null && typeof hash !== 'string') return undefined;
+  if (lastCheckedAt !== null && typeof lastCheckedAt !== 'number') return undefined;
+  return `${hash ?? ''}:${lastCheckedAt ?? ''}`;
+};
 /** The cache as stored; an unreadable one counts as empty (public data that can be fetched again). */
 export async function readMerchantCache(storage: {
   get: (key: string) => Promise<Record<string, unknown>>;
 }): Promise<MerchantCache> {
-  const parsed = merchantCacheSchema.safeParse((await storage.get(MERCHANTS_KEY))[MERCHANTS_KEY]);
-  return parsed.success ? parsed.data : emptyMerchantCache();
+  const raw = (await storage.get(MERCHANTS_KEY))[MERCHANTS_KEY];
+  const key = memoKey(raw);
+  if (key !== undefined && memo?.key === key) return memo.cache;
+  const parsed = merchantCacheSchema.safeParse(raw);
+  const cache = parsed.success ? parsed.data : emptyMerchantCache();
+  memo = key !== undefined && parsed.success ? { key, cache } : undefined;
+  return cache;
+}
+/** Forgets the memoized cache (tests; a write replaces it through the next read's key). */
+export function resetMerchantCacheMemo() {
+  memo = undefined;
 }
 
 export class MerchantUpdateError extends Error {}

@@ -299,10 +299,15 @@ export function createStateService(
             ok: false,
             error: 'This development build receives card terms through extension updates.',
           };
-        const update = await refreshCatalog(state, cache, timeoutMs);
-        // The merchant release is checked in the same action (Phase 14.6); its outcome never hides the
-        // card-terms notice, and a failure leaves the release in hand in effect.
-        if (fetchMerchants) await refreshMerchants(timeoutMs).catch(() => undefined);
+        // The merchant release is checked in the same action (Phase 14.6), whatever the catalog check's
+        // outcome; its own outcome never hides the card-terms notice or error, and a failure leaves the
+        // release in hand in effect.
+        let update: Awaited<ReturnType<typeof refreshCatalog>>;
+        try {
+          update = await refreshCatalog(state, cache, timeoutMs);
+        } finally {
+          if (fetchMerchants) await refreshMerchants(timeoutMs).catch(() => undefined);
+        }
         return success(update.state ?? state, currentCatalog(update.cache, clock()), null, update.notice);
       }
       if (request.type === 'checkout:save-wallet') {
@@ -456,16 +461,18 @@ export function createStateService(
     );
     return task;
   };
-  /** The weekly background refresh (Phase 14.6): the catalog (when the state is readable), then the merchant
-   * release, each on its own; a fetch that fails (the service asleep, offline) reports `failed` so the caller
-   * can retry later. Nothing is shown to the shopper; the next page load sees the releases in effect. */
+  /** The weekly background refresh (Phase 14.6): the catalog (unless `catalog: false`, when the state cannot
+   * be read, as with a locked vault), then the merchant release, each on its own; a fetch that fails (the
+   * service asleep, offline) reports `failed` so the caller can retry later. Nothing is shown to the shopper;
+   * the next page load sees the releases in effect. */
   service.refreshReleases = (
     limit: number,
+    { catalog: refreshTheCatalog = true }: { catalog?: boolean } = {},
   ): Promise<{ catalog: RefreshOutcome; merchants: RefreshOutcome }> => {
     const task = queue.then(async () => {
       let catalogOutcome: RefreshOutcome = 'skipped',
         merchantOutcome: RefreshOutcome = 'skipped';
-      if (fetchCatalog) {
+      if (fetchCatalog && refreshTheCatalog) {
         try {
           const { state, cache } = await load(clock());
           await refreshCatalog(state, cache, limit);

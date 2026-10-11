@@ -8,6 +8,7 @@ import {
   MerchantUpdateError,
   prepareMerchantUpdate,
   readMerchantCache,
+  resetMerchantCacheMemo,
 } from '../src/state/merchants';
 import type { MerchantCache } from '../src/state/merchants';
 import { CATALOG_KEY, createStateService, MERCHANTS_KEY, STATE_KEY } from '../src/state/service';
@@ -81,6 +82,25 @@ describe('the merchant release in effect', () => {
     expect(currentMerchants(cacheOf(published(MERCHANT_RELEASE_FIXTURE)))).toBe(bundled);
     const tie = { ...MERCHANT_RELEASE_FIXTURE, version: '2026-10-11.tie.1', verifiedAt: bundled.verifiedAt };
     expect(currentMerchants(cacheOf(published(tie)))).toBe(tie);
+  });
+});
+
+describe('readMerchantCache memo', () => {
+  it('returns the same parsed object while the stored row is unchanged, and re-parses a changed one', async () => {
+    resetMerchantCacheMemo();
+    let stored: unknown = cacheOf(published(newer), NOW);
+    const storage = { get: async () => ({ [MERCHANTS_KEY]: structuredClone(stored) }) };
+    const first = await readMerchantCache(storage);
+    expect(await readMerchantCache(storage)).toBe(first);
+    expect(currentMerchants(first)).toBe(currentMerchants(await readMerchantCache(storage)));
+    stored = cacheOf(published(newer, 2), NOW + 1);
+    const second = await readMerchantCache(storage);
+    expect(second).not.toBe(first);
+    expect(second.release?.sequence).toBe(2);
+    // A damaged row with a new key is parsed, not served from the memo.
+    stored = { release: { release_hash: '3'.padStart(64, '0'), bogus: true }, lastCheckedAt: NOW + 2 };
+    expect((await readMerchantCache(storage)).release).toBeNull();
+    resetMerchantCacheMemo();
   });
 });
 
@@ -211,10 +231,18 @@ describe('state service on the cached release', () => {
     fetchMerchants.mockRejectedValueOnce(new Error('offline'));
     ok(await service({ type: 'checkout:refresh-catalog', expectedRevision: 0 }));
     expect(data[MERCHANTS_KEY]).toEqual(cacheOf(published(newer), NOW));
+    // A failing catalog check still refreshes the merchants (and keeps its own error).
+    fetchCatalog.mockRejectedValueOnce(new Error('offline'));
+    fetchMerchants.mockResolvedValueOnce({
+      release: published({ ...newer, version: '2026-10-11.hosted.2' }, 2),
+    });
+    const failed = await service({ type: 'checkout:refresh-catalog', expectedRevision: 0 });
+    expect(failed.ok).toBe(false);
+    expect((data[MERCHANTS_KEY] as MerchantCache).release?.sequence).toBe(2);
     // A rolled-back release is refused and the cache kept.
     fetchMerchants.mockResolvedValueOnce({ release: published(MERCHANT_RELEASE_FIXTURE, 0) } as never);
     ok(await service({ type: 'checkout:refresh-catalog', expectedRevision: 0 }));
-    expect((data[MERCHANTS_KEY] as MerchantCache).release?.sequence).toBe(1);
+    expect((data[MERCHANTS_KEY] as MerchantCache).release?.sequence).toBe(2);
   });
   it('background refresh reports each release and fails without throwing', async () => {
     const fetchCatalog = vi.fn(async () => ({ release: catalogRelease }));
@@ -295,7 +323,8 @@ describe('vault and badge services on the cached release', () => {
       })) as CheckoutResponse,
     );
     ok((await vault({ type: 'checkout:vault-lock' })) as CheckoutResponse);
-    expect(await vault.refreshReleases(1000)).toEqual({ catalog: 'failed', merchants: 'ok' });
+    expect(await vault.refreshReleases(1000)).toEqual({ catalog: 'skipped', merchants: 'ok' });
+    expect(fetchCatalog).not.toHaveBeenCalled();
     expect(data[MERCHANTS_KEY]).toEqual(cacheOf(published(newer), NOW));
     ok(
       (await vault({

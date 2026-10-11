@@ -213,8 +213,12 @@ async function confirmRemote(
 
   // 1. The head as served now: the publication must land on exactly this state.
   const served = await servedMerchants(sessionDeps, api);
-  if (!served.release && served.error && served.error.status !== 503)
-    return refuse([`/v1/merchants did not answer (${served.error.message})`]);
+  // A 503 (the API unconfigured or its read failing) hides the head; a first publication answers 200 with
+  // a null release, so any error refuses rather than publishing against an unknown head.
+  if (served.error)
+    return refuse([
+      `/v1/merchants did not answer (${served.error.message}); the head is unknown, nothing was sent`,
+    ]);
   describeServed(log, served, release);
   if (served.release && served.release.version === release.version) {
     if (jsonSha256(served.release.release) === releaseSha256) {
