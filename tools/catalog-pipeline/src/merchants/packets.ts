@@ -27,7 +27,14 @@ import {
   wordCount,
   writeState,
 } from './files.ts';
-import type { Batch, MerchantAgentStage, Packet, ResearchFile, VerificationFile } from './files.ts';
+import type {
+  Batch,
+  DraftFile,
+  MerchantAgentStage,
+  Packet,
+  ResearchFile,
+  VerificationFile,
+} from './files.ts';
 
 export const packetsDir = (batch: Batch): string => join(batch.dir, 'packets');
 export const outputOf = (stage: MerchantAgentStage): string =>
@@ -224,7 +231,12 @@ export function researchGate(file: ResearchFile, batch: Batch, packet: Packet): 
 
 /** The verify gate: the schema, every batch store once, every field decided, a reason for every dispute, and the
  * filesRead naming every draft and capture of the packet. */
-export function verifyGate(file: VerificationFile, batch: Batch, packet: Packet): string[] {
+export function verifyGate(
+  file: VerificationFile,
+  batch: Batch,
+  packet: Packet,
+  drafts: Map<string, DraftFile> = new Map(),
+): string[] {
   const errors: string[] = [];
   if (file.packetId !== packet.packetId) errors.push('packetId: not this packet');
   if (file.batch !== batch.id) errors.push('batch: not this batch');
@@ -239,6 +251,22 @@ export function verifyGate(file: VerificationFile, batch: Batch, packet: Packet)
       const verdict = store.fields[field];
       if (verdict.verdict === 'disputed' && !verdict.reason?.trim())
         errors.push(`${at}.fields.${field}: disputed without a reason`);
+    }
+    // One verdict per drafted quote, indices 0..n-1 once each; `fields.evidence` summarises them.
+    const draft = drafts.get(store.domain);
+    if (draft) {
+      const indices = store.quotes.map((q) => q.index).sort((a, b) => a - b);
+      const expectedIndices = draft.draft.evidence.map((_, i) => i);
+      if (JSON.stringify(indices) !== JSON.stringify(expectedIndices))
+        errors.push(
+          `${at}.quotes: one verdict per drafted quote (0..${expectedIndices.length - 1}) expected`,
+        );
+      for (const q of store.quotes)
+        if (q.verdict === 'disputed' && !q.reason?.trim())
+          errors.push(`${at}.quotes[${q.index}]: disputed without a reason`);
+      const anyDisputed = store.quotes.some((q) => q.verdict === 'disputed');
+      if ((store.fields.evidence.verdict === 'disputed') !== anyDisputed)
+        errors.push(`${at}.fields.evidence: must be disputed exactly when a quote is disputed`);
     }
   }
   for (const domain of expected) if (!seen.has(domain)) errors.push(`stores: ${domain} missing`);
@@ -328,7 +356,12 @@ export async function accept(
         errors.push(...parsed.error.issues.map((i) => `${i.path.join('.') || '(file)'}: ${i.message}`));
       else if (stage === 'research') errors.push(...researchGate(parsed.data as ResearchFile, batch, packet));
       else {
-        errors.push(...verifyGate(parsed.data as VerificationFile, batch, packet));
+        const drafts = new Map<string, DraftFile>();
+        for (const store of batch.meta.stores) {
+          const draft = await readJsonOrNull(join(batch.dir, `drafts/${store.domain}.json`), draftFileSchema);
+          if (draft) drafts.set(store.domain, draft);
+        }
+        errors.push(...verifyGate(parsed.data as VerificationFile, batch, packet, drafts));
         for (const store of batch.meta.stores) errors.push(...(await draftGate(batch, store.domain)));
       }
     }

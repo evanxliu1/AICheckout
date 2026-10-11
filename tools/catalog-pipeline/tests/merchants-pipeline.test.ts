@@ -226,9 +226,18 @@ describe('hold-out rule', () => {
         date: '2026-10-11',
         filesRead: ['x'],
       },
-      stores: [{ domain: 'kroger.com', fields: confirmed() }],
+      stores: [
+        {
+          domain: 'kroger.com',
+          fields: confirmed(),
+          quotes: [{ index: 0, verdict: 'confirmed', reason: null }],
+        },
+      ],
     };
     expect(verificationFileSchema.safeParse(base).success).toBe(true);
+    const noQuotes = structuredClone(base) as { stores: Record<string, unknown>[] };
+    delete noQuotes.stores[0].quotes;
+    expect(verificationFileSchema.safeParse(noQuotes).success).toBe(false);
     const missing = structuredClone(base) as { stores: { fields: Record<string, unknown> }[] };
     delete missing.stores[0].fields.kind;
     expect(verificationFileSchema.safeParse(missing).success).toBe(false);
@@ -1073,6 +1082,97 @@ describe('definition basis: review probes (2026-10-11)', () => {
     expect(
       club('costco.com', 'Costco', `${sentence} Purchases at discount stores like Costco do not qualify.`),
     ).toMatch(/refused: issuer page/);
+  });
+});
+
+describe('per-quote verification (review 2026-10-11)', () => {
+  const issuer = 'us-bank-cash-plus-sample-merchants';
+  const srcs: ApplyInput['sources'] = [
+    ...sources,
+    {
+      id: issuer,
+      kind: 'issuer-terms',
+      url: 'https://www.usbank.com/terms',
+      capturedOn: '2026-10-05',
+      sha256: 'd'.repeat(64),
+    },
+  ];
+  const good = {
+    sourceId: issuer,
+    quote: 'grocery stores like Kroger may qualify for 2% cash back in the grocery category',
+    supports: 'category' as const,
+  };
+  const bad = {
+    sourceId: 'chase-freedom-flex-rewards-terms',
+    quote: 'Superstores, Supermarkets and Warehouse Clubs excluded; Kroger',
+    supports: 'category' as const,
+  };
+  const verdicts = (...v: ('confirmed' | 'disputed')[]) =>
+    v.map((verdict, index) => ({
+      index,
+      verdict,
+      reason: verdict === 'disputed' ? `quote ${index} is an exclusion list` : null,
+    }));
+  const withVerdicts = (quotes: ApplyInput['draft']['evidence'], ...v: ('confirmed' | 'disputed')[]) => {
+    const verification = confirmed();
+    if (v.includes('disputed')) verification.evidence = { verdict: 'disputed', reason: 'some quotes fail' };
+    return applyStore(
+      input(
+        {
+          sources: srcs,
+          verification,
+          quoteVerdicts: verdicts(...v),
+          issuerTexts: { [issuer]: 'x', 'chase-freedom-flex-rewards-terms': 'x' },
+          storeTexts: { 'kroger-com-page-1': 'groceries' },
+        },
+        { evidence: quotes },
+      ),
+    );
+  };
+
+  it('one bad quote beside a sufficient good one keeps the basis and cites only the good one', () => {
+    const out = withVerdicts([good, bad], 'confirmed', 'disputed');
+    expect(out.outcome).toBe('record');
+    if (out.outcome !== 'record') return;
+    expect(out.record.category).toBe('supermarkets');
+    expect(out.record.evidence).toEqual({ basis: 'issuer', sourceIds: [issuer] });
+    expect(out.evidence.quotes.map((q) => q.sourceId)).toEqual([issuer]);
+    expect(out.downgraded).toBeNull();
+  });
+
+  it('all quotes bad downgrades the record with the quotes\u2019 reasons', () => {
+    const out = withVerdicts([good, bad], 'disputed', 'disputed');
+    expect(out.outcome === 'record' && out.record.category).toBe('general-merchandise');
+    expect(out.outcome === 'record' && out.record.evidence).toEqual({ basis: 'default', sourceIds: [] });
+    expect(out.outcome === 'record' && out.downgraded).toEqual({
+      reason: 'quote 0 is an exclusion list quote 1 is an exclusion list',
+    });
+    expect(out.outcome === 'record' && out.evidence.quotes).toEqual([]);
+  });
+
+  it('a disputed quote that was not carrying the basis changes nothing; the definition basis uses confirmed quotes too', () => {
+    const store = { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' as const };
+    const definition = {
+      sourceId: issuer,
+      quote: 'earn cash back at most grocery stores and supermarkets',
+      supports: 'definition' as const,
+    };
+    const out = withVerdicts([store, definition, bad], 'confirmed', 'confirmed', 'disputed');
+    expect(out.outcome === 'record' && out.record.evidence).toEqual({
+      basis: 'definition',
+      sourceIds: ['kroger-com-page-1', issuer],
+    });
+    const gone = withVerdicts([store, definition, bad], 'confirmed', 'disputed', 'disputed');
+    expect(gone.outcome === 'record' && gone.record.evidence.basis).toBe('default');
+    expect(gone.outcome === 'record' && gone.downgraded).not.toBeNull();
+  });
+
+  it('without per-quote verdicts the field-level evidence verdict applies to every quote', () => {
+    const verification = confirmed();
+    verification.evidence = { verdict: 'disputed', reason: 'all of it' };
+    const out = applyStore(input({ sources: srcs, verification }, { evidence: [good] }));
+    expect(out.outcome === 'record' && out.record.evidence.basis).toBe('default');
+    expect(out.outcome === 'record' && out.downgraded).toEqual({ reason: 'all of it' });
   });
 });
 

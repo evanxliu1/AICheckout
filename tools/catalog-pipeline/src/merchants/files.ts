@@ -292,6 +292,9 @@ const verdictSchema = z.strictObject({
   /** Required for `disputed`: the verifier's own words. */
   reason: note.nullable(),
 });
+/** One verdict per drafted evidence quote, in the draft's order (review 2026-10-11): apply uses confirmed quotes only,
+ * so one bad quote no longer spoils a record whose other quotes satisfy the rule. */
+export const quoteVerdictSchema = verdictSchema.extend({ index: z.int().nonnegative() });
 export const verificationFileSchema = z.strictObject({
   schemaVersion: z.literal(1),
   packetId: z.uuid(),
@@ -313,6 +316,8 @@ export const verificationFileSchema = z.strictObject({
             typeof verdictSchema
           >,
         ),
+        /** Per-quote verdicts; `fields.evidence` is their summary (disputed when any quote is). */
+        quotes: z.array(quoteVerdictSchema),
       }),
     )
     .min(1),

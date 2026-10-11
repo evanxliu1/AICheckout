@@ -37,6 +37,9 @@ export interface ApplyInput {
   hosts: string[];
   draft: Draft;
   verification: VerificationFile['stores'][number]['fields'];
+  /** Per-quote verdicts (review 2026-10-11); absent or empty means the field-level `evidence` verdict stands for every
+   * quote. */
+  quoteVerdicts?: VerificationFile['stores'][number]['quotes'];
   sources: Pick<ManifestEntry, 'id' | 'kind' | 'url' | 'capturedOn' | 'sha256'>[];
   /** The mined issuer captures of this store (the windows around its name) by source id, for the exclusion check
    * of the `definition` basis. Absent texts count as no exclusion. */
@@ -327,20 +330,32 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
   if (draft.kind === 'processor' && (draft.physicalGoods || draft.brandIds.length))
     disputed.push({ field: 'processor', reason: 'a processor sells no physical goods and has no brands' });
   if (disputed.length) return { outcome: 'held-out', disputed };
-  const evidenceDisputed = input.verification.evidence.verdict === 'disputed';
+  // Confirmed quotes only (review 2026-10-11): a disputed quote is dropped, not the whole field; without per-quote
+  // verdicts the field-level verdict applies to every quote.
+  const perQuote = input.quoteVerdicts?.length ? input.quoteVerdicts : null;
+  const quoteOk = (i: number) =>
+    perQuote
+      ? perQuote.find((q) => q.index === i)?.verdict === 'confirmed'
+      : input.verification.evidence.verdict !== 'disputed';
+  const confirmedEvidence = draft.evidence.filter((_, i) => quoteOk(i));
+  const disputedReasons = perQuote
+    ? perQuote.filter((q) => q.verdict === 'disputed').map((q) => q.reason ?? '')
+    : input.verification.evidence.verdict === 'disputed'
+      ? [input.verification.evidence.reason ?? '']
+      : [];
+  const evidenceDisputed = disputedReasons.length > 0;
+  const confirmedDraft = { ...draft, evidence: confirmedEvidence };
   // Forum threads are no merchant-code lookups (researched before the research gate refused them).
   const sources = input.sources.filter((s) => !(s.kind === 'mcc-lookup' && FORUM_URL.test(s.url)));
   const byId = new Map(sources.map((s) => [s.id, s]));
   const candidate = draft.candidateCategory;
-  const categoryQuotes = evidenceDisputed
-    ? []
-    : draft.evidence.filter((e) => {
-        if (e.supports !== 'category' || !byId.has(e.sourceId) || candidate === null) return false;
-        const kind = byId.get(e.sourceId)!.kind;
-        if (kind === 'issuer-terms') return issuerQuoteEarns(e.quote, input.name, input.domain, candidate);
-        if (kind === 'mcc-lookup') return lookupQuoteNames(e.quote, candidate);
-        return true;
-      });
+  const categoryQuotes = confirmedEvidence.filter((e) => {
+    if (e.supports !== 'category' || !byId.has(e.sourceId) || candidate === null) return false;
+    const kind = byId.get(e.sourceId)!.kind;
+    if (kind === 'issuer-terms') return issuerQuoteEarns(e.quote, input.name, input.domain, candidate);
+    if (kind === 'mcc-lookup') return lookupQuoteNames(e.quote, candidate);
+    return true;
+  });
   const kinds = new Set(categoryQuotes.map((e) => byId.get(e.sourceId)!.kind));
   let basis: MerchantRecord['evidence']['basis'] = 'default';
   let citedIds: string[] = [];
@@ -349,14 +364,18 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
     if (kinds.has('issuer-terms')) basis = 'issuer';
     else if (kinds.has('store-page') && kinds.has('mcc-lookup')) basis = 'corroborated';
     if (basis !== 'default') citedIds = [...new Set(categoryQuotes.map((e) => e.sourceId))];
-    else if (!evidenceDisputed) {
-      const definition = definitionBasis({ ...input, sources }, candidate);
+    else {
+      const definition = definitionBasis({ ...input, sources, draft: confirmedDraft }, candidate);
       if ('cited' in definition) {
         basis = 'definition';
         citedIds = definition.cited;
-      } else refused = { candidate, reason: definition.refused };
+      } else if (!evidenceDisputed) refused = { candidate, reason: definition.refused };
     }
   }
+  // Downgraded: disputed quotes and no basis from the confirmed ones (with every quote confirmed it may still be
+  // refused by the rule, which is reported as `refused`).
+  const downgraded =
+    evidenceDisputed && basis === 'default' && candidate !== null && candidate !== 'general-merchandise';
   const record = merchantRecordSchema.parse({
     id: recordId(input.domain, draft.kind, input.id),
     name: input.name,
@@ -379,19 +398,17 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       schemaVersion: 1,
       id: record.id,
       basis,
-      quotes: evidenceDisputed
-        ? []
-        : draft.evidence
-            .filter((e) => byId.has(e.sourceId))
-            .map((e) => ({
-              sourceId: e.sourceId,
-              kind: byId.get(e.sourceId)!.kind,
-              supports: e.supports,
-              quote: e.quote,
-            })),
+      quotes: confirmedEvidence
+        .filter((e) => byId.has(e.sourceId))
+        .map((e) => ({
+          sourceId: e.sourceId,
+          kind: byId.get(e.sourceId)!.kind,
+          supports: e.supports,
+          quote: e.quote,
+        })),
     },
     cited,
-    downgraded: evidenceDisputed ? { reason: input.verification.evidence.reason } : null,
+    downgraded: downgraded ? { reason: disputedReasons.filter(Boolean).join(' ') || null } : null,
     refused,
   };
 }
@@ -454,6 +471,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       hosts: store.hosts ?? researched.hosts,
       draft: draftFile.draft,
       verification: verified.fields,
+      quoteVerdicts: verified.quotes,
       sources,
       issuerTexts,
       storeTexts,

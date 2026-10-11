@@ -134,11 +134,16 @@ export const MAX_ISSUER_SOURCES = 5;
 export const DEFINITION_PAGES = [
   'amex-rewards-info-retail',
   'boa-cash-back-category-choices',
+  'boa-customized-cash-rewards-pricing',
   'chase-rewards-category-faq',
   'citi-costco-anywhere-visa-categories',
+  'citi-strata-rewards-terms',
+  'discover-cashback-calendar',
+  'us-bank-cash-plus-product',
   'us-bank-cash-plus-sample-merchants',
   'us-bank-edward-jones-triple-rewards-categories',
   'wells-fargo-autograph-categories',
+  'wells-fargo-choice-privileges-rewards-terms',
 ] as const;
 
 export async function runCapture(
