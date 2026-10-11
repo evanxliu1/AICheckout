@@ -58,9 +58,14 @@ export function reviewMarkdown(input: ReviewInput): string {
     '| Record | Hosts | Category | Basis | Evidence (source: quote) |',
     '| --- | --- | --- | --- | --- |',
     ...categories.map((r) => {
+      // Only the cited sources' quotes: a definition record shows its store-page and issuer definition quotes.
       const quotes = (input.evidence.get(r.id)?.quotes ?? [])
-        .filter((q) => q.supports === 'category')
-        .map((q) => `${q.sourceId} (${q.kind}): "${cell(q.quote)}"`)
+        .filter((q) => r.evidence.sourceIds.includes(q.sourceId))
+        .filter((q) => q.supports === 'category' || q.supports === 'definition')
+        .map(
+          (q) =>
+            `${q.sourceId} (${q.kind}${q.supports === 'definition' ? ', definition' : ''}): "${cell(q.quote)}"`,
+        )
         .join('<br>');
       return `| ${r.id} | ${r.hosts.join(', ')} | ${r.category} | ${r.evidence.basis} | ${quotes} |`;
     }),

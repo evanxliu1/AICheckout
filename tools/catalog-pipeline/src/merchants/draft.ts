@@ -1,5 +1,6 @@
 // Stage 3, draft: gpt-5.6-luna at xhigh through `codex exec` (local subscription, apps/api/src/curation/codex.ts), one
-// call per store, from the captures only, with the prompt file merchant-draft.1. The reply is gated (Zod, quotes
+// call per store, from the captures only, with the prompt file merchant-draft.2 (issuer captures as the windows around
+// the store's name plus the windows around the issuer's category definitions). The reply is gated (Zod, quotes
 // verbatim and at most 25 words, catalog brands, the store's own sources) and written to drafts/<domain>.json; the raw
 // reply goes to the gitignored traces/. Refused under CI or RENDER. The model proposes `candidateCategory`; it never
 // sets `category` (apply does, from the evidence rule).
@@ -23,11 +24,12 @@ import {
   writeState,
 } from './files.ts';
 import type { Batch, ManifestEntry } from './files.ts';
+import { definitionWindows } from './capture.ts';
 import { draftGate } from './packets.ts';
 
 export const DRAFT_MODEL = { model: 'gpt-5.6-luna', effort: 'xhigh' as const, attemptTimeoutMs: 600_000 };
 /** Characters of each document shown to the model (store pages first; the harness admits about 64k input tokens). */
-const DOC_LIMITS = { 'store-page': 14_000, 'mcc-lookup': 6_000, 'issuer-terms': 5_000 } as const;
+const DOC_LIMITS = { 'store-page': 14_000, 'mcc-lookup': 6_000, 'issuer-terms': 8_000 } as const;
 
 export interface DraftDocument {
   id: string;
@@ -90,13 +92,18 @@ export async function runDraft(
     if (existing?.status === 'done' && batch.state.stages.draft.status !== 'stale' && !only) continue;
     const documents: DraftDocument[] = [];
     for (const source of manifest.sources.filter((s) => s.domain === store.domain)) {
-      const windowsPath = join(batch.dir, 'captures', `${source.id}.windows.${store.domain}.txt`);
-      const text =
-        source.kind === 'issuer-terms'
-          ? await readFile(windowsPath, 'utf8').catch(() =>
-              readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8'),
-            )
-          : await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8');
+      const full = await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8');
+      let text = full;
+      if (source.kind === 'issuer-terms') {
+        const named = await readFile(
+          join(batch.dir, 'captures', `${source.id}.windows.${store.domain}.txt`),
+          'utf8',
+        ).catch(() => full);
+        const definitions = definitionWindows(full).join('\n\n[…]\n\n');
+        text = definitions
+          ? `${named}\n\n[category definitions elsewhere on this page]\n\n${definitions}`
+          : named;
+      }
       documents.push({ id: source.id, kind: source.kind, url: source.url, text });
     }
     const started = Date.now();

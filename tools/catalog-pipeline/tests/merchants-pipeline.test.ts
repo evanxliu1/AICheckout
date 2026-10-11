@@ -4,7 +4,15 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { CATALOG_V3 } from '../../../packages/rewards-core/src/catalog-v3.ts';
-import { applyStore, issuerQuoteEarns, recordId } from '../src/merchants/apply.ts';
+import {
+  applyStore,
+  definitionBasis,
+  definitionQuoteCovers,
+  issuerExcludes,
+  issuerQuoteEarns,
+  recordId,
+  storePageShowsType,
+} from '../src/merchants/apply.ts';
 import type { ApplyInput } from '../src/merchants/apply.ts';
 import { brandNameGate, buildCandidates, domainLabel, hostGate } from '../src/merchants/candidates.ts';
 import {
@@ -17,7 +25,7 @@ import {
 import type { VerifiedField } from '../src/merchants/files.ts';
 import { displayName, tierARecord } from '../src/merchants/tier-a.ts';
 import { reviewMarkdown } from '../src/merchants/review.ts';
-import { nameMatcher, windows } from '../src/merchants/capture.ts';
+import { definitionWindows, nameMatcher, windows } from '../src/merchants/capture.ts';
 import { REPO_ROOT } from '../src/root.ts';
 
 const confirmed = () =>
@@ -455,6 +463,285 @@ describe('review.md', () => {
     expect(text).toContain('fake grocery store words');
     expect(text).not.toContain('chewy-us');
     expect(text).toContain('| dev-1 | x.com | kind | synthetic |');
+  });
+});
+
+describe('definition basis (Evan 2026-10-11)', () => {
+  const amex = 'amex-rewards-info-retail';
+  const chase = 'chase-rewards-category-faq';
+  const defSources: ApplyInput['sources'] = [
+    sources[0],
+    {
+      id: amex,
+      kind: 'issuer-terms',
+      url: 'https://www.americanexpress.com/t',
+      capturedOn: '2026-10-05',
+      sha256: 'e'.repeat(64),
+    },
+    {
+      id: chase,
+      kind: 'issuer-terms',
+      url: 'https://www.chase.com/faq',
+      capturedOn: '2026-10-05',
+      sha256: 'f'.repeat(64),
+    },
+  ];
+  const store = (
+    over: Partial<ApplyInput>,
+    draft: Partial<ApplyInput['draft']>,
+    quotes: ApplyInput['draft']['evidence'],
+  ) => applyStore(input({ sources: defSources, ...over }, { evidence: quotes, ...draft }));
+  const grocery = {
+    sourceId: amex,
+    quote: 'U.S. supermarkets: grocery stores and supermarkets',
+    supports: 'definition' as const,
+  };
+  const basisOf = (out: ReturnType<typeof applyStore>) =>
+    out.outcome === 'record' ? `${out.record.category}/${out.record.evidence.basis}` : out.outcome;
+
+  it('Kroger: its own grocery page plus an issuer supermarket definition gives definition, citing both', () => {
+    const out = store({}, {}, [
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      grocery,
+    ]);
+    expect(basisOf(out)).toBe('supermarkets/definition');
+    expect(out.outcome === 'record' && out.record.evidence.sourceIds).toEqual(['kroger-com-page-1', amex]);
+    expect(out.outcome === 'record' && out.cited.map((s) => s.id)).toEqual(['kroger-com-page-1', amex]);
+  });
+
+  it('issuer stays the strongest basis; corroborated is unchanged', () => {
+    const out = store({}, {}, [
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      grocery,
+      { sourceId: chase, quote: '3% at grocery stores including Kroger', supports: 'category' },
+    ]);
+    expect(basisOf(out)).toBe('supermarkets/issuer');
+    expect(basisOf(applyStore(input({ sources: [...sources] })))).toBe('supermarkets/corroborated');
+  });
+
+  it('needs both quotes: a definition alone, a store page alone, or a definition from a store page gives default', () => {
+    expect(basisOf(store({}, {}, [grocery]))).toBe('general-merchandise/default');
+    expect(
+      basisOf(
+        store({}, {}, [{ sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' }]),
+      ),
+    ).toBe('general-merchandise/default');
+    expect(
+      basisOf(
+        store({}, {}, [
+          { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+          { sourceId: 'kroger-com-page-1', quote: 'grocery stores and supermarkets', supports: 'definition' },
+        ]),
+      ),
+    ).toBe('general-merchandise/default');
+  });
+
+  it('the definition must cover the category in a clause with no exclusion wording; the store page must show the type', () => {
+    expect(definitionQuoteCovers('U.S. supermarkets: grocery stores and supermarkets', 'supermarkets')).toBe(
+      true,
+    );
+    expect(definitionQuoteCovers('drugstores and pharmacies', 'drugstores')).toBe(true);
+    expect(definitionQuoteCovers('restaurants, including takeout and delivery services', 'dining')).toBe(
+      true,
+    );
+    expect(
+      definitionQuoteCovers('Merchants not in the grocery category include wholesale clubs', 'supermarkets'),
+    ).toBe(false);
+    expect(definitionQuoteCovers('grocery stores and supermarkets', 'drugstores')).toBe(false);
+    expect(definitionQuoteCovers('Superstores, Supermarkets and Warehouse Clubs', 'supermarkets')).toBe(true);
+    expect(definitionQuoteCovers('earn 5% at Costco', 'general-merchandise')).toBe(false);
+    expect(storePageShowsType('We offer several ways to shop for groceries online.', 'supermarkets')).toBe(
+      true,
+    );
+    expect(storePageShowsType('Costco is a membership warehouse club', 'supermarkets')).toBe(false);
+    expect(storePageShowsType('Costco is a membership warehouse club', 'wholesale-clubs')).toBe(true);
+    expect(storePageShowsType('any CVS Pharmacy store', 'drugstores')).toBe(true);
+    expect(storePageShowsType('home improvement stores', 'home-improvement')).toBe(true);
+    expect(storePageShowsType('Uber Eats has hundreds of restaurants to choose from.', 'dining')).toBe(true);
+    expect(storePageShowsType('Save money. Live better.', 'supermarkets')).toBe(false);
+    const out = store({}, {}, [
+      {
+        sourceId: 'kroger-com-page-1',
+        quote: 'Pickup is our online ordering service.',
+        supports: 'category',
+      },
+      grocery,
+    ]);
+    expect(basisOf(out)).toBe('general-merchandise/default');
+  });
+
+  it('Walmart, Target and Costco never get grocery: an issuer exclusion naming the store or its kind of store', () => {
+    const usBank =
+      'purchases at discount stores like Wal-Mart\u00ae, Target\u00ae and Costco\u00ae do not qualify. Some grocery stores earn 2%.';
+    expect(issuerExcludes(usBank, 'Target', 'target.com', 'supermarkets')).toBe(true);
+    expect(issuerExcludes(usBank, 'Costco', 'costco.com', 'supermarkets')).toBe(true);
+    expect(
+      issuerExcludes(
+        'Grocery stores, excluding Walmart and Target',
+        'Walmart',
+        'walmart.com',
+        'supermarkets',
+      ),
+    ).toBe(true);
+    expect(
+      issuerExcludes(
+        'Superstores like Walmart are not grocery stores',
+        'Walmart',
+        'walmart.com',
+        'supermarkets',
+      ),
+    ).toBe(true);
+    expect(issuerExcludes(usBank, 'Kroger', 'kroger.com', 'supermarkets')).toBe(false);
+    expect(
+      issuerExcludes(
+        'Some grocery stores (like Kroger) may qualify for 2%',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    expect(
+      issuerExcludes(
+        '3% at grocery stores including Kroger; excluding warehouse clubs',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    // The exclusion must be about this category or its excluded kinds of store.
+    expect(
+      issuerExcludes(
+        'Costco purchases earn only 1% in the gas category',
+        'Costco',
+        'costco.com',
+        'wholesale-clubs',
+      ),
+    ).toBe(false);
+    for (const [name, domain, text] of [
+      ['Walmart', 'walmart.com', 'Grocery stores, excluding Walmart and Target'],
+      ['Target', 'target.com', usBank],
+    ] as const) {
+      const out = store({ domain, name, hosts: [domain], issuerTexts: { [chase]: text } }, {}, [
+        { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+        grocery,
+      ]);
+      expect(basisOf(out), name).toBe('general-merchandise/default');
+    }
+    // Costco's own page calls it a warehouse club, a kind of store the supermarket category excludes.
+    const costco = store({ domain: 'costco.com', name: 'Costco', hosts: ['costco.com'] }, {}, [
+      { sourceId: 'kroger-com-page-1', quote: 'Shop groceries', supports: 'category' },
+      { sourceId: 'kroger-com-page-1', quote: 'Costco is a membership warehouse club', supports: 'kind' },
+      grocery,
+    ]);
+    expect(basisOf(costco)).toBe('general-merchandise/default');
+    // Texts of sources that are not issuer terms, or that do not name the store, do not exclude.
+    const fine = store(
+      {
+        issuerTexts: {
+          'kroger-com-page-1': 'excluding Kroger grocery',
+          [chase]: 'Grocery stores, excluding Walmart and Target',
+        },
+      },
+      {},
+      [{ sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' }, grocery],
+    );
+    expect(basisOf(fine)).toBe('supermarkets/definition');
+  });
+
+  it('a marketplace is refused, except a delivery marketplace for dining under a definition naming delivery', () => {
+    const restaurant = {
+      sourceId: 'kroger-com-page-1',
+      quote: 'hundreds of restaurants to choose from',
+      supports: 'category' as const,
+    };
+    expect(
+      basisOf(
+        store({}, { kind: 'marketplace' }, [
+          { sourceId: 'kroger-com-page-1', quote: 'Get Groceries', supports: 'category' },
+          grocery,
+        ]),
+      ),
+    ).toBe('general-merchandise/default');
+    const dining = {
+      sourceId: chase,
+      quote: 'restaurants, including takeout and delivery services',
+      supports: 'definition' as const,
+    };
+    expect(
+      basisOf(
+        store(
+          { domain: 'ubereats.com', name: 'Uber Eats', hosts: ['ubereats.com'] },
+          { kind: 'marketplace', physicalGoods: false, candidateCategory: 'dining' },
+          [restaurant, dining],
+        ),
+      ),
+    ).toBe('dining/definition');
+    expect(
+      basisOf(
+        store(
+          { domain: 'ubereats.com', name: 'Uber Eats', hosts: ['ubereats.com'] },
+          { kind: 'marketplace', physicalGoods: false, candidateCategory: 'dining' },
+          [restaurant, { sourceId: chase, quote: 'restaurants and dining', supports: 'definition' }],
+        ),
+      ),
+    ).toBe('general-merchandise/default');
+    expect(
+      basisOf(
+        store({}, { kind: 'merchant', physicalGoods: false, candidateCategory: 'dining' }, [
+          restaurant,
+          { sourceId: chase, quote: 'restaurants and dining', supports: 'definition' },
+        ]),
+      ),
+    ).toBe('dining/definition');
+    expect(
+      definitionBasis(
+        input({ sources: defSources }, { kind: 'processor', evidence: [restaurant, dining] }),
+        'dining',
+      ),
+    ).toBeNull();
+  });
+
+  it('a disputed evidence verdict blocks the definition basis too', () => {
+    const verification = confirmed();
+    verification.evidence = { verdict: 'disputed', reason: 'the issuer page excludes this store' };
+    const out = store({ verification }, {}, [
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      grocery,
+    ]);
+    expect(basisOf(out)).toBe('general-merchandise/default');
+    expect(out.outcome === 'record' && out.downgraded).toEqual({
+      reason: 'the issuer page excludes this store',
+    });
+  });
+
+  it('definition windows pick the sentences where an issuer says what a category includes', () => {
+    const text = `Welcome. ${'x'.repeat(600)}. The grocery category includes grocery stores and supermarkets. ${'y'.repeat(600)}. Earn 1% elsewhere.`;
+    const out = definitionWindows(text, 20);
+    expect(out).toHaveLength(1);
+    expect(out[0]).toContain('grocery stores and supermarkets');
+    expect(out[0].length).toBeLessThan(140);
+    expect(definitionWindows('Nothing about categories here.')).toEqual([]);
+  });
+
+  it('review.md shows a definition record with both quotes', () => {
+    const out = store({}, {}, [
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      grocery,
+    ]);
+    if (out.outcome !== 'record') throw new Error('record expected');
+    const text = reviewMarkdown({
+      version: 'v',
+      verifiedAt: '2026-10-11T00:00:00Z',
+      records: [out.record],
+      evidence: new Map([[out.record.id, { ...out.evidence, batch: 'dev-1', appliedOn: '2026-10-11' }]]),
+      heldOut: [],
+      downgraded: [],
+    });
+    expect(text).toContain('| kroger-us | kroger.com | supermarkets | definition |');
+    expect(text).toContain('Grocery Pickup');
+    expect(text).toContain(
+      `${amex} (issuer-terms, definition): "U.S. supermarkets: grocery stores and supermarkets"`,
+    );
   });
 });
 

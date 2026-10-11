@@ -127,6 +127,34 @@ describe('storeEvidence', () => {
     );
     expect(storeEvidence('whole-foods-us', fixture)).toBe('Codes as a supermarket (named in card terms).');
   });
+  it('names the issuer whose definition a definition record fits, without implying a partnership', () => {
+    // The fixture's issuer source is synthetic (no catalog card cites it), so the wording falls back.
+    expect(storeEvidence('cvs-us', fixture)).toBe(
+      "Codes as a drugstore (its own pages; fits an issuer's drugstore definition).",
+    );
+    const catalog = {
+      ...v3,
+      cards: [
+        {
+          ...v3.cards[0],
+          issuer: 'American Express',
+          rules: [{ ...v3.cards[0].rules[0], sourceIds: ['issuer-category-definitions'] }],
+        },
+      ],
+    } as typeof v3;
+    expect(storeEvidence('cvs-us', fixture, catalog)).toBe(
+      "Codes as a drugstore (its own pages; fits American Express's drugstore definition).",
+    );
+    const dining: MerchantRelease = {
+      ...fixture,
+      merchants: fixture.merchants.map((m) =>
+        m.id === 'cvs-us' ? { ...m, kind: 'marketplace', category: 'dining' } : m,
+      ),
+    };
+    expect(storeEvidence('cvs-us', dining, catalog)).toBe(
+      "Codes as a restaurant (its own pages; fits American Express's restaurant definition).",
+    );
+  });
   it('says nothing for default records, the generic store, processors and unknown ids', () => {
     for (const id of [
       'amazon-us',

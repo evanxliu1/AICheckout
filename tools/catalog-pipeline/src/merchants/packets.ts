@@ -67,7 +67,13 @@ async function writeVerifySheets(batch: Batch): Promise<string[]> {
   for (const store of batch.meta.stores) {
     const file = await readJsonOrNull(join(batch.dir, `drafts/${store.domain}.json`), draftFileSchema);
     if (!file) continue;
-    const lines = [`# ${store.domain}: drafted quotes in context`, ''];
+    const d = file.draft;
+    const lines = [
+      `# ${store.domain}: drafted quotes in context`,
+      '',
+      `Draft: kind ${d.kind}, physicalGoods ${d.physicalGoods}, candidateCategory ${d.candidateCategory ?? 'null'}, brands ${d.brandIds.join(', ') || 'none'}.`,
+      '',
+    ];
     for (const [i, item] of file.draft.evidence.entries()) {
       const capture = await readFile(join(batch.dir, `captures/${item.sourceId}.txt`), 'utf8').catch(
         () => '',

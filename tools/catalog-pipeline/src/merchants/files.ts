@@ -28,8 +28,8 @@ export const EVIDENCE_DIR = `${DB_DIR}/evidence`;
 export const RELEASE_CONFIG = `${DB_DIR}/release-config.json`;
 export const REVIEW_FILE = `${DB_DIR}/review.md`;
 export const TIER_A_MANIFEST = `${DB_DIR}/tier-a-manifest.json`;
-export const PROMPT_FILE = 'tools/catalog-pipeline/src/merchants/prompts/merchant-draft.1.md';
-export const PROMPT_VERSION = 'merchant-draft.1';
+export const PROMPT_FILE = 'tools/catalog-pipeline/src/merchants/prompts/merchant-draft.2.md';
+export const PROMPT_VERSION = 'merchant-draft.2';
 export const RESEARCHER_AGENT = '.claude/agents/merchant-researcher.md';
 export const VERIFIER_AGENT = '.claude/agents/merchant-verifier.md';
 export const MERCHANT_AGENTS = { research: 'merchant-researcher', verify: 'merchant-verifier' } as const;
@@ -215,7 +215,8 @@ export const manifestEntrySchema = sourceEntrySchema.extend({
 export const manifestFileSchema = z.looseObject({ sources: z.array(manifestEntrySchema) });
 export type ManifestEntry = z.infer<typeof manifestEntrySchema>;
 
-export const DRAFT_SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category'] as const;
+/** `definition` (prompt 2): an issuer's published definition of a category, quoted from its own page. */
+export const DRAFT_SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category', 'definition'] as const;
 /** What luna returns per store (the Codex output schema is `draftJsonSchema`). The model never sets `category`;
  * it proposes `candidateCategory` and apply decides from the evidence rule. */
 export const draftSchema = z.strictObject({

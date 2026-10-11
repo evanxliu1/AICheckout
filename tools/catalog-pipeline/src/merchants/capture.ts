@@ -105,6 +105,32 @@ export function windows(text: string, matcher: RegExp, span = 500, max = 6): str
   return ranges.map(([s, e]) => text.slice(s, e));
 }
 
+/** Wording an issuer uses when it says what a category covers. */
+const DEFINITION_WORDING = /\b(includ\w*|defin\w*|categor\w*|such as|list|means|consist\w*)\b/i;
+/** Words of the catalog's bonus categories as issuers write them (the apply rule's `ISSUER_CATEGORY_WORDS`, kept
+ * here so capture does not import apply). */
+const CATEGORY_WORDING =
+  /\b(grocer(?:y|ies)|supermarkets?|restaurants?|dining|drug ?stores?|pharmac(?:y|ies)|streaming|gas stations?|ev charging|transit|rideshare|department stores?|home improvement|hardware stores?|wholesale clubs?|warehouse clubs?|electronics|entertainment)\b/i;
+
+/** Sentences of an issuer capture that define a category (a category word with definition wording), ±`span`
+ * characters, merged when they overlap, at most `max`: the drafter's `definition` quotes come from here (prompt
+ * merchant-draft.2), since the name windows alone miss a definition the page states away from the store's name. */
+export function definitionWindows(text: string, span = 200, max = 8): string[] {
+  const ranges: [number, number][] = [];
+  const sentence = /[^.;\n]*[.;\n]?/g;
+  for (const match of text.matchAll(sentence)) {
+    const s = match[0];
+    if (!s.trim() || !CATEGORY_WORDING.test(s) || !DEFINITION_WORDING.test(s)) continue;
+    const start = Math.max(0, match.index - span);
+    const end = Math.min(text.length, match.index + s.length + span);
+    const last = ranges[ranges.length - 1];
+    if (last && start <= last[1]) last[1] = end;
+    else ranges.push([start, end]);
+    if (ranges.length >= max) break;
+  }
+  return ranges.map(([s, e]) => text.slice(s, e));
+}
+
 export const MAX_ISSUER_SOURCES = 5;
 
 export async function runCapture(

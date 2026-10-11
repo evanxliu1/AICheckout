@@ -18,7 +18,7 @@ describe('merchant release schema', () => {
   });
   it('covers every evidence basis and kind in the fixture', () => {
     expect(new Set(MERCHANT_RELEASE_FIXTURE.merchants.map((m) => m.evidence.basis))).toEqual(
-      new Set(['issuer', 'corroborated', 'default']),
+      new Set(['issuer', 'corroborated', 'definition', 'default']),
     );
     expect(MERCHANT_RELEASE_FIXTURE.merchants.some((m) => m.kind === 'processor')).toBe(true);
     expect(MERCHANT_RELEASE_FIXTURE.merchants.some((m) => m.disabled)).toBe(true);
