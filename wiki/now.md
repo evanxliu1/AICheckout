@@ -4,17 +4,17 @@ title: Now
 description: Current state, active work, open questions and next steps. Rewritten at the end of every session.
 status: stable
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-10T23:30:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-11T00:30:00Z
 ---
 
 # Now
 
-As of 2026-10-10T23:30Z.
+As of 2026-10-11T00:30Z.
 
 ## Current state
 
-- **`origin/main` is `7a07113`** (PR #79, Phase 13c). Phases 7–13c are done; Phase 14 (merchant database) is planned ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)).
+- **`origin/main` is `cea4d04`** (PR #81, Phase 14 plan approval). Phases 7–13c are done; Phase 14 (merchant database) is in progress ([plan](product/phase-14-merchant-database.md), [roadmap](product/roadmap.md)).
 - **Hosted catalog:** release 3, `2026-10-05.renewal.1` (178 cards), published 2026-10-05T05:20:50Z; **expires 2026-11-04T00:00Z** ([release history](ops/catalog-release-history.md#release-3-published-2026-10-05)). Render checked 2026-10-10: `/health` 200 and the catalog served; all 10 migrations on hosted ([hosting](ops/hosting.md)).
 - **Captures:** the main checkout holds every gitignored issuer capture ([capture folders](ops/catalog-release.md#capture-folders)) and the pane exports (`evals/merchants/capture/data/pane/`); `AICheckout-p8-wf` and `AICheckout-expansion` stay as backups until Evan agrees to remove them. Curation model: gpt-5.6-luna `xhigh`.
 - **Reader rules:** the reader shows an amount only when certain, otherwise withholds (rates only); generic reader only, no store configs. **Since 2026-10-08 (Evan) the ≥ 99% bar is a quality target, not a pass gate** ([decision](decisions/2026-10-08-pause-capture-quality-target.md)); results are reported with exact bounds, store counts and coverage (target 80% on `cart-1`).
@@ -29,7 +29,8 @@ As of 2026-10-10T23:30Z.
 ## Active work
 
 - **Phase 13c merged 2026-10-10** (PR #79; [report](../docs/evals/cart-detection-v1.md)): the badge at any https store, the rates view, the popup reading on open; held-out detector recall 83.5% with 0 false shows; reader `cart-1` coverage 89.9% on development.
-- **Phase 14 planned 2026-10-10** ([plan](product/phase-14-merchant-database.md), [decision](decisions/2026-10-10-merchant-database-evidence.md)): about 500 stores, a bonus category only on issuer or corroborated evidence (otherwise the general rate), hosted releases. **Design review 2026-10-10** (Fable 5.1, [decision](decisions/2026-10-10-phase-14-design.md)) on branch `phase14-plan-approval`: approach confirmed; the plan now builds bundled-first, in two tiers (deterministic long tail, a luna-draft and Claude-verify pipeline for ~200 brand, bonus-group and processor stores, disputed records held out, no adjudicator), trims the record (no `onlineRetail`/`usMerchant`/quotes/expiry), drops the review-app page, and replaces the 70/30 split with a blind audit of every non-default record plus the frozen 60-domain held-out list. Milestones 14.1 contract/matcher/engine → 14.2 extension; 14.3 candidates/pipeline → 14.4 seed → 14.5 audit; 14.6 hosted and weekly refresh; 14.7 publish. Awaiting Evan's approval; on approval, 14.1 and 14.3 start in parallel.
+- **Phase 14 planned 2026-10-10** ([plan](product/phase-14-merchant-database.md), [decision](decisions/2026-10-10-merchant-database-evidence.md)): about 500 stores, a bonus category only on issuer or corroborated evidence (otherwise the general rate), hosted releases. **Design review 2026-10-10** (Fable 5.1, [decision](decisions/2026-10-10-phase-14-design.md)) on branch `phase14-plan-approval`: approach confirmed; the plan now builds bundled-first, in two tiers (deterministic long tail, a luna-draft and Claude-verify pipeline for ~200 brand, bonus-group and processor stores, disputed records held out, no adjudicator), trims the record (no `onlineRetail`/`usMerchant`/quotes/expiry), drops the review-app page, and replaces the 70/30 split with a blind audit of every non-default record plus the frozen 60-domain held-out list. Milestones 14.1 contract/matcher/engine → 14.2 extension; 14.3 candidates/pipeline → 14.4 seed → 14.5 audit; 14.6 hosted and weekly refresh; 14.7 publish. Approved; 14.1 and 14.3 started in parallel.
+- **Phase 14.1 built 2026-10-11 (UTC)** on branch `phase14-1-contract-engine` (not pushed; review pending): `merchant-release.ts` (schema 1, limits), `merchant-match.ts` (Zod-free matcher, `recordToProfile`), `compareRewards`/`compareV3` `{ merchant }` option, `merchants-v1.ts` (`2026-10-10.seed.1`: `amazon-us`, `best-buy-us`, `newegg-us` with brands, 15 processors, all `default`) built from `evals/merchants/db/records/` by `npm run merchants`, `merchants:check` in CI. All gates green (lint, format, typecheck, `npm test`: extension 840 tests, `catalog:v3:check`, `merchants:check`). Pages: [rewards engine](system/rewards-engine.md#merchant-release-contract-phase-141), [merchants](domain/merchants.md#merchant-release-records-phase-141), [decision](decisions/2026-10-11-merchant-release-seed-and-contract-details.md). **For 14.2:** the seed gives Best Buy and Newegg `general-merchandise` (the evidence rule), so passing the release profile there pauses the Cash+ and Edward Jones electronics bonuses until 14.4 captures store pages and a lookup; 14.2 decides whether to keep the catalog profile for the three legacy ids meanwhile. **For 14.3:** verify the 15 hand-authored processor hosts.
 - **Data collection decided 2026-10-10** ([decision](decisions/2026-10-10-data-collection.md)): one onboarding opt-in, persistent random ID, exact amounts and owned cards, domains only on a tap, a minimal telemetry set in Release A.
 
 ## Open questions and next steps

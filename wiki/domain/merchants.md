@@ -1,12 +1,12 @@
 ---
 type: Domain Concept
 title: Merchants
-description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, the caveats that make bonuses uncertain, their catalog v3 brands, and the engine's generic "Another U.S. online store" profile.
+description: The three merchant profiles in catalog v2 (Best Buy, Newegg, Amazon), their expected category and MCC with confidence, the caveats that make bonuses uncertain, their catalog v3 brands, the engine's generic "Another U.S. online store" profile, and the Phase 14 merchant release records (seed built in 14.1).
 status: stable
 tags: [domain, merchants, mcc]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:28:14Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-11T00:30:00Z
 sources:
   - resource: ../../evals/curation/real/merchants.json
     title: Merchant profiles (input to the catalog builder)
@@ -18,6 +18,10 @@ sources:
     title: MerchantProfile type
   - resource: ../../packages/rewards-core/src/generic-merchant.ts
     title: GENERIC_MERCHANT_PROFILE (Phase 11)
+  - resource: ../../packages/rewards-core/src/merchants-v1.ts
+    title: MERCHANTS_V1 seed release (Phase 14.1)
+  - resource: ../../evals/merchants/db/records/
+    title: Authored merchant records
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
 stale_after: 2026-11-04T00:00:00Z
@@ -72,9 +76,25 @@ Since Phase 11 the engine, not the catalog, supplies one more profile: `GENERIC_
 - **Brand websites deferred (Evan, 2026-10-05):** at the website of a brand the catalog knows (walmart.com, target.com, …) brand-scoped rules and exclusions do not apply and closed-loop cards are not accepted until Phase 14 gives those domains their brands, before Release A. Planned for Phase 14 (Evan, 2026-10-10): brand rules apply at any matched store regardless of its category, and a store gets a bonus category only on issuer or corroborated evidence, otherwise the general rate, never a range ([decision](../decisions/2026-10-10-merchant-database-evidence.md), [Phase 14 plan](../product/phase-14-merchant-database.md)).
 - **Generic reader only (Evan, 2026-10-06):** no store configs anywhere; when the generic reader (built in Phase 13, 2026-10-09) is not certain of an amount it withholds and the recommendation shows rates only ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md)). The three supported stores' adapters are legacy and retire once the generic reader matches them.
 
+## Merchant release records (Phase 14.1)
+
+Since milestone 14.1 (2026-10-10) a second source of profiles exists beside the catalog: the merchant release (`merchant-release.1`, [contract](../system/rewards-engine.md#merchant-release-contract-phase-141), [plan](../product/phase-14-merchant-database.md#3-what-a-merchant-record-says)). A record says who a website is (`hosts`, `name`), its `kind` (`merchant`, `marketplace`, `processor`), whether it sells `physicalGoods`, its `category` with the `evidence` behind it (`issuer`, `corroborated` or `default`), the catalog `brandIds` whose official store it is, and a remote `disabled` switch. A matched record becomes a `MerchantProfileV3` (`recordToProfile`: online U.S. store, no MCC) that the engine takes as `{ merchant }`; the extension wires this in 14.2.
+
+**Seed release `2026-10-10.seed.1`** (`MERCHANTS_V1`, authored in [`evals/merchants/db/records/`](../../evals/merchants/db/records/), [decision](../decisions/2026-10-11-merchant-release-seed-and-contract-details.md)):
+
+| Records | Hosts | Kind | Goods | Category | Brands |
+| --- | --- | --- | --- | --- | --- |
+| `amazon-us` | `amazon.com` | merchant | yes | general-merchandise (`default`) | `amazon` |
+| `best-buy-us` | `bestbuy.com` | merchant | yes | general-merchandise (`default`; the catalog's `electronics` rests on a lookup alone, so under the evidence rule the release says nothing until 14.4 captures a store page) | `best-buy` |
+| `newegg-us` | `newegg.com` | merchant | yes | general-merchandise (`default`, as Best Buy) | `newegg` |
+| 15 processors: `paypal`, `venmo`, `shop-pay` (`shop.app`, `pay.shopify.com`), `klarna`, `affirm`, `afterpay`, `bolt`, `amazon-pay` (`pay.amazon.com`), `sezzle`, `zip` (`zip.co`), `stripe-checkout` (`checkout.stripe.com`), `link`, `google-pay` (`pay.google.com`), `cash-app-pay` (`cash.app`), `splitit` | as listed, else `<id>.com` | processor | no | general-merchandise (`default`) | none |
+
+No record has sources or a bonus category yet; 14.4 adds them. The processor hosts are hand-authored and unverified until 14.3.
+
 ## Gotchas
 
 - The research report recommends the label "community, medium-low confidence". The catalog stores `low`.
+- The seed merchant release gives Best Buy and Newegg no category, while the catalog v3 profiles say `electronics`: once the extension passes the release profile (14.2) the Cash+ and Edward Jones electronics bonuses pause there until 14.4 supplies evidence, unless 14.2 keeps the catalog profile for the three legacy ids.
 - At a generic store the online-retail answer defaults to "Eligible", so a BCE-style online-retail bonus applies unless the shopper changes it; a payment processor page (PayPal, Shop Pay) also gets the generic answer.
 - Browser cart observations do not show how a transaction will post. The shopper's `onlineRetail` answer and the payment path decide whether BCE's 3% is certain or a range.
 
