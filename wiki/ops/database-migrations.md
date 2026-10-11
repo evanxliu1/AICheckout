@@ -30,7 +30,7 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 10 on `main` (checked 2026-10-10 at `7a07113`), `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24); an 11th, `20261011111247_merchant_releases.sql` (Phase 14.6), on branch `phase14-6-hosted`, to be pushed by the coordinator after its PR merges |
+| Migrations | 11 on `main` and on hosted (checked 2026-10-11 at `365c7159`): `20261011111247_merchant_releases` (Phase 14.6, PR #88) pushed to hosted 2026-10-11 by the coordinating session with `./scripts/db-push.sh` after a dry run. Earlier: 10 on `main` (checked 2026-10-10 at `7a07113`), `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24); an 11th, `20261011111247_merchant_releases.sql` (Phase 14.6), on branch `phase14-6-hosted`, to be pushed by the coordinator after its PR merges |
 | pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary`, `merchant_releases` since 14.6) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v3.ts` (since Stage 2 M5): one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |
