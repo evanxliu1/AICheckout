@@ -16,7 +16,7 @@ import {
   rowEmphasis,
   unavailableCopy,
 } from '../components/estimates';
-import { merchantName } from '../checkout/merchants';
+import { merchantName, storeEvidence } from '../checkout/merchants';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
 
@@ -347,6 +347,7 @@ function ReadyBody({
     setInputError('');
     void apply({ type: 'badge:set-amount', amountCents: cents });
   };
+  const evidence = storeEvidence(view.merchantId);
   return (
     <>
       {ready ? (
@@ -355,6 +356,7 @@ function ReadyBody({
             ? `Based on ${formatUsd(ready.cartAmountCents)} cart ${KIND_LABELS[ready.amountKind!]} at ${merchantName(view.merchantId)}.`
             : `Based on ${formatUsd(ready.amountCents)} you entered, at ${merchantName(view.merchantId)}.`}
           {ready.amountKind === 'subtotal' && !ready.amountEdited && ' Tax and shipping are not included.'}
+          {evidence && ` ${evidence}`}
         </p>
       ) : (
         <RatesResult catalog={rates!.catalog} result={rates!.result} merchantId={view.merchantId} />

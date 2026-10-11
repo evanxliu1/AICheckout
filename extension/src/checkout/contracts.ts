@@ -1,11 +1,12 @@
 import { z } from 'zod';
 import { MAX_AMOUNT_CENTS } from '../domain';
-import { GENERIC_READER_VERSION, MERCHANT_IDS, MERCHANTS, type MerchantId } from './merchants';
-import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
+import { GENERIC_READER_VERSION, MERCHANTS, type MerchantId } from './merchants';
 
 const readingFields = z.strictObject({
   status: z.literal('found'),
-  merchantId: z.enum([...MERCHANT_IDS, GENERIC_MERCHANT_ID]),
+  /** A legacy store, the generic store, or a merchant release record (Phase 14.2); the worker and the
+   * popup check it against the tab's URL. */
+  merchantId: z.string().min(1).max(100),
   currency: z.literal('USD'),
   amountCents: z.number().int().positive().max(MAX_AMOUNT_CENTS),
   kind: z.enum(['total', 'estimated-total', 'subtotal']),

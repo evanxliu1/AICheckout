@@ -72,6 +72,17 @@ describe('checkout browser boundary', () => {
     expect(execute.mock.calls[1][0]).toMatchObject({ target: { tabId: 7, documentIds: ['doc-1'] } });
     await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
   });
+  it('does not inject on a payment processor’s page and names it (Phase 14.2)', async () => {
+    query.mockResolvedValue([{ id: 7, url: 'https://www.paypal.com/checkoutnow?token=x' }]);
+    await expect(readActiveCheckout()).rejects.toThrow('This is a payment page, not the store’s.');
+    expect(execute).not.toHaveBeenCalled();
+  });
+  it('asks for no typed amount when Chrome cannot run the reader (A5)', async () => {
+    execute.mockReset().mockRejectedValue(new Error('No tab with id'));
+    await expect(readActiveCheckout()).rejects.toThrow(
+      'Reopen the extension from the cart’s tab and read it again.',
+    );
+  });
   it('does not inject on non-web pages or when Chrome has not granted activeTab', async () => {
     query.mockResolvedValue([{ id: 7, url: 'chrome://extensions/' }]);
     await expect(readActiveCheckout()).rejects.toThrow('cart or checkout page in a web tab');

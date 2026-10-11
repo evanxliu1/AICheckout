@@ -1,6 +1,12 @@
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
-import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout, merchantForTab } from './merchants';
+import {
+  GENERIC_READER_VERSION,
+  MERCHANTS,
+  merchantForCheckout,
+  merchantForTab,
+  storeForTab,
+} from './merchants';
 import { READ_COPY } from './read-copy';
 
 /** Built from content.ts by the content-script plugin in vite.config.ts (an IIFE, no imports). */
@@ -17,7 +23,9 @@ async function activeTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tab?.id === undefined || !tab.url)
     throw new Error('Open the extension from the store tab using its toolbar button, then try again.');
-  if (!merchantForTab(tab.url)) throw new Error(copy['unsupported-page']);
+  const store = storeForTab(tab.url);
+  if (!store) throw new Error(copy['unsupported-page']);
+  if (store.kind === 'processor') throw new Error(copy['payment-page']);
   return { id: tab.id, url: tab.url };
 }
 /** The merchant a reading of this URL must name: the legacy adapter's store on its cart pages, else
@@ -79,7 +87,7 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
   } catch (error) {
     if (error instanceof Error && [changed, ...Object.values(copy)].includes(error.message)) throw error;
     throw new Error(
-      'Chrome could not read this page. Reopen the extension from the cart’s toolbar button, or enter the amount manually. This page can’t be read; enter the amount manually.',
+      'Chrome could not read this page. Reopen the extension from the cart’s tab and read it again.',
     );
   }
 }

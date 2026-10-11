@@ -29,29 +29,45 @@ import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
-import { MERCHANT_IDS, merchantForTab, merchantName } from '../checkout/merchants';
+import {
+  MERCHANT_IDS,
+  isLegacyMerchant,
+  merchantName,
+  releaseRecord,
+  storeEvidence,
+  storeForTab,
+  storeProfile,
+} from '../checkout/merchants';
+import type { TabStore } from '../checkout/merchants';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
-/** The stores the popup offers: the supported stores, then any other U.S. online store. */
+/** The stores the popup always offers: the supported stores, then any other U.S. online store. A store
+ * matched from the tab (a merchant release record) is offered while it is selected. */
 const STORE_IDS: string[] = [...MERCHANT_IDS, GENERIC_MERCHANT_ID];
 
-/** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null, and
- * whether the tab is an https page the popup reads on open (Phase 13c). */
-async function activeTabMerchant(): Promise<{ id: string | null; https: boolean; tabId: number | null }> {
+/** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null for a non-web
+ * page, and whether the tab is an https page the popup reads on open (Phase 13c). A payment processor's
+ * page (Phase 14.2) has no store: the popup keeps the saved one and says it cannot compare there. */
+async function activeTabMerchant(): Promise<{
+  store: TabStore | null;
+  https: boolean;
+  tabId: number | null;
+}> {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     return {
-      id: merchantForTab(tab?.url),
+      store: storeForTab(tab?.url),
       https: !!tab?.url && tab.url.startsWith('https://'),
       tabId: tab?.id ?? null,
     };
   } catch {
-    return { id: null, https: false, tabId: null };
+    return { store: null, https: false, tabId: null };
   }
 }
-/** Online retail eligibility for a newly chosen store: the generic store sells physical goods
- * online (its profile, as the badge derives it); a supported store asks the shopper. */
-const storeOnlineRetail = (id: string): Eligibility => (id === GENERIC_MERCHANT_ID ? 'eligible' : 'unknown');
+/** Online retail eligibility for a newly chosen store: the generic store and a release record sell
+ * physical goods online (their profiles, as the badge derives them); a legacy store asks the shopper. */
+const storeOnlineRetail = (id: string): Eligibility =>
+  !isLegacyMerchant(id) && (id === GENERIC_MERCHANT_ID || releaseRecord(id)) ? 'eligible' : 'unknown';
 
 export default function Popup({
   onLock,
@@ -81,6 +97,8 @@ export default function Popup({
   const [cartId, setCartId] = useState<string | null>(null);
   /** The rates view: the cards ranked by rate when the read found a cart but no certain amount. */
   const [rates, setRates] = useState<{ merchantId: string; result: Comparison } | null>(null);
+  /** The popup was opened on a payment processor's page (Phase 14.2): nothing is read or compared there. */
+  const [paymentPage, setPaymentPage] = useState<string | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
   // The catalog in effect comes from the worker with every response; pages bundle none.
   const catalog = view?.catalog;
@@ -167,13 +185,15 @@ export default function Popup({
     let cancelled = false;
     // Kept even when loading fails, so "Reload saved inputs" restores the tab's store too.
     const tab = activeTabMerchant().then((found) => {
-      store.current = found.id;
-      return found;
+      const id = found.store && found.store.kind !== 'processor' ? found.store.id : null;
+      store.current = id;
+      return { ...found, id };
     });
     void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), tab])
       .then(([next, found]) => {
         if (cancelled) return;
         restore(next);
+        if (found.store?.kind === 'processor') setPaymentPage(found.store.name);
         // An https store tab is read on open: a certain amount fills in, otherwise the rates view. A
         // cart read in this very tab, or a comparison saved for this legacy store, is kept instead
         // (reopening the popup must not discard it); the generic id is every other store, so a saved
@@ -317,7 +337,7 @@ export default function Popup({
           if (!auto) setError('Your cards could not be compared. Try again.');
         }
       } else if (!auto || message === READ_COPY['unsupported-currency'])
-        setError(message || 'The cart could not be read. Enter the amount manually.');
+        setError(message || 'The cart could not be read. Read it again.');
     } finally {
       setPending(null);
     }
@@ -449,6 +469,12 @@ export default function Popup({
             </AlertInline>
           )}
           {!view && !error && <ApplicationState status="loading" titleTag="h2" title="Loading your cards…" />}
+          {paymentPage && (
+            <AlertInline role="status">
+              {paymentPage} is a payment page, not the store’s. Cards can’t be compared here; open the store’s
+              cart or checkout page, or pick the store below.
+            </AlertInline>
+          )}
           {view?.notice && (
             <AlertInline
               role="status"
@@ -537,7 +563,7 @@ export default function Popup({
                           }}
                         >
                           {!STORE_IDS.includes(merchantId) && (
-                            <option value={merchantId}>Unsupported saved merchant</option>
+                            <option value={merchantId}>{merchantName(merchantId)}</option>
                           )}
                           {STORE_IDS.map((id) => (
                             <option key={id} value={id}>
@@ -547,12 +573,14 @@ export default function Popup({
                         </Select>
                       )}
                     </Field>
-                    {!catalogMerchantIds(view.catalog).includes(merchantId) && (
-                      <AlertInline color="warning" role="status">
-                        Your current card terms do not cover {merchantName(merchantId)}. Check for updated
-                        terms or an extension update.
-                      </AlertInline>
-                    )}
+                    {storeEvidence(merchantId) && <p className="supporting">{storeEvidence(merchantId)}</p>}
+                    {!catalogMerchantIds(view.catalog).includes(merchantId) &&
+                      !storeProfile(view.catalog, merchantId) && (
+                        <AlertInline color="warning" role="status">
+                          Your current card terms do not cover {merchantName(merchantId)}. Check for updated
+                          terms or an extension update.
+                        </AlertInline>
+                      )}
                     <Button
                       color="secondary"
                       icon="shopping-cart"
@@ -594,8 +622,8 @@ export default function Popup({
                         </p>
                         {cart.kind === 'subtotal' && (
                           <p className="mt-2">
-                            The final charge is not known. Enter the amount you’ll charge when it is
-                            available, or compare this subtotal only.
+                            The final charge is not known yet, so this compares the subtotal before tax and
+                            shipping.
                           </p>
                         )}
                       </AlertInline>
