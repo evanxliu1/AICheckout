@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18519,
+    "outputTokens": 280
+  },
+  "durationMs": 33201,
+  "draft": {
+    "domain": "kinneydrugs.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "drugstores",
+    "evidence": [
+      {
+        "sourceId": "kinneydrugs-com-page-1",
+        "quote": "we offer FREE Prescription Delivery.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "kinneydrugs-com-page-1",
+        "quote": "we will deliver other store items",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "kinneydrugs-com-page-1",
+        "quote": "Kinney Drugs pharmacy",
+        "supports": "category"
+      },
+      {
+        "sourceId": "kinneydrugs-com-page-2",
+        "quote": "Pharmacy Finder",
+        "supports": "category"
+      },
+      {
+        "sourceId": "kinneydrugs-com-page-3",
+        "quote": "Prescription & Pharmacy Questions",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Drug Store purchases include those made at stand-alone drug stores, pharmacies, and online pharmacies.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Amex's select major-drugstore list omits Kinney Drugs, so issuer-specific rewards treatment may differ; Chase and Discover define the category broadly to include pharmacies."
+  }
+}

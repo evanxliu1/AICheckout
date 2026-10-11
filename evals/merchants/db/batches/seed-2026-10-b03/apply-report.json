@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "appliedOn": "2026-10-11",
+  "records": [
+    {
+      "domain": "capsule.com",
+      "id": "capsule-us",
+      "basis": "definition",
+      "category": "drugstores"
+    },
+    {
+      "domain": "carnival.com",
+      "id": "carnival-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "celebritycruises.com",
+      "id": "celebritycruises-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "chick-fil-a.com",
+      "id": "chick-fil-a-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "chicos.com",
+      "id": "chicos-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "chilis.com",
+      "id": "chilis-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "chipotle.com",
+      "id": "chipotle-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "choicehotels.com",
+      "id": "choicehotels-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "cinemark.com",
+      "id": "cinemark-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "entertainment",
+        "reason": "no store-page quote shows a entertainment business type",
+        "notes": "The pages list Food & Drink and Merchandise, but do not establish merchandise shipping or pickup; the documented business is theatre and ticket operations."
+      }
+    },
+    {
+      "domain": "clubwyndham.com",
+      "id": "clubwyndham-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "costplusdrugs.com",
+      "id": "costplusdrugs-us",
+      "basis": "definition",
+      "category": "drugstores"
+    },
+    {
+      "domain": "croatiaairlines.com",
+      "id": "croatiaairlines-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "crutchfield.com",
+      "id": "crutchfield-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "electronics",
+        "reason": "no store-page quote shows a electronics business type",
+        "notes": null
+      }
+    },
+    {
+      "domain": "dairyqueen.com",
+      "id": "dairyqueen-us",
+      "basis": "definition",
+      "category": "dining"
+    },
+    {
+      "domain": "dillards.com",
+      "id": "dillards-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "department-stores",
+        "reason": "no store-page quote shows a department-stores business type",
+        "notes": "The store's own pages were inaccessible, but issuer materials identify Dillard's as a department store and describe purchases made at Dillard's."
+      }
+    },
+    {
+      "domain": "directbuy.com",
+      "id": "directbuy-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "discoveryplus.com",
+      "id": "discoveryplus-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Citi's closed list of streaming providers does not include discovery+; it does not support the category for this store. Discover's examples list of select streaming services does not name discovery+."
+      },
+      "refused": {
+        "candidate": "streaming",
+        "reason": "no store-page quote shows a streaming business type",
+        "notes": "Citi's Select Streaming Services list omits discovery+, but Amex and three U.S. Bank documents explicitly list it."
+      }
+    },
+    {
+      "domain": "disneyland.disney.go.com",
+      "id": "go-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    },
+    {
+      "domain": "disneystore.com",
+      "id": "disneystore-us",
+      "basis": "default",
+      "category": "general-merchandise"
+    }
+  ],
+  "heldOut": [
+    {
+      "domain": "cathaypacific.com",
+      "disputed": [
+        {
+          "field": "name",
+          "reason": "No store page was captured and no issuer capture names Cathay Pacific; the name cannot be settled from the captures."
+        },
+        {
+          "field": "hosts",
+          "reason": "No store page captured and no issuer capture names the store or this host; the checkout host cannot be settled."
+        },
+        {
+          "field": "kind",
+          "reason": "No store-page or issuer capture describes what the site does; kind cannot be settled from the captures."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "No capture describes what the site sells; physicalGoods cannot be settled from the captures."
+        },
+        {
+          "field": "brandIds",
+          "reason": "No capture names Cathay or Cathay Pacific, so the cathay brand cannot be confirmed from the captures."
+        }
+      ]
+    },
+    {
+      "domain": "cedarpoint.com",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "cedarpoint.com only redirects; checkout is on sixflags.com, a host shared by every Six Flags park, so it belongs to Six Flags, not Cedar Point alone."
+        },
+        {
+          "field": "physicalGoods",
+          "reason": "Captures show park admission sales; the online shop appears only as a menu link (and sells gift cards); no goods shown shipped or picked up from the site."
+        }
+      ]
+    },
+    {
+      "domain": "chargepoint.com",
+      "disputed": [
+        {
+          "field": "physicalGoods",
+          "reason": "Captures mention hardware and a home charger but show no goods sold, shipped or picked up through the site; drivers pay for charging sessions."
+        }
+      ]
+    },
+    {
+      "domain": "crunchyroll.com",
+      "disputed": [
+        {
+          "field": "physicalGoods",
+          "reason": "Captures show only an error page and a help center with a Store topic; no goods shown shipped or picked up."
+        }
+      ]
+    },
+    {
+      "domain": "daveandbusters.com",
+      "disputed": [
+        {
+          "field": "physicalGoods",
+          "reason": "The only goods quote is a Power Card (game credit card); no merchandise shown shipped or picked up."
+        },
+        {
+          "field": "candidateCategory",
+          "reason": "Captures show a games-and-dining venue; no captured issuer definition of entertainment covers arcades or game venues, so entertainment is unsupported."
+        }
+      ]
+    },
+    {
+      "domain": "disneyplus.com",
+      "disputed": [
+        {
+          "field": "draft",
+          "reason": "the drafter's quotes failed the verbatim gate 3 times"
+        }
+      ]
+    }
+  ],
+  "botWalled": [
+    "cathaypacific.com",
+    "choicehotels.com",
+    "dillards.com",
+    "disneyland.disney.go.com"
+  ]
+}
