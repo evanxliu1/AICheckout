@@ -7,7 +7,7 @@ import type { MerchantRelease } from './types.ts';
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.seed.16',
+  version: '2026-10-11.seed.17',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -107,20 +107,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'store-page',
       capturedAt: '2026-10-11',
       sha256: '7558e989cc7bf677d3e72d80db66e2932d932aa2f86c41dac41478a7709f1231',
-    },
-    {
-      id: 'chilis-com-page-1',
-      url: 'https://www.chilis.com/who-we-are',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '96b3c654a9daac5b934d6e1d606b1beac7ce6495a47520518e8e72e571f69be0',
-    },
-    {
-      id: 'chipotle-com-page-1',
-      url: 'https://www.chipotle.com/values',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '0c8f6297dc73524a98433caa048f5758dfae3ff1ff1aa79a42dd774874da2673',
     },
     {
       id: 'citi-strata-rewards-terms',
@@ -242,13 +228,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: '82e8775489cfe93f7eb2b8ed882622b663dd4dde4abc482412d2487bfd4ac3ad',
     },
     {
-      id: 'kinneydrugs-com-page-2',
-      url: 'https://www.kinneydrugs.com/locations/',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '29077e39bf5486cdf3a10b1270e0ff8a211da5747379ab9fbf29c8ebfa1b4e79',
-    },
-    {
       id: 'kinneydrugs-com-page-3',
       url: 'https://www.kinneydrugs.com/contact-us/',
       kind: 'store-page',
@@ -319,13 +298,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: '124288245380c7f81da5f55d6abb0c93f10ed562cd92e79a89a5bbc2161b9dd2',
     },
     {
-      id: 'olivegarden-com-page-2',
-      url: 'https://www.olivegarden.com/faqs',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '416edb585ff799c9be1afec7f2d21415a020ee05c1e2475d111acd7ecdb24c4b',
-    },
-    {
       id: 'pandora-com-page-1',
       url: 'https://www.pandora.com/about',
       kind: 'store-page',
@@ -389,13 +361,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: 'e90a95cd9f44c27dcf925d561014d6e913570a4ff272eaac31e2a2aecbfa752c',
     },
     {
-      id: 'sonicdrivein-com-page-1',
-      url: 'https://www.sonicdrivein.com/contact-us/',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '3de117711b8f82ff9644aa7980146b97cc6cc60a9271838007cdaf3665127024',
-    },
-    {
       id: 'spotify-com-page-2',
       url: 'https://newsroom.spotify.com/company-info/',
       kind: 'store-page',
@@ -415,34 +380,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'store-page',
       capturedAt: '2026-10-11',
       sha256: '18ffd3f8b002f9fde3ba63518cd0c4b90b1f837c24a5cd8a4409767df04bdbaa',
-    },
-    {
-      id: 'thrivemarket-com-page-1',
-      url: 'https://thrivemarket.com/about-us',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: 'f50e9e0df88fcfc1381e0bff39b31573fd0a36729c54a5deccb4572a8dc33397',
-    },
-    {
-      id: 'thrivemarket-com-page-2',
-      url: 'https://help.thrivemarket.com/hc/en-us',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: 'e7ff313ed23237ebda973572a7789dc752937e45382107dbb6ed1ef33ebf5134',
-    },
-    {
-      id: 'tomthumb-com-page-1',
-      url: 'https://www.tomthumb.com/about-us.html',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '48fd79902cbdaccde613f30416c541ad681899e57cdb9a7d2644a98349602907',
-    },
-    {
-      id: 'tomthumb-com-page-2',
-      url: 'https://www.tomthumb.com/faq.html',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: 'b312af42a0cb6acc648e096ccff4920d0a7abcbf3bfb0c9198669349a7df5f2f',
     },
     {
       id: 'truevalue-com-page-1',
@@ -492,13 +429,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'issuer-terms',
       capturedAt: '2026-10-05',
       sha256: '9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998',
-    },
-    {
-      id: 'vons-com-page-1',
-      url: 'https://www.vons.com/about-us.html',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: 'b508820be99f3fbcaf8db5813150e0d3679a693578f3abbe65f3c58033a1df97',
     },
     {
       id: 'walgreens-com-page-1',
@@ -833,7 +763,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'airfrance-us-us',
+      id: 'airfrance-us',
       name: 'Air France',
       hosts: ['airfrance.us'],
       kind: 'merchant',
@@ -875,7 +805,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'aldi-us-us',
+      id: 'aldi-us',
       name: 'ALDI',
       hosts: ['aldi.us'],
       kind: 'merchant',
@@ -1257,7 +1187,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'aventon-us',
-      name: 'Aventon Bikes Electric Bikes Redefining Adventure',
+      name: 'Aventon',
       hosts: ['aventon.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1268,7 +1198,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'avery-us',
-      name: 'Buy Custom & Blank Labels, Stickers, Cards & Tags',
+      name: 'Avery.com',
       hosts: ['avery.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1312,7 +1242,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'backmarket-us',
-      name: "Refurbished tech that's better for the planet",
+      name: 'Back Market',
       hosts: ['backmarket.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1576,7 +1506,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'booksamillion-us',
-      name: 'BAM Books, Toys & More',
+      name: 'Books-A-Million Online Book Store',
       hosts: ['booksamillion.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1598,7 +1528,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'bootbarn-us',
-      name: 'Access to this page has been denied.',
+      name: 'Bootbarn',
       hosts: ['bootbarn.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1730,7 +1660,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'bsnsports-us',
-      name: 'Custom Team Uniforms, Apparel & Equipment',
+      name: 'BSN SPORTS',
       hosts: ['bsnsports.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1741,7 +1671,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'buckle-us',
-      name: 'Quality Jeans, Shoes & Clothes',
+      name: 'Buckle',
       hosts: ['buckle.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1784,7 +1714,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'calvinklein-us-us',
+      id: 'calvinklein-us',
       name: 'Calvinklein',
       hosts: ['calvinklein.us'],
       kind: 'merchant',
@@ -1796,7 +1726,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'campingworld-us',
-      name: '1 Destination for RV Sales & Camping Supplies',
+      name: 'Campingworld',
       hosts: ['campingworld.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1873,7 +1803,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'carters-us',
-      name: "Carter's Baby, Toddler, and Children's Clothes",
+      name: 'Carters',
       hosts: ['carters.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -1917,7 +1847,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'catherines-us',
-      name: 'Affordable Plus Size Clothing & Fashion for Women',
+      name: 'Catherines',
       hosts: ['catherines.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2063,17 +1993,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['chilis.com'],
       kind: 'merchant',
       physicalGoods: false,
-      category: 'dining',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'chilis-com-page-1',
-          'amex-rewards-info-retail',
-          'chase-rewards-category-faq',
-          'citi-strata-rewards-terms',
-          'discover-cashback-calendar',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -2083,17 +2004,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['chipotle.com'],
       kind: 'merchant',
       physicalGoods: false,
-      category: 'dining',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'chipotle-com-page-1',
-          'amex-rewards-info-retail',
-          'chase-rewards-category-faq',
-          'citi-strata-rewards-terms',
-          'discover-cashback-calendar',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -2121,7 +2033,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'chrono24-us',
-      name: "Chrono24 The World's Leading Watch Market",
+      name: 'Chrono24',
       hosts: ['chrono24.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2220,7 +2132,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'comc-us',
-      name: 'Check Out My Baseball Cards, Comics & Collectibles',
+      name: 'Comc',
       hosts: ['comc.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2399,7 +2311,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'customwheeloffset-us',
-      name: 'Simplifying Buying Aftermarket Wheels & Tires',
+      name: 'Customwheeloffset',
       hosts: ['customwheeloffset.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2477,7 +2389,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'denniskirk-us',
-      name: 'Just a moment...',
+      name: 'Denniskirk',
       hosts: ['denniskirk.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2641,7 +2553,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'disturbia-us-us',
+      id: 'disturbia-us',
       name: 'Disturbia',
       hosts: ['disturbia.us'],
       kind: 'merchant',
@@ -2675,7 +2587,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'dollartree-us',
-      name: 'Glass Vases, Party Supplies, Cleaning & More',
+      name: 'DollarTree.com',
       hosts: ['dollartree.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -2983,7 +2895,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'farmandfleet-us',
-      name: 'Pardon Our Interruption',
+      name: 'Farmandfleet',
       hosts: ['farmandfleet.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3082,7 +2994,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'fitmentindustries-us',
-      name: 'Car Wheels, Tires, Suspension & More',
+      name: 'Fitment Industries',
       hosts: ['fitmentindustries.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3147,7 +3059,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'flooranddecor-us',
-      name: 'Floor & Decor High Quality Flooring and Tile',
+      name: 'Flooranddecor',
       hosts: ['flooranddecor.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3180,7 +3092,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'footlocker-us',
-      name: 'Sneakers, Apparel & More',
+      name: 'Foot Locker',
       hosts: ['footlocker.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3280,7 +3192,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'funko-us',
-      name: 'Funko Official Store, Home of Pop Vinyl, Personalized Pops',
+      name: 'Funko',
       hosts: ['funko.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3568,7 +3480,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       id: 'harley-davidson-us',
       name: 'Harley-Davidson',
       hosts: ['harley-davidson.com'],
-      kind: 'marketplace',
+      kind: 'merchant',
       physicalGoods: true,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
@@ -3795,7 +3707,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'ifit-us',
-      name: 'Workout App for At-Home Training, Cardio & Strength',
+      name: 'Ifit',
       hosts: ['ifit.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3914,7 +3826,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'jamesavery-us',
-      name: 'James Avery Artisan Jewelry Official Site Charms, Rings & Mo',
+      name: 'Jamesavery',
       hosts: ['jamesavery.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -3969,7 +3881,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'jellycat-us',
-      name: 'Just a moment...',
+      name: 'Official Jellycat Store',
       hosts: ['jellycat.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4216,12 +4128,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'drugstores',
       evidence: {
         basis: 'definition',
-        sourceIds: [
-          'kinneydrugs-com-page-1',
-          'kinneydrugs-com-page-2',
-          'kinneydrugs-com-page-3',
-          'discover-cashback-calendar',
-        ],
+        sourceIds: ['kinneydrugs-com-page-1', 'kinneydrugs-com-page-3', 'discover-cashback-calendar'],
       },
       brandIds: [],
       disabled: false,
@@ -4238,7 +4145,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'klm-us-us',
+      id: 'klm-us',
       name: 'KLM Royal Dutch Airlines',
       hosts: ['klm.us'],
       kind: 'merchant',
@@ -4325,7 +4232,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'lanebryant-us',
-      name: 'Access to this page has been denied.',
+      name: 'Lanebryant',
       hosts: ['lanebryant.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4422,7 +4329,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'lifeisgood-us',
-      name: 'Life is Good Shop the Official Company Website',
+      name: 'Life is Good',
       hosts: ['lifeisgood.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4488,7 +4395,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'loft-us',
-      name: 'Access to this page has been denied.',
+      name: 'Loft',
       hosts: ['loft.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4822,7 +4729,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'minted-us',
-      name: 'Premium Christmas Cards, Wedding Invitations, Stationery, Gi',
+      name: 'Minted',
       hosts: ['minted.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4855,7 +4762,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'missouriquiltco-us',
-      name: 'Huge selection of quilting precuts & quilt fabric by the yar',
+      name: 'Missouriquiltco',
       hosts: ['missouriquiltco.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4877,7 +4784,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'morningsave-us',
-      name: 'MorningSave Big Savings. Top Brands. New Daily.',
+      name: 'Morningsave',
       hosts: ['morningsave.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4921,7 +4828,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'musiciansfriend-us',
-      name: "Musician's Friend Musical Instruments Store",
+      name: 'Musiciansfriend',
       hosts: ['musiciansfriend.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -4943,7 +4850,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'mycomicshop-us',
-      name: 'Comic Books Buy, Sell, Trade, Consign, Collect',
+      name: 'MyComicShop',
       hosts: ['mycomicshop.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -5172,7 +5079,6 @@ export const MERCHANTS_V1: MerchantRelease = {
         basis: 'definition',
         sourceIds: [
           'olivegarden-com-page-1',
-          'olivegarden-com-page-2',
           'us-bank-cash-plus-sample-merchants',
           'amex-rewards-info-retail',
           'chase-rewards-category-faq',
@@ -5328,7 +5234,6 @@ export const MERCHANTS_V1: MerchantRelease = {
           'pandora-com-page-1',
           'amex-rewards-info-retail',
           'citi-strata-rewards-terms',
-          'discover-cashback-calendar',
           'us-bank-altitude-connect-rewards-terms',
           'us-bank-altitude-go-rewards-terms',
           'us-bank-cash-plus-sample-merchants',
@@ -5831,7 +5736,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'replacements-us',
-      name: 'Replacement China Patterns, Flatware, and Crystal',
+      name: 'Replacements, Ltd.',
       hosts: ['replacements.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -5875,7 +5780,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'revzilla-us',
-      name: 'Motorcycle Gear, Free Shipping & HD Video Reviews Online',
+      name: 'RevZilla',
       hosts: ['revzilla.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -5919,7 +5824,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'rockymountainatvmc-us',
-      name: 'ATV Parts, ATV Tires, Dirt Bike Parts, Motocross Gear, Motor',
+      name: 'Rocky Mountain ATVMC',
       hosts: ['rockymountainatvmc.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6018,7 +5923,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'sallybeauty-us',
-      name: 'Access to this page has been denied.',
+      name: 'Sallybeauty',
       hosts: ['sallybeauty.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6051,7 +5956,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'scentbird-us',
-      name: 'Perfume & Cologne Subscription Box from 8.97',
+      name: 'Scentbird',
       hosts: ['scentbird.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6354,7 +6259,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       name: 'SiriusXM',
       hosts: ['siriusxm.com'],
       kind: 'merchant',
-      physicalGoods: true,
+      physicalGoods: false,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['siriusxm'],
@@ -6392,7 +6297,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'sleepnumber-us',
-      name: 'Mattresses, Bedding, Pillows',
+      name: 'Sleep Number',
       hosts: ['sleepnumber.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6462,17 +6367,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['sonicdrivein.com'],
       kind: 'merchant',
       physicalGoods: false,
-      category: 'dining',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'sonicdrivein-com-page-1',
-          'amex-rewards-info-retail',
-          'chase-rewards-category-faq',
-          'citi-strata-rewards-terms',
-          'discover-cashback-calendar',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -6500,7 +6396,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'spencersonline-us',
-      name: 'Body Jewelry, Graphic Tees, Lingerie & Lava Lamps',
+      name: 'Spencersonline',
       hosts: ['spencersonline.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6566,7 +6462,6 @@ export const MERCHANTS_V1: MerchantRelease = {
           'spotify-com-page-2',
           'amex-rewards-info-retail',
           'citi-strata-rewards-terms',
-          'discover-cashback-calendar',
           'us-bank-cash-plus-sample-merchants',
         ],
       },
@@ -6660,7 +6555,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'stockx-us',
-      name: 'StockX Sneakers, Streetwear, Trading Cards, Handbags, Watche',
+      name: 'Stockx',
       hosts: ['stockx.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6856,7 +6751,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'tcgplayer-us',
-      name: 'Your Trusted Marketplace for Collectible Trading Card Games',
+      name: 'TCGplayer',
       hosts: ['tcgplayer.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6892,7 +6787,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       name: 'Tesla',
       hosts: ['tesla.com'],
       kind: 'merchant',
-      physicalGoods: false,
+      physicalGoods: true,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
@@ -6922,7 +6817,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'thereformation-us',
-      name: "Sustainable Women's Clothing and Accessories",
+      name: 'Thereformation',
       hosts: ['thereformation.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6933,7 +6828,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'thorne-us',
-      name: 'Clinically Backed Supplements & Daily Essentials',
+      name: 'Thorne',
       hosts: ['thorne.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -6981,17 +6876,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['thrivemarket.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'supermarkets',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'thrivemarket-com-page-1',
-          'thrivemarket-com-page-2',
-          'chase-rewards-category-faq',
-          'discover-cashback-calendar',
-          'us-bank-cash-plus-sample-merchants',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -7096,7 +6982,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'tommybahama-us',
-      name: "Tommy Bahama Men's & Women's Clothing, Beach & Home",
+      name: 'Tommybahama',
       hosts: ['tommybahama.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7111,18 +6997,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['tomthumb.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'supermarkets',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'tomthumb-com-page-1',
-          'tomthumb-com-page-2',
-          'boa-customized-cash-rewards-pricing',
-          'chase-rewards-category-faq',
-          'discover-cashback-calendar',
-          'us-bank-cash-plus-sample-merchants',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -7455,7 +7331,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'vistaprint-us',
-      name: 'VistaPrint Official Website Online Printing Services',
+      name: 'Vistaprint',
       hosts: ['vistaprint.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7503,17 +7379,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['vons.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'supermarkets',
-      evidence: {
-        basis: 'definition',
-        sourceIds: [
-          'vons-com-page-1',
-          'boa-customized-cash-rewards-pricing',
-          'chase-rewards-category-faq',
-          'discover-cashback-calendar',
-          'us-bank-cash-plus-sample-merchants',
-        ],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -7599,7 +7466,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'weathertech-us',
-      name: 'Custom-Fit Floor Mats, Trunk Liners, and More',
+      name: 'WeatherTech',
       hosts: ['weathertech.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7663,7 +7530,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'westmarine-us',
-      name: 'Access to this page has been denied.',
+      name: 'Westmarine',
       hosts: ['westmarine.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7784,7 +7651,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'womanwithin-us',
-      name: 'Comfortable, Casual Plus Size Clothing for Women',
+      name: 'Woman Within',
       hosts: ['womanwithin.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7916,7 +7783,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'zappos-us',
-      name: 'Shoes, Sneakers, Boots, & Clothing + FREE SHIPPING',
+      name: 'Zappos.com',
       hosts: ['zappos.com'],
       kind: 'merchant',
       physicalGoods: true,

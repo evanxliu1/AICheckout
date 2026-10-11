@@ -69,8 +69,13 @@
     {
       "domain": "vons.com",
       "id": "vons-us",
-      "basis": "definition",
-      "category": "supermarkets"
+      "basis": "default",
+      "category": "general-merchandise",
+      "refused": {
+        "candidate": "supermarkets",
+        "reason": "no store-page quote shows a supermarkets business type",
+        "notes": null
+      }
     },
     {
       "domain": "vrbo.com",
@@ -84,15 +89,11 @@
       "basis": "issuer",
       "category": "drugstores",
       "conflicts": [
-        "synchrony-mywalgreens-mastercard-rewards-terms: excludes: \"Skip to main content $10 OFF $40+ eligible items sitewide* with code NOW10 $5 OFF $25+ eligible items sitewide* with code NOW5 Schedule vaccinations Nearest …\"",
         "synchrony-mywalgreens-mastercard-rewards-terms: excludes: \"You will earn Walgreens Cash rewards equal to 3% of every USD spent for Eligible Purchases when you use your myWalgreens Mastercard to make Eligible …\"",
-        "synchrony-mywalgreens-mastercard-rewards-terms: lists the store under another category: \"View all products by: Baby & Kids Beauty Caregiver Essentials Contact Lenses Electronics & Office Fitness & Nutrition Gift Cards Grocery Home Goods Home Health …\"",
-        "synchrony-mywalgreens-mastercard-product: excludes: \"Skip to main content $10 OFF $40+ eligible items sitewide* with code NOW10 $5 OFF $25+ eligible items sitewide* with code NOW5 Schedule vaccinations Nearest …\"",
         "synchrony-mywalgreens-mastercard-product: excludes: \"Questions about myWalgreens? Get answers › We're connecting you to more More rewards, more savings Start earning 1% Walgreens Cash rewards storewide, even at the …\"",
         "synchrony-mywalgreens-mastercard-product: lists the store under another category: \"3% Walgreens Cash rewards on grocery and health & wellness purchases outside of Walgreens†\"",
         "synchrony-mywalgreens-mastercard-product: lists the store under another category: \"1% Walgreens Cash rewards per $1 5% Walgreens Cash rewards per $1 Earn more rewards on Walgreens branded products2 5% Walgreens Cash rewards per $1 …\"",
-        "synchrony-mywalgreens-mastercard-product: excludes: \"How do I sign up for myWalgreens®? How much does it cost to join myWalgreens®? How does myWalgreens® benefit customers and patients? Do I earn …\"",
-        "synchrony-mywalgreens-mastercard-product: lists the store under another category: \"View all products by: Baby & Kids Beauty Caregiver Essentials Contact Lenses Electronics & Office Fitness & Nutrition Gift Cards Grocery Home Goods Home Health …\""
+        "synchrony-mywalgreens-mastercard-product: excludes: \"How do I sign up for myWalgreens®? How much does it cost to join myWalgreens®? How does myWalgreens® benefit customers and patients? Do I earn …\""
       ]
     },
     {

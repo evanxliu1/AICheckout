@@ -409,6 +409,8 @@ export const applyReportSchema = z.strictObject({
       fallback: z.literal('default-from-research').optional(),
       /** Hosts the verifier could not confirm, dropped from the record (the rest confirmed). */
       droppedHosts: z.array(domainSchema).optional(),
+      /** A coordinator field correction from overrides.json was applied. */
+      overridden: z.array(z.string().max(300)).optional(),
     }),
   ),
   heldOut: z.array(
@@ -425,6 +427,20 @@ export const applyReportSchema = z.strictObject({
 });
 export type ApplyReport = z.infer<typeof applyReportSchema>;
 
+/** Coordinator field corrections (`evals/merchants/db/overrides.json`), applied after the rule and listed in review.md. */
+export const OVERRIDES_FILE = `${DB_DIR}/overrides.json`;
+export const overridesFileSchema = z.strictObject({
+  description: z.string(),
+  fields: z.array(
+    z.strictObject({
+      domain: domainSchema,
+      physicalGoods: z.boolean().optional(),
+      kind: z.enum(MERCHANT_KINDS).optional(),
+      reason: z.string().max(300),
+    }),
+  ),
+  notes: z.array(z.string().max(400)),
+});
 export const exclusionsFileSchema = z.strictObject({
   description: z.string(),
   excluded: z.array(

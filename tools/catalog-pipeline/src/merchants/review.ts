@@ -10,12 +10,14 @@ import { FORUM_URL } from './apply.ts';
 import {
   BATCHES_DIR,
   EVIDENCE_DIR,
+  OVERRIDES_FILE,
   RECORDS_DIR,
   RELEASE_CONFIG,
   REVIEW_FILE,
   applyReportSchema,
   evidenceFileSchema,
   loadBatch,
+  overridesFileSchema,
   readJson,
   readJsonOrNull,
   releaseConfigSchema,
@@ -39,6 +41,9 @@ export interface ReviewInput {
   /** Default records built from research after three failed draft gates, and hosts dropped on the verifier's word. */
   fallbacks: { batch: string; domain: string; id: string }[];
   droppedHosts: { batch: string; domain: string; id: string; hosts: string[] }[];
+  /** Coordinator field corrections applied (overrides.json) and notes for Evan. */
+  overridden: { batch: string; domain: string; id: string; changes: string[] }[];
+  notes: string[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
   /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
    * an issuer listing the store under another category show here). */
@@ -149,6 +154,16 @@ export function reviewMarkdown(input: ReviewInput): string {
       ? input.fallbacks.map((f) => `- ${f.batch}: ${f.domain} (${f.id})`)
       : ['None.']),
     '',
+    `## Coordinator field corrections (overrides.json) (${input.overridden.length})`,
+    '',
+    ...(input.overridden.length
+      ? input.overridden.map((o) => `- ${o.batch}: ${o.id}: ${cell(o.changes.join('; '))}`)
+      : ['None.']),
+    '',
+    `## Notes for Evan (${input.notes.length})`,
+    '',
+    ...(input.notes.length ? input.notes.map((n) => `- ${cell(n)}`) : ['None.']),
+    '',
     `## Hosts dropped on the verifier's word (${input.droppedHosts.length})`,
     '',
     ...(input.droppedHosts.length
@@ -198,6 +213,8 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   const botWalled: ReviewInput['botWalled'] = [];
   const fallbacks: ReviewInput['fallbacks'] = [];
   const droppedHosts: ReviewInput['droppedHosts'] = [];
+  const overridden: ReviewInput['overridden'] = [];
+  const notes = (await readJsonOrNull(join(root, OVERRIDES_FILE), overridesFileSchema))?.notes ?? [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
@@ -219,6 +236,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
       if (r.fallback) fallbacks.push({ batch, domain: r.domain, id: r.id });
       if (r.droppedHosts?.length)
         droppedHosts.push({ batch, domain: r.domain, id: r.id, hosts: r.droppedHosts });
+      if (r.overridden?.length) overridden.push({ batch, domain: r.domain, id: r.id, changes: r.overridden });
     }
   }
   const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
@@ -236,6 +254,8 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     botWalled,
     fallbacks,
     droppedHosts,
+    overridden,
+    notes,
   };
 }
 

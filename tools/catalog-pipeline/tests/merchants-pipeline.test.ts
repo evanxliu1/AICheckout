@@ -420,12 +420,49 @@ describe('tier A', () => {
         'kroger.com',
       ),
     ).toEqual({ name: 'Kroger', source: 'title' });
+    // A title without the brand's name is a tagline: the label stands in (review 2026-10-11).
     expect(
       displayName(
         { ogSiteName: null, applicationName: null, title: '★★★ Deals ★★★' },
         'shop.example-store.com',
       ),
-    ).toEqual({ name: 'Deals', source: 'title' });
+    ).toEqual({ name: 'Example-store', source: 'domain-label' });
+    expect(
+      displayName(
+        {
+          ogSiteName: null,
+          applicationName: null,
+          title: 'Shoes, Sneakers, Boots, & Clothing + FREE SHIPPING | Zappos.com',
+        },
+        'zappos.com',
+      ),
+    ).toEqual({ name: 'Zappos.com', source: 'title' });
+    expect(
+      displayName(
+        {
+          ogSiteName: null,
+          applicationName: null,
+          title: 'Buy Custom & Blank Labels, Stickers, Cards & Tags',
+        },
+        'avery.com',
+      ),
+    ).toEqual({ name: 'Avery', source: 'domain-label' });
+    // Bot-wall titles served with HTTP 200 give no name.
+    for (const title of [
+      'Access to this page has been denied.',
+      'Just a moment...',
+      'Pardon Our Interruption',
+    ])
+      expect(displayName({ ogSiteName: null, applicationName: null, title }, 'bootbarn.com')).toEqual({
+        name: 'Bootbarn',
+        source: 'domain-label',
+      });
+    expect(
+      displayName(
+        { ogSiteName: 'Boot Barn', applicationName: null, title: 'Just a moment...' },
+        'bootbarn.com',
+      ),
+    ).toEqual({ name: 'Bootbarn', source: 'domain-label' });
     expect(
       displayName({ ogSiteName: null, applicationName: null, title: null }, 'example-store.com'),
     ).toEqual({ name: 'Example-store', source: 'domain-label' });
@@ -498,6 +535,8 @@ describe('review.md', () => {
       botWalled: [],
       fallbacks: [],
       droppedHosts: [],
+      overridden: [],
+      notes: [],
     });
     expect(text).toContain(
       '| dev-1 | z.com | z-us | dining | synthetic refusal | Chase lists it under food delivery |',
@@ -556,7 +595,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
 
   it('Kroger: its own grocery page plus an issuer supermarket definition gives definition, citing both', () => {
     const out = store({}, {}, [
-      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
       grocery,
     ]);
     expect(basisOf(out)).toBe('supermarkets/definition');
@@ -566,7 +605,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
 
   it('issuer stays the strongest basis; corroborated is unchanged', () => {
     const out = store({}, {}, [
-      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
       grocery,
       { sourceId: chase, quote: '3% at grocery stores including Kroger', supports: 'category' },
     ]);
@@ -578,13 +617,23 @@ describe('definition basis (Evan 2026-10-11)', () => {
     expect(basisOf(store({}, {}, [grocery]))).toBe('general-merchandise/default');
     expect(
       basisOf(
-        store({}, {}, [{ sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' }]),
+        store({}, {}, [
+          {
+            sourceId: 'kroger-com-page-1',
+            quote: 'Grocery Pickup and delivery service',
+            supports: 'category',
+          },
+        ]),
       ),
     ).toBe('general-merchandise/default');
     expect(
       basisOf(
         store({}, {}, [
-          { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+          {
+            sourceId: 'kroger-com-page-1',
+            quote: 'Grocery Pickup and delivery service',
+            supports: 'category',
+          },
           { sourceId: 'kroger-com-page-1', quote: 'grocery stores and supermarkets', supports: 'definition' },
         ]),
       ),
@@ -677,7 +726,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
       ['Target', 'target.com', usBank],
     ] as const) {
       const out = store({ domain, name, hosts: [domain], issuerTexts: { [chase]: text, [amex]: 'x' } }, {}, [
-        { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+        { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
         grocery,
       ]);
       expect(basisOf(out), name).toBe('general-merchandise/default');
@@ -708,7 +757,10 @@ describe('definition basis (Evan 2026-10-11)', () => {
         },
       },
       {},
-      [{ sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' }, grocery],
+      [
+        { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
+        grocery,
+      ],
     );
     expect(basisOf(fine)).toBe('supermarkets/definition');
   });
@@ -787,7 +839,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
     const verification = confirmed();
     verification.evidence = { verdict: 'disputed', reason: 'the issuer page excludes this store' };
     const out = store({ verification }, {}, [
-      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
       grocery,
     ]);
     expect(basisOf(out)).toBe('general-merchandise/default');
@@ -807,7 +859,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
 
   it('review.md shows a definition record with both quotes', () => {
     const out = store({}, {}, [
-      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' },
+      { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup and delivery service', supports: 'category' },
       grocery,
     ]);
     if (out.outcome !== 'record') throw new Error('record expected');
@@ -823,9 +875,11 @@ describe('definition basis (Evan 2026-10-11)', () => {
       botWalled: [],
       fallbacks: [],
       droppedHosts: [],
+      overridden: [],
+      notes: [],
     });
     expect(text).toContain('| kroger-us | kroger.com | supermarkets | definition |');
-    expect(text).toContain('Grocery Pickup');
+    expect(text).toContain('Grocery Pickup and delivery service');
     expect(text).toContain(
       `${amex} (issuer-terms, definition): "U.S. supermarkets: grocery stores and supermarkets"`,
     );
@@ -921,7 +975,13 @@ describe('definition basis: review probes (2026-10-11)', () => {
 
   it('2: excluded kinds of store are read on the full store pages; a missing issuer capture refuses', () => {
     const cases: [string, string, 'supermarkets' | 'drugstores', string, string][] = [
-      ['walmart.com', 'Walmart', 'supermarkets', 'Grocery Pickup', 'Walmart Supercenter hours. Save money.'],
+      [
+        'walmart.com',
+        'Walmart',
+        'supermarkets',
+        'Grocery Pickup and delivery service',
+        'Walmart Supercenter hours. Save money.',
+      ],
       [
         'target.com',
         'Target',
@@ -940,10 +1000,16 @@ describe('definition basis: review probes (2026-10-11)', () => {
         'samsclub.com',
         'Sams Club',
         'supermarkets',
-        'groceries delivered',
+        'fresh groceries delivered today',
         'the leading membership warehouse club',
       ],
-      ['walmart.com', 'Walmart', 'drugstores', 'Walmart Pharmacy', 'Find a Walmart Supercenter near you'],
+      [
+        'walmart.com',
+        'Walmart',
+        'drugstores',
+        'Walmart Pharmacy prescriptions online',
+        'Find a Walmart Supercenter near you',
+      ],
       ['target.com', 'Target', 'drugstores', 'CVS pharmacy at Target', 'a discount store with a pharmacy'],
     ];
     for (const [domain, name, category, quote, text] of cases) {
@@ -961,13 +1027,13 @@ describe('definition basis: review probes (2026-10-11)', () => {
     const missing = applyStore(
       input(
         { sources: srcs, storeTexts: { 'store-page-1': 'groceries' }, issuerTexts: { [amex]: 'nothing' } },
-        { evidence: [page('Grocery Pickup'), grocery] },
+        { evidence: [page('Grocery Pickup and delivery service'), grocery] },
       ),
     );
     expect(result(missing)).toBe(`general-merchandise/default refused: issuer capture ${chase} is missing`);
     const kroger = (issuer?: Record<string, string>) =>
       result(
-        run('kroger.com', 'Kroger', {}, [page('Grocery Pickup'), grocery], {
+        run('kroger.com', 'Kroger', {}, [page('Grocery Pickup and delivery service'), grocery], {
           store: 'Kroger grocery stores',
           issuer,
         }),
@@ -1173,7 +1239,11 @@ describe('per-quote verification (review 2026-10-11)', () => {
   });
 
   it('a disputed quote that was not carrying the basis changes nothing; the definition basis uses confirmed quotes too', () => {
-    const store = { sourceId: 'kroger-com-page-1', quote: 'Grocery Pickup', supports: 'category' as const };
+    const store = {
+      sourceId: 'kroger-com-page-1',
+      quote: 'Grocery Pickup and delivery service',
+      supports: 'category' as const,
+    };
     const definition = {
       sourceId: issuer,
       quote: 'earn cash back at most grocery stores and supermarkets',
@@ -1252,7 +1322,7 @@ describe('re-check probes (2026-10-11)', () => {
       : out.outcome;
 
   it('1: a grocer with a pharmacy is still a supermarket; the refusal reason is reported even with a disputed quote', () => {
-    const kroger = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup'), grocery], {
+    const kroger = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup and delivery service'), grocery], {
       store: 'Kroger Pharmacy: transfer your prescriptions. Shop groceries for pickup or delivery.',
     });
     expect(result(kroger)).toBe('supermarkets/definition');
@@ -1263,7 +1333,7 @@ describe('re-check probes (2026-10-11)', () => {
       'kroger.com',
       'Kroger',
       {},
-      [page('Grocery Pickup'), grocery],
+      [page('Grocery Pickup and delivery service'), grocery],
       { store: 'Shop groceries.' },
       {
         verification,
@@ -1388,7 +1458,7 @@ describe('re-check probes (2026-10-11)', () => {
   });
 
   it('6: cross-issuer conflicts of a granted category are listed; the record follows the rule', () => {
-    const out = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup'), grocery], {
+    const out = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup and delivery service'), grocery], {
       store: 'Shop groceries.',
       issuer: {
         [chase]: 'Kroger is listed under our gas category. Grocery stores earn 3%.',
@@ -1404,7 +1474,7 @@ describe('re-check probes (2026-10-11)', () => {
       'Kroger',
       {},
       [
-        page('Grocery Pickup'),
+        page('Grocery Pickup and delivery service'),
         { sourceId: amex, quote: 'Earn 6% at U.S. supermarkets like Kroger', supports: 'category' },
       ],
       { store: 'Shop groceries.', issuer: { [chase]: 'Grocery stores, excluding Kroger and Walmart' } },
@@ -1433,6 +1503,8 @@ describe('re-check probes (2026-10-11)', () => {
       botWalled: [],
       fallbacks: [],
       droppedHosts: [],
+      overridden: [],
+      notes: [],
     });
     expect(text).toContain('| dev-1 | kroger.com | kroger-us | supermarkets | x: excludes: "y" |');
   });
@@ -1500,6 +1572,8 @@ describe('seed rules (coordinator 2026-10-11)', () => {
       botWalled: [{ batch: 'seed-1', domain: 'bjs.com' }],
       fallbacks: [],
       droppedHosts: [],
+      overridden: [],
+      notes: [],
     });
     expect(text).toContain('- seed-1: bjs.com');
     expect(text).toContain('- seed-1: bonton.com (defunct: parked domain)');
@@ -1737,6 +1811,135 @@ describe('seed decisions 2026-10-11 (third set)', () => {
       ),
     );
     expect(out.outcome === 'record' && out.record.category).toBe('general-merchandise');
+  });
+});
+
+describe('review fixes 2026-10-11 (88c32e02)', () => {
+  const amex = 'amex-rewards-info-retail';
+  const defSources: ApplyInput['sources'] = [
+    sources[0],
+    {
+      id: amex,
+      kind: 'issuer-terms',
+      url: 'https://www.americanexpress.com/t',
+      capturedOn: '2026-10-05',
+      sha256: 'e'.repeat(64),
+    },
+  ];
+  const grocery = {
+    sourceId: amex,
+    quote: 'U.S. supermarkets: grocery stores and supermarkets',
+    supports: 'definition' as const,
+  };
+  const run = (storeQuote: string, storeText: string, over: Partial<ApplyInput> = {}) =>
+    applyStore(
+      input(
+        {
+          sources: defSources,
+          storeTexts: { 'kroger-com-page-1': storeText },
+          issuerTexts: { [amex]: 'x' },
+          ...over,
+        },
+        { evidence: [{ sourceId: 'kroger-com-page-1', quote: storeQuote, supports: 'category' }, grocery] },
+      ),
+    );
+  const result = (out: ReturnType<typeof applyStore>) =>
+    out.outcome === 'record' ? `${out.record.category}/${out.record.evidence.basis}` : out.outcome;
+  it('7: .us domains get no doubled suffix', () => {
+    expect(recordId('aldi.us', 'merchant', null)).toBe('aldi-us');
+    expect(recordId('airfrance.us', 'merchant', null)).toBe('airfrance-us');
+    expect(recordId('pandora.net', 'merchant', null)).toBe('pandora-net-us');
+  });
+  it('6: a hedged definition does not cover', () => {
+    expect(
+      definitionQuoteCovers('Examples of streaming services include Netflix, Hulu and Spotify', 'streaming'),
+    ).toBe(false);
+    expect(
+      definitionQuoteCovers('Streaming services include subscription video and music providers', 'streaming'),
+    ).toBe(true);
+  });
+  it('tomthumb: a bare nav word is no business type; a membership-required grocer is no supermarket', () => {
+    expect(storePageShowsType('Grocery', 'supermarkets')).toBe(false);
+    expect(storePageShowsType('Grocery Pickup', 'supermarkets')).toBe(false);
+    expect(result(run('Grocery', 'Shop groceries at Tom Thumb'))).toBe('general-merchandise/default');
+    expect(result(run('Shop groceries online for delivery', 'Shop groceries at Tom Thumb'))).toBe(
+      'supermarkets/definition',
+    );
+    expect(
+      result(
+        run(
+          'Organic groceries delivered to your door',
+          'An annual membership is required to shop. Groceries delivered.',
+        ),
+      ),
+    ).toBe('general-merchandise/default');
+  });
+  it('4 and 5: the redirect boundary and negative wording decide which hosts drop', () => {
+    const verdict = (reason: string) => {
+      const v = confirmed();
+      v.hosts = { verdict: 'disputed', reason };
+      return v;
+    };
+    const max = applyStore(
+      input({
+        domain: 'max.com',
+        name: 'HBO Max',
+        hosts: ['max.com', 'hbomax.com'],
+        verification: verdict('hbomax.com is the live site; max.com redirects to hbomax.com'),
+      }),
+    );
+    expect(max.outcome === 'record' && max.record.hosts).toEqual(['hbomax.com']);
+    const mention = applyStore(
+      input({
+        hosts: ['kroger.com', 'kroger.delivery'],
+        verification: verdict('kroger.delivery is also listed; kroger.com is the main site'),
+      }),
+    );
+    expect(mention.outcome).toBe('held-out');
+    const negative = applyStore(
+      input({
+        hosts: ['kroger.com', 'kroger.delivery'],
+        verification: verdict('kroger.delivery appears in no capture'),
+      }),
+    );
+    expect(negative.outcome === 'record' && negative.record.hosts).toEqual(['kroger.com']);
+  });
+  it('walgreens: page chrome is filtered from conflict quotes', () => {
+    const chase = 'chase-rewards-category-faq';
+    const out = applyStore(
+      input(
+        {
+          domain: 'walgreens.com',
+          name: 'Walgreens',
+          hosts: ['walgreens.com'],
+          sources: [
+            { ...sources[0], id: 'wg-page' },
+            {
+              id: chase,
+              kind: 'issuer-terms',
+              url: 'https://www.chase.com/f',
+              capturedOn: '2026-10-05',
+              sha256: 'f'.repeat(64),
+            },
+          ],
+          storeTexts: { 'wg-page': 'Your local pharmacy and drugstore.' },
+          issuerTexts: {
+            [chase]:
+              'Walgreens Pharmacy Grocery Beauty Photo Health\n\nMerchants in the grocery category include Walgreens and other stores that sell food.',
+          },
+        },
+        {
+          candidateCategory: 'drugstores',
+          evidence: [
+            { sourceId: 'wg-page', quote: 'your local pharmacy and drugstore', supports: 'category' },
+            { sourceId: chase, quote: 'drugstores and pharmacies', supports: 'definition' },
+          ],
+        },
+      ),
+    );
+    expect(out.outcome === 'record' && out.record.category).toBe('drugstores');
+    expect(out.outcome === 'record' && out.conflicts).toHaveLength(1);
+    expect(out.outcome === 'record' && out.conflicts[0]).toContain('Merchants in the grocery category');
   });
 });
 

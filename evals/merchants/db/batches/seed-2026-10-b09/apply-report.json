@@ -156,7 +156,10 @@
         "candidate": "streaming",
         "reason": "no store-page quote shows a streaming business type",
         "notes": "The primary offering is recurring streaming subscriptions, but the help page also references purchased radios and shipping returns, so physicalGoods is true."
-      }
+      },
+      "overridden": [
+        "physicalGoods → false: subscriptions; nothing shipped"
+      ]
     },
     {
       "domain": "sixflags.com",
@@ -184,8 +187,16 @@
     {
       "domain": "sonicdrivein.com",
       "id": "sonicdrivein-us",
-      "basis": "definition",
-      "category": "dining"
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Promotional Bank of America sentence with no definition wording; not the issuer's statement of what the dining category includes. Promotional U.S. Bank fast-food line with no business-type definition wording."
+      },
+      "refused": {
+        "candidate": "dining",
+        "reason": "no store-page quote shows a dining business type",
+        "notes": "The site links to SONIC merchandise, but the supplied pages characterize the business as a restaurant. U.S. Bank labels fast food separately, while other issuers include fast food in dining."
+      }
     },
     {
       "domain": "southwest.com",

@@ -1,39 +1,39 @@
 {
   "schemaVersion": 1,
-  "id": "airfrance-us-us",
+  "id": "klm-us",
   "basis": "default",
   "quotes": [
     {
-      "sourceId": "airfrance-us-lookup-1",
+      "sourceId": "klm-us-lookup-1",
+      "kind": "mcc-lookup",
+      "supports": "brand",
+      "quote": "3010 KLM (ROYAL DUTCH AIRLINES)"
+    },
+    {
+      "sourceId": "klm-us-lookup-1",
       "kind": "mcc-lookup",
       "supports": "category",
-      "quote": "3007 AIR FRANCE"
+      "quote": "3010 KLM (ROYAL DUTCH AIRLINES)"
     },
     {
       "sourceId": "boa-air-france-klm-pricing",
       "kind": "issuer-terms",
       "supports": "kind",
-      "quote": "made directly with Air France"
+      "quote": "made directly with Air France, KLM Royal Dutch Airlines and SkyTeam member airlines"
     },
     {
-      "sourceId": "boa-air-france-klm-pricing",
+      "sourceId": "boa-air-france-klm-product",
       "kind": "issuer-terms",
       "supports": "physicalGoods",
-      "quote": "flights booked directly through Air France"
+      "quote": "eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases"
     },
     {
       "sourceId": "boa-air-france-klm-product",
       "kind": "issuer-terms",
       "supports": "category",
       "quote": "eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases"
-    },
-    {
-      "sourceId": "boa-air-france-klm-product",
-      "kind": "issuer-terms",
-      "supports": "brand",
-      "quote": "Earn 3 Miles for every $1 spent on eligible Air France"
     }
   ],
-  "batch": "seed-2026-10-b01",
+  "batch": "seed-2026-10-b06",
   "appliedOn": "2026-10-11"
 }

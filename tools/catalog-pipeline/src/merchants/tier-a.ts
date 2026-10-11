@@ -25,6 +25,10 @@ const NAME = merchantRecordSchema.shape.name;
 /** The capture script's bot-wall pattern (scripts/capture-issuer-pages.mjs). */
 const BOT_WALL =
   /access denied|captcha|unusual (traffic|activity)|are you a robot|request (was )?blocked|verify you are human|enable javascript to/i;
+/** Titles a bot wall serves with HTTP 200 (seed 2026-10-11: "Access to this page has been denied.", "Just a moment...",
+ * "Pardon Our Interruption"): no name comes from such a page. */
+export const WALL_TITLE =
+  /access to this page has been denied|just a moment|pardon our interruption|attention required|access denied|are you a robot|robot or human|security check|verify you are human|one more step|checking your browser|please wait/i;
 
 /** The record name from the homepage's own metadata, or the domain's label capitalised. Names are cut at the first
  * separator ("Kroger | Shop Groceries" → "Kroger"), restricted to the record charset and 60 characters. */
@@ -40,14 +44,45 @@ export function displayName(meta: HomepageMeta, domain: string): { name: string;
       .trim();
     return NAME.safeParse(kept).success ? kept : null;
   };
+  const label = domainLabel(domain);
+  const fallback = { name: label.charAt(0).toUpperCase() + label.slice(1), source: 'domain-label' };
+  if ([meta.ogSiteName, meta.applicationName, meta.title].some((v) => v && WALL_TITLE.test(v)))
+    return fallback;
   const candidates: [string, string | null][] = [
     ['og:site_name', clean(meta.ogSiteName)],
     ['application-name', clean(meta.applicationName)],
-    ['title', clean(meta.title)],
   ];
   for (const [source, name] of candidates) if (name) return { name, source };
-  const label = domainLabel(domain);
-  return { name: label.charAt(0).toUpperCase() + label.slice(1), source: 'domain-label' };
+  // A title is often a tagline ("Shoes, Sneakers, Boots, & Clothing + FREE SHIPPING"): take the segment that names
+  // the brand (its label), else the label itself when the title reads like a tagline (long, list-like, no brand word).
+  const title = meta.title;
+  if (title) {
+    const normalLabel = label.replace(/-/g, '');
+    const segments = title
+      .split(/\s+[|–—:·•-]\s+|\s[|•·]\s|\s+-\s+/)
+      .map((seg) => clean(seg))
+      .filter((seg): seg is string => seg !== null);
+    const brandSegment = segments.find(
+      (seg) =>
+        seg.length <= 40 &&
+        seg
+          .replace(/[^a-z0-9]/gi, '')
+          .toLowerCase()
+          .includes(normalLabel),
+    );
+    if (brandSegment) return { name: brandSegment, source: 'title' };
+    const first = segments[0];
+    const tagline =
+      !first ||
+      first.length > 40 ||
+      (first.match(/[,&+]/g) ?? []).length >= 2 ||
+      !first
+        .replace(/[^a-z0-9]/gi, '')
+        .toLowerCase()
+        .includes(normalLabel);
+    if (!tagline) return { name: first, source: 'title' };
+  }
+  return fallback;
 }
 
 export function tierARecord(domain: string, name: string, id = `${domainLabel(domain)}-us`): MerchantRecord {

@@ -18,6 +18,8 @@ import {
   RELEASE_CONFIG,
   DEFUNCT_WORDING,
   EXCLUSIONS_FILE,
+  OVERRIDES_FILE,
+  overridesFileSchema,
   GOODS_FALSE_WORDING,
   GOODS_UNSETTLED_WORDING,
   VERIFIED_FIELDS,
@@ -83,7 +85,10 @@ export const recordId = (domain: string, kind: string, fixed: string | null): st
   // A public suffix other than .com stays in the id (pandora.net → pandora-net-us), so pandora.com and pandora.net
   // never share one (seed 2026-10-11: the tier-A pandora.net record overwrote the tier-B pandora.com one).
   const suffix = labels.slice(at + 1).join('-');
-  const slug = [...labels.slice(0, at + 1), ...(suffix === 'com' ? [] : [suffix])].join('-');
+  // .com and .us need no suffix (every record is a U.S. store and ends in -us already: aldi.us → aldi-us).
+  const slug = [...labels.slice(0, at + 1), ...(suffix === 'com' || suffix === 'us' ? [] : [suffix])].join(
+    '-',
+  );
   return kind === 'processor' ? slug : `${slug}-us`;
 };
 
@@ -169,6 +174,10 @@ const EXCLUDED_STORE_TYPES = [
   'membership (?:warehouse|club)s?',
   'club membership',
   'members-only',
+  'membership (?:is )?required',
+  'paid membership',
+  'annual membership',
+  'membership fee',
   'department stores?',
   'general merchandise',
   'online marketplaces?',
@@ -286,7 +295,7 @@ export function definitionClause(quote: string, category: string): string | null
   if (!words) return null;
   for (const clause of normal(quote).split(CLAUSE_BREAK)) {
     if (!words.test(clause) || !DEFINITION_WORDING.test(clause) || clauseExcludes(clause, category)) continue;
-    if (CALENDAR_WORDING.test(clause)) continue;
+    if (CALENDAR_WORDING.test(clause) || HEDGED_WORDING.test(clause)) continue;
     const start = INCLUSION_START.exec(clause);
     // An inclusion list under another category's exclusion: only its tail defines this category.
     if (start && EXCLUSION_WORDING.test(clause.slice(0, start.index))) return clause.slice(start.index);
@@ -304,6 +313,8 @@ export const definitionQuoteCovers = (quote: string, category: string): boolean 
 export function storePageShowsType(quote: string, category: string): boolean {
   const words = BUSINESS_TYPE_WORDS[category];
   if (!words) return false;
+  // A bare navigation word or label ("Grocery", "Grocery Pickup") is no business-type statement: at least three words.
+  if (quote.trim().split(/\s+/).length < 3) return false;
   return words.test(quote) && !CATEGORY_EXCLUDED_TYPES[category].test(quote);
 }
 
@@ -390,6 +401,8 @@ export function issuerConflicts(input: ApplyInput, category: string, citedIds: s
       if (!excludes && !elsewhere) continue;
       if (!excludes && citedIds.includes(source.id)) continue;
       const words = sentence.trim().split(/\s+/).filter(Boolean);
+      // Page chrome (menus, lists of capitalised links) is no sentence: at least six words, mostly lower-case.
+      if (words.length < 6 || words.filter((w) => /^[A-Z]/.test(w)).length > words.length / 2) continue;
       out.push(
         `${source.id}: ${excludes ? 'excludes' : 'lists the store under another category'}: "${words.slice(0, 25).join(' ')}${words.length > 25 ? ' …' : ''}"`,
       );
@@ -423,15 +436,28 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
   const namedIn = (h: string) =>
     new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}(?![a-z0-9-])`, 'i').test(hostsReason);
   const redirectsAway = (h: string) =>
-    new RegExp(`${escapeHost(h)}[^.]*?\\bredirects?\\b`, 'i').test(hostsReason) &&
+    new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}[^.]*?\\bredirects?\\b`, 'i').test(hostsReason) &&
     !new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason);
+  // A host is dropped only when the sentence naming it says something negative about it ("appears in no capture",
+  // "not confirmed", "redirects"), not when it is merely mentioned ("only oldnavy.gap.com is shown selling").
+  const negativeAbout = (h: string) =>
+    hostsReason
+      .split(/;|\.(?=\s)/)
+      .some(
+        (part) =>
+          new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}(?![a-z0-9-])`, 'i').test(part) &&
+          /\b(no|not|never|cannot|can't|unconfirmed|redirects?|fails?|unreachable|missing)\b/i.test(part) &&
+          !/\bonly\b/i.test(part.split(new RegExp(escapeHost(h), 'i'))[0] ?? ''),
+      );
   let droppedHosts: string[] = [];
   let hostsSettled = false;
   if (input.verification.hosts.verdict === 'disputed') {
     // Hosts the reason names as redirect targets ("redirects to hbomax.com") are kept, not dropped.
     const isTarget = (h: string) =>
       new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason);
-    const others = input.hosts.filter((h) => h !== input.domain && namedIn(h) && !isTarget(h));
+    const others = input.hosts.filter(
+      (h) => h !== input.domain && namedIn(h) && !isTarget(h) && negativeAbout(h),
+    );
     const domainRedirects = redirectsAway(input.domain);
     const domainUnconfirmed =
       !domainRedirects && others.length === 0 && HOSTS_UNCONFIRMED_WORDING.test(hostsReason);
@@ -575,6 +601,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       conflicts?: string[];
       fallback?: 'default-from-research';
       droppedHosts?: string[];
+      overridden?: string[];
     }[],
     heldOut: [] as {
       domain: string;
@@ -587,6 +614,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
   let newestCapture = config.verifiedAt.slice(0, 10);
   const exclusions =
     (await readJsonOrNull(join(env.root, EXCLUSIONS_FILE), exclusionsFileSchema))?.excluded ?? [];
+  const overrides = (await readJsonOrNull(join(env.root, OVERRIDES_FILE), overridesFileSchema))?.fields ?? [];
   for (const store of batch.meta.stores) {
     const excluded = exclusions.find((e) => e.domain === store.domain);
     if (excluded) {
@@ -644,13 +672,29 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       );
       if (text !== null) issuerTexts[source.id] = text;
     }
+    // Coordinator field corrections (overrides.json) replace the drafted value before the rule runs and are listed.
+    const override = overrides.find((o) => o.domain === store.domain);
+    const overridden: string[] = [];
+    const draft = { ...draftFile.draft };
+    if (override?.physicalGoods !== undefined && override.physicalGoods !== draft.physicalGoods) {
+      draft.physicalGoods = override.physicalGoods;
+      overridden.push(`physicalGoods → ${override.physicalGoods}: ${override.reason}`);
+    }
+    if (override?.kind !== undefined && override.kind !== draft.kind) {
+      draft.kind = override.kind;
+      overridden.push(`kind → ${override.kind}: ${override.reason}`);
+    }
+    const verifiedFields = { ...verified.fields };
+    if (override?.physicalGoods !== undefined)
+      verifiedFields.physicalGoods = { verdict: 'confirmed', reason: null };
+    if (override?.kind !== undefined) verifiedFields.kind = { verdict: 'confirmed', reason: null };
     const outcome = applyStore({
       domain: store.domain,
       id: store.id ?? null,
       name: researched.name,
       hosts: store.hosts ?? researched.hosts,
-      draft: draftFile.draft,
-      verification: verified.fields,
+      draft,
+      verification: verifiedFields,
       quoteVerdicts: verified.quotes,
       sources,
       issuerTexts,
@@ -694,6 +738,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       ...(outcome.conflicts.length ? { conflicts: outcome.conflicts } : {}),
       ...(draftFile.fallback ? { fallback: draftFile.fallback } : {}),
       ...(outcome.droppedHosts.length ? { droppedHosts: outcome.droppedHosts } : {}),
+      ...(overridden.length ? { overridden } : {}),
     });
     if (outcome.downgraded)
       env.log(`${store.domain}: DOWNGRADED to the default category (evidence disputed).`);
