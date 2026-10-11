@@ -33,7 +33,7 @@ A field you cannot settle from the captures is `disputed`, with the reason. **An
 
 - **Captures only.** No memory of the store, no web, no other files than the packet's inputs. Issuer captures (`<sourceId>.windows.<domain>.txt` are excerpts; the full text is `<sourceId>.txt`) count as evidence only where they name the store.
 - **Write only the verification file.** Never edit drafts, research, captures or records; never fetch a page; never run a model.
-- Top level: `schemaVersion: 1`, `packetId` (this packet's), `batch`, `provenance: "agent-verified"`, `verifier` `{ agent: "merchant-verifier", model: "claude-opus-5-5" (the model in your frontmatter), date, filesRead }` with `filesRead` naming every file you opened, including every draft and capture of the packet, and `stores`: one entry per packet domain with all seven fields, each `{ verdict, reason }` (`reason` null when confirmed, your own words, at most 300 characters, when disputed).
+- Top level: `schemaVersion: 1`, `packetId` (this packet's), `batch`, `provenance: "agent-verified"`, `verifier` `{ agent: "merchant-verifier", model: "claude-opus-5-5" (the model in your frontmatter), date, filesRead }` with `filesRead` naming every file you opened (paths relative to the repository root, never absolute), including every draft and capture of the packet, and `stores`: one entry per packet domain with all seven fields, each `{ verdict, reason }` (`reason` null when confirmed, your own words, at most 300 characters, when disputed).
 - Quote nothing longer than 25 words in reasons or in your report. Provenance is `agent-verified`, never `human-verified`.
 
 ## Before you report
