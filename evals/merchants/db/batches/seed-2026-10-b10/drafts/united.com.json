@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 22518,
-    "outputTokens": 156
+    "inputTokens": 22516,
+    "outputTokens": 247
   },
-  "durationMs": 10151,
+  "durationMs": 33171,
   "draft": {
     "domain": "united.com",
     "kind": "merchant",
@@ -21,21 +21,31 @@
     "candidateCategory": null,
     "evidence": [
       {
-        "sourceId": "united-quest-product",
-        "quote": "purchases your tickets from United with their card",
+        "sourceId": "united-explorer-product",
+        "quote": "purchases their tickets from United with their card",
         "supports": "kind"
       },
       {
         "sourceId": "united-quest-product",
-        "quote": "United® - or United Express® - operated flight",
+        "quote": "Earn miles on United purchases",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "united-quest-product",
+        "quote": "United-operated flights",
         "supports": "physicalGoods"
       },
       {
-        "sourceId": "united-explorer-product",
-        "quote": "United-operated flights",
-        "supports": "brand"
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants that provide transportation and related services are not included in this category, for example, airlines, hotels, car rental agencies, cruise lines",
+        "supports": "category"
       }
     ],
-    "notes": "Issuer documents identify United as an airline selling flight tickets. No store-owned or lookup page is provided; airlines are not among the supplied candidate categories, so candidateCategory is null."
+    "notes": "United is identified as an airline/flight merchant, but no listed category covers airlines; the Chase local-transit definition excludes airlines, so candidateCategory is null."
   }
 }
