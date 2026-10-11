@@ -1,7 +1,7 @@
 // `npm run pipeline -- merchants <command>`: the merchant pipeline (Phase 14.3, wiki/system/merchant-pipeline.md).
 //
 //   merchants candidates [--check]                    build or check the frozen candidate list
-//   merchants tier-a [--only a.com,b.com] [--limit N]  deterministic long-tail records (no model)
+//   merchants tier-a [--only a.com,b.com] [--limit N] [--allow-heldout]  deterministic long-tail records (no model)
 //   merchants init <batch> --stores a.com,b.com [--development] [--allow-heldout]
 //   merchants status [--batch B] [--json]
 //   merchants claim research|verify --batch B [--release]
@@ -38,7 +38,7 @@ import { tierACommand } from './tier-a.ts';
 
 export const MERCHANTS_USAGE = `Usage: npm run pipeline -- merchants <command>
   candidates [--check]
-  tier-a [--only a.com,b.com] [--limit N]
+  tier-a [--only a.com,b.com] [--limit N] [--allow-heldout]
   init <batch> --stores a.com,b.com [--development] [--allow-heldout]
   status [--batch B] [--json]
   claim <${MERCHANT_AGENT_STAGES.join('|')}> --batch B [--release]
@@ -229,6 +229,7 @@ export async function merchantsMain(argv: string[], env: Env): Promise<number> {
         return await tierACommand(env, {
           only: values.only ? list(values.only) : undefined,
           limit: int(values.limit),
+          allowHeldout: values['allow-heldout'],
         });
       case 'init':
         if (positionals.length !== 1) throw new UsageError('init takes one batch id.');

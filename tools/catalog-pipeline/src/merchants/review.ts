@@ -28,6 +28,7 @@ export interface ReviewInput {
   records: MerchantRecord[];
   evidence: Map<string, EvidenceFile>;
   heldOut: { batch: string; domain: string; disputed: { field: string; reason: string | null }[] }[];
+  downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -86,6 +87,12 @@ export function reviewMarkdown(input: ReviewInput): string {
     '',
     ...(disabled.length ? disabled.map((r) => `- ${r.id}`) : ['None.']),
     '',
+    `## Downgraded to the default category: evidence disputed, for Evan (${input.downgraded.length})`,
+    '',
+    "| Batch | Store | Record | Verifier's reason |",
+    '| --- | --- | --- | --- |',
+    ...input.downgraded.map((d) => `| ${d.batch} | ${d.domain} | ${d.id} | ${cell(d.reason ?? '')} |`),
+    '',
     `## Held out: disputed fields, for Evan (${input.heldOut.length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
@@ -113,14 +120,17 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     evidence.set(file.id, file);
   }
   const heldOut: ReviewInput['heldOut'] = [];
+  const downgraded: ReviewInput['downgraded'] = [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
       applyReportSchema,
     );
     for (const h of report?.heldOut ?? []) heldOut.push({ batch, domain: h.domain, disputed: h.disputed });
+    for (const r of report?.records ?? [])
+      if (r.downgraded) downgraded.push({ batch, domain: r.domain, id: r.id, reason: r.downgraded.reason });
   }
-  return { version: config.version, verifiedAt: config.verifiedAt, records, evidence, heldOut };
+  return { version: config.version, verifiedAt: config.verifiedAt, records, evidence, heldOut, downgraded };
 }
 
 export async function runBuild(env: Env, batchId?: string): Promise<number> {

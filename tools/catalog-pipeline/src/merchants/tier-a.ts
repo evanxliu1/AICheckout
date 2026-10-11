@@ -133,12 +133,15 @@ export async function captureHomepage(domain: string): Promise<{
   }
 }
 
-export async function tierACommand(env: Env, options: { only?: string[]; limit?: number }): Promise<number> {
+export async function tierACommand(
+  env: Env,
+  options: { only?: string[]; limit?: number; allowHeldout?: boolean },
+): Promise<number> {
   const candidates = await loadCandidates(env.root);
   const only = options.only ? new Set(options.only) : null;
   let todo = candidates.candidates.filter((c) => c.tier === 'A' && (!only || only.has(c.domain)));
-  if (!only) todo = todo.filter((c) => !c.heldOut);
-  else {
+  if (!only) todo = todo.filter((c) => options.allowHeldout || !c.heldOut);
+  else if (!options.allowHeldout) {
     const heldOut = todo.filter((c) => c.heldOut);
     if (heldOut.length) {
       env.log(

@@ -360,7 +360,14 @@ export const applyReportSchema = z.strictObject({
   batch: z.string().regex(BATCH_ID),
   appliedOn: z.iso.date(),
   records: z.array(
-    z.strictObject({ domain: domainSchema, id: slug, basis: z.string(), category: z.string() }),
+    z.strictObject({
+      domain: domainSchema,
+      id: slug,
+      basis: z.string(),
+      category: z.string(),
+      /** The verifier disputed `evidence` alone: shipped on the default category, listed for Evan. */
+      downgraded: z.strictObject({ reason: note.nullable() }).optional(),
+    }),
   ),
   heldOut: z.array(
     z.strictObject({

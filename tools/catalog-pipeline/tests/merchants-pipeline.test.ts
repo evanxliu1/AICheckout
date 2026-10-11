@@ -94,7 +94,7 @@ describe('apply rule', () => {
           evidence: [
             {
               sourceId: 'chase-freedom-flex-rewards-terms',
-              quote: 'fake issuer words at Kroger earn',
+              quote: 'earn 3% at grocery stores including Kroger',
               supports: 'category',
             },
           ],
@@ -165,7 +165,7 @@ describe('apply rule', () => {
 });
 
 describe('hold-out rule', () => {
-  for (const field of VERIFIED_FIELDS)
+  for (const field of VERIFIED_FIELDS.filter((f) => f !== 'evidence'))
     it(`a disputed ${field} holds the whole record out`, () => {
       const verification = confirmed();
       verification[field as VerifiedField] = { verdict: 'disputed', reason: 'synthetic reason' };
@@ -173,6 +173,34 @@ describe('hold-out rule', () => {
       expect(out.outcome).toBe('held-out');
       expect(out.outcome === 'held-out' && out.disputed).toEqual([{ field, reason: 'synthetic reason' }]);
     });
+
+  it('a disputed evidence alone downgrades the record to the default category and keeps the rest', () => {
+    const verification = confirmed();
+    verification.evidence = { verdict: 'disputed', reason: 'the issuer quotes are an exclusion list' };
+    const out = applyStore(
+      input({ verification }, { brandIds: ['whole-foods-market'], physicalGoods: false }),
+    );
+    expect(out.outcome).toBe('record');
+    if (out.outcome !== 'record') return;
+    expect(out.record).toMatchObject({
+      id: 'kroger-us',
+      name: 'Kroger',
+      hosts: ['kroger.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      brandIds: ['whole-foods-market'],
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+    });
+    expect(out.cited).toEqual([]);
+    expect(out.evidence.quotes).toEqual([]);
+    expect(out.downgraded).toEqual({ reason: 'the issuer quotes are an exclusion list' });
+  });
+
+  it('a confirmed record is not downgraded', () => {
+    const out = applyStore(input());
+    expect(out.outcome === 'record' && out.downgraded).toBeNull();
+  });
 
   it('the verification schema requires every field decided and rejects extra fields', () => {
     const base = {
@@ -420,7 +448,9 @@ describe('review.md', () => {
         ],
       ]),
       heldOut: [{ batch: 'dev-1', domain: 'x.com', disputed: [{ field: 'kind', reason: 'synthetic' }] }],
+      downgraded: [{ batch: 'dev-1', domain: 'y.com', id: 'y-us', reason: 'synthetic downgrade' }],
     });
+    expect(text).toContain('| dev-1 | y.com | y-us | synthetic downgrade |');
     expect(text).toContain('| kroger-us | kroger.com | supermarkets | corroborated |');
     expect(text).toContain('fake grocery store words');
     expect(text).not.toContain('chewy-us');
@@ -475,45 +505,93 @@ describe('issuer quotes: earning statements only', () => {
       sha256: 'd'.repeat(64),
     },
   ];
-  const withQuote = (quote: string, domain = 'costco.com', name = 'Costco') =>
+  const withQuote = (
+    quote: string,
+    domain = 'costco.com',
+    name = 'Costco',
+    category = 'wholesale-clubs' as const,
+  ) =>
     applyStore(
       input(
         { domain, name, hosts: [domain], sources: issuerSources },
-        {
-          candidateCategory: 'wholesale-clubs',
-          evidence: [{ sourceId: issuer, quote, supports: 'category' }],
-        },
+        { candidateCategory: category, evidence: [{ sourceId: issuer, quote, supports: 'category' }] },
       ),
     );
-  it('an exclusion naming the store gives no issuer category', () => {
+  const basis = (out: ReturnType<typeof applyStore>) =>
+    out.outcome === 'record' ? out.record.evidence.basis : out.outcome;
+
+  it('exclusions, limits and base rates naming the store give no issuer category', () => {
     for (const quote of [
       'purchases at discount stores like Wal-Mart, Target and Costco do not qualify.',
       'superstores like Costco excluded',
       'Grocery stores, excluding Walmart and Target and Costco',
       'Costco purchases are not eligible for the bonus',
+      'Costco purchases earn only 1%',
+      'warehouse clubs such as Costco are an exception to the 3% rate',
     ]) {
       const out = withQuote(quote);
-      expect(out.outcome === 'record' && out.record.evidence, quote).toEqual({
-        basis: 'default',
-        sourceIds: [],
-      });
+      expect(basis(out), quote).toBe('default');
       expect(out.outcome === 'record' && out.record.category, quote).toBe('general-merchandise');
     }
   });
-  it('a quote that does not name the store is not issuer evidence for it', () => {
-    const out = withQuote('Superstores, Supermarkets and Warehouse Clubs earn 2%');
-    expect(out.outcome === 'record' && out.record.evidence.basis).toBe('default');
+
+  it('naming without earning, or under another category, is not issuer evidence', () => {
+    expect(issuerQuoteEarns('Kroger', 'Kroger', 'kroger.com', 'supermarkets')).toBe(false);
+    expect(
+      issuerQuoteEarns('Netflix is an example of a streaming service', 'Netflix', 'netflix.com', 'streaming'),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'Merchant examples Amazon Comcast Etsy Netflix',
+        'Netflix',
+        'netflix.com',
+        'streaming',
+      ),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns('3% cash back on online shopping at Netflix', 'Netflix', 'netflix.com', 'streaming'),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'an exceptional 3% at Costco wholesale clubs',
+        'Costco',
+        'costco.com',
+        'wholesale-clubs',
+      ),
+    ).toBe(true);
+    expect(basis(withQuote('Superstores, Supermarkets and Warehouse Clubs earn 2%'))).toBe('default');
+    expect(issuerQuoteEarns('earn 5% at Costco', 'Costco', 'costco.com', 'general-merchandise')).toBe(false);
   });
-  it('an earning statement naming the store gives the issuer basis', () => {
+
+  it('an earning statement naming the store and its category gives the issuer basis', () => {
     const out = withQuote('wholesale clubs such as Costco and BJs earn 3% cash back');
     expect(out.outcome === 'record' && out.record.evidence).toEqual({ basis: 'issuer', sourceIds: [issuer] });
+    expect(
+      issuerQuoteEarns(
+        '3% at grocery stores including Kroger; excluding warehouse clubs',
+        'Kroger',
+        'kroger.com',
+        'supermarkets',
+      ),
+    ).toBe(true);
+    expect(
+      issuerQuoteEarns(
+        'earn 2X points at hardware stores like Lowe\u2019s',
+        "Lowe's",
+        'lowes.com',
+        'home-improvement',
+      ),
+    ).toBe(true);
     expect(
       issuerQuoteEarns(
         'Some grocery stores like Kroger may qualify for 2% in the grocery category',
         'Kroger',
         'kroger.com',
+        'supermarkets',
       ),
     ).toBe(true);
-    expect(issuerQuoteEarns('Krogers nearby', 'Kroger', 'kroger.com')).toBe(false);
+    expect(
+      issuerQuoteEarns('Krogers earn 3% at grocery stores', 'Kroger', 'kroger.com', 'supermarkets'),
+    ).toBe(false);
   });
 });

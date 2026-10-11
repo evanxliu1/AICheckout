@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
+import { domainLabel } from './candidates.ts';
 import {
   loadBatch,
   manifestFileSchema,
@@ -81,8 +82,8 @@ export async function listIssuerCaptures(root: string): Promise<IssuerCapture[]>
 export function nameMatcher(name: string, domain: string): RegExp {
   const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const variants = new Set([name.trim()]);
-  const label = domain.split('.')[0];
-  if (label.length >= 5 && !/^(www|shop|store|pay)$/.test(label)) variants.add(label);
+  const label = domainLabel(domain);
+  if (label.length >= 5) variants.add(label);
   return new RegExp(`(?<![A-Za-z0-9])(?:${[...variants].map(escape).join('|')})(?![A-Za-z0-9])`, 'i');
 }
 

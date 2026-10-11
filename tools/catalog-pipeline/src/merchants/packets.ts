@@ -3,9 +3,10 @@
 // file; `accept` runs the stage's gate on that file and records packet, agent run, model, duration and tokens in
 // state.json. Gate errors name paths and fields only, never page text.
 import { randomUUID } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { CATALOG_V3 } from '../../../../packages/rewards-core/src/catalog-v3.ts';
+import { MERCHANT_CATEGORIES_V3 } from '../../../../packages/rewards-core/src/types.ts';
 import { fileSha256 } from '../hash.ts';
 import { TOKEN, writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
@@ -51,17 +52,65 @@ export async function openPacket(batch: Batch, stage: MerchantAgentStage): Promi
 const writePacket = (batch: Batch, packet: Packet) =>
   writeJsonAtomic(join(packetsDir(batch), `${packet.stage}.${packet.n}.json`), packetSchema.parse(packet));
 
+/** Written at `claim verify`: the catalog brand and category lists (`verify/catalog-lists.json`) and one sheet per
+ * store (`verify/<domain>.md`) with every drafted quote and ±300 characters of its capture around it, so the verifier
+ * reads about 2 KB per store instead of every capture. Verbatim and length checks are the draft gate's. */
+async function writeVerifySheets(batch: Batch): Promise<string[]> {
+  const dir = join(batch.dir, 'verify');
+  await mkdir(dir, { recursive: true });
+  const lists = join(dir, 'catalog-lists.json');
+  await writeJsonAtomic(lists, {
+    brands: CATALOG_V3.brands.map((b) => ({ id: b.id, name: b.name })),
+    categories: [...MERCHANT_CATEGORIES_V3],
+  });
+  const out = [lists];
+  for (const store of batch.meta.stores) {
+    const file = await readJsonOrNull(join(batch.dir, `drafts/${store.domain}.json`), draftFileSchema);
+    if (!file) continue;
+    const lines = [`# ${store.domain}: drafted quotes in context`, ''];
+    for (const [i, item] of file.draft.evidence.entries()) {
+      const capture = await readFile(join(batch.dir, `captures/${item.sourceId}.txt`), 'utf8').catch(
+        () => '',
+      );
+      const words = item.quote.trim().split(/\s+/).filter(Boolean);
+      const match = new RegExp(words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s+')).exec(
+        capture,
+      );
+      const context = match
+        ? capture.slice(Math.max(0, match.index - 300), match.index + match[0].length + 300)
+        : '(quote not found in the capture; the draft gate reports this)';
+      lines.push(
+        `## evidence[${i}] ${item.sourceId} (${item.supports})`,
+        '',
+        `Quote: ${item.quote}`,
+        '',
+        '```',
+        context,
+        '```',
+        '',
+      );
+    }
+    const path = join(dir, `${store.domain}.md`);
+    await writeFile(path, lines.join('\n'));
+    out.push(path);
+  }
+  return out;
+}
+
 async function inputsOf(batch: Batch, stage: MerchantAgentStage): Promise<string[]> {
   const at = (path: string) => join(batch.dir, path);
   if (stage === 'research') return [at('batch.json'), join(batch.root, RESEARCHER_AGENT)];
   const manifest = await readJsonOrNull(at('manifest.json'), manifestFileSchema);
-  const captures = (manifest?.sources ?? []).map((s) => at(`captures/${s.id}.txt`));
+  // Store and lookup pages in full; issuer captures as the windows around the store's name (the full text stays
+  // in captures/ for a verifier that wants it).
+  const captures = (manifest?.sources ?? []).map((s) =>
+    s.kind === 'issuer-terms' ? at(`captures/${s.id}.windows.${s.domain}.txt`) : at(`captures/${s.id}.txt`),
+  );
   return [
     join(batch.root, VERIFIER_AGENT),
-    join(batch.root, 'packages/rewards-core/src/catalog-v3.ts'),
-    join(batch.root, 'packages/rewards-core/src/types.ts'),
     at('research.json'),
     at('manifest.json'),
+    ...(await writeVerifySheets(batch)),
     ...batch.meta.stores.map((s) => at(`drafts/${s.domain}.json`)),
     ...captures,
   ];
@@ -156,8 +205,11 @@ export function researchGate(file: ResearchFile, batch: Batch, packet: Packet): 
     };
     for (const [i, page] of store.storePages.entries())
       if (!onOwnHost(page.url)) errors.push(`${at}.storePages[${i}].url: not on the store's hosts`);
-    for (const [i, page] of store.lookupPages.entries())
+    for (const [i, page] of store.lookupPages.entries()) {
       if (onOwnHost(page.url)) errors.push(`${at}.lookupPages[${i}].url: on the store's own host`);
+      if (/forum|community|reddit|thread|discussion/i.test(page.url))
+        errors.push(`${at}.lookupPages[${i}].url: a forum or community thread is not a merchant-code lookup`);
+    }
   }
   for (const domain of expected) if (!seen.has(domain)) errors.push(`stores: ${domain} missing`);
   return errors;
@@ -185,7 +237,7 @@ export function verifyGate(file: VerificationFile, batch: Batch, packet: Packet)
   for (const domain of expected) if (!seen.has(domain)) errors.push(`stores: ${domain} missing`);
   const read = new Set(file.verifier.filesRead.map((f) => f.split('/').pop()));
   for (const input of packet.inputs)
-    if (/\/(drafts|captures)\//.test(input) && !read.has(input.split('/').pop()))
+    if (/\/(drafts|captures|verify)\//.test(input) && !read.has(input.split('/').pop()))
       errors.push(`verifier.filesRead: ${relative(batch.dir, input)} not read`);
   return errors;
 }

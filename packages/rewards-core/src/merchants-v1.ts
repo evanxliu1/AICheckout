@@ -2,36 +2,14 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 22 records, 15 of them payment
+/** The bundled merchant release (schema 1): 26 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
   version: '2026-10-11.dev.1',
   verifiedAt: '2026-10-11T00:00:00Z',
-  sources: [
-    {
-      id: 'amex-rewards-info-retail',
-      url: 'https://www.americanexpress.com/us/rewards-info/retail.html',
-      kind: 'issuer-terms',
-      capturedAt: '2026-10-05',
-      sha256: '8a441c08567b09d3fdbd9345da4ea18fe6658b0eab6c4f871e41ff375b2b7fc8',
-    },
-    {
-      id: 'cvs-com-page-1',
-      url: 'https://www.cvs.com/retail/help/help_faq',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '95ab13881227363a159f7784713bafce1b92c683aba1c0bff9cb647d325001e7',
-    },
-    {
-      id: 'cvs-com-page-2',
-      url: 'https://www.cvs.com/retail/help/help-subtopic-online-shopping-faqs',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: 'd1b8b59ebe045795c6b09127681ab0a82b824198ddc67e987ac209c887e27bb7',
-    },
-  ],
+  sources: [],
   merchants: [
     {
       id: 'affirm',
@@ -116,11 +94,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['cvs.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'drugstores',
-      evidence: {
-        basis: 'issuer',
-        sourceIds: ['cvs-com-page-1', 'cvs-com-page-2', 'amex-rewards-info-retail'],
-      },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
       disabled: false,
     },
@@ -147,11 +122,33 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'instacart-us',
+      name: 'Instacart',
+      hosts: ['instacart.com'],
+      kind: 'marketplace',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['instacart'],
+      disabled: false,
+    },
+    {
       id: 'klarna',
       name: 'Klarna',
       hosts: ['klarna.com'],
       kind: 'processor',
       physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'kroger-us',
+      name: 'Kroger',
+      hosts: ['kroger.com'],
+      kind: 'merchant',
+      physicalGoods: true,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
@@ -174,6 +171,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['lowes.com'],
       kind: 'merchant',
       physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'netflix-us',
+      name: 'Netflix',
+      hosts: ['netflix.com'],
+      kind: 'merchant',
+      physicalGoods: false,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
@@ -239,6 +247,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       name: 'Stripe Checkout',
       hosts: ['checkout.stripe.com'],
       kind: 'processor',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'ubereats-us',
+      name: 'Uber Eats',
+      hosts: ['ubereats.com'],
+      kind: 'marketplace',
       physicalGoods: false,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },

@@ -31,6 +31,9 @@ Milestone 14.3 of the [Phase 14 plan](../product/phase-14-merchant-database.md) 
 | Keeping values out of research | A blacklist of keys (`rate`, `cap`… as the card researcher's gate); strict Zod objects | Strict objects everywhere: a key the schema does not name is rejected, so no category, code, kind, goods flag or brand can be written at all |
 | Blocked homepages in tier A | Fail the store; write the record with the label name | Write the record, name from the domain label, `(blocked)` in `tier-a-manifest.json`: a default record's only model-free field is its name, and the smoke test showed headless Chromium bot-walled on both tries (chewy.com 403, crocs.com 429) |
 | Issuer sources | Research issuer pages again; mine the existing issuer captures by name | Mine (plan): a word-boundary match of the store name (and its domain label when 5+ letters) over every catalog capture, newest per source id, at most 5 per store, windows of ±500 characters for the drafter so a 90k-character terms page does not fill the context |
+| Disputed `evidence` (review, 2026-10-11) | Hold the record out like any field; downgrade to the default category and ship the rest | Downgrade: 4 of the 5 dry-run hold-outs had every other field confirmed, so holding them out lost correct names, hosts, kinds, goods flags and a brand. `downgraded: { reason }` goes to `apply-report.json` and a Downgraded table in `review.md` |
+| Issuer quote as category evidence (review) | Names the store and has no exclusion word; one clause names the store, states earning, names the category, no exclusion/limit/"only" | The latter (`issuerQuoteEarns`, `ISSUER_CATEGORY_WORDS`): the first accepted "Netflix is an example of a streaming service" and "Costco purchases earn only 1%" and refused "3% at grocery stores including Kroger; excluding warehouse clubs". Consequence: cvs's Amex definition line no longer gives `issuer`; Evan may add a basis for issuer category definitions plus store pages later |
+| Verifier inputs (review) | Every capture in full; sheets of each quote in context plus brand and category lists, issuer captures as windows | The latter: the first verifier read about 60 KB per store (38.5k tokens per store); verbatim and length checks are the draft gate's |
 | Subagent types | Wait for a session that registers the new agent files; run a general-purpose subagent that reads the agent file | The latter for the dry run, on Opus (the pinned model), recorded as such in `state.json` |
 
 ## Decision
@@ -42,4 +45,4 @@ As chosen; recorded in the [merchant pipeline](../system/merchant-pipeline.md) p
 - Any field a model could abuse is refused by the schema rather than by a list that could miss a synonym.
 
 ## Status
-Accepted 2026-10-11 (UTC) by the 14.3 implementer (Fable 5.1); agent-verified by tests. Evan may change any of it.
+Accepted 2026-10-11 (UTC) by the 14.3 implementer (Fable 5.1); amended the same day after the independent review (downgrade rule, tightened issuer quotes, verifier sheets); agent-verified by tests. Evan may change any of it.
