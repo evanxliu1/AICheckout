@@ -44,6 +44,15 @@ The first three tier-B seed batches (75 stores) raised cases the plan did not se
 | Airlines with no U.S. booking site (Air Dolomiti, Eurowings, HK Express, Luxair) | **Excluded as out of scope** (USD/U.S. only), no record: `evals/merchants/db/exclusions.json`, listed under Excluded in `review.md` |
 | Issuer fast-food lists | Count as `dining` evidence only where the catalog maps that issuer's fast-food option to `dining`: U.S. Bank Cash+ (`cash-plus-fast-food`, category `dining`) is the only such option, so "fast food" is a dining word for issuer quotes |
 
+## Third set (coordinator, same day, after the seed's completion)
+| Question | Chosen |
+| --- | --- |
+| A hosts dispute naming only extra hosts (Costco's costcobusinessdelivery.com, Old Navy's secure host) | Drop the named extra hosts and keep the record while the store's own domain stands; hold out only when the reason says the domain itself has no checkout or cannot be confirmed (`HOSTS_UNCONFIRMED_WORDING`), or when nothing would be left |
+| Draft hold-outs of catalog-brand stores (gap.com, disneyplus.com; nordstromrack.com has no catalog brand) | A default record needs no quotes: after three failed gates a default draft from research (name, hosts, the candidate list's brands, `fallback: default-from-research`) goes to the verifier; the record ships default when name, hosts and brands are confirmed |
+| Furnishings stores (Pottery Barn, West Elm) | Not home improvement: the store's own page must show a home-improvement, hardware or building-supply business; a definition that lists furnishings does not make a furniture store home improvement. The four home-improvement records (Lowe's, Menards, True Value, Home Depot) rest on "home improvement stores/retailer" or "hardware store" page quotes |
+| jcp.com | A redirect-only host, dropped (the record has jcpenney.com only) |
+| Pizza Hut's hedged U.S. Bank list, transit fare cards, stores with no online checkout | The hedged list is refused (pizzahut-us is default); Ventra and SmarTrip records ship (fare media are no goods; wmata's transit basis rests on its own page and a transit definition); Trader Joe's, HomeGoods, Homesense and Ross stay out |
+
 ## Decision
 As chosen; implemented in `draft.ts` (`held-out` draft status after `MAX_DRAFT_ATTEMPTS`), `packets.ts` (verify skips held-out stores), `apply.ts` (held-out entries with field `draft`, `reason: 'defunct'` from `DEFUNCT_WORDING`, `botWalled` list) and `review.ts` (Bot-walled and Excluded sections); the verifier brief carries the bot-walled and host conventions.
 

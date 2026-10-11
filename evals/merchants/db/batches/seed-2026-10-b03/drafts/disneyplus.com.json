@@ -3,104 +3,24 @@
   "batch": "seed-2026-10-b03",
   "promptVersion": "merchant-draft.2",
   "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
-  "model": "gpt-5.6-luna",
-  "effort": "xhigh",
+  "model": "none",
+  "effort": "none",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 20350,
-    "outputTokens": 591
+    "inputTokens": 0,
+    "outputTokens": 0
   },
-  "durationMs": 181925,
+  "durationMs": 0,
   "draft": {
     "domain": "disneyplus.com",
     "kind": "merchant",
-    "physicalGoods": false,
+    "physicalGoods": true,
     "brandIds": [
       "disney-plus"
     ],
-    "candidateCategory": "streaming",
-    "evidence": [
-      {
-        "sourceId": "disneyplus-com-page-1",
-        "quote": "Available only for direct-billed purchases via Disney+ and Hulu.",
-        "supports": "kind"
-      },
-      {
-        "sourceId": "disneyplus-com-page-1",
-        "quote": "Stream all of these and more.",
-        "supports": "physicalGoods"
-      },
-      {
-        "sourceId": "disneyplus-com-page-1",
-        "quote": "Discover the all-new Disney+ Perks",
-        "supports": "brand"
-      },
-      {
-        "sourceId": "disneyplus-com-page-2",
-        "quote": "Disney+ subscriptions through a third party",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-blue-cash-everyday-terms",
-        "quote": "\"Qualifying purchases\" include any monthly or annual subscription purchases made at U.S. websites DisneyPlus.com, Hulu.com or Stream.ESPN.com.",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-blue-cash-preferred-terms",
-        "quote": "\"Qualifying purchases\" include any monthly or annual subscription purchases made at U.S. websites DisneyPlus.com, Hulu.com or Stream.ESPN.com.",
-        "supports": "category"
-      },
-      {
-        "sourceId": "disney-inspire-visa-product",
-        "quote": "Disney Streaming",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-platinum-pricing",
-        "quote": "Disney+: Eligible Disney+ purchases include subscriptions and add-ons purchased directly at www.disneyplus.com.",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-rewards-info-retail",
-        "quote": "Disney+",
-        "supports": "category"
-      },
-      {
-        "sourceId": "citi-strata-rewards-terms",
-        "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fubo TV, HBO Max, Hulu",
-        "supports": "category"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "TV or Movie Streaming\nDisney+",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-rewards-info-retail",
-        "quote": "a provider that is included on our list of Select U.S. Streaming Subscriptions:",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "amex-blue-cash-preferred-terms",
-        "quote": "6% cash back on eligible purchases of U.S. streaming subscriptions from select providers",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "citi-strata-rewards-terms",
-        "quote": "Includes the following streaming providers:",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "discover-cashback-calendar",
-        "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV, Audible, DirecTV Stream",
-        "supports": "definition"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
-        "supports": "definition"
-      }
-    ],
-    "notes": null
-  }
+    "candidateCategory": null,
+    "evidence": [],
+    "notes": "Default draft from research after 3 failed draft gates; brands from the candidate list."
+  },
+  "fallback": "default-from-research"
 }

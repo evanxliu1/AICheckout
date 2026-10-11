@@ -67,6 +67,8 @@ export type ApplyOutcome =
       refused: { candidate: string; reason: string } | null;
       /** Cross-issuer conflicts of a granted category (review.md lists them; the record follows the rule). */
       conflicts: string[];
+      /** Hosts dropped on the verifier's word (the rest confirmed). */
+      droppedHosts: string[];
     }
   | { outcome: 'held-out'; disputed: { field: VerifiedField | 'processor'; reason: string | null }[] };
 
@@ -100,6 +102,10 @@ export const INCLUSION_WORDING = /\b(includes?|included|list (?:is|of)|following
 /** Wording an issuer uses when it says what a category covers. */
 export const DEFINITION_WORDING =
   /\b(includ\w*|such as|means?|defin\w*|consist\w*|categor\w*|\w*stores?|merchants?|list|establishments?|providers?|services?|retailers?|pharmac(?:y|ies))\b/i;
+/** A verifier's `hosts` reason that says the store's own domain is no checkout host (held out), as against one that
+ * only names extra hosts it could not confirm (dropped; coordinator, 2026-10-11). */
+export const HOSTS_UNCONFIRMED_WORDING =
+  /\b(no (?:web |online |public )?(?:checkout|cart|ordering)|nothing (?:is )?(?:shown )?(?:being )?(?:bought|sold|purchased)|no issuer capture names|corporate site|links out)\b/i;
 /** Wording that makes a definition conditional ("included if they classify as a restaurant merchant"). */
 export const CONDITIONAL_WORDING =
   /\b(if|when|unless|provided|may|might|classif\w*|qualif\w*|depend\w*|eligible)\b/i;
@@ -141,8 +147,10 @@ export const BUSINESS_TYPE_WORDS: Record<string, RegExp> = {
   transit:
     /\b(transit (?:agency|authority|system)|public transit|rideshar\w+ (?:company|service|platform|app)|ride-?hailing|commuter rail|railroads?|rail service|toll (?:road|authority)s?|parking (?:operator|garage|facility|lot)s?|taxi (?:service|company))\b/i,
   'department-stores': /\bdepartment stores?\b/i,
+  // Furniture and home-decor stores are not home improvement (coordinator, 2026-10-11): the page must show a
+  // home-improvement, hardware or building-supply business.
   'home-improvement':
-    /\b(home improvement (?:store|retailer|center|chain)s?|hardware (?:store|retailer|chain)s?|home centers?)\b/i,
+    /\b(home improvement (?:store|retailer|center|chain|products?)s?|hardware (?:store|retailer|chain)s?|home centers?|building (?:supply|supplies|materials?) (?:store|retailer|dealer)s?|lumber ?yards?)\b/i,
   'wholesale-clubs': /\b(wholesale clubs?|warehouse clubs?|membership warehouse)\b/i,
   electronics:
     /\b((?:consumer )?electronics (?:retailer|store|chain|company|superstore)s?|technology retailers?|computer (?:retailer|store)s?)\b/i,
@@ -406,20 +414,32 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
           ? true
           : null;
   const draft = goodsValue === null ? drafted : { ...drafted, physicalGoods: goodsValue };
-  // Hosts the verifier says only redirect ("max.com redirects to hbomax.com") are dropped, not held out: the matcher
-  // sees the final tab URL. The hosts dispute holds out only when nothing would be left.
+  // A hosts dispute drops the hosts the verifier could not confirm and keeps the record when the store's own domain
+  // stands (coordinator, 2026-10-11: Costco keeps costco.com, Old Navy keeps oldnavy.gap.com); a redirect-only host
+  // ("max.com redirects to hbomax.com") is dropped too. The record is held out only when the reason says the domain
+  // itself is no checkout host or cannot be confirmed, or when nothing would be left.
   const hostsReason = input.verification.hosts.reason ?? '';
   const escapeHost = (h: string) => h.replace(/[.]/g, '\\.');
-  const redirectHosts =
-    input.verification.hosts.verdict === 'disputed' && /\bredirects?\b/i.test(hostsReason)
-      ? input.hosts.filter(
-          (h) =>
-            new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}(?![a-z0-9-])`, 'i').test(hostsReason) &&
-            !new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason),
-        )
-      : [];
-  const hosts = input.hosts.filter((h) => !redirectHosts.includes(h));
-  const hostsSettled = redirectHosts.length > 0 && hosts.length > 0;
+  const namedIn = (h: string) =>
+    new RegExp(`(?<![a-z0-9.-])${escapeHost(h)}(?![a-z0-9-])`, 'i').test(hostsReason);
+  const redirectsAway = (h: string) =>
+    new RegExp(`${escapeHost(h)}[^.]*?\\bredirects?\\b`, 'i').test(hostsReason) &&
+    !new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason);
+  let droppedHosts: string[] = [];
+  let hostsSettled = false;
+  if (input.verification.hosts.verdict === 'disputed') {
+    // Hosts the reason names as redirect targets ("redirects to hbomax.com") are kept, not dropped.
+    const isTarget = (h: string) =>
+      new RegExp(`redirects? to (?:www\\.)?${escapeHost(h)}`, 'i').test(hostsReason);
+    const others = input.hosts.filter((h) => h !== input.domain && namedIn(h) && !isTarget(h));
+    const domainRedirects = redirectsAway(input.domain);
+    const domainUnconfirmed =
+      !domainRedirects && others.length === 0 && HOSTS_UNCONFIRMED_WORDING.test(hostsReason);
+    droppedHosts = domainRedirects ? [...others, input.domain] : others;
+    const left = input.hosts.filter((h) => !droppedHosts.includes(h));
+    hostsSettled = !domainUnconfirmed && droppedHosts.length > 0 && left.length > 0;
+  }
+  const hosts = hostsSettled ? input.hosts.filter((h) => !droppedHosts.includes(h)) : input.hosts;
   const disputed = VERIFIED_FIELDS.filter((f) => {
     if (f === 'evidence' || input.verification[f].verdict !== 'disputed') return false;
     // A null candidate the verifier would raise stays default (coordinator, 2026-10-11): the rule is conservative.
@@ -522,6 +542,7 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       : null,
     refused,
     conflicts,
+    droppedHosts: hostsSettled ? droppedHosts : [],
   };
 }
 
@@ -548,6 +569,8 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       downgraded?: { reason: string | null };
       refused?: { candidate: string; reason: string; notes: string | null };
       conflicts?: string[];
+      fallback?: 'default-from-research';
+      droppedHosts?: string[];
     }[],
     heldOut: [] as {
       domain: string;
@@ -665,6 +688,8 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       ...(outcome.downgraded ? { downgraded: outcome.downgraded } : {}),
       ...(outcome.refused ? { refused: { ...outcome.refused, notes: draftFile.draft.notes } } : {}),
       ...(outcome.conflicts.length ? { conflicts: outcome.conflicts } : {}),
+      ...(draftFile.fallback ? { fallback: draftFile.fallback } : {}),
+      ...(outcome.droppedHosts.length ? { droppedHosts: outcome.droppedHosts } : {}),
     });
     if (outcome.downgraded)
       env.log(`${store.domain}: DOWNGRADED to the default category (evidence disputed).`);

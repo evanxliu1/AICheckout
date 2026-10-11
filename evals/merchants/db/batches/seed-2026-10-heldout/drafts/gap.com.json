@@ -3,57 +3,24 @@
   "batch": "seed-2026-10-heldout",
   "promptVersion": "merchant-draft.2",
   "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
-  "model": "gpt-5.6-luna",
-  "effort": "xhigh",
+  "model": "none",
+  "effort": "none",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 21014,
-    "outputTokens": 279
+    "inputTokens": 0,
+    "outputTokens": 0
   },
-  "durationMs": 31306,
+  "durationMs": 0,
   "draft": {
     "domain": "gap.com",
     "kind": "merchant",
     "physicalGoods": true,
     "brandIds": [
-      "gap",
-      "old-navy",
-      "banana-republic",
-      "athleta"
+      "gap"
     ],
     "candidateCategory": null,
-    "evidence": [
-      {
-        "sourceId": "gap-com-page-1",
-        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want.",
-        "supports": "kind"
-      },
-      {
-        "sourceId": "gap-com-page-1",
-        "quote": "we'll ship your order when and where you want.",
-        "supports": "physicalGoods"
-      },
-      {
-        "sourceId": "gap-com-page-1",
-        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want.",
-        "supports": "brand"
-      },
-      {
-        "sourceId": "barclays-gap-encore-mastercard-pricing",
-        "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands.",
-        "supports": "brand"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "Select Clothing Stores",
-        "supports": "category"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "GAP",
-        "supports": "category"
-      }
-    ],
-    "notes": "Gap is a direct apparel retailer selling shipped and pickup goods. The documents place GAP under “Select Clothing Stores,” but clothing is not a candidate category; no evidence supports department stores or another listed category."
-  }
+    "evidence": [],
+    "notes": "Default draft from research after 3 failed draft gates; brands from the candidate list."
+  },
+  "fallback": "default-from-research"
 }

@@ -267,6 +267,9 @@ export const draftFileSchema = z.strictObject({
   usage: z.strictObject({ inputTokens: z.int().nonnegative(), outputTokens: z.int().nonnegative() }),
   durationMs: z.int().nonnegative(),
   draft: draftSchema,
+  /** A catalog-brand store whose drafts failed the gate three times gets a default draft from research (name, hosts,
+   * the candidate list's brands, no quotes) for the verifier to confirm (coordinator, 2026-10-11). */
+  fallback: z.literal('default-from-research').optional(),
 });
 export type DraftFile = z.infer<typeof draftFileSchema>;
 export const draftJsonSchema = {
@@ -402,6 +405,10 @@ export const applyReportSchema = z.strictObject({
         .optional(),
       /** Cross-issuer conflicts of a granted category, for Evan (source id and a sentence of 25 words or fewer). */
       conflicts: z.array(z.string().max(400)).optional(),
+      /** The record came from a default draft built from research after three failed draft gates. */
+      fallback: z.literal('default-from-research').optional(),
+      /** Hosts the verifier could not confirm, dropped from the record (the rest confirmed). */
+      droppedHosts: z.array(domainSchema).optional(),
     }),
   ),
   heldOut: z.array(

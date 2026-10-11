@@ -26,6 +26,7 @@ import {
 } from './files.ts';
 import type { Batch, ManifestEntry } from './files.ts';
 import { definitionWindows } from './capture.ts';
+import { loadCandidates } from './candidates.ts';
 import { draftGate } from './packets.ts';
 
 export const DRAFT_MODEL = { model: 'gpt-5.6-luna', effort: 'xhigh' as const, attemptTimeoutMs: 600_000 };
@@ -163,10 +164,44 @@ export async function runDraft(
     }
     const attempts = (existing?.attempts ?? 0) + 1;
     if (status === 'failed-gate' && attempts >= MAX_DRAFT_ATTEMPTS) {
-      status = 'held-out';
-      env.log(
-        `${store.domain}: HELD OUT after ${attempts} failed draft gates (coordinator rule, 2026-10-11).`,
-      );
+      // A catalog-brand store needs no quotes for a default record: a default draft from research (name, hosts, the
+      // candidate list's brands) goes to the verifier instead of a hold-out (coordinator, 2026-10-11).
+      const candidate = (await loadCandidates(env.root)).candidates.find((c) => c.domain === store.domain);
+      if (candidate?.brandIds?.length && !candidate.id) {
+        await writeJsonAtomic(
+          join(batch.dir, 'drafts', `${store.domain}.json`),
+          draftFileSchema.parse({
+            schemaVersion: 1,
+            batch: batch.id,
+            promptVersion: PROMPT_VERSION,
+            promptSha256,
+            model: 'none',
+            effort: 'none',
+            draftedOn: env.now().toISOString().slice(0, 10),
+            usage: { inputTokens: 0, outputTokens: 0 },
+            durationMs: 0,
+            fallback: 'default-from-research',
+            draft: {
+              domain: store.domain,
+              kind: 'merchant',
+              physicalGoods: true,
+              brandIds: candidate.brandIds,
+              candidateCategory: null,
+              evidence: [],
+              notes: `Default draft from research after ${attempts} failed draft gates; brands from the candidate list.`,
+            },
+          }),
+        );
+        status = 'done';
+        env.log(
+          `${store.domain}: default draft from research after ${attempts} failed draft gates (brands ${candidate.brandIds.join(', ')}).`,
+        );
+      } else {
+        status = 'held-out';
+        env.log(
+          `${store.domain}: HELD OUT after ${attempts} failed draft gates (coordinator rule, 2026-10-11).`,
+        );
+      }
     } else if (status !== 'done') failed += 1;
     batch.state.stores[store.domain] = {
       ...batch.state.stores[store.domain],

@@ -36,6 +36,9 @@ export interface ReviewInput {
   }[];
   /** Stores whose own pages were bot-walled: name and hosts rest on research and issuer captures. */
   botWalled: { batch: string; domain: string }[];
+  /** Default records built from research after three failed draft gates, and hosts dropped on the verifier's word. */
+  fallbacks: { batch: string; domain: string; id: string }[];
+  droppedHosts: { batch: string; domain: string; id: string; hosts: string[] }[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
   /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
    * an issuer listing the store under another category show here). */
@@ -140,6 +143,18 @@ export function reviewMarkdown(input: ReviewInput): string {
     '',
     ...(input.botWalled.length ? input.botWalled.map((b) => `- ${b.batch}: ${b.domain}`) : ['None.']),
     '',
+    `## Default records from research after three failed draft gates (${input.fallbacks.length})`,
+    '',
+    ...(input.fallbacks.length
+      ? input.fallbacks.map((f) => `- ${f.batch}: ${f.domain} (${f.id})`)
+      : ['None.']),
+    '',
+    `## Hosts dropped on the verifier's word (${input.droppedHosts.length})`,
+    '',
+    ...(input.droppedHosts.length
+      ? input.droppedHosts.map((d) => `- ${d.batch}: ${d.id} dropped ${d.hosts.join(', ')}`)
+      : ['None.']),
+    '',
     `## Excluded: defunct, parked or typo domains, or out of scope (${input.heldOut.filter((h) => h.reason).length})`,
     '',
     ...(input.heldOut.some((h) => h.reason)
@@ -181,6 +196,8 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   const refused: ReviewInput['refused'] = [];
   const conflicts: ReviewInput['conflicts'] = [];
   const botWalled: ReviewInput['botWalled'] = [];
+  const fallbacks: ReviewInput['fallbacks'] = [];
+  const droppedHosts: ReviewInput['droppedHosts'] = [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
@@ -199,6 +216,9 @@ export async function collectReview(root: string): Promise<ReviewInput> {
       if (r.refused) refused.push({ batch, domain: r.domain, id: r.id, ...r.refused });
       for (const conflict of r.conflicts ?? [])
         conflicts.push({ batch, domain: r.domain, id: r.id, category: r.category, conflict });
+      if (r.fallback) fallbacks.push({ batch, domain: r.domain, id: r.id });
+      if (r.droppedHosts?.length)
+        droppedHosts.push({ batch, domain: r.domain, id: r.id, hosts: r.droppedHosts });
     }
   }
   const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
@@ -214,6 +234,8 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     refused,
     conflicts,
     botWalled,
+    fallbacks,
+    droppedHosts,
   };
 }
 

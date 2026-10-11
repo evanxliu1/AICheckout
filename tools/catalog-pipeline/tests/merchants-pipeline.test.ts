@@ -496,6 +496,8 @@ describe('review.md', () => {
       ],
       conflicts: [],
       botWalled: [],
+      fallbacks: [],
+      droppedHosts: [],
     });
     expect(text).toContain(
       '| dev-1 | z.com | z-us | dining | synthetic refusal | Chase lists it under food delivery |',
@@ -819,6 +821,8 @@ describe('definition basis (Evan 2026-10-11)', () => {
       refused: [],
       conflicts: [],
       botWalled: [],
+      fallbacks: [],
+      droppedHosts: [],
     });
     expect(text).toContain('| kroger-us | kroger.com | supermarkets | definition |');
     expect(text).toContain('Grocery Pickup');
@@ -1427,6 +1431,8 @@ describe('re-check probes (2026-10-11)', () => {
         },
       ],
       botWalled: [],
+      fallbacks: [],
+      droppedHosts: [],
     });
     expect(text).toContain('| dev-1 | kroger.com | kroger-us | supermarkets | x: excludes: "y" |');
   });
@@ -1492,6 +1498,8 @@ describe('seed rules (coordinator 2026-10-11)', () => {
       refused: [],
       conflicts: [],
       botWalled: [{ batch: 'seed-1', domain: 'bjs.com' }],
+      fallbacks: [],
+      droppedHosts: [],
     });
     expect(text).toContain('- seed-1: bjs.com');
     expect(text).toContain('- seed-1: bonton.com (defunct: parked domain)');
@@ -1601,6 +1609,111 @@ describe('seed decisions 2026-10-11 (second set)', () => {
     expect(
       issuerQuoteEarns('Earn 3% at grocery stores including Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
     ).toBe(true);
+  });
+});
+
+describe('seed decisions 2026-10-11 (third set)', () => {
+  const verdict = (field: VerifiedField, reason: string) => {
+    const v = confirmed();
+    v[field] = { verdict: 'disputed', reason };
+    return v;
+  };
+  it('1: a hosts dispute naming extra hosts drops them and keeps the record; the domain itself unconfirmed holds out', () => {
+    const costco = applyStore(
+      input({
+        domain: 'costco.com',
+        name: 'Costco',
+        hosts: ['costco.com', 'costcobusinessdelivery.com'],
+        verification: verdict(
+          'hosts',
+          'costcobusinessdelivery.com appears in no capture; the host cannot be settled from the captures.',
+        ),
+      }),
+    );
+    expect(costco.outcome === 'record' && costco.record.hosts).toEqual(['costco.com']);
+    expect(costco.outcome === 'record' && costco.droppedHosts).toEqual(['costcobusinessdelivery.com']);
+    const oldNavy = applyStore(
+      input({
+        domain: 'oldnavy.gap.com',
+        name: 'Old Navy',
+        hosts: ['oldnavy.gap.com', 'secure-oldnavy.gap.com', 'oldnavy.com'],
+        verification: verdict(
+          'hosts',
+          'secure-oldnavy.gap.com appears in no capture, and oldnavy.com appears in no capture either; only oldnavy.gap.com is shown selling.',
+        ),
+      }),
+    );
+    expect(oldNavy.outcome === 'record' && oldNavy.record.hosts).toEqual(['oldnavy.gap.com']);
+    for (const reason of [
+      'there is no online ordering, so nothing is sold or checked out on this host',
+      'both store pages are bot checks and no issuer capture names the store',
+      'gm.com is a corporate site whose shopping links out to the brand domains',
+    ])
+      expect(applyStore(input({ verification: verdict('hosts', reason) })).outcome, reason).toBe('held-out');
+    // The redirect rule still works, and a sole host that redirects away holds out.
+    const max = applyStore(
+      input({
+        domain: 'max.com',
+        name: 'HBO Max',
+        hosts: ['max.com', 'hbomax.com'],
+        verification: verdict('hosts', 'max.com redirects to hbomax.com'),
+      }),
+    );
+    expect(max.outcome === 'record' && max.record.hosts).toEqual(['hbomax.com']);
+    expect(
+      applyStore(
+        input({
+          domain: 'showtime.com',
+          name: 'Showtime',
+          hosts: ['showtime.com'],
+          verification: verdict('hosts', 'showtime.com redirects to paramountplus.com'),
+        }),
+      ).outcome,
+    ).toBe('held-out');
+  });
+  it('3: a furnishings store is not home improvement; hardware and building-supply pages are', () => {
+    expect(storePageShowsType('a home furnishings retailer', 'home-improvement')).toBe(false);
+    expect(storePageShowsType('furniture and home decor', 'home-improvement')).toBe(false);
+    expect(
+      storePageShowsType(
+        'We are your local hardware store providing the best home improvement products',
+        'home-improvement',
+      ),
+    ).toBe(true);
+    expect(storePageShowsType('a building supply store and lumber yard', 'home-improvement')).toBe(true);
+    const out = applyStore(
+      input(
+        {
+          domain: 'potterybarn.com',
+          name: 'Pottery Barn',
+          hosts: ['potterybarn.com'],
+          sources: [
+            { ...sources[0], id: 'pb-page' },
+            {
+              id: 'boa',
+              kind: 'issuer-terms',
+              url: 'https://www.bankofamerica.com/c',
+              capturedOn: '2026-10-05',
+              sha256: 'a'.repeat(64),
+            },
+          ],
+          storeTexts: { 'pb-page': 'home furnishings' },
+          issuerTexts: { boa: 'x' },
+        },
+        {
+          candidateCategory: 'home-improvement',
+          evidence: [
+            { sourceId: 'pb-page', quote: 'a home furnishings retailer', supports: 'category' },
+            {
+              sourceId: 'boa',
+              quote: 'The Home Improvement & Furnishings category includes furniture stores',
+              supports: 'definition',
+            },
+          ],
+        },
+      ),
+    );
+    expect(out.outcome === 'record' && out.record.category).toBe('general-merchandise');
   });
 });
 
