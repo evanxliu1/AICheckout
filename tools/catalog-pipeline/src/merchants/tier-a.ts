@@ -4,7 +4,7 @@
 // general-merchandise with default evidence, no brands. The homepage text is a gitignored capture; its hash goes to
 // evals/merchants/db/tier-a-manifest.json.
 //   pipeline merchants tier-a [--only a.com,b.com] [--limit N]
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
 import { merchantRecordSchema } from '../../../../packages/rewards-core/src/merchant-release.ts';
@@ -158,12 +158,31 @@ export async function tierACommand(
   const capturesDir = join(env.root, DB_DIR, 'tier-a-captures');
   await mkdir(capturesDir, { recursive: true });
   const today = env.now().toISOString().slice(0, 10);
+  // A tier-A domain a tier-B record already lists as a host (hy-vee.com under hyvee-us, seed 2026-10-11) gets no
+  // second record: hosts are unique across the release.
+  const covered = new Set<string>();
+  for (const name of (await readdir(join(env.root, RECORDS_DIR)).catch(() => [] as string[])).filter((n) =>
+    n.endsWith('.json'),
+  )) {
+    const record = JSON.parse(await readFile(join(env.root, RECORDS_DIR, name), 'utf8')) as {
+      id: string;
+      hosts: string[];
+    };
+    for (const host of record.hosts) covered.add(`${host}|${record.id}`);
+  }
+  const coveredBy = (domain: string, id: string) =>
+    [...covered].find((c) => c.startsWith(`${domain}|`) && !c.endsWith(`|${id}`))?.split('|')[1];
   let failed = 0;
   for (const candidate of todo) {
     const refused = hostGate(candidate.domain);
     if (refused) {
       env.log(`${candidate.domain}: refused (${refused}).`);
       failed += 1;
+      continue;
+    }
+    const owner = coveredBy(candidate.domain, tierARecord(candidate.domain, 'x', candidate.id).id);
+    if (owner) {
+      env.log(`${candidate.domain}: already a host of ${owner}; no tier-A record.`);
       continue;
     }
     try {
