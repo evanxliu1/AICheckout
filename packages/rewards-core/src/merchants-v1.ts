@@ -7,7 +7,7 @@ import type { MerchantRelease } from './types.ts';
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.dev.3',
+  version: '2026-10-11.dev.4',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -18,11 +18,39 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: 'ccab2ac66bbc49069dffeb82531a96f1c52f8047956b27aab2efba4756e6709e',
     },
     {
+      id: 'boa-customized-cash-rewards-pricing',
+      url: 'https://www.bankofamerica.com/credit-cards/terms-and-conditions/?campaignid=4079537&productoffercode=8H&locale=en_US',
+      kind: 'issuer-terms',
+      capturedAt: '2026-10-05',
+      sha256: '65aa56b1463cc9230ca780a9a6b4bcc74ff4e4e4b7bbb01e8a1518de879d6563',
+    },
+    {
       id: 'chase-rewards-category-faq',
       url: 'https://www.chase.com/personal/credit-cards/rewards-category-faq',
       kind: 'issuer-terms',
       capturedAt: '2026-10-05',
       sha256: '06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2',
+    },
+    {
+      id: 'cvs-com-page-1',
+      url: 'https://www.cvs.com/retail/help/help_faq',
+      kind: 'store-page',
+      capturedAt: '2026-10-11',
+      sha256: '95ab13881227363a159f7784713bafce1b92c683aba1c0bff9cb647d325001e7',
+    },
+    {
+      id: 'cvs-com-page-2',
+      url: 'https://www.cvs.com/retail/help/help-subtopic-online-shopping-faqs',
+      kind: 'store-page',
+      capturedAt: '2026-10-11',
+      sha256: 'd1b8b59ebe045795c6b09127681ab0a82b824198ddc67e987ac209c887e27bb7',
+    },
+    {
+      id: 'discover-cashback-calendar',
+      url: 'https://www.discover.com/credit-cards/cash-back/cashback-calendar.html',
+      kind: 'issuer-terms',
+      capturedAt: '2026-10-02',
+      sha256: 'c671552eeafadbc884a070efbb5ddc36e9d79457527434d11e6257d0c5706a03',
     },
     {
       id: 'lowes-com-page-1',
@@ -32,11 +60,11 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: 'cd0fbbc7a4cb352e65848d0fe15e73d2e2f4fec774bd0576b57f843ff490153b',
     },
     {
-      id: 'us-bank-cash-plus-sample-merchants',
-      url: 'https://cashplus.usbank.com/cash-plus/samplemerchants',
-      kind: 'issuer-terms',
-      capturedAt: '2026-10-05',
-      sha256: '9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998',
+      id: 'wholefoodsmarket-com-page-1',
+      url: 'https://www.wholefoodsmarket.com/company-info',
+      kind: 'store-page',
+      capturedAt: '2026-10-11',
+      sha256: '1c2d127ebd06e6b4ba8513f5cc64dfbc8b31fa3fba49128ac80499c06d6aa55b',
     },
     {
       id: 'wholefoodsmarket-com-page-2',
@@ -137,8 +165,11 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['cvs.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
+      category: 'drugstores',
+      evidence: {
+        basis: 'definition',
+        sourceIds: ['cvs-com-page-1', 'cvs-com-page-2', 'discover-cashback-calendar'],
+      },
       brandIds: [],
       disabled: false,
     },
@@ -215,7 +246,10 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'merchant',
       physicalGoods: true,
       category: 'home-improvement',
-      evidence: { basis: 'definition', sourceIds: ['lowes-com-page-1', 'boa-cash-back-category-choices'] },
+      evidence: {
+        basis: 'definition',
+        sourceIds: ['lowes-com-page-1', 'boa-cash-back-category-choices', 'discover-cashback-calendar'],
+      },
       brandIds: [],
       disabled: false,
     },
@@ -328,10 +362,12 @@ export const MERCHANTS_V1: MerchantRelease = {
       evidence: {
         basis: 'definition',
         sourceIds: [
+          'wholefoodsmarket-com-page-1',
           'wholefoodsmarket-com-page-2',
           'wholefoodsmarket-com-page-3',
-          'us-bank-cash-plus-sample-merchants',
+          'boa-customized-cash-rewards-pricing',
           'chase-rewards-category-faq',
+          'discover-cashback-calendar',
         ],
       },
       brandIds: ['whole-foods-market'],

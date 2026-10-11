@@ -156,7 +156,8 @@ export function storeEvidence(
           .filter((name): name is string => name !== null),
       ),
     ];
-    const whose = issuers.length ? `${issuers.join(' and ')}'s` : "an issuer's";
+    const list = issuers.length > 1 ? `${issuers.slice(0, -1).join(', ')} and ${issuers.at(-1)}` : issuers[0];
+    const whose = issuers.length ? `${list}'s` : "an issuer's";
     const noun = wording.replace(/^an? /, '');
     return `Treated as ${wording} (its own pages; fits ${whose} ${noun} definition).`;
   }

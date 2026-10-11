@@ -169,13 +169,16 @@ describe('storeEvidence', () => {
     for (const record of MERCHANTS_V1.merchants)
       if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
       else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
-    // The bundled dev release (2026-10-11.dev.3): Whole Foods on U.S. Bank's and Chase's supermarket definitions,
-    // Lowe's on Bank of America's home-improvement definition; Kroger is on the default category.
+    // The bundled dev release (2026-10-11.dev.4): Whole Foods, CVS and Lowe's on issuer definitions; Kroger is on
+    // the default category. Several issuers read as a list.
     expect(storeEvidence('wholefoodsmarket-us')).toBe(
-      "Treated as a supermarket (its own pages; fits U.S. Bank and Chase's supermarket definition).",
+      "Treated as a supermarket (its own pages; fits Bank of America, Chase and Discover's supermarket definition).",
+    );
+    expect(storeEvidence('cvs-us')).toBe(
+      "Treated as a drugstore (its own pages; fits Discover's drugstore definition).",
     );
     expect(storeEvidence('lowes-us')).toBe(
-      "Treated as a home-improvement store (its own pages; fits Bank of America's home-improvement store definition).",
+      "Treated as a home-improvement store (its own pages; fits Bank of America and Discover's home-improvement store definition).",
     );
     expect(storeEvidence('kroger-us')).toBeNull();
   });

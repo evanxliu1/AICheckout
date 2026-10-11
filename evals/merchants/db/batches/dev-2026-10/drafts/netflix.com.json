@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 15730,
-    "outputTokens": 459
+    "inputTokens": 17620,
+    "outputTokens": 657
   },
-  "durationMs": 130883,
+  "durationMs": 72314,
   "draft": {
     "domain": "netflix.com",
     "kind": "merchant",
@@ -18,6 +18,11 @@
     "brandIds": [],
     "candidateCategory": "streaming",
     "evidence": [
+      {
+        "sourceId": "netflix-com-page-1",
+        "quote": "Netflix delivers the next series, films and games you’ll obsess over.",
+        "supports": "category"
+      },
       {
         "sourceId": "netflix-com-page-2",
         "quote": "Sign up for Netflix today and choose from several payment options.",
@@ -31,11 +36,6 @@
       {
         "sourceId": "netflix-com-page-2",
         "quote": "Unlimited ad-free movies, TV shows, and games",
-        "supports": "physicalGoods"
-      },
-      {
-        "sourceId": "netflix-com-page-1",
-        "quote": "Netflix delivers the next series, films and games you’ll obsess over.",
         "supports": "category"
       },
       {
@@ -49,41 +49,56 @@
         "supports": "category"
       },
       {
-        "sourceId": "amex-rewards-info-retail",
-        "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
-        "supports": "definition"
+        "sourceId": "us-bank-altitude-go-secured-product",
+        "quote": "Plus, a $15 credit for annual streaming service purchases such as Netflix and Spotify®.3",
+        "supports": "category"
       },
       {
         "sourceId": "amex-rewards-info-retail",
-        "quote": "Netflix",
+        "quote": "NBA League Pass\nNetflix\nPandora\nParamount+",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "streaming subscription purchases, the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Merchant examples*\nAmazon\nComcast\nEtsy\nNetflix\nNordstrom",
         "supports": "category"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
-        "quote": "Includes the following streaming providers:",
-        "supports": "definition"
+        "quote": "Hulu, MLB.TV, NBA League Pass, Netflix",
+        "supports": "category"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
-        "quote": "Netflix",
+        "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "MLB.TV, Netflix, Pandora, Paramount Plus, Peacock",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "TV or Movie Streaming\nDisney+\nNetflix\nYouTube",
         "supports": "category"
       },
       {
         "sourceId": "us-bank-cash-plus-sample-merchants",
         "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
         "supports": "definition"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "TV or Movie Streaming",
-        "supports": "category"
-      },
-      {
-        "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "Netflix",
-        "supports": "category"
       }
     ],
-    "notes": "Netflix is not among the supplied catalog brand IDs. The lookup labels its MCC as “Cable and other pay television,” while issuer sources explicitly list Netflix as a streaming provider."
+    "notes": "Netflix’s corporate page uses broad entertainment language, while its plans and multiple issuer sources identify monthly streaming subscriptions. One issuer lists Netflix under Online Shopping, and the lookup reports MCC 4899 cable/pay television. No catalog brand matches Netflix."
   }
 }

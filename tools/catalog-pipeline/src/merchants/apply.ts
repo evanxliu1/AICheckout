@@ -408,7 +408,10 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
         })),
     },
     cited,
-    downgraded: downgraded ? { reason: disputedReasons.filter(Boolean).join(' ') || null } : null,
+    // The report's note field holds 300 characters; the full per-quote reasons stay in verification.json.
+    downgraded: downgraded
+      ? { reason: disputedReasons.filter(Boolean).join(' ').slice(0, 300) || null }
+      : null,
     refused,
   };
 }

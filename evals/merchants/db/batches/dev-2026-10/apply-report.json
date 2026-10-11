@@ -9,19 +9,14 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "evidence[7] and [8] cite Citi's list of stores excluded from its 4% gas earn; an exclusion list naming Kroger, not a statement that Kroger purchases earn as supermarkets."
+        "reason": "Store-page category quote names an online ordering service, not a grocery business type; the grocery wording is elsewhere on the page. Conditional, location-dependent 'may qualify' for gas and/or grocery, sitting in U.S. Bank's gas section; not a statement that Kroger purchases earn as supermarkets."
       }
     },
     {
       "domain": "cvs.com",
       "id": "cvs-us",
-      "basis": "default",
-      "category": "general-merchandise",
-      "refused": {
-        "candidate": "drugstores",
-        "reason": "no issuer definition quote covers drugstores",
-        "notes": "CVS is not included in the provided catalog brand list, so no brand ID is assigned."
-      }
+      "basis": "definition",
+      "category": "drugstores"
     },
     {
       "domain": "netflix.com",
@@ -29,7 +24,16 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "evidence[4] is a forum post giving Netflix's code as cable and pay television, not streaming; evidence[5] is a U.S. Bank streaming statement credit, not an earning statement."
+        "reason": "Corporate about-page tagline about entertainment; it does not show a streaming subscription business type (the plans page quote does). Forum post by a user, not an MCC lookup source; it reports a cable/pay-TV code (4899), not streaming. Names Netflix only for a $15 statement credit on streaming purc"
+      }
+    },
+    {
+      "domain": "instacart.com",
+      "id": "instacart-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "A U.S. Bank category heading that does not name Instacart; as a category quote it supports nothing about this store. Amex's supermarket definition describes stores selling food and household goods; it does not cover a grocery-delivery marketplace like Instacart. BoA's grocery definition lists store "
       }
     },
     {
@@ -56,7 +60,7 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "evidence[6] is an Amex Uber One membership credit, not a dining earn; evidence[7] is about orders on Instacart; evidence[4]/[5] are Chase's separate select food delivery category, not dining."
+        "reason": "Chase's separate Select food delivery category, not dining; it supports a different category than the drafted one. Lists ubereats.com under Chase's Select food delivery category, a different category from dining. Conditional on classifying as a restaurant merchant, and the same Chase page puts ubere"
       }
     },
     {
@@ -68,20 +72,11 @@
   ],
   "heldOut": [
     {
-      "domain": "instacart.com",
-      "disputed": [
-        {
-          "field": "physicalGoods",
-          "reason": "The captures show grocery orders shopped and delivered to the customer (grocery delivery, produce, dairy, meat departments), so goods are delivered; false does not match the captures."
-        }
-      ]
-    },
-    {
       "domain": "costco.com",
       "disputed": [
         {
           "field": "hosts",
-          "reason": "costcobusinessdelivery.com does not appear in any capture; the store pages show only a 'Business Delivery' link label, so the host cannot be settled from the captures."
+          "reason": "costcobusinessdelivery.com appears in no capture; the pages show only a 'Business Delivery' link text, so the host cannot be settled from the captures."
         }
       ]
     }
