@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b11",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 18875,
+    "outputTokens": 348
+  },
+  "durationMs": 41000,
+  "draft": {
+    "domain": "williams-sonoma.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "williams-sonoma"
+    ],
+    "candidateCategory": "home-improvement",
+    "evidence": [
+      {
+        "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+        "quote": "5% back in Rewards for Net Eligible Purchases made at Williams Sonoma",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+        "quote": "Purchases will only qualify towards earning Rewards once they have shipped.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "capital-one-williams-sonoma-key-rewards-visa-pricing",
+        "quote": "made at Williams Sonoma, Williams Sonoma Home, Pottery Barn, Pottery Barn Kids, Pottery Barn Teen, west elm, Rejuvenation, and Mark & Graham stores",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Merchant examples*\nAce Hardware\nCrate & Barrel\nIKEA\nPottery Barn\nSherwin-Williams\nThe Home Depot\nWayfair\nWilliams-Sonoma",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Home Improvement Store purchases include online and in-store purchases at home improvement retail stores, building supply stores",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Store pages were unavailable. The separate Williams Sonoma Home brand is named in issuer terms but is not attributed to this domain, so only Williams Sonoma is included."
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "seed-2026-10-heldout",
-  "updatedAt": "2026-10-11T08:02:30.098Z",
+  "updatedAt": "2026-10-11T08:08:22.618Z",
   "stages": {
     "research": {
       "status": "done",
@@ -27,10 +27,21 @@
       "inputSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec"
     },
     "verify": {
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-10-11T08:08:22.099Z",
+      "attempts": 1,
+      "packetId": "ed4f0f02-aa05-4e0e-92e1-ffa3a03ed175",
+      "agentRun": "a2bcf2eee89846b34",
+      "model": "claude-opus-5-5",
+      "acceptedAt": "2026-10-11T08:08:22.099Z",
+      "durationMs": 198709,
+      "tokens": 72699,
+      "inputSha256": "fb4b9627265e30cef6973c0b8d7ba828761ff588289329bda1e9acbd2ab1bec2"
     },
     "apply": {
-      "status": "pending"
+      "status": "done",
+      "finishedAt": "2026-10-11T08:08:22.618Z",
+      "attempts": 1
     },
     "build": {
       "status": "pending"
@@ -45,7 +56,8 @@
         "outputTokens": 166,
         "durationMs": 44538,
         "finishedAt": "2026-10-11T07:50:10.617Z"
-      }
+      },
+      "apply": "record"
     },
     "barnesandnoble.com": {
       "draft": {
@@ -55,7 +67,8 @@
         "outputTokens": 189,
         "durationMs": 55119,
         "finishedAt": "2026-10-11T07:51:05.748Z"
-      }
+      },
+      "apply": "record"
     },
     "birchlane.com": {
       "draft": {
@@ -65,7 +78,8 @@
         "outputTokens": 239,
         "durationMs": 64896,
         "finishedAt": "2026-10-11T07:52:10.650Z"
-      }
+      },
+      "apply": "record"
     },
     "build.com": {
       "draft": {
@@ -75,7 +89,13 @@
         "outputTokens": 124,
         "durationMs": 29451,
         "finishedAt": "2026-10-11T07:52:40.110Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "name",
+        "kind",
+        "physicalGoods"
+      ]
     },
     "cabelas.com": {
       "draft": {
@@ -85,7 +105,8 @@
         "outputTokens": 295,
         "durationMs": 18284,
         "finishedAt": "2026-10-11T07:52:58.401Z"
-      }
+      },
+      "apply": "record"
     },
     "dell.com": {
       "draft": {
@@ -95,7 +116,8 @@
         "outputTokens": 214,
         "durationMs": 52864,
         "finishedAt": "2026-10-11T07:53:51.270Z"
-      }
+      },
+      "apply": "record"
     },
     "gap.com": {
       "draft": {
@@ -105,7 +127,11 @@
         "outputTokens": 279,
         "durationMs": 31310,
         "finishedAt": "2026-10-11T08:02:06.091Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "draft"
+      ]
     },
     "homedepot.com": {
       "draft": {
@@ -115,7 +141,8 @@
         "outputTokens": 267,
         "durationMs": 36230,
         "finishedAt": "2026-10-11T07:56:44.413Z"
-      }
+      },
+      "apply": "record"
     },
     "jcpenney.com": {
       "draft": {
@@ -125,7 +152,8 @@
         "outputTokens": 261,
         "durationMs": 20171,
         "finishedAt": "2026-10-11T07:57:04.590Z"
-      }
+      },
+      "apply": "record"
     },
     "nordstromrack.com": {
       "draft": {
@@ -135,7 +163,11 @@
         "outputTokens": 182,
         "durationMs": 23993,
         "finishedAt": "2026-10-11T08:02:30.097Z"
-      }
+      },
+      "apply": "held-out",
+      "heldOutFields": [
+        "draft"
+      ]
     },
     "sherwin-williams.com": {
       "draft": {
@@ -145,7 +177,8 @@
         "outputTokens": 288,
         "durationMs": 21442,
         "finishedAt": "2026-10-11T07:58:04.319Z"
-      }
+      },
+      "apply": "record"
     },
     "target.com": {
       "draft": {
@@ -155,7 +188,8 @@
         "outputTokens": 432,
         "durationMs": 87409,
         "finishedAt": "2026-10-11T07:59:31.735Z"
-      }
+      },
+      "apply": "record"
     }
   }
 }
