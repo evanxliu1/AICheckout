@@ -7,13 +7,13 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 25289,
-    "outputTokens": 214
+    "inputTokens": 25287,
+    "outputTokens": 253
   },
-  "durationMs": 90719,
+  "durationMs": 30944,
   "draft": {
     "domain": "amazon.com",
-    "kind": "merchant",
+    "kind": "marketplace",
     "physicalGoods": true,
     "brandIds": [
       "amazon"
@@ -22,12 +22,7 @@
     "evidence": [
       {
         "sourceId": "prime-visa-rewards-terms",
-        "quote": "Amazon.com Services LLC and its affiliates",
-        "supports": "kind"
-      },
-      {
-        "sourceId": "prime-visa-rewards-terms",
-        "quote": "third-party merchants through Amazon.com’s",
+        "quote": "items sold by third-party merchants through Amazon.com’s marketplace",
         "supports": "kind"
       },
       {
@@ -37,8 +32,18 @@
       },
       {
         "sourceId": "amazon-com-page-1",
-        "quote": "Amazon.com, Inc. or its affiliates",
+        "quote": "© 1996-2026, Amazon.com, Inc. or its affiliates",
         "supports": "brand"
+      },
+      {
+        "sourceId": "amazon-com-page-1",
+        "quote": "Shop by Department",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Major retailers (e.g., Amazon.com, Walmart.com)",
+        "supports": "category"
       },
       {
         "sourceId": "amex-rewards-info-retail",
@@ -46,6 +51,6 @@
         "supports": "category"
       }
     ],
-    "notes": "The documents show third-party marketplace sellers but do not establish that most sales are third-party, so merchant is conservative. Amazon is explicitly described as an online superstore, so no listed specialty category applies."
+    "notes": "Amazon.com is a broad retailer that also hosts third-party marketplace sellers; the documents do not quantify the third-party share. Its major-retailer and online-superstore descriptions support null rather than a listed specialty category."
   }
 }
