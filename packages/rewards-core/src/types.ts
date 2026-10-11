@@ -301,6 +301,53 @@ export interface CatalogV3 {
 
 export type Catalog = CatalogV1 | CatalogV2 | CatalogV3;
 
+/** Merchant release schema 1 (Phase 14): what the extension may assume about a known store website.
+ * Separate from the catalog; matched on the device by `merchant-match.ts`. */
+export const MERCHANT_KINDS = ['merchant', 'marketplace', 'processor'] as const;
+export type MerchantKind = (typeof MERCHANT_KINDS)[number];
+/** Why a record's category is what it is: the issuer names the store, the store's own pages and a
+ * public merchant-code lookup agree, or neither (then `general-merchandise`). */
+export const MERCHANT_EVIDENCE_BASES = ['issuer', 'corroborated', 'default'] as const;
+export type MerchantEvidenceBasis = (typeof MERCHANT_EVIDENCE_BASES)[number];
+export const MERCHANT_SOURCE_KINDS = ['issuer-terms', 'store-page', 'mcc-lookup'] as const;
+export type MerchantSourceKind = (typeof MERCHANT_SOURCE_KINDS)[number];
+
+export interface MerchantSource {
+  id: string;
+  url: string;
+  kind: MerchantSourceKind;
+  /** Capture date (YYYY-MM-DD). */
+  capturedAt: string;
+  sha256: string;
+}
+
+export interface MerchantRecord {
+  id: string;
+  name: string;
+  /** Registrable domains or exact subdomains the store sells and checks out on; matched by
+   * label-boundary suffix, so `newegg.com` covers `secure.newegg.com` but not `notnewegg.com`. */
+  hosts: string[];
+  kind: MerchantKind;
+  /** Online-retail rules need it; `false` for services, subscriptions and processors. */
+  physicalGoods: boolean;
+  category: MerchantCategoryV3;
+  evidence: { basis: MerchantEvidenceBasis; sourceIds: string[] };
+  /** Catalog brands whose official store this site is (not brands it resells). */
+  brandIds: string[];
+  /** Remote off switch: the site falls back to the generic profile. */
+  disabled: boolean;
+}
+
+export interface MerchantRelease {
+  schemaVersion: 1;
+  version: string;
+  /** The newest capture date among the cited sources; no `expiresAt` (the catalog's own expiry stops
+   * an abandoned install). */
+  verifiedAt: string;
+  sources: MerchantSource[];
+  merchants: MerchantRecord[];
+}
+
 export interface RuleUsage {
   ruleId: string;
   calendarYear: number;
