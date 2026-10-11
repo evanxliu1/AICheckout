@@ -206,10 +206,27 @@ export async function tierACommand(
       await writeJsonAtomic(join(env.root, RECORDS_DIR, `${record.id}.json`), record);
       env.log(`${candidate.domain}: ${record.id} "${name}" (${source}, HTTP ${status}, robots ${robots}).`);
     } catch (error) {
+      // A homepage that cannot be fetched at all (timeouts, protocol or certificate errors) says nothing about the
+      // store either: the record is still written with the domain label (seed 2026-10-11: 14 of 332), marked
+      // `(failed)` in the manifest, and counted as failed in the log.
       failed += 1;
-      env.log(
-        `${candidate.domain}: FAILED ${error instanceof Error ? error.message.split('\n')[0] : String(error)}`,
+      const message = error instanceof Error ? error.message.split('\n')[0] : String(error);
+      const { name, source } = displayName(
+        { ogSiteName: null, applicationName: null, title: null },
+        candidate.domain,
       );
+      const record = tierARecord(candidate.domain, name, candidate.id);
+      manifest.stores[candidate.domain] = {
+        url: `https://${candidate.domain}/`,
+        capturedOn: today,
+        sha256: sha256Hex(''),
+        length: 0,
+        nameSource: `${source} (failed: ${message.slice(0, 80)})`,
+        status: 0,
+        robots: 'unknown',
+      };
+      await writeJsonAtomic(join(env.root, RECORDS_DIR, `${record.id}.json`), record);
+      env.log(`${candidate.domain}: FAILED ${message}; default record "${name}" written from the label.`);
     }
     await writeJsonAtomic(manifestPath, manifest);
   }
