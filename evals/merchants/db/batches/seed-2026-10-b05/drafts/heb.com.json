@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12535,
+    "outputTokens": 318
+  },
+  "durationMs": 45605,
+  "draft": {
+    "domain": "heb.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "A supermarket offers a wide variety of food and household products",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "This category includes purchases for grocery pickup and delivery that are placed online with grocery stores",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes purchases at cafes, bars, lounges, fast-food restaurants, restaurant delivery services, and take out restaurants.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Grocery Store purchases include those made at supermarkets, meat lockers, bakeries, smaller grocery stores, and grocery delivery services.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Check off your grocery list and earn cash back at most grocery stores and supermarkets.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The store pages failed to load, and no supplied lookup page identifies H-E-B's merchant category. Issuer definitions describe supermarkets, but no document states that H-E-B is a supermarket or names it as earning in that category, so candidateCategory remains null. H-E-B is not in the catalog."
+  }
+}

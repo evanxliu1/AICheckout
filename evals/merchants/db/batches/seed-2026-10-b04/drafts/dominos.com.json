@@ -7,10 +7,10 @@
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 16037,
-    "outputTokens": 490
+    "inputTokens": 16039,
+    "outputTokens": 492
   },
-  "durationMs": 105342,
+  "durationMs": 162246,
   "draft": {
     "domain": "dominos.com",
     "kind": "merchant",
@@ -19,24 +19,24 @@
     "candidateCategory": "dining",
     "evidence": [
       {
-        "sourceId": "dominos-com-page-2",
-        "quote": "Domino’s has more than 22,500 stores in over 90 international markets across the globe",
-        "supports": "kind"
-      },
-      {
         "sourceId": "dominos-com-page-1",
         "quote": "Domino's Pizza cares about its customers and the quality of its products and service.",
         "supports": "category"
       },
       {
         "sourceId": "dominos-com-page-2",
-        "quote": "delivering great-tasting pizza to customers’ doors.",
-        "supports": "physicalGoods"
+        "quote": "Now, as the largest pizza company in the world, Domino’s proudly continues its legacy of delivering great-tasting pizza to customers’ doors.",
+        "supports": "category"
       },
       {
         "sourceId": "dominos-com-page-3",
-        "quote": "PIZZA NEAR ME",
-        "supports": "category"
+        "quote": "START YOUR ORDER\nDELIVERY\nOR\nCARRYOUT",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "dominos-com-page-3",
+        "quote": "Delivery orders subject to each store's delivery minimum and delivery charge.",
+        "supports": "physicalGoods"
       },
       {
         "sourceId": "us-bank-cash-plus-sample-merchants",
@@ -74,6 +74,6 @@
         "supports": "definition"
       }
     ],
-    "notes": "Domino’s is absent from the supplied brand catalog. U.S. Bank excludes Domino’s from its Restaurants subcategory but directs it to Fast Food; the allowed taxonomy maps this restaurant business to Dining. Restaurant and food delivery businesses are false for physicalGoods under the stated rule."
+    "notes": "U.S. Bank separates fast-food merchants from its Restaurants category and explicitly excludes Domino's there; other issuer definitions include fast food and restaurant delivery in dining. Domino's is not in the supplied catalog brand list."
   }
 }

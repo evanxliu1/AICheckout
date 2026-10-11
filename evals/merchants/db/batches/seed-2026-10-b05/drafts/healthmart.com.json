@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12169,
+    "outputTokens": 232
+  },
+  "durationMs": 26082,
+  "draft": {
+    "domain": "healthmart.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "drugstores",
+    "evidence": [
+      {
+        "sourceId": "healthmart-com-page-1",
+        "quote": "Find a Pharmacy",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Drug Store purchases include those made at stand-alone drug stores, pharmacies, and online pharmacies.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category specialize in selling prescription drugs and over-the-counter medicines, supplements, and various health-related items.",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The supplied Health Mart page is a 404 and does not show checkout or an explicit ownership statement; merchant and physical-goods status are conservative. Health Mart is not among Amex's listed select major drugstores, but that list is card-specific."
+  }
+}

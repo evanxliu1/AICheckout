@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b05",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 12562,
+    "outputTokens": 160
+  },
+  "durationMs": 12634,
+  "draft": {
+    "domain": "gamestop.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "gamestop-com-page-1",
+        "quote": "How Do I Place an Order on GameStop.com?",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "gamestop-com-page-1",
+        "quote": "Shipping Options at GameStop",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "gamestop-com-page-1",
+        "quote": "Buy Online Pickup In-Store Preorders - How They Work",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "The catalog has no GameStop brand ID. No provided lookup or issuer document identifies GameStop's merchant category, so candidateCategory is conservatively null."
+  }
+}

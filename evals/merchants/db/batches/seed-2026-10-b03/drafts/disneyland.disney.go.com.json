@@ -8,9 +8,9 @@
   "draftedOn": "2026-10-11",
   "usage": {
     "inputTokens": 13057,
-    "outputTokens": 177
+    "outputTokens": 187
   },
-  "durationMs": 70855,
+  "durationMs": 42247,
   "draft": {
     "domain": "disneyland.disney.go.com",
     "kind": "merchant",
@@ -22,20 +22,20 @@
     "evidence": [
       {
         "sourceId": "disney-premier-visa-rewards-terms",
-        "quote": "the Disneyland Resort",
+        "quote": "Disney Locations in the U.S.",
         "supports": "brand"
       },
       {
         "sourceId": "disney-premier-visa-rewards-terms",
-        "quote": "Disney Locations in the U.S.",
+        "quote": "the Disneyland Resort",
         "supports": "kind"
       },
       {
-        "sourceId": "disney-premier-visa-rewards-terms",
-        "quote": "if you are visiting a Disney property",
-        "supports": "physicalGoods"
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras.",
+        "supports": "definition"
       }
     ],
-    "notes": "The store pages are Access Denied, and no merchant-code lookup names Disneyland's category. Issuer text identifies a Disney visitor property but does not classify this site under an available merchant category, so category is conservatively null."
+    "notes": "All Disneyland store pages returned Access Denied. The issuer material identifies Disney Locations and the Disneyland Resort, but does not explicitly classify this site in one of the candidate categories, so candidateCategory is left null."
   }
 }
