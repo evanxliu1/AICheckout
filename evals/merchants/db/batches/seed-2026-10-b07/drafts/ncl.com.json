@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15396,
+    "outputTokens": 247
+  },
+  "durationMs": 23420,
+  "draft": {
+    "domain": "ncl.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "norwegian-cruise-line"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "ncl-com-page-1",
+        "quote": "Norwegian Cruise Line has been the premier innovator in the cruise line industry for over 58 years.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "ncl-com-page-1",
+        "quote": "Our award-winning fleet of 20 contemporary ships sail to nearly 350 of the world's most desirable destinations",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "ncl-com-page-1",
+        "quote": "design their ideal vacation",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "ncl-com-page-1",
+        "quote": "cruise line industry",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "not included in this category, for example, airlines, hotels, car rental agencies, cruise lines",
+        "supports": "category"
+      }
+    ],
+    "notes": "NCL is a cruise and travel merchant, not a physical-goods seller. Cruise lines are explicitly excluded from Chase's local transit category, and cruise/travel is not among the permitted candidate categories."
+  }
+}
