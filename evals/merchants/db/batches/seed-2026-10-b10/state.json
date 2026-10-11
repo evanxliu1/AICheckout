@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "seed-2026-10-b10",
-  "updatedAt": "2026-10-11T07:30:20.134Z",
+  "updatedAt": "2026-10-11T07:31:49.936Z",
   "stages": {
     "research": {
       "status": "done",
@@ -21,7 +21,10 @@
       "attempts": 1
     },
     "draft": {
-      "status": "pending"
+      "status": "failed-gate",
+      "finishedAt": "2026-10-11T07:31:49.936Z",
+      "attempts": 1,
+      "inputSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec"
     },
     "verify": {
       "status": "pending"
@@ -262,6 +265,26 @@
         "outputTokens": 400,
         "durationMs": 25527,
         "finishedAt": "2026-10-11T07:30:20.134Z"
+      }
+    },
+    "uber.com": {
+      "draft": {
+        "status": "done",
+        "attempts": 1,
+        "inputTokens": 17799,
+        "outputTokens": 427,
+        "durationMs": 79620,
+        "finishedAt": "2026-10-11T07:31:39.774Z"
+      }
+    },
+    "united.com": {
+      "draft": {
+        "status": "failed-gate",
+        "attempts": 1,
+        "inputTokens": 22518,
+        "outputTokens": 156,
+        "durationMs": 10155,
+        "finishedAt": "2026-10-11T07:31:49.936Z"
       }
     }
   }
