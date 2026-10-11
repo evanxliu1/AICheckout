@@ -2,13 +2,13 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 18 records, 15 of them payment
- * processors, verified 2026-10-10. The extension matches store websites against it on the
+/** The bundled merchant release (schema 1): 26 records, 15 of them payment
+ * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-10.seed.1',
-  verifiedAt: '2026-10-10T00:00:00Z',
+  version: '2026-10-11.dev.1',
+  verifiedAt: '2026-10-11T00:00:00Z',
   sources: [],
   merchants: [
     {
@@ -89,6 +89,28 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'cvs-us',
+      name: 'CVS Pharmacy',
+      hosts: ['cvs.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'delta-us',
+      name: 'Delta Air Lines',
+      hosts: ['delta.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['delta'],
+      disabled: false,
+    },
+    {
       id: 'google-pay',
       name: 'Google Pay',
       hosts: ['pay.google.com'],
@@ -97,6 +119,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'instacart-us',
+      name: 'Instacart',
+      hosts: ['instacart.com'],
+      kind: 'marketplace',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['instacart'],
       disabled: false,
     },
     {
@@ -111,10 +144,43 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'kroger-us',
+      name: 'Kroger',
+      hosts: ['kroger.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
       id: 'link',
       name: 'Link',
       hosts: ['link.com'],
       kind: 'processor',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'lowes-us',
+      name: "Lowe's",
+      hosts: ['lowes.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'netflix-us',
+      name: 'Netflix',
+      hosts: ['netflix.com'],
+      kind: 'merchant',
       physicalGoods: false,
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
@@ -188,6 +254,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
+      id: 'ubereats-us',
+      name: 'Uber Eats',
+      hosts: ['ubereats.com'],
+      kind: 'marketplace',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
       id: 'venmo',
       name: 'Venmo',
       hosts: ['venmo.com'],
@@ -196,6 +273,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'wholefoodsmarket-us',
+      name: 'Whole Foods Market',
+      hosts: ['wholefoodsmarket.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['whole-foods-market'],
       disabled: false,
     },
     {

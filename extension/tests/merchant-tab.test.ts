@@ -83,7 +83,7 @@ describe('merchantName', () => {
     expect(merchantName('best-buy-us')).toBe('Best Buy US');
     expect(merchantName('generic-us-online')).toBe('Another U.S. online store');
     expect(merchantName('paypal')).toBe('PayPal');
-    expect(merchantName('kroger-us')).toBe('Unsupported merchant');
+    expect(merchantName('not-a-store-us')).toBe('Unsupported merchant');
     expect(MERCHANTS_V1.merchants.filter((m) => m.kind === 'processor')).toHaveLength(15);
   });
 });

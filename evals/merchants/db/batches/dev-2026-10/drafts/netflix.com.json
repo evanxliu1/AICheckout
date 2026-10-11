@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "batch": "dev-2026-10",
+  "promptVersion": "merchant-draft.1",
+  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 9523,
+    "outputTokens": 436
+  },
+  "durationMs": 47700,
+  "draft": {
+    "domain": "netflix.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "streaming",
+    "evidence": [
+      {
+        "sourceId": "netflix-com-page-1",
+        "quote": "Netflix delivers the next series, films and games you’ll obsess over.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "netflix-com-page-2",
+        "quote": "Sign up for Netflix today and choose from several payment options.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "netflix-com-page-2",
+        "quote": "Netflix plans are billed monthly on the date you signed up.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "netflix-com-lookup-1",
+        "quote": "Netflix, Peacock, and Hulu all use MCC 4899 (Cable and other pay television)",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-altitude-go-product",
+        "quote": "Get a $15 credit for annual streaming service purchases like Netflix, Apple TV, Spotify® and more.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-altitude-go-secured-product",
+        "quote": "Plus, a $15 credit for annual streaming service purchases such as Netflix and Spotify®.3",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Select U.S. Streaming Subscriptions",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app).",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Merchant examples*\nAmazon\nComcast\nEtsy\nNetflix",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
+        "supports": "category"
+      }
+    ],
+    "notes": "Bank of America lists Netflix as an online-shopping merchant example, but the store, MCC lookup, and other issuer pages identify it as streaming. No Netflix brand ID appears in the catalog."
+  }
+}

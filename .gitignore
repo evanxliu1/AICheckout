@@ -93,3 +93,12 @@ scratchpad/
 # Phase 13 reader harness: per-page reader outputs of every run (held-out ones are read only by the class-only
 # analyst). The text-free run log evals/reader/runs.json is committed.
 /evals/reader/runs/
+
+# Phase 14 merchant pipeline: store-page, lookup and copied issuer captures, luna traces and work packets stay local;
+# records, evidence (quotes of 25 words or fewer), manifests, drafts and verification files are committed.
+/evals/merchants/db/batches/*/captures/
+/evals/merchants/db/batches/*/traces/
+/evals/merchants/db/batches/*/packets/
+# Verifier quote sheets hold about 300 characters of capture text around each quote.
+/evals/merchants/db/batches/*/verify/
+/evals/merchants/db/tier-a-captures/

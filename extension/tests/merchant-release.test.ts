@@ -42,10 +42,16 @@ describe('bundled merchant release', () => {
       expect(record.brandIds.every((id) => CATALOG_V3.brands.some((b) => b.id === id))).toBe(true);
     }
   });
-  it('names every record with a default category and no categories without evidence', () => {
-    // Seed release: no evidence files yet, so every record is general-merchandise (14.4 adds evidence).
-    expect(MERCHANTS_V1.sources).toEqual([]);
-    expect(MERCHANTS_V1.merchants.every((m) => m.evidence.basis === 'default')).toBe(true);
+  it('gives no category without evidence, and cites a source for every category it gives', () => {
+    // Since the 14.3 dry run the bundled release carries records with evidence (cvs-us, drugstores, issuer).
+    const ids = new Set(MERCHANTS_V1.sources.map((s) => s.id));
+    for (const m of MERCHANTS_V1.merchants) {
+      if (m.evidence.basis === 'default') expect(m.category, m.id).toBe('general-merchandise');
+      else {
+        expect(m.evidence.sourceIds.length, m.id).toBeGreaterThan(0);
+        for (const id of m.evidence.sourceIds) expect(ids.has(id), `${m.id} cites ${id}`).toBe(true);
+      }
+    }
   });
   it('lists payment processors without goods', () => {
     const processors = MERCHANTS_V1.merchants.filter((m) => m.kind === 'processor');

@@ -23,6 +23,7 @@
 //   npm run pipeline -- whoami [--check]
 //   npm run pipeline -- publish --version <v> [--captures <dir> ...] [--offline] [--api <origin>]
 //                           [--confirm <v> --instruction-at <UTC time of Evan's "publish <v>">]
+//   npm run pipeline -- merchants <command>   the merchant pipeline (src/merchants/cli.ts)
 //
 // Exit status: 0 done, 1 error or failed gate, 2 usage or not built yet, 3 usage limit (extract paused).
 import { spawn } from 'node:child_process';
@@ -71,6 +72,7 @@ import {
 } from './state.ts';
 import type { CliStage, IssuerStage } from './state.ts';
 import { REPO_ROOT } from './root.ts';
+import { merchantsMain } from './merchants/cli.ts';
 
 const USAGE = `Usage: npm run pipeline -- <command>
   init <batch> --issuer "<Name>" --cards "<names or ids>" [--domains a.com,b.com] [--refresh] [--summary "<text>"]
@@ -93,7 +95,8 @@ const USAGE = `Usage: npm run pipeline -- <command>
   whoami [--check]                        the session file without secrets; --check asks the API
   publish --version <v> [--captures <dir> ...] [--offline] [--api <origin>]
       dry run: local and read-only checks, no POST or PUT
-  publish --version <v> --captures <dir> ... --confirm <v> --instruction-at <UTC time of Evan's "publish <v>">`;
+  publish --version <v> --captures <dir> ... --confirm <v> --instruction-at <UTC time of Evan's "publish <v>">
+  merchants <command>                     the merchant pipeline (Phase 14): \`merchants\` alone prints its usage`;
 
 const list = (value: string | undefined): string[] =>
   (value ?? '')
@@ -259,6 +262,7 @@ export async function next(env: Env, batch?: string): Promise<NextStep> {
 
 export async function main(argv: string[], env: Env = defaultEnv()): Promise<number> {
   const [command, ...rest] = argv;
+  if (command === 'merchants') return merchantsMain(rest, env);
   try {
     const { values, positionals } = parseArgs({
       args: rest,

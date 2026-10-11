@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "batch": "dev-2026-10",
+  "promptVersion": "merchant-draft.1",
+  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 10031,
+    "outputTokens": 291
+  },
+  "durationMs": 24310,
+  "draft": {
+    "domain": "costco.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "costco"
+    ],
+    "candidateCategory": "wholesale-clubs",
+    "evidence": [
+      {
+        "sourceId": "costco-com-page-1",
+        "quote": "Costco is a membership warehouse club",
+        "supports": "category"
+      },
+      {
+        "sourceId": "costco-com-page-1",
+        "quote": "Costco provides a wide selection of merchandise",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "costco-com-page-1",
+        "quote": "quality brand-name merchandise",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "costco-com-page-1",
+        "quote": "Costco is a membership warehouse club",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "wholesale clubs such as Costco and BJs",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-costco-anywhere-visa-categories",
+        "quote": "Superstores, Supermarkets and Warehouse Clubs",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "In addition, purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Costco’s own page identifies it as a membership warehouse club, and Chase explicitly lists Costco among wholesale clubs. U.S. Bank separately calls Costco a discount store for rewards purposes; wholesale-clubs is based on the direct store description and Chase evidence."
+  }
+}
