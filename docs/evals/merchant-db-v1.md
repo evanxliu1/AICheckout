@@ -144,7 +144,7 @@ After the fixes `2026-10-11.audit.2` has 640 records, basis `default` 590, `defi
 
 ## Addendum: the mcc basis (2026-10-11)
 
-After the 14.5 fixes, Evan asked for the best-known chains to be fixed with merchant category codes ("fix the big names, i think we should use MCC codes … that is enough evidence"; [decision](../../wiki/decisions/2026-10-11-mcc-evidence-basis.md)). A fourth evidence basis, `mcc`, was added and applied deterministically to every record of `2026-10-11.audit.2` (`pipeline merchants mcc`), giving release **`2026-10-11.mcc.1`** (640 records). The records whose category changed were re-audited blind with the 14.5 method.
+After the 14.5 fixes, Evan asked for the best-known chains to be fixed with merchant category codes ("fix the big names, i think we should use MCC codes … that is enough evidence"; [decision](../../wiki/decisions/2026-10-11-mcc-evidence-basis.md)). A fourth evidence basis, `mcc`, was added and applied deterministically to every record of `2026-10-11.audit.2` (`pipeline merchants mcc`), giving release **`2026-10-11.mcc.1`** (640 records; `2026-10-11.mcc.2` after the one adjudicated fix below). The records whose category changed were re-audited blind with the 14.5 method.
 
 ### The evidence
 
@@ -197,7 +197,7 @@ The 64 changed records were labelled blind by three `merchant-auditor` runs (cla
 
 The auditors' convention questions, for Evan: whether `mcc` may grant a category when every store page is a bot wall (it did, since the refusals depend only on what the pages say); whether a restaurant selling packaged goods (Starbucks whole-bean coffee) is still `physicalGoods: false`; whether Chase's separate food-delivery list is an `issuer` basis for dining (Grubhub); whether exactly 10 rows passes (Menards; yes, "at least 10"); whether an unrelated-looking descriptor under a matching name (a Wendy's franchise coded as a software store) should be excluded from the count (it was a minority and changed nothing).
 
-**Adjudication of the one disagreement:** pending at the time of writing; recorded in [`adjudication-mcc.json`](../../evals/merchants/db/audit/adjudication-mcc.json) and in the line below once the third agent has decided.
+**Adjudication of the one disagreement** ([`adjudication-mcc.json`](../../evals/merchants/db/audit/adjudication-mcc.json), a third agent, claude-fable-5-1, 74,004 tokens): **auditor**. The written rule makes food delivery `false` and names DoorDash as a delivery service; the grocery and retail delivery lines on its pages are side offerings. Applied after these numbers as release **`2026-10-11.mcc.2`** (`apply-adjudication.mjs --run mcc`: doordash-us `physicalGoods` true → false; listed in `fixes.json` and in `review.md` under Audit fixes). The auditor's open question, for Evan: whether a delivery marketplace that also delivers groceries and retail should ever be `physicalGoods: true`. No category changed, so the audit numbers above describe `mcc.1` and `mcc.2` alike.
 
 ### Limits
 

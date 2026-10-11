@@ -7,7 +7,7 @@ import type { MerchantRelease } from './types.ts';
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.mcc.1',
+  version: '2026-10-11.mcc.2',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -2469,7 +2469,7 @@ export const MERCHANTS_V1: MerchantRelease = {
       name: 'DoorDash',
       hosts: ['doordash.com'],
       kind: 'marketplace',
-      physicalGoods: true,
+      physicalGoods: false,
       category: 'dining',
       evidence: {
         basis: 'mcc',
