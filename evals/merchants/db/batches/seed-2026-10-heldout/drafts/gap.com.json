@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 21016,
+    "outputTokens": 217
+  },
+  "durationMs": 136896,
+  "draft": {
+    "domain": "gap.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "gap",
+      "old-navy",
+      "banana-republic",
+      "athleta"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "gap-com-page-1",
+        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "gap-com-page-1",
+        "quote": "Buy online from one brand or all four, and we'll ship your order when and where you want.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "barclays-gap-encore-mastercard-pricing",
+        "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "GAP",
+        "supports": "category"
+      }
+    ],
+    "notes": "The issuer lists GAP under “Select Clothing Stores,” but clothing is not a candidate category; Gap is not a full-line department store."
+  }
+}

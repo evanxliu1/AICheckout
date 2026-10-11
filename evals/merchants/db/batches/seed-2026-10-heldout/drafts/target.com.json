@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 21176,
+    "outputTokens": 432
+  },
+  "durationMs": 87403,
+  "draft": {
+    "domain": "target.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "target"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "target-com-page-2",
+        "quote": "Target is a general merchandise retailer with stores in all 50 states and the District of Columbia",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "target-com-page-2",
+        "quote": "From our exclusive only-at-Target products to the national brands our guests expect, you can shop Target in stores, online or delivered to your home.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "target-com-page-2",
+        "quote": "Target, the Bullseye Design and Bullseye Dog are trademarks of Target Brands, Inc.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "target-com-page-2",
+        "quote": "Target is a general merchandise retailer with stores in all 50 states and the District of Columbia",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Grocery store and supermarket purchases at discount stores/supercenters such as Target and Walmart and wholesale clubs are excluded.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+        "quote": "Purchases made at Amazon and discount stores/supercenters such as Target and Walmart are excluded.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "not included in this category; for example, larger stores that sell a wide variety of goods and groceries like Walmart and Target",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "All purchases made from Walmart or Target are not eligible.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Target identifies itself as a general merchandise retailer. Issuer materials repeatedly treat Target as a discount store/superstore and exclude it from department-store, electronics, grocery/supermarket, and related specialty categories, so candidateCategory is null."
+  }
+}

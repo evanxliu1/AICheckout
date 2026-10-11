@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 20524,
+    "outputTokens": 256
+  },
+  "durationMs": 38272,
+  "draft": {
+    "domain": "nordstromrack.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "nordstromrack-com-page-1",
+        "quote": "It's easy to shop your way: in store, online and through the Nordstrom Rack app.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "nordstromrack-com-page-1",
+        "quote": "Buy Gifts Online & Pick Up in Store",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "nordstromrack-com-page-1",
+        "quote": "We’re your destination for brands you love up to 70% off.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Nordstrom Rack",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Nordstrom Rack is an off-price/discount retailer, so it does not fit the supplied department-store definition. U.S. Bank nevertheless lists Nordstrom Rack among popular merchants in a category. No catalog ID is provided for Nordstrom or Nordstrom Rack."
+  }
+}

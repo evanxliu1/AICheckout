@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-heldout",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16700,
+    "outputTokens": 295
+  },
+  "durationMs": 18280,
+  "draft": {
+    "domain": "cabelas.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [
+      "cabelas"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "cabelas-com-page-1",
+        "quote": "Can I Purchase a Firearm Online Through Cabela's?",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "cabelas-com-page-1",
+        "quote": "Can I Purchase a Firearm Online Through Cabela's?",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "capital-one-cabelas-club-card-pricing",
+        "quote": "online at www.basspro.com, www.cabelas.com, www.mackspw.com and www.cabelas.ca",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Sporting Goods Stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Earn cash back on sports and outdoor equipment, including clothing and camping gear.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "However, there are exceptions. For example, Cabelas.com purchases do not qualify.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Cabela's is an outdoor/sporting-goods retailer, but sporting goods is not an allowed candidate category. U.S. Bank also specifically excludes Cabelas.com purchases from its Sporting Goods Stores category."
+  }
+}
