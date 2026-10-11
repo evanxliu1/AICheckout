@@ -1670,6 +1670,29 @@ describe('seed decisions 2026-10-11 (third set)', () => {
         }),
       ).outcome,
     ).toBe('held-out');
+    // A redirect to another business's site leaves no host of the store's own: held out, not re-homed.
+    expect(
+      applyStore(
+        input({
+          domain: 'cedarpoint.com',
+          name: 'Cedar Point',
+          hosts: ['cedarpoint.com', 'sixflags.com'],
+          verification: verdict(
+            'hosts',
+            'cedarpoint.com redirects to sixflags.com, the shared Six Flags site',
+          ),
+        }),
+      ).outcome,
+    ).toBe('held-out');
+    const club = applyStore(
+      input({
+        domain: 'clubwyndham.com',
+        name: 'Club Wyndham',
+        hosts: ['clubwyndham.com', 'clubwyndham.wyndhamdestinations.com'],
+        verification: verdict('hosts', 'clubwyndham.com redirects to clubwyndham.wyndhamdestinations.com'),
+      }),
+    );
+    expect(club.outcome === 'record' && club.record.hosts).toEqual(['clubwyndham.wyndhamdestinations.com']);
   });
   it('3: a furnishings store is not home improvement; hardware and building-supply pages are', () => {
     expect(storePageShowsType('a home furnishings retailer', 'home-improvement')).toBe(false);

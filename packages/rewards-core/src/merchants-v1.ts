@@ -2,12 +2,12 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 639 records, 15 of them payment
+/** The bundled merchant release (schema 1): 641 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.seed.15',
+  version: '2026-10-11.seed.16',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -499,13 +499,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'store-page',
       capturedAt: '2026-10-11',
       sha256: 'b508820be99f3fbcaf8db5813150e0d3679a693578f3abbe65f3c58033a1df97',
-    },
-    {
-      id: 'vudu-com-page-1',
-      url: 'https://athome.fandango.com/',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '96d0d462eb81d3edeca6f357cf2f8dc3c41ffc05a57042342e4f08dbc9ff8024',
     },
     {
       id: 'walgreens-com-page-1',
@@ -2173,7 +2166,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     {
       id: 'clubwyndham-us',
       name: 'Club Wyndham',
-      hosts: ['clubwyndham.com', 'clubwyndham.wyndhamdestinations.com'],
+      hosts: ['clubwyndham.wyndhamdestinations.com'],
       kind: 'merchant',
       physicalGoods: false,
       category: 'general-merchandise',
@@ -2278,6 +2271,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'costco-us',
+      name: 'Costco Wholesale',
+      hosts: ['costco.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['costco'],
       disabled: false,
     },
     {
@@ -2601,6 +2605,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['disney'],
+      disabled: false,
+    },
+    {
+      id: 'disneyplus-us',
+      name: 'Disney+',
+      hosts: ['disneyplus.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['disney-plus'],
       disabled: false,
     },
     {
@@ -3294,6 +3309,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'gap-us',
+      name: 'Gap',
+      hosts: ['gap.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['gap'],
       disabled: false,
     },
     {
@@ -5122,6 +5148,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'oldnavy-gap-us',
+      name: 'Old Navy',
+      hosts: ['oldnavy.gap.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['old-navy'],
       disabled: false,
     },
     {
@@ -7492,17 +7529,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'vudu-us',
-      name: 'Fandango at Home',
-      hosts: ['athome.fandango.com'],
-      kind: 'merchant',
-      physicalGoods: false,
-      category: 'streaming',
-      evidence: { basis: 'issuer', sourceIds: ['vudu-com-page-1', 'citi-strata-rewards-terms'] },
-      brandIds: [],
-      disabled: false,
-    },
-    {
       id: 'walgreens-us',
       name: 'Walgreens',
       hosts: ['walgreens.com'],
@@ -7787,17 +7813,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       category: 'general-merchandise',
       evidence: { basis: 'default', sourceIds: [] },
       brandIds: [],
-      disabled: false,
-    },
-    {
-      id: 'worldmarktheclub-us',
-      name: 'WorldMark by Wyndham',
-      hosts: ['worldmark.wyndhamdestinations.com'],
-      kind: 'merchant',
-      physicalGoods: false,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
-      brandIds: ['worldmark-by-wyndham'],
       disabled: false,
     },
     {

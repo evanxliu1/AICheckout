@@ -80,7 +80,10 @@
       "domain": "clubwyndham.com",
       "id": "clubwyndham-us",
       "basis": "default",
-      "category": "general-merchandise"
+      "category": "general-merchandise",
+      "droppedHosts": [
+        "clubwyndham.com"
+      ]
     },
     {
       "domain": "costplusdrugs.com",
@@ -149,6 +152,13 @@
       "category": "general-merchandise"
     },
     {
+      "domain": "disneyplus.com",
+      "id": "disneyplus-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "fallback": "default-from-research"
+    },
+    {
       "domain": "disneystore.com",
       "id": "disneystore-us",
       "basis": "default",
@@ -160,24 +170,16 @@
       "domain": "cathaypacific.com",
       "disputed": [
         {
-          "field": "name",
-          "reason": "No store page was captured and no issuer capture names Cathay Pacific; the name cannot be settled from the captures."
-        },
-        {
           "field": "hosts",
-          "reason": "No store page captured and no issuer capture names the store or this host; the checkout host cannot be settled."
+          "reason": "Store pages were unreachable and no issuer capture names Cathay Pacific or cathaypacific.com, so research and an issuer capture do not agree; the host cannot be confirmed at all."
         },
         {
           "field": "kind",
-          "reason": "No store-page or issuer capture describes what the site does; kind cannot be settled from the captures."
+          "reason": "Store pages were unreachable and no issuer capture names the store; what the site does cannot be settled from the captures."
         },
         {
           "field": "physicalGoods",
-          "reason": "No capture describes what the site sells; physicalGoods cannot be settled from the captures."
-        },
-        {
-          "field": "brandIds",
-          "reason": "No capture names Cathay or Cathay Pacific, so the cathay brand cannot be confirmed from the captures."
+          "reason": "Store pages were unreachable and no capture describes what the site sells; the value cannot be settled from the captures."
         }
       ]
     },
@@ -186,7 +188,7 @@
       "disputed": [
         {
           "field": "hosts",
-          "reason": "cedarpoint.com only redirects; checkout is on sixflags.com, a host shared by every Six Flags park, so it belongs to Six Flags, not Cedar Point alone."
+          "reason": "cedarpoint.com redirects to sixflags.com; sixflags.com is the Six Flags site shared by every Six Flags park, another company's domain, not a Cedar Point host."
         }
       ]
     },
@@ -195,7 +197,7 @@
       "disputed": [
         {
           "field": "physicalGoods",
-          "reason": "Captures show only an error page and a help center with a Store topic; no goods shown shipped or picked up."
+          "reason": "Captures show only an error page and a help center listing a Store topic; neither shows goods shipped or picked up nor rules them out, so the value cannot be settled."
         }
       ]
     },
@@ -205,15 +207,6 @@
         {
           "field": "candidateCategory",
           "reason": "Captures show a games-and-dining venue; no captured issuer definition of entertainment covers arcades or game venues, so entertainment is unsupported."
-        }
-      ]
-    },
-    {
-      "domain": "disneyplus.com",
-      "disputed": [
-        {
-          "field": "draft",
-          "reason": "the drafter's quotes failed the verbatim gate 3 times"
         }
       ]
     }

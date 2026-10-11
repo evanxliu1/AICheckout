@@ -47,6 +47,23 @@
       }
     },
     {
+      "domain": "costco.com",
+      "id": "costco-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Chase names Costco here as an exclusion from its online grocery category, not as earning in wholesale clubs."
+      },
+      "refused": {
+        "candidate": "wholesale-clubs",
+        "reason": "no issuer definition quote covers wholesale-clubs",
+        "notes": "Costco also operates gasoline, pharmacy, travel, and other departments, but its own description identifies the business as a membership warehouse club; Chase expressly excludes Costco from online grocery."
+      },
+      "droppedHosts": [
+        "costcobusinessdelivery.com"
+      ]
+    },
+    {
       "domain": "delta.com",
       "id": "delta-us",
       "basis": "default",
@@ -93,17 +110,7 @@
       "category": "home-improvement"
     }
   ],
-  "heldOut": [
-    {
-      "domain": "costco.com",
-      "disputed": [
-        {
-          "field": "hosts",
-          "reason": "costcobusinessdelivery.com appears in no capture; the pages show only a 'Business Delivery' link text, so the host cannot be settled from the captures."
-        }
-      ]
-    }
-  ],
+  "heldOut": [],
   "botWalled": [
     "delta.com"
   ]

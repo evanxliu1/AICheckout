@@ -437,7 +437,11 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       !domainRedirects && others.length === 0 && HOSTS_UNCONFIRMED_WORDING.test(hostsReason);
     droppedHosts = domainRedirects ? [...others, input.domain] : others;
     const left = input.hosts.filter((h) => !droppedHosts.includes(h));
-    hostsSettled = !domainUnconfirmed && droppedHosts.length > 0 && left.length > 0;
+    // A domain that redirects to another business's site (cedarpoint.com → sixflags.com) leaves no host of its own:
+    // the hosts go to the business that checks out there (coordinator rule 6), so the record is held out. A redirect
+    // within the same name (max.com → hbomax.com, clubwyndham.com → clubwyndham.wyndhamdestinations.com) keeps it.
+    const ownHostLeft = !domainRedirects || left.some((h) => h.includes(domainLabel(input.domain)));
+    hostsSettled = !domainUnconfirmed && droppedHosts.length > 0 && left.length > 0 && ownHostLeft;
   }
   const hosts = hostsSettled ? input.hosts.filter((h) => !droppedHosts.includes(h)) : input.hosts;
   const disputed = VERIFIED_FIELDS.filter((f) => {

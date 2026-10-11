@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "ed4f0f02-aa05-4e0e-92e1-ffa3a03ed175",
+  "packetId": "630943b5-fd3f-421b-87c6-d9be9c82be6a",
   "batch": "seed-2026-10-heldout",
   "provenance": "agent-verified",
   "verifier": {
@@ -8,7 +8,8 @@
     "model": "claude-opus-5-5",
     "date": "2026-10-11",
     "filesRead": [
-      "evals/merchants/db/batches/seed-2026-10-heldout/packets/verify.1.json",
+      "evals/merchants/db/batches/seed-2026-10-heldout/packets/verify.2.json",
+      "evals/merchants/db/batches/seed-2026-10-heldout/verification.json",
       ".claude/agents/merchant-verifier.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/research.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/manifest.json",
@@ -19,6 +20,7 @@
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/build.com.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/cabelas.com.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/dell.com.md",
+      "evals/merchants/db/batches/seed-2026-10-heldout/verify/gap.com.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/homedepot.com.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/jcpenney.com.md",
       "evals/merchants/db/batches/seed-2026-10-heldout/verify/sherwin-williams.com.md",
@@ -29,6 +31,7 @@
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/build.com.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/cabelas.com.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/dell.com.json",
+      "evals/merchants/db/batches/seed-2026-10-heldout/drafts/gap.com.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/homedepot.com.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/jcpenney.com.json",
       "evals/merchants/db/batches/seed-2026-10-heldout/drafts/sherwin-williams.com.json",
@@ -221,22 +224,7 @@
       "evals/merchants/db/batches/seed-2026-10-heldout/captures/us-bank-cash-plus-product.windows.target.com.txt",
       "evals/merchants/db/batches/seed-2026-10-heldout/captures/wells-fargo-autograph-categories.windows.target.com.txt",
       "evals/merchants/db/batches/seed-2026-10-heldout/captures/wells-fargo-choice-privileges-rewards-terms.windows.target.com.txt",
-      "evals/merchants/db/batches/seed-2026-10-heldout/drafts/gap.com.json",
-      "evals/merchants/db/batches/seed-2026-10-heldout/drafts/nordstromrack.com.json",
-      "wiki/system/merchant-pipeline.md",
-      "wiki/domain/merchants.md",
-      "wiki/domain/glossary.md",
-      "evals/merchants/db/batches/seed-2026-10-b01/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b02/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b03/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b04/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b05/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b06/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b07/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b08/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b09/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b10/verification.json",
-      "evals/merchants/db/batches/seed-2026-10-b12/verification.json"
+      "evals/merchants/db/batches/seed-2026-10-heldout/drafts/nordstromrack.com.json"
     ]
   },
   "stores": [
@@ -559,6 +547,40 @@
           "reason": null
         }
       ]
+    },
+    {
+      "domain": "gap.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": []
     },
     {
       "domain": "homedepot.com",

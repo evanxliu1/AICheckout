@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "80b1d857-f8d8-41d2-8fc5-46bd2607dc1a",
+  "packetId": "eb04efd7-63ce-433e-84e2-fbbc71d5f733",
   "batch": "seed-2026-10-b03",
   "provenance": "agent-verified",
   "verifier": {
@@ -9,7 +9,6 @@
     "date": "2026-10-11",
     "filesRead": [
       ".claude/agents/merchant-verifier.md",
-      "evals/merchants/db/batches/seed-2026-10-b03/packets/verify.1.json",
       "evals/merchants/db/batches/seed-2026-10-b03/research.json",
       "evals/merchants/db/batches/seed-2026-10-b03/manifest.json",
       "evals/merchants/db/batches/seed-2026-10-b03/verify/catalog-lists.json",
@@ -36,6 +35,7 @@
       "evals/merchants/db/batches/seed-2026-10-b03/verify/directbuy.com.md",
       "evals/merchants/db/batches/seed-2026-10-b03/verify/discoveryplus.com.md",
       "evals/merchants/db/batches/seed-2026-10-b03/verify/disneyland.disney.go.com.md",
+      "evals/merchants/db/batches/seed-2026-10-b03/verify/disneyplus.com.md",
       "evals/merchants/db/batches/seed-2026-10-b03/verify/disneystore.com.md",
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/capsule.com.json",
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/carnival.com.json",
@@ -60,6 +60,7 @@
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/directbuy.com.json",
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/discoveryplus.com.json",
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneyland.disney.go.com.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneyplus.com.json",
       "evals/merchants/db/batches/seed-2026-10-b03/drafts/disneystore.com.json",
       "evals/merchants/db/batches/seed-2026-10-b03/captures/capsule-com-page-1.txt",
       "evals/merchants/db/batches/seed-2026-10-b03/captures/capsule-com-page-2.txt",
@@ -441,8 +442,8 @@
       "evals/merchants/db/batches/seed-2026-10-b03/captures/us-bank-edward-jones-triple-rewards-categories.windows.disneystore.com.txt",
       "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-autograph-categories.windows.disneystore.com.txt",
       "evals/merchants/db/batches/seed-2026-10-b03/captures/wells-fargo-choice-privileges-rewards-terms.windows.disneystore.com.txt",
-      "tools/catalog-pipeline/src/merchants/files.ts",
-      "tools/catalog-pipeline/src/merchants/packets.ts"
+      "evals/merchants/db/batches/seed-2026-10-b03/packets/verify.2.json",
+      "evals/merchants/db/batches/seed-2026-10-b03/capture-report.json"
     ]
   },
   "stores": [
@@ -539,8 +540,8 @@
           "reason": null
         },
         "evidence": {
-          "verdict": "confirmed",
-          "reason": null
+          "verdict": "disputed",
+          "reason": "Quotes 4 disputed; see quotes."
         }
       },
       "quotes": [
@@ -566,8 +567,8 @@
         },
         {
           "index": 4,
-          "verdict": "confirmed",
-          "reason": null
+          "verdict": "disputed",
+          "reason": "Bank of America Travel definition that does not name Carnival; Travel is not the drafted (null) category, so it supports no drafted category."
         },
         {
           "index": 5,
@@ -580,24 +581,24 @@
       "domain": "cathaypacific.com",
       "fields": {
         "name": {
-          "verdict": "disputed",
-          "reason": "No store page was captured and no issuer capture names Cathay Pacific; the name cannot be settled from the captures."
+          "verdict": "confirmed",
+          "reason": null
         },
         "hosts": {
           "verdict": "disputed",
-          "reason": "No store page captured and no issuer capture names the store or this host; the checkout host cannot be settled."
+          "reason": "Store pages were unreachable and no issuer capture names Cathay Pacific or cathaypacific.com, so research and an issuer capture do not agree; the host cannot be confirmed at all."
         },
         "kind": {
           "verdict": "disputed",
-          "reason": "No store-page or issuer capture describes what the site does; kind cannot be settled from the captures."
+          "reason": "Store pages were unreachable and no issuer capture names the store; what the site does cannot be settled from the captures."
         },
         "physicalGoods": {
           "verdict": "disputed",
-          "reason": "No capture describes what the site sells; physicalGoods cannot be settled from the captures."
+          "reason": "Store pages were unreachable and no capture describes what the site sells; the value cannot be settled from the captures."
         },
         "brandIds": {
-          "verdict": "disputed",
-          "reason": "No capture names Cathay or Cathay Pacific, so the cathay brand cannot be confirmed from the captures."
+          "verdict": "confirmed",
+          "reason": null
         },
         "candidateCategory": {
           "verdict": "confirmed",
@@ -619,7 +620,7 @@
         },
         "hosts": {
           "verdict": "disputed",
-          "reason": "cedarpoint.com only redirects; checkout is on sixflags.com, a host shared by every Six Flags park, so it belongs to Six Flags, not Cedar Point alone."
+          "reason": "cedarpoint.com redirects to sixflags.com; sixflags.com is the Six Flags site shared by every Six Flags park, another company's domain, not a Cedar Point host."
         },
         "kind": {
           "verdict": "confirmed",
@@ -627,7 +628,7 @@
         },
         "physicalGoods": {
           "verdict": "disputed",
-          "reason": "Captures show park admission sales; the online shop appears only as a menu link (and sells gift cards); no goods shown shipped or picked up from the site."
+          "reason": "physicalGoods: false; sells park admission tickets and passes; the online shop is only a menu link (gift cards), no goods shown shipped or picked up."
         },
         "brandIds": {
           "verdict": "confirmed",
@@ -767,7 +768,7 @@
         },
         "physicalGoods": {
           "verdict": "disputed",
-          "reason": "Captures mention hardware and a home charger but show no goods sold, shipped or picked up through the site; drivers pay for charging sessions."
+          "reason": "physicalGoods: false; drivers find, charge and pay for EV charging sessions; no hardware shown sold, shipped or picked up through the site."
         },
         "brandIds": {
           "verdict": "confirmed",
@@ -1293,8 +1294,8 @@
           "reason": null
         },
         "hosts": {
-          "verdict": "confirmed",
-          "reason": null
+          "verdict": "disputed",
+          "reason": "clubwyndham.com redirects to clubwyndham.wyndhamdestinations.com (research note; every capture is on that subdomain); the subdomain stands as the store host."
         },
         "kind": {
           "verdict": "confirmed",
@@ -1502,7 +1503,7 @@
         },
         "physicalGoods": {
           "verdict": "disputed",
-          "reason": "Captures show only an error page and a help center with a Store topic; no goods shown shipped or picked up."
+          "reason": "Captures show only an error page and a help center listing a Store topic; neither shows goods shipped or picked up nor rules them out, so the value cannot be settled."
         },
         "brandIds": {
           "verdict": "confirmed",
@@ -1682,7 +1683,7 @@
         },
         "physicalGoods": {
           "verdict": "disputed",
-          "reason": "The only goods quote is a Power Card (game credit card); no merchandise shown shipped or picked up."
+          "reason": "physicalGoods: false; sells game play, food and drink and event bookings; the only goods quote is a Power Card (game credit), not merchandise shipped."
         },
         "brandIds": {
           "verdict": "confirmed",
@@ -1994,6 +1995,40 @@
           "reason": "Definition of Citi's live-entertainment category; the draft has no candidate category, so it supports no drafted category."
         }
       ]
+    },
+    {
+      "domain": "disneyplus.com",
+      "fields": {
+        "name": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "hosts": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "kind": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "physicalGoods": {
+          "verdict": "disputed",
+          "reason": "physicalGoods: false; sells Disney+ streaming subscriptions and bundles; nothing is shipped or picked up."
+        },
+        "brandIds": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "candidateCategory": {
+          "verdict": "confirmed",
+          "reason": null
+        },
+        "evidence": {
+          "verdict": "confirmed",
+          "reason": null
+        }
+      },
+      "quotes": []
     },
     {
       "domain": "disneystore.com",
