@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13571,
+    "outputTokens": 455
+  },
+  "durationMs": 39527,
+  "draft": {
+    "domain": "chipotle.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [],
+    "candidateCategory": "dining",
+    "evidence": [
+      {
+        "sourceId": "chipotle-com-page-1",
+        "quote": "ORDER NOW",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "chipotle-com-page-1",
+        "quote": "restaurant brands",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "chipotle-com-page-1",
+        "quote": "restaurant brands",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chipotle-com-page-2",
+        "quote": "RESTAURANTS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Fast Food",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Chipotle Mexican Grill",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Get your burgers, subs, tacos, baked goods and more — plus earn cash back. Eat in or take out!",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Yes, fast food restaurants are included in the restaurant rewards category.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "Whether you dine in or take out, treat yourself to more cash back on dining purchases when you let someone else do the cooking.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "This category's merchants’ primary business is sit-down or eat-in dining, including fast food restaurants and fine dining establishments.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes purchases at cafes, bars, lounges, fast-food restaurants, restaurant delivery services, and take out restaurants.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Restaurant purchases include those made at merchants classified as full-service restaurants, cafes, cafeterias, fast-food locations, and caterers.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Chipotle is listed under U.S. Bank’s Fast Food category, while that page separately excludes most fast food from Restaurants. Other issuer definitions include fast food in dining. No Chipotle brand ID appears in the supplied catalog."
+  }
+}

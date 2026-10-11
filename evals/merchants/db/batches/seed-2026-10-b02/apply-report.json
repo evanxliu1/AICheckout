@@ -21,7 +21,7 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "Store-page quote says Audible reinvented a media category; it does not plainly show a streaming or subscription business type. Amazon department-menu entry; not an issuer statement that Audible purchases earn in streaming. Citi's streaming definition is a closed list of providers that does not name "
+        "reason": "An Amazon department menu entry, not an issuer statement that Audible purchases earn in streaming. A closed list of streaming providers that does not include Audible, so it does not cover this store."
       },
       "refused": {
         "candidate": "streaming",
@@ -53,12 +53,6 @@
       "category": "general-merchandise"
     },
     {
-      "domain": "bart.gov",
-      "id": "bart-us",
-      "basis": "definition",
-      "category": "transit"
-    },
-    {
       "domain": "basspro.com",
       "id": "basspro-us",
       "basis": "default",
@@ -82,12 +76,26 @@
       }
     },
     {
+      "domain": "bjs.com",
+      "id": "bjs-us",
+      "basis": "default",
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Names BJ's in a list of merchants that do NOT earn (grocery exclusion), not as earning in wholesale clubs. Names BJs as a grocery exclusion; it does not tie the BJ's Wholesale Club brand to bjs.com. A generic wholesale-club definition that does not name the store; it does not show this site ships or"
+      },
+      "refused": {
+        "candidate": "wholesale-clubs",
+        "reason": "no store-page quote shows a wholesale-clubs business type",
+        "notes": "The two BJ's store pages were access-denied. Issuer excerpts identify BJs as a wholesale/warehouse club and describe its broad physical-goods assortment."
+      }
+    },
+    {
       "domain": "bk.com",
       "id": "bk-us",
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "Bare category heading; it neither names Burger King nor states earning."
+        "reason": "A category heading that does not name Burger King; the store is named in a separate quote."
       },
       "refused": {
         "candidate": "dining",
@@ -129,13 +137,19 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "Citi's streaming definition is a closed list of providers that does not name BritBox, so it does not cover this store."
+        "reason": "A closed list of streaming providers that does not include BritBox, so it does not cover this store."
       },
       "refused": {
         "candidate": "streaming",
         "reason": "no store-page quote shows a streaming business type",
         "notes": "BritBox is not included in the supplied catalog brand list, so no brand ID is assigned."
       }
+    },
+    {
+      "domain": "britishairways.com",
+      "id": "britishairways-us",
+      "basis": "default",
+      "category": "general-merchandise"
     },
     {
       "domain": "brusselsairlines.com",
@@ -158,53 +172,42 @@
   ],
   "heldOut": [
     {
+      "domain": "bart.gov",
+      "disputed": [
+        {
+          "field": "hosts",
+          "reason": "Nothing is bought on bart.gov: the fare page says riders pay at the gates with Clipper (run by MTC on its own site) or Tap and Ride, so the domain is not a place the store sells or checks out."
+        }
+      ]
+    },
+    {
       "domain": "bartelldrugs.com",
       "disputed": [
         {
-          "field": "name",
-          "reason": "No store-page capture exists for this domain; no capture shows the name Bartell Drugs, and research says the chain closed."
-        },
-        {
           "field": "hosts",
-          "reason": "No capture shows a checkout on bartelldrugs.com; research notes the chain closed and the domain points at another company's host."
-        },
-        {
-          "field": "kind",
-          "reason": "No store capture; whether any merchant operates on this domain cannot be settled."
+          "reason": "Store closed: research reports the chain closed its last stores and the homepage was unreachable; no capture shows an operating store at this domain."
         },
         {
           "field": "physicalGoods",
-          "reason": "No store capture shows goods shipped or picked up at this domain."
+          "reason": "No capture shows goods shipped or picked up; the only store page was unreachable and the chain is reported closed."
         }
-      ]
+      ],
+      "reason": "defunct"
     },
     {
       "domain": "bhphotovideo.com",
       "disputed": [
         {
-          "field": "name",
-          "reason": "Both store pages are a Cloudflare bot check; no capture shows the name B&H Photo Video."
+          "field": "hosts",
+          "reason": "Bot-walled (both store pages are security checks) and no issuer capture names B&H, so research and an issuer capture do not agree on the store; the host cannot be settled from the captures."
         },
         {
           "field": "kind",
-          "reason": "Both store pages are a bot check; nothing in the captures shows what the site sells."
+          "reason": "Both store pages are bot-check interstitials and no issuer capture names the store; nothing in the captures shows what the site does."
         },
         {
           "field": "physicalGoods",
-          "reason": "Both store pages are a bot check; no capture shows goods shipped or picked up."
-        }
-      ]
-    },
-    {
-      "domain": "bjs.com",
-      "disputed": [
-        {
-          "field": "name",
-          "reason": "Both store pages are Access Denied; issuers say only BJ's Club or BJs, and no capture shows the name BJ's Wholesale Club or ties it to bjs.com."
-        },
-        {
-          "field": "brandIds",
-          "reason": "No capture ties bjs.com to BJ's Wholesale Club as its official store; the only issuer mentions are grocery exclusions."
+          "reason": "No capture shows goods shipped or picked up: store pages are bot checks and no issuer capture names the store."
         }
       ]
     },
@@ -212,8 +215,12 @@
       "domain": "blinkcharging.com",
       "disputed": [
         {
+          "field": "hosts",
+          "reason": "The captured page shows no checkout: drivers find stations in the Blink app and businesses request a quote; no capture shows a purchase on blinkcharging.com."
+        },
+        {
           "field": "physicalGoods",
-          "reason": "The about page shows EV charging stations and services; no capture shows goods shipped or picked up (the quote is a partner testimonial about equipment)."
+          "reason": "No capture shows goods shipped or picked up; the drafted quote is a partner testimonial, and the page offers charging services and sales quotes only."
         }
       ]
     },
@@ -221,56 +228,49 @@
       "domain": "bonton.com",
       "disputed": [
         {
-          "field": "name",
-          "reason": "The only capture is a GoDaddy Auctions parked-domain page; it is not the store's own page and shows no store name as its own."
-        },
-        {
           "field": "hosts",
-          "reason": "bonton.com is a parked domain for sale on GoDaddy Auctions, not a checkout host; research notes the chain liquidated in 2018."
+          "reason": "Parked domain: the only capture is a GoDaddy auction lander offering the domain for sale; research reports the chain liquidated in 2018."
         },
         {
           "field": "kind",
-          "reason": "A parked domain lander sells nothing; no merchant operates on the captured page."
+          "reason": "The domain is a parked auction lander, not an operating store; no capture shows a merchant at this domain."
         },
         {
           "field": "physicalGoods",
-          "reason": "The parked page shows no goods sold, shipped or picked up; its lines are related-search links."
+          "reason": "No goods are sold at this parked domain; its search-topic links are not merchandise."
         },
         {
           "field": "candidateCategory",
-          "reason": "No operating store on this domain; issuer lists name the former chain, not purchases at bonton.com."
+          "reason": "Issuers list Bon-Ton as a department store, but the domain is parked and sells nothing, so no category applies to this host."
         }
-      ]
+      ],
+      "reason": "defunct"
     },
     {
       "domain": "boxed.com",
       "disputed": [
         {
-          "field": "name",
-          "reason": "Both store-page captures are empty; no capture shows the name Boxed."
+          "field": "hosts",
+          "reason": "Bot-walled (both store captures are empty) and no issuer capture names Boxed, so research and an issuer capture do not agree on the store; the host cannot be settled from the captures."
         },
         {
           "field": "kind",
-          "reason": "Both store-page captures are empty; what the site does cannot be settled."
+          "reason": "Both store captures are empty and no issuer capture names Boxed; nothing in the captures shows what the site does."
         },
         {
           "field": "physicalGoods",
-          "reason": "Both store-page captures are empty; no capture shows goods shipped or picked up."
-        }
-      ]
-    },
-    {
-      "domain": "britishairways.com",
-      "disputed": [
-        {
-          "field": "name",
-          "reason": "The store page is a queue page that says only ba.com; no capture shows the name British Airways tied to britishairways.com."
-        },
-        {
-          "field": "brandIds",
-          "reason": "No capture ties britishairways.com to British Airways; the store page is a queue page and the issuer pages name no domain."
+          "reason": "No capture shows goods shipped or picked up: store captures are empty and no issuer capture names the store."
         }
       ]
     }
+  ],
+  "botWalled": [
+    "bartelldrugs.com",
+    "belk.com",
+    "bhphotovideo.com",
+    "bjs.com",
+    "bloomingdales.com",
+    "boxed.com",
+    "britishairways.com"
   ]
 }

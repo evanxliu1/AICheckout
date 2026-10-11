@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15432,
+    "outputTokens": 285
+  },
+  "durationMs": 44975,
+  "draft": {
+    "domain": "chargepoint.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "ev-charging",
+    "evidence": [
+      {
+        "sourceId": "chargepoint-com-page-1",
+        "quote": "EV charging is all we do, and we do it all",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "chargepoint-com-page-1",
+        "quote": "we’ve built a fully integrated portfolio of hardware, cloud services and support",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "chargepoint-com-page-1",
+        "quote": "EV charging is all we do",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chargepoint-com-page-2",
+        "quote": "Easily find and use EV charging stations",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chargepoint-com-page-3",
+        "quote": "For help with a charging session",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "ChargePoint Charging Station",
+        "supports": "category"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Also includes merchants that sell electricity for charging an electric vehicle.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "public electric vehicle charging stations.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "The site primarily describes charging services; its hardware portfolio does not explicitly state shipping or pickup, so the physical-goods classification relies on the documented hardware offering."
+  }
+}

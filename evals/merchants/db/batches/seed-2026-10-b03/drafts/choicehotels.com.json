@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b03",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 20355,
+    "outputTokens": 437
+  },
+  "durationMs": 24638,
+  "draft": {
+    "domain": "choicehotels.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "choice-hotels"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "wells-fargo-choice-privileges-pricing",
+        "quote": "\"Choice Privileges Rewards Program\" refers to the loyalty program that Choice Hotels International (\"Choice Hotels\") owns and operates.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-select-product",
+        "quote": "Qualifying Choice Hotel stays are items billed by eligible Choice brand hotels as merchant of record booked through either choicehotels.com",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-pricing",
+        "quote": "You can book these stays at both Choice Hotels brand and non-Choice Hotels brand hotels and resorts.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-pricing",
+        "quote": "You can book these stays at both Choice Hotels brand and non-Choice Hotels brand hotels and resorts.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-rewards-terms",
+        "quote": "You can book these stays at both Choice Hotels brand and non-Choice Hotels brand hotels and resorts.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-select-pricing",
+        "quote": "You can book these stays at both Choice Hotels brand and non-Choice Hotels brand hotels and resorts.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
+        "quote": "You can book these stays at both Choice Hotels brand and non-Choice Hotels brand hotels and resorts.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "wells-fargo-choice-privileges-select-product",
+        "quote": "Qualifying Choice Hotel stays are items billed by eligible Choice brand hotels as merchant of record booked through either choicehotels.com",
+        "supports": "category"
+      }
+    ],
+    "notes": "The store pages are access-denied, so classification relies on issuer terms. Those terms identify hotel/resort stays, which have no matching allowed category, and mention some non-Choice hotels without establishing a mostly third-party marketplace."
+  }
+}
