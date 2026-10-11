@@ -10,6 +10,7 @@ import {
   catalogMerchantIds,
   catalogV3Schema,
   compareRewards,
+  recordToProfile,
   ruleCoversMerchant,
   usageInputs,
 } from '../src/domain';
@@ -17,6 +18,8 @@ import type {
   CardEstimate,
   CatalogV3,
   Comparison,
+  MerchantProfileV3,
+  MerchantRecord,
   Purchase,
   RewardRuleV3,
   RuleStatusV3,
@@ -1297,5 +1300,233 @@ describe('catalog v3 engine: a chosen category is its own enrollment (Stage 2 M7
     expect(usageInputs(enrollOnce, 'test-cash-plus').map((i) => [i.ruleId, i.needsActivation])).toEqual([
       ['cash-plus-department-stores', false],
     ]);
+  });
+});
+
+describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
+  // The profile a matched merchant record becomes (`recordToProfile`), passed as `{ merchant }`. The
+  // bundled catalog's own rules decide the scenarios; the records are test data.
+  const record = (id: string, extra: Partial<MerchantRecord> = {}): MerchantRecord => ({
+    id,
+    name: id,
+    hosts: [`${id}.example`],
+    kind: 'merchant',
+    physicalGoods: true,
+    category: 'general-merchandise',
+    evidence: { basis: 'default', sourceIds: [] },
+    brandIds: [],
+    disabled: false,
+    ...extra,
+  });
+  const amazon = recordToProfile(record('amazon-us', { brandIds: ['amazon'] }), CATALOG_V3);
+  const walmart = recordToProfile(record('walmart-us', { brandIds: ['walmart'] }), CATALOG_V3);
+  const target = recordToProfile(record('target-us', { brandIds: ['target'] }), CATALOG_V3);
+  const kroger = recordToProfile(
+    record('kroger-us', {
+      category: 'supermarkets',
+      evidence: { basis: 'corroborated', sourceIds: ['a', 'b'] },
+    }),
+    CATALOG_V3,
+  );
+  const costco = recordToProfile(
+    record('costco-us', {
+      category: 'wholesale-clubs',
+      brandIds: ['costco'],
+      evidence: { basis: 'corroborated', sourceIds: ['a', 'b'] },
+    }),
+    CATALOG_V3,
+  );
+  const delta = recordToProfile(
+    record('delta-us', { physicalGoods: false, brandIds: ['delta'] }),
+    CATALOG_V3,
+  );
+  const prime = { gates: [{ gateId: 'amazon-prime', optionId: 'member' }] };
+  function at(
+    merchant: MerchantProfileV3,
+    cards: WalletCard[],
+    wallet: Partial<Wallet> = {},
+    catalog: CatalogV3 = CATALOG_V3,
+    extra: Partial<Purchase> = {},
+  ) {
+    return compareRewards(
+      catalog,
+      { cards, defaultCardId: null, ...wallet },
+      purchase({ merchantId: merchant.id, ...extra }),
+      now,
+      { merchant },
+    );
+  }
+  const first = (...args: Parameters<typeof at>) => {
+    const result = at(...args);
+    if (result.status !== 'ready') throw new Error(`unavailable: ${result.reason}`);
+    return result.estimates[0];
+  };
+
+  it('Prime Visa earns its Amazon rate at amazon.com and the base rate elsewhere', () => {
+    const member = first(amazon, [owned('prime-visa')], prime);
+    expect(statusOf(member, 'prime-amazon-member')).toBe('applied');
+    expect(cents(member)).toEqual([500, 500]);
+    const unknown = first(amazon, [owned('prime-visa')]);
+    expect(cents(unknown)).toEqual([300, 500]);
+    const generic = first(GENERIC_MERCHANT_PROFILE, [owned('prime-visa')], prime);
+    expect(statusOf(generic, 'prime-amazon-member')).toBe('not-at-merchant');
+    expect(cents(generic)).toEqual([100, 100]);
+  });
+  it('a store card is accepted only where the profile carries its brand', () => {
+    const catalog = structuredClone(CATALOG);
+    catalog.brands.push({ id: 'target', name: 'Target' });
+    catalog.cards.push({
+      ...card('test-target-card', 'cash-back', [
+        rule('target-store', { category: 'other', rateBps: 500, brandIds: ['target'] }),
+      ]),
+      acceptance: { kind: 'closed-loop', brandIds: ['target'] },
+    });
+    expect(catalogV3Schema.safeParse(catalog).success).toBe(true);
+    const accepted = first(
+      recordToProfile(record('target-us', { brandIds: ['target'] }), catalog),
+      [owned('test-target-card')],
+      {},
+      catalog,
+    );
+    expect(statusOf(accepted, 'target-store')).toBe('applied');
+    expect(cents(accepted)).toEqual([500, 500]);
+    for (const elsewhere of [
+      recordToProfile(record('walmart-us', { brandIds: ['walmart'] }), catalog),
+      GENERIC_MERCHANT_PROFILE,
+    ])
+      expect(at(elsewhere, [owned('test-target-card')], {}, catalog)).toEqual({
+        status: 'unavailable',
+        reason: 'no-accepted-card',
+      });
+  });
+  it('Freedom Flex grocery is excluded at walmart.com and target.com but applies at a supermarket', () => {
+    // Activated, with the Q4 group's spend known on its cap holder (the group's smallest rule ID).
+    const activated = shared(
+      'freedom-flex-supermarkets-2026-10-v2',
+      'freedom-flex-american-red-cross-2026-10-v2',
+    );
+    for (const store of [walmart, target])
+      expect(
+        statusOf(
+          first(store, [owned('chase-freedom-flex', { usage: activated })]),
+          'freedom-flex-supermarkets-2026-10-v2',
+        ),
+      ).toBe('not-at-merchant');
+    const grocery = first(kroger, [owned('chase-freedom-flex', { usage: activated })]);
+    expect(statusOf(grocery, 'freedom-flex-supermarkets-2026-10-v2')).toBe('applied');
+    expect(cents(grocery)).toEqual([500, 500]);
+  });
+  it('OnePay at walmart.com earns the Walmart rate and never the first-90-days rate', () => {
+    const wallet = {
+      gates: [{ gateId: 'synchrony-onepay-cashrewards-card-first-90-days', optionId: 'first-90-days' }],
+    };
+    const estimate = first(walmart, [owned('synchrony-onepay-cashrewards-card')], wallet);
+    expect(statusOf(estimate, 'onepay-cashrewards-walmart-v2')).toBe('applied');
+    expect(statusOf(estimate, 'onepay-cashrewards-all-first-90-days-v2')).toBe('not-at-merchant');
+    // The known wrong answer at a generic store (decision 2026-10-05-generic-store-profile) is fixed here.
+    const generic = first(GENERIC_MERCHANT_PROFILE, [owned('synchrony-onepay-cashrewards-card')], wallet);
+    expect(statusOf(generic, 'onepay-cashrewards-all-first-90-days-v2')).toBe('applied');
+  });
+  it('a corroborated supermarket profile applies supermarket rules', () => {
+    const bce = first(kroger, [owned('amex-blue-cash-everyday')]);
+    expect(statusOf(bce, 'bce-supermarkets-v2')).not.toBe('not-at-merchant');
+    expect(statusOf(first(walmart, [owned('amex-blue-cash-everyday')]), 'bce-supermarkets-v2')).toBe(
+      'not-at-merchant',
+    );
+  });
+  it('a warehouse club profile applies wholesale-club and Costco rules', () => {
+    const citi = first(costco, [owned('citi-costco-anywhere-visa')]);
+    expect(statusOf(citi, 'costco-anywhere-costco')).toBe('applied');
+    expect(
+      statusOf(first(costco, [owned('boa-customized-cash-rewards')]), 'customized-cash-rewards-club'),
+    ).not.toBe('not-at-merchant');
+    expect(
+      statusOf(
+        first(GENERIC_MERCHANT_PROFILE, [owned('boa-customized-cash-rewards')]),
+        'customized-cash-rewards-club',
+      ),
+    ).toBe('not-at-merchant');
+  });
+  it('physicalGoods: false blocks online-retail rules while brand rules still apply', () => {
+    const bce = first(delta, [owned('amex-blue-cash-everyday')]);
+    expect(statusOf(bce, 'bce-online-retail-v2')).toBe('not-at-merchant');
+    expect(cents(bce)).toEqual([100, 100]);
+    const blue = first(delta, [owned('amex-delta-skymiles-blue')]);
+    // Delta's rule applies through the brand; its unstated cap keeps it a range.
+    expect(statusOf(blue, 'delta-skymiles-blue-delta-v2')).toBe('may-apply');
+    expect(blue.uncertainties).toContain('cap-unstated');
+  });
+  it('a disabled record is not passed: the generic profile answers', () => {
+    const disabled = record('walmart-us', { brandIds: ['walmart'], disabled: true });
+    expect(disabled.disabled).toBe(true);
+    const generic = compareRewards(
+      CATALOG_V3,
+      { cards: [owned('synchrony-onepay-cashrewards-card')], defaultCardId: null },
+      purchase({ merchantId: GENERIC_MERCHANT_ID }),
+      now,
+    ) as Comparison;
+    expect(statusOf(generic.estimates[0], 'onepay-cashrewards-walmart-v2')).toBe('not-at-merchant');
+  });
+  it('replaces only the profile with the purchase merchant id; other callers are unchanged', () => {
+    const withoutOption = compareRewards(
+      CATALOG_V3,
+      { cards: [owned('prime-visa')], defaultCardId: null },
+      purchase({ merchantId: 'amazon-us' }),
+      now,
+    );
+    expect(at(amazon, [owned('prime-visa')])).toEqual(withoutOption);
+    // A profile for another id does not make that id available, nor change this one.
+    expect(
+      compareRewards(
+        CATALOG_V3,
+        { cards: [owned('prime-visa')], defaultCardId: null },
+        purchase({ merchantId: 'walmart-us' }),
+        now,
+        { merchant: kroger },
+      ),
+    ).toEqual({ status: 'unavailable', reason: 'unsupported-merchant' });
+    expect(
+      compareRewards(
+        CATALOG_V3,
+        { cards: [owned('prime-visa')], defaultCardId: null },
+        purchase({ merchantId: 'amazon-us' }),
+        now,
+        { merchant: kroger },
+      ),
+    ).toEqual(withoutOption);
+    // v2 catalogs ignore the option.
+    expect(
+      compareRewards(
+        CATALOG_V2,
+        { cards: [{ cardId: CATALOG_V2.cards[0].id, usage: [] }], defaultCardId: null },
+        purchase({ merchantId: 'best-buy-us' }),
+        Date.parse('2026-10-01T12:00:00Z'),
+        { merchant: kroger },
+      ).status,
+    ).toBe('ready');
+  });
+  it('overrides a catalog profile and the generic one at their own ids', () => {
+    const generalBestBuy = recordToProfile(record('best-buy-us', { brandIds: ['best-buy'] }), CATALOG_V3);
+    const cashPlus = owned('us-bank-cash-plus', {
+      choices: [
+        { choiceId: 'five-percent-categories', optionIds: ['electronic-stores', 'department-stores'] },
+      ],
+    });
+    const catalogProfile = compareRewards(
+      CATALOG_V3,
+      { cards: [cashPlus], defaultCardId: null },
+      purchase(),
+      now,
+    );
+    const released = at(generalBestBuy, [cashPlus]);
+    expect(catalogProfile.status).toBe('ready');
+    expect(released.status).toBe('ready');
+    expect((released as Comparison).estimates[0].maxRewardCents).toBeLessThan(
+      (catalogProfile as Comparison).estimates[0].maxRewardCents,
+    );
+    const genericNamed = recordToProfile(record(GENERIC_MERCHANT_ID, { physicalGoods: false }), CATALOG_V3);
+    expect(statusOf(first(genericNamed, [owned('amex-blue-cash-everyday')]), 'bce-online-retail-v2')).toBe(
+      'not-at-merchant',
+    );
   });
 });
