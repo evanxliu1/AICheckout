@@ -3,6 +3,7 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-10-11
+* [Phase 14.2 choices: release matching in the worker and pages only, legacy adapter names kept, processors refused before injection, the per-site switch by host for every non-legacy store, A5 copy](./2026-10-11-extension-on-the-merchant-release.md) — implementer: `storeForTab` in the worker and pages only (amended after review; content scripts carry no release); `Amazon US` kept for legacy ids; processor pages give `merchantForTab` null and a `payment-page` message; `disabledSites` keys every non-legacy store; open merchant ids in the contracts; never-ask read copy.
 * [Merchant release 14.1 details: the seed keeps Best Buy and Newegg on the default category, fifteen processor hosts hand-picked, strict version format, evidence rule and processor flag enforced in Zod, recordToProfile Zod-free](./2026-10-11-merchant-release-seed-and-contract-details.md) — 14.1 implementer's choices the plan left open; the seed applies the evidence rule honestly, so the two electronics stores wait for 14.4's evidence.
 
 ## 2026-10-10

@@ -9,7 +9,7 @@ import type {
   RewardRuleV3,
   UnavailableComparison,
 } from '../domain';
-import { merchantName } from '../checkout/merchants';
+import { merchantName } from '../checkout/store-match';
 import {
   notAcceptedLines,
   rankingNote,

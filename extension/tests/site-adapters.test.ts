@@ -1,13 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { MERCHANT_IDS, SITE_ADAPTERS } from '../src/checkout/adapters';
 import { siteAdapterSchema } from '../src/checkout/adapters/schema';
-import {
-  MERCHANTS,
-  merchantForCheckout,
-  merchantForOrderConfirmation,
-  merchantForTab,
-  merchantName,
-} from '../src/checkout/merchants';
+import { MERCHANTS, merchantForCheckout, merchantForOrderConfirmation } from '../src/checkout/merchants';
+import { merchantForTab, merchantName } from '../src/checkout/store-match';
 
 describe('bundled site adapters', () => {
   it.each(MERCHANT_IDS)('%s is a valid spec with usable selectors and patterns', (id) => {

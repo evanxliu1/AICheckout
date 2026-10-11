@@ -1,7 +1,9 @@
 import { compareRewards } from '../domain';
 import { RATES_REFERENCE_CENTS } from '../badge/contracts';
 import { CATALOG_TIMEOUT_MS } from '@ai-checkout/catalog-client';
-import type { Catalog } from '../domain';
+import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
+import type { Catalog, MerchantRelease, Purchase } from '../domain';
+import { merchantOption } from '../checkout/store-match';
 import {
   catalogCacheSchema,
   emptyCatalogCache,
@@ -72,8 +74,19 @@ export function createStateService(
   clock = Date.now,
   cartReader?: CartReader,
   fetchCatalog?: (signal: AbortSignal) => Promise<unknown>,
+  /** The merchant release whose records stand in for catalog profiles (Phase 14.2); the bundled one. */
+  release: MerchantRelease = MERCHANTS_V1,
 ) {
   let queue = Promise.resolve<unknown>(undefined);
+  /** A comparison at a store: the release record's profile when the store has one. */
+  const compare = (catalog: Catalog, state: AppState, purchase: Purchase, at: number) =>
+    compareRewards(
+      catalog,
+      engineWallet(state.wallet, catalog),
+      purchase,
+      at,
+      merchantOption(catalog, purchase.merchantId, release),
+    );
   const success = (
     state: AppState,
     catalog: Catalog,
@@ -88,7 +101,7 @@ export function createStateService(
         promise,
         new Promise<never>((_, reject) => {
           timer = setTimeout(
-            () => reject(new Error('Reading the cart took too long. Retry or enter the amount manually.')),
+            () => reject(new Error('Reading the cart took too long. Read it again.')),
             CART_READ_TIMEOUT_MS,
           );
         }),
@@ -130,7 +143,7 @@ export function createStateService(
   }
   async function validateCart(cart: CartSnapshot | null, now: number) {
     if (!cart || !cartReader || cart.capturedAt > now || now - cart.capturedAt >= CART_MAX_AGE_MS) {
-      throw new Error('Read the cart again and confirm the current amount, or enter the amount manually.');
+      throw new Error('Read the cart again and confirm the current amount.');
     }
     await bounded(cartReader.validate(cart));
     if (clock() - cart.capturedAt >= CART_MAX_AGE_MS)
@@ -189,12 +202,7 @@ export function createStateService(
         return success(
           state,
           catalog,
-          compareRewards(
-            catalog,
-            engineWallet(state.wallet, catalog),
-            enginePurchase(state.purchase, catalog),
-            checkedAt,
-          ),
+          compare(catalog, state, enginePurchase(state.purchase, catalog), checkedAt),
           notice,
         );
       }
@@ -255,11 +263,7 @@ export function createStateService(
           },
           catalog,
         );
-        return success(
-          state,
-          catalog,
-          compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, now),
-        );
+        return success(state, catalog, compare(catalog, state, purchase, now));
       }
       if (request.expectedRevision !== state.revision) {
         return {
@@ -330,18 +334,14 @@ export function createStateService(
         return await response(next, catalog, now);
       }
       if (request.type === 'checkout:read-cart') {
-        if (!cartReader)
-          return { ok: false, error: 'Cart reading is unavailable. Enter the amount manually.' };
+        if (!cartReader) return { ok: false, error: 'Cart reading is unavailable in this build.' };
         let cart: CartSnapshot;
         try {
           cart = await bounded(cartReader.read());
         } catch (error) {
           return {
             ok: false,
-            error:
-              error instanceof Error
-                ? error.message
-                : 'The cart could not be read. Enter the amount manually.',
+            error: error instanceof Error ? error.message : 'The cart could not be read. Read it again.',
           };
         }
         const next: AppState = { ...state, revision: state.revision + 1, cart, comparison: null };
@@ -370,7 +370,7 @@ export function createStateService(
       if (request.purchase.purchasedOn !== localDate(comparedAt))
         return { ok: false, error: 'The date changed while reading the cart. Confirm today’s amount again.' };
       const purchase = enginePurchase(request.purchase, catalog);
-      const comparison = compareRewards(catalog, engineWallet(state.wallet, catalog), purchase, comparedAt);
+      const comparison = compare(catalog, state, purchase, comparedAt);
       if (comparison.status === 'unavailable') return success(state, catalog, comparison);
       const next: AppState = {
         ...state,

@@ -1,4 +1,5 @@
-import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from '@ai-checkout/rewards-core/generic-merchant';
+// Adapter-based URL rules, safe for the content scripts (no Zod, no catalog, no merchant release).
+// The merchant release is matched in the worker and the extension pages only: store-match.ts.
 import { MERCHANT_IDS, SITE_ADAPTERS, type MerchantId } from './adapters';
 
 /** Installed readers, distinct from the merchant scope of a downloaded catalog. */
@@ -13,28 +14,17 @@ export const MERCHANTS = Object.fromEntries(
 /** The reader version of a generic (`readCart`) reading; legacy readings carry their adapter's. */
 export const GENERIC_READER_VERSION = 'generic-reader-v1';
 
-export function merchantName(id: string): string {
-  if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
-  return Object.hasOwn(MERCHANTS, id) ? MERCHANTS[id as MerchantId].name : 'Unsupported merchant';
-}
+/** A legacy store: one of the three installed adapters (its own badge switch, savings and order pages). */
+export const isLegacyMerchant = (id: string): id is MerchantId =>
+  (MERCHANT_IDS as readonly string[]).includes(id);
 
-/** The last two labels of a host (`secure.newegg.com` → `newegg.com`); every adapter host is a .com. */
-const site = (host: string) => host.split('.').slice(-2).join('.');
-
-/** The popup's store for a tab URL: a supported store on any page of its site (product pages too,
- * not only the carts its adapter reads), any other web page the engine's generic store, and null
- * for a non-web page. The URL is never stored. */
-export function merchantForTab(rawUrl: string | undefined): string | null {
+/** Whether a reader may run on this URL: an http(s) page (a non-web page is `unsupported-page`). */
+export function isWebUrl(rawUrl: string | undefined): boolean {
   try {
-    const url = new URL(rawUrl ?? '');
-    if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
-    return (
-      MERCHANT_IDS.find((id) =>
-        SITE_ADAPTERS[id].match.hosts.some((host) => site(host) === site(url.hostname.replace(/\.$/, ''))),
-      ) ?? GENERIC_MERCHANT_ID
-    );
+    const { protocol } = new URL(rawUrl ?? '');
+    return protocol === 'https:' || protocol === 'http:';
   } catch {
-    return null;
+    return false;
   }
 }
 

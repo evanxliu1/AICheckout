@@ -5,7 +5,7 @@ import { Button, Card, Checkbox, Disclosure } from '@ai-checkout/ui';
 import { formatUsd } from '../domain';
 import type { SavingsEntry } from '../state/contracts';
 import { totalExtraCents } from '../state/savings';
-import { merchantName } from '../checkout/merchants';
+import { merchantName } from '../checkout/store-match';
 
 const signed = (cents: number) => `${cents < 0 ? '−' : ''}${formatUsd(Math.abs(cents))}`;
 
