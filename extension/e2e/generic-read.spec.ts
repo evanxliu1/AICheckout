@@ -110,6 +110,29 @@ test('fills nothing from a cart shown in another currency', async ({ browserName
   );
 });
 
+test('says it cannot compare on a payment processor’s page (Phase 14.2)', async ({
+  browserName,
+}, testInfo) => {
+  expect(browserName).toBe('chromium');
+  // A cart-like page on paypal.com: the store is not known there, so the popup says so on open, keeps
+  // its saved store, and "Read cart amount" does not inject the reader.
+  await withStore(
+    testInfo,
+    'https://www.paypal.com/checkoutnow',
+    summary(row('Subtotal', '$90.00') + row('Order total', '$100.00')),
+    async (popup) => {
+      await expect.poll(popup.text).toContain('PayPal is a payment page, not the store’s.');
+      expect(await popup.evaluate("document.getElementById('purchase-merchant').value")).toBe('best-buy-us');
+      await popup.click('Read cart amount');
+      await expect
+        .poll(popup.text)
+        .toContain('This is a payment page, not the store’s. Cards can’t be compared here');
+      expect(await popup.evaluate("document.getElementById('purchase-amount').value")).toBe('');
+      expect(await popup.text()).not.toMatch(/enter the amount|manually/i);
+    },
+  );
+});
+
 test('a legacy cart page is still read by its adapter, not the generic reader', async ({
   browserName,
 }, testInfo) => {
