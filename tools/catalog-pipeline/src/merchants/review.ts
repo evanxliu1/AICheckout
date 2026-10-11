@@ -40,6 +40,9 @@ export interface ReviewInput {
     reason: string;
     notes: string | null;
   }[];
+  /** Granted categories another issuer contradicts (excludes the store or lists it elsewhere); the record follows
+   * the rule. */
+  conflicts: { batch: string; domain: string; id: string; category: string; conflict: string }[];
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -118,6 +121,14 @@ export function reviewMarkdown(input: ReviewInput): string {
         `| ${r.batch} | ${r.domain} | ${r.id} | ${r.candidate} | ${cell(r.reason)} | ${cell(r.notes ?? '')} |`,
     ),
     '',
+    `## Conflicts: a granted category another issuer contradicts, for Evan (${input.conflicts.length})`,
+    '',
+    '| Batch | Store | Record | Category | Issuer sentence |',
+    '| --- | --- | --- | --- | --- |',
+    ...input.conflicts.map(
+      (c) => `| ${c.batch} | ${c.domain} | ${c.id} | ${c.category} | ${cell(c.conflict)} |`,
+    ),
+    '',
     `## Held out: disputed fields, for Evan (${input.heldOut.length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
@@ -147,6 +158,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   const heldOut: ReviewInput['heldOut'] = [];
   const downgraded: ReviewInput['downgraded'] = [];
   const refused: ReviewInput['refused'] = [];
+  const conflicts: ReviewInput['conflicts'] = [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
@@ -156,6 +168,8 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     for (const r of report?.records ?? []) {
       if (r.downgraded) downgraded.push({ batch, domain: r.domain, id: r.id, reason: r.downgraded.reason });
       if (r.refused) refused.push({ batch, domain: r.domain, id: r.id, ...r.refused });
+      for (const conflict of r.conflicts ?? [])
+        conflicts.push({ batch, domain: r.domain, id: r.id, category: r.category, conflict });
     }
   }
   const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
@@ -169,6 +183,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     heldOut,
     downgraded,
     refused,
+    conflicts,
   };
 }
 

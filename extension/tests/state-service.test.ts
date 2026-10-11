@@ -96,22 +96,22 @@ describe('comparisons at a merchant release store (Phase 14.2)', () => {
     expect(
       (rates.comparison as { estimates: { minRewardCents: number }[] }).estimates[0].minRewardCents,
     ).toBe(600);
-    // The bundled release (2026-10-11.dev.3) has Kroger on the default category (its issuer evidence was
-    // disputed), so no supermarket bonus there; Whole Foods is a supermarket on the definition basis, so 6%.
+    // The bundled release (2026-10-11.dev.5) has Kroger as a supermarket on the definition basis, so the same
+    // 6% applies there; Lowe's (home improvement) gets no supermarket bonus.
     const bundled = createStateService(storage, () => now);
     const plain = success(await bundled({ type: 'checkout:compare', expectedRevision: 2, purchase: kroger }))
       .comparison as { status: string; estimates: { minRewardCents: number }[] };
     expect(plain.status).toBe('ready');
-    expect(plain.estimates[0].minRewardCents).toBeLessThan(600);
-    const wholeFoods = success(
+    expect(plain.estimates[0].minRewardCents).toBe(600);
+    const lowes = success(
       await bundled({
         type: 'checkout:compare',
         expectedRevision: 3,
-        purchase: { ...kroger, merchantId: 'wholefoodsmarket-us' },
+        purchase: { ...kroger, merchantId: 'lowes-us' },
       }),
     ).comparison as { status: string; estimates: { minRewardCents: number }[] };
-    expect(wholeFoods.status).toBe('ready');
-    expect(wholeFoods.estimates[0].minRewardCents).toBe(600);
+    expect(lowes.status).toBe('ready');
+    expect(lowes.estimates[0].minRewardCents).toBeLessThan(600);
     expect(
       success(
         await bundled({

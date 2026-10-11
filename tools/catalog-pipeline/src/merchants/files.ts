@@ -381,6 +381,8 @@ export const applyReportSchema = z.strictObject({
           notes: z.string().max(600).nullable(),
         })
         .optional(),
+      /** Cross-issuer conflicts of a granted category, for Evan (source id and a sentence of 25 words or fewer). */
+      conflicts: z.array(z.string().max(400)).optional(),
     }),
   ),
   heldOut: z.array(

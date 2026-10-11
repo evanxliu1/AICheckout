@@ -58,6 +58,8 @@ export type ApplyOutcome =
       downgraded: { reason: string | null } | null;
       /** A drafted candidate the evidence rule did not grant, with the rule's reason (review.md lists it). */
       refused: { candidate: string; reason: string } | null;
+      /** Cross-issuer conflicts of a granted category (review.md lists them; the record follows the rule). */
+      conflicts: string[];
     }
   | { outcome: 'held-out'; disputed: { field: VerifiedField | 'processor'; reason: string | null }[] };
 
@@ -80,7 +82,11 @@ export const INCLUSION_WORDING = /\b(includes?|included|list (?:is|of)|following
 export const DEFINITION_WORDING =
   /\b(includ\w*|such as|means?|defin\w*|consist\w*|categor\w*|\w*stores?|merchants?|list|establishments?|providers?|services?|retailers?|pharmac(?:y|ies))\b/i;
 /** Wording that makes a definition conditional ("included if they classify as a restaurant merchant"). */
-export const CONDITIONAL_WORDING = /\b(if|when|unless|provided|may|might|classif\w*|qualif\w*|depend\w*)\b/i;
+export const CONDITIONAL_WORDING =
+  /\b(if|when|unless|provided|may|might|classif\w*|qualif\w*|depend\w*|eligible)\b/i;
+/** A quarterly-calendar or rate line is no definition ("Earn 5% … April 1 to June 30, 2026"). */
+export const CALENDAR_WORDING =
+  /\b(january|february|march|april|may|june|july|august|september|october|november|december|q[1-4]|quarter(?:ly)?|\d{1,2}\/\d{1,2}(?:\/\d{2,4})?)\b|\d+(?:\.\d+)?\s?%|\b\d+x\b/i;
 /** Issuer category words → the merchant category they describe. Unlisted categories (general-merchandise) never
  * come from an issuer quote. */
 export const ISSUER_CATEGORY_WORDS: Record<string, RegExp> = {
@@ -127,18 +133,21 @@ const EXCLUDED_STORE_TYPES = [
   'discount (?:store|retailer)s?',
   'warehouse clubs?',
   'wholesale clubs?',
+  'membership (?:warehouse|club)s?',
+  'club membership',
+  'members-only',
   'department stores?',
   'general merchandise',
   'online marketplaces?',
   'third-party sellers',
 ] as const;
 const CATEGORY_OWN_TYPES: Record<string, RegExp> = {
-  'wholesale-clubs': /warehouse|wholesale/,
+  'wholesale-clubs': /warehouse|wholesale|membership|members-only/,
   'department-stores': /department/,
 };
 const CATEGORY_EXTRA_EXCLUDED: Record<string, string[]> = {
-  supermarkets: ['convenience stores?', 'drug ?stores?', 'pharmac(?:y|ies)'],
-  drugstores: ['grocer(?:y|ies)', 'supermarkets?', 'convenience stores?'],
+  supermarkets: ['convenience stores?'],
+  drugstores: ['convenience stores?'],
   dining: ['grocer(?:y|ies)', 'supermarkets?', 'convenience stores?'],
 };
 export const CATEGORY_EXCLUDED_TYPES: Record<string, RegExp> = Object.fromEntries(
@@ -212,6 +221,14 @@ export function issuerQuoteEarns(quote: string, name: string, domain: string, ca
   const words = ISSUER_CATEGORY_WORDS[category];
   if (!words) return false;
   const named = storeNamed(name, domain);
+  // An inclusion list names the category before its opener and the store after it ("Includes the following streaming
+  // providers: … Netflix"); "Note: Kroger is a grocery store" and "Q: Does Kroger count…?" are not lists.
+  const inclusionList = (clause: string) => {
+    for (const start of clause.matchAll(new RegExp(INCLUSION_WORDING.source, 'gi')))
+      if (words.test(clause.slice(0, start.index)) && named.test(clause.slice(start.index + start[0].length)))
+        return true;
+    return false;
+  };
   // Clauses are joined to the one before them when they only continue the list ("Kroger, Meijer").
   return normal(quote)
     .split(CLAUSE_BREAK)
@@ -219,8 +236,9 @@ export function issuerQuoteEarns(quote: string, name: string, domain: string, ca
       (clause) =>
         named.test(clause) &&
         words.test(clause) &&
-        (EARNING_WORDING.test(clause) || INCLUSION_WORDING.test(clause)) &&
-        !EXCLUSION_WORDING.test(clause),
+        (EARNING_WORDING.test(clause) || inclusionList(clause)) &&
+        !EXCLUSION_WORDING.test(clause) &&
+        !CONDITIONAL_WORDING.test(clause),
     );
 }
 
@@ -234,6 +252,7 @@ export function definitionClause(quote: string, category: string): string | null
   if (!words) return null;
   for (const clause of normal(quote).split(CLAUSE_BREAK)) {
     if (!words.test(clause) || !DEFINITION_WORDING.test(clause) || clauseExcludes(clause, category)) continue;
+    if (CALENDAR_WORDING.test(clause)) continue;
     const start = INCLUSION_START.exec(clause);
     // An inclusion list under another category's exclusion: only its tail defines this category.
     if (start && EXCLUSION_WORDING.test(clause.slice(0, start.index))) return clause.slice(start.index);
@@ -318,6 +337,33 @@ export function definitionBasis(input: ApplyInput, category: string): Definition
   return { cited: [...new Set([...storeQuotes, ...covering].map((e) => e.sourceId))] };
 }
 
+/** Cross-issuer conflicts of a granted category (review 2026-10-11): sentences of the store's issuer windows that name
+ * the store and either exclude the granted category (an `issuer` or `corroborated` record skips the exclusion check) or
+ * place it under another category's words. Reported for Evan in review.md; the record still follows the rule. Each
+ * entry is the source id and the sentence cut to 25 words. */
+export function issuerConflicts(input: ApplyInput, category: string, citedIds: string[]): string[] {
+  const named = storeNamed(input.name, input.domain);
+  const own = ISSUER_CATEGORY_WORDS[category];
+  const others = Object.entries(ISSUER_CATEGORY_WORDS).filter(([c]) => c !== category);
+  const out: string[] = [];
+  for (const source of input.sources.filter((s) => s.kind === 'issuer-terms')) {
+    const text = input.issuerTexts?.[source.id];
+    if (text === undefined) continue;
+    for (const sentence of normal(text).split(SENTENCE_BREAK)) {
+      if (!named.test(sentence)) continue;
+      const excludes = clauseExcludes(sentence, category);
+      const elsewhere = !own?.test(sentence) && others.some(([, words]) => words.test(sentence));
+      if (!excludes && !elsewhere) continue;
+      if (!excludes && citedIds.includes(source.id)) continue;
+      const words = sentence.trim().split(/\s+/).filter(Boolean);
+      out.push(
+        `${source.id}: ${excludes ? 'excludes' : 'lists the store under another category'}: "${words.slice(0, 25).join(' ')}${words.length > 25 ? ' …' : ''}"`,
+      );
+    }
+  }
+  return out;
+}
+
 /** The apply rule for one store. Pure: no files. `basis` is decided in one place. */
 export function applyStore(input: ApplyInput): ApplyOutcome {
   const disputed = VERIFIED_FIELDS.filter(
@@ -369,9 +415,13 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       if ('cited' in definition) {
         basis = 'definition';
         citedIds = definition.cited;
-      } else if (!evidenceDisputed) refused = { candidate, reason: definition.refused };
+      } else refused = { candidate, reason: definition.refused };
     }
   }
+  const conflicts =
+    basis === 'default'
+      ? []
+      : issuerConflicts(input, candidate as string, [...new Set(categoryQuotes.map((e) => e.sourceId))]);
   // Downgraded: disputed quotes and no basis from the confirmed ones (with every quote confirmed it may still be
   // refused by the rule, which is reported as `refused`).
   const downgraded =
@@ -413,6 +463,7 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
       ? { reason: disputedReasons.filter(Boolean).join(' ').slice(0, 300) || null }
       : null,
     refused,
+    conflicts,
   };
 }
 
@@ -438,6 +489,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       category: string;
       downgraded?: { reason: string | null };
       refused?: { candidate: string; reason: string; notes: string | null };
+      conflicts?: string[];
     }[],
     heldOut: [] as { domain: string; disputed: { field: string; reason: string | null }[] }[],
   };
@@ -506,6 +558,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       category: outcome.record.category,
       ...(outcome.downgraded ? { downgraded: outcome.downgraded } : {}),
       ...(outcome.refused ? { refused: { ...outcome.refused, notes: draftFile.draft.notes } } : {}),
+      ...(outcome.conflicts.length ? { conflicts: outcome.conflicts } : {}),
     });
     if (outcome.downgraded)
       env.log(`${store.domain}: DOWNGRADED to the default category (evidence disputed).`);

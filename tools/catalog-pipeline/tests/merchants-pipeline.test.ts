@@ -480,6 +480,7 @@ describe('review.md', () => {
           notes: 'Chase lists it under food delivery',
         },
       ],
+      conflicts: [],
     });
     expect(text).toContain(
       '| dev-1 | z.com | z-us | dining | synthetic refusal | Chase lists it under food delivery |',
@@ -801,6 +802,7 @@ describe('definition basis (Evan 2026-10-11)', () => {
       heldOut: [],
       downgraded: [],
       refused: [],
+      conflicts: [],
     });
     expect(text).toContain('| kroger-us | kroger.com | supermarkets | definition |');
     expect(text).toContain('Grocery Pickup');
@@ -891,7 +893,7 @@ describe('definition basis: review probes (2026-10-11)', () => {
     );
     expect(dash('restaurants, including takeout and delivery')).toBe('dining/definition');
     expect(dash('dining purchases, including restaurant delivery services')).toBe('dining/definition');
-    expect(dash('restaurants, including takeout and eligible delivery services')).toBe('dining/definition');
+    expect(dash('restaurants, including takeout and eligible delivery services')).toMatch(/default refused/);
     expect(
       dash('Delivery and takeout services will be included if they classify as a restaurant merchant.'),
     ).toMatch(/default refused: no issuer dining definition names delivery services unconditionally/);
@@ -1099,7 +1101,7 @@ describe('per-quote verification (review 2026-10-11)', () => {
   ];
   const good = {
     sourceId: issuer,
-    quote: 'grocery stores like Kroger may qualify for 2% cash back in the grocery category',
+    quote: 'Earn 2% cash back at grocery stores including Kroger',
     supports: 'category' as const,
   };
   const bad = {
@@ -1173,6 +1175,243 @@ describe('per-quote verification (review 2026-10-11)', () => {
     const out = applyStore(input({ sources: srcs, verification }, { evidence: [good] }));
     expect(out.outcome === 'record' && out.record.evidence.basis).toBe('default');
     expect(out.outcome === 'record' && out.downgraded).toEqual({ reason: 'all of it' });
+  });
+});
+
+describe('re-check probes (2026-10-11)', () => {
+  const amex = 'amex-rewards-info-retail';
+  const chase = 'chase-rewards-category-faq';
+  const srcs: ApplyInput['sources'] = [
+    { ...sources[0], id: 'store-page-1' },
+    {
+      id: amex,
+      kind: 'issuer-terms',
+      url: 'https://www.americanexpress.com/t',
+      capturedOn: '2026-10-05',
+      sha256: 'e'.repeat(64),
+    },
+    {
+      id: chase,
+      kind: 'issuer-terms',
+      url: 'https://www.chase.com/faq',
+      capturedOn: '2026-10-05',
+      sha256: 'f'.repeat(64),
+    },
+  ];
+  const grocery = {
+    sourceId: amex,
+    quote: 'U.S. supermarkets: grocery stores and supermarkets',
+    supports: 'definition' as const,
+  };
+  const page = (quote: string) => ({ sourceId: 'store-page-1', quote, supports: 'category' as const });
+  const run = (
+    domain: string,
+    name: string,
+    draft: Partial<ApplyInput['draft']>,
+    quotes: ApplyInput['draft']['evidence'],
+    texts: { store?: string; issuer?: Record<string, string> } = {},
+    verification?: Partial<ApplyInput>,
+  ) =>
+    applyStore(
+      input(
+        {
+          domain,
+          name,
+          hosts: [domain],
+          sources: srcs,
+          storeTexts: { 'store-page-1': texts.store ?? 'Welcome to our store.' },
+          issuerTexts: { [amex]: 'nothing', [chase]: 'nothing', ...texts.issuer },
+          ...verification,
+        },
+        { evidence: quotes, ...draft },
+      ),
+    );
+  const result = (out: ReturnType<typeof applyStore>) =>
+    out.outcome === 'record'
+      ? `${out.record.category}/${out.record.evidence.basis}${out.refused ? ` refused: ${out.refused.reason}` : ''}`
+      : out.outcome;
+
+  it('1: a grocer with a pharmacy is still a supermarket; the refusal reason is reported even with a disputed quote', () => {
+    const kroger = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup'), grocery], {
+      store: 'Kroger Pharmacy: transfer your prescriptions. Shop groceries for pickup or delivery.',
+    });
+    expect(result(kroger)).toBe('supermarkets/definition');
+    expect(storePageShowsType('Pharmacy and grocery pickup', 'supermarkets')).toBe(true);
+    const verification = confirmed();
+    verification.evidence = { verdict: 'disputed', reason: 'quote 1 fails' };
+    const disputed = run(
+      'kroger.com',
+      'Kroger',
+      {},
+      [page('Grocery Pickup'), grocery],
+      { store: 'Shop groceries.' },
+      {
+        verification,
+        quoteVerdicts: [
+          { index: 0, verdict: 'confirmed', reason: null },
+          { index: 1, verdict: 'disputed', reason: 'quote 1 fails' },
+        ],
+      },
+    );
+    expect(result(disputed)).toBe(
+      'general-merchandise/default refused: no issuer definition quote covers supermarkets',
+    );
+    expect(disputed.outcome === 'record' && disputed.downgraded).toEqual({ reason: 'quote 1 fails' });
+  });
+
+  it('2: an inclusion list names the category before its opener and the store after it; conditional quotes never earn', () => {
+    for (const quote of [
+      'Note: Kroger is a grocery store',
+      'Q: Does Kroger count as a grocery store?',
+      'Some grocery stores with gas stations (like Hy-Vee, Kroger or Meijer) may qualify for 2% cash back in the gas and/or grocery categories.',
+      'Earn 3% at grocery stores including Kroger if the merchant is eligible',
+    ])
+      expect(issuerQuoteEarns(quote, 'Kroger', 'kroger.com', 'supermarkets'), quote).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'Includes the following streaming providers: Hulu, Netflix, Spotify',
+        'Netflix',
+        'netflix.com',
+        'streaming',
+      ),
+    ).toBe(true);
+    expect(
+      issuerQuoteEarns(
+        'The U.S. drugstore list is: CVS Pharmacy, Duane Reade, Rite Aid and Walgreens.',
+        'CVS',
+        'cvs.com',
+        'drugstores',
+      ),
+    ).toBe(true);
+    expect(
+      issuerQuoteEarns('Earn 3% at grocery stores including Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
+    ).toBe(true);
+  });
+
+  it('3: quarterly calendar and rate lines are no definitions; standing sentences are', () => {
+    expect(
+      definitionQuoteCovers(
+        'Earn 5% cash back at grocery stores from April 1 to June 30, 2026',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    expect(
+      definitionQuoteCovers(
+        'Q2: Grocery Stores, Wholesale Clubs, and Select Streaming Services',
+        'supermarkets',
+      ),
+    ).toBe(false);
+    expect(
+      definitionQuoteCovers('Automatic 2% cash back at grocery stores and wholesale clubs', 'supermarkets'),
+    ).toBe(false);
+    expect(
+      definitionQuoteCovers(
+        'Drug Store purchases include those made at stand-alone drug stores, pharmacies and drug store chains',
+        'drugstores',
+      ),
+    ).toBe(true);
+    expect(
+      definitionQuoteCovers(
+        'Check off your grocery list and earn cash back at most grocery stores and supermarkets.',
+        'supermarkets',
+      ),
+    ).toBe(true);
+  });
+
+  it('4: a drugstore selling groceries stays a drugstore; "eligible delivery services" is conditional', () => {
+    const walgreens = run(
+      'walgreens.com',
+      'Walgreens',
+      { candidateCategory: 'drugstores' },
+      [
+        page('your local Walgreens pharmacy'),
+        { sourceId: amex, quote: 'drugstores and pharmacies', supports: 'definition' },
+      ],
+      { store: 'Shop Grocery, Household and Beauty at Walgreens Pharmacy.' },
+    );
+    expect(result(walgreens)).toBe('drugstores/definition');
+    const dash = run(
+      'doordash.com',
+      'DoorDash',
+      { kind: 'marketplace', physicalGoods: false, candidateCategory: 'dining' },
+      [
+        page('order from local restaurants'),
+        {
+          sourceId: amex,
+          quote: 'restaurants, including takeout and eligible delivery services',
+          supports: 'definition',
+        },
+      ],
+    );
+    expect(result(dash)).toMatch(
+      /default refused: no issuer dining definition names delivery services unconditionally/,
+    );
+  });
+
+  it("5: wholesale clubs never get supermarkets: Sam's Club and BJ's style pages, or an issuer exclusion list naming the store", () => {
+    const sams = run('samsclub.com', "Sam's Club", {}, [page('Shop groceries online'), grocery], {
+      store: 'Join Sam’s Club today. A Club membership gets you members-only prices on groceries and fuel.',
+    });
+    expect(result(sams)).toMatch(/general-merchandise\/default refused: the store's own page/);
+    const bjs = run('bjs.com', "BJ's", {}, [page('Fresh groceries delivered'), grocery], {
+      store: "BJ's Wholesale Club: the membership warehouse club with fresh groceries.",
+    });
+    expect(result(bjs)).toMatch(/general-merchandise\/default refused: the store's own page/);
+    const listed = run('bjs.com', "BJ's", {}, [page('Fresh groceries delivered'), grocery], {
+      store: 'Fresh groceries delivered to your door.',
+      issuer: {
+        [chase]: "Merchants not in the grocery category include wholesale clubs such as Costco and BJ's.",
+      },
+    });
+    expect(result(listed)).toMatch(/refused: issuer page/);
+    expect(storePageShowsType('a membership warehouse club with groceries', 'wholesale-clubs')).toBe(true);
+  });
+
+  it('6: cross-issuer conflicts of a granted category are listed; the record follows the rule', () => {
+    const out = run('kroger.com', 'Kroger', {}, [page('Grocery Pickup'), grocery], {
+      store: 'Shop groceries.',
+      issuer: {
+        [chase]: 'Kroger is listed under our gas category. Grocery stores earn 3%.',
+      },
+    });
+    expect(result(out)).toBe('supermarkets/definition');
+    expect(out.outcome === 'record' && out.conflicts).toEqual([
+      `${chase}: lists the store under another category: "Kroger is listed under our gas category"`,
+    ]);
+    // An issuer record skips the exclusion check, so an exclusion elsewhere shows as a conflict.
+    const issuerRecord = run(
+      'kroger.com',
+      'Kroger',
+      {},
+      [
+        page('Grocery Pickup'),
+        { sourceId: amex, quote: 'Earn 6% at U.S. supermarkets like Kroger', supports: 'category' },
+      ],
+      { store: 'Shop groceries.', issuer: { [chase]: 'Grocery stores, excluding Kroger and Walmart' } },
+    );
+    expect(result(issuerRecord)).toBe('supermarkets/issuer');
+    expect(issuerRecord.outcome === 'record' && issuerRecord.conflicts[0]).toMatch(
+      /^chase-rewards-category-faq: excludes: "Grocery stores, excluding Kroger/,
+    );
+    const text = reviewMarkdown({
+      version: 'v',
+      verifiedAt: '2026-10-11T00:00:00Z',
+      records: [],
+      evidence: new Map(),
+      heldOut: [],
+      downgraded: [],
+      refused: [],
+      conflicts: [
+        {
+          batch: 'dev-1',
+          domain: 'kroger.com',
+          id: 'kroger-us',
+          category: 'supermarkets',
+          conflict: 'x: excludes: "y"',
+        },
+      ],
+    });
+    expect(text).toContain('| dev-1 | kroger.com | kroger-us | supermarkets | x: excludes: "y" |');
   });
 });
 
@@ -1307,7 +1546,7 @@ describe('issuer quotes: earning statements only', () => {
         'kroger.com',
         'supermarkets',
       ),
-    ).toBe(true);
+    ).toBe(false);
     expect(
       issuerQuoteEarns('Krogers earn 3% at grocery stores', 'Kroger', 'kroger.com', 'supermarkets'),
     ).toBe(false);

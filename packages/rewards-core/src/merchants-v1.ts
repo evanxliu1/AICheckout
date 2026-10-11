@@ -7,7 +7,7 @@ import type { MerchantRelease } from './types.ts';
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.dev.4',
+  version: '2026-10-11.dev.5',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -53,11 +53,25 @@ export const MERCHANTS_V1: MerchantRelease = {
       sha256: 'c671552eeafadbc884a070efbb5ddc36e9d79457527434d11e6257d0c5706a03',
     },
     {
+      id: 'kroger-com-page-2',
+      url: 'https://www.kroger.com/hc/help/faqs/ways-to-shop/pickup',
+      kind: 'store-page',
+      capturedAt: '2026-10-11',
+      sha256: 'd9f4887b3692a41f534e233eaa3b11650d71dba7068f920eb3325c3dd6f6e176',
+    },
+    {
       id: 'lowes-com-page-1',
       url: 'https://corporate.lowes.com/who-we-are/our-business',
       kind: 'store-page',
       capturedAt: '2026-10-11',
       sha256: 'cd0fbbc7a4cb352e65848d0fe15e73d2e2f4fec774bd0576b57f843ff490153b',
+    },
+    {
+      id: 'us-bank-cash-plus-sample-merchants',
+      url: 'https://cashplus.usbank.com/cash-plus/samplemerchants',
+      kind: 'issuer-terms',
+      capturedAt: '2026-10-05',
+      sha256: '9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998',
     },
     {
       id: 'wholefoodsmarket-com-page-1',
@@ -223,8 +237,17 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['kroger.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
+      category: 'supermarkets',
+      evidence: {
+        basis: 'definition',
+        sourceIds: [
+          'kroger-com-page-2',
+          'us-bank-cash-plus-sample-merchants',
+          'boa-customized-cash-rewards-pricing',
+          'chase-rewards-category-faq',
+          'discover-cashback-calendar',
+        ],
+      },
       brandIds: [],
       disabled: false,
     },
