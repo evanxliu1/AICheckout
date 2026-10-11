@@ -368,6 +368,14 @@ export const applyReportSchema = z.strictObject({
       category: z.string(),
       /** The verifier disputed `evidence` alone: shipped on the default category, listed for Evan. */
       downgraded: z.strictObject({ reason: note.nullable() }).optional(),
+      /** A drafted candidate the evidence rule refused, with the rule's reason and the drafter's notes. */
+      refused: z
+        .strictObject({
+          candidate: z.string(),
+          reason: z.string().max(300),
+          notes: z.string().max(600).nullable(),
+        })
+        .optional(),
     }),
   ),
   heldOut: z.array(

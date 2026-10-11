@@ -41,6 +41,8 @@ export interface ApplyInput {
   /** The mined issuer captures of this store (the windows around its name) by source id, for the exclusion check
    * of the `definition` basis. Absent texts count as no exclusion. */
   issuerTexts?: Record<string, string>;
+  /** The full store-page captures by source id, for the excluded-kinds check of the `definition` basis. */
+  storeTexts?: Record<string, string>;
 }
 
 export type ApplyOutcome =
@@ -51,18 +53,29 @@ export type ApplyOutcome =
       cited: MerchantSource[];
       /** The verifier disputed `evidence` alone: the record ships on the default category with no sources. */
       downgraded: { reason: string | null } | null;
+      /** A drafted candidate the evidence rule did not grant, with the rule's reason (review.md lists it). */
+      refused: { candidate: string; reason: string } | null;
     }
   | { outcome: 'held-out'; disputed: { field: VerifiedField | 'processor'; reason: string | null }[] };
 
 export const recordId = (domain: string, kind: string, fixed: string | null): string =>
   fixed ?? (kind === 'processor' ? domainLabel(domain) : `${domainLabel(domain)}-us`);
 
-/** Words that make a clause an exclusion, a limit or a base rate rather than an earning statement. */
+/** Words that make a clause an exclusion, a limit or a base rate rather than an earning statement. A bare "not"
+ * catches "Not grocery stores:" lists. */
 export const EXCLUSION_WORDING =
-  /\b(exclud\w*|except|excepting|excepted|exceptions?|other than|not (?:includ|qualif|eligib|earn|count)\w*|not in|do(?:es)? not|don't|doesn't|aren't|are not|is not|isn't|ineligible|will not|only)\b/i;
+  /\b(exclud\w*|except|excepting|excepted|exceptions?|other than|not|don't|doesn't|aren't|isn't|ineligible|only)\b/i;
 /** Wording that says purchases earn something. */
 export const EARNING_WORDING =
   /\b(earns?|earning|rewards?|cash ?back|points?|miles|\d+(?:\.\d+)?\s?%|\d+x)\b|\d%/i;
+/** Wording that opens an inclusion list ("Includes the following streaming providers:", "The U.S. drugstore list
+ * is:"); such a list under an earning category names its stores as earning (coordinator, 2026-10-11). */
+export const INCLUSION_WORDING = /\b(includ\w*|list (?:is|of)|following|such as|like)\b|:/i;
+/** Wording an issuer uses when it says what a category covers. */
+export const DEFINITION_WORDING =
+  /\b(includ\w*|such as|means?|defin\w*|consist\w*|categor\w*|\w*stores?|merchants?|list|establishments?|providers?|services?|retailers?|pharmac(?:y|ies))\b/i;
+/** Wording that makes a definition conditional ("included if they classify as a restaurant merchant"). */
+export const CONDITIONAL_WORDING = /\b(if|when|unless|provided|may|might|classif\w*|qualif\w*|depend\w*)\b/i;
 /** Issuer category words → the merchant category they describe. Unlisted categories (general-merchandise) never
  * come from an issuer quote. */
 export const ISSUER_CATEGORY_WORDS: Record<string, RegExp> = {
@@ -80,54 +93,116 @@ export const ISSUER_CATEGORY_WORDS: Record<string, RegExp> = {
   entertainment: /\b(entertainment|tickets?|theat(?:er|re)s?|cinemas?|amusement)\b/i,
 };
 
-/** What a store's own page says it is, per category: the issuer words plus the store-side synonyms. */
-export const BUSINESS_TYPE_WORDS: Record<string, RegExp> = Object.fromEntries(
-  Object.entries({
-    supermarkets: /\bgrocer\b/i,
-    dining: /\b(food delivery|takeout|take-out)\b/i,
-    drugstores: /\bprescriptions?\b/i,
-    streaming: /\bstream\b/i,
-    'wholesale-clubs': /\bmembership warehouse\b/i,
-    entertainment: /\b(theme parks?|live events?)\b/i,
-  }).map(([category, extra]) => [
+/** What a store's own page says it is, per category: a business-type noun phrase, not a department word ("Shop
+ * Electronics at Walmart", "Buy event tickets", "Free parking" and "Stream with Prime Video" show no business type). */
+export const BUSINESS_TYPE_WORDS: Record<string, RegExp> = {
+  supermarkets: /\b(grocer(?:y|ies)|grocers?|supermarkets?)\b/i,
+  dining: /\b(restaurants?|food delivery|takeout|take-out|dining)\b/i,
+  drugstores: /\b(drug ?stores?|pharmac(?:y|ies)|prescriptions?)\b/i,
+  streaming: /\b(streaming (?:service|platform|subscription|provider)s?|stream\w* service)\b/i,
+  gas: /\b(gas stations?|fuel(?:ing)? stations?|filling stations?|gas and convenience)\b/i,
+  'ev-charging': /\b(ev charging (?:network|station)s?|charging networks?|electric vehicle charging)\b/i,
+  transit:
+    /\b(transit (?:agency|authority|system)|public transit|rideshar\w+ (?:company|service|platform|app)|ride-?hailing|commuter rail|railroads?|rail service|toll (?:road|authority)s?|parking (?:operator|garage|facility|lot)s?|taxi (?:service|company))\b/i,
+  'department-stores': /\bdepartment stores?\b/i,
+  'home-improvement':
+    /\b(home improvement (?:store|retailer|center|chain)s?|hardware (?:store|retailer|chain)s?|home centers?)\b/i,
+  'wholesale-clubs': /\b(wholesale clubs?|warehouse clubs?|membership warehouse)\b/i,
+  electronics:
+    /\b((?:consumer )?electronics (?:retailer|store|chain|company|superstore)s?|technology retailers?|computer (?:retailer|store)s?)\b/i,
+  entertainment:
+    /\b(movie theat(?:er|re)s?|cinemas?|theme parks?|amusement parks?|ticketing (?:company|service|platform|marketplace)|live entertainment|entertainment company)\b/i,
+};
+/** Kinds of store the issuers' definitions exclude (plan section 2, Evan 2026-10-11; coordinator 2026-10-11: applied
+ * to every category, minus the category's own type). A store whose own pages call it one of these never gets a
+ * category on the `definition` basis, and an issuer sentence naming the store as one excludes it. */
+const EXCLUDED_STORE_TYPES = [
+  'superstores?',
+  'supercenters?',
+  'discount (?:store|retailer)s?',
+  'warehouse clubs?',
+  'wholesale clubs?',
+  'department stores?',
+  'general merchandise',
+  'online marketplaces?',
+  'third-party sellers',
+] as const;
+const CATEGORY_OWN_TYPES: Record<string, RegExp> = {
+  'wholesale-clubs': /warehouse|wholesale/,
+  'department-stores': /department/,
+};
+const CATEGORY_EXTRA_EXCLUDED: Record<string, string[]> = {
+  supermarkets: ['convenience stores?', 'drug ?stores?', 'pharmac(?:y|ies)'],
+  drugstores: ['grocer(?:y|ies)', 'supermarkets?', 'convenience stores?'],
+  dining: ['grocer(?:y|ies)', 'supermarkets?', 'convenience stores?'],
+};
+export const CATEGORY_EXCLUDED_TYPES: Record<string, RegExp> = Object.fromEntries(
+  Object.keys(ISSUER_CATEGORY_WORDS).map((category) => [
     category,
-    new RegExp(`${ISSUER_CATEGORY_WORDS[category].source}|${extra.source}`, 'i'),
+    new RegExp(
+      `\\b(${[
+        ...EXCLUDED_STORE_TYPES.filter((t) => !CATEGORY_OWN_TYPES[category]?.test(t)),
+        ...(CATEGORY_EXTRA_EXCLUDED[category] ?? []),
+      ].join('|')})\\b`,
+      'i',
+    ),
   ]),
 );
-for (const category of Object.keys(ISSUER_CATEGORY_WORDS))
-  BUSINESS_TYPE_WORDS[category] ??= ISSUER_CATEGORY_WORDS[category];
-/** Kinds of store the issuers' definitions exclude from a category (plan section 2, Evan 2026-10-11: superstores,
- * discount stores and warehouse clubs never get grocery). A store whose own pages call it one of these never gets the
- * category on the `definition` basis. */
-export const CATEGORY_EXCLUDED_TYPES: Record<string, RegExp> = {
-  supermarkets:
-    /\b(superstores?|supercenters?|discount stores?|warehouse clubs?|wholesale clubs?|general merchandise|convenience stores?|department stores?)\b/i,
-  drugstores:
-    /\b(superstores?|supercenters?|discount stores?|warehouse clubs?|wholesale clubs?|grocer(?:y|ies)|supermarkets?)\b/i,
-  dining: /\b(grocer(?:y|ies)|supermarkets?|convenience stores?)\b/i,
-};
 /** An issuer definition that names delivery services lets a delivery marketplace qualify (dining only). */
 export const DELIVERY_WORDING = /\b(deliver(?:y|ies|ed)|takeout|take-out)\b/i;
+/** A merchant-code lookup page that is a forum or community thread is no lookup (the research gate refuses them;
+ * apply and build refuse one that slipped through before the gate). */
+export const FORUM_URL = /forum|community|reddit|thread|discussion|myfico/i;
 
 /** Clause boundaries: a semicolon, a sentence end (a period before whitespace and a capital, not after an abbreviation
  * such as U.S., e.g., Inc.), or a word that turns the rest into an exclusion. A colon is not a boundary ("The U.S.
  * drugstore list is: CVS…" is one clause). */
 const CLAUSE_BREAK =
   /;|(?<!\b(?:U\.S|U\.K|e\.g|i\.e|Inc|Co|Corp|Ltd|No|St|vs|etc))\.(?=\s+[A-Z])|\b(?:but|excluding|except(?:ing)?|other than|not including)\b/i;
+/** Sentence boundaries for the exclusion check: a semicolon, a blank line or a sentence end; exclusion words do not
+ * split, because the exclusion must be read with what it excludes. */
+const SENTENCE_BREAK = /;|\n\s*\n|(?<!\b(?:U\.S|U\.K|e\.g|i\.e|Inc|Co|Corp|Ltd|No|St|vs|etc))\.(?=\s+[A-Z])/;
+/** Where an inclusion list starts inside a sentence: what follows is included under what precedes. */
+const INCLUSION_START = /\b(includ\w*|such as|like)\b|:/i;
 
 const normal = (s: string) => s.replace(/[\u2018\u2019\u02bc]/g, "'").replace(/\u00a0/g, ' ');
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const storeNamed = (name: string, domain: string): RegExp => {
+/** The store's name (hyphens and soft hyphens inside it optional, so "Wal-Mart" names Walmart) or its domain label
+ * when 5+ letters, on word boundaries. */
+export const storeNamed = (name: string, domain: string): RegExp => {
   const label = domainLabel(domain);
-  const names = [normal(name.trim()), ...(label.length >= 5 ? [label] : [])].map(escape);
+  const flexible = normal(name.trim())
+    .split(/[-\u00ad]/)
+    .map((part) => escape(part).replace(/(?<=[A-Za-z])(?=[A-Za-z])/g, '[-\\u00ad]?'))
+    .join('[-\\u00ad]?');
+  const names = [flexible, ...(label.length >= 5 ? [escape(label)] : [])];
   return new RegExp(`(?<![A-Za-z0-9])(?:${names.join('|')})(?![A-Za-z0-9])`, 'i');
 };
 
+/** Whether a clause excludes `category`: it has exclusion wording about the category's words or a kind of store the
+ * category excludes, read with direction: in "Merchants not in the grocery category include wholesale clubs such as
+ * Costco" the exclusion is grocery's, and what follows "include" is an inclusion for wholesale clubs (coordinator,
+ * 2026-10-11: an exclusion counts only within the drafted category). */
+export function clauseExcludes(clause: string, category: string): boolean {
+  const words = ISSUER_CATEGORY_WORDS[category];
+  if (!words || !EXCLUSION_WORDING.test(clause)) return false;
+  const types = CATEGORY_EXCLUDED_TYPES[category];
+  const start = INCLUSION_START.exec(clause);
+  if (start) {
+    const head = clause.slice(0, start.index);
+    const tail = clause.slice(start.index);
+    if (!words.test(head) && words.test(tail) && !EXCLUSION_WORDING.test(tail) && !types.test(tail))
+      return false;
+  }
+  return words.test(clause) || types.test(clause);
+}
+
 /** An issuer quote is category evidence for `category` only when one clause of it names this store (its name or
- * domain label, on word boundaries), says purchases earn (earn, rewards, cash back, points, a rate) and names that
- * category, with no exclusion, limit or "only" wording in that clause. "3% at grocery stores including Kroger;
- * excluding warehouse clubs" counts for Kroger; "superstores like Costco excluded", "Netflix is an example of a
- * streaming service", "Costco purchases earn only 1%" and a bare "Kroger" do not. */
+ * domain label, on word boundaries), names that category, and either says purchases earn (earn, rewards, cash back,
+ * points, a rate) or is an inclusion list under the category ("Includes the following streaming providers: …
+ * Netflix", "The U.S. drugstore list is: CVS Pharmacy…"), with no exclusion of that category in the clause. "3% at
+ * grocery stores including Kroger; excluding warehouse clubs" counts for Kroger; "superstores like Costco excluded",
+ * "Netflix is an example of a streaming service", "Costco purchases earn only 1%" and a bare "Kroger" do not. */
 export function issuerQuoteEarns(quote: string, name: string, domain: string, category: string): boolean {
   const words = ISSUER_CATEGORY_WORDS[category];
   if (!words) return false;
@@ -138,62 +213,68 @@ export function issuerQuoteEarns(quote: string, name: string, domain: string, ca
     .some(
       (clause) =>
         named.test(clause) &&
-        EARNING_WORDING.test(clause) &&
         words.test(clause) &&
+        (EARNING_WORDING.test(clause) || INCLUSION_WORDING.test(clause)) &&
         !EXCLUSION_WORDING.test(clause),
     );
 }
 
-/** Sentence boundaries for the exclusion check: a semicolon, a blank line or a sentence end; exclusion words do not
- * split, because the exclusion must be read with what it excludes. */
-const SENTENCE_BREAK = /;|\n\s*\n|(?<!\b(?:U\.S|U\.K|e\.g|i\.e|Inc|Co|Corp|Ltd|No|St|vs|etc))\.(?=\s+[A-Z])/;
-
-/** An issuer quote is a category definition covering a business type when one clause of it names the category's
- * issuer words with no exclusion, limit or "only" wording ("grocery stores and supermarkets"; "restaurants, including
- * takeout and delivery services"). "Merchants not in the grocery category include wholesale clubs" is not. */
-export function definitionQuoteCovers(quote: string, category: string): boolean {
+/** The clause of an issuer quote that defines `category`: it names the category's issuer words with definition
+ * wording ("grocery stores and supermarkets", "restaurants, including takeout and delivery services", "the purchases
+ * must be made at a drugstore that is included on our list"), and does not exclude the category ("Merchants not in
+ * the grocery category include wholesale clubs" defines wholesale clubs, not grocery). "Earn points with our grocery
+ * rewards partners" defines nothing. Null when no clause qualifies. */
+export function definitionClause(quote: string, category: string): string | null {
   const words = ISSUER_CATEGORY_WORDS[category];
-  if (!words) return false;
-  return normal(quote)
-    .split(CLAUSE_BREAK)
-    .some((clause) => words.test(clause) && !EXCLUSION_WORDING.test(clause));
+  if (!words) return null;
+  for (const clause of normal(quote).split(CLAUSE_BREAK)) {
+    if (!words.test(clause) || !DEFINITION_WORDING.test(clause) || clauseExcludes(clause, category)) continue;
+    const start = INCLUSION_START.exec(clause);
+    // An inclusion list under another category's exclusion: only its tail defines this category.
+    if (start && EXCLUSION_WORDING.test(clause.slice(0, start.index))) return clause.slice(start.index);
+    if (EXCLUSION_WORDING.test(clause)) continue;
+    return clause;
+  }
+  return null;
 }
+export const definitionQuoteCovers = (quote: string, category: string): boolean =>
+  definitionClause(quote, category) !== null;
 
-/** A store-page quote shows the business type when it names the category's words ("Grocery Pickup", "home
- * improvement stores") and no kind of store the category excludes ("membership warehouse club" for supermarkets). */
+/** A store-page quote shows the business type when it names the category's business-type phrase ("Grocery Pickup",
+ * "home improvement stores") and no kind of store the category excludes ("membership warehouse club" for
+ * supermarkets). The full store pages are checked for excluded kinds by `definitionBasis`. */
 export function storePageShowsType(quote: string, category: string): boolean {
   const words = BUSINESS_TYPE_WORDS[category];
   if (!words) return false;
-  const excluded = CATEGORY_EXCLUDED_TYPES[category];
-  return words.test(quote) && !(excluded && excluded.test(quote));
+  return words.test(quote) && !CATEGORY_EXCLUDED_TYPES[category].test(quote);
 }
 
-/** An issuer capture excludes this store from the category when one sentence names the store, has exclusion wording
- * and names the category or a kind of store the category excludes ("purchases at discount stores like Walmart,
+/** A lookup quote backs a category only when it names the category's words: "MCC 4899 (Cable and other pay
+ * television)" never backs streaming. */
+export const lookupQuoteNames = (quote: string, category: string): boolean =>
+  (ISSUER_CATEGORY_WORDS[category]?.test(quote) || BUSINESS_TYPE_WORDS[category]?.test(quote)) ?? false;
+
+/** An issuer capture excludes this store from the category when one sentence names the store and excludes the
+ * category or names the store as a kind of store the category excludes ("purchases at discount stores like Wal-Mart,
  * Target and Costco do not qualify"; "Grocery stores, excluding Walmart and Target"). Conservative: "3% at grocery
  * stores including Kroger, excluding warehouse clubs" in one sentence also counts against Kroger. */
 export function issuerExcludes(text: string, name: string, domain: string, category: string): boolean {
-  const words = ISSUER_CATEGORY_WORDS[category];
-  if (!words) return false;
   const named = storeNamed(name, domain);
-  const types = CATEGORY_EXCLUDED_TYPES[category];
   return normal(text)
     .split(SENTENCE_BREAK)
-    .some(
-      (sentence) =>
-        named.test(sentence) &&
-        EXCLUSION_WORDING.test(sentence) &&
-        (words.test(sentence) || (types !== undefined && types.test(sentence))),
-    );
+    .some((sentence) => named.test(sentence) && clauseExcludes(sentence, category));
 }
 
+export type DefinitionOutcome = { cited: string[] } | { refused: string };
+
 /** The `definition` basis (Evan 2026-10-11): the store's own page shows its business type, an issuer's category
- * definition covers that type, no issuer capture excludes the store or its kind of store from the category, and the
- * store sells directly (a marketplace only for `dining` under a definition that names delivery services). Returns the
- * source ids to cite, or null. */
-export function definitionBasis(input: ApplyInput, category: string): string[] | null {
+ * definition covers that type, no issuer capture excludes the store or its kind of store from the category, the
+ * store's own pages never call it a kind of store the category excludes, and the store sells directly (a marketplace
+ * only for `dining` under a definition whose covering clause names delivery services unconditionally). Returns the
+ * source ids to cite, or why it was refused. */
+export function definitionBasis(input: ApplyInput, category: string): DefinitionOutcome {
   const { draft } = input;
-  if (draft.kind === 'processor') return null;
+  if (draft.kind === 'processor') return { refused: 'a processor has no category' };
   const byId = new Map(input.sources.map((s) => [s.id, s]));
   const kindOf = (id: string) => byId.get(id)?.kind;
   const storeQuotes = draft.evidence.filter(
@@ -202,25 +283,34 @@ export function definitionBasis(input: ApplyInput, category: string): string[] |
       kindOf(e.sourceId) === 'store-page' &&
       storePageShowsType(e.quote, category),
   );
-  let definitions = draft.evidence.filter(
-    (e) =>
-      e.supports === 'definition' &&
-      kindOf(e.sourceId) === 'issuer-terms' &&
-      definitionQuoteCovers(e.quote, category),
-  );
-  if (draft.kind === 'marketplace')
-    definitions = category === 'dining' ? definitions.filter((e) => DELIVERY_WORDING.test(e.quote)) : [];
-  if (!storeQuotes.length || !definitions.length) return null;
+  if (!storeQuotes.length) return { refused: `no store-page quote shows a ${category} business type` };
+  const definitions = draft.evidence
+    .map((e) => ({ ...e, clause: definitionClause(e.quote, category) }))
+    .filter((e) => e.supports === 'definition' && kindOf(e.sourceId) === 'issuer-terms' && e.clause !== null);
+  if (!definitions.length) return { refused: `no issuer definition quote covers ${category}` };
+  let covering = definitions;
+  if (draft.kind !== 'merchant') {
+    if (category !== 'dining') return { refused: 'a marketplace gets a category only for dining' };
+    covering = definitions.filter(
+      (e) => DELIVERY_WORDING.test(e.clause!) && !CONDITIONAL_WORDING.test(e.clause!),
+    );
+    if (!covering.length)
+      return { refused: 'no issuer dining definition names delivery services unconditionally' };
+  }
   const excludedType = CATEGORY_EXCLUDED_TYPES[category];
-  if (
-    excludedType &&
-    draft.evidence.some((e) => kindOf(e.sourceId) === 'store-page' && excludedType.test(e.quote))
-  )
-    return null;
-  for (const [id, text] of Object.entries(input.issuerTexts ?? {}))
-    if (kindOf(id) === 'issuer-terms' && issuerExcludes(text, input.name, input.domain, category))
-      return null;
-  return [...new Set([...storeQuotes, ...definitions].map((e) => e.sourceId))];
+  for (const source of input.sources.filter((s) => s.kind === 'store-page')) {
+    const text = input.storeTexts?.[source.id];
+    if (text === undefined) return { refused: `store page ${source.id} has no capture to check` };
+    const hit = excludedType.exec(text);
+    if (hit) return { refused: `the store's own page ${source.id} calls it a ${hit[0].toLowerCase()}` };
+  }
+  for (const source of input.sources.filter((s) => s.kind === 'issuer-terms')) {
+    const text = input.issuerTexts?.[source.id];
+    if (text === undefined) return { refused: `issuer capture ${source.id} is missing` };
+    if (issuerExcludes(text, input.name, input.domain, category))
+      return { refused: `issuer page ${source.id} excludes the store or its kind of store from ${category}` };
+  }
+  return { cited: [...new Set([...storeQuotes, ...covering].map((e) => e.sourceId))] };
 }
 
 /** The apply rule for one store. Pure: no files. `basis` is decided in one place. */
@@ -236,30 +326,33 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
     disputed.push({ field: 'processor', reason: 'a processor sells no physical goods and has no brands' });
   if (disputed.length) return { outcome: 'held-out', disputed };
   const evidenceDisputed = input.verification.evidence.verdict === 'disputed';
-  const byId = new Map(input.sources.map((s) => [s.id, s]));
+  // Forum threads are no merchant-code lookups (researched before the research gate refused them).
+  const sources = input.sources.filter((s) => !(s.kind === 'mcc-lookup' && FORUM_URL.test(s.url)));
+  const byId = new Map(sources.map((s) => [s.id, s]));
   const candidate = draft.candidateCategory;
   const categoryQuotes = evidenceDisputed
     ? []
-    : draft.evidence.filter(
-        (e) =>
-          e.supports === 'category' &&
-          byId.has(e.sourceId) &&
-          (byId.get(e.sourceId)!.kind !== 'issuer-terms' ||
-            (candidate !== null && issuerQuoteEarns(e.quote, input.name, input.domain, candidate))),
-      );
+    : draft.evidence.filter((e) => {
+        if (e.supports !== 'category' || !byId.has(e.sourceId) || candidate === null) return false;
+        const kind = byId.get(e.sourceId)!.kind;
+        if (kind === 'issuer-terms') return issuerQuoteEarns(e.quote, input.name, input.domain, candidate);
+        if (kind === 'mcc-lookup') return lookupQuoteNames(e.quote, candidate);
+        return true;
+      });
   const kinds = new Set(categoryQuotes.map((e) => byId.get(e.sourceId)!.kind));
   let basis: MerchantRecord['evidence']['basis'] = 'default';
   let citedIds: string[] = [];
+  let refused: { candidate: string; reason: string } | null = null;
   if (candidate && candidate !== 'general-merchandise' && draft.kind !== 'processor') {
     if (kinds.has('issuer-terms')) basis = 'issuer';
     else if (kinds.has('store-page') && kinds.has('mcc-lookup')) basis = 'corroborated';
     if (basis !== 'default') citedIds = [...new Set(categoryQuotes.map((e) => e.sourceId))];
     else if (!evidenceDisputed) {
-      const definition = definitionBasis(input, candidate);
-      if (definition) {
+      const definition = definitionBasis({ ...input, sources }, candidate);
+      if ('cited' in definition) {
         basis = 'definition';
-        citedIds = definition;
-      }
+        citedIds = definition.cited;
+      } else refused = { candidate, reason: definition.refused };
     }
   }
   const record = merchantRecordSchema.parse({
@@ -297,6 +390,7 @@ export function applyStore(input: ApplyInput): ApplyOutcome {
     },
     cited,
     downgraded: evidenceDisputed ? { reason: input.verification.evidence.reason } : null,
+    refused,
   };
 }
 
@@ -321,6 +415,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       basis: string;
       category: string;
       downgraded?: { reason: string | null };
+      refused?: { candidate: string; reason: string; notes: string | null };
     }[],
     heldOut: [] as { domain: string; disputed: { field: string; reason: string | null }[] }[],
   };
@@ -337,6 +432,11 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       JSON.parse(await readFile(join(batch.dir, 'drafts', `${store.domain}.json`), 'utf8')),
     );
     const sources = manifest.sources.filter((s) => s.domain === store.domain);
+    const storeTexts: Record<string, string> = {};
+    for (const source of sources.filter((s) => s.kind === 'store-page')) {
+      const text = await readFile(join(batch.dir, 'captures', `${source.id}.txt`), 'utf8').catch(() => null);
+      if (text !== null) storeTexts[source.id] = text;
+    }
     const issuerTexts: Record<string, string> = {};
     for (const source of sources.filter((s) => s.kind === 'issuer-terms')) {
       const dir = join(batch.dir, 'captures');
@@ -354,6 +454,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       verification: verified.fields,
       sources,
       issuerTexts,
+      storeTexts,
     });
     if (outcome.outcome === 'held-out') {
       report.heldOut.push({ domain: store.domain, disputed: outcome.disputed });
@@ -381,6 +482,7 @@ export async function runApply(env: Env, batchId: string): Promise<number> {
       basis: outcome.record.evidence.basis,
       category: outcome.record.category,
       ...(outcome.downgraded ? { downgraded: outcome.downgraded } : {}),
+      ...(outcome.refused ? { refused: { ...outcome.refused, notes: draftFile.draft.notes } } : {}),
     });
     if (outcome.downgraded)
       env.log(`${store.domain}: DOWNGRADED to the default category (evidence disputed).`);

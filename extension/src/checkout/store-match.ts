@@ -135,8 +135,8 @@ const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
 
 /** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
  * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile.
- * A `definition` record names the issuer whose category definition the store's own pages fit; no partnership
- * is implied. */
+ * A `definition` record reads "Treated as", naming the issuer whose category definition the store's own pages fit
+ * ("Codes as" is for `issuer` and `corroborated` only); no partnership is implied. */
 export function storeEvidence(
   merchantId: string,
   release: MerchantRelease = MERCHANTS_V1,
@@ -158,7 +158,7 @@ export function storeEvidence(
     ];
     const whose = issuers.length ? `${issuers.join(' and ')}'s` : "an issuer's";
     const noun = wording.replace(/^an? /, '');
-    return `Codes as ${wording} (its own pages; fits ${whose} ${noun} definition).`;
+    return `Treated as ${wording} (its own pages; fits ${whose} ${noun} definition).`;
   }
   const basis =
     record.evidence.basis === 'issuer'

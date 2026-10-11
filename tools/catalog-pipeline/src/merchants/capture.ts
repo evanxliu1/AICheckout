@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
-import { domainLabel } from './candidates.ts';
+import { storeNamed } from './apply.ts';
 import {
   loadBatch,
   manifestFileSchema,
@@ -78,14 +78,9 @@ export async function listIssuerCaptures(root: string): Promise<IssuerCapture[]>
   return [...byId.values()];
 }
 
-/** Word-boundary, case-insensitive match of the store's name (and its domain label when 5+ letters). */
-export function nameMatcher(name: string, domain: string): RegExp {
-  const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const variants = new Set([name.trim()]);
-  const label = domainLabel(domain);
-  if (label.length >= 5) variants.add(label);
-  return new RegExp(`(?<![A-Za-z0-9])(?:${[...variants].map(escape).join('|')})(?![A-Za-z0-9])`, 'i');
-}
+/** Word-boundary, case-insensitive match of the store's name (hyphens inside it optional: "Wal-Mart") and its
+ * domain label when 5+ letters; the apply rule's `storeNamed`. */
+export const nameMatcher = (name: string, domain: string): RegExp => storeNamed(name, domain);
 
 /** Text windows (±WINDOW characters) around every match, merged when they overlap; at most `max` windows. */
 export function windows(text: string, matcher: RegExp, span = 500, max = 6): string[] {
@@ -132,6 +127,19 @@ export function definitionWindows(text: string, span = 200, max = 8): string[] {
 }
 
 export const MAX_ISSUER_SOURCES = 5;
+/** Issuer pages that define their bonus categories (review 2026-10-11): attached to every non-processor store, named
+ * or not, as issuer sources, so a store the issuers never name still sees the definitions (Lowe's and Chase's
+ * home-improvement definition). The fixed set is the catalog's category pages; a mined capture's own definition
+ * sentences are shown by `definitionWindows` anyway. */
+export const DEFINITION_PAGES = [
+  'amex-rewards-info-retail',
+  'boa-cash-back-category-choices',
+  'chase-rewards-category-faq',
+  'citi-costco-anywhere-visa-categories',
+  'us-bank-cash-plus-sample-merchants',
+  'us-bank-edward-jones-triple-rewards-categories',
+  'wells-fargo-autograph-categories',
+] as const;
 
 export async function runCapture(
   env: Env,
@@ -200,7 +208,15 @@ export async function runCapture(
       if (count) hits.push({ capture, text, count });
     }
     hits.sort((a, b) => b.count - a.count || a.capture.id.localeCompare(b.capture.id));
-    for (const { capture, text } of hits.slice(0, MAX_ISSUER_SOURCES)) {
+    const chosen = hits.slice(0, MAX_ISSUER_SOURCES);
+    const processor = batch.meta.stores.find((s) => s.domain === store.domain)?.groups.includes('processors');
+    if (!processor)
+      for (const id of DEFINITION_PAGES) {
+        const capture = issuerCaptures.find((c) => c.id === id);
+        if (capture && !chosen.some((h) => h.capture.id === id))
+          chosen.push({ capture, text: await readFile(capture.path, 'utf8'), count: 0 });
+      }
+    for (const { capture, text } of chosen) {
       const id = capture.id;
       await copyFile(capture.path, join(batch.dir, 'captures', `${id}.txt`));
       await writeFile(

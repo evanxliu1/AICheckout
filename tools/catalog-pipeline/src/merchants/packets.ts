@@ -10,6 +10,7 @@ import { MERCHANT_CATEGORIES_V3 } from '../../../../packages/rewards-core/src/ty
 import { fileSha256 } from '../hash.ts';
 import { TOKEN, writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
+import { FORUM_URL } from './apply.ts';
 import { hostGate } from './candidates.ts';
 import {
   MERCHANT_AGENTS,
@@ -213,7 +214,7 @@ export function researchGate(file: ResearchFile, batch: Batch, packet: Packet): 
       if (!onOwnHost(page.url)) errors.push(`${at}.storePages[${i}].url: not on the store's hosts`);
     for (const [i, page] of store.lookupPages.entries()) {
       if (onOwnHost(page.url)) errors.push(`${at}.lookupPages[${i}].url: on the store's own host`);
-      if (/forum|community|reddit|thread|discussion/i.test(page.url))
+      if (FORUM_URL.test(page.url))
         errors.push(`${at}.lookupPages[${i}].url: a forum or community thread is not a merchant-code lookup`);
     }
   }

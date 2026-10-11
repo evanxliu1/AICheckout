@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { merchantRecordSchema } from '../../../../packages/rewards-core/src/merchant-release.ts';
 import type { MerchantRecord } from '../../../../packages/rewards-core/src/types.ts';
 import type { Env } from '../run.ts';
+import { FORUM_URL } from './apply.ts';
 import {
   BATCHES_DIR,
   EVIDENCE_DIR,
@@ -29,6 +30,16 @@ export interface ReviewInput {
   evidence: Map<string, EvidenceFile>;
   heldOut: { batch: string; domain: string; disputed: { field: string; reason: string | null }[] }[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
+  /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
+   * an issuer listing the store under another category show here). */
+  refused: {
+    batch: string;
+    domain: string;
+    id: string;
+    candidate: string;
+    reason: string;
+    notes: string | null;
+  }[];
 }
 
 const cell = (text: string) => text.replace(/\|/g, '\\|').replace(/\n/g, ' ');
@@ -98,6 +109,15 @@ export function reviewMarkdown(input: ReviewInput): string {
     '| --- | --- | --- | --- |',
     ...input.downgraded.map((d) => `| ${d.batch} | ${d.domain} | ${d.id} | ${cell(d.reason ?? '')} |`),
     '',
+    `## Candidates the evidence rule refused, for Evan (${input.refused.length})`,
+    '',
+    "| Batch | Store | Record | Candidate | Rule's reason | Drafter's notes |",
+    '| --- | --- | --- | --- | --- | --- |',
+    ...input.refused.map(
+      (r) =>
+        `| ${r.batch} | ${r.domain} | ${r.id} | ${r.candidate} | ${cell(r.reason)} | ${cell(r.notes ?? '')} |`,
+    ),
+    '',
     `## Held out: disputed fields, for Evan (${input.heldOut.length})`,
     '',
     "| Batch | Store | Field | Verifier's reason |",
@@ -126,25 +146,41 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   }
   const heldOut: ReviewInput['heldOut'] = [];
   const downgraded: ReviewInput['downgraded'] = [];
+  const refused: ReviewInput['refused'] = [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
       applyReportSchema,
     );
     for (const h of report?.heldOut ?? []) heldOut.push({ batch, domain: h.domain, disputed: h.disputed });
-    for (const r of report?.records ?? [])
+    for (const r of report?.records ?? []) {
       if (r.downgraded) downgraded.push({ batch, domain: r.domain, id: r.id, reason: r.downgraded.reason });
+      if (r.refused) refused.push({ batch, domain: r.domain, id: r.id, ...r.refused });
+    }
   }
-  return { version: config.version, verifiedAt: config.verifiedAt, records, evidence, heldOut, downgraded };
+  const forum = config.sources.filter((s) => s.kind === 'mcc-lookup' && FORUM_URL.test(s.url));
+  if (forum.length)
+    throw new Error(`forum threads are no merchant-code lookups: ${forum.map((s) => s.id).join(', ')}`);
+  return {
+    version: config.version,
+    verifiedAt: config.verifiedAt,
+    records,
+    evidence,
+    heldOut,
+    downgraded,
+    refused,
+  };
 }
 
 export async function runBuild(env: Env, batchId?: string): Promise<number> {
+  // Refuses a release that cites a forum thread as a lookup before anything is written.
+  const review = await collectReview(env.root);
   const code = await env.exec('node', ['scripts/build-merchants-v1.mjs']);
   if (code !== 0) {
     env.log('build: the release is invalid; fix the records first.');
     return code;
   }
-  await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(await collectReview(env.root)));
+  await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(review));
   env.log(`Wrote ${REVIEW_FILE}.`);
   if (batchId) {
     const batch = await loadBatch(env.root, batchId);

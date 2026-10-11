@@ -130,7 +130,7 @@ describe('storeEvidence', () => {
   it('names the issuer whose definition a definition record fits, without implying a partnership', () => {
     // The fixture's issuer source is synthetic (no catalog card cites it), so the wording falls back.
     expect(storeEvidence('cvs-us', fixture)).toBe(
-      "Codes as a drugstore (its own pages; fits an issuer's drugstore definition).",
+      "Treated as a drugstore (its own pages; fits an issuer's drugstore definition).",
     );
     const catalog = {
       ...v3,
@@ -143,7 +143,7 @@ describe('storeEvidence', () => {
       ],
     } as typeof v3;
     expect(storeEvidence('cvs-us', fixture, catalog)).toBe(
-      "Codes as a drugstore (its own pages; fits American Express's drugstore definition).",
+      "Treated as a drugstore (its own pages; fits American Express's drugstore definition).",
     );
     const dining: MerchantRelease = {
       ...fixture,
@@ -152,7 +152,7 @@ describe('storeEvidence', () => {
       ),
     };
     expect(storeEvidence('cvs-us', dining, catalog)).toBe(
-      "Codes as a restaurant (its own pages; fits American Express's restaurant definition).",
+      "Treated as a restaurant (its own pages; fits American Express's restaurant definition).",
     );
   });
   it('says nothing for default records, the generic store, processors and unknown ids', () => {
@@ -168,10 +168,10 @@ describe('storeEvidence', () => {
       expect(storeEvidence(id, fixture), id).toBeNull();
     for (const record of MERCHANTS_V1.merchants)
       if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
-      else expect(storeEvidence(record.id), record.id).toMatch(/^Codes as /);
+      else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
     // The bundled dev release (2026-10-11): Kroger on U.S. Bank's supermarket definition.
     expect(storeEvidence('kroger-us')).toBe(
-      "Codes as a supermarket (its own pages; fits U.S. Bank's supermarket definition).",
+      "Treated as a supermarket (its own pages; fits U.S. Bank's supermarket definition).",
     );
   });
 });
