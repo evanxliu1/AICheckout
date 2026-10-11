@@ -92,5 +92,44 @@
       "toolUses": 24,
       "decisions": 19
     }
-  ]
+  ],
+  "mcc": {
+    "note": "Re-audit of the 64 records the mcc basis changed (release 2026-10-11.mcc.1, 2026-10-11): three merchant-auditor runs (the registered agent type, claude-opus-5-5) on packets-mcc/1-3 with the mcc-evidence sheet section; tokens and durations as the Agent tool reported them.",
+    "auditor": [
+      {
+        "packet": 1,
+        "agentRun": "ac5cf8d428a08716c",
+        "model": "claude-opus-5-5",
+        "tokens": 146946,
+        "durationMs": 147224,
+        "toolUses": 21
+      },
+      {
+        "packet": 2,
+        "agentRun": "a1e6c0c57ff9c16b1",
+        "model": "claude-opus-5-5",
+        "tokens": 140668,
+        "durationMs": 309626,
+        "toolUses": 31
+      },
+      {
+        "packet": 3,
+        "agentRun": "a6d333cd2a214b218",
+        "model": "claude-opus-5-5",
+        "tokens": 137343,
+        "durationMs": 141364,
+        "toolUses": 17
+      }
+    ],
+    "adjudicator": [
+      {
+        "agentRun": "af77f15b573830e73",
+        "model": "claude-fable-5-1",
+        "tokens": 74004,
+        "durationMs": 32766,
+        "toolUses": 6,
+        "decisions": 1
+      }
+    ]
+  }
 }

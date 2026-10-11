@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "packet": 1,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      "evals/merchants/db/audit/packets-mcc/1/packet.json",
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets-mcc/1/catalog-lists.json",
+      "evals/merchants/db/audit/packets-mcc/1/issuer-definitions.md",
+      "evals/merchants/db/audit/packets-mcc/1/mcc-codes.json",
+      "evals/merchants/db/audit/packets-mcc/1/stores/acehardware.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/acmetools.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/albertsons.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/aldi.us.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/amctheatres.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/amtrak.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/applebees.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/arbys.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/bambulab.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/bestbuy.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/bjs.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/bk.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/bose.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/chick-fil-a.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/chilis.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/chipotle.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/cinemark.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/cvs.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/dairyqueen.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/dominos.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/doordash.com.md",
+      "evals/merchants/db/audit/packets-mcc/1/stores/dunkindonuts.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "acehardware.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "mcc-evidence", "quote": "ANNIES ACE HARDWARE | HARDWARE STORES", "supports": "mcc" }
+      ],
+      "notes": "Both store pages are bot walls. Rows are Ace Hardware stores; 1652 of 1685 are hardware stores (98%). BoA lists Ace only as hedged merchant examples, so no issuer basis."
+    },
+    {
+      "domain": "acmetools.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "mcc-evidence", "quote": "ACMETOOLS.COM | HARDWARE STORES", "supports": "mcc" }
+      ],
+      "notes": "Homepage capture is a bot wall. 11 of 11 rows are hardware stores, just above the 10-row floor."
+    },
+    {
+      "domain": "albertsons.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "albertsons-com-page-2", "quote": "These FAQs apply to grocery delivery and pickup services provided only by the Albertsons Companies family of grocery store banners.", "supports": "kind" },
+        { "source": "albertsons-com-page-1", "quote": "Order delivery, pickup & more.", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "ALBERTSONS MARKET 920 | GROCERY STORES SUPERMARKETS", "supports": "mcc" }
+      ],
+      "notes": "13 of 13 rows are grocery stores/supermarkets. U.S. Bank names Albertsons only in a hedged popular-merchants list, so no issuer basis."
+    },
+    {
+      "domain": "aldi.us",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "aldi-us-page-2", "quote": "An employee will deliver your groceries direct to your door.", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "ALDI 75018 | GROCERY STORES SUPERMARKETS", "supports": "mcc" }
+      ],
+      "notes": "63 of 63 rows are grocery stores/supermarkets. Amex lists ALDI under 'Examples of merchants', a hedged list, so no issuer basis."
+    },
+    {
+      "domain": "amctheatres.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "entertainment",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "amctheatres-com-page-1", "quote": "the largest theatrical exhibitor in the United States and the world", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "AMC 0142 ROBINSON CROS | MOTION PICTURE THEATERS", "supports": "mcc" }
+      ],
+      "notes": "96 of 98 rows are motion picture theaters (98%). U.S. Bank movie-theater list is hedged, so no issuer basis."
+    },
+    {
+      "domain": "amtrak.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "transit",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "amtrak-com-page-1", "quote": "How do I make a train reservation?", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "AMTRAK 555473990156826 | Passenger Railways", "supports": "mcc" }
+      ],
+      "notes": "2279 of 2285 rows are passenger railways. BoA and U.S. Bank name Amtrak only as hedged merchant examples."
+    },
+    {
+      "domain": "applebees.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "applebees-com-page-2", "quote": "Our entire menu is available for takeout!", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "APPLEBEES 951203495124 | EATING PLACES RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "93 of 93 rows are eating places or fast food. U.S. Bank's Applebee's mentions are a hedged list and a categorisation note, not an earning clause."
+    },
+    {
+      "domain": "arbys.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "arbys-com-page-1", "quote": "a leading sandwich drive-thru restaurant brand with more than 3,600 restaurants globally", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "ARBY S 5002042 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "80 of 80 rows are fast food restaurants."
+    },
+    {
+      "domain": "bambulab.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "electronics",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "bambulab.com-home", "quote": "Versatile Workhorse 3D Printer", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "SP BAMBULAB.US | ELECTRONIC SALES", "supports": "mcc" }
+      ],
+      "notes": "45 of 55 rows (81.8%) are electronic sales, just over 80%; 10 rows are misc general merchandise. Page shows Buy now on printers but not shipping wording explicitly."
+    },
+    {
+      "domain": "bestbuy.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["best-buy"],
+      "category": "electronics",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "bestbuy-com-page-1", "quote": "At Best Buy, our purpose is to enrich lives through technology.", "supports": "brand" },
+        { "source": "bestbuy-com-page-2", "quote": "Shipping, Delivery & Store Pickup", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "BEST BUY 00010926 | Electronic Sales", "supports": "mcc" }
+      ],
+      "notes": "2880 of 2907 rows are electronics (99%). Citi excerpts are the co-brand card's own bonus, not an issuer basis. Site links a Best Buy Marketplace but sells as itself."
+    },
+    {
+      "domain": "bjs.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "wholesale-clubs",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "mcc-evidence", "quote": "BJ'S WHOLESALE CLUB | Wholesale Clubs", "supports": "mcc" }
+      ],
+      "notes": "Both store pages are Access Denied, so kind, goods and brand (bjs-wholesale-club likely) are not shown. 31 of 31 rows are wholesale clubs."
+    },
+    {
+      "domain": "bk.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "bk-com-page-1", "quote": "Burger King is the second largest fast food hamburger chain in the world.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "BURGER KING #29030 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "85 of 85 rows are fast food restaurants. U.S. Bank fast-food list is hedged."
+    },
+    {
+      "domain": "bose.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "electronics",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "bose-com-page-1", "quote": "from headphones and earbuds to Bluetooth speakers to open-audio wearables", "supports": "kind" },
+        { "source": "bose-com-page-1", "quote": "Order Tracking", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "BOSE CORP WEB STORE | Electronic Sales", "supports": "mcc" }
+      ],
+      "notes": "11 of 11 rows are electronic sales. U.S. Bank electronics list naming Bose is hedged."
+    },
+    {
+      "domain": "chick-fil-a.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "chick-fil-a-com-page-1", "quote": "As the first quick-service restaurant to introduce parent-friendly menus", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "CHICK-FIL-A #01973 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "2262 of 2264 rows are fast food or eating places."
+    },
+    {
+      "domain": "chilis.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "chilis-com-page-1", "quote": "Start an Order for Pickup or Delivery", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "CHILI S STILLWATER | EATING PLACES RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "270 of 270 rows are eating places/restaurants."
+    },
+    {
+      "domain": "chipotle.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "chipotle-com-page-1", "quote": "One of the first national restaurant brands to commit to goals on local and organic produce.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "CHIPOTLE ONLINE | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "698 of 698 rows are fast food or eating places."
+    },
+    {
+      "domain": "cinemark.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "entertainment",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "cinemark-com-page-2", "quote": "How to buy and pick up tickets, request refunds, and other purchase-related questions.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "CINEMARK THEATRES 1083 | MOTION PICTURE THEATERS", "supports": "mcc" }
+      ],
+      "notes": "23 of 25 rows (92%) are motion picture theaters; 2 eating-place rows. U.S. Bank movie-theater list is hedged."
+    },
+    {
+      "domain": "cvs.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "drugstores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "cvs-com-page-1", "quote": "you can order your prescription refills online for in-store pickup.", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "The U.S. drugstore list is: CVS Pharmacy, DUANEreade, Rite Aid and Walgreens. Eligible purchases include those made in store and online.", "supports": "category" },
+        { "source": "mcc-evidence", "quote": "CVS PHARMACY #4546 | Drug Stores, Pharmacies", "supports": "mcc" }
+      ],
+      "notes": "Amex's closed drugstore inclusion list names CVS Pharmacy; mcc (937 of 937 drug stores) agrees but issuer outranks it."
+    },
+    {
+      "domain": "dairyqueen.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "dairyqueen-com-page-1", "quote": "TO BE THE WORLD'S FAVORITE QUICK-SERVICE RESTAURANT", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "DAIRY QUEEN #43323 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "69 of 70 rows are fast food or eating places."
+    },
+    {
+      "domain": "dominos.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "dominos-com-page-2", "quote": "as the largest pizza company in the world, Domino’s proudly continues its legacy of delivering great-tasting pizza", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "DOMINO S 6460 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "1083 of 1083 rows are fast food restaurants. U.S. Bank fast-food list is hedged."
+    },
+    {
+      "domain": "doordash.com",
+      "kind": "marketplace",
+      "physicalGoods": false,
+      "brandIds": ["doordash"],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "doordash-com-page-1", "quote": "DoorDash offers a huge selection of restaurants and stores, from local favorites to popular chains.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "DD DOORDASH MCDONALDS | EATING PLACES RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "Delivery marketplace; mcc allowed for dining only. 44 of 47 rows (94%) eating places. Chase excerpts are co-brand bonuses and credits, not an issuer basis. Also delivers grocery and retail."
+    },
+    {
+      "domain": "dunkindonuts.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "dunkindonuts-com-page-1", "quote": "Iced Coffee, Cold Brew & Espresso", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "DUNKIN #300978 Q35 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "158 of 161 rows are fast food or eating places. Amex Gold Dunkin' benefit is a statement credit, not an issuer basis. Site also has a Dunkin' Shop link."
+    }
+  ]
+}

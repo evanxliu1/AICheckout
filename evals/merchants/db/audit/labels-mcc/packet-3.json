@@ -1,0 +1,498 @@
+{
+  "schemaVersion": 1,
+  "packet": 3,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      "evals/merchants/db/audit/packets-mcc/3/packet.json",
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets-mcc/3/catalog-lists.json",
+      "evals/merchants/db/audit/packets-mcc/3/issuer-definitions.md",
+      "evals/merchants/db/audit/packets-mcc/3/mcc-codes.json",
+      "evals/merchants/db/audit/packets-mcc/3/stores/papajohns.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/pizzahut.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/popeyes.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/publix.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/safeway.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/samsclub.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/samsung.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/sonicdrivein.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/spotify.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/sprouts.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/starbucks.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/subway.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/tacobell.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/truevalue.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/ubereats.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/wegmans.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/wendys.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/wholefoodsmarket.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/wingstop.com.md",
+      "evals/merchants/db/audit/packets-mcc/3/stores/wmata.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "papajohns.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "papajohns-com-page-1",
+          "quote": "at participating U.S. Papa Johns restaurants",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "PAPA JOHNS 3539 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "All 37 rows are fast food or eating places."
+    },
+    {
+      "domain": "pizzahut.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "mcc-evidence",
+          "quote": "PIZZA HUT#031925 | EATING PLACES RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "No store page captured, so kind, goods and brand are cant-tell. 709 rows all dining codes. U.S. Bank list is hedged (popular merchants), not issuer basis."
+    },
+    {
+      "domain": "popeyes.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "popeyes-com-page-2",
+          "quote": "pay for certain products at or prior to arrival at participating restaurant locations",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "POPEYES 3230 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "publix.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "publix-com-page-1",
+          "quote": "Order online, select your time, then pick up your items when you're ready.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "publix-com-page-2",
+          "quote": "Ours is to be the premier quality food retailer in the world.",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "PUBLIX #1625 | GROCERY STORES SUPERMARKETS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "73 of 73 rows grocery. In-store pharmacy does not change it. U.S. Bank grocery list is hedged."
+    },
+    {
+      "domain": "safeway.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "safeway-com-page-1",
+          "quote": "Order delivery, pickup & more.",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "safeway-com-page-1",
+          "quote": "purchased a tiny grocery store from his father",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "SAFEWAY STORE 00027375 | Grocery Stores, Supermarkets",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "SAFEWAY LOCKSMITH rows are another business, set aside; 618 of remaining rows grocery. Citi Costco list excludes Safeway only from gas."
+    },
+    {
+      "domain": "samsclub.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "sams-club"
+      ],
+      "category": "wholesale-clubs",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "samsclub-com-page-2",
+          "quote": "Free Curbside Pickup",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "samsclub-com-page-2",
+          "quote": "Join Club",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "SAMSCLUB.COM | WHOLESALE CLUBS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "34 fuel-dispenser rows set aside; 1660 of 1662 rows wholesale clubs. Synchrony Sam's Club Mastercard earning is a co-brand bonus, not issuer basis."
+    },
+    {
+      "domain": "samsung.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "electronics",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "samsung-com-page-1",
+          "quote": "Buy Direct Get More",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "samsung-com-page-1",
+          "quote": "Consumer Electronics",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "Samsung | ELECTRONIC SALES",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "Samsung is not a catalog brand. SAMSUNG PARTS/J&J rows may be a parts reseller; all rows map to electronics either way. Shipping only implied by Orders/Returns links."
+    },
+    {
+      "domain": "sonicdrivein.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "sonicdrivein-com-page-1",
+          "quote": "Have a question or suggestion about your experience at a SONIC® restaurant or online order?",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "SONIC DRIVE IN #2850 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "spotify.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        {
+          "source": "citi-strata-rewards-terms",
+          "quote": "Includes the following streaming providers:",
+          "supports": "category"
+        },
+        {
+          "source": "citi-strata-rewards-terms",
+          "quote": "Paramount+, Sling TV, Spotify, Starz, SiriusXM",
+          "supports": "category"
+        },
+        {
+          "source": "spotify-com-page-2",
+          "quote": "We are the world’s most popular audio streaming subscription service",
+          "supports": "kind"
+        }
+      ],
+      "notes": "Citi inclusion list names Spotify; issuer outranks the mcc rows (404 of 469 pay-TV/streaming). Spotify is not a catalog brand."
+    },
+    {
+      "domain": "sprouts.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "sprouts-com-page-2",
+          "quote": "Sprouts Farmers Market is an indoor, healthy grocery store inspired by farmers markets",
+          "supports": "kind"
+        },
+        {
+          "source": "sprouts-com-page-3",
+          "quote": "Pickup · available from 7:00am tomorrow",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "SPROUTS FARMERS MARKET | GROCERY STORES SUPERMARKETS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "12 of 13 rows grocery (92%), just above the 10-row floor."
+    },
+    {
+      "domain": "starbucks.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "starbucks-com-page-1",
+          "quote": "In 1987 we became a coffeehouse",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "STARBUCKS STORE 13815 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "390 of 435 rows dining (90%) even counting the gift-card funding, card reload and casino rows. Site also sells whole-bean coffee; treated as a restaurant so physicalGoods false."
+    },
+    {
+      "domain": "subway.com",
+      "kind": "cant-tell",
+      "physicalGoods": "cant-tell",
+      "brandIds": "cant-tell",
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "mcc-evidence",
+          "quote": "SUBWAY 00431734 | Fast Food Restaurants",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "No store page captured, so kind, goods and brand are cant-tell. 1044 of 1045 rows dining. U.S. Bank fast-food list is hedged."
+    },
+    {
+      "domain": "tacobell.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "tacobell-com-page-2",
+          "quote": "At participating U.S. Taco Bell® locations. Contact restaurant for prices, hours & participation",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "TACO BELL 726022 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "truevalue.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "truevalue-com-page-1",
+          "quote": "We are your local hardware store providing the best home improvement products to your community.",
+          "supports": "kind"
+        },
+        {
+          "source": "truevalue-com-page-1",
+          "quote": "Shipping & Delivery Options",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "SALLISAW TRUE VALUE HDW | HARDWARE STORES",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "657 of 661 rows hardware or lumber (99%)."
+    },
+    {
+      "domain": "ubereats.com",
+      "kind": "marketplace",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "ubereats-com-page-1",
+          "quote": "Uber Eats has hundreds of restaurants to choose from.",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "UBER EATS | EATING PLACES RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "Delivery marketplace; mcc allowed for dining. Chase select food delivery is a separate category; Amex Uber Cash is a credit; Instacart card clause is a co-brand bonus."
+    },
+    {
+      "domain": "wegmans.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "wegmans-com-page-1",
+          "quote": "Wegmans is a regional supermarket chain",
+          "supports": "kind"
+        },
+        {
+          "source": "wegmans-com-page-1",
+          "quote": "Grocery Delivery & Pickup",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "WEGMANS # 40 | Grocery Stores, Supermarkets",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "EZCATER*WEGMANS row is ezCater's, set aside; 20 of 20 grocery. page-2 capture is empty."
+    },
+    {
+      "domain": "wendys.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "wendys-com-page-1",
+          "quote": "At Wendy's, we're all about serving up fresh food",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "WENDY S 13338 | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "247 of 262 rows fast food (94%); WENDYS / PITTSBURG STA software rows look like another business."
+    },
+    {
+      "domain": "wholefoodsmarket.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [
+        "whole-foods-market"
+      ],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "wholefoodsmarket-com-page-2",
+          "quote": "Shop for grocery delivery or pickup, get pantry essentials shipped to you",
+          "supports": "physicalGoods"
+        },
+        {
+          "source": "wholefoodsmarket-com-page-1",
+          "quote": "the excitement and fun we bring to shopping for groceries",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "WHOLEFDS OKC 10376 | GROCERY STORES SUPERMARKETS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "361 of 361 rows grocery. Prime Visa and Amazon Store Card earning at Whole Foods is a co-brand bonus, not issuer basis."
+    },
+    {
+      "domain": "wingstop.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "wingstop-com-page-1",
+          "quote": "Today there are more than 2,500 restaurants open across the globe.",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "WINGSTOP 2133 OLO | FAST FOOD RESTAURANTS",
+          "supports": "mcc"
+        }
+      ],
+      "notes": null
+    },
+    {
+      "domain": "wmata.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "transit",
+      "basis": "mcc",
+      "quotes": [
+        {
+          "source": "wmata-com-page-1",
+          "quote": "Metro is the transportation agency for the Washington, D.C. metropolitan area",
+          "supports": "kind"
+        },
+        {
+          "source": "mcc-evidence",
+          "quote": "WMATA METRO CENTER BUL | Local/Suburban Commuter Transportation",
+          "supports": "mcc"
+        }
+      ],
+      "notes": "413 of 413 rows commuter transportation. Physical SmarTrip cards are mailed but the purchase is fares, so physicalGoods false."
+    }
+  ]
+}

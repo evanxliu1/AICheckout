@@ -1,0 +1,55 @@
+{
+ "schemaVersion": 1,
+ "release": "2026-10-11.mcc.1",
+ "note": "One item per disagreement between the release record and the blind auditor. The adjudicator reads both sides' quotes (and the packet sheet for context) and writes adjudication.json: { domain, field, verdict: record | auditor | neither, reason }.",
+ "items": [
+  {
+   "domain": "doordash.com",
+   "recordId": "doordash-us",
+   "field": "physicalGoods",
+   "type": "wrong-goods",
+   "record": "true",
+   "auditor": "false",
+   "recordQuotes": [
+    {
+     "sourceId": "mcc-dataset-dc",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2022",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2023",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2024",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    }
+   ],
+   "auditorQuotes": [
+    {
+     "source": "doordash-com-page-1",
+     "quote": "DoorDash offers a huge selection of restaurants and stores, from local favorites to popular chains.",
+     "supports": "kind"
+    },
+    {
+     "source": "mcc-evidence",
+     "quote": "DD DOORDASH MCDONALDS | EATING PLACES RESTAURANTS",
+     "supports": "mcc"
+    }
+   ],
+   "auditorNotes": "Delivery marketplace; mcc allowed for dining only. 44 of 47 rows (94%) eating places. Chase excerpts are co-brand bonuses and credits, not an issuer basis. Also delivers grocery and retail.",
+   "sheet": "evals/merchants/db/audit/packets-mcc/1/stores/doordash.com.md"
+  }
+ ]
+}

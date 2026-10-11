@@ -1,0 +1,929 @@
+{
+ "schemaVersion": 1,
+ "release": "2026-10-11.mcc.1",
+ "run": "mcc",
+ "scoredOn": "2026-10-11",
+ "auditorModels": [
+  "claude-opus-5-5"
+ ],
+ "adjudicated": {
+  "model": "claude-fable-5-1",
+  "decisions": 1
+ },
+ "population": {
+  "stores": 64,
+  "labelled": 64,
+  "withRecord": 64,
+  "withoutRecord": 0,
+  "unlabelled": []
+ },
+ "counts": {
+  "all": {
+   "stores": 64,
+   "bonusRecords": 64,
+   "defaultRecords": 0,
+   "brandRecords": 9,
+   "processors": 0,
+   "cantTell": {
+    "kind": 5,
+    "physicalGoods": 6,
+    "brandIds": 5,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   }
+  },
+  "bonus": {
+   "stores": 64,
+   "bonusRecords": 64,
+   "defaultRecords": 0,
+   "brandRecords": 9,
+   "processors": 0,
+   "cantTell": {
+    "kind": 5,
+    "physicalGoods": 6,
+    "brandIds": 5,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   }
+  },
+  "brands": {
+   "stores": 9,
+   "bonusRecords": 9,
+   "defaultRecords": 0,
+   "brandRecords": 9,
+   "processors": 0,
+   "cantTell": {
+    "kind": 1,
+    "physicalGoods": 1,
+    "brandIds": 1,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 9,
+      "rate": 0,
+      "upper95": 0.2831
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 9,
+     "rate": 0.1111,
+     "upper95": 0.4291
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 9,
+      "rate": 0,
+      "upper95": 0.2831
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 9,
+     "rate": 0,
+     "upper95": 0.2831
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 9,
+     "rate": 0.1111,
+     "upper95": 0.4291
+    }
+   }
+  },
+  "processors": {
+   "stores": 0,
+   "bonusRecords": 0,
+   "defaultRecords": 0,
+   "brandRecords": 0,
+   "processors": 0,
+   "cantTell": {
+    "kind": 0,
+    "physicalGoods": 0,
+    "brandIds": 0,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   }
+  },
+  "held-out": {
+   "stores": 0,
+   "bonusRecords": 0,
+   "defaultRecords": 0,
+   "brandRecords": 0,
+   "processors": 0,
+   "cantTell": {
+    "kind": 0,
+    "physicalGoods": 0,
+    "brandIds": 0,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   }
+  },
+  "held-out-frozen": {
+   "stores": 0,
+   "bonusRecords": 0,
+   "defaultRecords": 0,
+   "brandRecords": 0,
+   "processors": 0,
+   "cantTell": {
+    "kind": 0,
+    "physicalGoods": 0,
+    "brandIds": 0,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   }
+  },
+  "post-freeze": {
+   "stores": 0,
+   "bonusRecords": 0,
+   "defaultRecords": 0,
+   "brandRecords": 0,
+   "processors": 0,
+   "cantTell": {
+    "kind": 0,
+    "physicalGoods": 0,
+    "brandIds": 0,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 0,
+      "rate": null,
+      "upper95": null
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongGoods": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    }
+   }
+  },
+  "mcc-changed": {
+   "stores": 64,
+   "bonusRecords": 64,
+   "defaultRecords": 0,
+   "brandRecords": 9,
+   "processors": 0,
+   "cantTell": {
+    "kind": 5,
+    "physicalGoods": 6,
+    "brandIds": 5,
+    "category": 0
+   },
+   "before": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   },
+   "after": {
+    "wrongBonus": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "cantTell": 0,
+     "includingCantTell": {
+      "x": 0,
+      "n": 64,
+      "rate": 0,
+      "upper95": 0.0457
+     }
+    },
+    "missedBonus": {
+     "x": 0,
+     "n": 0,
+     "rate": null,
+     "upper95": null
+    },
+    "wrongBrand": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457,
+     "adds": 0,
+     "drops": 0,
+     "different": 0
+    },
+    "wrongKind": {
+     "x": 0,
+     "n": 64,
+     "rate": 0,
+     "upper95": 0.0457
+    },
+    "wrongGoods": {
+     "x": 1,
+     "n": 64,
+     "rate": 0.0156,
+     "upper95": 0.072
+    }
+   }
+  }
+ },
+ "categories": {
+  "home-improvement": {
+   "records": 8,
+   "auditorAgrees": 8,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "supermarkets": {
+   "records": 11,
+   "auditorAgrees": 11,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "entertainment": {
+   "records": 2,
+   "auditorAgrees": 2,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "transit": {
+   "records": 4,
+   "auditorAgrees": 4,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "dining": {
+   "records": 26,
+   "auditorAgrees": 26,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "electronics": {
+   "records": 5,
+   "auditorAgrees": 5,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "wholesale-clubs": {
+   "records": 2,
+   "auditorAgrees": 2,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "drugstores": {
+   "records": 1,
+   "auditorAgrees": 1,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "streaming": {
+   "records": 3,
+   "auditorAgrees": 3,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  },
+  "department-stores": {
+   "records": 2,
+   "auditorAgrees": 2,
+   "auditorOther": 0,
+   "auditorCantTell": 0
+  }
+ },
+ "disagreements": [
+  {
+   "domain": "doordash.com",
+   "recordId": "doordash-us",
+   "packet": 1,
+   "sets": [
+    "all",
+    "bonus",
+    "brands",
+    "mcc-changed"
+   ],
+   "field": "physicalGoods",
+   "type": "wrong-goods",
+   "subtype": "different",
+   "record": "true",
+   "auditor": "false",
+   "auditorQuotes": [
+    {
+     "source": "doordash-com-page-1",
+     "quote": "DoorDash offers a huge selection of restaurants and stores, from local favorites to popular chains.",
+     "supports": "kind"
+    },
+    {
+     "source": "mcc-evidence",
+     "quote": "DD DOORDASH MCDONALDS | EATING PLACES RESTAURANTS",
+     "supports": "mcc"
+    }
+   ],
+   "auditorNotes": "Delivery marketplace; mcc allowed for dining only. 44 of 47 rows (94%) eating places. Chase excerpts are co-brand bonuses and credits, not an issuer basis. Also delivers grocery and retail.",
+   "recordQuotes": [
+    {
+     "sourceId": "mcc-dataset-dc",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2022",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2023",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    },
+    {
+     "sourceId": "mcc-dataset-ok-fy2024",
+     "kind": "mcc-dataset",
+     "supports": "category",
+     "quote": "DOORDASH*RASA | EATING PLACES RESTAURANTS"
+    }
+   ],
+   "recordSources": [
+    "mcc-dataset-dc",
+    "mcc-dataset-ok-fy2022",
+    "mcc-dataset-ok-fy2023",
+    "mcc-dataset-ok-fy2024"
+   ],
+   "adjudication": {
+    "verdict": "auditor",
+    "reason": "The written rule makes food delivery false and names DoorDash as a delivery service; 44 of 47 dataset rows are restaurants and the record's own quotes support only dining. The sheet's grocery and retail delivery lines are side offerings and do not override the rule's named case."
+   },
+   "standsAfterAdjudication": true
+  }
+ ],
+ "noRecord": []
+}

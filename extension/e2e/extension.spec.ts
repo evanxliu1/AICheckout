@@ -176,8 +176,8 @@ test('catalog v3: the ranking follows chosen categories, point values and member
     // Synthetic fixture cards: Points earns 3 points per $1 online at 1.2¢ (estimate); Cash Plus
     // earns 5% in two chosen categories (electronics, department stores, fast food); Prime Visa 5%
     // at Amazon with Prime, 3% without. The merchant release (not the fixture's catalog profile)
-    // decides a store's category, and its Best Buy record is general-merchandise until 14.4, so no
-    // Cash Plus option applies there (decision 2026-10-11, transitional rule dropped).
+    // decides a store's category: its Best Buy record is electronics on the mcc basis since release
+    // 2026-10-11.mcc.1 (it was general merchandise between the dropped transitional rule and 14.8).
     await addCard(popup, 'Test Points Card');
     await addCard(popup, 'Test Cash Plus');
     await popup.getByRole('button', { name: 'Save cards' }).click();
@@ -197,31 +197,25 @@ test('catalog v3: the ranking follows chosen categories, point values and member
       await expect(popup.getByRole('button', { name: 'Edit cards' })).toBeVisible();
     }
 
-    // 1. Cash Plus's categories unknown: Points ($3.60) earns more than Cash Plus's general rate
-    // ($1.00). Was "Compare the conditions" with a $1.00–$5.00 range while Best Buy was an
-    // electronics store (decision 2026-10-11, transitional rule dropped).
+    // 1. Cash Plus's categories unknown at an electronics store: Points ($3.60) is sure to earn more
+    // than Cash Plus's guaranteed $1.00, which may be $5.00 ("Compare the conditions").
     await compare();
-    await expect(popup.getByRole('heading', { name: 'Use Points' })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'Compare the conditions' })).toBeVisible();
     await expect(first()).toHaveText('Points');
     await expect(popup.getByText('$3.60', { exact: true })).toBeVisible();
-    await expect(popup.getByText('$1.00', { exact: true })).toBeVisible();
-    await expect(popup.getByText('$1.00–$5.00', { exact: true })).toHaveCount(0);
+    await expect(popup.getByText('$1.00–$5.00', { exact: true })).toBeVisible();
 
-    // 2. Choose electronics for Cash Plus, with its limit and activation known: still $1.00, because
-    // the release record, not the chosen category, says Best Buy is general merchandise. Was "Use
-    // Cash Plus" at $5.00 (decision 2026-10-11); chosen-category ranking at an electronics store
-    // returns with 14.4, and extension/tests/rewards-v3.test.ts keeps covering the engine's side.
+    // 2. Choose electronics for Cash Plus, with its limit and activation known: $5.00 beats $3.60.
     await edit(async () => {
       await popup.getByRole('checkbox', { name: 'Electronics stores' }).check();
       await popup.getByLabel(/Cash Plus electronics store bonus activation/).selectOption('active');
       await popup.getByLabel(/Cash Plus combined electronics store spend/).fill('0');
     });
     await compare();
-    await expect(popup.getByRole('heading', { name: 'Use Points' })).toBeVisible();
-    await expect(first()).toHaveText('Points');
-    await expect(popup.getByText('$1.00', { exact: true })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'Use Cash Plus' })).toBeVisible();
+    await expect(first()).toHaveText('Cash Plus');
 
-    // 3. Value Test Membership Points at 2¢: 300 points are worth $6.00, above $3.60.
+    // 3. Value Test Membership Points at 2¢: 300 points are worth $6.00, above $5.00.
     await edit(async () => {
       await popup.getByLabel('Your value for Test Membership Points, in cents each').fill('2');
     });
@@ -282,10 +276,9 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
     await popup.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
     await startPopup(popup);
     // Bundled catalog (re-dated for the test). On $100 at Best Buy: Double Cash earns 2% cash back
-    // ($2.00); Cash+ earns 5% in two chosen categories, none of which is general merchandise, the
-    // category the merchant release gives Best Buy until 14.4 (decision 2026-10-11, transitional
-    // rule dropped); Customized Cash Rewards earns 3% in one chosen category, Online Shopping among
-    // them, which does apply to an online retail purchase at Best Buy.
+    // ($2.00); Cash+ earns 5% in two chosen categories, electronics stores among them, and the
+    // bundled merchant release makes Best Buy an electronics store (the mcc basis, release
+    // 2026-10-11.mcc.1).
     await addCard(popup, 'Citi Double Cash');
     await addCard(popup, 'U.S. Bank Cash+ Visa Signature Card');
     await popup.getByRole('button', { name: 'Save cards' }).click();
@@ -305,33 +298,25 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
       await expect(popup.getByRole('button', { name: 'Edit cards' })).toBeVisible();
     }
 
-    // Cash+ earns its 1% general rate ($1.00) at Best Buy, with no category to choose. Was a
-    // $1.00–$5.00 range with "Earns more only if Electronic stores is one of your chosen
-    // categories" while Best Buy was an electronics store (decision 2026-10-11).
+    // Cash+ with no category chosen at an electronics store: a $1.00–$5.00 range behind Double Cash,
+    // with the line naming the category to choose.
     await compare('best-buy-us');
-    await expect(popup.getByRole('heading', { name: 'Use Double Cash' })).toBeVisible();
     await expect(first()).toHaveText('Double Cash');
-    await expect(popup.getByText('$1.00', { exact: true })).toBeVisible();
-    await expect(popup.getByText('$1.00–$5.00', { exact: true })).toHaveCount(0);
-    await expect(popup.getByText(/Earns more only if/)).toHaveCount(0);
+    await expect(popup.getByText('$1.00–$5.00', { exact: true })).toBeVisible();
+    await expect(
+      popup.getByText(/Earns more only if Electronic stores is one of your chosen categories/),
+    ).toBeVisible();
 
-    // Customized Cash Rewards with Online Shopping chosen (its default is gas), no spend yet toward
-    // the shared limit and the first-year 6% ruled out: 3% ($3.00) beats Double Cash. Was Cash+ with
-    // Electronic stores chosen at 5% (decision 2026-10-11); that returns with 14.4.
+    // Cash+ with Electronic stores chosen, activated, and no spend yet toward the shared limit.
     await edit(async () => {
-      await addCard(popup, 'Bank of America Customized Cash Rewards credit card');
-      await popup.getByRole('radio', { name: 'Online Shopping', exact: true }).check();
+      await popup.getByRole('checkbox', { name: 'Electronic stores' }).check();
       await popup
-        .getByRole('group', {
-          name: /Did you open your Bank of America Customized Cash Rewards credit card account/,
-        })
-        .getByRole('radio', { name: 'No, a year ago or more', exact: true })
-        .check();
-      await popup.getByLabel(/Customized Cash Rewards combined online retail spend this quarter/).fill('0');
+        .getByLabel(/Cash\+ Visa Signature electronics store bonus activation/)
+        .selectOption('active');
+      await popup.getByLabel(/Cash\+ Visa Signature combined .* spend this quarter/).fill('0');
     });
     await compare('best-buy-us');
-    await expect(popup.getByRole('heading', { name: 'Use Customized Cash Rewards' })).toBeVisible();
-    await expect(popup.getByText('$3.00', { exact: true })).toBeVisible();
+    await expect(popup.getByRole('heading', { name: 'Use Cash+ Visa Signature' })).toBeVisible();
 
     // Capital One miles at 3¢ (the shopper's own value) make Venture Rewards' 200 miles $6.00.
     await edit(async () => {
@@ -343,8 +328,7 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
     await expect(popup.getByText('$6.00', { exact: true })).toBeVisible();
 
     // At Amazon with Prime Visa and miles at 2¢ ($4.00): Prime unknown guarantees Prime Visa only
-    // 3% ($3.00), so Venture Rewards leads (Customized Cash Rewards earns its 3% there too);
-    // answering "Prime member" (5%, $5.00) puts Prime Visa first.
+    // 3% ($3.00), so Venture Rewards leads; answering "Prime member" (5%, $5.00) puts Prime Visa first.
     await edit(async () => {
       await addCard(popup, 'Prime Visa');
       await popup.getByLabel('Your value for Capital One miles, in cents each').fill('2');

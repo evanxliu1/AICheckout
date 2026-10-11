@@ -5,15 +5,18 @@
 // `general-merchandise`, `default`, no sources. `release-config.json` gains the new cited sources, loses the ones no
 // record cites, and takes the new version. Every change is listed in fixes.json (review.md shows them).
 //
-//   node evals/merchants/db/audit/apply-adjudication.mjs --version 2026-10-11.audit.1
+//   node evals/merchants/db/audit/apply-adjudication.mjs --version 2026-10-11.audit.1 [--run mcc]
+//
+// `--run <name>` reads that re-audit's files (adjudication-<name>.json, comparison-<name>.json, labels-<name>/) and
+// records its fixes under the same fixes.json (the batch is audit-<name>-2026-10).
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runPaths } from './build-packets.mjs';
 
 const ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
 const DB = join(ROOT, 'evals/merchants/db');
 const AUDIT = join(DB, 'audit');
-const BATCH = 'audit-2026-10';
 const SUPPORTS = new Set(['kind', 'physicalGoods', 'brand', 'category', 'definition']);
 
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
@@ -32,12 +35,16 @@ export async function main(argv = process.argv.slice(2)) {
   const at = argv.indexOf('--version');
   if (at < 0) throw new Error('--version <YYYY-MM-DD.tag.n> is required');
   const version = argv[at + 1];
+  const runAt = argv.indexOf('--run');
+  const run = runAt >= 0 ? argv[runAt + 1] : null;
+  const paths = runPaths(run);
+  const BATCH = run ? `audit-${run}-2026-10` : 'audit-2026-10';
   const today = new Date().toISOString().slice(0, 10);
-  const adjudication = await readJson(join(AUDIT, 'adjudication.json'));
-  const comparison = await readJson(join(AUDIT, 'comparison.json'));
+  const adjudication = await readJson(paths.adjudication);
+  const comparison = await readJson(paths.comparison);
   const labels = new Map();
-  for (const name of (await readdir(join(AUDIT, 'labels'))).filter((n) => /^packet-\d+\.json$/.test(n)))
-    for (const s of (await readJson(join(AUDIT, 'labels', name))).stores) labels.set(s.domain, s);
+  for (const name of (await readdir(paths.labelsDir)).filter((n) => /^packet-\d+\.json$/.test(n)))
+    for (const s of (await readJson(join(paths.labelsDir, name))).stores) labels.set(s.domain, s);
   const sources = await manifestSources();
   const config = await readJson(join(DB, 'release-config.json'));
   const fixes = [];
