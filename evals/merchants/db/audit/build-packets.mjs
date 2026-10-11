@@ -126,8 +126,9 @@ export async function buildPopulation() {
 
 async function storeSheet(entry, release, issuerCaptures) {
   const record = release.merchants.find((r) => r.id === entry.recordId) ?? null;
-  // The name used to find the store in issuer and lookup pages: the record's display name (from the store's own
-  // page or research, never from a draft) or the domain label.
+  // The needle for the issuer and lookup excerpts is the record's display name: for tier B the research name the
+  // verifier confirmed (so one verified field reaches the sheet as a search term, never as a label), for tier A the
+  // homepage's own metadata; the domain label when there is no record.
   const name = record?.name ?? domainLabel(entry.domain);
   const named = storeNamed(name, entry.domain);
   const lines = [

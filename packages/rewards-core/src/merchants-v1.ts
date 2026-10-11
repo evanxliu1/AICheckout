@@ -2,12 +2,12 @@
 // Do not edit; rerun `npm run merchants`. `npm run merchants:check` fails when this file is stale.
 import type { MerchantRelease } from './types.ts';
 
-/** The bundled merchant release (schema 1): 641 records, 15 of them payment
+/** The bundled merchant release (schema 1): 640 records, 15 of them payment
  * processors, verified 2026-10-11. The extension matches store websites against it on the
  * device and refreshes it from the hosted release when one is published. */
 export const MERCHANTS_V1: MerchantRelease = {
   schemaVersion: 1,
-  version: '2026-10-11.audit.1',
+  version: '2026-10-11.audit.2',
   verifiedAt: '2026-10-11T00:00:00Z',
   sources: [
     {
@@ -107,13 +107,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       kind: 'issuer-terms',
       capturedAt: '2026-10-05',
       sha256: '90eac02313b516671d4a8f50bd9e52613d12b89f4535632e6d46e3c699ae86b1',
-    },
-    {
-      id: 'costco-com-page-1',
-      url: 'https://www.costco.com/company-information.html',
-      kind: 'store-page',
-      capturedAt: '2026-10-11',
-      sha256: '729c0d301a1307b605732dd3c0221e9a12794030eaec02fda50549f85a75ae3d',
     },
     {
       id: 'costplusdrugs-com-page-1',
@@ -2147,8 +2140,8 @@ export const MERCHANTS_V1: MerchantRelease = {
       hosts: ['costco.com'],
       kind: 'merchant',
       physicalGoods: true,
-      category: 'wholesale-clubs',
-      evidence: { basis: 'definition', sourceIds: ['costco-com-page-1', 'chase-rewards-category-faq'] },
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
       brandIds: ['costco'],
       disabled: false,
     },
@@ -3290,17 +3283,6 @@ export const MERCHANTS_V1: MerchantRelease = {
       disabled: false,
     },
     {
-      id: 'google-us',
-      name: 'Google',
-      hosts: ['google.com'],
-      kind: 'merchant',
-      physicalGoods: true,
-      category: 'general-merchandise',
-      evidence: { basis: 'default', sourceIds: [] },
-      brandIds: [],
-      disabled: false,
-    },
-    {
       id: 'goosecreek-us',
       name: 'Goose Creek Candle',
       hosts: ['goosecreek.com'],
@@ -4201,7 +4183,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'lego-us',
-      name: 'Home',
+      name: 'LEGO',
       hosts: ['lego.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7148,7 +7130,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'usps-us',
-      name: 'Welcome',
+      name: 'USPS',
       hosts: ['usps.com'],
       kind: 'merchant',
       physicalGoods: true,
@@ -7733,7 +7715,7 @@ export const MERCHANTS_V1: MerchantRelease = {
     },
     {
       id: 'zillionsgift-us',
-      name: 'Home',
+      name: 'Zillionsgift',
       hosts: ['zillionsgift.com'],
       kind: 'merchant',
       physicalGoods: true,

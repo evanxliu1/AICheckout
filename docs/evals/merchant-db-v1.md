@@ -4,7 +4,7 @@ Phase 14.5 of the [merchant database plan](../../wiki/product/phase-14-merchant-
 
 - **Built** by the 14.4 pipeline: gpt-5.6-luna drafts, a Claude `merchant-verifier` check of every field and quote, a deterministic apply rule that grants a bonus category only on `issuer`, `corroborated` or `definition` evidence ([pipeline](../../wiki/system/merchant-pipeline.md)).
 - **Audited** 2026-10-11 by a blind `merchant-auditor` ([agent file](../../.claude/agents/merchant-auditor.md)) that saw only the captured pages and issuer excerpts of each store and the written rules, never a draft, verification, record or `review.md`; disagreements were adjudicated by a third agent ([method](../../wiki/decisions/2026-10-11-merchant-audit-method.md)). All labels are agent labels (`agent-verified`); no human labelled a store.
-- **The numbers below are the pre-fix numbers** of `2026-10-11.seed.17`, committed before any record changed. The 16 fixes the adjudication calls for are listed in [Fixes](#fixes) and were applied in the next commit as release `2026-10-11.audit.1`, as the plan requires.
+- **The numbers below are the pre-fix numbers** of `2026-10-11.seed.17`, committed before any record changed. The 16 fixes the adjudication calls for are listed in [Fixes](#fixes) and were applied in the next commit as release `2026-10-11.audit.1`, as the plan requires; an independent review then reverted one of them and fixed two tier-A naming faults as `2026-10-11.audit.2`.
 
 ## What the release contains
 
@@ -43,11 +43,13 @@ Denominators are the plan's: bonus records for the wrong-bonus rate, default rec
 | Measure | Before adjudication | After adjudication | 95% upper bound (after) |
 | --- | ---: | ---: | ---: |
 | **Wrong bonus category** | 4 / 46 (8.7%) | **4 / 46 (8.7%)** | **18.8%** |
-| Missed bonus category | 11 / 182 | 9 / 182 (4.9%) | 8.8% |
+| Missed bonus category | 11 / 182 | 9 / 182 (4.9%) | 8.5% |
 | Wrong brand set | 2 / 120 (both: auditor adds brands) | 2 / 120 (1.7%) | 5.2% |
 | Wrong kind | 2 / 228 | 1 / 228 (0.4%) | 2.1% |
 | Wrong goods flag | 0 / 228 | 0 / 228 | 1.3% |
 | Auditor `cant-tell` | kind 39, goods 50, brands 31, category 11 | | |
+
+**What the four wrong bonus records are.** Three of them, aldi.us, kroger.com and wholefoodsmarket.com, are real supermarkets: the rule granted a category their captured pages could not prove under the written conditions (no business-type noun phrase on the captured pages), so the error is one of non-compliance with the evidence rule, and the fix costs those stores' shoppers a grocery bonus they would in fact have earned. The fourth, marketbasket.com, is The Market Basket of New Jersey, a gourmet market selling gift baskets and catering, so its supermarket category is plausibly wrong in the world, not only under the rule.
 
 Against the plan's targets (reporting targets, not gates): wrong bonus category **4, target 0**; wrong brand **2, target 0**; wrong kind **1, target 0**; wrong goods flag 0; missed bonuses 9 (reported, costs value not trust).
 
@@ -98,10 +100,10 @@ Full reasons: [`adjudication.json`](../../evals/merchants/db/audit/adjudication.
 | Set | URLs | Matched a store | Wrong store matches |
 | --- | ---: | ---: | ---: |
 | Every release host × 6 subdomain forms (bare, `www.`, `secure.`, `checkout.`, `www.secure.`, `a.b.c.`) × 6 checkout-like paths | 23,328 | 23,328 to the authoring record (or the longer authored subdomain record) | **0** |
-| The frozen reader set's U.S. cart-state URLs (pane records, `us` stream; product, cart and empty-cart pages) | 367 | 365 (2 stores are not in the release) | **0** |
+| The frozen reader set's U.S. cart-state URLs (pane records, `us` stream; product, cart and empty-cart pages) | 367 | 365 (2 stores are not in the release; 364 in `audit.2`, after google.com's removal) | **0** |
 | Look-alike traps: `amazon.ca`, `amazon.co.uk`, `target.com.au`, `walmartmoney.com`, `wal-mart.com`, `kroger.com.mx`, `notnewegg.com`, `newegg.com.evil.example`, deep subdomains of look-alikes, punycode and Unicode look-alikes (`xn--trget-gra.com`, Cyrillic `аmazon.com`), redirect-only or dropped domains (`jcp.com`, `cedarpoint.com`, `vudu.com`, `build.com`, `showtime.com`, `worldmarktheclub.com`, `costcobusinessdelivery.com`, `oldnavy.com`, `clubwyndham.com`, `nordstromrack.com`, `hy-veepharmacy.com`), unknown stores | 33 | 0 | **0** |
 
-Match time stays under a millisecond per URL (`merchant-match.test.ts`). One finding for the candidate list rather than the matcher: the tier-A record `google-us` authors `google.com` (from the frame's top-stores bucket, a bot-walled render named from the label), so every Google page matches a default "Google" store; the profile is the generic one, so no reward changes, but the badge would name the store on a Google cart page.
+Match time stays under a millisecond per URL (`merchant-match.test.ts`). One finding for the candidate list rather than the matcher: the tier-A record `google-us` authored `google.com` (from the frame's top-stores bucket, a bot-walled render named from the label), so every Google page matched a default "Google" store; the profile is the generic one, so no reward changed, but the badge would have named the store on a Google cart page. Removed in `audit.2` ([Fixes](#fixes)).
 
 ## Cost
 
@@ -127,11 +129,15 @@ No paid API calls; everything ran locally on subscription CLIs.
 
 ## Fixes
 
-Under the plan, records the adjudication finds wrong are fixed after the report records the pre-fix numbers. The 16 adjudicated changes were applied by `evals/merchants/db/audit/apply-adjudication.mjs` (deterministic: the record takes the auditor's value; an added bonus cites the sources of the auditor's category and definition quotes from the batch manifests and its evidence file holds those quotes; a refused bonus falls to `general-merchandise`, `default`, no sources) as **release `2026-10-11.audit.1`**, listed in [`fixes.json`](../../evals/merchants/db/audit/fixes.json) and in `review.md` under "Audit fixes" for Evan to read before any publish:
+Under the plan, records the adjudication finds wrong are fixed after the report records the pre-fix numbers. The 16 adjudicated changes were applied by `evals/merchants/db/audit/apply-adjudication.mjs` (deterministic: the record takes the auditor's value; an added bonus cites the sources of the auditor's category and definition quotes from the batch manifests and its evidence file holds those quotes; a refused bonus falls to `general-merchandise`, `default`, no sources) as **release `2026-10-11.audit.1`**, listed in [`fixes.json`](../../evals/merchants/db/audit/fixes.json) and in `review.md` under "Audit fixes" for Evan to read before any publish (the current release is `2026-10-11.audit.2`, below):
 
 - **Downgraded to `general-merchandise`, `default`** (wrong bonus category): aldi-us, kroger-us, marketbasket-us, wholefoodsmarket-us.
-- **Bonus category added** (missed bonus): audible-us, disneyplus-us, plus-espn-us, siriusxm-us → streaming (`issuer`); bloomingdales-us, dillards-us, macys-us, jcpenney-us → department-stores (`issuer`); costco-us → wholesale-clubs (`definition`, Costco's own "membership warehouse club" page and Chase's paragraph; the adjudicator's closest call).
+- **Bonus category added** (missed bonus): audible-us, disneyplus-us, plus-espn-us, siriusxm-us → streaming (`issuer`); bloomingdales-us, dillards-us, macys-us, jcpenney-us → department-stores (`issuer`). **costco-us was added as wholesale-clubs (`definition`) in `audit.1` and reverted to the default in `audit.2`** after the independent review of `79ace9da`: the cited Chase clause names no wholesale or warehouse club word (its heading is cut off in the capture) and no other captured definition clause names warehouse or wholesale clubs other than as exclusions, an "e.g." list or a quarterly line, so condition (b) is not met on the cited text. The adjudicator had called it the closest call. Costco stays at the general rate until an issuer page defines the category in words.
 - **Brands**: gap-us and oldnavy-gap-us carry gap, old-navy, banana-republic and athleta.
 - **Kind**: whatnot-us → marketplace.
 
-The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-williams-us default) changed nothing. After the fixes `2026-10-11.audit.1` has 641 records, basis `default` 590, `definition` 38, `issuer` 13; 51 bonus categories (dining 12, streaming 11, supermarkets 9, department-stores 6, drugstores 5, home-improvement 4, entertainment 2, wholesale-clubs 1, transit 1); 120 brand records; 63 cited sources. The extension tests that named Kroger and Whole Foods as bundled supermarkets now use Wegmans, Costco and Audible. The fixed records were not re-audited: their values are the adjudicated labels, so the audit numbers above describe `seed.17`, not `audit.1`.
+The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-williams-us default) changed nothing.
+
+**Review fixes in `2026-10-11.audit.2`** (independent review of `79ace9da`, same day): Costco back to the default (above); the tier-A record `google-us` removed and `google.com` excluded (it is the search site; the Google Store checks out at `store.google.com`, which no capture shows); the tier-A records named from generic page titles renamed from the label (usps-us "Welcome" → "USPS", lego-us "Home" → "LEGO", zillionsgift-us "Home" → "Zillionsgift") and the tier-A builder now skips such titles (`GENERIC_TITLE`) and excluded domains.
+
+After the fixes `2026-10-11.audit.2` has 640 records, basis `default` 590, `definition` 37, `issuer` 13; 50 bonus categories (dining 12, streaming 11, supermarkets 9, department-stores 6, drugstores 5, home-improvement 4, entertainment 2, transit 1); 120 brand records; 62 cited sources. The extension tests that named Kroger and Whole Foods as bundled supermarkets now use Wegmans and Audible. The fixed records were not re-audited: their values are the adjudicated labels, so the audit numbers above describe `seed.17`, not `audit.2`.

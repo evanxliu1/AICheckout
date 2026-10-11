@@ -13,7 +13,14 @@ import { sha256Hex } from '../hash.ts';
 import { writeJsonAtomic } from '../state.ts';
 import type { Env } from '../run.ts';
 import { domainLabel, hostGate, loadCandidates } from './candidates.ts';
-import { DB_DIR, RECORDS_DIR, TIER_A_MANIFEST } from './files.ts';
+import {
+  DB_DIR,
+  EXCLUSIONS_FILE,
+  RECORDS_DIR,
+  TIER_A_MANIFEST,
+  exclusionsFileSchema,
+  readJsonOrNull,
+} from './files.ts';
 
 export interface HomepageMeta {
   ogSiteName: string | null;
@@ -30,6 +37,11 @@ const BOT_WALL =
 export const WALL_TITLE =
   /access to this page has been denied|just a moment|pardon our interruption|attention required|access denied|are you a robot|robot or human|security check|verify you are human|one more step|checking your browser|please wait/i;
 
+/** Generic page titles that name no store ("Welcome", "Home", "Sign in"; audit review 2026-10-11: usps.com, lego.com
+ * and zillionsgift.com were named from them): such a segment is skipped and the label is the fallback. */
+export const GENERIC_TITLE =
+  /^(welcome|home|home ?page|sign ?in|log ?in|index|untitled|my account|shop)\W*$/i;
+
 /** The record name from the homepage's own metadata, or the domain's label capitalised. Names are cut at the first
  * separator ("Kroger | Shop Groceries" → "Kroger"), restricted to the record charset and 60 characters. */
 export function displayName(meta: HomepageMeta, domain: string): { name: string; source: string } {
@@ -42,6 +54,7 @@ export function displayName(meta: HomepageMeta, domain: string): { name: string;
       .trim()
       .slice(0, 60)
       .trim();
+    if (GENERIC_TITLE.test(kept)) return null;
     return NAME.safeParse(kept).success ? kept : null;
   };
   const label = domainLabel(domain);
@@ -207,8 +220,18 @@ export async function tierACommand(
   }
   const coveredBy = (domain: string, id: string) =>
     [...covered].find((c) => c.startsWith(`${domain}|`) && !c.endsWith(`|${id}`))?.split('|')[1];
+  // Excluded domains (exclusions.json: google.com is the search site, not the Google Store) get no record.
+  const excluded = new Set(
+    ((await readJsonOrNull(join(env.root, EXCLUSIONS_FILE), exclusionsFileSchema))?.excluded ?? []).map(
+      (e) => e.domain,
+    ),
+  );
   let failed = 0;
   for (const candidate of todo) {
+    if (excluded.has(candidate.domain)) {
+      env.log(`${candidate.domain}: excluded (exclusions.json); no tier-A record.`);
+      continue;
+    }
     const refused = hostGate(candidate.domain);
     if (refused) {
       env.log(`${candidate.domain}: refused (${refused}).`);

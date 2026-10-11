@@ -29,13 +29,13 @@
       "reason": "Amex says additional rewards are earned only at the following department stores with these specific names, and the list names Bloomingdale's. That is an issuer inclusion list under an earning category. Bot-walled store pages do not matter for an issuer basis; the U.S. Bank list is hedged and unused."
     },
     {
-      "release": "2026-10-11.audit.1",
+      "release": "2026-10-11.audit.2",
       "id": "costco-us",
       "domain": "costco.com",
       "field": "category",
-      "from": "general-merchandise (default)",
-      "to": "wholesale-clubs (definition)",
-      "reason": "Costco's own page calls it a membership warehouse club. The Chase definition paragraph (merchants that sell in bulk, may or may not require membership; wholesale specialty services excluded) states what the wholesale-club category includes and covers that type. Warehouse club is excluded only for other categories. Weak point: the heading is truncated in the capture."
+      "from": "wholesale-clubs (definition) in 2026-10-11.audit.1; general-merchandise (default) in seed.17",
+      "to": "general-merchandise (default)",
+      "reason": "Adjudicated for the auditor (wholesale-clubs on definition), but the independent review of 79ace9da found the cited Chase clause names no wholesale or warehouse club word (its heading is cut) and no captured definition clause does, so condition (b) is unmet and the record stays default."
     },
     {
       "release": "2026-10-11.audit.1",

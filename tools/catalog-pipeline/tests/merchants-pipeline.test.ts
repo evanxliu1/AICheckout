@@ -466,6 +466,15 @@ describe('tier A', () => {
     expect(
       displayName({ ogSiteName: null, applicationName: null, title: null }, 'example-store.com'),
     ).toEqual({ name: 'Example-store', source: 'domain-label' });
+    // Generic page titles name no store (audit review 2026-10-11: usps.com "Welcome", lego.com "Home").
+    for (const title of ['Welcome', 'Home', 'Home Page', 'Sign In', 'Welcome!'])
+      expect(displayName({ ogSiteName: null, applicationName: null, title }, 'usps.com')).toEqual({
+        name: 'Usps',
+        source: 'domain-label',
+      });
+    expect(
+      displayName({ ogSiteName: 'Home', applicationName: null, title: 'Welcome | USPS' }, 'usps.com'),
+    ).toEqual({ name: 'USPS', source: 'title' });
     expect(
       displayName({ ogSiteName: '', applicationName: '日本語', title: null }, 'shop.example.com'),
     ).toEqual({ name: 'Example', source: 'domain-label' });
