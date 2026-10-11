@@ -1,8 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "jcpenney-us",
-  "basis": "default",
+  "basis": "issuer",
   "quotes": [
+    {
+      "sourceId": "amex-rewards-info-retail",
+      "kind": "issuer-terms",
+      "supports": "category",
+      "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's, Century 21 Department Stores, Dillard’s, J.C. Penney (JCP)"
+    },
     {
       "sourceId": "synchrony-jcpenney-mastercard-partner",
       "kind": "issuer-terms",
@@ -13,21 +19,9 @@
       "sourceId": "synchrony-jcpenney-mastercard-product",
       "kind": "issuer-terms",
       "supports": "physicalGoods",
-      "quote": "qualifying furniture, mattress, jewelry"
-    },
-    {
-      "sourceId": "synchrony-jcpenney-mastercard-partner",
-      "kind": "issuer-terms",
-      "supports": "brand",
-      "quote": "Your JCPenney Credit Card or JCPenney Mastercard can be used at all JCPenney Stores, and jcp.com."
-    },
-    {
-      "sourceId": "amex-rewards-info-retail",
-      "kind": "issuer-terms",
-      "supports": "category",
-      "quote": "J.C. Penney (JCP)"
+      "quote": "Free Shipping on orders of $49 or more."
     }
   ],
-  "batch": "seed-2026-10-heldout",
+  "batch": "audit-2026-10",
   "appliedOn": "2026-10-11"
 }

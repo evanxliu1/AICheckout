@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "fixes": [
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "aldi-us",
+      "domain": "aldi.us",
+      "field": "category",
+      "from": "supermarkets (definition)",
+      "to": "general-merchandise (default)",
+      "reason": "Amex names ALDI only under an 'Examples of merchants' list with 'not a complete list', a hedged list, so no issuer basis. The ALDI pages show grocery delivery and pickup service wording but never a business-type noun phrase such as grocery store or supermarket, so definition condition (a) fails. Default is right."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "audible-us",
+      "domain": "audible.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "streaming (issuer)",
+      "reason": "Amex's Select U.S. Streaming Subscriptions section says purchases must be from a provider on its list to earn, and the list names Audible. That is an inclusion list under an earning category, so issuer evidence. Audible is a subscription audio service. Discover's 'examples' list is hedged but not needed."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "bloomingdales-us",
+      "domain": "bloomingdales.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "department-stores (issuer)",
+      "reason": "Amex says additional rewards are earned only at the following department stores with these specific names, and the list names Bloomingdale's. That is an issuer inclusion list under an earning category. Bot-walled store pages do not matter for an issuer basis; the U.S. Bank list is hedged and unused."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "costco-us",
+      "domain": "costco.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "wholesale-clubs (definition)",
+      "reason": "Costco's own page calls it a membership warehouse club. The Chase definition paragraph (merchants that sell in bulk, may or may not require membership; wholesale specialty services excluded) states what the wholesale-club category includes and covers that type. Warehouse club is excluded only for other categories. Weak point: the heading is truncated in the capture."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "dillards-us",
+      "domain": "dillards.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "department-stores (issuer)",
+      "reason": "The Amex select major department stores section limits earning to the stores on its named list, and the list includes Dillard's. That is issuer evidence. Access-denied store pages do not affect an issuer basis."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "disneyplus-us",
+      "domain": "disneyplus.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "streaming (issuer)",
+      "reason": "Citi Strata's Select Streaming Services clause says it includes the following streaming providers and names Disney+; the Amex streaming inclusion list also names it. Issuer basis. Bundled charges may not qualify under Citi, but the store's own Disney+ subscription is named. Co-brand and statement-credit lines are unused."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "gap-us",
+      "domain": "gap.com",
+      "field": "brandIds",
+      "from": "gap",
+      "to": "gap, old-navy, banana-republic, athleta",
+      "reason": "The gap.com page carries Gap, Old Navy, Banana Republic and Athleta in its navigation and says customers can buy from one brand or all four and have the order shipped. That shows this host's shared checkout sells all four Gap Inc. catalog brands, so each one may be listed. All four ids are in the catalog lists."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "jcpenney-us",
+      "domain": "jcpenney.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "department-stores (issuer)",
+      "reason": "The Amex department-store section in the packet's issuer definitions says rewards are earned only at the named stores, and the list names J.C. Penney (JCP). Issuer inclusion list under an earning category. No store page was captured, but an issuer basis does not need one."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "kroger-us",
+      "domain": "kroger.com",
+      "field": "category",
+      "from": "supermarkets (definition)",
+      "to": "general-merchandise (default)",
+      "reason": "Kroger's captured help pages describe pickup and delivery ways to shop for groceries but never give a business-type noun phrase such as grocery store or supermarket, so definition condition (a) fails. U.S. Bank names Kroger only in a 'may qualify' clause and hedged lists. Default is right."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "macys-us",
+      "domain": "macys.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "department-stores (issuer)",
+      "reason": "The Amex select major department stores list, under a clause limiting earning to stores with those specific names, includes Macy's. That is issuer evidence; access-denied store captures do not affect it. The U.S. Bank list is hedged and unused."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "marketbasket-us",
+      "domain": "marketbasket.com",
+      "field": "category",
+      "from": "supermarkets (definition)",
+      "to": "general-merchandise (default)",
+      "reason": "The store calls itself a specialty market focused on gourmet food. The Amex supermarket definition excludes specialty food stores, so condition (c) blocks. Its checkout host sells mainly gift baskets, entree boxes and catering, which Chase online grocery excludes. Discover and BoA lines are calendar or rate lines. Default is right."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "oldnavy-gap-us",
+      "domain": "oldnavy.gap.com",
+      "field": "brandIds",
+      "from": "old-navy",
+      "to": "old-navy, gap, banana-republic, athleta",
+      "reason": "The oldnavy.gap.com page shows the Gap, Old Navy, Banana Republic and Athleta navigation and the same line about buying from one brand or all four with one shipment. This host's shared Gap Inc. checkout sells all four catalog brands, so it carries each, the same ruling as gap.com."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "plus-espn-us",
+      "domain": "plus.espn.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "streaming (issuer)",
+      "reason": "The U.S. Bank Altitude terms give 2 points per $1 on qualifying streaming subscription services and list ESPN+ among them. Citi and Amex inclusion lists also name ESPN. That is an issuer earning clause naming the store. Bundle exclusions affect only some charges and do not undo the named inclusion."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "siriusxm-us",
+      "domain": "siriusxm.com",
+      "field": "category",
+      "from": "general-merchandise (default)",
+      "to": "streaming (issuer)",
+      "reason": "Citi Strata's streaming clause says it includes the following providers and names SiriusXM; the Amex streaming inclusion list names SiriusXM Streaming and Satellite. Both are issuer inclusion lists under an earning category. The plans page sells audio subscriptions. Discover and U.S. Bank lists are hedged and unused."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "whatnot-us",
+      "domain": "whatnot.com",
+      "field": "kind",
+      "from": "merchant",
+      "to": "marketplace",
+      "reason": "Whatnot's homepage calls itself the live shopping marketplace, invites visitors to become sellers, and describes auctions and sales run by others. That shows a site of mostly third-party sellers checking out through it, so marketplace is right."
+    },
+    {
+      "release": "2026-10-11.audit.1",
+      "id": "wholefoodsmarket-us",
+      "domain": "wholefoodsmarket.com",
+      "field": "category",
+      "from": "supermarkets (definition)",
+      "to": "general-merchandise (default)",
+      "reason": "Whole Foods' own pages mention locations, shopping for groceries and grocery delivery or pickup, but never give a business-type noun phrase such as grocery store or supermarket, so definition condition (a) fails. U.S. Bank names it only in a hedged popular-merchants list. Default is right."
+    }
+  ]
+}

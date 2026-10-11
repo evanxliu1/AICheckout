@@ -169,19 +169,23 @@ describe('storeEvidence', () => {
     for (const record of MERCHANTS_V1.merchants)
       if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
       else expect(storeEvidence(record.id), record.id).toMatch(/^(Codes|Treated) as /);
-    // The bundled dev release (2026-10-11.dev.5): Kroger, Whole Foods, CVS and Lowe's on issuer definitions.
-    // Several issuers read as a list.
-    expect(storeEvidence('wholefoodsmarket-us')).toBe(
-      "Treated as a supermarket (its own pages; fits Bank of America, Chase and Discover's supermarket definition).",
-    );
+    // The bundled release (2026-10-11.audit.1): CVS and Lowe's on issuer definitions (several issuers read as a
+    // list), Costco on Chase's wholesale-club definition and Audible named in Amex's card terms (the 14.5 audit
+    // fixes); Kroger and Whole Foods fell to the default category in that audit and say nothing.
     expect(storeEvidence('cvs-us')).toBe(
       "Treated as a drugstore (its own pages; fits Discover's drugstore definition).",
     );
     expect(storeEvidence('lowes-us')).toBe(
       "Treated as a home-improvement store (its own pages; fits Bank of America and Discover's home-improvement store definition).",
     );
-    expect(storeEvidence('kroger-us')).toMatch(
+    expect(storeEvidence('wegmans-us')).toMatch(
       /^Treated as a supermarket \(its own pages; fits .*supermarket definition\)\.$/,
     );
+    expect(storeEvidence('costco-us')).toMatch(
+      /^Treated as .* \(its own pages; fits Chase's .* definition\)\.$/,
+    );
+    expect(storeEvidence('audible-us')).toMatch(/^Codes as .* \(named in card terms\)\.$/);
+    expect(storeEvidence('kroger-us')).toBeNull();
+    expect(storeEvidence('wholefoodsmarket-us')).toBeNull();
   });
 });

@@ -4,7 +4,7 @@ Phase 14.5 of the [merchant database plan](../../wiki/product/phase-14-merchant-
 
 - **Built** by the 14.4 pipeline: gpt-5.6-luna drafts, a Claude `merchant-verifier` check of every field and quote, a deterministic apply rule that grants a bonus category only on `issuer`, `corroborated` or `definition` evidence ([pipeline](../../wiki/system/merchant-pipeline.md)).
 - **Audited** 2026-10-11 by a blind `merchant-auditor` ([agent file](../../.claude/agents/merchant-auditor.md)) that saw only the captured pages and issuer excerpts of each store and the written rules, never a draft, verification, record or `review.md`; disagreements were adjudicated by a third agent ([method](../../wiki/decisions/2026-10-11-merchant-audit-method.md)). All labels are agent labels (`agent-verified`); no human labelled a store.
-- **The numbers below are the pre-fix numbers** of `2026-10-11.seed.17`. The fixes the adjudication calls for are listed in [Fixes](#fixes) and applied to the release in a separate commit after this report, as the plan requires.
+- **The numbers below are the pre-fix numbers** of `2026-10-11.seed.17`, committed before any record changed. The 16 fixes the adjudication calls for are listed in [Fixes](#fixes) and were applied in the next commit as release `2026-10-11.audit.1`, as the plan requires.
 
 ## What the release contains
 
@@ -127,11 +127,11 @@ No paid API calls; everything ran locally on subscription CLIs.
 
 ## Fixes
 
-Under the plan, records the adjudication finds wrong are fixed after this report records the pre-fix numbers. The 16 adjudicated changes, applied by `evals/merchants/db/audit/apply-adjudication.mjs` in the next commit as release `2026-10-11.audit.1`:
+Under the plan, records the adjudication finds wrong are fixed after the report records the pre-fix numbers. The 16 adjudicated changes were applied by `evals/merchants/db/audit/apply-adjudication.mjs` (deterministic: the record takes the auditor's value; an added bonus cites the sources of the auditor's category and definition quotes from the batch manifests and its evidence file holds those quotes; a refused bonus falls to `general-merchandise`, `default`, no sources) as **release `2026-10-11.audit.1`**, listed in [`fixes.json`](../../evals/merchants/db/audit/fixes.json) and in `review.md` under "Audit fixes" for Evan to read before any publish:
 
 - **Downgraded to `general-merchandise`, `default`** (wrong bonus category): aldi-us, kroger-us, marketbasket-us, wholefoodsmarket-us.
-- **Bonus category added** (missed bonus, on the auditor's quotes as evidence, sources cited from the batch manifests): audible-us, disneyplus-us, plus-espn-us, siriusxm-us → streaming (`issuer`); bloomingdales-us, dillards-us, macys-us, jcpenney-us → department-stores (`issuer`); costco-us → wholesale-clubs (`definition`).
+- **Bonus category added** (missed bonus): audible-us, disneyplus-us, plus-espn-us, siriusxm-us → streaming (`issuer`); bloomingdales-us, dillards-us, macys-us, jcpenney-us → department-stores (`issuer`); costco-us → wholesale-clubs (`definition`, Costco's own "membership warehouse club" page and Chase's paragraph; the adjudicator's closest call).
 - **Brands**: gap-us and oldnavy-gap-us carry gap, old-navy, banana-republic and athleta.
 - **Kind**: whatnot-us → marketplace.
 
-The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-williams-us default) change nothing. The fixes commit updates `review.md` (an Audit fixes section) and this section with the final state.
+The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-williams-us default) changed nothing. After the fixes `2026-10-11.audit.1` has 641 records, basis `default` 590, `definition` 38, `issuer` 13; 51 bonus categories (dining 12, streaming 11, supermarkets 9, department-stores 6, drugstores 5, home-improvement 4, entertainment 2, wholesale-clubs 1, transit 1); 120 brand records; 63 cited sources. The extension tests that named Kroger and Whole Foods as bundled supermarkets now use Wegmans, Costco and Audible. The fixed records were not re-audited: their values are the adjudicated labels, so the audit numbers above describe `seed.17`, not `audit.1`.

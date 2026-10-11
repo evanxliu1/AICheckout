@@ -428,6 +428,22 @@ export const applyReportSchema = z.strictObject({
 export type ApplyReport = z.infer<typeof applyReportSchema>;
 
 /** Coordinator field corrections (`evals/merchants/db/overrides.json`), applied after the rule and listed in review.md. */
+/** Records the blind audit's adjudication changed (Phase 14.5, evals/merchants/db/audit/apply-adjudication.mjs). */
+export const AUDIT_FIXES_FILE = `${DB_DIR}/audit/fixes.json`;
+export const auditFixesFileSchema = z.strictObject({
+  schemaVersion: z.literal(1),
+  fixes: z.array(
+    z.strictObject({
+      release: z.string(),
+      id: slug,
+      domain: z.string(),
+      field: z.enum(['category', 'brandIds', 'kind', 'physicalGoods']),
+      from: z.string(),
+      to: z.string(),
+      reason: z.string().max(400),
+    }),
+  ),
+});
 export const OVERRIDES_FILE = `${DB_DIR}/overrides.json`;
 export const overridesFileSchema = z.strictObject({
   description: z.string(),

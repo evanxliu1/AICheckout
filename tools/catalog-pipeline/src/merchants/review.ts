@@ -8,6 +8,7 @@ import type { MerchantRecord } from '../../../../packages/rewards-core/src/types
 import type { Env } from '../run.ts';
 import { FORUM_URL } from './apply.ts';
 import {
+  AUDIT_FIXES_FILE,
   BATCHES_DIR,
   EVIDENCE_DIR,
   OVERRIDES_FILE,
@@ -15,6 +16,7 @@ import {
   RELEASE_CONFIG,
   REVIEW_FILE,
   applyReportSchema,
+  auditFixesFileSchema,
   evidenceFileSchema,
   loadBatch,
   overridesFileSchema,
@@ -44,6 +46,8 @@ export interface ReviewInput {
   /** Coordinator field corrections applied (overrides.json) and notes for Evan. */
   overridden: { batch: string; domain: string; id: string; changes: string[] }[];
   notes: string[];
+  /** Records changed by the blind audit's adjudication (evals/merchants/db/audit/fixes.json, Phase 14.5). */
+  fixes?: { release: string; id: string; field: string; from: string; to: string; reason: string }[];
   downgraded: { batch: string; domain: string; id: string; reason: string | null }[];
   /** Drafted candidates the evidence rule refused, with the rule's reason and the drafter's notes (conflicts such as
    * an issuer listing the store under another category show here). */
@@ -160,6 +164,19 @@ export function reviewMarkdown(input: ReviewInput): string {
       ? input.overridden.map((o) => `- ${o.batch}: ${o.id}: ${cell(o.changes.join('; '))}`)
       : ['None.']),
     '',
+    `## Audit fixes: records changed on the blind audit's adjudication (${input.fixes?.length ?? 0})`,
+    '',
+    ...(input.fixes?.length
+      ? [
+          '| Release | Record | Field | Before | After | Adjudicator |',
+          '| --- | --- | --- | --- | --- | --- |',
+          ...input.fixes.map(
+            (f) =>
+              `| ${f.release} | ${f.id} | ${f.field} | ${cell(f.from)} | ${cell(f.to)} | ${cell(f.reason)} |`,
+          ),
+        ]
+      : ['None.']),
+    '',
     `## Notes for Evan (${input.notes.length})`,
     '',
     ...(input.notes.length ? input.notes.map((n) => `- ${cell(n)}`) : ['None.']),
@@ -215,6 +232,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
   const droppedHosts: ReviewInput['droppedHosts'] = [];
   const overridden: ReviewInput['overridden'] = [];
   const notes = (await readJsonOrNull(join(root, OVERRIDES_FILE), overridesFileSchema))?.notes ?? [];
+  const fixes = (await readJsonOrNull(join(root, AUDIT_FIXES_FILE), auditFixesFileSchema))?.fixes ?? [];
   for (const batch of (await readdir(join(root, BATCHES_DIR)).catch(() => [] as string[])).sort()) {
     const report: ApplyReport | null = await readJsonOrNull(
       join(root, BATCHES_DIR, batch, 'apply-report.json'),
@@ -256,6 +274,7 @@ export async function collectReview(root: string): Promise<ReviewInput> {
     droppedHosts,
     overridden,
     notes,
+    fixes,
   };
 }
 
