@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 14412,
+    "outputTokens": 418
+  },
+  "durationMs": 40443,
+  "draft": {
+    "domain": "austrian.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "austrian-airlines"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "austrian-com-page-1",
+        "quote": "Austrian Airlines is Austria’s leading airline with a global route network of more than 120 destinations.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "austrian-com-page-1",
+        "quote": "Book flights",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "austrian-com-page-1",
+        "quote": "Austrian Airlines is Austria’s leading airline",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "austrian-com-page-1",
+        "quote": "Austrian Airlines is Austria’s leading airline",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "2X on Ticket Purchases",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS (subject to modifications).",
+        "supports": "category"
+      },
+      {
+        "sourceId": "boa-cash-back-category-choices",
+        "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "are not included in this category, for example, airlines",
+        "supports": "category"
+      }
+    ],
+    "notes": "The documents identify Austrian as an airline selling flight tickets/services. Airlines are treated as travel or ticket purchases, while the provided transit definition covers ground/local transport and explicitly excludes airlines; no listed category is airline travel."
+  }
+}

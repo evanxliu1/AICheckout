@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16671,
+    "outputTokens": 474
+  },
+  "durationMs": 54484,
+  "draft": {
+    "domain": "audible.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "audible"
+    ],
+    "candidateCategory": "streaming",
+    "evidence": [
+      {
+        "sourceId": "audible-com-page-1",
+        "quote": "producing Originals, audiobooks and podcasts that inspire imaginations and bring new ideas and voices to our millions of listeners around the globe each day.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "audible-com-page-2",
+        "quote": "Learn about the Audible Standard Membership",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "audible-com-page-1",
+        "quote": "At Audible, we believe stories can inspire compassion and change.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "audible-com-page-2",
+        "quote": "Purchases & returns",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "audible-com-page-1",
+        "quote": "Audible has reinvented a media category and is the driving force behind the audio entertainment revolution.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amazon-store-card-product",
+        "quote": "Audible Books & Originals",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Audible",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Audible",
+        "supports": "category"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "Examples of Select Streaming Service purchases include Amazon Music, Amazon Prime Video, AMC+, Apple Music, Apple TV, Audible",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "This category includes bills paid directly to your cable and internet service providers, as well as online streaming services.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Audible is a digital audio-content merchant, so physicalGoods is false. Amex and Discover explicitly list Audible under streaming; Citi’s listed streaming providers omit Audible, but do not expressly exclude it."
+  }
+}

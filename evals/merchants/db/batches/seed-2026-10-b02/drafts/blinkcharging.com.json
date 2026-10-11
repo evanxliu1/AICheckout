@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b02",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13219,
+    "outputTokens": 260
+  },
+  "durationMs": 27378,
+  "draft": {
+    "domain": "blinkcharging.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "ev-charging",
+    "evidence": [
+      {
+        "sourceId": "blinkcharging-com-page-1",
+        "quote": "market-leading owner, operator, and provider of EV charging stations and services in the United States.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "blinkcharging-com-page-1",
+        "quote": "best equipment available.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "blinkcharging-com-page-1",
+        "quote": "provider of EV charging stations and services",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Blink Charging",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "Use your card at the pump, or inside the store or at EV charging stations to receive cash back.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Also includes merchants that sell electricity for charging an electric vehicle.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "public electric vehicle charging stations.",
+        "supports": "definition"
+      }
+    ],
+    "notes": "Blink also provides charging services; physicalGoods=true is based on the site's references to products and equipment."
+  }
+}
