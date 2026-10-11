@@ -573,10 +573,16 @@ export function compareV3(
   wallet: Wallet,
   purchase: Purchase,
   now: number,
+  options?: { merchant?: MerchantProfileV3 },
 ): Comparison | UnavailableComparison {
   validatePurchaseAndWallet(wallet, purchase, now);
   validateCatalog(catalog, wallet, purchase);
-  const merchants = merchantProfilesV3(catalog);
+  // A passed-in profile (merchant release, Phase 14) stands in for the catalog's at its own id only.
+  const override = options?.merchant;
+  const merchants =
+    override && override.id === purchase.merchantId
+      ? [...merchantProfilesV3(catalog).filter((m) => m.id !== override.id), override]
+      : merchantProfilesV3(catalog);
   const unavailable = unavailableReason(
     catalog,
     merchants.map((m) => m.id),

@@ -15,3 +15,6 @@ export {
   ruleCoversMerchant,
   unitValueFor,
 } from './engine-v3.ts';
+export * from './merchant-release.ts';
+export * from './merchant-match.ts';
+export * from './merchants-v1.ts';

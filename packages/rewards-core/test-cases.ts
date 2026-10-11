@@ -1,6 +1,12 @@
 import { PILOT_CATALOG } from './src/catalog.ts';
 import { CATALOG_V2 } from './src/catalog-v2.ts';
-import type { CatalogV1 as Catalog, CatalogV2, CatalogV3, RewardRuleV3 } from './src/types.ts';
+import type {
+  CatalogV1 as Catalog,
+  CatalogV2,
+  CatalogV3,
+  MerchantRelease,
+  RewardRuleV3,
+} from './src/types.ts';
 
 type Case = { name: string; input: unknown; valid: boolean };
 const invalid = (name: string, mutate: (catalog: Catalog) => unknown): Case => {
@@ -1121,5 +1127,304 @@ export const catalogV3Cases: Case[] = [
   }),
   invalidV3('oversized catalog', (c) => {
     c.cards.push(...copies(c, 100, longExclusions));
+  }),
+];
+
+/** Synthetic merchant release (schema 1, Phase 14) with every evidence basis and kind; test data only. */
+export const MERCHANT_RELEASE_FIXTURE: MerchantRelease = {
+  schemaVersion: 1,
+  version: '2026-10-10.test.1',
+  verifiedAt: '2026-10-10T00:00:00Z',
+  sources: [
+    {
+      id: 'issuer-amazon-terms',
+      url: 'https://issuer.example/prime-terms',
+      kind: 'issuer-terms',
+      capturedAt: '2026-10-05',
+      sha256: 'a'.repeat(64),
+    },
+    {
+      id: 'kroger-about',
+      url: 'https://store.example/about',
+      kind: 'store-page',
+      capturedAt: '2026-10-09',
+      sha256: 'b'.repeat(64),
+    },
+    {
+      id: 'kroger-mcc',
+      url: 'https://lookup.example/kroger',
+      kind: 'mcc-lookup',
+      capturedAt: '2026-10-10',
+      sha256: 'c'.repeat(64),
+    },
+  ],
+  merchants: [
+    {
+      id: 'amazon-us',
+      name: 'Amazon',
+      hosts: ['amazon.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['amazon'],
+      disabled: false,
+    },
+    {
+      id: 'whole-foods-us',
+      name: 'Whole Foods Market',
+      hosts: ['wholefoodsmarket.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'supermarkets',
+      evidence: { basis: 'issuer', sourceIds: ['issuer-amazon-terms'] },
+      brandIds: ['whole-foods-market'],
+      disabled: false,
+    },
+    {
+      id: 'kroger-us',
+      name: 'Kroger',
+      hosts: ['kroger.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'supermarkets',
+      evidence: { basis: 'corroborated', sourceIds: ['kroger-about', 'kroger-mcc'] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'target-us',
+      name: 'Target',
+      hosts: ['target.com'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['target'],
+      disabled: false,
+    },
+    {
+      id: 'delta-us',
+      name: 'Delta Air Lines',
+      hosts: ['delta.com'],
+      kind: 'merchant',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: ['delta'],
+      disabled: false,
+    },
+    {
+      id: 'paypal',
+      name: 'PayPal',
+      hosts: ['paypal.com'],
+      kind: 'processor',
+      physicalGoods: false,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: false,
+    },
+    {
+      id: 'closed-store-us',
+      name: 'Closed Store',
+      hosts: ['closed-store.example'],
+      kind: 'merchant',
+      physicalGoods: true,
+      category: 'general-merchandise',
+      evidence: { basis: 'default', sourceIds: [] },
+      brandIds: [],
+      disabled: true,
+    },
+  ],
+};
+const merchantOf = (release: MerchantRelease, id: string) => release.merchants.find((m) => m.id === id)!;
+const caseRelease =
+  (valid: boolean) =>
+  (name: string, mutate: (release: MerchantRelease) => unknown): Case => {
+    const release = structuredClone(MERCHANT_RELEASE_FIXTURE);
+    const result = mutate(release);
+    return { name: `merchants: ${name}`, input: result ?? release, valid };
+  };
+const validRelease = caseRelease(true);
+const invalidRelease = caseRelease(false);
+/** Default records with unique hosts; `hostCount` long hosts each (about 190 bytes per host) for size cases. */
+const recordCopies = (release: MerchantRelease, count: number, hostCount = 1) =>
+  Array.from({ length: count }, (_, i) => ({
+    ...structuredClone(merchantOf(release, 'target-us')),
+    id: `copy-${i}`,
+    hosts: Array.from({ length: hostCount }, (_, j) =>
+      hostCount === 1
+        ? `copy-${i}.example`
+        : `${'h'.repeat(50)}-${j}-copy-${i}.${'x'.repeat(60)}.${'y'.repeat(60)}.example`,
+    ),
+  }));
+
+/** Merchant release contract cases, run against Zod (extension tests) and, from 14.6, SQL (parity script). */
+export const merchantReleaseCases: Case[] = [
+  validRelease('synthetic release', () => undefined),
+  validRelease('no sources', (r) => {
+    r.sources = [];
+    r.merchants = r.merchants.filter((m) => m.evidence.basis === 'default');
+  }),
+  validRelease('punycode and subdomain hosts', (r) => {
+    merchantOf(r, 'target-us').hosts = ['xn--trget-gra.example', 'secure.target.com'];
+  }),
+  validRelease('name with basic punctuation', (r) => {
+    merchantOf(r, 'target-us').name = "BJ's Wholesale Club, Inc. & Co.";
+  }),
+  validRelease('a verified store page alone keeps the default category', (r) => {
+    merchantOf(r, 'kroger-us').evidence = { basis: 'default', sourceIds: [] };
+    merchantOf(r, 'kroger-us').category = 'general-merchandise';
+    r.sources = r.sources.filter((s) => !s.id.startsWith('kroger-'));
+  }),
+  validRelease('source captured on the verification date', (r) => {
+    r.sources[2].capturedAt = '2026-10-10';
+  }),
+  validRelease('5,000 merchants', (r) => {
+    r.merchants.push(...recordCopies(r, 5000 - r.merchants.length));
+  }),
+  { name: 'merchants: null', input: null, valid: false },
+  { name: 'merchants: a catalog is not a merchant release', input: CATALOG_V3_FIXTURE, valid: false },
+  invalidRelease('unknown fields', (r) => ({ ...r, script: 'execute' })),
+  invalidRelease('schema version 2', (r) => ({ ...r, schemaVersion: 2 })),
+  invalidRelease('expiresAt is not part of the release', (r) => ({
+    ...r,
+    expiresAt: '2026-11-10T00:00:00Z',
+  })),
+  invalidRelease('version without a date', (r) => {
+    r.version = 'seed.1';
+  }),
+  invalidRelease('version without a counter', (r) => {
+    r.version = '2026-10-10.seed';
+  }),
+  invalidRelease('verifiedAt is a date, not a datetime', (r) => {
+    r.verifiedAt = '2026-10-10';
+  }),
+  invalidRelease('no merchants', (r) => {
+    r.merchants = [];
+  }),
+  invalidRelease('5,001 merchants', (r) => {
+    r.merchants.push(...recordCopies(r, 5001 - r.merchants.length));
+  }),
+  invalidRelease('oversized release', (r) => {
+    r.merchants.push(...recordCopies(r, 700, 20));
+  }),
+  invalidRelease('duplicate merchant id', (r) => {
+    r.merchants.push({ ...merchantOf(r, 'target-us'), hosts: ['target.example'] });
+  }),
+  invalidRelease('duplicate source id', (r) => {
+    r.sources.push({ ...r.sources[0] });
+  }),
+  invalidRelease('host shared by two records', (r) => {
+    merchantOf(r, 'kroger-us').hosts.push('target.com');
+  }),
+  invalidRelease('host repeated in one record', (r) => {
+    merchantOf(r, 'kroger-us').hosts.push('kroger.com');
+  }),
+  invalidRelease('no hosts', (r) => {
+    merchantOf(r, 'kroger-us').hosts = [];
+  }),
+  invalidRelease('21 hosts', (r) => {
+    merchantOf(r, 'kroger-us').hosts = Array.from({ length: 21 }, (_, i) => `h${i}.kroger.com`);
+  }),
+  invalidRelease('upper-case host', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['Kroger.com'];
+  }),
+  invalidRelease('host with a trailing dot', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['kroger.com.'];
+  }),
+  invalidRelease('single-label host', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['localhost'];
+  }),
+  invalidRelease('IPv4 host', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['127.0.0.1'];
+  }),
+  invalidRelease('host with a scheme', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['https://kroger.com'];
+  }),
+  invalidRelease('host with a path', (r) => {
+    merchantOf(r, 'kroger-us').hosts = ['kroger.com/shop'];
+  }),
+  invalidRelease('host with a label of 64 characters', (r) => {
+    merchantOf(r, 'kroger-us').hosts = [`${'a'.repeat(64)}.kroger.com`];
+  }),
+  invalidRelease('empty name', (r) => {
+    merchantOf(r, 'kroger-us').name = '';
+  }),
+  invalidRelease('name of 61 characters', (r) => {
+    merchantOf(r, 'kroger-us').name = 'K'.repeat(61);
+  }),
+  invalidRelease('name with markup', (r) => {
+    merchantOf(r, 'kroger-us').name = '<b>Kroger</b>';
+  }),
+  invalidRelease('unknown kind', (r) => {
+    (merchantOf(r, 'kroger-us') as { kind: string }).kind = 'platform';
+  }),
+  invalidRelease('unknown category', (r) => {
+    (merchantOf(r, 'kroger-us') as { category: string }).category = 'groceries';
+  }),
+  invalidRelease('unknown evidence basis', (r) => {
+    (merchantOf(r, 'kroger-us').evidence as { basis: string }).basis = 'guess';
+  }),
+  invalidRelease('a bonus category without evidence', (r) => {
+    merchantOf(r, 'kroger-us').evidence = { basis: 'default', sourceIds: [] };
+  }),
+  invalidRelease('default evidence citing a source', (r) => {
+    merchantOf(r, 'target-us').evidence.sourceIds = ['kroger-about'];
+  }),
+  invalidRelease('issuer evidence without issuer terms', (r) => {
+    merchantOf(r, 'whole-foods-us').evidence.sourceIds = ['kroger-about'];
+  }),
+  invalidRelease('issuer evidence citing nothing', (r) => {
+    merchantOf(r, 'whole-foods-us').evidence.sourceIds = [];
+  }),
+  invalidRelease('corroborated evidence from a store page alone', (r) => {
+    merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-about'];
+  }),
+  invalidRelease('corroborated evidence from a lookup alone', (r) => {
+    merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-mcc'];
+  }),
+  invalidRelease('unknown source id', (r) => {
+    merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-about', 'missing'];
+  }),
+  invalidRelease('duplicate source id in evidence', (r) => {
+    merchantOf(r, 'kroger-us').evidence.sourceIds = ['kroger-about', 'kroger-mcc', 'kroger-mcc'];
+  }),
+  invalidRelease('source captured after verification', (r) => {
+    r.sources[2].capturedAt = '2026-10-11';
+  }),
+  invalidRelease('source over http', (r) => {
+    r.sources[0].url = 'http://issuer.example/prime-terms';
+  }),
+  invalidRelease('source with a short hash', (r) => {
+    r.sources[0].sha256 = 'abc';
+  }),
+  invalidRelease('unknown source kind', (r) => {
+    (r.sources[0] as { kind: string }).kind = 'blog';
+  }),
+  invalidRelease('a processor selling physical goods', (r) => {
+    merchantOf(r, 'paypal').physicalGoods = true;
+  }),
+  invalidRelease('a processor with evidence', (r) => {
+    merchantOf(r, 'paypal').evidence = { basis: 'issuer', sourceIds: ['issuer-amazon-terms'] };
+  }),
+  invalidRelease('a processor with a brand', (r) => {
+    merchantOf(r, 'paypal').brandIds = ['amazon'];
+  }),
+  invalidRelease('a source no record cites', (r) => {
+    r.sources.push({ ...r.sources[0], id: 'uncited' });
+  }),
+  invalidRelease('duplicate brand id', (r) => {
+    merchantOf(r, 'target-us').brandIds = ['target', 'target'];
+  }),
+  invalidRelease('21 brands', (r) => {
+    merchantOf(r, 'target-us').brandIds = Array.from({ length: 21 }, (_, i) => `brand-${i}`);
+  }),
+  invalidRelease('upper-case merchant id', (r) => {
+    merchantOf(r, 'target-us').id = 'Target-US';
+  }),
+  invalidRelease('disabled as a string', (r) => {
+    (merchantOf(r, 'target-us') as { disabled: unknown }).disabled = 'true';
   }),
 ];

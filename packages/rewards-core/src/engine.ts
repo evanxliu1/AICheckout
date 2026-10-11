@@ -7,10 +7,18 @@ import type {
   Catalog,
   CatalogV1,
   Comparison,
+  MerchantProfileV3,
   Purchase,
   UnavailableComparison,
   Wallet,
 } from './types.ts';
+
+export interface CompareOptions {
+  /** Catalog v3: a merchant profile (from a merchant release, `recordToProfile`) that replaces the
+   * catalog's lookup when its id equals `purchase.merchantId`; otherwise the catalog's profiles and the
+   * generic store answer as before. Ignored by v1 and v2. */
+  merchant?: MerchantProfileV3;
+}
 
 /** Defense in depth for typed callers; external JSON must also pass its runtime schema. */
 function validate(catalog: CatalogV1, wallet: Wallet, purchase: Purchase, now: number) {
@@ -91,8 +99,9 @@ export function compareRewards(
   wallet: Wallet,
   purchase: Purchase,
   now: number,
+  options?: CompareOptions,
 ): Comparison | UnavailableComparison {
-  if (catalog.schemaVersion === 3) return compareV3(catalog, wallet, purchase, now);
+  if (catalog.schemaVersion === 3) return compareV3(catalog, wallet, purchase, now, options);
   return catalog.schemaVersion === 2
     ? compareV2(catalog, wallet, purchase, now)
     : compareV1(catalog, wallet, purchase, now);

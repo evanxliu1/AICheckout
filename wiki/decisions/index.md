@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-11
+* [Merchant release 14.1 details: the seed keeps Best Buy and Newegg on the default category, fifteen processor hosts hand-picked, strict version format, evidence rule and processor flag enforced in Zod, recordToProfile Zod-free](./2026-10-11-merchant-release-seed-and-contract-details.md) — 14.1 implementer's choices the plan left open; the seed applies the evidence rule honestly, so the two electronics stores wait for 14.4's evidence.
+
 ## 2026-10-10
 * [Build the merchant database bundled-first in two tiers, with a passed-in engine profile, a trimmed record, no adjudicator, no review-app page and a blind audit instead of a held-out split](./2026-10-10-phase-14-design.md) — Fable 5.1 design review of the Phase 14 plan: approach kept, pipeline split into tiers, record trimmed, audit on the frozen 60-domain list; within Evan's binding decisions.
 * [Calls from the 2026-10-10 wiki audit (A1–A6)](./2026-10-10-audit-calls.md) — Evan accepted the recommendations: D2 and D8 approved, lookups cited only, real users a goal, accounts planned but not scheduled, adapters retire after a check on fresh captures, popup copy reworded, public site fixed in Phase 15.
