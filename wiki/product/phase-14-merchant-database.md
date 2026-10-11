@@ -63,8 +63,8 @@ The merchant database fixes all five by telling the extension, for each known we
 
 ## 2. Evan's decisions this plan follows
 
-All 2026-10-10, binding for this plan:
-- [merchant database evidence](../decisions/2026-10-10-merchant-database-evidence.md);
+All 2026-10-10 unless dated, binding for this plan:
+- [merchant database evidence](../decisions/2026-10-10-merchant-database-evidence.md) and its 2026-10-11 supplement, the [`definition` basis](../decisions/2026-10-11-definition-evidence-basis.md);
 - [audit calls](../decisions/2026-10-10-audit-calls.md);
 - [data collection](../decisions/2026-10-10-data-collection.md).
 
@@ -72,7 +72,8 @@ All 2026-10-10, binding for this plan:
 2. **Weak evidence gives the general rate**, never a range. This supersedes D5's ranges.
 3. **A bonus category needs evidence:**
    - **`issuer`:** the issuer names the store in its card terms;
-   - **`corroborated`:** the store's own official pages show the business type, and a public merchant-code lookup agrees.
+   - **`corroborated`:** the store's own official pages show the business type, and a public merchant-code lookup agrees;
+   - **`definition`** (added 2026-10-11, "Option 2"): the store's own captured pages plainly show its business type, an issuer's published category definition (quoted verbatim, 25 words or fewer) covers that type, no captured issuer page excludes that kind of store or the store from the category (superstores, discount stores and warehouse clubs never get grocery), and the store sells directly (a delivery marketplace only for `dining` where the definition names delivery services). `issuer` is the strongest basis.
 4. **Public sources only.** Lookup pages are cited by URL, date, SHA-256 and quotes of 25 words or fewer, never copied as data; top-store lists contribute domain names only; card statements are never used.
 5. **Competitors' architecture, not their data flow:** a hosted, reviewed list with a remote off switch and a generic fallback, downloaded whole and matched on the device, so no per-site lookups.
 6. **Releases:** merchant data is a separate, versioned release (D2), published on Evan's chat "publish merchants <version>"; the extension refreshes it, and the card catalog, weekly in the background (D8).
@@ -105,7 +106,7 @@ Schema `merchant-release.1`, validated in Zod (`packages/rewards-core/src/mercha
 | `kind` | `merchant`, `marketplace` or `processor` | `merchant` |
 | `physicalGoods` | Whether the store sells physical goods (online-retail rules need it); `false` for services, subscriptions and processors | `true` |
 | `category` | One of the catalog v3 merchant categories; `general-merchandise` unless the evidence rule is met | `supermarkets` |
-| `evidence` | `basis`: `issuer`, `corroborated` or `default`; `sourceIds` (empty for `default`). Quotes are not shipped; they stay in the committed evidence files for review | `corroborated`, store page and lookup |
+| `evidence` | `basis`: `issuer`, `corroborated`, `definition` (since 2026-10-11: a store page and an issuer's category definition) or `default`; `sourceIds` (empty for `default`). Quotes are not shipped; they stay in the committed evidence files for review | `definition`, store page and issuer terms |
 | `brandIds` | Catalog brands **whose official store this site is** (not brands it resells); ids missing from the catalog in effect are ignored | `[]` (Kroger is not a catalog brand) |
 | `disabled` | Remote off switch: the site falls back to the generic profile | `false` |
 
@@ -173,9 +174,9 @@ Records are committed one JSON file per store under `evals/merchants/db/records/
 | --- | --- | --- | --- |
 | 1 Research | `merchant-researcher` subagent (Claude, web), 25 stores per packet | Per store: official U.S. checkout domains, the store's own about or store-type page, any public merchant-code lookup page; URLs only, no values. Issuer pages are not researched: the existing issuer captures of the 178-card catalog are searched deterministically for the store's name, and matches become `issuer` sources | URLs resolve; domains are the store's own; no lookup site's terms forbid citation |
 | 2 Capture | CLI (Playwright, logged out, robots recorded) | Gitignored dated captures with a hashed manifest | Every cited URL captured or the source is dropped |
-| 3 Draft | gpt-5.6-luna `xhigh` through Codex; new prompt file `merchant-draft.1` | Per store from captures only: kind, `physicalGoods`, brands (from the catalog's brand list), candidate category, evidence quotes with source ids | Zod-valid; quotes found verbatim in captures, ≤ 25 words |
+| 3 Draft | gpt-5.6-luna `xhigh` through Codex; prompt file `merchant-draft.2` (since 2026-10-11; `.1` retired, never edited) | Per store from captures only: kind, `physicalGoods`, brands (from the catalog's brand list), candidate category, evidence quotes with source ids: business-type quotes from the store's pages and `definition` quotes of the issuers' category definitions | Zod-valid; quotes found verbatim in captures, ≤ 25 words |
 | 4 Verify | `merchant-verifier` subagent (Claude, captures only), 25 stores per packet | Per field: confirmed, or disputed with the reason | Every field decided |
-| 5 Apply | CLI, deterministic | Records. **The evidence rule sets `category`**: a candidate stays only with an `issuer` source (a quote that names the store, states earning and names the category in one clause, with no exclusion or limit wording), or a store page plus an agreeing lookup; otherwise `general-merchandise` with `default`. **A disputed `evidence` field downgrades the record to the default category** (shipped, listed under Downgraded for Evan); **any other disputed field holds the whole record out of the release** and lists it for Evan; there is no adjudicator (review fix 2026-10-11) | Rule unit-tested; downgraded and held-out records listed |
+| 5 Apply | CLI, deterministic | Records. **The evidence rule sets `category`**: a candidate stays only with an `issuer` source (a quote that names the store, states earning and names the category in one clause, with no exclusion or limit wording), or a store page plus an agreeing lookup (`corroborated`), or (since 2026-10-11) a store-page quote showing the business type plus an issuer `definition` quote covering it, with no issuer sentence excluding the store or its kind of store from the category and the store selling directly (`definition`; a marketplace only for `dining` under a definition naming delivery services); otherwise `general-merchandise` with `default`. **A disputed `evidence` field downgrades the record to the default category** (shipped, listed under Downgraded for Evan); **any other disputed field holds the whole record out of the release** and lists it for Evan; there is no adjudicator (review fix 2026-10-11) | Rule unit-tested; downgraded and held-out records listed |
 | 6 Build | CLI | `merchants-v1.ts`, the release JSON, and `evals/merchants/db/review.md`: only the deviations from the default (bonus categories with their evidence quotes, brands, processors, `physicalGoods: false`, disabled, held-out records) | `merchants:check` up to date |
 
 **Size and cost:** tier B is about 8 research and 8 verify packets. At the card pipeline's 20–40k Claude tokens per item that is about 4–8 million Claude tokens for 200 stores (the first plan's 15–30 million covered 500), plus the luna runs on the ChatGPT subscription; the 14.3 dry run gives a real figure. Live models run locally only, never on Render.
@@ -191,10 +192,10 @@ The report is `docs/evals/merchant-db-v1.md`. There is no 70/30 split: the relea
 | **Wrong brand** (a store card accepted where it isn't, or a wrong exclusion) | Gold vs record brands on every record with brands and on the 60 | 0 |
 | Wrong kind | Gold vs record on every processor and on the 60 | 0 |
 | **Wrong store match** | A URL test set: every candidate's checkout URL, the frozen reader set's U.S. cart URLs, and look-alike traps (`amazon.ca`, `target.com.au`, `walmartmoney.com`, deep subdomains, punycode, `myshopify.com` stores) | 0 wrong matches |
-| Engine scenarios | Unit tests: Prime Visa at amazon.com and wholefoodsmarket.com; Target card accepted at target.com only; Freedom Flex grocery excluded at walmart.com; OnePay first-90-days at walmart.com; kroger.com grocery (corroborated); costco.com warehouse club; delta.com with no online-retail rule; PayPal page with no badge; `disabled` → generic; a release naming an unknown brand or category | All pass |
+| Engine scenarios | Unit tests: Prime Visa at amazon.com and wholefoodsmarket.com; Target card accepted at target.com only; Freedom Flex grocery excluded at walmart.com; OnePay first-90-days at walmart.com; kroger.com grocery (corroborated or definition); costco.com warehouse club; delta.com with no online-retail rule; PayPal page with no badge; `disabled` → generic; a release naming an unknown brand or category | All pass |
 | Size and speed | Release bytes; match time on the device | ≤ 2 MiB; under 1 ms |
 
-**Discipline.** `merchant-draft.1` and the pipeline are tuned only on the 14.3 dry run's 10 development stores, which are excluded from the audit. The audit runs once, after the full build. Disagreements are fixed in the release **after** the report records the pre-fix numbers; the report says which records changed.
+**Discipline.** The draft prompt (`merchant-draft.1`, then `.2`) and the pipeline are tuned only on the 14.3 dry run's 10 development stores, which are excluded from the audit. The audit runs once, after the full build. Disagreements are fixed in the release **after** the report records the pre-fix numbers; the report says which records changed.
 
 ## 8. Milestones
 
