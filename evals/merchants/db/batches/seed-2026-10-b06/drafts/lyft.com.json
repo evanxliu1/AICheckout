@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 16967,
+    "outputTokens": 436
+  },
+  "durationMs": 257527,
+  "draft": {
+    "domain": "lyft.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "lyft"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "lyft-com-page-1",
+        "quote": "they’ll get access to convenient, reliable Lyft rides",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "lyft-com-page-1",
+        "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter.",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "lyft-com-page-1",
+        "quote": "© 2026 Lyft, Inc.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "lyft-com-page-1",
+        "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter.",
+        "supports": "category"
+      },
+      {
+        "sourceId": "lyft-com-page-2",
+        "quote": "Riding with Lyft",
+        "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-cash-plus-sample-merchants",
+        "quote": "this category. While the list can be a helpful guide, U.S. Bank does not control how individual merchants or purchases are categorized.\nAmtrak®\nLyft®",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "Merchants in this category include operators of passenger trains, buses, taxis, limousines, rideshare, ferries, toll bridges and highways, and parking lots and garages.",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "Select transit includes car rentals, ferries, commuter railways, subways, taxis/limousines/car services",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "discover-cashback-calendar",
+        "quote": "taxi & rideshare services (including shared bikes and scooters), limousines, parking garages and toll-related purchases are not included.",
+        "supports": "category"
+      }
+    ],
+    "notes": "Lyft is clearly a rideshare service, and U.S. Bank lists Lyft under transportation while Chase includes rideshare in local transit. However, Discover excludes taxi and rideshare services from its transportation category, so the category is left null conservatively."
+  }
+}
