@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "packet": 2,
+  "provenance": "agent-verified",
+  "auditor": {
+    "agent": "merchant-auditor",
+    "model": "claude-opus-5-5",
+    "date": "2026-10-11",
+    "filesRead": [
+      "evals/merchants/db/audit/packets-mcc/2/packet.json",
+      ".claude/agents/merchant-auditor.md",
+      "evals/merchants/db/audit/packets-mcc/2/catalog-lists.json",
+      "evals/merchants/db/audit/packets-mcc/2/issuer-definitions.md",
+      "evals/merchants/db/audit/packets-mcc/2/mcc-codes.json",
+      "evals/merchants/db/audit/packets-mcc/2/stores/fiveguys.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/giantfood.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/greyhound.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/grubhub.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/harborfreight.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/harristeeter.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/homedepot.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/hulu.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/hyvee.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/ihop.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/jimmyjohns.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/kohls.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/kroger.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/lowes.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/lyft.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/menards.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/netflix.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/newegg.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/nordstrom.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/northerntool.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/olivegarden.com.md",
+      "evals/merchants/db/audit/packets-mcc/2/stores/panerabread.com.md"
+    ]
+  },
+  "stores": [
+    {
+      "domain": "fiveguys.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "fiveguys-com-page-1", "quote": "we operate more than 1,900 restaurants worldwide", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "FIVE GUYS 1845 QSR | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "50/50 rows fast food. Amex Gold names Five Guys only for a statement credit, not an issuer earning clause."
+    },
+    {
+      "domain": "giantfood.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "giantfood-com-page-3", "quote": "All Giant Food Locations", "supports": "kind" },
+        { "source": "giantfood-com-page-3", "quote": "Store Departments", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "GIANT FOOD INC #375 | Grocery Stores, Supermarkets", "supports": "mcc" }
+      ],
+      "notes": "Pages 1-2 empty; page 3 is a store locator with department nav only. 238/238 rows grocery. physicalGoods true read as in-store goods."
+    },
+    {
+      "domain": "greyhound.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "transit",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "greyhound-com-page-1", "quote": "affordable and reliable long-distance bus travel in North America", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "GREYHOUND LINES CNP | Bus Lines", "supports": "mcc" }
+      ],
+      "notes": "104/104 rows bus lines (incl. 'BUS LINES CHARTERS TOUR BUSES', matched by the ^BUS LINES prefix). US Bank list naming Greyhound is hedged."
+    },
+    {
+      "domain": "grubhub.com",
+      "kind": "marketplace",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "grubhub-com-page-1", "quote": "Using contact-free delivery, supporting local restaurants & COVID-19's impact", "supports": "kind" },
+        { "source": "chase-rewards-category-faq", "quote": "Only purchases made with the following select food delivery merchants will qualify for this category:", "supports": "category" },
+        { "source": "chase-rewards-category-faq", "quote": "grubhub.com or the Grubhub mobile app", "supports": "category" }
+      ],
+      "notes": "Issuer basis is Chase's select food delivery inclusion list, read as dining. mcc also supports dining: 13/16 rows eating places (81%). Amex is a statement credit; US Bank list hedged."
+    },
+    {
+      "domain": "harborfreight.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["harbor-freight"],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "synchrony-harbor-freight-credit-card-partner", "quote": "Can I use the Harbor Freight Credit Card to make purchases at HarborFreight.com?", "supports": "brand" },
+        { "source": "synchrony-harbor-freight-credit-card-partner", "quote": "Can I use my Harbor Freight Money towards all merchandise?", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "HARBOR FREIGHT TOOLS 251 | HARDWARE STORES", "supports": "mcc" }
+      ],
+      "notes": "Store page is a bot wall; kind, goods and brand rest on the Synchrony co-brand page. 698/700 rows hardware or home supply."
+    },
+    {
+      "domain": "harristeeter.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "harristeeter-com-page-1", "quote": "Pickup at Village at Chestnut Street", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "HARRIS TEETER #352 | Grocery Stores, Supermarkets", "supports": "mcc" }
+      ],
+      "notes": "1 fuel row set aside; 142/142 remaining rows grocery. Pages are navigation only, no business-type noun phrase."
+    },
+    {
+      "domain": "homedepot.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "homedepot-com-page-1", "quote": "Today, we’re proud to be the world’s largest home improvement retailer.", "supports": "kind" },
+        { "source": "homedepot-com-page-1", "quote": "an e-commerce business that offers more than one million products for the DIY customer", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "THE HOME DEPOT #2583 | Home Supply Warehouse Stores", "supports": "mcc" }
+      ],
+      "notes": "12321/12609 rows home supply warehouse (98%). BoA lists The Home Depot only as a merchant example (hedged)."
+    },
+    {
+      "domain": "hulu.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["hulu"],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "hulu-com-page-1", "quote": "Hulu is available as a standalone streaming service", "supports": "kind" },
+        { "source": "citi-strata-rewards-terms", "quote": "Includes the following streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu", "supports": "category" }
+      ],
+      "notes": "Issuer clause is in issuer-definitions.md, not the sheet; sheet issuer excerpts are a Disney co-brand bonus and an Amex statement credit. mcc also supports streaming: 39/39 rows pay TV."
+    },
+    {
+      "domain": "hyvee.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "hyvee-com-page-1", "quote": "Voted #1 Best Grocery Store in America - USA TODAY, 2024", "supports": "kind" },
+        { "source": "hyvee-com-page-1", "quote": "Prices, promotions, and availability may vary by store and online and are determined on date order is fulfilled.", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "HY-VEE AMES 1018 | GROCERY STORES SUPERMARKETS", "supports": "mcc" }
+      ],
+      "notes": "1 fuel row set aside; 18/18 grocery. Amex names Hy-Vee only under 'Examples of merchants' (hedged). The 1930 'general store' is history, not a current self-description."
+    },
+    {
+      "domain": "ihop.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "ihop-com-page-1", "quote": "the IHOP family restaurant chain has served our world-famous pancakes", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "IHOP 1908 | EATING PLACES RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "133/133 rows eating places or fast food. US Bank list naming IHOP is hedged."
+    },
+    {
+      "domain": "jimmyjohns.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "jimmyjohns-com-page-1", "quote": "In October 2019, Jimmy John’s was acquired by Inspire Brands, a multi-brand restaurant company.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "JIMMY JOHNS # 1317 | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "453/453 rows fast food or eating places. US Bank list is hedged."
+    },
+    {
+      "domain": "kohls.com",
+      "kind": "merchant",
+      "physicalGoods": "cant-tell",
+      "brandIds": [],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "capital-one-kohls-rewards-visa-pricing", "quote": "The Kohl’s Credit Card can only be used at Kohl’s stores, catalogs, or online", "supports": "kind" },
+        { "source": "amex-rewards-info-retail", "quote": "The department stores must have these specific names: Bealls, Belk, Bloomingdale’s, Bon Ton Stores, Boscov's, Century 21 Department Stores, Dillard’s, J.C. Penney (JCP), Kohl's", "supports": "category" }
+      ],
+      "notes": "Both store pages are access-denied errors, so goods shipped or picked up are not shown. mcc also supports department stores: 60/60 rows."
+    },
+    {
+      "domain": "kroger.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "supermarkets",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "kroger-com-page-3", "quote": "You can shop online for the products you need and get them delivered to your doorstep the same day.", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "KROGER #239 | GROCERY STORES SUPERMARKETS", "supports": "mcc" }
+      ],
+      "notes": "4 fuel rows set aside; 20/20 grocery. Citi Costco list excludes Kroger from the gas earn only, not supermarkets. US Bank mentions are hedged."
+    },
+    {
+      "domain": "lowes.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "lowes-com-page-1", "quote": "Lowe’s operates over 1,700 home improvement stores and employs approximately 300,000 associates.", "supports": "kind" },
+        { "source": "lowes-com-page-1", "quote": "home delivery and parcel shipment", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "LOWES #00241 | HOME SUPPLY WAREHOUSE STORES", "supports": "mcc" }
+      ],
+      "notes": "27197/27198 rows home supply warehouse. Page 2 is an access-denied error."
+    },
+    {
+      "domain": "lyft.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": ["lyft"],
+      "category": "transit",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "lyft-com-page-1", "quote": "We’ll match you with a driver in seconds, or help you find the nearest bike or scooter.", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "LYFT RIDE MON 5PM | TAXICABS/LIMOUSINES", "supports": "mcc" }
+      ],
+      "notes": "499/504 rows taxicabs/limousines (99%). Issuer mentions are Lyft credits (statement-credit type) and a hedged US Bank list."
+    },
+    {
+      "domain": "menards.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "menards-com-page-1", "quote": "has more than 300 home improvement stores located in Illinois", "supports": "kind" },
+        { "source": "menards-com-page-1", "quote": "Order Tracker", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "MENARDS GRAND ISLAND NE | HOME SUPPLY WAREHOUSE STORES", "supports": "mcc" }
+      ],
+      "notes": "Exactly 10 rows, all home supply warehouse: at the minimum. Pages 2-3 empty. 'One-stop shopping' with groceries is not an excluded kind for home improvement."
+    },
+    {
+      "domain": "netflix.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "streaming",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "netflix-com-page-2", "quote": "Netflix plans are billed monthly on the date you signed up.", "supports": "kind" },
+        { "source": "citi-strata-rewards-terms", "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix", "supports": "category" }
+      ],
+      "notes": "Citi inclusion list. Netflix is not a catalog brand. Lookup is a forum thread (not used). mcc also supports streaming: 120/125 rows pay TV (96%)."
+    },
+    {
+      "domain": "newegg.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": ["newegg"],
+      "category": "electronics",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "newegg-com-page-1", "quote": "a wide selection of PC hardware, consumer electronics, gaming peripherals, and lifestyle technology", "supports": "kind" },
+        { "source": "newegg-com-page-1", "quote": "More than a marketplace", "supports": "kind" },
+        { "source": "newegg-com-page-1", "quote": "Track My Order", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "WWW.NEWEGG.COM | Electronic Sales", "supports": "mcc" }
+      ],
+      "notes": "Kind uncertain: page hosts independent sellers and says 'More than a marketplace', but does not show sales are mostly third-party. 500/507 rows electronics or computer software (99%)."
+    },
+    {
+      "domain": "nordstrom.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "department-stores",
+      "basis": "issuer",
+      "quotes": [
+        { "source": "nordstrom-com-page-1", "quote": "Free shipping and free returns", "supports": "physicalGoods" },
+        { "source": "amex-rewards-info-retail", "quote": "To earn additional rewards, purchases must be made at department stores included on our list of “select major department stores”", "supports": "category" },
+        { "source": "amex-rewards-info-retail", "quote": "Kohl's, Lord & Taylor, Macy's, Neiman Marcus, Nordstrom, Saks Fifth Avenue, Sears and Stein Mart.", "supports": "category" }
+      ],
+      "notes": "Amex select major department store list names Nordstrom. mcc also supports department stores: 19/20 rows."
+    },
+    {
+      "domain": "northerntool.com",
+      "kind": "merchant",
+      "physicalGoods": true,
+      "brandIds": [],
+      "category": "home-improvement",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "northerntool.com-home", "quote": "Quality Tools for Serious Work", "supports": "kind" },
+        { "source": "northerntool.com-home", "quote": "TAKE $25 OFF YOUR ORDER OF $250 OR MORE", "supports": "physicalGoods" },
+        { "source": "mcc-evidence", "quote": "NOR NORTHERN TOOL | HARDWARE STORES", "supports": "mcc" }
+      ],
+      "notes": "229/229 rows hardware stores. Homepage shows stores, cart and products but no explicit shipping or pickup; physicalGoods true is a reading of in-store goods."
+    },
+    {
+      "domain": "olivegarden.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "olivegarden-com-page-1", "quote": "With more than 900 restaurants nationwide", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "OLIVE GARDEN 0024426 | EATING PLACES RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "394/395 rows eating places. US Bank list naming Olive Garden is hedged."
+    },
+    {
+      "domain": "panerabread.com",
+      "kind": "merchant",
+      "physicalGoods": false,
+      "brandIds": [],
+      "category": "dining",
+      "basis": "mcc",
+      "quotes": [
+        { "source": "panerabread-com-page-1", "quote": "Start an Order", "supports": "kind" },
+        { "source": "mcc-evidence", "quote": "PANERA BREAD #202828 O | FAST FOOD RESTAURANTS", "supports": "mcc" }
+      ],
+      "notes": "1214/1216 rows fast food or eating places (2 caterers). Page shows a menu and ordering, no business-type noun phrase."
+    }
+  ]
+}

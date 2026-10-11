@@ -339,7 +339,7 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     });
     expect(await send(t, genericReading(10000), 7, 'https://www.target.com/cart')).toEqual({ show: false });
   });
-  it('a default Best Buy record is general merchandise: no electronics bonus until it carries evidence (2026-10-11)', async () => {
+  it('the bundled Best Buy record is electronics on the mcc basis (2026-10-11); a record is always used as authored', async () => {
     const cashPlus = {
       defaultCardId: 'us-bank-cash-plus',
       cards: [
@@ -354,8 +354,8 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     };
     const seed = setupWith({ wallet: cashPlus }, v3);
     await send(seed, genericReading(10000), 4, 'https://www.bestbuy.com/site/basket');
-    expect((await ready(seed, 4)).result.estimates[0].maxRewardCents).toBeLessThan(500);
-    // A record with evidence is used as authored too (the fixture's record is general merchandise).
+    expect((await ready(seed, 4)).result.estimates[0].maxRewardCents).toBeGreaterThanOrEqual(500);
+    // A record with other evidence is used as authored too (a supermarket record at bestbuy.com pays no electronics).
     const evidenced: MerchantRelease = {
       ...MERCHANT_RELEASE_FIXTURE,
       merchants: MERCHANT_RELEASE_FIXTURE.merchants.map((m) =>

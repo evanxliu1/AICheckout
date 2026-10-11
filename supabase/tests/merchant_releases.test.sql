@@ -10,9 +10,10 @@ insert into auth.sessions(id,user_id) values
   ('94000000-0000-4000-8000-000000000002','93000000-0000-4000-8000-000000000002');
 insert into catalog_private.reviewers(user_id) values('93000000-0000-4000-8000-000000000001');
 
--- A small synthetic merchant release (schema 1) verified today: an issuer page, a store page and a lookup;
--- a default store with a brand, an issuer-named supermarket, a corroborated drugstore, a definition-based
--- store, a processor and a disabled store. Fixture values are not claims about real stores.
+-- A small synthetic merchant release (schema 1) verified today: an issuer page, a store page, a lookup and a
+-- card-transaction dataset; a default store with a brand, an issuer-named supermarket, a corroborated drugstore,
+-- a definition-based store, a processor, a disabled store and an mcc-based restaurant (2026-10-11). Fixture
+-- values are not claims about real stores.
 create function pg_temp.release(ver text default '2026-10-11.test.1') returns jsonb language sql as $$
   select jsonb_build_object(
     'schemaVersion',1,'version',ver,
@@ -23,7 +24,9 @@ create function pg_temp.release(ver text default '2026-10-11.test.1') returns js
       jsonb_build_object('id','store-about','url','https://store.example/about','kind','store-page',
         'capturedAt',to_char((now() at time zone 'UTC') - interval '1 day','YYYY-MM-DD'),'sha256',repeat('b',64)),
       jsonb_build_object('id','store-mcc','url','https://lookup.example/store','kind','mcc-lookup',
-        'capturedAt',to_char(now() at time zone 'UTC','YYYY-MM-DD'),'sha256',repeat('c',64))),
+        'capturedAt',to_char(now() at time zone 'UTC','YYYY-MM-DD'),'sha256',repeat('c',64)),
+      jsonb_build_object('id','mcc-dataset','url','https://opendata.example/pcard.csv','kind','mcc-dataset',
+        'capturedAt',to_char(now() at time zone 'UTC','YYYY-MM-DD'),'sha256',repeat('e',64))),
     'merchants','[
       {"id":"target-us","name":"Target","hosts":["target.com"],"kind":"merchant","physicalGoods":true,
        "category":"general-merchandise","evidence":{"basis":"default","sourceIds":[]},"brandIds":["target"],"disabled":false},
@@ -36,7 +39,9 @@ create function pg_temp.release(ver text default '2026-10-11.test.1') returns js
       {"id":"paypal","name":"PayPal","hosts":["paypal.com"],"kind":"processor","physicalGoods":false,
        "category":"general-merchandise","evidence":{"basis":"default","sourceIds":[]},"brandIds":[],"disabled":false},
       {"id":"closed-us","name":"Closed Store","hosts":["closed.example"],"kind":"merchant","physicalGoods":true,
-       "category":"general-merchandise","evidence":{"basis":"default","sourceIds":[]},"brandIds":[],"disabled":true}
+       "category":"general-merchandise","evidence":{"basis":"default","sourceIds":[]},"brandIds":[],"disabled":true},
+      {"id":"coffee-us","name":"Coffee Chain","hosts":["coffee.example"],"kind":"merchant","physicalGoods":false,
+       "category":"dining","evidence":{"basis":"mcc","sourceIds":["mcc-dataset"]},"brandIds":[],"disabled":false}
     ]'::jsonb);
 $$;
 create function pg_temp.valid(payload jsonb) returns boolean language sql as $$
@@ -71,6 +76,12 @@ select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,3,evidence,s
 select ok(pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,3,kind}','"marketplace"')),'definition evidence on a dining marketplace is valid');
 select ok(not pg_temp.valid(jsonb_set(jsonb_set(pg_temp.release(),'{merchants,3,kind}','"marketplace"'),'{merchants,3,category}','"drugstores"')),'definition evidence on a marketplace outside dining fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,2,evidence,sourceIds}','["store-about","missing"]')),'unknown source id fails');
+select ok(not pg_temp.valid(jsonb_set(jsonb_set(pg_temp.release(),'{merchants,6,evidence,sourceIds}','["store-mcc"]'),'{sources}',
+  (select jsonb_agg(s) from jsonb_array_elements(pg_temp.release()->'sources') s where s->>'id'<>'mcc-dataset'))),'mcc evidence without a dataset fails');
+select ok(pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,6,kind}','"marketplace"')),'mcc evidence on a dining marketplace is valid');
+select ok(not pg_temp.valid(jsonb_set(jsonb_set(pg_temp.release(),'{merchants,6,kind}','"marketplace"'),'{merchants,6,category}','"supermarkets"')),'mcc evidence on a marketplace outside dining fails');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,6,kind}','"processor"')),'mcc evidence on a processor fails');
+select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{sources,3,kind}','"blog"')),'unknown source kind fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,4,physicalGoods}','true')),'processor with physical goods fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{merchants,4,brandIds}','["target"]')),'processor with a brand fails');
 select ok(not pg_temp.valid(jsonb_set(pg_temp.release(),'{sources,0,url}','"https://user:pw@issuer.example/terms"')),'source URL with credentials fails');

@@ -55,9 +55,10 @@ export const merchantRecordSchema = z.strictObject({
 /** `merchant-release.1`: a versioned list of known store websites, downloaded whole and matched on the
  * device. Invariants: unique ids, sources and hosts (across every record, so the longest matching host
  * is always one record); every cited source resolves; the evidence rule (`default` cites nothing and
- * is `general-merchandise`; `issuer` cites issuer terms; `corroborated` cites a store page and a
- * merchant-code lookup; `definition` cites a store page and issuer terms, and on a marketplace only for
- * `dining`, where an issuer's definition may name delivery services); every source is cited by some
+ * is `general-merchandise`; `issuer` cites issuer terms; `mcc` (2026-10-11) cites at least one public
+ * card-transaction dataset (`mcc-dataset`) and sits on a marketplace only for `dining`; `corroborated`
+ * cites a store page and a merchant-code lookup; `definition` cites a store page and issuer terms, and on
+ * a marketplace only for `dining`, where an issuer's definition may name delivery services); every source is cited by some
  * record; a processor sells no physical goods, has `default` evidence and no brands; no source captured
  * after `verifiedAt`; at most 2 MiB. */
 export const merchantReleaseSchema = z
@@ -100,7 +101,12 @@ export const merchantReleaseSchema = z
           reject('A category other than general-merchandise needs evidence.', [...path, 'category']);
       } else if (basis === 'issuer' && !kinds.has('issuer-terms'))
         reject('Issuer evidence cites issuer terms.', [...path, 'evidence', 'sourceIds']);
-      else if (basis === 'corroborated' && !(kinds.has('store-page') && kinds.has('mcc-lookup')))
+      else if (basis === 'mcc') {
+        if (!kinds.has('mcc-dataset'))
+          reject('MCC evidence cites a public card-transaction dataset.', [...path, 'evidence', 'sourceIds']);
+        if (merchant.kind === 'marketplace' && merchant.category !== 'dining')
+          reject('MCC evidence on a marketplace is for dining only.', [...path, 'category']);
+      } else if (basis === 'corroborated' && !(kinds.has('store-page') && kinds.has('mcc-lookup')))
         reject('Corroborated evidence cites a store page and a merchant-code lookup.', [
           ...path,
           'evidence',

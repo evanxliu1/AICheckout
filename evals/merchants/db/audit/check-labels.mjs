@@ -12,11 +12,12 @@ import { fileURLToPath } from 'node:url';
 export const ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
 export const MAX_QUOTE_WORDS = 25;
 export const KINDS = ['merchant', 'marketplace', 'processor', 'cant-tell'];
-export const BASES = ['issuer', 'corroborated', 'definition', 'default'];
-export const SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category', 'definition', 'exclusion'];
+export const BASES = ['issuer', 'mcc', 'corroborated', 'definition', 'default'];
+/** `mcc` (2026-10-11): a descriptor line of the sheet's MCC evidence section (the mcc basis). */
+export const SUPPORTS = ['kind', 'physicalGoods', 'brand', 'category', 'definition', 'exclusion', 'mcc'];
 /** Paths an auditor must never open (the release side of the comparison). */
 export const FORBIDDEN =
-  /(^|\/)(records|evidence|drafts|verify)\/|release(-config)?\.json$|review\.md$|overrides\.json$|verification\.json$|apply-report\.json$|research\.json$|merchants-v1\.ts$|audit\/labels\/|audit\/comparison|audit\/adjudication/;
+  /(^|\/)(records|evidence|drafts|verify)\/|release(-config)?\.json$|review\.md$|overrides\.json$|verification\.json$|apply-report\.json$|research\.json$|merchants-v1\.ts$|audit\/labels[^/]*\/|audit\/comparison|audit\/adjudication|mcc\/results\.json$/;
 
 export const wordCount = (s) => s.trim().split(/\s+/).filter(Boolean).length;
 const normal = (s) => s.replace(/[‘’ʼ]/g, "'").replace(/ /g, ' ').replace(/\s+/g, ' ').trim();
@@ -75,7 +76,7 @@ export function checkLabels({ packet, labels, sheets, lists, otherPacketIncluded
     if (store.category === 'cant-tell') {
       if (store.basis !== null) at(`${p}.basis`, 'null when the category is "cant-tell"');
     } else if (!BASES.includes(store.basis)) at(`${p}.basis`, `one of ${BASES.join(', ')}`);
-    if (bonus && store.basis === 'default') at(`${p}.basis`, 'a bonus category needs issuer, corroborated or definition');
+    if (bonus && store.basis === 'default') at(`${p}.basis`, 'a bonus category needs issuer, mcc, corroborated or definition');
     if (!bonus && store.basis && store.basis !== 'default') at(`${p}.basis`, 'general-merchandise is default');
     if (store.kind === 'processor' && bonus) at(`${p}.category`, 'a processor has no bonus category');
     if (store.notes !== null && (typeof store.notes !== 'string' || store.notes.length > 300))
@@ -100,8 +101,10 @@ export function checkLabels({ packet, labels, sheets, lists, otherPacketIncluded
       else if (!text.includes(normal(q.quote))) at(qp, `not found verbatim in section ${q.source}`);
     }
     if (bonus) {
-      if (!supports.has('category') && !supports.has('definition'))
-        at(`${p}.quotes`, 'a bonus category needs a category or definition quote');
+      if (!supports.has('category') && !supports.has('definition') && !supports.has('mcc'))
+        at(`${p}.quotes`, 'a bonus category needs a category, definition or mcc quote');
+      if (store.basis === 'mcc' && !supports.has('mcc'))
+        at(`${p}.quotes`, 'mcc basis needs a descriptor quote from the MCC evidence section');
       if (store.basis === 'definition' && !(supports.has('category') && supports.has('definition')))
         at(`${p}.quotes`, 'definition basis needs a store-page category quote and an issuer definition quote');
     }

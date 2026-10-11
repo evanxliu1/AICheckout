@@ -141,3 +141,79 @@ The three verdicts for the record (amazon-us merchant, lyft-us default, sherwin-
 **Review fixes in `2026-10-11.audit.2`** (independent review of `79ace9da`, same day): Costco back to the default (above); the tier-A record `google-us` removed and `google.com` excluded (it is the search site; the Google Store checks out at `store.google.com`, which no capture shows); the tier-A records named from generic page titles renamed from the label (usps-us "Welcome" → "USPS", lego-us "Home" → "LEGO", zillionsgift-us "Home" → "Zillionsgift") and the tier-A builder now skips such titles (`GENERIC_TITLE`) and excluded domains.
 
 After the fixes `2026-10-11.audit.2` has 640 records, basis `default` 590, `definition` 37, `issuer` 13; 50 bonus categories (dining 12, streaming 11, supermarkets 9, department-stores 6, drugstores 5, home-improvement 4, entertainment 2, transit 1); 120 brand records; 62 cited sources. The extension tests that named Kroger and Whole Foods as bundled supermarkets now use Wegmans and Audible. The fixed records were not re-audited: their values are the adjudicated labels, so the audit numbers above describe `seed.17`, not `audit.2`.
+
+## Addendum: the mcc basis (2026-10-11)
+
+After the 14.5 fixes, Evan asked for the best-known chains to be fixed with merchant category codes ("fix the big names, i think we should use MCC codes … that is enough evidence"; [decision](../../wiki/decisions/2026-10-11-mcc-evidence-basis.md)). A fourth evidence basis, `mcc`, was added and applied deterministically to every record of `2026-10-11.audit.2` (`pipeline merchants mcc`), giving release **`2026-10-11.mcc.1`** (640 records; `2026-10-11.mcc.2` after the one adjudicated fix below). The records whose category changed were re-audited blind with the 14.5 method.
+
+### The evidence
+
+Openly licensed government purchase-card datasets that carry the merchant descriptor and the Visa merchant category description of every transaction, downloaded 2026-10-11 and kept out of the repository (hashes and row counts in [`evals/merchants/db/mcc/manifest.json`](../../evals/merchants/db/mcc/manifest.json)):
+
+| Dataset | Licence | Rows |
+| --- | --- | ---: |
+| Open Data DC, "Purchase Card Transactions" (2009–2026) | CC0 1.0 | 639,306 |
+| State of Oklahoma OMES, "Purchase Card (PCard)" FY2022, FY2023, FY2024 (36 monthly files) | CC BY | 382,724 + 408,063 + 421,889 |
+| GSA SmartPay, "Purchase Card Transactions" Q3 2020 | CC0 1.0 | 6,913 |
+
+Excluded on licence grounds: Delaware (a public-domain label only in portal metadata), Indiana (personal, news, nonprofit or academic use only), Oklahoma FY2025–FY2026 (no licence shown). **Attribution:** the Oklahoma datasets are published by the State of Oklahoma Office of Management and Enterprise Services under Creative Commons Attribution; see [`NOTICE.md`](../../evals/merchants/db/mcc/NOTICE.md). **Channel:** these are in-person and card-not-present *government* purchases, not consumer online checkout; a chain's website may code differently (costco.com did).
+
+A store's rows are those whose merchant descriptor matches a committed, reviewable rule ([`descriptors.json`](../../evals/merchants/db/mcc/descriptors.json): the record's name on word boundaries by default, with explicit patterns, excludes for name collisions such as Domino's car washes and Nordstrom cafés, and vetoes). Descriptions are mapped to numeric codes through the Visa Merchant Data Standards Manual (April 2026, marked VISA PUBLIC) and to catalog categories in [`codes.json`](../../evals/merchants/db/mcc/codes.json): 5411 supermarkets, 5300 wholesale clubs, 5912 drugstores, 5812/5813/5814 dining, 5732/5734 electronics, 5311 department stores, 5200/5211/5251 home improvement, 4899 streaming (Visa's own guidance for subscription streaming), 7832/7922/7929/7941/7991/7996/7998 entertainment, 4111/4112/4121/4131/4784/7523 transit, 5541/5542 gas, 5552 EV charging. A category is granted at **10 or more matched rows with one category holding 80% or more** (fuel rows of a separate code set aside first); `issuer` evidence outranks the data; a marketplace gets dining only; the superstore guard (the store's own pages) applies to supermarkets and drugstores; eBay's department-store code was vetoed as the marketplace platform's.
+
+### What changed
+
+| | `2026-10-11.audit.2` | `2026-10-11.mcc.1` |
+| --- | ---: | ---: |
+| Bonus categories | 50 | **91** |
+| by basis | `issuer` 13, `definition` 37 | `issuer` 13, **`mcc` 64**, `definition` 14 |
+| dining | 12 | 27 |
+| supermarkets | 9 | 16 |
+| streaming | 11 | 12 |
+| home-improvement | 4 | 8 |
+| department-stores | 6 | 8 |
+| electronics | 0 | 5 |
+| drugstores | 5 | 5 |
+| entertainment | 2 | 4 |
+| transit | 1 | 4 |
+| wholesale-clubs | 0 | 2 |
+
+309 of 625 non-processor records matched at least one row, 194 at least 10; 64 records changed (41 from `default`, 23 `definition` records moved to `mcc` with the same category; the data contradicted no existing category). Of the 25 big names in Evan's list, **18 now carry a category** (Kroger, Whole Foods, Aldi, Safeway, Publix, Starbucks, Chipotle, Domino's, Panera, Pizza Hut, DoorDash, Uber Eats, Grubhub, Netflix, Best Buy, Newegg, Sam's Club, Nordstrom); Walgreens keeps `issuer`. Not granted: **Costco** (125 rows, wholesale clubs 76%: costco.com orders code as general merchandise in 20 rows against 22 wholesale-club rows); **Peacock** (0 rows in these datasets) and **Paramount+** (2 rows); **H-E-B, Food Lion and McDonald's** have no record (held out in 14.4 on disputed hosts) and **Rite Aid** is defunct. Also refused by the rule: Target (63% discount stores against grocery), Walmart (discount stores), eBay (vetoed), Instacart, Uber and Ticketmaster (marketplaces outside dining; Uber codes 100% taxicabs), Apple, Coach, Regal, Six Flags (79%), Topgolf and Discovery+ (under 80%).
+
+Conflicts listed for Evan in `review.md` (MCC evidence section): Netflix's 5 continuity-subscription rows (5968) against 120 pay-television rows; Starbucks's 32 gift-card rows; Spotify's 65 Ad Studio advertising rows; Wendy's 15 software-store rows under one franchise descriptor; DoorDash's and Sam's Club's issuer sentences (credits and co-brand terms).
+
+### Re-audit of the changed records
+
+The 64 changed records were labelled blind by three `merchant-auditor` runs (claude-opus-5-5; 424,957 tokens, [`runs.json`](../../evals/merchants/db/audit/runs.json)) on packets whose sheets added an `mcc-evidence` section (the matched descriptors with their dataset descriptions and row counts, raw data only) and the code map; the agent file gained the `mcc` rule. Labels: [`labels-mcc/`](../../evals/merchants/db/audit/labels-mcc/); comparison: [`comparison-mcc.json`](../../evals/merchants/db/audit/comparison-mcc.json).
+
+| Measure (64 changed records) | Result |
+| --- | --- |
+| **Wrong bonus category** | **0 of 64** (one-sided 95% Clopper–Pearson upper bound 4.6%); `cant-tell` 0 |
+| Category agreement | 64 of 64, every category (dining 26, supermarkets 11, home-improvement 8, electronics 5, transit 4, streaming 3, department-stores 2, entertainment 2, wholesale-clubs 2, drugstores 1) |
+| Basis | the auditor reached the same category on `mcc` for 57 and on `issuer` for 7 (CVS: Amex's drugstore list; Spotify, Hulu, Netflix: Citi's streaming list; Kohl's, Nordstrom: Amex's department-store list; Grubhub: Chase's food-delivery list); the release keeps `mcc` for those seven because the pipeline's verifier had disputed or the rule refused those issuer quotes earlier, and the data agrees with every one |
+| Wrong brand | 0 of 9 records with brands |
+| Wrong kind | 0 |
+| Wrong goods | **1**: doordash.com, record `true`, auditor `false` (a delivery marketplace; the auditor notes it also delivers groceries and retail). Adjudication: see below |
+| `cant-tell` | kind 5, physicalGoods 6, brandIds 5 (bot-walled store pages: Ace Hardware, Acme Tools, BJ's, Pizza Hut, Subway, Kohl's); category 0 |
+
+The auditors' convention questions, for Evan: whether `mcc` may grant a category when every store page is a bot wall (it did, since the refusals depend only on what the pages say); whether a restaurant selling packaged goods (Starbucks whole-bean coffee) is still `physicalGoods: false`; whether Chase's separate food-delivery list is an `issuer` basis for dining (Grubhub); whether exactly 10 rows passes (Menards; yes, "at least 10"); whether an unrelated-looking descriptor under a matching name (a Wendy's franchise coded as a software store) should be excluded from the count (it was a minority and changed nothing).
+
+**Adjudication of the one disagreement** ([`adjudication-mcc.json`](../../evals/merchants/db/audit/adjudication-mcc.json), a third agent, claude-fable-5-1, 74,004 tokens): **auditor**. The written rule makes food delivery `false` and names DoorDash as a delivery service; the grocery and retail delivery lines on its pages are side offerings. Applied after these numbers as release **`2026-10-11.mcc.2`** (`apply-adjudication.mjs --run mcc`: doordash-us `physicalGoods` true → false; listed in `fixes.json` and in `review.md` under Audit fixes). The auditor's open question, for Evan: whether a delivery marketplace that also delivers groceries and retail should ever be `physicalGoods: true`. No category changed, so the audit numbers above describe `mcc.1` and `mcc.2` alike.
+
+### Review fixes: release `2026-10-11.mcc.3`
+
+The independent review of `231dc89c` (approve with one must-fix and should-fixes, applied the same day) changed the rule and the release:
+
+- **Card-not-present check.** Rows whose descriptor shows an online channel (WWW, .COM, ONLINE, CNP, the store's own host, a toll-free phone order, a gift card or reload) are the best evidence for online checkout; when five or more exist and their dominant category differs from the store's, the grant is refused (`online-disagrees`). **Starbucks** is refused (its 47 online rows are gift cards, reloads and phone orders coded outside dining, 81%); **Bambu Lab** is refused (its own store host `store.bambulab.com` codes 5399 in all 10 online rows). Walmart and Target carry explicit vetoes in `descriptors.json` and Walmart's rows are now read through `WAL ?MART` (8,218 rows, discount stores and grocery, nothing dominant); Costco's 43 online rows split 51/49 between wholesale clubs and general merchandise, so it stays refused.
+- **Streaming.** 4899 backs `streaming` only for a service without physical goods whose name and descriptors are no cable, satellite, internet or phone provider and whose readable pages show a streaming service; Netflix, Hulu and Spotify pass, a Comcast or Spectrum never would (tested).
+- **Per-dataset quotes.** Each cited dataset's evidence quote now comes from that dataset's own rows, and only datasets with a row of the granted category are cited.
+- **Delivery conflicts.** Every issuer sentence that excludes or conditions delivery services in dining (Amex's "You may not …", Chase's "included if they classify as a restaurant merchant") is listed for DoorDash, Uber Eats and Grubhub; Whole Foods carries the note that its orders check out on amazon.com.
+- Wording: "Codes as dining in public purchase-card data (mostly in-store)". Nits: the descriptors kept are the top 12 by count; Wendy's software-store franchise rows and AMC's music rows are excluded; an `.xlsx` reader test; the Oklahoma CC BY 4.0 licence URL, dataset URLs, publishers and a "changes made" line in `NOTICE.md`.
+
+**`2026-10-11.mcc.3`:** 640 records, **89 bonus categories** (`mcc` 62, `definition` 14, `issuer` 13): dining 26, supermarkets 16, streaming 12, home-improvement 8, department-stores 8, drugstores 5, entertainment 4, transit 4, electronics 4, wholesale-clubs 2. Of the 25 big names, **17 carry a category** (the 18 above minus Starbucks); the DoorDash goods fix is carried over. The two records whose category changed since `mcc.2` (starbucks-us and bambulab-us, both back to the default) were re-audited blind by one `merchant-auditor` run (39,817 tokens; `packets-mcc3`, `labels-mcc3`, `comparison-mcc3.json`): **wrong bonus 0 of 0**; the auditor also refused both `mcc` grants (Bambu Lab: its own web store codes general merchandise; Starbucks: its online rows do not code dining, and it set the CashStar gift-card rows aside as another business's), but labelled **Starbucks `dining` on the `definition` basis** (its about page "became a coffeehouse"; Citi's restaurant definition includes cafes): one **missed bonus** against the record, which stays at the default because the pipeline's definition rule never saw that quote (the store was `default` before 14.8 and `definition` grants come only from the seed's drafts). Not adjudicated or applied: a missed bonus costs value, not trust, and the plan fixes records only on wrong-bonus or field disagreements; it is listed for Evan. The auditor's questions: whether the online-channel condition belongs in the agent file (added the same day); what "online rows" means for an online-only store (Bambu Lab: the rows naming its own web host, as the rule reads them); whether stored-value reload rows are purchases (the rule counts them as card-not-present rows).
+
+### Limits
+
+- The datasets are government purchasing: in person and card-not-present, mostly card-present at stores and restaurants. A website's own coding can differ (costco.com), and online-only brands with few government purchases get no evidence (Peacock, Paramount+).
+- The Oklahoma descriptions are truncated at 40 characters; the DC file is refreshed monthly (its hash dates the fetch); the Oracle `ROWID` column repeats across Oklahoma's monthly files and was not used as a key.
+- Descriptor rules match names, so a common name can collect another business's rows; the 10-row and 80% bars, the explicit excludes, the review table and the blind re-audit are the checks.
+- The re-audit shares the 14.5 limits: one Opus labeller per store, procedural blindness, truncated captures.

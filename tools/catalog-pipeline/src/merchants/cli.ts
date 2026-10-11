@@ -7,6 +7,7 @@
 //   merchants claim research|verify --batch B [--release]
 //   merchants accept research|verify --batch B --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--dry-run]
 //   merchants run capture|draft|apply|build --batch B [--only a.com,b.com]
+//   merchants mcc [--version <v>]                      the `mcc` basis from the public card-transaction datasets
 //   merchants review                                   rewrite evals/merchants/db/review.md
 //   merchants publish --version <v> [--offline] [--api <origin>]
 //                     [--confirm <v> --instruction-at <UTC time of Evan's "publish merchants <v>">]
@@ -19,6 +20,7 @@ import { runApply } from './apply.ts';
 import { candidatesCommand, loadCandidates } from './candidates.ts';
 import { runCapture } from './capture.ts';
 import { runDraft } from './draft.ts';
+import { runMcc } from './mcc.ts';
 import {
   BATCH_ID,
   MERCHANT_AGENT_STAGES,
@@ -48,6 +50,7 @@ export const MERCHANTS_USAGE = `Usage: npm run pipeline -- merchants <command>
   claim <${MERCHANT_AGENT_STAGES.join('|')}> --batch B [--release]
   accept <${MERCHANT_AGENT_STAGES.join('|')}> --batch B --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--dry-run]
   run <${MERCHANT_CLI_STAGES.join('|')}> --batch B [--only a.com,b.com]
+  mcc [--version <v>]
   review
   publish --version <v> [--offline] [--api <origin>]
   publish --version <v> --confirm <v> --instruction-at <UTC time of Evan's "publish merchants <v>">`;
@@ -290,6 +293,9 @@ export async function merchantsMain(argv: string[], env: Env): Promise<number> {
           },
           defaultMerchantPublishDeps(sessionPathFrom(env.env)),
         );
+      case 'mcc':
+        if (positionals.length) throw new UsageError('mcc takes no positional argument.');
+        return await runMcc(env, { version: values.version });
       case 'review': {
         const { writeFile } = await import('node:fs/promises');
         await writeFile(join(env.root, REVIEW_FILE), reviewMarkdown(await collectReview(env.root)));
