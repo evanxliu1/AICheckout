@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 13279,
+    "outputTokens": 193
+  },
+  "durationMs": 21071,
+  "draft": {
+    "domain": "kohls.com",
+    "kind": "merchant",
+    "physicalGoods": true,
+    "brandIds": [],
+    "candidateCategory": "department-stores",
+    "evidence": [
+      {
+        "sourceId": "capital-one-kohls-rewards-visa-pricing",
+        "quote": "The Kohl’s Credit Card can only be used at Kohl’s stores, catalogs, or online (collectively referred to as Kohl’s Stores).",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "U.S. Select Major Department Stores",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "Kohl's",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "department store purchases",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "Kohl's own pages were inaccessible. The issuer documents identify Kohl's as a department store; no catalog brand ID corresponds to Kohl's."
+  }
+}

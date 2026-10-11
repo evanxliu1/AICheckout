@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b07",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 24021,
+    "outputTokens": 186
+  },
+  "durationMs": 35381,
+  "draft": {
+    "domain": "marriott.com",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "marriott"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "marriott-com-page-1",
+        "quote": "We Are Marriott International",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "marriott-com-page-1",
+        "quote": "hotels for every kind of stay",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amex-marriott-bonvoy-bevy-product",
+        "quote": "booked directly with Marriott",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "amex-marriott-bonvoy-bevy-product",
+        "quote": "paid eligible stay",
+        "supports": "physicalGoods"
+      }
+    ],
+    "notes": "Marriott is a hotel/travel service, not a physical-goods retailer. Bank of America lists Marriott under Travel, but travel/hotels is not an allowed candidate category, so candidateCategory is null."
+  }
+}

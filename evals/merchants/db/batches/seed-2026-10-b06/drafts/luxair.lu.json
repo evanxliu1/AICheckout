@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "batch": "seed-2026-10-b06",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
+  "model": "gpt-5.6-luna",
+  "effort": "xhigh",
+  "draftedOn": "2026-10-11",
+  "usage": {
+    "inputTokens": 15479,
+    "outputTokens": 320
+  },
+  "durationMs": 28499,
+  "draft": {
+    "domain": "luxair.lu",
+    "kind": "merchant",
+    "physicalGoods": false,
+    "brandIds": [
+      "luxair"
+    ],
+    "candidateCategory": null,
+    "evidence": [
+      {
+        "sourceId": "luxair-lu-page-1",
+        "quote": "The company has been active for over 60 years in three aviation-related activities: passenger air transport, tour operating and airport services.",
+        "supports": "kind"
+      },
+      {
+        "sourceId": "luxair-lu-page-1",
+        "quote": "passenger air transport",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "luxair-lu-page-1",
+        "quote": "Copyright 2026 Luxair S.A.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "luxair-lu-page-1",
+        "quote": "aviation-related activities: passenger air transport, tour operating and airport services",
+        "supports": "category"
+      },
+      {
+        "sourceId": "luxair-lu-lookup-1",
+        "quote": "3146\tLUXAIR",
+        "supports": "category"
+      },
+      {
+        "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+        "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS",
+        "supports": "category"
+      },
+      {
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "are not included in this category, for example, airlines",
+        "supports": "category"
+      }
+    ],
+    "notes": "Luxair is an airline and tour operator, but airlines are excluded from Chase’s local-transit category and air travel is not one of the supplied candidate categories."
+  }
+}

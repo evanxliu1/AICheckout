@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-11.seed.4",
+  "version": "2026-10-11.seed.5",
   "verifiedAt": "2026-10-11T00:00:00Z",
   "sources": [
     {
@@ -186,6 +186,27 @@
       "sha256": "dff6f88596c24984e53a13a5840e1cdae9f04f814282d86289d7d761342c92e7"
     },
     {
+      "id": "fubo-tv-page-1",
+      "url": "https://www.fubo.tv/about",
+      "kind": "store-page",
+      "capturedAt": "2026-10-11",
+      "sha256": "edf210344999356a96a3250ff01c2b88f41ef050750eecd309a5c7446d09d614"
+    },
+    {
+      "id": "fubo-tv-page-2",
+      "url": "https://support.fubo.tv/hc",
+      "kind": "store-page",
+      "capturedAt": "2026-10-11",
+      "sha256": "d36281549742e245b675d1f10f10a08f6dbf111371d3a52d74eff2540c2e815c"
+    },
+    {
+      "id": "hulu-com-page-1",
+      "url": "https://press.hulu.com/corporate/",
+      "kind": "store-page",
+      "capturedAt": "2026-10-11",
+      "sha256": "8e92af19c34cafb8e4653d7f96f88ead482a9e4c5c6e14c775954f54542596e2"
+    },
+    {
       "id": "kroger-com-page-2",
       "url": "https://www.kroger.com/hc/help/faqs/ways-to-shop/pickup",
       "kind": "store-page",
@@ -198,6 +219,27 @@
       "kind": "store-page",
       "capturedAt": "2026-10-11",
       "sha256": "cd0fbbc7a4cb352e65848d0fe15e73d2e2f4fec774bd0576b57f843ff490153b"
+    },
+    {
+      "id": "us-bank-altitude-connect-rewards-terms",
+      "url": "https://rewards.usbank.com/benefits/card/AltitudeConnectBenefits/program-rules",
+      "kind": "issuer-terms",
+      "capturedAt": "2026-10-05",
+      "sha256": "4dc126f8d18c8a1aad7fc703a32fd671aef17bef5ca9d632e6777afb37e8d702"
+    },
+    {
+      "id": "us-bank-altitude-go-rewards-terms",
+      "url": "https://rewards.usbank.com/benefits/card/AltitudeGoBenefits/program-rules",
+      "kind": "issuer-terms",
+      "capturedAt": "2026-10-05",
+      "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
+    },
+    {
+      "id": "us-bank-altitude-go-secured-rewards-terms",
+      "url": "https://rewards.usbank.com/benefits/card/AltitudeGoSecBenefits/program-rules",
+      "kind": "issuer-terms",
+      "capturedAt": "2026-10-05",
+      "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
     },
     {
       "id": "us-bank-cash-plus-sample-merchants",
@@ -1715,6 +1757,47 @@
       "disabled": false
     },
     {
+      "id": "fubo-us",
+      "name": "Fubo",
+      "hosts": [
+        "fubo.tv"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "streaming",
+      "evidence": {
+        "basis": "definition",
+        "sourceIds": [
+          "fubo-tv-page-1",
+          "fubo-tv-page-2",
+          "amex-rewards-info-retail",
+          "us-bank-altitude-connect-rewards-terms",
+          "us-bank-altitude-go-rewards-terms",
+          "us-bank-altitude-go-secured-rewards-terms",
+          "citi-strata-rewards-terms",
+          "us-bank-cash-plus-sample-merchants"
+        ]
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "gamestop-us",
+      "name": "GameStop",
+      "hosts": [
+        "gamestop.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
       "id": "gap-us",
       "name": "Athleta",
       "hosts": [
@@ -1730,6 +1813,38 @@
       "brandIds": [
         "athleta"
       ],
+      "disabled": false
+    },
+    {
+      "id": "giantfood-us",
+      "name": "Giant Food",
+      "hosts": [
+        "giantfood.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "giantfoodstores-us",
+      "name": "The GIANT Company",
+      "hosts": [
+        "giantfoodstores.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
       "disabled": false
     },
     {
@@ -1764,6 +1879,216 @@
         "sourceIds": []
       },
       "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "greyhound-us",
+      "name": "Greyhound",
+      "hosts": [
+        "greyhound.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "grubhub-us",
+      "name": "Grubhub",
+      "hosts": [
+        "grubhub.com"
+      ],
+      "kind": "marketplace",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "hannaford-us",
+      "name": "Hannaford",
+      "hosts": [
+        "hannaford.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "harborfreight-us",
+      "name": "Harbor Freight Tools",
+      "hosts": [
+        "harborfreight.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "harbor-freight"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "harley-davidson-us",
+      "name": "Harley-Davidson",
+      "hosts": [
+        "harley-davidson.com"
+      ],
+      "kind": "marketplace",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "harley-davidson"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "harristeeter-us",
+      "name": "Harris Teeter",
+      "hosts": [
+        "harristeeter.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "hawaiianairlines-us",
+      "name": "Hawaiian Airlines",
+      "hosts": [
+        "hawaiianairlines.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "hawaiian-airlines"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "hilton-us",
+      "name": "Hilton",
+      "hosts": [
+        "hilton.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "hilton"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "hkexpress-us",
+      "name": "HK Express",
+      "hosts": [
+        "hkexpress.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "hk-express"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "hp-us",
+      "name": "HP",
+      "hosts": [
+        "hp.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": true,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [],
+      "disabled": false
+    },
+    {
+      "id": "hulu-us",
+      "name": "Hulu",
+      "hosts": [
+        "hulu.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "streaming",
+      "evidence": {
+        "basis": "definition",
+        "sourceIds": [
+          "hulu-com-page-1",
+          "citi-strata-rewards-terms",
+          "us-bank-cash-plus-sample-merchants"
+        ]
+      },
+      "brandIds": [
+        "hulu"
+      ],
+      "disabled": false
+    },
+    {
+      "id": "hyatt-us",
+      "name": "Hyatt",
+      "hosts": [
+        "hyatt.com"
+      ],
+      "kind": "merchant",
+      "physicalGoods": false,
+      "category": "general-merchandise",
+      "evidence": {
+        "basis": "default",
+        "sourceIds": []
+      },
+      "brandIds": [
+        "hyatt"
+      ],
       "disabled": false
     },
     {
