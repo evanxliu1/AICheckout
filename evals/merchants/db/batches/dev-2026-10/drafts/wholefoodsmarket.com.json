@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 10944,
-    "outputTokens": 180
+    "inputTokens": 13090,
+    "outputTokens": 292
   },
-  "durationMs": 42978,
+  "durationMs": 110857,
   "draft": {
     "domain": "wholefoodsmarket.com",
     "kind": "merchant",
@@ -22,18 +22,8 @@
     "evidence": [
       {
         "sourceId": "wholefoodsmarket-com-page-1",
-        "quote": "shopping for groceries",
-        "supports": "category"
-      },
-      {
-        "sourceId": "wholefoodsmarket-com-page-1",
-        "quote": "Whole Foods Market has more than 500 retail and non-retail locations",
-        "supports": "brand"
-      },
-      {
-        "sourceId": "wholefoodsmarket-com-page-2",
-        "quote": "Shop for grocery delivery or pickup",
-        "supports": "category"
+        "quote": "we started out with one small store in Austin, Texas.",
+        "supports": "kind"
       },
       {
         "sourceId": "wholefoodsmarket-com-page-2",
@@ -41,11 +31,36 @@
         "supports": "physicalGoods"
       },
       {
+        "sourceId": "wholefoodsmarket-com-page-1",
+        "quote": "Whole Foods Market IP, Inc.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "wholefoodsmarket-com-page-1",
+        "quote": "shopping for groceries",
+        "supports": "category"
+      },
+      {
+        "sourceId": "wholefoodsmarket-com-page-2",
+        "quote": "Shop for grocery delivery or pickup",
+        "supports": "category"
+      },
+      {
         "sourceId": "wholefoodsmarket-com-page-3",
         "quote": "How do I order groceries online?",
         "supports": "category"
+      },
+      {
+        "sourceId": "amazon-store-card-product",
+        "quote": "Whole Foods Market\nAmerica’s Healthiest\nGrocery Store",
+        "supports": "category"
+      },
+      {
+        "sourceId": "amazon-visa-product",
+        "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel purchases.*",
+        "supports": "category"
       }
     ],
-    "notes": null
+    "notes": "No merchant-code lookup is provided; classification relies on the store’s grocery descriptions and issuer pages naming Whole Foods Market as an earning merchant."
   }
 }

@@ -233,7 +233,7 @@ export const draftSchema = z.strictObject({
         supports: z.enum(DRAFT_SUPPORTS),
       }),
     )
-    .max(12),
+    .max(16),
   notes: z.string().max(600).nullable(),
 });
 export type Draft = z.infer<typeof draftSchema>;

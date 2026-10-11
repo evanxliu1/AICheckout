@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "6cd974c1-8dd1-41ac-8e5f-a2a5e9e23828",
+  "packetId": "dc259814-b54e-4872-a019-b516a6c717e3",
   "batch": "dev-2026-10",
   "provenance": "agent-verified",
   "verifier": {
@@ -8,10 +8,21 @@
     "model": "claude-opus-5-5",
     "date": "2026-10-11",
     "filesRead": [
-      "evals/merchants/db/batches/dev-2026-10/packets/verify.2.json",
+      "evals/merchants/db/batches/dev-2026-10/packets/verify.1.json",
       ".claude/agents/merchant-verifier.md",
       "evals/merchants/db/batches/dev-2026-10/research.json",
       "evals/merchants/db/batches/dev-2026-10/manifest.json",
+      "evals/merchants/db/batches/dev-2026-10/verify/catalog-lists.json",
+      "evals/merchants/db/batches/dev-2026-10/verify/kroger.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/cvs.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/netflix.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/instacart.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/costco.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/delta.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/paypal.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/wholefoodsmarket.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/ubereats.com.md",
+      "evals/merchants/db/batches/dev-2026-10/verify/lowes.com.md",
       "evals/merchants/db/batches/dev-2026-10/drafts/kroger.com.json",
       "evals/merchants/db/batches/dev-2026-10/drafts/cvs.com.json",
       "evals/merchants/db/batches/dev-2026-10/drafts/netflix.com.json",
@@ -44,80 +55,47 @@
       "evals/merchants/db/batches/dev-2026-10/captures/ubereats-com-page-2.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/lowes-com-page-1.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/lowes-com-page-2.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/us-bank-cash-plus-sample-merchants.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-categories.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-rewards-info-retail.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/us-bank-altitude-go-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/us-bank-altitude-go-secured-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-cash-back-category-choices.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-strata-rewards-terms.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/instacart-mastercard-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/ihg-one-rewards-premier-select-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/united-explorer-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/united-quest-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/southwest-rapid-rewards-plus-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/chase-rewards-category-faq.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-platinum-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-gold-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-blue-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-rewards-terms.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-secured-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-rewards-terms.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amazon-store-card-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-amazon-store-card-categories.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amazon-visa-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-product.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-platinum-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-gold-pricing.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-mylowes-rewards-credit-card-partner.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amazon-store-card-product.windows.wholefoodsmarket.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amazon-visa-product.windows.wholefoodsmarket.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-blue-pricing.windows.delta.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-gold-pricing.windows.delta.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-platinum-pricing.windows.delta.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-pricing.windows.delta.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-product.windows.delta.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-gold-pricing.windows.ubereats.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-platinum-pricing.windows.ubereats.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-rewards-info-retail.windows.cvs.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/amex-rewards-info-retail.windows.netflix.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-cash-back-category-choices.windows.netflix.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-pricing.windows.paypal.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-secured-pricing.windows.paypal.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/chase-rewards-category-faq.windows.costco.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/chase-rewards-category-faq.windows.ubereats.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-categories.windows.costco.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/us-bank-cash-plus-sample-merchants.windows.kroger.com.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-categories.windows.kroger.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-product.windows.costco.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.windows.costco.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/citi-strata-rewards-terms.windows.netflix.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/ihg-one-rewards-premier-select-product.windows.instacart.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/instacart-mastercard-product.windows.instacart.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/instacart-mastercard-product.windows.ubereats.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-product.windows.wholefoodsmarket.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-rewards-terms.windows.wholefoodsmarket.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/southwest-rapid-rewards-plus-product.windows.instacart.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-amazon-store-card-categories.windows.wholefoodsmarket.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-mylowes-rewards-credit-card-partner.windows.lowes.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-pricing.windows.paypal.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-product.windows.paypal.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-rewards-terms.windows.paypal.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/united-explorer-product.windows.instacart.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/united-quest-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-rewards-info-retail.windows.cvs.com.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/us-bank-altitude-go-product.windows.netflix.com.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/us-bank-altitude-go-secured-product.windows.netflix.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-rewards-info-retail.windows.netflix.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/boa-cash-back-category-choices.windows.netflix.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/citi-strata-rewards-terms.windows.netflix.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/instacart-mastercard-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/ihg-one-rewards-premier-select-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/united-explorer-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/united-quest-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/southwest-rapid-rewards-plus-product.windows.instacart.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-product.windows.costco.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-rewards-terms.windows.costco.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/chase-rewards-category-faq.windows.costco.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/citi-costco-anywhere-visa-categories.windows.costco.com.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/us-bank-cash-plus-sample-merchants.windows.costco.com.txt",
-      "evals/merchants/db/batches/dev-2026-10/captures/us-bank-cash-plus-sample-merchants.windows.kroger.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-pricing.windows.delta.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-platinum-pricing.windows.delta.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-gold-pricing.windows.delta.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-reserve-product.windows.delta.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-delta-skymiles-blue-pricing.windows.delta.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-pricing.windows.paypal.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-rewards-terms.windows.paypal.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-paypal-cashback-mastercard-product.windows.paypal.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-pricing.windows.paypal.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/boa-customized-cash-rewards-secured-pricing.windows.paypal.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-rewards-terms.windows.wholefoodsmarket.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amazon-store-card-product.windows.wholefoodsmarket.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-amazon-store-card-categories.windows.wholefoodsmarket.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amazon-visa-product.windows.wholefoodsmarket.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/prime-visa-product.windows.wholefoodsmarket.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-platinum-pricing.windows.ubereats.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/amex-gold-pricing.windows.ubereats.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/chase-rewards-category-faq.windows.ubereats.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/instacart-mastercard-product.windows.ubereats.com.txt",
       "evals/merchants/db/batches/dev-2026-10/captures/us-bank-cash-plus-sample-merchants.windows.ubereats.com.txt",
+      "evals/merchants/db/batches/dev-2026-10/captures/synchrony-mylowes-rewards-credit-card-partner.windows.lowes.com.txt",
       "tools/catalog-pipeline/src/merchants/files.ts",
-      "packages/rewards-core/src/types.ts"
+      "evals/merchants/db/batches/dev-2026-10/verification.json"
     ]
   },
   "stores": [
@@ -149,8 +127,8 @@
           "reason": null
         },
         "evidence": {
-          "verdict": "disputed",
-          "reason": "Both Citi quotes come from Citi's list of superstores, supermarkets and warehouse clubs EXCLUDED from the Costco card's 4% gas earn; an exclusion list does not show purchases at Kroger earn in supermarkets. Store-page and U.S. Bank quotes are fine."
+          "verdict": "confirmed",
+          "reason": null
         }
       }
     },
@@ -215,8 +193,8 @@
           "reason": null
         },
         "evidence": {
-          "verdict": "disputed",
-          "reason": "Bank of America quotes name Netflix as a merchant example of its Online Shopping category, a different category than streaming. The U.S. Bank Altitude Go quotes describe a $15 statement credit, not earning. Citi Strata and store quotes are fine."
+          "verdict": "confirmed",
+          "reason": null
         }
       }
     },
@@ -248,8 +226,8 @@
           "reason": null
         },
         "evidence": {
-          "verdict": "disputed",
-          "reason": "The Instacart Mastercard quote is a co-brand bonus on Instacart.com and app purchases; it does not say Instacart purchases earn in a supermarkets or grocery category. Store-page quotes are fine."
+          "verdict": "confirmed",
+          "reason": null
         }
       }
     },
@@ -262,7 +240,7 @@
         },
         "hosts": {
           "verdict": "disputed",
-          "reason": "costcobusinessdelivery.com does not appear in any capture; the store pages mention Business Delivery and Costco Business Center orders but never that domain, so the second host cannot be confirmed."
+          "reason": "costcobusinessdelivery.com is not shown in any Costco capture; the pages mention Business Delivery and Business Center orders but never name that domain, so the host cannot be confirmed from captures."
         },
         "kind": {
           "verdict": "confirmed",
@@ -282,7 +260,7 @@
         },
         "evidence": {
           "verdict": "disputed",
-          "reason": "All three issuer quotes name Costco or warehouse clubs as exclusions: Chase lists Costco among merchants not in its grocery category, U.S. Bank says Costco purchases do not qualify, and the Citi header titles an exclusion list. Store-page quotes are fine."
+          "reason": "Two issuer category quotes do not show Costco earning as a wholesale club: Chase names Costco as excluded from grocery, and U.S. Bank names Costco as a non-qualifying discount store for department stores."
         }
       }
     },
@@ -380,8 +358,8 @@
           "reason": null
         },
         "evidence": {
-          "verdict": "confirmed",
-          "reason": null
+          "verdict": "disputed",
+          "reason": "Issuer quotes do not show supermarkets earning: the Amazon Visa quote is a co-brand bonus for Amazon, Audible and Whole Foods as named merchants, and the Amazon store-card quote is a site tagline, not an earn statement."
         }
       }
     },
@@ -414,7 +392,7 @@
         },
         "evidence": {
           "verdict": "disputed",
-          "reason": "The Instacart Mastercard quote is about orders on Instacart powered by Uber Eats, not purchases on ubereats.com. Chase names ubereats.com under its separate Select food delivery category, not restaurants/dining. The U.S. Bank Restaurants list entry and store quotes are fine."
+          "reason": "The Chase quote names Uber Eats in its separate select food delivery category, not dining; Chase lists dining as purchases directly from a restaurant, so that quote supports a different category than drafted."
         }
       }
     },

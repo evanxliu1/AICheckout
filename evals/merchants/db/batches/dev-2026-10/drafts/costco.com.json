@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 10031,
-    "outputTokens": 291
+    "inputTokens": 13413,
+    "outputTokens": 317
   },
-  "durationMs": 24310,
+  "durationMs": 34526,
   "draft": {
     "domain": "costco.com",
     "kind": "merchant",
@@ -22,23 +22,23 @@
     "evidence": [
       {
         "sourceId": "costco-com-page-1",
-        "quote": "Costco is a membership warehouse club",
-        "supports": "category"
-      },
-      {
-        "sourceId": "costco-com-page-1",
-        "quote": "Costco provides a wide selection of merchandise",
+        "quote": "Costco is a membership warehouse club, dedicated to bringing our members the best possible prices on quality brand-name merchandise.",
         "supports": "kind"
       },
       {
         "sourceId": "costco-com-page-1",
-        "quote": "quality brand-name merchandise",
+        "quote": "quality brand-name merchandise.",
         "supports": "physicalGoods"
       },
       {
         "sourceId": "costco-com-page-1",
-        "quote": "Costco is a membership warehouse club",
+        "quote": "© 1998 — 2026 Costco Wholesale Corporation. All rights reserved.",
         "supports": "brand"
+      },
+      {
+        "sourceId": "costco-com-page-1",
+        "quote": "Costco is a membership warehouse club",
+        "supports": "category"
       },
       {
         "sourceId": "chase-rewards-category-faq",
@@ -46,16 +46,16 @@
         "supports": "category"
       },
       {
-        "sourceId": "citi-costco-anywhere-visa-categories",
-        "quote": "Superstores, Supermarkets and Warehouse Clubs",
-        "supports": "category"
+        "sourceId": "chase-rewards-category-faq",
+        "quote": "These merchants sell a full range of household goods and merchandise, groceries, furniture, electronics, appliances, and auto supplies.",
+        "supports": "definition"
       },
       {
         "sourceId": "us-bank-cash-plus-sample-merchants",
-        "quote": "In addition, purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify.",
+        "quote": "purchases at discount stores like Wal-Mart®, Target® and Costco® do not qualify.",
         "supports": "category"
       }
     ],
-    "notes": "Costco’s own page identifies it as a membership warehouse club, and Chase explicitly lists Costco among wholesale clubs. U.S. Bank separately calls Costco a discount store for rewards purposes; wholesale-clubs is based on the direct store description and Chase evidence."
+    "notes": "Costco's own page and Chase identify it as a membership/wholesale club. A U.S. Bank page groups Costco with discount stores, creating a classification discrepancy, but does not assign it to another listed category."
   }
 }

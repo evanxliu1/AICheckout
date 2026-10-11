@@ -6,35 +6,26 @@
     {
       "domain": "kroger.com",
       "id": "kroger-us",
-      "basis": "default",
-      "category": "general-merchandise",
-      "downgraded": {
-        "reason": "Both Citi quotes come from Citi's list of superstores, supermarkets and warehouse clubs EXCLUDED from the Costco card's 4% gas earn; an exclusion list does not show purchases at Kroger earn in supermarkets. Store-page and U.S. Bank quotes are fine."
-      }
+      "basis": "definition",
+      "category": "supermarkets"
     },
     {
       "domain": "cvs.com",
       "id": "cvs-us",
-      "basis": "default",
-      "category": "general-merchandise"
+      "basis": "definition",
+      "category": "drugstores"
     },
     {
       "domain": "netflix.com",
       "id": "netflix-us",
-      "basis": "default",
-      "category": "general-merchandise",
-      "downgraded": {
-        "reason": "Bank of America quotes name Netflix as a merchant example of its Online Shopping category, a different category than streaming. The U.S. Bank Altitude Go quotes describe a $15 statement credit, not earning. Citi Strata and store quotes are fine."
-      }
+      "basis": "corroborated",
+      "category": "streaming"
     },
     {
       "domain": "instacart.com",
       "id": "instacart-us",
       "basis": "default",
-      "category": "general-merchandise",
-      "downgraded": {
-        "reason": "The Instacart Mastercard quote is a co-brand bonus on Instacart.com and app purchases; it does not say Instacart purchases earn in a supermarkets or grocery category. Store-page quotes are fine."
-      }
+      "category": "general-merchandise"
     },
     {
       "domain": "delta.com",
@@ -52,7 +43,10 @@
       "domain": "wholefoodsmarket.com",
       "id": "wholefoodsmarket-us",
       "basis": "default",
-      "category": "general-merchandise"
+      "category": "general-merchandise",
+      "downgraded": {
+        "reason": "Issuer quotes do not show supermarkets earning: the Amazon Visa quote is a co-brand bonus for Amazon, Audible and Whole Foods as named merchants, and the Amazon store-card quote is a site tagline, not an earn statement."
+      }
     },
     {
       "domain": "ubereats.com",
@@ -60,7 +54,7 @@
       "basis": "default",
       "category": "general-merchandise",
       "downgraded": {
-        "reason": "The Instacart Mastercard quote is about orders on Instacart powered by Uber Eats, not purchases on ubereats.com. Chase names ubereats.com under its separate Select food delivery category, not restaurants/dining. The U.S. Bank Restaurants list entry and store quotes are fine."
+        "reason": "The Chase quote names Uber Eats in its separate select food delivery category, not dining; Chase lists dining as purchases directly from a restaurant, so that quote supports a different category than drafted."
       }
     },
     {
@@ -76,7 +70,7 @@
       "disputed": [
         {
           "field": "hosts",
-          "reason": "costcobusinessdelivery.com does not appear in any capture; the store pages mention Business Delivery and Costco Business Center orders but never that domain, so the second host cannot be confirmed."
+          "reason": "costcobusinessdelivery.com is not shown in any Costco capture; the pages mention Business Delivery and Business Center orders but never name that domain, so the host cannot be confirmed from captures."
         }
       ]
     }

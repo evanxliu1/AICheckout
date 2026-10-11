@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 8584,
-    "outputTokens": 195
+    "inputTokens": 10011,
+    "outputTokens": 226
   },
-  "durationMs": 8844,
+  "durationMs": 15538,
   "draft": {
     "domain": "cvs.com",
     "kind": "merchant",
@@ -25,23 +25,28 @@
       },
       {
         "sourceId": "cvs-com-page-1",
-        "quote": "You can shop as a guest for nonprescription items.",
+        "quote": "we will send you a shipping confirmation email containing a tracking number",
         "supports": "physicalGoods"
       },
       {
         "sourceId": "cvs-com-page-1",
-        "quote": "any CVS Pharmacy® store",
+        "quote": "CVS Pharmacy® store",
         "supports": "category"
       },
       {
         "sourceId": "cvs-com-page-2",
-        "quote": "At CVS/pharmacy, we make it easy for you to see which medical supplies",
+        "quote": "your local CVS/pharmacy store",
         "supports": "category"
       },
       {
         "sourceId": "amex-rewards-info-retail",
         "quote": "The U.S. locations of CVS Pharmacy, DUANEreade, Rite Aid and Walgreens.",
         "supports": "category"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "the purchases must be made at a drugstore that is included on our list of \"select major drugstores\"",
+        "supports": "definition"
       }
     ],
     "notes": null

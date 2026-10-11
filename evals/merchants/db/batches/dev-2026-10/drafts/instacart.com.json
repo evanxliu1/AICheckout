@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 9729,
-    "outputTokens": 257
+    "inputTokens": 10624,
+    "outputTokens": 308
   },
-  "durationMs": 43168,
+  "durationMs": 24460,
   "draft": {
     "domain": "instacart.com",
     "kind": "marketplace",
@@ -18,7 +18,7 @@
     "brandIds": [
       "instacart"
     ],
-    "candidateCategory": "supermarkets",
+    "candidateCategory": null,
     "evidence": [
       {
         "sourceId": "instacart-com-page-1",
@@ -27,17 +27,22 @@
       },
       {
         "sourceId": "instacart-com-page-2",
-        "quote": "Instacart powers the shopping and delivery, but your account, payment, and order details live with the retailer.",
-        "supports": "kind"
-      },
-      {
-        "sourceId": "instacart-com-page-2",
         "quote": "Instacart powers many grocery delivery orders",
         "supports": "physicalGoods"
       },
       {
+        "sourceId": "instacart-com-page-2",
+        "quote": "Instacart powers the shopping and delivery, but your account, payment, and order details live with the retailer.",
+        "supports": "kind"
+      },
+      {
         "sourceId": "instacart-com-page-1",
-        "quote": "Get Groceries",
+        "quote": "© 2026, Maplebear Inc. dba Instacart.",
+        "supports": "brand"
+      },
+      {
+        "sourceId": "instacart-com-page-1",
+        "quote": "By powering the future of grocery with our retail partners",
         "supports": "category"
       },
       {
@@ -47,15 +52,10 @@
       },
       {
         "sourceId": "instacart-mastercard-product",
-        "quote": "on qualifying Instacart.com and Instacart app purchases",
-        "supports": "category"
-      },
-      {
-        "sourceId": "instacart-com-page-1",
-        "quote": "© 2026, Maplebear Inc. dba Instacart.",
-        "supports": "brand"
+        "quote": "from more than 1,500 retail brands and 80,000+ stores across 14,000+ cities in North America.",
+        "supports": "kind"
       }
     ],
-    "notes": null
+    "notes": "Instacart’s pages clearly describe grocery delivery through retail partners, but no lookup page or issuer supermarket classification/definition is provided; candidateCategory is therefore null."
   }
 }

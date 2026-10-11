@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 9523,
-    "outputTokens": 436
+    "inputTokens": 13332,
+    "outputTokens": 561
   },
-  "durationMs": 47700,
+  "durationMs": 43411,
   "draft": {
     "domain": "netflix.com",
     "kind": "merchant",
@@ -18,11 +18,6 @@
     "brandIds": [],
     "candidateCategory": "streaming",
     "evidence": [
-      {
-        "sourceId": "netflix-com-page-1",
-        "quote": "Netflix delivers the next series, films and games you’ll obsess over.",
-        "supports": "category"
-      },
       {
         "sourceId": "netflix-com-page-2",
         "quote": "Sign up for Netflix today and choose from several payment options.",
@@ -32,6 +27,16 @@
         "sourceId": "netflix-com-page-2",
         "quote": "Netflix plans are billed monthly on the date you signed up.",
         "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "netflix-com-page-2",
+        "quote": "Unlimited ad-free movies, TV shows, and games",
+        "supports": "physicalGoods"
+      },
+      {
+        "sourceId": "netflix-com-page-1",
+        "quote": "Netflix delivers the next series, films and games you’ll obsess over.",
+        "supports": "category"
       },
       {
         "sourceId": "netflix-com-lookup-1",
@@ -50,25 +55,35 @@
       },
       {
         "sourceId": "amex-rewards-info-retail",
-        "quote": "Select U.S. Streaming Subscriptions",
-        "supports": "category"
-      },
-      {
-        "sourceId": "boa-cash-back-category-choices",
-        "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app).",
-        "supports": "category"
-      },
-      {
-        "sourceId": "boa-cash-back-category-choices",
-        "quote": "Merchant examples*\nAmazon\nComcast\nEtsy\nNetflix",
+        "quote": "Netflix",
         "supports": "category"
       },
       {
         "sourceId": "citi-strata-rewards-terms",
         "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
         "supports": "category"
+      },
+      {
+        "sourceId": "us-bank-altitude-go-product",
+        "quote": "eligible streaming service purchases, such as Netflix, Hulu, Apple Music",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "us-bank-altitude-go-secured-product",
+        "quote": "eligible streaming service purchases, such as Netflix, Hulu, Apple Music",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "amex-rewards-info-retail",
+        "quote": "streaming subscription purchases, the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions:",
+        "supports": "definition"
+      },
+      {
+        "sourceId": "citi-strata-rewards-terms",
+        "quote": "streaming providers: Amazon Prime Video, Apple Music, Disney+, DirecTV Stream, ESPN, Fandango at Home, fuboTV, HBO Max, Hulu, MLB.TV, NBA League Pass, Netflix",
+        "supports": "definition"
       }
     ],
-    "notes": "Bank of America lists Netflix as an online-shopping merchant example, but the store, MCC lookup, and other issuer pages identify it as streaming. No Netflix brand ID appears in the catalog."
+    "notes": "The lookup describes Netflix as MCC 4899 (cable and other pay television), while issuer terms explicitly include Netflix as a streaming service. No Netflix brand id exists in the supplied catalog."
   }
 }

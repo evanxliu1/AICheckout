@@ -166,6 +166,12 @@ describe('storeEvidence', () => {
       'x',
     ])
       expect(storeEvidence(id, fixture), id).toBeNull();
-    for (const record of MERCHANTS_V1.merchants) expect(storeEvidence(record.id)).toBeNull();
+    for (const record of MERCHANTS_V1.merchants)
+      if (record.evidence.basis === 'default') expect(storeEvidence(record.id), record.id).toBeNull();
+      else expect(storeEvidence(record.id), record.id).toMatch(/^Codes as /);
+    // The bundled dev release (2026-10-11): Kroger on U.S. Bank's supermarket definition.
+    expect(storeEvidence('kroger-us')).toBe(
+      "Codes as a supermarket (its own pages; fits U.S. Bank's supermarket definition).",
+    );
   });
 });

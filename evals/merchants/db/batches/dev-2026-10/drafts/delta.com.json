@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
   "batch": "dev-2026-10",
-  "promptVersion": "merchant-draft.1",
-  "promptSha256": "e366f474873a9db8d7146b02123ed7ecf6b7cc704d131df901d2506eb6626be5",
+  "promptVersion": "merchant-draft.2",
+  "promptSha256": "4b7c20833e0e487f06bcff83b5ca56c91fa060f2b3d0d7a5ec2daf2a1233f1ec",
   "model": "gpt-5.6-luna",
   "effort": "xhigh",
   "draftedOn": "2026-10-11",
   "usage": {
-    "inputTokens": 10433,
-    "outputTokens": 302
+    "inputTokens": 13615,
+    "outputTokens": 230
   },
-  "durationMs": 49067,
+  "durationMs": 19525,
   "draft": {
     "domain": "delta.com",
     "kind": "merchant",
@@ -22,7 +22,7 @@
     "evidence": [
       {
         "sourceId": "amex-delta-skymiles-reserve-product",
-        "quote": "Made directly with Delta.",
+        "quote": "Made directly with Delta.‡",
         "supports": "kind"
       },
       {
@@ -36,26 +36,11 @@
         "supports": "brand"
       },
       {
-        "sourceId": "amex-delta-skymiles-reserve-pricing",
-        "quote": "Eligible flights are operated by Delta or Delta Connection carriers",
-        "supports": "category"
-      },
-      {
         "sourceId": "amex-delta-skymiles-gold-pricing",
-        "quote": "Delta flight purchases are limited to purchases of Delta-marketed flights",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-delta-skymiles-blue-pricing",
-        "quote": "in-flight purchases of food and beverages on Delta-operated flights",
-        "supports": "category"
-      },
-      {
-        "sourceId": "amex-delta-skymiles-reserve-product",
-        "quote": "on Delta flights",
+        "quote": "Delta flight purchases",
         "supports": "category"
       }
     ],
-    "notes": "Delta is an airline/travel merchant, but airlines are not represented by any supplied category. The store page was inaccessible."
+    "notes": "The store page was inaccessible, but issuer documents identify direct Delta flight purchases. Air travel has no matching listed category; transit is defined narrowly as rideshare, rail, fares, parking, and tolls, so candidateCategory is null."
   }
 }
