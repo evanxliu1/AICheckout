@@ -1246,6 +1246,26 @@ describe('issuer quotes: earning statements only', () => {
     expect(
       issuerQuoteEarns('Not grocery stores: Walmart, Target, Kroger', 'Kroger', 'kroger.com', 'supermarkets'),
     ).toBe(false);
+    // Examples in a sentence about something else are no inclusion list.
+    expect(
+      issuerQuoteEarns(
+        'Get a $15 credit for annual streaming service purchases like Netflix, Apple TV, Spotify and more.',
+        'Netflix',
+        'netflix.com',
+        'streaming',
+      ),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns('wholesale clubs such as Costco and BJs', 'Costco', 'costco.com', 'wholesale-clubs'),
+    ).toBe(false);
+    expect(
+      issuerQuoteEarns(
+        'at restaurants, including orders on Instacart powered by Uber Eats, gas stations, and on select streaming services.',
+        'Uber Eats',
+        'ubereats.com',
+        'dining',
+      ),
+    ).toBe(false);
     expect(
       issuerQuoteEarns(
         'Earn 3% at U.S. drugstores: CVS Pharmacy, Duane Reade and Walgreens.',

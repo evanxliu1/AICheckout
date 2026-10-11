@@ -69,8 +69,10 @@ export const EXCLUSION_WORDING =
 export const EARNING_WORDING =
   /\b(earns?|earning|rewards?|cash ?back|points?|miles|\d+(?:\.\d+)?\s?%|\d+x)\b|\d%/i;
 /** Wording that opens an inclusion list ("Includes the following streaming providers:", "The U.S. drugstore list
- * is:"); such a list under an earning category names its stores as earning (coordinator, 2026-10-11). */
-export const INCLUSION_WORDING = /\b(includ\w*|list (?:is|of)|following|such as|like)\b|:/i;
+ * is:"); such a list under an earning category names its stores as earning (coordinator, 2026-10-11). Not "like" or
+ * "such as": "a $15 credit for streaming purchases like Netflix" and "wholesale clubs such as Costco" are examples in
+ * a sentence about something else, not the category's list. */
+export const INCLUSION_WORDING = /\b(includes?|included|list (?:is|of)|following)\b|:/i;
 /** Wording an issuer uses when it says what a category covers. */
 export const DEFINITION_WORDING =
   /\b(includ\w*|such as|means?|defin\w*|consist\w*|categor\w*|\w*stores?|merchants?|list|establishments?|providers?|services?|retailers?|pharmac(?:y|ies))\b/i;
