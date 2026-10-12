@@ -100,13 +100,6 @@ Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): *
 
 `2026-10-05.renewal.1` was added to `publishedVersions` in `evals/curation/catalog-batches.json` in the PR that recorded release 3 (branch `wiki-audit-2026-10-05`). The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 
-## Related
-
-* [Catalog release](catalog-release.md)
-* [Hosting](hosting.md)
-* [Roadmap](../product/roadmap.md)
-* [Phase 9 plan](../product/phase-9-freshness.md)
-
 ## Merchant release 1 (published 2026-10-12)
 
 | Field | Value |
@@ -118,3 +111,10 @@ Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): *
 | Published by | The coordinating session from the CLI (`pipeline merchants publish`) with Evan's session; agent-verified, not human-verified |
 | Evidence | Blind audit `docs/evals/merchant-db-v1.md`; review file `evals/merchants/db/review.md` |
 | Check | `GET /v1/merchants` serves sequence 1, version `2026-10-11.mcc.3` |
+
+## Related
+
+* [Catalog release](catalog-release.md)
+* [Hosting](hosting.md)
+* [Roadmap](../product/roadmap.md)
+* [Phase 9 plan](../product/phase-9-freshness.md)
