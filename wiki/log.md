@@ -2,6 +2,9 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-12
+* **Publish** merchant release 1 `2026-10-11.mcc.3` on Evan's chat instruction (2026-10-12T00:31:49Z), from the CLI with Evan's session; `/v1/merchants` serves it. Phase 14 complete. (claude-code/claude-opus-5-5)
+
 ## 2026-10-11
 * **Deploy** PR #91 (merchant-code evidence) merged; `merchant_release_mcc_basis` migration pushed to hosted (dry run, then push); publish dry run for `2026-10-11.mcc.3` passed. (claude-code/claude-opus-5-5)
 * **Review** independent review of `231dc89c` (approve; one must-fix, should-fixes and nits), applied on `phase14-8-mcc-evidence` as release `2026-10-11.mcc.3`: per-dataset evidence quotes (each dataset's own rows, only datasets with a row of the category cited); the card-not-present check (`isOnline`, `MIN_ONLINE_ROWS`; Starbucks and Bambu Lab refused, Walmart/Target vetoes and `WAL ?MART`); `streamingVeto` (no telecom providers, pages must show a streaming service); `deliveryExclusions` listing every issuer that excludes or conditions delivery in dining; the Whole Foods amazon.com note; wording "Codes as dining in public purchase-card data (mostly in-store)"; top-12 descriptors by count; Wendy's and AMC pattern nits; `xlsxRows` test; NOTICE with the CC BY 4.0 URL, dataset URLs and changes made; the two b06 prose Fiserv notes reworded; `results.json` regenerated; 89 bonus categories (`mcc` 62); the two changed records re-audited blind. (claude-code/claude-fable-5-1)
