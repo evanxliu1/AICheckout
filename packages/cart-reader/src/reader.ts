@@ -14,7 +14,9 @@
 //    is a total, subtotal or, next to a credit row, an after-credit total. Savings, shipping, tax, points, instalment
 //    and line-item rows are excluded. A total label ending in a bare number the grammar cannot read is a total the
 //    reader cannot show, and withholds. A card offer's hypothetical credit ("upon approval", "statement credit") is
-//    neither a credit nor a total after one. Rows inside a page header (a basket flyout) are left out when a summary
+//    neither a credit nor a total after one. A credit row in a card-offer panel beside no summary total neither
+//    blocks the summary's amount nor makes an after-credit total (15.1b, 2026-10-20); any other credit row beside a
+//    total still counts. Rows inside a page header (a basket flyout) are left out when a summary
 //    row sits outside every header: the page's own summary outranks the flyout.
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control)
@@ -244,9 +246,17 @@ export function analyze(
     if (r.why === 'several-amounts' && rows.some((o) => o !== r && r.els.at(-1)!.contains(o.els.at(-1)!)))
       r.kind = null;
   // "Amount due", "balance" and the like are after-credit totals only beside a credit row (same parent); otherwise
-  // they are plain totals when they say so, and nothing at all when they do not.
+  // they are plain totals when they say so, and nothing at all when they do not. A credit beside no summary total is
+  // left out only when it sits in a card offer (15.1b, 2026-10-20; narrowed in review): a card-offer panel's
+  // illustration ("Current subtotal", "Gift card savings: -$50") is not a credit the shopper's total carries, but a
+  // gift card applied in a payment section or a credits panel beside the summary is, and still withholds. A credit
+  // that says it is applied or redeemed always counts, whatever block it sits in.
   const totals = rows.filter((r) => r.kind !== null && r.kind !== 'credit');
-  const credits = rows.filter((r) => r.kind === 'credit' && totals.some((t) => near(r, t)));
+  const offerCredit = (r: Row) =>
+    !APPLIED_RE.test(r.text.toLowerCase()) && inOfferBlock(r.els.at(-1)!, ctx, true);
+  const credits = rows.filter(
+    (r) => r.kind === 'credit' && totals.some((t) => near(r, t) && (t.inSummary || !offerCredit(r))),
+  );
   const resolved: (Row & { kind: Kind })[] = [];
   for (const r of rows) {
     if (r.kind === 'credit' || r.kind === null) continue;
@@ -309,7 +319,7 @@ export function analyze(
       const first = row.els[0]!;
       const scope = parentOf(parentOf(first) ?? first) ?? first;
       const negative = findAmounts(normalizeText(visibleText(scope, ctx)), isCode).some((a) => a.negative);
-      if (!negative && !rows.some((r) => r.kind === 'credit')) return withhold('total-below-subtotal', rows);
+      if (!negative && credits.length === 0) return withhold('total-below-subtotal', rows);
     }
   }
   if (kind === 'subtotal') {
@@ -779,9 +789,12 @@ function withoutSavedNote(text: string): string {
  * Whether a row sits in a card offer's illustration ("Apply now", "upon approval"): a block within three levels,
  * short and with no shipping or tax words, whose text matches OFFER_RE. Its "new total" is not the cart's.
  */
-function inOfferBlock(el: Element, ctx: Ctx): boolean {
+function inOfferBlock(el: Element, ctx: Ctx, tablesFree = false): boolean {
   let a = parentOf(el);
-  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; depth += 1, a = parentOf(a)) {
+  // With `tablesFree` (a credit row outside every summary, 15.1b review), table structure does not count toward the
+  // three levels: an offer's illustration is often a small table under its copy.
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < 3; a = parentOf(a)) {
+    if (!tablesFree || !TABLE_TAGS.has(a.nodeName)) depth += 1;
     const text = blockText(a, ctx);
     // A real summary (shipping, tax or a checkout control) with a promo "Apply now" or a "Terms apply" footnote is not
     // an offer block (review fix, 13c.5): the offer must also talk of a card, a credit or a new total.
@@ -791,6 +804,8 @@ function inOfferBlock(el: Element, ctx: Ctx): boolean {
   return false;
 }
 const OFFER_CONTEXT_RE = /credit|\bcard\b|karte|carte|tarjeta|new total/u;
+/** A credit row that says it is in use ("Gift card applied", "Points redeemed"): never an offer's illustration. */
+const APPLIED_RE = /appl(?:ied|iqu)|redeem|eingel[öo]st|angewendet|aplicad|utilis|\bused\b/u;
 
 /** The text with its amounts taken out: the row's label. */
 function withoutAmounts(text: string): string {
