@@ -8,7 +8,6 @@ import {
   catalogCacheSchema,
   emptyCatalogCache,
   emptyState,
-  MAX_SAVINGS_ENTRIES,
   requestSchema,
   storedAppStateSchema,
 } from './contracts';
@@ -253,20 +252,6 @@ export function createStateService(
       }
       if (request.type === 'checkout:catalog-cards')
         return success(state, catalog, null, null, request.cardIds);
-      if (request.type === 'checkout:record-savings') {
-        // Written by the worker from a one-tap answer; it does not race the shopper's form inputs,
-        // so it needs no expected revision. Newest first, bounded.
-        const next: AppState = {
-          ...state,
-          revision: state.revision + 1,
-          savings: [request.entry, ...state.savings.filter((e) => e.id !== request.entry.id)].slice(
-            0,
-            MAX_SAVINGS_ENTRIES,
-          ),
-        };
-        await storage.set({ [STATE_KEY]: next });
-        return success(next, catalog);
-      }
       if (request.type === 'checkout:rates') {
         const purchase = enginePurchase(
           {
@@ -287,11 +272,6 @@ export function createStateService(
           ok: false,
           error: 'Your saved inputs changed in another window. Reopen the extension before saving.',
         };
-      }
-      if (request.type === 'checkout:delete-savings') {
-        const next: AppState = { ...state, revision: state.revision + 1, savings: [] };
-        await storage.set({ [STATE_KEY]: next });
-        return await response(next, catalog, now);
       }
       if (request.type === 'checkout:refresh-catalog') {
         if (!fetchCatalog)

@@ -159,9 +159,8 @@ test('report: counts, three levels, coverage without cart-other, variants apart'
       stability: 1,
     },
   });
-  assert.equal(r.legacy.pageStates, 0);
-  assert.match(r.legacy.reason, /^n = 0: amazon\.com, bestbuy\.com and newegg\.com are excluded from retail-frame-3/);
-  assert.match(r.legacy.retirement, /untested.*separate evidence or Evan/);
+  // Phase 15.1: no separate legacy-adapter report any more.
+  assert.equal(r.legacy, undefined);
 });
 
 function allCorrect(n, readMs = [1, 2, 3, 4, 5]) {
@@ -214,19 +213,16 @@ test('review 8: an inconsistent read sequence counts under stability without cha
   assert.deepEqual(r.classes, { 'non-us': { stability: 1 } });
 });
 
-test('review 2: legacy reads are scored apart, never pooled with the generic reader', () => {
+test('Phase 15.1: a stray legacy read on an old output row is ignored, never pooled or reported', () => {
   const env = allCorrect(3);
   env.outputs.set(
     's0.example/cart-1',
     out(withheld, [1, 1, 1, 1, 1], { legacy: out(shown('estimatedTotal', 2400)) }),
   );
-  env.outputs.set('s1.example/cart-1', out(shown('estimatedTotal', 2400), undefined, { legacy: out(withheld) }));
   const r = report({ split: 'development', runId: 'r', ...env });
   assert.equal(r.whole.counts.shownCorrect, 2);
-  assert.equal(r.legacy.pageStates, 2);
-  assert.equal(r.legacy.counts.shownCorrect, 1);
-  assert.equal(r.legacy.counts.withheld, 1);
-  assert.equal(r.legacy.reason, undefined);
+  assert.equal(r.whole.counts.withheld, 1);
+  assert.equal(r.legacy, undefined);
 });
 
 const realLabels = labels;

@@ -58,10 +58,11 @@ describe('storeForTab', () => {
     expect(merchantForTab('https://www.paypal.com/checkoutnow', fixture)).toBeNull();
     // The bundled seed: 15 processors, Amazon Pay's hosts before amazon.com.
     expect(storeForTab('https://pay.amazon.com/checkout/x')?.kind).toBe('processor');
+    // Since Phase 15.1 the release names every store (the adapters' "Amazon US" is gone).
     expect(storeForTab('https://www.amazon.com/gp/cart/view.html')).toMatchObject({
       kind: 'store',
       id: 'amazon-us',
-      name: 'Amazon US',
+      name: 'Amazon',
     });
     expect(storeForTab('https://shop.app/checkout/1')?.kind).toBe('processor');
   });
@@ -79,8 +80,10 @@ describe('storeForTab', () => {
 });
 
 describe('merchantName', () => {
-  it('keeps the adapters’ names for legacy stores and names release records and the generic store', () => {
-    expect(merchantName('best-buy-us')).toBe('Best Buy US');
+  it('names release records (the three former adapter stores included) and the generic store', () => {
+    expect(merchantName('best-buy-us')).toBe('Best Buy');
+    expect(merchantName('amazon-us')).toBe('Amazon');
+    expect(merchantName('newegg-us')).toBe('Newegg');
     expect(merchantName('generic-us-online')).toBe('Another U.S. online store');
     expect(merchantName('paypal')).toBe('PayPal');
     expect(merchantName('not-a-store-us')).toBe('Unsupported merchant');

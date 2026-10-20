@@ -2,7 +2,29 @@ import { expect } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import { CATALOG_V3_FIXTURE } from '../../packages/rewards-core/test-cases';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
-import { writeCatalogCache } from './vault';
+import { mutateVaultState, writeCatalogCache } from './vault';
+
+/** Puts a popup opened as an extension page at a named store. Since Phase 15.1 the Merchant select offers only
+ * the tab's matched store and the generic store, and an extension page has no store tab; a purchase saved at
+ * the store is restored on reload and offered by name, as the popup does for any saved store its list lacks.
+ * Test data only: the saved purchase is $1.00 with online-retail eligibility unknown (what choosing one of
+ * the former adapter stores in the select used to leave), and the specs type their own amount. */
+export async function atStore(page: Page, merchantId: string) {
+  await mutateVaultState(page, (state) => {
+    state.revision += 1;
+    state.comparison = null;
+    state.purchase = {
+      merchantId,
+      currency: 'USD',
+      amountCents: 100,
+      purchasedOn: new Date().toISOString().slice(0, 10),
+      eligiblePurchase: 'eligible',
+      onlineRetail: 'unknown',
+    };
+  });
+  await page.reload();
+  await expect(page.getByLabel('Merchant')).toHaveValue(merchantId);
+}
 
 /** Adds a card in the wallet editor (popup or onboarding): type its name in the search field and
  * pick it from the list of matches, as a shopper would. */

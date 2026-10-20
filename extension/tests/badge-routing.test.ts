@@ -26,9 +26,6 @@ describe('worker routing by sender', () => {
     for (const sender of [badge, content, { ...popup, id: 'other' }])
       expect(routeMessage({ type: 'checkout:get-state' }, sender, ids)).toEqual({ kind: 'deny' });
   });
-  it('never lets a page record savings (worker-internal only)', () => {
-    expect(routeMessage({ type: 'checkout:record-savings' }, popup, ids)).toEqual({ kind: 'deny' });
-  });
   it('lets the badge iframe use badge:* for its own tab only, identified by Chrome', () => {
     expect(routeMessage({ type: 'badge:get', tabId: 99 }, badge, ids)).toEqual({ kind: 'badge', tabId: 7 });
     expect(routeMessage({ type: 'badge:get' }, { ...badge, frameId: 0 }, ids)).toEqual({ kind: 'deny' });
@@ -37,7 +34,7 @@ describe('worker routing by sender', () => {
     expect(routeMessage({ type: 'badge:get' }, popup, ids)).toEqual({ kind: 'deny' });
     expect(routeMessage({ type: 'badge:changed' }, popup, ids)).toEqual({ kind: 'ignore' });
   });
-  it('lets the content script report readings and order pages only from a tab top frame over HTTPS', () => {
+  it('lets the content script report readings only from a tab top frame over HTTPS; the retired order:page is ignored', () => {
     expect(routeMessage({ type: 'cart:reading' }, content, ids)).toEqual({
       kind: 'content',
       tabId: 7,
@@ -51,7 +48,9 @@ describe('worker routing by sender', () => {
       tabId: 7,
       url: 'https://shop.example.com/basket',
     });
-    expect(routeMessage({ type: 'order:page' }, { ...content, frameId: 1 }, ids)).toEqual({ kind: 'deny' });
+    expect(routeMessage({ type: 'cart:reading' }, { ...content, frameId: 1 }, ids)).toEqual({ kind: 'deny' });
+    // Phase 15.1: no order pages; the old message is an unknown type, routed nowhere.
+    expect(routeMessage({ type: 'order:page' }, content, ids)).toEqual({ kind: 'ignore' });
     expect(
       routeMessage({ type: 'cart:reading' }, { ...content, url: 'http://www.bestbuy.com/cart' }, ids),
     ).toEqual({

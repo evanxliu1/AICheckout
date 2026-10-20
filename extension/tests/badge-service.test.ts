@@ -1,20 +1,18 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
 import { createBadgeService } from '../src/background/badge-service';
-import { BADGE_TABS_KEY, ORDER_WINDOW_MS, SETTINGS_KEY } from '../src/badge/contracts';
+import { BADGE_TABS_KEY, SETTINGS_KEY } from '../src/badge/contracts';
 import type { BadgeView } from '../src/badge/contracts';
 import { createVaultService } from '../src/state/vault-service';
 import type { StateStorage } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import type { AppState } from '../src/state/contracts';
 import { CATALOG_KEY, STATE_KEY } from '../src/state/service';
-import { cardEstimate, savingsEntry, totalExtraCents } from '../src/state/savings';
-import { rewardsWording } from '../src/components/estimates';
 import { CATALOG_V2, CATALOG_V3, redateCatalog } from '../src/domain';
-import type { Catalog, MerchantRelease, Wallet } from '../src/domain';
+import type { Catalog, MerchantRelease } from '../src/domain';
 import { MERCHANT_RELEASE_FIXTURE } from '../../packages/rewards-core/test-cases';
 
-let now = Date.parse('2026-10-02T15:00:00Z');
+const now = Date.parse('2026-10-02T15:00:00Z');
 const clock = () => now;
 const catalog = redateCatalog(CATALOG_V2, '2026-10-01');
 function memory(initial: Record<string, unknown> = {}) {
@@ -56,15 +54,17 @@ function setupWith(
   state: Partial<AppState> | null = { wallet },
   cat: Catalog = catalog,
   merchants?: MerchantRelease,
+  settings?: unknown,
 ) {
-  const local = memory(
-    state
+  const local = memory({
+    ...(state
       ? {
           [STATE_KEY]: { ...emptyState(), ...state },
           [CATALOG_KEY]: { release: release(cat), lastCheckedAt: null },
         }
-      : {},
-  );
+      : {}),
+    ...(settings !== undefined ? { [SETTINGS_KEY]: settings } : {}),
+  });
   const session = memory();
   const vault = createVaultService(local.api, session.api, clock);
   const open = vi.fn(async () => undefined);
@@ -72,7 +72,7 @@ function setupWith(
   const badge = createBadgeService({
     local: local.api,
     session: session.api,
-    vault: { snapshot: vault.snapshot, handle: vault },
+    vault: { snapshot: vault.snapshot },
     clock,
     open,
     notify,
@@ -90,18 +90,21 @@ function release(cat: Catalog = catalog) {
     catalog: cat,
   };
 }
-const reading = (amountCents: number) => ({
+/** A generic reading (the only reader since Phase 15.1): the content script names the generic store and the
+ * worker resolves the tab's store from the sender URL. */
+const reading = (amountCents: number, kind = 'total') => ({
   type: 'cart:reading',
   reading: {
     status: 'found',
-    merchantId: 'best-buy-us',
+    merchantId: 'generic-us-online',
     currency: 'USD',
     amountCents,
-    kind: 'total',
-    extractorVersion: 'bestbuy-summary-v1',
+    kind,
+    extractorVersion: 'generic-reader-v1',
   },
   framed: false,
 });
+/** A former adapter store's cart URL: `best-buy-us` in the bundled release. */
 const cart = 'https://www.bestbuy.com/cart';
 type Setup = ReturnType<typeof setupWith>;
 const setup = (state: Partial<AppState> | null = { wallet }) => setupWith(state);
@@ -126,18 +129,7 @@ const view = async (t: Setup, tab = 4) => {
 };
 
 const GENERIC = 'https://shop.example.com/cart';
-const genericReading = (amountCents: number) => ({
-  type: 'cart:reading',
-  reading: {
-    status: 'found',
-    merchantId: 'generic-us-online',
-    currency: 'USD',
-    amountCents,
-    kind: 'estimated-total',
-    extractorVersion: 'generic-reader-v1',
-  },
-  framed: false,
-});
+const genericReading = (amountCents: number) => reading(amountCents, 'estimated-total');
 const withheld = {
   type: 'cart:reading',
   reading: { status: 'unavailable', reason: 'withheld' },
@@ -155,7 +147,7 @@ describe('badge service at any store (Phase 13c)', () => {
     })),
   };
   const setup = () => setupWith({ wallet: walletV3 }, v3);
-  it('accepts a generic reading at a store without an adapter and ranks at the generic profile', async () => {
+  it('accepts a generic reading at an unmatched store and ranks at the generic profile', async () => {
     const t = setup();
     expect(await send(t, genericReading(10000), 4, GENERIC)).toMatchObject({ show: true });
     const v = (await view(t)) as Extract<BadgeView, { kind: 'ready' }>;
@@ -169,22 +161,48 @@ describe('badge service at any store (Phase 13c)', () => {
       'shop.example.com',
     );
   });
-  it('refuses a generic reading that names another store or carries an adapter version', async () => {
+  it('refuses a reading that names a store or carries a retired adapter version (Phase 15.1)', async () => {
     const t = setup();
     const named = {
       ...genericReading(10000),
       reading: { ...genericReading(10000).reading, merchantId: 'best-buy-us' },
     };
     expect(await send(t, named, 4, GENERIC)).toEqual({ show: false });
-    // A legacy cart URL takes only its adapter's reading.
-    expect(await send(t, genericReading(10000), 5, cart)).toEqual({ show: false });
-    // A legacy store's other pages take a generic reading, resolved to that store's id in the worker
-    // (Phase 14.2); a reading that names the store itself is refused.
+    expect(await send(t, named, 4, cart)).toEqual({ show: false });
     expect(await send(t, named, 6, 'https://www.bestbuy.com/site/basket')).toEqual({ show: false });
+    for (const extractorVersion of ['bestbuy-summary-v1', 'amazon-summary-v1', 'newegg-summary-v1'])
+      expect(
+        await send(
+          t,
+          { ...genericReading(10000), reading: { ...genericReading(10000).reading, extractorVersion } },
+          4,
+          cart,
+        ),
+        extractorVersion,
+      ).toEqual({ show: false });
+    expect(t.session.read()[BADGE_TABS_KEY]).toBeUndefined();
+    // A former adapter store's cart URL is any other page now: the generic reading is accepted and the
+    // worker names the store from the release (Phase 14.2).
+    expect(await send(t, genericReading(10000), 5, cart)).toMatchObject({ show: true });
+    expect(((await view(t, 5)) as Extract<BadgeView, { kind: 'ready' }>).merchantId).toBe('best-buy-us');
     expect(await send(t, genericReading(10000), 6, 'https://www.bestbuy.com/site/basket')).toMatchObject({
       show: true,
     });
     expect(((await view(t, 6)) as Extract<BadgeView, { kind: 'ready' }>).merchantId).toBe('best-buy-us');
+  });
+  it('refuses the retired order:page message and records nothing for the tab (Phase 15.1)', async () => {
+    const t = setup();
+    await send(t, genericReading(10000), 4, cart);
+    await t.badge.navigated(4);
+    const order = 'https://www.bestbuy.com/checkout/r/thank-you';
+    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toEqual({ show: false });
+    expect(await send(t, { type: 'order:page', framed: false }, 5, order)).toEqual({ show: false });
+    expect(Object.keys(t.session.read()[BADGE_TABS_KEY] as object)).toEqual(['4']);
+    expect(t.notify).toHaveBeenCalledTimes(1);
+    // The badge iframe has no order answer to send either.
+    expect(await act(t, { type: 'badge:answer-order', answer: 'yes', cardId: null }, 4)).toMatchObject({
+      ok: false,
+    });
   });
   it('shows the rates view when the amount was not read: ranked at $100, with rates, never a prompt', async () => {
     const t = setup();
@@ -196,8 +214,8 @@ describe('badge service at any store (Phase 13c)', () => {
     // At $100 the cents are the rate in basis points: a sure 3%.
     expect([best.minRewardCents, best.maxRewardCents]).toEqual([300, 300]);
     expect(JSON.stringify(v)).not.toContain('enter the amount');
-    // Loading, empty and non-USD carts hide the badge.
-    for (const reason of ['page-loading', 'empty-cart', 'unsupported-currency', 'unsupported-page'])
+    // Empty and non-USD carts and non-web pages hide the badge.
+    for (const reason of ['empty-cart', 'unsupported-currency', 'unsupported-page', 'not-a-cart'])
       expect(await send(t, { ...withheld, reading: { status: 'unavailable', reason } }, 5, GENERIC)).toEqual({
         show: false,
       });
@@ -205,12 +223,13 @@ describe('badge service at any store (Phase 13c)', () => {
     await act(t, { type: 'badge:set-amount', amountCents: 5000 }, 4);
     expect((await view(t)).kind).toBe('ready');
   });
-  it('"Not on this site" at another store records its host, not the shared generic id', async () => {
+  it('"Not on this site" records the host, not the shared generic id', async () => {
     const t = setup();
     await send(t, genericReading(10000), 4, GENERIC);
     await act(t, { type: 'badge:disable-site' }, 4);
-    expect(t.local.read()[SETTINGS_KEY]).toMatchObject({
-      disabledMerchants: [],
+    expect(t.local.read()[SETTINGS_KEY]).toEqual({
+      schemaVersion: 1,
+      showOnOtherStores: true,
       disabledSites: ['shop.example.com'],
     });
     expect(await send(t, genericReading(10000), 5, GENERIC)).toEqual({ show: false });
@@ -219,25 +238,60 @@ describe('badge service at any store (Phase 13c)', () => {
     });
     expect((await view(t, 4)).kind).toBe('hidden');
   });
-  it('the "other stores" toggle hides every store without an adapter and leaves legacy stores alone', async () => {
+  it('the badge toggle hides every store, a former adapter store included', async () => {
     const t = setup();
-    await t.badge.saveSettings({
-      schemaVersion: 1,
-      disabledMerchants: [],
-      showOnOtherStores: false,
-      disabledSites: [],
-    });
+    await t.badge.saveSettings({ schemaVersion: 1, showOnOtherStores: false, disabledSites: [] });
     expect(await send(t, genericReading(10000), 4, GENERIC)).toEqual({ show: false });
-    expect(await send(t, reading(10000), 5, cart)).toMatchObject({ show: true });
+    expect(await send(t, reading(10000), 5, cart)).toEqual({ show: false });
     // Settings stored before Phase 13c (no toggle, no sites) still parse, with the defaults.
     await t.local.api.set({ [SETTINGS_KEY]: { schemaVersion: 1, disabledMerchants: [] } });
     expect(await t.badge.settings()).toEqual({
       schemaVersion: 1,
-      disabledMerchants: [],
       showOnOtherStores: true,
       disabledSites: [],
     });
     expect(await send(t, genericReading(10000), 6, GENERIC)).toMatchObject({ show: true });
+  });
+});
+
+describe('settings written before Phase 15.1 (disabledMerchants)', () => {
+  const v3 = redateCatalog(CATALOG_V3, '2026-10-01');
+  const stored = {
+    schemaVersion: 1,
+    disabledMerchants: ['best-buy-us', 'newegg-us'],
+    showOnOtherStores: true,
+    disabledSites: ['shop.example.com', 'www.bestbuy.com'],
+  };
+  it('maps the retired per-store switch to its hosts once, and rewrites the stored value', async () => {
+    const t = setupWith({ wallet }, v3, undefined, stored);
+    const mapped = {
+      schemaVersion: 1,
+      showOnOtherStores: true,
+      disabledSites: ['shop.example.com', 'www.bestbuy.com', 'bestbuy.com', 'secure.newegg.com'],
+    };
+    expect(await t.badge.settings()).toEqual(mapped);
+    expect(t.local.read()[SETTINGS_KEY]).toEqual(mapped);
+    // Mapped settings are not rewritten again on the next read.
+    await t.local.api.set({ [SETTINGS_KEY]: { ...mapped, disabledSites: ['secure.newegg.com'] } });
+    expect(await t.badge.settings()).toEqual({ ...mapped, disabledSites: ['secure.newegg.com'] });
+    expect(t.local.read()[SETTINGS_KEY]).toEqual({ ...mapped, disabledSites: ['secure.newegg.com'] });
+  });
+  it('keeps the badge off at the mapped hosts and on elsewhere; an unknown id maps to nothing', async () => {
+    const t = setupWith({ wallet }, v3, undefined, stored);
+    expect(await send(t, reading(10000), 4, cart)).toEqual({ show: false });
+    expect(await send(t, reading(10000), 5, 'https://bestbuy.com/cart')).toEqual({ show: false });
+    expect(await send(t, reading(10000), 6, 'https://secure.newegg.com/shop/cart')).toEqual({ show: false });
+    expect(await send(t, reading(10000), 7, 'https://www.newegg.com/p/N82E1')).toMatchObject({ show: true });
+    expect(await send(t, reading(10000), 8, 'https://www.amazon.com/cart')).toMatchObject({ show: true });
+    const odd = setupWith({ wallet }, v3, undefined, {
+      schemaVersion: 1,
+      disabledMerchants: ['amazon-us', 'not-a-store'],
+    });
+    expect(await odd.badge.settings()).toEqual({
+      schemaVersion: 1,
+      showOnOtherStores: true,
+      disabledSites: ['www.amazon.com'],
+    });
   });
 });
 
@@ -316,12 +370,13 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     await act(t, { type: 'badge:disable-site' }, 4);
     expect(t.local.read()[SETTINGS_KEY]).toMatchObject({ disabledSites: ['closed-store.example'] });
   });
-  it('"Not on this site" at a matched store records its host; the "other stores" toggle covers it too', async () => {
+  it('"Not on this site" at a matched store records its host; the badge toggle covers it too', async () => {
     const t = setupWith({ wallet: walletBcp }, v3, MERCHANT_RELEASE_FIXTURE);
     await send(t, genericReading(10000), 4, 'https://www.kroger.com/cart');
     await act(t, { type: 'badge:disable-site' }, 4);
-    expect(t.local.read()[SETTINGS_KEY]).toMatchObject({
-      disabledMerchants: [],
+    expect(t.local.read()[SETTINGS_KEY]).toEqual({
+      schemaVersion: 1,
+      showOnOtherStores: true,
       disabledSites: ['www.kroger.com'],
     });
     expect(await send(t, genericReading(10000), 5, 'https://www.kroger.com/checkout')).toEqual({
@@ -333,7 +388,6 @@ describe('badge service on the merchant release (Phase 14.2)', () => {
     expect((await ready(t, 6)).merchantId).toBe('target-us');
     await t.badge.saveSettings({
       schemaVersion: 1,
-      disabledMerchants: [],
       showOnOtherStores: false,
       disabledSites: ['www.kroger.com'],
     });
@@ -381,6 +435,7 @@ describe('badge service', () => {
     expect(v.result.preferredCardId).toBe('amex-blue-cash-everyday');
     expect(v.result.estimates[0]).toMatchObject({ cardId: 'amex-blue-cash-everyday', minRewardCents: 300 });
     expect(v).toMatchObject({
+      merchantId: 'best-buy-us',
       cartAmountCents: 10000,
       amountCents: 10000,
       amountKind: 'total',
@@ -388,18 +443,18 @@ describe('badge service', () => {
     });
     expect(t.notify).toHaveBeenCalledWith(4);
   });
-  it('rejects a reading whose merchant does not match the page, and readings from other pages', async () => {
+  it('rejects malformed readings, and names the store of the page a reading came from', async () => {
     const t = setup();
-    expect(await send(t, reading(10000), 4, 'https://www.amazon.com/cart')).toEqual({ show: false });
-    expect(await send(t, reading(10000), 4, 'https://www.bestbuy.com/site/tv')).toEqual({
-      show: false,
-    });
     expect(
       await send(t, { type: 'cart:reading', reading: { status: 'found' }, framed: false }, 4, cart),
     ).toEqual({
       show: false,
     });
     expect(await act(t, { type: 'badge:get' }, 4)).toMatchObject({ ok: false });
+    // The same generic reading at another store's page is that store's (the release decides, not the reading).
+    await send(t, reading(10000), 5, 'https://www.amazon.com/cart');
+    expect((await view(t, 5)).kind).toBe('ready');
+    expect(((await view(t, 5)) as Extract<BadgeView, { kind: 'ready' }>).merchantId).toBe('amazon-us');
   });
   it('updates with the cart, keeps a typed amount for the same cart only, and applies the payment path', async () => {
     const t = setup();
@@ -432,9 +487,9 @@ describe('badge service', () => {
     });
     await locked.vault({ type: 'checkout:vault-lock' });
     await send(locked, reading(10000), 4, cart);
-    expect(await view(locked)).toEqual({ kind: 'locked', order: false });
+    expect(await view(locked)).toEqual({ kind: 'locked' });
   });
-  it('dismisses for the tab and turns a site off in settings', async () => {
+  it('dismisses for the tab and turns a site off in settings by its host', async () => {
     const t = setup();
     await send(t, reading(10000), 4, cart);
     await act(t, { type: 'badge:dismiss' }, 4);
@@ -443,119 +498,29 @@ describe('badge service', () => {
     await act(t, { type: 'badge:disable-site' }, 5);
     expect(t.local.read()[SETTINGS_KEY]).toEqual({
       schemaVersion: 1,
-      disabledMerchants: ['best-buy-us'],
       showOnOtherStores: true,
-      disabledSites: [],
+      disabledSites: ['www.bestbuy.com'],
     });
     expect(await send(t, reading(10000), 6, cart)).toEqual({ show: false });
+    // The host, not the store: another host of the same store still shows the badge.
+    expect(await send(t, reading(10000), 7, 'https://bestbuy.com/cart')).toMatchObject({ show: true });
     await t.badge.removed(4);
     expect(Object.keys(t.session.read()[BADGE_TABS_KEY] as object)).not.toContain('4');
   });
-  it('asks once after an order URL in the same tab, records the answer, and counts it in savings', async () => {
+  it('a navigation clears the reading and typed amount but keeps the dismissal and payment choice', async () => {
     const t = setup();
     await send(t, reading(10000), 4, cart);
-    await view(t);
+    await act(t, { type: 'badge:set-amount', amountCents: 5000 }, 4);
+    await act(t, { type: 'badge:set-payment', paymentPath: 'bnpl' }, 4);
     await t.badge.navigated(4);
-    const order = 'https://www.bestbuy.com/checkout/r/thank-you';
-    expect(await send(t, { type: 'order:page', framed: false }, 5, order)).toEqual({ show: false });
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toMatchObject({ show: true });
-    const asked = await view(t);
-    expect(asked).toMatchObject({ kind: 'order', recommendedCardId: 'amex-blue-cash-everyday' });
-    const answered = await act(t, { type: 'badge:answer-order', answer: 'yes', cardId: null }, 4);
-    // Used Blue Cash Everyday ($3.00) instead of the default Double Cash ($2.00).
-    expect(answered).toEqual({
-      ok: true,
-      view: {
-        kind: 'recorded',
-        extraCents: 100,
-        usedCardName: 'Blue Cash Everyday',
-        baselineCardName: 'Double Cash',
-        rewardTerm: 'cash back',
-        valueNote: null,
-      },
+    expect(t.session.read()[BADGE_TABS_KEY]).toMatchObject({
+      '4': { reading: null, amountOverrideCents: null, paymentPath: 'bnpl', dismissed: false },
     });
-    const state = (await t.vault({ type: 'checkout:get-state' })) as { ok: true; state: AppState };
-    expect(state.state.savings).toHaveLength(1);
-    expect(state.state.savings[0]).toMatchObject({
-      merchantId: 'best-buy-us',
-      cartAmountCents: 10000,
-      recommendedCardId: 'amex-blue-cash-everyday',
-      usedCardId: 'amex-blue-cash-everyday',
-      estimatedRewardCents: 300,
-      baselineRewardCents: 200,
-      extraCents: 100,
-    });
-    // Asked once: the same order page again shows nothing.
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toEqual({ show: false });
-  });
-  it('ignores order pages long after the recommendation, and requires one of your cards for "another card"', async () => {
-    const t = setup();
-    await send(t, reading(10000), 4, cart);
-    await view(t);
-    now += ORDER_WINDOW_MS;
-    expect(
-      await send(t, { type: 'order:page', framed: false }, 4, 'https://www.bestbuy.com/checkout/r/thank-you'),
-    ).toEqual({
-      show: false,
-    });
-    now -= ORDER_WINDOW_MS;
-    const u = setup();
-    await send(u, reading(10000), 4, cart);
-    await view(u);
-    await send(u, { type: 'order:page', framed: false }, 4, 'https://www.bestbuy.com/checkout/r/thank-you');
-    expect(
-      await act(u, { type: 'badge:answer-order', answer: 'other', cardId: 'chase-freedom-unlimited' }, 4),
-    ).toMatchObject({ ok: false });
-    expect(
-      await act(u, { type: 'badge:answer-order', answer: 'other', cardId: 'citi-double-cash' }, 4),
-    ).toMatchObject({ ok: true, view: { kind: 'recorded', extraCents: 0 } });
+    expect((await view(t)).kind).toBe('rates');
   });
 });
 
 describe('badge review fixes', () => {
-  const order = 'https://www.bestbuy.com/checkout/r/thank-you';
-  async function ask(t: Setup, tab = 4) {
-    await send(t, reading(10000), tab, cart);
-    await view(t, tab);
-    await t.badge.navigated(tab);
-    return send(t, { type: 'order:page', framed: false }, tab, order);
-  }
-  it('expires the order question and never shows it on a later cart in the same tab', async () => {
-    const t = setup();
-    expect(await ask(t)).toMatchObject({ show: true });
-    // A reload of the order page within the window shows the same pending question.
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toMatchObject({ show: true });
-    expect(await view(t)).toMatchObject({ kind: 'order' });
-    // Days later, a new cart in this tab gets the normal badge, not the old question.
-    now += 5 * 86_400_000;
-    await send(t, reading(5000), 4, cart);
-    expect(await view(t)).toMatchObject({ kind: 'ready', amountCents: 5000 });
-    now -= 5 * 86_400_000;
-  });
-  it('drops an unanswered question after the window and refuses a late answer', async () => {
-    const t = setup();
-    await ask(t);
-    now += ORDER_WINDOW_MS;
-    expect(await act(t, { type: 'badge:answer-order', answer: 'yes', cardId: null }, 4)).toMatchObject({
-      ok: false,
-    });
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toEqual({ show: false });
-    now -= ORDER_WINDOW_MS;
-  });
-  it('never asks again after an answer, even if the order page reloads', async () => {
-    const t = setup();
-    await ask(t);
-    await act(t, { type: 'badge:answer-order', answer: 'unsure', cardId: null }, 4);
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toEqual({ show: false });
-  });
-  it('keeps a dismissed tab dismissed on the order page', async () => {
-    const t = setup();
-    await send(t, reading(10000), 4, cart);
-    await view(t);
-    await act(t, { type: 'badge:dismiss' }, 4);
-    await t.badge.navigated(4);
-    expect(await send(t, { type: 'order:page', framed: false }, 4, order)).toEqual({ show: false });
-  });
   it('answers only the frame its content script created; a new frame replaces the old nonce', async () => {
     const t = setup();
     const first = await send(t, reading(10000), 4, cart);
@@ -581,106 +546,6 @@ describe('badge review fixes', () => {
     await t.vault({ type: 'checkout:vault-lock' });
     expect(t.session.read()[BADGE_TABS_KEY]).toHaveProperty('4');
     expect(t.session.read()).not.toHaveProperty('checkoutVaultSessionV1');
-    expect(await view(t)).toEqual({ kind: 'locked', order: false });
-  });
-});
-
-describe('savings math', () => {
-  const purchase = {
-    merchantId: 'best-buy-us',
-    currency: 'USD' as const,
-    amountCents: 10000,
-    purchasedOn: '2026-10-02',
-    eligiblePurchase: 'eligible' as const,
-    onlineRetail: 'eligible' as const,
-    paymentPath: 'card' as const,
-  };
-  it('compares the used card with the default card and keeps unknowns out of the total', () => {
-    const base = {
-      catalog,
-      wallet,
-      purchase,
-      recommendedCardId: 'amex-blue-cash-everyday',
-      now,
-      id: crypto.randomUUID(),
-    };
-    const used = savingsEntry({ ...base, usedCardId: 'amex-blue-cash-everyday' });
-    const worse = savingsEntry({ ...base, usedCardId: 'citi-double-cash', id: crypto.randomUUID() });
-    const unsure = savingsEntry({ ...base, usedCardId: null, id: crypto.randomUUID() });
-    const noDefault = savingsEntry({
-      ...base,
-      wallet: { ...wallet, defaultCardId: null },
-      usedCardId: 'amex-blue-cash-everyday',
-      id: crypto.randomUUID(),
-    });
-    expect([used.extraCents, worse.extraCents, unsure.extraCents, noDefault.extraCents]).toEqual([
-      100,
-      0,
-      null,
-      null,
-    ]);
-    expect(unsure).toMatchObject({ usedCardId: null, estimatedRewardCents: null, baselineRewardCents: 200 });
-    expect(totalExtraCents([used, worse, unsure, noDefault])).toBe(100);
-  });
-  it('names the amount by what the cards pay and leaves programs with no value out of the total', () => {
-    const v3 = redateCatalog(CATALOG_V3, '2026-10-01');
-    const owned: Wallet = {
-      defaultCardId: 'citi-double-cash',
-      cards: ['citi-double-cash', 'capital-one-venture', 'barclays-frontier-airlines-world-mastercard'].map(
-        (cardId) => ({ cardId, usage: [] }),
-      ),
-    };
-    const estimates = (...ids: string[]) => ids.map((id) => cardEstimate(v3, owned, purchase, id, now)!);
-    const entry = (usedCardId: string) =>
-      savingsEntry({ catalog: v3, wallet: owned, purchase, recommendedCardId: usedCardId, usedCardId, now });
-    // Double Cash is cash back (2%): $2.00 both ways.
-    expect(rewardsWording(estimates('citi-double-cash', 'citi-double-cash'), v3)).toEqual({
-      term: 'cash back',
-      note: null,
-      unvalued: false,
-    });
-    // Venture Rewards: 200 miles at NerdWallet's 1¢ estimate.
-    expect(entry('capital-one-venture').extraCents).toBe(0);
-    expect(rewardsWording(estimates('capital-one-venture', 'citi-double-cash'), v3)).toEqual({
-      term: 'rewards',
-      note: 'Counts Capital One miles at 1¢ each (estimate).',
-      unvalued: false,
-    });
-    // Frontier miles have no value: not $0, not counted.
-    expect(entry('barclays-frontier-airlines-world-mastercard')).toMatchObject({
-      estimatedRewardCents: null,
-      baselineRewardCents: 200,
-      extraCents: null,
-    });
-    expect(
-      rewardsWording(estimates('barclays-frontier-airlines-world-mastercard', 'citi-double-cash'), v3).note,
-    ).toMatch(/has no published value, so this order is not added to your all-time total\.$/);
-  });
-  it('keeps the newest 500 entries and deletes the history only with the current revision', async () => {
-    const t = setup();
-    const entry = savingsEntry({
-      catalog,
-      wallet,
-      purchase,
-      recommendedCardId: 'citi-double-cash',
-      usedCardId: 'citi-double-cash',
-      now,
-    });
-    const recorded = (await t.vault({ type: 'checkout:record-savings', entry })) as {
-      ok: true;
-      state: AppState;
-    };
-    expect(recorded.state.savings).toEqual([entry]);
-    expect(await t.vault({ type: 'checkout:delete-savings', expectedRevision: 0 })).toMatchObject({
-      ok: false,
-    });
-    const deleted = (await t.vault({
-      type: 'checkout:delete-savings',
-      expectedRevision: recorded.state.revision,
-    })) as {
-      ok: true;
-      state: AppState;
-    };
-    expect(deleted.state.savings).toEqual([]);
+    expect(await view(t)).toEqual({ kind: 'locked' });
   });
 });

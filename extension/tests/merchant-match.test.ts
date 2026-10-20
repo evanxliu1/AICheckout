@@ -125,7 +125,7 @@ describe('matchMerchant', () => {
 describe('the bundled release on the device', () => {
   const bundled = buildMerchantIndex(MERCHANTS_V1.merchants);
   const at = (url: string) => matchMerchant(bundled, url)?.record;
-  it('names the three legacy stores', () => {
+  it('names the three stores that had adapters until Phase 15.1', () => {
     expect(at('https://www.amazon.com/gp/cart/view.html')!.id).toBe('amazon-us');
     expect(at('https://www.bestbuy.com/cart')!.id).toBe('best-buy-us');
     expect(at('https://secure.newegg.com/shop/cart')!.id).toBe('newegg-us');

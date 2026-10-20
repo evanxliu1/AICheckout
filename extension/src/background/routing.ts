@@ -6,7 +6,7 @@ export type Route =
   | { kind: 'page' }
   /** The badge iframe (an extension page inside a supported cart tab): badge:* only. */
   | { kind: 'badge'; tabId: number }
-  /** The content script in a supported cart tab's top frame: readings and order pages only. */
+  /** The content script in an https tab's top frame: cart readings only. */
   | { kind: 'content'; tabId: number; url: string };
 
 /** The parts of chrome.runtime.MessageSender that decide the route. */
@@ -22,8 +22,6 @@ export function routeMessage(
   const type = (request as { type?: unknown } | null)?.type;
   if (typeof type !== 'string') return { kind: 'ignore' };
   if (/^(checkout|settings):/.test(type)) {
-    // Savings are recorded only by the worker itself, from a one-tap answer in the badge.
-    if (type === 'checkout:record-savings') return { kind: 'deny' };
     // Only the extension's own popup and onboarding pages; never a page or content script.
     return sender.id === runtimeId && pageUrls.some((page) => exact(sender.url, page))
       ? { kind: 'page' }
@@ -39,7 +37,7 @@ export function routeMessage(
       ? { kind: 'badge', tabId: sender.tab.id }
       : { kind: 'deny' };
   }
-  if (type === 'cart:reading' || type === 'order:page') {
+  if (type === 'cart:reading') {
     const url = sender.url ?? '';
     return sender.id === runtimeId &&
       url.startsWith('https://') &&

@@ -1,8 +1,8 @@
 // run.mjs in Playwright Chromium on synthetic pages only (no capture is read): rebuilt pane pages and variants with
 // JavaScript off, a synthetic MHTML robot snapshot through replay.mjs, every request aborted (a 127.0.0.1 server
 // referenced by the pages receives nothing), data-pane-* attributes stripped before the reader runs, the protocol's
-// reads (warm-up, three timed reads, a stability pair 500 ms apart), synthetic misbehaving readers, the legacy
-// adapters on their own store's URL, integrity failures aborting the run, then scoring.
+// reads (warm-up, three timed reads, a stability pair 500 ms apart), synthetic misbehaving readers, integrity
+// failures aborting the run, then scoring.
 import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
@@ -240,7 +240,7 @@ test('review 7: a synthetic MHTML robot snapshot loads through replay.mjs; a cha
   assert.deepEqual(hits, []);
 });
 
-test('run + score: real pages, variants, a robot page and legacy reads in one counted run; limit enforced', async () => {
+test('run + score: real pages, variants and a robot page in one counted run; limit enforced', async () => {
   const mhtml = await mhtmlOf('<html><body><p>Subtotal $20.00</p></body></html>');
   const env = frozenEnv({
     pages: {
@@ -264,16 +264,16 @@ test('run + score: real pages, variants, a robot page and legacy reads in one co
   assert.deepEqual([dev.pageStates, dev.variants, dev.errors], [3, 1, 0]);
   const lines = readFileSync(dev.outputsFile, 'utf8').trim().split('\n').map(JSON.parse);
   assert.deepEqual(
-    lines.map((l) => [l.id, l.method, l.output.reason, l.networkAttempts, Boolean(l.variant), Boolean(l.legacy)]),
+    lines.map((l) => [l.id, l.method, l.output.reason, l.networkAttempts, Boolean(l.variant)]),
     [
-      ['dev.example/cart-1', 'pane', 'not-implemented', 0, false, true],
-      ['dev.example/empty-cart', 'pane', 'not-implemented', 0, false, false],
-      ['robot.example/cart-1', 'robot', 'not-implemented', 0, false, false],
-      ['dev.example/cart-1/class-rename', 'pane', 'not-implemented', 0, true, false],
+      ['dev.example/cart-1', 'pane', 'not-implemented', 0, false],
+      ['dev.example/empty-cart', 'pane', 'not-implemented', 0, false],
+      ['robot.example/cart-1', 'robot', 'not-implemented', 0, false],
+      ['dev.example/cart-1/class-rename', 'pane', 'not-implemented', 0, true],
     ],
   );
-  // The Best Buy adapter matched the store URL and read the page (no Best Buy summary: withheld).
-  assert.equal(lines[0].legacy.output.shown, false);
+  // Since Phase 15.1 the generic reader is the only reader: no row carries a legacy read.
+  assert.ok(lines.every((l) => l.legacy === undefined));
   const runs = readRuns(path.join(env.root, 'runs.json')).runs;
   assert.equal(runs.length, 1);
   assert.equal(runs[0].status, 'complete');
@@ -293,7 +293,7 @@ test('run + score: real pages, variants, a robot page and legacy reads in one co
   assert.equal(s.criterion1.passed, false);
   assert.equal(s.timing.timedReads, 15);
   assert.equal(s.variants.byTransform['class-rename'].counts.withheld, 1);
-  assert.equal(s.legacy.pageStates, 1);
+  assert.equal(s.legacy, undefined);
 
   const h1 = await run({ split: 'heldout-a', confirmHeldoutRun: '1', ...opts });
   assert.deepEqual([h1.pageStates, h1.variants], [1, 1]);
@@ -310,7 +310,7 @@ test('run + score: real pages, variants, a robot page and legacy reads in one co
   assert.deepEqual(hits, []);
 });
 
-test('re-check B: the generic reader never sees the legacy global, nor the legacy reader the generic one', async () => {
+test('re-check B: the generic reader runs alone under its own global (no other harness reader in the page)', async () => {
   const env = frozenEnv({
     pages: { 'dev.example/cart-1': cartPage('https://www.bestbuy.com/cart') },
     labels: { development: [label('dev.example/cart-1')] },
@@ -330,8 +330,8 @@ test('re-check B: the generic reader never sees the legacy global, nor the legac
   const r = await run({ split: 'development', ...env, readerRoot, browser, testOnlyReaderCommit: 'abc1234', gapMs: 50 });
   const [row] = readFileSync(r.outputsFile, 'utf8').trim().split('\n').map(JSON.parse);
   assert.equal(row.output.reason, 'alone');
-  assert.ok(row.legacy, 'the legacy reader still ran on the Best Buy URL');
-  // And in the page after both: only the legacy global remains, the generic one deleted.
+  assert.equal(row.legacy, undefined, 'no legacy read since Phase 15.1');
+  // And installing then deleting the named global leaves nothing of the bundle behind.
   const opened = await openPane(browser, {
     domFile: path.join(env.root, 'data', 'pane', 'dev.example', 'cart-1', 'dom.json'),
     ...env.hashes['dev.example/cart-1'],

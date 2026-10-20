@@ -1,0 +1,769 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.12",
+  "method": "pane",
+  "purpose": "phase-15.1m measurement capture for legacy-adapter retirement; not an evaluation-set visit",
+  "domain": "newegg.com",
+  "stream": "us",
+  "visit": 0,
+  "session": 1,
+  "entryHost": "www.newegg.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "85b7ed75/agent-a258fb801db1c2fb1",
+  "startUtc": "2026-10-20T00:42:37.758Z",
+  "endUtc": "2026-10-20T00:46:59.817Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (qty 2)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.newegg.com",
+      "status": 200,
+      "sha256": "2deb6f030caaf256659e4e61ff846d4ebc3af1bb7af9e53f4383799a4f07a3c2",
+      "bytes": 4596,
+      "rootDisallowed": false,
+      "cartDisallowed": false,
+      "checkoutDisallowed": false
+    },
+    {
+      "host": "secure.newegg.com",
+      "status": 200,
+      "sha256": "65ed032e87cdd14de7152b55b2f18af7a2e9f30e77613aa38b6ae05c3c55d2a4",
+      "bytes": 484,
+      "rootDisallowed": true,
+      "cartDisallowed": true,
+      "checkoutDisallowed": true
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.newegg.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://secure.newegg.com/robots.txt"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://secure.newegg.com/shop/cart"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.newegg.com/"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.newegg.com/Computer-Peripherals/Store/ID-380"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.newegg.com/Mouse/SubCategory/ID-65"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.newegg.com/logitech-910-004790-m720-triathlon-rf-wireless/p/N82E16826197219"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "url": "https://secure.newegg.com/shop/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "www robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "www.newegg.com"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "secure robots.txt"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "secure.newegg.com"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart (starting count)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "home"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "menuitem",
+      "name": "Computer Peripherals (side menu)"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Computer Peripherals store page"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "Mouse subcategory listing"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Logitech M720 Triathlon Wireless Multi"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "popup-close",
+      "role": "button",
+      "name": "No, thanks"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 15,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity"
+    },
+    {
+      "n": 16,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 17,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "link",
+      "name": "Remove"
+    },
+    {
+      "n": 18,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "5eded1232935615bf18010514a836122ffd7e438ea9aa0cd1f8c1c0d92617972",
+      "bytes": 2006115,
+      "chunks": 6,
+      "url": "https://secure.newegg.com/shop/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "b778d45ff265ed6e04de61e5f75712ebbe7acb2be52cfe432d058ec882e825e4",
+      "bytes": 2007899,
+      "chunks": 6,
+      "url": "https://secure.newegg.com/shop/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "02b914a08f36e17b880366e53ad0312eba546a227fda4998516040aaa1333b37",
+      "bytes": 2138214,
+      "chunks": 6,
+      "url": "https://secure.newegg.com/shop/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "not requested for 15.1m"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not requested for 15.1m"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.newegg.com/Mouse/SubCategory/ID-65",
+    "productUrl": "https://www.newegg.com/logitech-910-004790-m720-triathlon-rf-wireless/p/N82E16826197219",
+    "price": "USD 34.99 (sold and shipped by Newegg)",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Operator error: one chunk fetch (window.__aiCheckoutPaneExport.chunk(0)) was run on the Mouse listing page before any export existed; it threw TypeError (export object undefined), returned nothing and changed nothing. It is not part of any export.",
+    "Side-menu click on the home page opened the Server & Components flyout instead of Computer Peripherals (no navigation); the Computer Peripherals store page was then opened by URL from a link on the page.",
+    "Add-to-cart opened a warranty upsell drawer with a protection plan radio preselected; declined with 'No, thanks'. Cart shows no protection plan attached.",
+    "secure.newegg.com robots.txt has Disallow: / for * (cart host visited despite root disallow; recorded only, per protocol).",
+    "Data path for this capture is evals/merchants/capture/data/pane-15-1m/newegg.com/ (coordinator collects)."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-20T00:42:37.758Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-20T00:42:40.795Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-20T00:42:40.962Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-20T00:42:41.419Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-20T00:42:44.836Z",
+      "tool": "Read"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-20T00:42:47.193Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-20T00:42:50.517Z",
+      "tool": "tabs_context"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-20T00:42:52.622Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-20T00:42:55.883Z",
+      "tool": "navigate",
+      "url": "https://www.newegg.com/robots.txt"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-20T00:42:58.525Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-20T00:43:03.439Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-20T00:43:06.411Z",
+      "tool": "navigate",
+      "url": "https://secure.newegg.com/robots.txt"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-20T00:43:06.649Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-20T00:43:11.683Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-20T00:43:14.533Z",
+      "tool": "navigate",
+      "url": "https://secure.newegg.com/shop/cart"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-20T00:43:14.787Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-20T00:43:20.006Z",
+      "tool": "navigate",
+      "url": "https://www.newegg.com/"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-20T00:43:20.574Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-20T00:43:25.469Z",
+      "tool": "find"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-20T00:43:27.553Z",
+      "tool": "find"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-20T00:43:30.173Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-20T00:43:33.712Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-20T00:43:34.187Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-20T00:43:37.515Z",
+      "tool": "navigate",
+      "url": "https://www.newegg.com/Computer-Peripherals/Store/ID-380"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-20T00:43:37.899Z",
+      "tool": "find"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-20T00:43:43.098Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-20T00:43:46.220Z",
+      "tool": "navigate",
+      "url": "https://www.newegg.com/Mouse/SubCategory/ID-65"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-20T00:43:46.656Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-20T00:43:50.632Z",
+      "tool": "find"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-20T00:43:53.293Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-20T00:43:56.631Z",
+      "tool": "find"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-20T00:43:59.196Z",
+      "tool": "find"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-20T00:44:02.656Z",
+      "tool": "computer",
+      "action": "scroll"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-20T00:44:03.083Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-20T00:44:07.892Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-20T00:44:08.316Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-20T00:44:12.440Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-20T00:44:16.978Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-20T00:44:17.349Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-20T00:44:20.232Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-20T00:44:20.618Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-20T00:44:25.788Z",
+      "tool": "find"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-20T00:44:28.491Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-20T00:44:31.045Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-20T00:44:33.717Z",
+      "tool": "navigate",
+      "url": "https://secure.newegg.com/shop/cart"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-20T00:44:34.095Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-20T00:44:57.457Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-20T00:45:00.141Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-20T00:45:00.916Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-20T00:45:01.763Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-20T00:45:02.563Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-20T00:45:03.409Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-20T00:45:04.037Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-20T00:45:07.155Z",
+      "tool": "find"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-20T00:45:10.049Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-20T00:45:10.605Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-20T00:45:10.981Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-20T00:45:34.464Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 58,
+      "utc": "2026-10-20T00:45:38.137Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 59,
+      "utc": "2026-10-20T00:45:38.918Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 60,
+      "utc": "2026-10-20T00:45:39.766Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 61,
+      "utc": "2026-10-20T00:45:40.557Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 62,
+      "utc": "2026-10-20T00:45:41.497Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 63,
+      "utc": "2026-10-20T00:45:42.031Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 64,
+      "utc": "2026-10-20T00:45:45.487Z",
+      "tool": "find"
+    },
+    {
+      "n": 65,
+      "utc": "2026-10-20T00:45:48.684Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 66,
+      "utc": "2026-10-20T00:45:49.023Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 67,
+      "utc": "2026-10-20T00:45:51.645Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 68,
+      "utc": "2026-10-20T00:45:52.018Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 69,
+      "utc": "2026-10-20T00:46:15.058Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 70,
+      "utc": "2026-10-20T00:46:18.033Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 71,
+      "utc": "2026-10-20T00:46:18.719Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 72,
+      "utc": "2026-10-20T00:46:19.646Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 73,
+      "utc": "2026-10-20T00:46:20.328Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 74,
+      "utc": "2026-10-20T00:46:21.180Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 75,
+      "utc": "2026-10-20T00:46:21.873Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 76,
+      "utc": "2026-10-20T00:46:26.062Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 77,
+      "utc": "2026-10-20T00:46:48.316Z",
+      "tool": "Write"
+    },
+    {
+      "n": 78,
+      "utc": "2026-10-20T00:46:59.817Z",
+      "tool": "SubagentHandback"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "5eded1232935615bf18010514a836122ffd7e438ea9aa0cd1f8c1c0d92617972"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "b778d45ff265ed6e04de61e5f75712ebbe7acb2be52cfe432d058ec882e825e4"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "02b914a08f36e17b880366e53ad0312eba546a227fda4998516040aaa1333b37"
+      }
+    ],
+    "errors": []
+  }
+}

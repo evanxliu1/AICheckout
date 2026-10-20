@@ -1,7 +1,7 @@
 import { probeSchema } from './contracts';
 import type { CartSnapshot } from './contracts';
 import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
-import { GENERIC_READER_VERSION, MERCHANTS, merchantForCheckout } from './merchants';
+import { GENERIC_READER_VERSION } from './merchants';
 import { storeForTab } from './store-match';
 import { READ_COPY } from './read-copy';
 
@@ -24,14 +24,6 @@ async function activeTab() {
   if (store.kind === 'processor') throw new Error(copy['payment-page']);
   return { id: tab.id, url: tab.url, merchantId: store.id };
 }
-/** The merchant a reading of this URL must name: the legacy adapter's store on its cart pages, else the
- * generic id (readManualCart does the same split); the snapshot carries the tab's store instead. */
-const expectedMerchant = (url: string) => merchantForCheckout(url) ?? GENERIC_MERCHANT_ID;
-/** The reader version a reading of this URL must carry: the adapter's on its cart pages, else the generic one. */
-const expectedVersion = (url: string) => {
-  const legacy = merchantForCheckout(url);
-  return legacy ? MERCHANTS[legacy].extractorVersion : GENERIC_READER_VERSION;
-};
 async function readDocument(tabId: number, documentId: string) {
   const results = await chrome.scripting.executeScript({
     target: { tabId, documentIds: [documentId] },
@@ -42,7 +34,8 @@ async function readDocument(tabId: number, documentId: string) {
   if (results.length !== 1 || result.documentId !== documentId || result.frameId !== 0)
     throw new Error(changed);
   const parsed = probeSchema.safeParse(result.result);
-  if (!parsed.success) throw new Error(copy['ambiguous-amount']);
+  // A reply the contract refuses is an amount not read with certainty: the rates view, as for `withheld`.
+  if (!parsed.success) throw new Error(copy.withheld);
   if (parsed.data.reading.status === 'unavailable') throw new Error(copy[parsed.data.reading.reason]);
   return { url: parsed.data.url, reading: parsed.data.reading };
 }
@@ -63,13 +56,14 @@ export async function readActiveCheckout(now = Date.now()): Promise<CartSnapshot
       result.url !== tab.url ||
       current.id !== tab.id ||
       current.url !== tab.url ||
-      result.reading.merchantId !== expectedMerchant(tab.url) ||
-      result.reading.extractorVersion !== expectedVersion(tab.url)
+      // The content script names only the generic store (probeSchema); the snapshot carries the tab's store.
+      result.reading.merchantId !== GENERIC_MERCHANT_ID ||
+      result.reading.extractorVersion !== GENERIC_READER_VERSION
     )
       throw new Error(changed);
     const { currency, amountCents, kind, extractorVersion } = result.reading;
     return {
-      // The store the worker resolved for the tab (a release record, a legacy store or the generic one).
+      // The store the worker resolved for the tab (a release record or the generic one).
       merchantId: tab.merchantId,
       currency,
       amountCents,
@@ -100,7 +94,7 @@ export async function validateActiveCheckout(snapshot: CartSnapshot): Promise<vo
       current.url !== tab.url ||
       result.url !== tab.url ||
       tab.merchantId !== snapshot.merchantId ||
-      result.reading.merchantId !== expectedMerchant(tab.url) ||
+      result.reading.merchantId !== GENERIC_MERCHANT_ID ||
       result.reading.amountCents !== snapshot.amountCents ||
       result.reading.kind !== snapshot.kind ||
       result.reading.extractorVersion !== snapshot.extractorVersion

@@ -6,8 +6,6 @@ import WalletEditor from '../components/WalletEditor';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import type { Wallet } from '../domain';
-import { MERCHANT_IDS } from '../checkout/merchants';
-import { merchantName } from '../checkout/store-match';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
 
@@ -47,9 +45,6 @@ export default function Onboarding() {
       setBusy(false);
     }
   }
-  const sites = MERCHANT_IDS.map(merchantName)
-    .join(', ')
-    .replace(/, ([^,]*)$/, ' and $1');
   return (
     <main className="onboarding">
       <header className="onboarding__header">
@@ -74,13 +69,13 @@ export default function Onboarding() {
                 You’re set
               </h2>
               <p>
-                Open a cart on {sites}. A small badge in the corner shows which of your cards earns the most
-                on it. Click it for every card’s estimate and the terms behind it.
+                Open a cart at any U.S. online store. A small badge in the corner shows which of your cards
+                earns the most on it. Click it for every card’s estimate and the terms behind it.
               </p>
               <p className="supporting">
                 Your cards and settings stay on this device. AI Checkout reads only the cart’s order summary
-                on those sites, and only the amount. You can change cards, turn the badge off for a site, or
-                protect your data with a passphrase from the AI Checkout toolbar button.
+                on cart and checkout pages, and only the amount. You can change cards, turn the badge off for
+                a site, or protect your data with a passphrase from the AI Checkout toolbar button.
               </p>
               <p className="supporting">You can close this tab.</p>
             </div>

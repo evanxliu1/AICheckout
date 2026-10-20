@@ -64,9 +64,9 @@ Copied: hosted merchant data, configs as data, generic detection. Not copied: br
 
 1. **Detect on the URL, in the worker.** On a popup click (activeTab) or, with the optional grant, on `tabs.onUpdated`: a named profile's pinned paths or cart/checkout tokens (`/cart`, `/checkout`, `/basket`, `/bag`, `checkouts/`). Page code is injected with `executeScript` only on candidate URLs; no content script runs on all sites. Mini-cart drawers on product pages stay click-to-use.
 2. **Profile:** named, or generic "Another U.S. online store" (`general-merchandise`).
-3. **Amount:** the generic reader (store configs dropped 2026-10-06; the three legacy adapters stay until the generic reader matches them); a shown amount is used; otherwise no amount is shown and the recommendation shows rates only (no confirmation prompt; [decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), 2026-10-06; supersedes the `ask` prompt).
-4. **Rank:** the engine uses the amount only (`kind` is for display and savings); weak category evidence → a range.
-5. **Savings:** order recognition and the savings question only at named profiles with a verified `orderConfirmation`; generic stores never ask.
+3. **Amount:** the generic reader (store configs dropped 2026-10-06; the three legacy adapters retired in Phase 15.1, 2026-10-20); a shown amount is used; otherwise no amount is shown and the recommendation shows rates only (no confirmation prompt; [decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), 2026-10-06; supersedes the `ask` prompt).
+4. **Rank:** the engine uses the amount only (`kind` is for display); weak category evidence → a range.
+5. **Savings:** order recognition and the savings question were dropped with the adapters in Phase 15.1 (2026-10-20, [decision](../decisions/2026-10-19-retire-legacy-adapters.md)); a generic version is a Phase 17 candidate if telemetry shows demand.
 
 Chrome's per-extension site-access setting is read at start and on `permissions.onAdded/onRemoved`.
 

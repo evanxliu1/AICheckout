@@ -349,7 +349,7 @@ describe('vault and badge services on the cached release', () => {
     const badge = createBadgeService({
       local,
       session,
-      vault: { snapshot: vault.snapshot, handle: vault },
+      vault: { snapshot: vault.snapshot },
       clock: () => NOW,
       open: async () => undefined,
       notify: () => undefined,

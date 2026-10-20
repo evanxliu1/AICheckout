@@ -2,19 +2,11 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest.json';
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build as esbuild } from 'esbuild';
-import { siteAdapterSchema } from './src/checkout/adapters/schema';
 
-// Site adapters are bundled data; reject an invalid spec at build time, not at checkout.
-const adapterDir = new URL('./src/checkout/adapters/', import.meta.url);
-for (const file of readdirSync(adapterDir)
-  .filter((name) => name.endsWith('.json'))
-  .sort())
-  siteAdapterSchema.parse(JSON.parse(readFileSync(new URL(file, adapterDir), 'utf8')));
-/** The automatic badge's reach (Phase 13c): every https page, top frame only. The legacy adapters'
- * hosts and patterns are a subset; the content script picks the reader per URL. */
+/** The automatic badge's reach (Phase 13c): every https page, top frame only. */
 export const BADGE_MATCHES = ['https://*/*'];
 export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
 

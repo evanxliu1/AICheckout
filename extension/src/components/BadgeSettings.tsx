@@ -1,8 +1,6 @@
-// Per-site switch for the automatic cart badge.
+// The automatic cart badge's switches: on or off everywhere, and back on for a site switched off.
 import { useEffect, useState } from 'react';
 import { AlertInline, Fieldset, Toggle } from '@ai-checkout/ui';
-import { MERCHANT_IDS, type MerchantId } from '../checkout/merchants';
-import { merchantName } from '../checkout/store-match';
 import type { Settings } from '../badge/contracts';
 import { getSettings, saveSettings } from '../state/settings-client';
 
@@ -26,14 +24,6 @@ export default function BadgeSettings() {
       setBusy(false);
     }
   }
-  const toggle = (merchant: MerchantId, on: boolean) =>
-    settings &&
-    save({
-      ...settings,
-      disabledMerchants: on
-        ? settings.disabledMerchants.filter((id) => id !== merchant)
-        : [...settings.disabledMerchants, merchant],
-    });
   return (
     <div className="space-y-2">
       {error && (
@@ -42,20 +32,11 @@ export default function BadgeSettings() {
         </AlertInline>
       )}
       <Fieldset
-        legend="Show the cart badge on"
-        helperText="On a cart or checkout page the badge reads only the order summary amount; nothing about the page leaves your device."
+        legend="Cart badge"
+        helperText="On a cart or checkout page the badge reads only the order summary amount; nothing about the page leaves your device. Sites you switched off with “Not on this site” are listed below."
       >
-        {MERCHANT_IDS.map((merchant) => (
-          <Toggle
-            key={merchant}
-            label={merchantName(merchant)}
-            checked={!!settings && !settings.disabledMerchants.includes(merchant)}
-            disabled={busy || !settings}
-            onChange={(event) => void toggle(merchant, event.target.checked)}
-          />
-        ))}
         <Toggle
-          label="Show the badge at other stores"
+          label="Show the cart badge at stores"
           checked={!!settings && settings.showOnOtherStores}
           disabled={busy || !settings}
           onChange={(event) =>

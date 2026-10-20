@@ -112,16 +112,19 @@ describe('popup store from the open tab', () => {
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('100.00');
   });
   it('does not show a saved result from another store as current', async () => {
+    // A store matched from the tab (Best Buy, named by the merchant release since Phase 15.1).
+    openOn('https://www.bestbuy.com/site/tv');
     render(<Popup />);
+    await vi.waitFor(() => expect(merchantValue()).toBe('best-buy-us'));
     await fillPurchase();
-    expect(await screen.findByText('Saved estimate for a $100.00 Best Buy US purchase.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $100.00 Best Buy purchase.')).toBeTruthy();
     cleanup();
     openOn('https://shop.example.com/checkout');
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
     await vi.waitFor(() => expect(merchantValue()).toBe('generic-us-online'));
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('');
-    expect(screen.queryByText(/Saved estimate for a \$100.00 Best Buy US purchase/)).toBeNull();
+    expect(screen.queryByText(/Saved estimate for a \$100.00 Best Buy purchase/)).toBeNull();
     expect(screen.queryByText('$1.50')).toBeNull();
   });
   it('keeps the tab’s store when saved inputs are reloaded', async () => {
@@ -150,7 +153,7 @@ describe('popup store from the open tab', () => {
     openOn('chrome://extensions/');
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
-    expect(merchantValue()).toBe('best-buy-us');
+    expect(merchantValue()).toBe('generic-us-online');
   });
   it('offers another U.S. online store in the merchant select', async () => {
     render(<Popup />);
@@ -158,7 +161,7 @@ describe('popup store from the open tab', () => {
     fireEvent.change(screen.getByLabelText('Merchant'), { target: { value: 'generic-us-online' } });
     expect(screen.getByRole('button', { name: 'Read cart amount' })).toBeTruthy();
   });
-  it('reads a generic store’s cart like a legacy one and keeps online retail eligible (Phase 13b)', async () => {
+  it('reads a generic store’s cart and keeps online retail eligible (Phase 13b)', async () => {
     openOn('https://shop.example.com/checkout');
     read.mockResolvedValue({
       id: '6b89a362-0be9-4dca-990d-7e110e7f91ea',
@@ -205,16 +208,16 @@ describe('popup store from the open tab', () => {
     expect(read).toHaveBeenCalledTimes(2);
     expect(screen.queryByRole('alert')).toBeNull();
   });
-  it('keeps a saved comparison for the tab’s legacy store, but a generic one never suppresses the read elsewhere', async () => {
+  it('keeps a saved comparison for the tab’s matched store, but a generic one never suppresses the read elsewhere', async () => {
     openOn('https://www.newegg.com/p/N82E1');
     render(<Popup />);
     await vi.waitFor(() => expect(merchantValue()).toBe('newegg-us'));
     await fillPurchase();
-    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $100.00 Newegg purchase.')).toBeTruthy();
     cleanup();
     read.mockClear();
     render(<Popup />);
-    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $100.00 Newegg purchase.')).toBeTruthy();
     expect(read).not.toHaveBeenCalled();
     // A generic comparison saved at one store: another store's tab is still read on open (review fix).
     cleanup();
@@ -289,7 +292,7 @@ describe('popup on the merchant release (Phase 14.2)', () => {
     expect(await screen.findByText(/PayPal is a payment page, not the store’s/)).toBeTruthy();
     await screen.findByLabelText('Purchase amount (USD)');
     expect(read).not.toHaveBeenCalled();
-    expect(merchantValue()).toBe('best-buy-us');
+    expect(merchantValue()).toBe('generic-us-online');
     expect(screen.queryByRole('alert')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
     expect((await screen.findByRole('alert')).textContent).toMatch(/payment page/);
@@ -298,7 +301,7 @@ describe('popup on the merchant release (Phase 14.2)', () => {
     openOn('https://shop.example.com/cart');
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
-    for (const reason of ['empty-cart', 'summary-missing', 'ambiguous-amount', 'unsupported-page'] as const) {
+    for (const reason of ['empty-cart', 'withheld', 'not-a-cart', 'unsupported-page'] as const) {
       read.mockRejectedValue(new Error(READ_COPY[reason]));
       fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
       await vi.waitFor(() => expect(read).toHaveBeenCalled());
@@ -312,20 +315,35 @@ describe('popup on the merchant release (Phase 14.2)', () => {
 });
 describe('offline comparison popup', () => {
   it('changes manual merchant without carrying the old amount, confirmation or result across', async () => {
+    // The select offers the tab's matched store and the generic store only (Phase 15.1).
+    openOn('https://www.newegg.com/p/N82E1');
     render(<Popup />);
+    await vi.waitFor(() => expect(merchantValue()).toBe('newegg-us'));
+    expect([...(screen.getByLabelText('Merchant') as HTMLSelectElement).options].map((o) => o.value)).toEqual(
+      ['newegg-us', 'generic-us-online'],
+    );
     await fillPurchase();
     await screen.findByText('$1.50');
-    fireEvent.change(screen.getByLabelText('Merchant'), { target: { value: 'newegg-us' } });
+    fireEvent.change(screen.getByLabelText('Merchant'), { target: { value: 'generic-us-online' } });
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('');
     expect((screen.getByRole('checkbox', { name: /I confirmed/ }) as HTMLInputElement).checked).toBe(false);
     expect(screen.queryByText('$1.50')).toBeNull();
     await fillPurchase();
-    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
-    expect((data.checkoutStateV1 as AppState).purchase?.merchantId).toBe('newegg-us');
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect((data.checkoutStateV1 as AppState).purchase?.merchantId).toBe('generic-us-online');
+    // Reopened on a non-web page, the saved store is restored; a store the list lacks is offered by name.
     cleanup();
+    openOn('chrome://newtab/');
     render(<Popup />);
-    expect(await screen.findByText('Saved estimate for a $100.00 Newegg US purchase.')).toBeTruthy();
-    expect((screen.getByLabelText('Merchant') as HTMLSelectElement).value).toBe('newegg-us');
+    expect(
+      await screen.findByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
+    ).toBeTruthy();
+    expect(merchantValue()).toBe('generic-us-online');
+    expect([...(screen.getByLabelText('Merchant') as HTMLSelectElement).options].map((o) => o.value)).toEqual(
+      ['generic-us-online'],
+    );
   });
   it('selects the captured merchant and keeps subtotal-only status visible in the saved estimate', async () => {
     read.mockResolvedValue({
@@ -338,7 +356,7 @@ describe('offline comparison popup', () => {
       currency: 'USD',
       amountCents: 24999,
       kind: 'subtotal',
-      extractorVersion: 'newegg-summary-v1',
+      extractorVersion: 'generic-reader-v1',
     });
     render(<Popup />);
     fireEvent.click(await screen.findByRole('button', { name: 'Read cart amount' }));
@@ -347,15 +365,15 @@ describe('offline comparison popup', () => {
     expect((screen.getByLabelText('Purchase amount (USD)') as HTMLInputElement).value).toBe('249.99');
     fireEvent.click(screen.getByRole('checkbox', { name: /I confirmed/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Compare my cards' }));
-    expect(await screen.findByText('Saved estimate for a $249.99 Newegg US subtotal.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $249.99 Newegg subtotal.')).toBeTruthy();
     expect(screen.getByText(/Subtotal only; tax and shipping/)).toBeTruthy();
     cleanup();
     render(<Popup />);
-    expect(await screen.findByText('Saved estimate for a $249.99 Newegg US subtotal.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $249.99 Newegg subtotal.')).toBeTruthy();
     fireEvent.change(screen.getByLabelText('Purchase amount (USD)'), { target: { value: '260' } });
     fireEvent.click(screen.getByRole('checkbox', { name: /I confirmed/ }));
     fireEvent.click(screen.getByRole('button', { name: 'Compare my cards' }));
-    expect(await screen.findByText('Saved estimate for a $260.00 Newegg US purchase.')).toBeTruthy();
+    expect(await screen.findByText('Saved estimate for a $260.00 Newegg purchase.')).toBeTruthy();
     expect(screen.queryByText(/Subtotal only; tax and shipping/)).toBeNull();
   });
   it('does not silently expand the scope of a newer downloaded catalog', async () => {
@@ -377,9 +395,12 @@ describe('offline comparison popup', () => {
         published_at: catalog.verifiedAt,
       },
     } satisfies CatalogCache;
+    // Newegg is the tab's store (the select offers no other named store since Phase 15.1).
+    openOn('https://www.newegg.com/p/N82E1');
     render(<Popup />);
-    fireEvent.change(await screen.findByLabelText('Merchant'), { target: { value: 'newegg-us' } });
-    expect(screen.getByText(/Your current card terms do not cover Newegg US/)).toBeTruthy();
+    await screen.findByLabelText('Merchant');
+    await vi.waitFor(() => expect(merchantValue()).toBe('newegg-us'));
+    expect(screen.getByText(/Your current card terms do not cover Newegg/)).toBeTruthy();
     await fillPurchase();
     expect(await screen.findByRole('alert')).toHaveProperty(
       'textContent',

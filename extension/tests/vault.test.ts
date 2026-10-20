@@ -259,7 +259,7 @@ describe('protected storage lifecycle', () => {
       currency: 'USD',
       amountCents: 24999,
       kind: 'subtotal',
-      extractorVersion: 'newegg-summary-v1',
+      extractorVersion: 'generic-reader-v1',
       tabId: 7,
       documentId: 'doc',
       pageKey: 'a'.repeat(64),

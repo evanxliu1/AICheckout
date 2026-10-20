@@ -8,7 +8,7 @@ import {
   UNCERTAINTIES_V3,
 } from '../domain';
 import type { Catalog, Comparison, UnavailableComparison } from '../domain';
-import { cartSnapshotSchema } from '../checkout/contracts';
+import { storedCartSnapshotSchema } from '../checkout/contracts';
 import type { CardIndexEntry } from './catalog-slice';
 import { MAX_WALLET_CARDS } from './keys';
 
@@ -101,8 +101,10 @@ export const purchaseSchema = z.strictObject({
   paymentPath: z.enum(PAYMENT_PATHS_V3).optional(),
 });
 
-/** One order the shopper confirmed after a badge recommendation. Amounts are estimates: the cart
- * amount is the last cart reading (tax and shipping may differ), rewards are guaranteed minimums. */
+/** One order the shopper confirmed after a badge recommendation, as the order question of Phases 3b to
+ * 14 recorded it. Retired in Phase 15.1 with the order detection: nothing writes or shows these entries
+ * any more; the field stays in schema 3 so stored states parse (`Delete all local data` still clears it;
+ * dropped at the next schema bump). */
 export const savingsEntrySchema = z.strictObject({
   id: z.string().uuid(),
   date: z.iso.date(),
@@ -118,7 +120,6 @@ export const savingsEntrySchema = z.strictObject({
   /** estimatedRewardCents − baselineRewardCents; null when either is unknown. May be negative. */
   extraCents: z.number().int().min(-MAX_AMOUNT_CENTS).max(MAX_AMOUNT_CENTS).nullable(),
 });
-export type SavingsEntry = z.infer<typeof savingsEntrySchema>;
 export const MAX_SAVINGS_ENTRIES = 500;
 
 const comparisonMetaSchema = z
@@ -136,8 +137,8 @@ const commonFields = {
     .min(0)
     .max(Number.MAX_SAFE_INTEGER - 1),
   purchase: purchaseSchema.nullable(),
-  cart: cartSnapshotSchema.nullable().default(null),
-  /** Orders recorded from the badge's one-tap question, newest first. */
+  cart: storedCartSnapshotSchema.default(null),
+  /** Orders the retired order question recorded (newest first); tolerated, never written since Phase 15.1. */
   savings: z.array(savingsEntrySchema).max(MAX_SAVINGS_ENTRIES).default([]),
   /** A notice that must reach the shopper once (e.g. why migration dropped limits); kept until shown. */
   pendingNotice: z.string().min(1).max(300).nullable().default(null),
@@ -202,12 +203,6 @@ export const requestSchema = z.discriminatedUnion('type', [
     cartId: z.string().uuid().nullable().optional(),
   }),
   z.strictObject({ type: z.literal('checkout:clear') }),
-  /** Internal: the worker records an order answered in the badge (never sent by a page). */
-  z.strictObject({ type: z.literal('checkout:record-savings'), entry: savingsEntrySchema }),
-  z.strictObject({
-    type: z.literal('checkout:delete-savings'),
-    expectedRevision: z.number().int().nonnegative(),
-  }),
 ]);
 export type CheckoutRequest = z.infer<typeof requestSchema>;
 export type CheckoutResponse =

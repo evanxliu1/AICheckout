@@ -10,8 +10,8 @@ How the code works. One page per component; name code by path and symbol.
 
 ## Shopper side
 
-* [Extension](extension.md) — MV3 popup, onboarding, service worker, local state and optional vault, site adapters, catalog refresh.
-* [Cart badge](cart-badge.md) — automatic badge on every https cart or checkout page (Phase 13c): content script, sender-based routing, isolated iframe, amount and rates views, order detection and savings.
+* [Extension](extension.md) — MV3 popup, onboarding, service worker, local state and optional vault, the generic cart reader, store matching, catalog refresh.
+* [Cart badge](cart-badge.md) — automatic badge on every https cart or checkout page (Phase 13c): content script, sender-based routing, isolated iframe, amount and rates views.
 * [Merchant coverage design (Phases 10–17, draft)](merchant-coverage-design.md) — hosted merchant database, generic cart reader that shows an amount only when certain (no store configs), pre-registered real-page eval and pane capture, category evidence and permissions; Phase 11's generic profile and the Phase 13 reader built; the optional all-sites grant was superseded by the badge on all https sites at install (2026-10-09) and category ranges by the general rate (2026-10-10); the merchant database is Phase 14.
 * [Telemetry and value metrics design (draft)](telemetry-design.md) — proposed consented telemetry, ingest and retention, value metrics and data room, affiliate rules; a minimal set ships in Release A (Phase 15), the rest in Phase 17 (2026-10-10); not built.
 * [Rewards engine](rewards-engine.md) — `packages/rewards-core`: catalog v1/v2/v3 contract, bundled `CATALOG_V2` and `CATALOG_V3`, `compareRewards`, ranges and ranking.

@@ -6,7 +6,7 @@ status: stable
 tags: [ops, database, supabase, migrations]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T01:30:00Z
+  at: 2026-10-20T02:30:00Z
 sources:
   - resource: ../../package.json
     title: db:* scripts
@@ -30,11 +30,11 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 12 on `main` and on hosted ([hosting](hosting.md)); a 13th, `20261020004702_telemetry_events` (Phase 15.2), on branch `phase15-2-telemetry-backend`, to be pushed by the coordinator after its PR merges. Earlier: 11 on `main` and on hosted (checked 2026-10-11 at `365c7159`): `20261011111247_merchant_releases` (Phase 14.6, PR #88) pushed to hosted 2026-10-11 by the coordinating session with `./scripts/db-push.sh` after a dry run. Earlier: 10 on `main` (checked 2026-10-10 at `7a07113`), `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24); an 11th, `20261011111247_merchant_releases.sql` (Phase 14.6), on branch `phase14-6-hosted`, to be pushed by the coordinator after its PR merges |
+| Migrations | 13 on `main` and on hosted ([hosting](hosting.md)): `20261020004702_telemetry_events` (Phase 15.2, PR #95) was pushed to hosted Supabase on 2026-10-20 by the coordinating session with `./scripts/db-push.sh` after the merge (reported by the coordinator); the deployed `POST /v1/events` then answered an empty batch with 400 `invalid_request`, as the contract requires. Earlier: 12 on `main` and on hosted, the 13th on branch `phase15-2-telemetry-backend`. Earlier: 11 on `main` and on hosted (checked 2026-10-11 at `365c7159`): `20261011111247_merchant_releases` (Phase 14.6, PR #88) pushed to hosted 2026-10-11 by the coordinating session with `./scripts/db-push.sh` after a dry run. Earlier: 10 on `main` (checked 2026-10-10 at `7a07113`), `20260926032620_baseline_legacy_catalog.sql` to `20261002230334_review_summary.sql` (Stage 2: `20261002222425_catalog_v3`, PR #22; `20261002230334_review_summary`, PR #24); an 11th, `20261011111247_merchant_releases.sql` (Phase 14.6), on branch `phase14-6-hosted`, to be pushed by the coordinator after its PR merges |
 | pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary`, `merchant_releases` since 14.6, `telemetry` since 15.2) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v3.ts` (since Stage 2 M5): one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |
-| Hosted state | All 10 applied. The 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2`, `20261001010350_source_body_limit`, `20261002222425_catalog_v3` and `20261002230334_review_summary` were pushed by the coordinating session with `./scripts/db-push.sh` after their PRs merged (reported by the coordinator; not re-listed by the M10 session, which does not sign in to hosted services). Confirm with `npx supabase migration list --linked` before a catalog release ([catalog release](catalog-release.md)) |
+| Hosted state | All 13 applied as of 2026-10-20 (the 11th to 13th pushed later, as the Migrations row records). Of the first 10, the 6 that existed on 2026-09-28 were applied that day ([archive](../archive/phase2-goal.md)); `20260930225732_catalog_v2`, `20261001010350_source_body_limit`, `20261002222425_catalog_v3` and `20261002230334_review_summary` were pushed by the coordinating session with `./scripts/db-push.sh` after their PRs merged (reported by the coordinator; not re-listed by the M10 session, which does not sign in to hosted services). Confirm with `npx supabase migration list --linked` before a catalog release ([catalog release](catalog-release.md)) |
 
 ## Create a migration
 

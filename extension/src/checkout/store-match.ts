@@ -1,7 +1,7 @@
 // The tab's store against the merchant release (Phase 14.2). Worker and extension pages only: the
 // content scripts never carry the release (it is refreshed in the worker from 14.6 on, and ~500 records
-// on every https page would be waste); they send the legacy id on an adapter's URL and the generic id
-// elsewhere, and the worker resolves the store from the sender URL.
+// on every https page would be waste); they send the generic id on every page, and the worker resolves
+// the store from the sender URL.
 import { GENERIC_MERCHANT_ID, GENERIC_MERCHANT_PROFILE } from '@ai-checkout/rewards-core/generic-merchant';
 import {
   buildMerchantIndex,
@@ -18,7 +18,6 @@ import type {
   MerchantRecord,
   MerchantRelease,
 } from '@ai-checkout/rewards-core';
-import { isLegacyMerchant, MERCHANTS } from './merchants';
 
 /** The release in effect in this document: the bundled one until a page calls `setMerchantsInEffect` with the
  * cached hosted release when it is newer (Phase 14.6, `state/merchants-page.ts`). The worker does not use
@@ -41,11 +40,10 @@ const indexOf = (release: MerchantRelease): MerchantIndex => {
 export const releaseRecord = (id: string, release: MerchantRelease = inEffect): MerchantRecord | undefined =>
   release.merchants.find((m) => m.id === id);
 
-/** The name shown for a store id: a legacy store's adapter name, the generic store, or the release record's
- * name (Phase 14.2). */
+/** The name shown for a store id: the generic store, or the release record's name (Phase 14.2; since
+ * Phase 15.1 the release names every store, `amazon-us` included). */
 export function merchantName(id: string): string {
   if (id === GENERIC_MERCHANT_ID) return GENERIC_MERCHANT_PROFILE.name;
-  if (isLegacyMerchant(id)) return MERCHANTS[id].name;
   return releaseRecord(id)?.name ?? 'Unsupported merchant';
 }
 
@@ -80,12 +78,7 @@ export function storeForTab(
   if (match && match.record.kind === 'processor')
     return { kind: 'processor', id: match.record.id, host, name: match.record.name };
   if (match && !match.record.disabled)
-    return {
-      kind: 'store',
-      id: match.record.id,
-      host,
-      name: isLegacyMerchant(match.record.id) ? MERCHANTS[match.record.id].name : match.record.name,
-    };
+    return { kind: 'store', id: match.record.id, host, name: match.record.name };
   return { kind: 'generic', id: GENERIC_MERCHANT_ID, host, name: GENERIC_MERCHANT_PROFILE.name };
 }
 
@@ -145,7 +138,7 @@ const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
   catalog.cards.find((card) => card.rules.some((rule) => rule.sourceIds.includes(sourceId)))?.issuer ?? null;
 
 /** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
- * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile.
+ * for a `default` record (it claims no category), the generic store and any id the release lacks.
  * A `definition` record reads "Treated as", naming the issuer whose category definition the store's own pages fit
  * ("Codes as" is for `issuer`, `mcc` and `corroborated`; an `mcc` record reads "Codes as dining in public
  * purchase-card data (mostly in-store)", the openly licensed government datasets, 2026-10-11); no partnership is

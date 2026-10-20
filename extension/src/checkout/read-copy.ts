@@ -4,12 +4,7 @@
 export const READ_COPY = {
   'unsupported-page': 'Open a store’s cart or checkout page in a web tab, then read it again.',
   'empty-cart': 'This cart is empty, so there is no amount to compare. Add an item, then read it again.',
-  'summary-missing':
-    'No order summary was found on this page, so the cart amount wasn’t read. Your cards are compared by rate.',
-  'ambiguous-amount':
-    'This page shows an ambiguous amount (more than one possible total), so the cart amount wasn’t read. Your cards are compared by rate.',
   'unsupported-currency': 'This comparison supports USD only. The cart showed another currency.',
-  'page-loading': 'The order summary is still loading. Wait for it to finish, then read it again.',
   withheld: 'The cart total could not be read with certainty on this page. Your cards are compared by rate.',
   /** The detector did not recognise a cart or checkout page (Phase 13c review fix): the popup's read on open
    * says nothing; the button shows this. */
@@ -20,8 +15,4 @@ export const READ_COPY = {
     'This is a payment page, not the store’s. Cards can’t be compared here; open the store’s cart or checkout page, or pick the store below.',
 } as const;
 /** The read found a cart or checkout page but not a certain amount: the popup compares by rate. */
-export const RATES_READ_MESSAGES: string[] = [
-  READ_COPY.withheld,
-  READ_COPY['summary-missing'],
-  READ_COPY['ambiguous-amount'],
-];
+export const RATES_READ_MESSAGES: string[] = [READ_COPY.withheld];

@@ -6,7 +6,7 @@ status: stable
 tags: [system, database, supabase, postgres, security]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T01:30:00Z
+  at: 2026-10-20T02:30:00Z
 sources:
   - resource: ../../supabase/migrations
     title: Migrations
@@ -30,7 +30,7 @@ sources:
 
 PostgreSQL 17 under Supabase (Auth + Data API). Three schemas: `public` holds the published, immutable catalog and merchant history and their single-row head pointers, readable by anyone; `catalog_private` holds reviewers, source captures, drafts, publications and the extraction ledger, is not exposed through the Data API, has RLS on with no client policies, and is reached only through narrow `SECURITY DEFINER` functions called via `SECURITY INVOKER` public wrappers; `telemetry` (Phase 15.2) holds the extension's consented events for 90 days and per-install day counters, written only by the anon-granted `security definer` RPC `public.ingest_events` and read only by two reviewer functions. Publication is one transaction bound to an exact draft revision, payload hash and current head, so stale approvals fail rather than overwrite. Wallet and shopping data never enter this database.
 
-Verified 2026-10-02 by reading the migrations and tests. Ten migrations are on `main` and, as reported by the coordinating session, all ten are applied to hosted Supabase: the two Stage 2 migrations `20261002222425_catalog_v3` (M1, PR #22) and `20261002230334_review_summary` (M8, PR #24) were pushed with `./scripts/db-push.sh` after their merges. Rechecked 2026-10-03 on `main` `5f1f4fb`: `db:test:http`, `db:test:curation:http` and `db:test:curation:application` pass on the local stack with all ten applied; the hosted review bundle offers `CATALOG_V3` (M8 code live).
+**Hosted, 2026-10-20:** all 13 migrations are applied; `20261020004702_telemetry_events` was pushed by the coordinating session with `./scripts/db-push.sh` after PR #95 merged, and the deployed `POST /v1/events` answers an empty batch with 400 `invalid_request` (reported by the coordinator). Verified 2026-10-02 by reading the migrations and tests. Ten migrations are on `main` and, as reported by the coordinating session, all ten are applied to hosted Supabase: the two Stage 2 migrations `20261002222425_catalog_v3` (M1, PR #22) and `20261002230334_review_summary` (M8, PR #24) were pushed with `./scripts/db-push.sh` after their merges. Rechecked 2026-10-03 on `main` `5f1f4fb`: `db:test:http`, `db:test:curation:http` and `db:test:curation:application` pass on the local stack with all ten applied; the hosted review bundle offers `CATALOG_V3` (M8 code live).
 
 ## Facts
 

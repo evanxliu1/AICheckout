@@ -52,7 +52,7 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 | Lifecycle | install (after consent), onboarding complete, consent given |
 | Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; amount view or rates view; top card's catalog ID; exact `amountCents` when read; Evan 2026-10-10) |
 | Wallet | owned cards as catalog card IDs on change (never numbers, last 4 or balances; Evan 2026-10-10) |
-| Reader quality | Shown or withheld (no `ask` since 2026-10-06); reader kind (generic or legacy adapter; no store configs since 2026-10-06); shopper reported a wrong amount or typed one (relative-difference bucket) |
+| Reader quality | Shown or withheld (no `ask` since 2026-10-06); reader kind (generic only since Phase 15.1 retired the legacy adapters; no store configs since 2026-10-06); shopper reported a wrong amount or typed one (relative-difference bucket) |
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 

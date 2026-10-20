@@ -18,8 +18,8 @@
 // bounds for every zero count. Breakdowns: stream, state, region group, USD or not, currency (E's, at least 5 sites),
 // observed tag. Timing: p95 (nearest rank) over every timed read of the split's real page-states. Criterion 1: page
 // upper bound <= 1% and p95 <= 50 ms on the whole split; evidence only on a held-out split. Variants (per transform,
-// with the manifest's eligible and skip counts) and the legacy adapters are reported apart, never pooled, and are
-// outside criterion 1 and p95. Errata (`evals/merchants/errata/<split>.json`, `reader-errata.1`) are scored beside
+// with the manifest's eligible and skip counts) are reported apart, never pooled, and are outside criterion 1 and
+// p95 (the legacy adapters' separate report went with the adapters in Phase 15.1). Errata (`evals/merchants/errata/<split>.json`, `reader-errata.1`) are scored beside
 // the frozen labels, never instead; only accepted errata apply.
 //
 //   node evals/reader/score.mjs --run <runId> [--class-only] [--failures] [--record]
@@ -54,10 +54,6 @@ export const P95_BAR_MS = 50;
 export const MIN_CURRENCY_SITES = 5;
 export const STREAM_STATEMENT =
   'A whole-split pass says nothing about either stream alone; each stream has its own bound and coverage.';
-export const LEGACY_NONE =
-  'n = 0: amazon.com, bestbuy.com and newegg.com are excluded from retail-frame-3 (legacy-named-merchant), so no split page is on a legacy store.';
-export const LEGACY_RETIREMENT =
-  'The condition for replacing the legacy adapters (the generic reader matching them on their own stores) is untested here; retiring them needs separate evidence or Evan’s decision.';
 const round = (v) => (v == null ? null : Math.round(v * 1e6) / 1e6);
 
 /** Outcome of one output against one label: 'shown-correct' | 'shown-wrong' | 'withheld'. */
@@ -91,15 +87,15 @@ export function failureClass(label, output) {
   return null;
 }
 
-/** Scored rows, one per label, joined with its output (`pick` chooses the generic or legacy reads) and the frame. */
-export function scoreRows(labels, outputs, frame, pick = (o) => o) {
+/** Scored rows, one per label, joined with its output and the frame. */
+export function scoreRows(labels, outputs, frame) {
   return labels.map((l) => {
     const { domain, transform } = parseId(l.id);
     const f = frame.get(domain);
     if (!f) throw new Error(`${l.id}: domain not in the frozen frame`);
     const raw = outputs.get(l.id);
     const harnessError = Boolean(raw?.harnessError);
-    const o = raw && !harnessError ? pick(raw) : null;
+    const o = raw && !harnessError ? raw : null;
     const res = o ? outcome(l, o.output) : 'missing';
     return {
       id: l.id,
@@ -260,12 +256,6 @@ function shownWrongClasses(rows) {
 export function report({ split, runId, labels, outputs, frame, variantLabels = [], variantManifest = null }) {
   const real = scoreRows(labels, outputs, frame).filter((r) => r.transform === null);
   const variants = scoreRows(variantLabels, outputs, frame);
-  const legacyRows = scoreRows(
-    labels.filter((l) => outputs.get(l.id)?.legacy),
-    outputs,
-    frame,
-    (o) => o.legacy,
-  );
   const sitesPer = (rows) => new Set(rows.map((r) => r.domain)).size;
   const currencies = groupBy(real, (r) => r.currency);
   return {
@@ -301,12 +291,6 @@ export function report({ split, runId, labels, outputs, frame, variantLabels = [
       summarize,
     ),
     variants: variantReport(variants, variantManifest),
-    legacy: {
-      ...summarize(legacyRows),
-      timing: timing(legacyRows),
-      ...(legacyRows.length ? {} : { reason: LEGACY_NONE }),
-      retirement: LEGACY_RETIREMENT,
-    },
     classes: classCounts(real),
   };
 }

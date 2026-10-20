@@ -5,7 +5,7 @@ import { openNativePopup } from './native-popup';
 import { startNativePopup } from './vault';
 import { BADGE_ORIGINS } from './hosts';
 
-// Phase 11: opened on a store with no adapter, the popup picks "Another U.S. online store" from the
+// Phase 11: opened on a store the merchant release does not know, the popup picks "Another U.S. online store" from the
 // tab (activeTab) and recommends a card from a typed amount, with no new host permissions.
 test('popup on an unsupported store recommends a card from a typed amount', async ({
   browserName,
