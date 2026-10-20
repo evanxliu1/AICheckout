@@ -15,6 +15,8 @@ import {
   merchantReleaseCases,
 } from '../packages/rewards-core/test-cases.ts';
 import { CATALOG_V3_BYTE_BUDGET, jsonbTextBytes } from './lib/catalog-v3.mjs';
+import { telemetryEventSchema } from '../packages/catalog-review/src/telemetry.ts';
+import { telemetryEventCases } from '../packages/catalog-review/test-cases.ts';
 
 // Local read-only comparison of both actual implementations against common domain cases.
 const client = new pg.Client({
@@ -27,9 +29,9 @@ const client = new pg.Client({
 });
 try {
   await client.connect();
-  const check = async (fn, cases, schema = catalogSchema) => {
+  const check = async (fn, cases, schema = catalogSchema, schemaName = 'catalog_private') => {
     for (const { name, input, valid } of cases) {
-      const result = await client.query(`select catalog_private.${fn}($1::jsonb) as valid`, [
+      const result = await client.query(`select ${schemaName}.${fn}($1::jsonb) as valid`, [
         JSON.stringify(input),
       ]);
       assert.equal(result.rows[0].valid, valid, `Database ${fn}: ${name}`);
@@ -76,8 +78,36 @@ try {
     merchants.rows[0].bytes <= MERCHANT_RELEASE_LIMITS.bytes,
     'MERCHANTS_V1 within 2 MiB as JSONB text',
   );
+  // Telemetry events (Phase 15.2): the shared envelope cases through telemetry.valid_event_v1 (the CHECK on
+  // telemetry.events and the gate of ingest_events) and telemetryEventSchema.
+  await check('valid_event_v1', telemetryEventCases, telemetryEventSchema, 'telemetry');
+  // ingest_events matches the batch once (telemetry.valid_batch_v1); each case as a one-event batch must agree.
+  for (const { name, input, valid } of telemetryEventCases) {
+    const result = await client.query('select telemetry.valid_batch_v1($1::jsonb) as valid', [
+      JSON.stringify([input]),
+    ]);
+    assert.equal(result.rows[0].valid, valid, `Database valid_batch_v1: ${name}`);
+  }
+  const allFixtures = telemetryEventCases.filter((c) => c.valid).map((c) => c.input);
+  const mixed = await client.query(
+    'select telemetry.valid_batch_v1($1::jsonb) as whole, telemetry.valid_batch_v1($2::jsonb) as spoiled',
+    [
+      JSON.stringify(allFixtures),
+      JSON.stringify([
+        ...allFixtures,
+        telemetryEventCases.find(
+          (c) => !c.valid && c.input && typeof c.input === 'object' && !Array.isArray(c.input),
+        ).input,
+      ]),
+    ],
+  );
+  assert.deepEqual(
+    mixed.rows[0],
+    { whole: true, spoiled: false },
+    'Database valid_batch_v1 on a mixed batch',
+  );
   console.log(
-    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, on the v3 category lists, and accept CATALOG_V3 (${real.rows[0].bytes} JSONB text bytes); and on ${merchantReleaseCases.length} merchant release cases, accepting MERCHANTS_V1 (${merchants.rows[0].bytes} JSONB text bytes).`,
+    `PASS: database and shared runtime agree on ${catalogCases.length} v1, ${catalogV2Cases.length} v2 and ${catalogV3Cases.length} v3 contract cases, on the v3 category lists, and accept CATALOG_V3 (${real.rows[0].bytes} JSONB text bytes); on ${merchantReleaseCases.length} merchant release cases, accepting MERCHANTS_V1 (${merchants.rows[0].bytes} JSONB text bytes); and on ${telemetryEventCases.length} telemetry event cases, alone and as batches.`,
   );
 } finally {
   await client.end();

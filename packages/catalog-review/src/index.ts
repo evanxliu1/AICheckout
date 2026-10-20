@@ -163,3 +163,5 @@ export const startExtractionInputSchema = z.strictObject({
   requestKey: z.uuid(),
 });
 export type StartExtractionInput = z.infer<typeof startExtractionInputSchema>;
+
+export * from './telemetry.ts';
