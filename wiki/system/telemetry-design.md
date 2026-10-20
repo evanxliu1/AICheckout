@@ -6,7 +6,7 @@ status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:28:17Z
+  at: 2026-10-20T00:30:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -23,6 +23,8 @@ sources:
 ---
 
 # Telemetry, operations and value metrics design (Phases 15 and 17, draft)
+
+**Planned for building on 2026-10-19:** the Release A mechanics (where rows live, the ingest RPC, retention, the kill switch, the build-time switch, the event set) are fixed in the [Phase 15 plan](../product/phase-15-release-a.md) and its [telemetry decision](../decisions/2026-10-19-release-a-telemetry-design.md); where this draft differs, they win. This page stays the design rationale and the Phase 17 scope (dashboard, value metrics, affiliate readiness).
 
 **Draft v6, not built; Evan approved the data-collection choices on 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)), which override this page where they differ: one opt-in question at onboarding covers every metric; a persistent random install ID (no rotation); exact cart amounts without a domain; owned cards as catalog IDs; no post-purchase category question; a minimal set ships in Release A (Phase 15).** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
 
