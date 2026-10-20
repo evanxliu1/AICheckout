@@ -817,3 +817,103 @@ describe('Phase 13c.5 coverage round (2026-10-10)', () => {
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 220000, currency: 'EGP' });
   });
 });
+
+describe('Phase 15.1b: a card-offer credit beside no summary total is left out (2026-10-20)', () => {
+  // A card-offer panel's illustration: its own items total, a hypothetical credit and a new total, no checkout control.
+  const offer = `<div class="offer"><p>Get a $50 gift card upon approval of our card.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}${row('New subtotal', '$0.00')}</div>`;
+  it('a credit in a panel outside the summary does not block the summary subtotal', () => {
+    const r = page(`<div>${offer}</div><div>${summary(row('Subtotal (1 item)', '$43.49'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
+  });
+  it('a credit in a panel outside the summary does not block the summary total either', () => {
+    const r = page(
+      `<div>${offer}</div><div>${summary(row('Subtotal', '$43.49') + row('Shipping', '$5.00') + row('Total', '$48.49'))}</div>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4849, currency: 'USD' });
+  });
+  it('a credit inside the summary still withholds a pre-credit amount', () => {
+    expect(page(summary(row('Subtotal', '$43.49') + row('Gift card applied', '-$10.00')))).toEqual({
+      shown: false,
+      reason: 'credit-unclear',
+    });
+    expect(
+      page(summary(row('Subtotal', '$43.49') + row('Store credit', '-$10.00') + row('Total', '$33.49'))),
+    ).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a card-offer credit beside a non-summary total does not make an after-credit total', () => {
+    // The offer panel's rows are the offer's (left out); the summary's subtotal is shown.
+    const panel = `<div><p>Get a $50 gift card upon approval of our card.</p>${row('Total', '$50.00')}${row('Gift card savings', '-$50.00')}${row('Amount due', '$0.00')}</div>`;
+    const r = page(`<div>${panel}</div><div>${summary(row('Subtotal', '$50.00'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 5000, currency: 'USD' });
+  });
+  it('a credit with no offer wording beside a non-summary total still counts (review narrowing)', () => {
+    // Without the offer's words it may be a credit the shopper pays with: its "Amount due" is an after-credit total
+    // outside the summary, and nothing is shown.
+    const panel = `<div>${row('Total', '$50.00')}${row('Gift card savings', '-$50.00')}${row('Amount due', '$0.00')}</div>`;
+    const r = page(`<div>${panel}</div><div>${summary(row('Subtotal', '$50.00'))}</div>`);
+    expect(r).toEqual({ shown: false, reason: 'total-outside-summary' });
+  });
+  it("an offer panel laid out as the summary list's own sibling still counts (adjacent panel)", () => {
+    // Single-element rows one list apart share a grandparent (`near`): the credit is read as the summary's company,
+    // and the reader stays on the safe side. One wrapper further out (the tests above) it is a separate panel.
+    const panel = `<div><p>Pay with our card and save.</p><p>Current subtotal $43.49</p><p>Gift card savings -$50.00</p></div>`;
+    const r = page(`<div>${summary('<p>Subtotal (1 item) $43.49</p>')}${panel}</div>`);
+    expect(r).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a credit in an outer summary around the chosen summary still counts (nested summaries)', () => {
+    const inner = `<section><p>Subtotal $43.49</p><p>Shipping $5.00</p><p>Total $48.49</p></section>`;
+    const outer = `<section>${inner}<p>Store credit -$5.00</p><button>Checkout</button></section>`;
+    expect(page(outer)).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a total below its subtotal is still a misread row when the only credit is outside the summary', () => {
+    const r = page(
+      `<div>${offer}</div><div>${summary(row('Subtotal', '$43.49') + row('Total', '$3.49'))}</div>`,
+    );
+    expect(r).toEqual({ shown: false, reason: 'total-below-subtotal' });
+  });
+});
+
+describe('Phase 15.1b review: credits outside the summary that the shopper does pay with (2026-10-20)', () => {
+  const orderSummary = summary(
+    row('Subtotal', '$43.49') + row('Shipping', '$5.00') + row('Order total', '$48.49'),
+  );
+  it('a gift card applied in a payment section beside its remaining balance withholds', () => {
+    const payment = `<div><h3>Payment method</h3>${row('Gift card ending 1234', '-$25.00')}${row('Remaining balance', '$23.49')}</div>`;
+    expect(page(`<div>${payment}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a gift card applied in a payment section beside an amount due withholds', () => {
+    const payment = `<div><h3>Payment</h3>${row('Gift card applied', '-$25.00')}${row('Amount due', '$23.49')}</div>`;
+    expect(page(`<div>${payment}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('an applied-credits section above the summary with its own totals withholds', () => {
+    const credits = `<div><h3>Your credits</h3>${row('Order total', '$48.49')}${row('Store credit applied', '-$10.00')}${row('Total after credit', '$38.49')}</div>`;
+    expect(page(`<div>${credits}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a rewards balance beside a plain total in a side panel withholds', () => {
+    const panel = `<aside>${row('Rewards balance', '-$5.00')}${row('Total', '$43.49')}</aside>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a credit split across two columns of the summary (labels and values apart) shows no pre-credit amount', () => {
+    const cols = `<section><div><p>Subtotal</p><p>Gift card</p><p>Total</p></div><div><p>$43.49</p><p>-$10.00</p><p>$33.49</p></div><button>Checkout</button></section>`;
+    const r = page(cols);
+    expect(r.shown && r.amountMinor !== 3349).toBe(false);
+  });
+  it('an applied gift card in a block with offer-like footnotes still counts', () => {
+    // The table keeps the balance row out of the footnote's three levels, so only the applied wording keeps the credit.
+    const panel = `<div><small>Card terms apply.</small><table><tbody><tr><td>Gift card applied</td><td>-$25.00</td></tr><tr><td>Remaining balance</td><td>$23.49</td></tr></tbody></table></div>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('an offer panel without offer wording withholds (conservative)', () => {
+    const panel = `<div><p>Pay with our card and save.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}</div>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toEqual({
+      shown: false,
+      reason: 'credit-unclear',
+    });
+  });
+  it('a card-offer illustration in a table below the offer copy is ignored (the Amazon shape)', () => {
+    const table = `<table><tbody><tr><td>Current subtotal:</td><td>$43.49</td></tr><tr><td>Gift card savings:</td><td>-$50.00</td></tr><tr><td>Cost after savings:</td><td>$0.00</td></tr></tbody></table>`;
+    const offer = `<a><div><div><span>Get a $50 gift card upon approval of our card.</span><div><div>${table}</div></div><span>Learn more</span></div></div></a>`;
+    const r = page(`<div>${offer}</div><div>${summary(row('Subtotal (1 item)', '$43.49'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
+  });
+});

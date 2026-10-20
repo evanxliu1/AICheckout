@@ -72,7 +72,7 @@ describe('"Checking for updated terms…" (Phase 15.4)', () => {
     // but the broadcast reaches the page before that answer is rendered.
     let answer!: () => void;
     const first = new Promise<void>((resolve) => (answer = resolve));
-    const inner = send.getMockImplementation()!;
+    const inner = send.getMockImplementation() as (request: { type: string }) => Promise<unknown>;
     send.mockImplementation(async (request: { type: string }) => {
       const reply = await inner(request);
       if (
