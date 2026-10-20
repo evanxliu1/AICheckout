@@ -11,7 +11,7 @@ import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
 import type { PublishedRelease } from '../../packages/rewards-core/src/schema';
 import type { PublishedMerchantRelease } from '../../packages/rewards-core/src/merchant-release';
 import { MERCHANTS_V1 } from '../../packages/rewards-core/src/merchants-v1';
-import { addCard } from './wallet';
+import { addCard, atStore } from './wallet';
 
 test('published catalog and merchants: HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
   browserName,
@@ -127,6 +127,9 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     page.on('pageerror', (error) => errors.push(error.message));
     await addCard(page, 'Capital One Quicksilver');
     await page.getByRole('button', { name: 'Save cards' }).click();
+    // The published release is a pilot (v1) catalog, which covers its named stores only, not the generic
+    // store the popup defaults to since Phase 15.1: compare at Best Buy, a store it covers.
+    await atStore(page, 'best-buy-us');
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
