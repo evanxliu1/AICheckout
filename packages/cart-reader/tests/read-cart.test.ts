@@ -898,6 +898,11 @@ describe('Phase 15.1b review: credits outside the summary that the shopper does 
     const r = page(cols);
     expect(r.shown && r.amountMinor !== 3349).toBe(false);
   });
+  it('an applied gift card in a block with offer-like footnotes still counts', () => {
+    // The table keeps the balance row out of the footnote's three levels, so only the applied wording keeps the credit.
+    const panel = `<div><small>Card terms apply.</small><table><tbody><tr><td>Gift card applied</td><td>-$25.00</td></tr><tr><td>Remaining balance</td><td>$23.49</td></tr></tbody></table></div>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
   it('an offer panel without offer wording withholds (conservative)', () => {
     const panel = `<div><p>Pay with our card and save.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}</div>`;
     expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toEqual({

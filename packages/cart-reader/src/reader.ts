@@ -249,12 +249,13 @@ export function analyze(
   // they are plain totals when they say so, and nothing at all when they do not. A credit beside no summary total is
   // left out only when it sits in a card offer (15.1b, 2026-10-20; narrowed in review): a card-offer panel's
   // illustration ("Current subtotal", "Gift card savings: -$50") is not a credit the shopper's total carries, but a
-  // gift card applied in a payment section or a credits panel beside the summary is, and still withholds.
+  // gift card applied in a payment section or a credits panel beside the summary is, and still withholds. A credit
+  // that says it is applied or redeemed always counts, whatever block it sits in.
   const totals = rows.filter((r) => r.kind !== null && r.kind !== 'credit');
+  const offerCredit = (r: Row) =>
+    !APPLIED_RE.test(r.text.toLowerCase()) && inOfferBlock(r.els.at(-1)!, ctx, true);
   const credits = rows.filter(
-    (r) =>
-      r.kind === 'credit' &&
-      totals.some((t) => near(r, t) && (t.inSummary || !inOfferBlock(r.els.at(-1)!, ctx, true))),
+    (r) => r.kind === 'credit' && totals.some((t) => near(r, t) && (t.inSummary || !offerCredit(r))),
   );
   const resolved: (Row & { kind: Kind })[] = [];
   for (const r of rows) {
@@ -803,6 +804,8 @@ function inOfferBlock(el: Element, ctx: Ctx, tablesFree = false): boolean {
   return false;
 }
 const OFFER_CONTEXT_RE = /credit|\bcard\b|karte|carte|tarjeta|new total/u;
+/** A credit row that says it is in use ("Gift card applied", "Points redeemed"): never an offer's illustration. */
+const APPLIED_RE = /appl(?:ied|iqu)|redeem|eingel[öo]st|angewendet|aplicad|utilis|\bused\b/u;
 
 /** The text with its amounts taken out: the row's label. */
 function withoutAmounts(text: string): string {
