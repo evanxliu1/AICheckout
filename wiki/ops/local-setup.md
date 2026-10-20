@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T02:40:00Z
+  at: 2026-10-20T04:30:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
@@ -57,7 +57,8 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
    - `npm run test:browser --workspace=@ai-checkout/site`
    - `npm run test:browser --workspace=ai-checkout-extension`
    - `npm run test:browser --workspace=@ai-checkout/review -- e2e/a11y.spec.ts` (the other review specs need the local database)
-   - `npm run test:catalog:browser` (builds the catalog-enabled extension and runs `e2e/catalog.spec.ts` with `CATALOG_E2E`; `test:browser` skips that spec, so run this one too before a PR that touches the popup)
+   - `npm run test:catalog:browser` (builds the catalog-enabled extension with `VITE_TELEMETRY=1` and runs `e2e/catalog.spec.ts` and `e2e/telemetry.spec.ts` with `CATALOG_E2E`; `test:browser` skips both specs, so run this one too before a PR that touches the popup, onboarding or the worker)
+   - `npm run telemetry:check` (the public event dictionary `docs/telemetry/events.md` matches the contract; `npm run telemetry` regenerates it)
    - `npm run test:capture:browser` (Phase 12 capture tool and pane export round trip on a 127.0.0.1 fixture shop)
    - `npm run test:reader:browser` (`evals/reader/tests/browser/*.test.mjs`, the Phase 13 reader harness in a browser; not run by CI as of 2026-10-10)
    - `npm run test:package:browser --workspace=ai-checkout-extension` (packages the zip into `extension/artifacts/`, then tests it)
