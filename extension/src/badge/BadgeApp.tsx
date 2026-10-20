@@ -7,6 +7,8 @@ import type { PaymentPathV3 } from '../domain';
 import { EstimateRow } from '../components/ComparisonResult';
 import RatesResult from '../components/RatesResult';
 import {
+  CHECKING_TERMS_COPY,
+  CHECKING_TERMS_TITLE,
   notAcceptedLines,
   PAYMENT_LABELS,
   pillReward,
@@ -189,6 +191,11 @@ export default function BadgeApp() {
     pillText = 'Open AI Checkout to fix saved data';
     pillLabel = `${pillText} (AI Checkout)`;
     pillAction = () => open('popup');
+  } else if (view.kind === 'checking') {
+    // Expired bundled terms with the first refresh in flight (Phase 15.4); `badge:changed` ends it.
+    pillText = CHECKING_TERMS_TITLE;
+    pillLabel = `${pillText} (AI Checkout). Show details`;
+    pillAction = expand;
   } else if (view.kind === 'rates') {
     // The amount was not read: the best card and its rate, never a prompt (Phase 13c).
     const best = view.result.estimates.find((e) => e.cardId === view.result.preferredCardId)!;
@@ -249,26 +256,43 @@ export default function BadgeApp() {
           </div>
         </section>
       ) : (
-        <button
-          ref={pill}
-          type="button"
-          className="badge-pill"
-          aria-label={pillLabel}
-          aria-expanded={['ready', 'rates', 'unavailable'].includes(view.kind) ? false : undefined}
-          onClick={pillAction}
-        >
-          <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
-          <span>
-            {pillAmount ? (
-              <>
-                {pillText.slice(0, -pillAmount.length)}
-                <span className="badge-pill__amount">{pillAmount}</span>
-              </>
-            ) : (
-              pillText
-            )}
-          </span>
-        </button>
+        <div className="badge-pill-row">
+          <button
+            ref={pill}
+            type="button"
+            className="badge-pill"
+            aria-label={pillLabel}
+            aria-expanded={
+              ['ready', 'rates', 'unavailable', 'checking'].includes(view.kind) ? false : undefined
+            }
+            onClick={pillAction}
+          >
+            <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
+            <span>
+              {pillAmount ? (
+                <>
+                  {pillText.slice(0, -pillAmount.length)}
+                  <span className="badge-pill__amount">{pillAmount}</span>
+                </>
+              ) : (
+                pillText
+              )}
+            </span>
+          </button>
+          {/* Phase 15.4: the no-cards pill shows at every https cart and expands nothing, so its per-tab
+              dismiss sits beside it (comparisons have theirs in the panel footer). */}
+          {view.kind === 'no-cards' && (
+            <button
+              type="button"
+              className="badge-pill__dismiss"
+              aria-label="Dismiss for this tab (AI Checkout)"
+              disabled={busy}
+              onClick={() => close('badge:dismiss')}
+            >
+              <Icon name="x" size={16} />
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
@@ -310,10 +334,10 @@ function PanelBody({
           ))}
       </>
     );
-  if (view.kind === 'unavailable')
+  if (view.kind === 'unavailable' || view.kind === 'checking')
     return (
       <>
-        <p>{unavailableCopy[view.result.reason]}</p>
+        <p>{view.kind === 'checking' ? CHECKING_TERMS_COPY : unavailableCopy[view.result.reason]}</p>
         <Button size="small" onClick={() => open('popup')}>
           Open AI Checkout
         </Button>

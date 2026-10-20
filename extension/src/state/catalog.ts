@@ -109,7 +109,9 @@ export function prepareCatalogUpdate(
   return {
     state: {
       ...state,
-      revision: state.revision + 1,
+      // An empty wallet has no input the new terms could invalidate: the revision stays, so a first run's
+      // onboarding page, opened before the install-time refresh landed (Phase 15.4), can still save its cards.
+      revision: state.wallet.cards.length || state.comparison ? state.revision + 1 : state.revision,
       wallet: reconciled.wallet,
       walletCatalogVersion: after.version,
       comparison: null,

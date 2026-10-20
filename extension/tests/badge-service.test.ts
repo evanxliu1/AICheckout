@@ -654,6 +654,17 @@ describe('usage reports from the badge (Phase 15.3)', () => {
     expect(differenceBucket(115, 100)).toBe('5-20%');
     expect(differenceBucket(200, 100)).toBe('>20%');
   });
+  it('the no-cards pill (and any pill without the amount or rates view) reports no expansion or dismissal', async () => {
+    const record = vi.fn<(input: unknown) => Promise<void>>(async () => undefined);
+    const recordTap = vi.fn<(input: unknown) => Promise<boolean>>(async () => true);
+    const t = setupWith(null, v3, undefined, undefined, { record, recordTap });
+    await send(t, genericReading(10000), 4, GENERIC);
+    expect(await view(t)).toEqual({ kind: 'no-cards' });
+    await act(t, { type: 'badge:expanded' }, 4);
+    expect((await act(t, { type: 'badge:dismiss' }, 4)).ok).toBe(true);
+    expect(await view(t)).toEqual({ kind: 'hidden' });
+    expect(record).not.toHaveBeenCalled();
+  });
   it('Suggest it sends the registrable domain at a generic store only, once per tab', async () => {
     const { t, recordTap } = reporting();
     await send(t, genericReading(10000), 4, 'https://www.shop.example.com/cart');

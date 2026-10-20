@@ -34,7 +34,13 @@ export interface BadgeDeps {
   local: Pick<StateStorage, 'get' | 'set'>;
   session: Pick<StateStorage, 'get' | 'set'>;
   vault: {
-    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null; catalog: Catalog | null }>;
+    snapshot: () => Promise<{
+      status: VaultStatus;
+      state: AppState | null;
+      catalog: Catalog | null;
+      /** A refresh is in flight and the catalog has expired (Phase 15.4). */
+      checkingTerms: boolean;
+    }>;
   };
   clock?: () => number;
   open: (target: 'popup' | 'onboarding') => Promise<void>;
@@ -76,6 +82,9 @@ export function differenceBucket(typedCents: number, readCents: number | null | 
 /** The view a tab shows for the usage report: an amount (read or typed) or the rates view. */
 const viewOf = (entry: TabEntry): 'amount' | 'rates' =>
   entry.reading || entry.amountOverrideCents ? 'amount' : 'rates';
+/** The dictionary's `view` of what a badge shows, or null for a pill that shows neither view. */
+const reportedView = (shown: BadgeView): 'amount' | 'rates' | null =>
+  shown.kind === 'ready' ? 'amount' : shown.kind === 'rates' ? 'rates' : null;
 /** 32 URL-safe characters (192 random bits). */
 function newNonce() {
   const bytes = crypto.getRandomValues(new Uint8Array(24));
@@ -306,7 +315,11 @@ export function createBadgeService({
       now,
       merchantOption(catalog, entry.merchantId, inEffect),
     );
-    if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
+    if (result.status === 'unavailable')
+      // Expired terms with a refresh in flight (Phase 15.4): "checking", never "expired", until it settles.
+      return result.reason === 'catalog-expired' && snapshot.checkingTerms
+        ? { kind: 'checking' }
+        : { kind: 'unavailable', merchantId: entry.merchantId, result };
     await reportRecommendation(tabId, entry, catalog, inEffect, result, state.wallet.cards.length);
     if (!amountCents)
       return {
@@ -354,10 +367,16 @@ export function createBadgeService({
       } else if (value.type === 'badge:set-payment')
         await saveTab(tabId, { ...entry, paymentPath: value.paymentPath });
       else if (value.type === 'badge:dismiss') {
-        await saveTab(tabId, { ...entry, dismissed: true });
-        report({ type: 'badge_dismissed', view: viewOf(entry) });
-      } else if (value.type === 'badge:expanded') report({ type: 'badge_expanded', view: viewOf(entry) });
-      else if (value.type === 'badge:disable-site') {
+        // The dictionary's `view` is the amount or rates view; the no-cards, locked, checking and unavailable
+        // pills (Phase 15.4's no-cards dismiss among them) show neither, so they report nothing.
+        const shown = reportedView(await view(tabId));
+        // `view` may have stamped `reportedKey`: dismiss the entry as it is now.
+        await saveTab(tabId, { ...((await tabs())[String(tabId)] ?? entry), dismissed: true });
+        if (shown) report({ type: 'badge_dismissed', view: shown });
+      } else if (value.type === 'badge:expanded') {
+        const shown = reportedView(await view(tabId));
+        if (shown) report({ type: 'badge_expanded', view: shown });
+      } else if (value.type === 'badge:disable-site') {
         // The tab's host, never its id (the generic id is shared by every unmatched store).
         const current = await settings();
         if (entry.host && !current.disabledSites.includes(entry.host))

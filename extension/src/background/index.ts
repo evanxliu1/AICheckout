@@ -1,6 +1,11 @@
 import { createVaultService } from '../state/vault-service';
 import { readActiveCheckout, validateActiveCheckout } from '../checkout/browser';
-import { fetchPublishedCatalog, fetchPublishedMerchants, telemetryClient } from '../catalog-config';
+import {
+  fetchPublishedCatalog,
+  fetchPublishedMerchants,
+  telemetryClient,
+  uninstalledUrl,
+} from '../catalog-config';
 import { createBadgeService, storeFacts } from './badge-service';
 import { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from '../badge/contracts';
 import { routeMessage } from './routing';
@@ -74,40 +79,64 @@ async function scheduleRefresh() {
     // Without the alarm, "Check for updated terms" still refreshes both releases.
   }
 }
+/** Refreshes both releases and reports one `release_refresh` per release with the versions before and after
+ * (Phase 15.3). The reports are started, never awaited. At install the shopper has not answered the consent
+ * question yet, so an `install` report is sent only if Share comes first (normally it is dropped). */
+async function refreshAndReport(trigger: 'install' | 'weekly') {
+  const before = await versionsInEffect().catch(() => null);
+  const outcome = await handle.refreshReleases(REFRESH_TIMEOUT_MS);
+  if (before)
+    void versionsInEffect()
+      .then(async (after) => {
+        for (const kind of ['catalog', 'merchants'] as const)
+          await telemetry.record({
+            type: 'release_refresh',
+            kind,
+            outcome: outcome[kind],
+            from_version: before[kind],
+            to_version: after[kind] !== before[kind] ? after[kind] : null,
+            trigger,
+          });
+      })
+      .catch(() => undefined);
+  return outcome;
+}
 chrome.alarms?.onAlarm.addListener((alarm) => {
   if (alarm.name !== REFRESH_ALARM && alarm.name !== REFRESH_RETRY_ALARM) {
     void telemetry.onAlarm(alarm.name).catch(() => undefined);
     return;
   }
   void ready
-    .then(async () => {
-      const before = await versionsInEffect();
-      const outcome = await handle.refreshReleases(REFRESH_TIMEOUT_MS);
-      const after = await versionsInEffect();
-      for (const kind of ['catalog', 'merchants'] as const)
-        await telemetry.record({
-          type: 'release_refresh',
-          kind,
-          outcome: outcome[kind],
-          from_version: before[kind],
-          to_version: after[kind] !== before[kind] ? after[kind] : null,
-          trigger: 'weekly',
-        });
-      return outcome;
-    })
+    .then(() => refreshAndReport('weekly'))
     .then((outcome) => {
+      refreshed();
       if (alarm.name === REFRESH_ALARM && (outcome.catalog === 'failed' || outcome.merchants === 'failed'))
         return chrome.alarms.create(REFRESH_RETRY_ALARM, { delayInMinutes: REFRESH_RETRY_MINUTES });
-      // Badges and pages re-read the releases in effect on their next request; tell open badges now.
-      notify(null);
     })
     .catch(() => undefined);
 });
+/** A new install refreshes both releases at once (Phase 15.4): the bundled catalog of a store build may
+ * have expired, and the pages say "Checking for updated terms…" until this settles. A failure needs no
+ * retry of its own: the weekly alarm's first run follows REFRESH_FIRST_MINUTES later. */
+function refreshAtInstall() {
+  void ready
+    .then(() => refreshAndReport('install'))
+    .then(refreshed)
+    .catch(() => undefined);
+}
+/** A background refresh settled, with or without new terms: badges and pages re-read the releases in effect
+ * on their next request; open badges reload now, and a popup showing "Checking…" reloads too. */
+function refreshed() {
+  notify(null);
+  void chrome.runtime.sendMessage({ type: 'terms:checked' }).catch(() => undefined);
+}
 chrome.runtime.onStartup?.addListener(() => void scheduleRefresh());
 /** Badge iframes refresh their view on this broadcast. Runtime messages never reach content scripts. */
 function notify(tabId: number | null) {
   void chrome.runtime.sendMessage({ type: 'badge:changed', tabId }).catch(() => undefined);
 }
+// Hosted builds: Chrome opens the site's static page after an uninstall (no parameters; needs no permission).
+if (uninstalledUrl) void chrome.runtime.setUninstallURL(uninstalledUrl).catch(() => undefined);
 async function open(target: 'popup' | 'onboarding') {
   if (target === 'popup') {
     try {
@@ -339,7 +368,9 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.runtime.onInstalled.addListener((details) => {
   void restrictStorage().catch(() => undefined);
   void scheduleRefresh();
-  // First install: pick cards in a full tab, so the badge has something to compare.
-  if (details.reason === 'install')
+  // First install: fetch current terms now, and pick cards in a full tab so the badge has something to compare.
+  if (details.reason === 'install') {
+    refreshAtInstall();
     void chrome.tabs.create({ url: chrome.runtime.getURL(ONBOARDING_PAGE) }).catch(() => undefined);
+  }
 });

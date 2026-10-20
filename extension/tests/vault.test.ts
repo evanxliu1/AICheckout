@@ -300,7 +300,12 @@ describe('optional protection', () => {
     await service(create);
     await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet });
     await service({ type: 'checkout:vault-lock' });
-    expect(await service.snapshot()).toEqual({ status: 'locked', state: null, catalog: null });
+    expect(await service.snapshot()).toEqual({
+      status: 'locked',
+      state: null,
+      catalog: null,
+      checkingTerms: false,
+    });
     expect(await service({ type: 'checkout:get-state' })).toMatchObject({ ok: false });
     expect(await service(unlock)).toEqual({ ok: true, status: 'unlocked' });
     expect((await service.snapshot()).state).toMatchObject({ wallet });
@@ -313,7 +318,12 @@ describe('optional protection', () => {
     expect(await service({ type: 'checkout:save-wallet', expectedRevision: 0, wallet })).toMatchObject({
       ok: false,
     });
-    expect(await service.snapshot()).toEqual({ status: 'damaged', state: null, catalog: null });
+    expect(await service.snapshot()).toEqual({
+      status: 'damaged',
+      state: null,
+      catalog: null,
+      checkingTerms: false,
+    });
   });
 });
 

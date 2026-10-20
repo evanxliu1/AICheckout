@@ -183,7 +183,9 @@ describe('newest valid catalog wins', () => {
     fetchCatalog.mockResolvedValue({ release: release(hostedV3(), 2) });
     const newer = ok(await service({ type: 'checkout:refresh-catalog', expectedRevision: 0 }));
     expect(newer.catalog.version).toBe('hosted-v3.2');
-    expect(newer.state).toMatchObject({ revision: 1, walletCatalogVersion: 'hosted-v3.2' });
+    // An empty wallet has nothing the new terms invalidate, so the revision stays (Phase 15.3 review: a first
+    // run's onboarding save must not conflict with the install-time refresh).
+    expect(newer.state).toMatchObject({ revision: 0, walletCatalogVersion: 'hosted-v3.2' });
     expect(local.writes.at(-1)).toEqual([CATALOG_KEY, STATE_KEY]);
   });
 });

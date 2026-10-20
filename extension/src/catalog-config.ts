@@ -12,3 +12,6 @@ export const fetchPublishedMerchants = endpoint
  * only in a build with `VITE_TELEMETRY=1`. Worker only; the content scripts never import this module. */
 export const telemetryClient =
   endpoint && TELEMETRY_ENABLED ? createEventSender(new URL('/v1/events', endpoint).href) : undefined;
+/** The public site is served by the same origin: the static page Chrome opens after an uninstall (Phase
+ * 15.4), with no parameters, so hosting logs never see an install id. Hosted builds only. */
+export const uninstalledUrl = endpoint ? new URL('/uninstalled/', endpoint).href : undefined;

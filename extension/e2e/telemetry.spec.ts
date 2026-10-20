@@ -19,6 +19,9 @@ import { readFileSync } from 'node:fs';
 import { createServer } from 'node:https';
 import { resolve } from 'node:path';
 import { eventBatchSchema } from '../../packages/catalog-review/src/telemetry';
+import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
+import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
+import type { PublishedRelease } from '../../packages/rewards-core/src/schema';
 import type { TelemetryEvent } from '../../packages/catalog-review/src/telemetry';
 import { openNativePopup } from './native-popup';
 import { addCard } from './wallet';
@@ -31,7 +34,19 @@ const row = (label: string, amount: string) => `<div><span>${label}</span><span>
 const CART = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Your cart</title></head><body><main><h1>Your cart</h1><section class="summary">${row('Subtotal', '$90.00') + row('Shipping', '$10.00') + row('Order total', '$100.00')}<button type="button">Checkout</button></section></main></body></html>`;
 
 type Hit = { url: string; origin?: string; cookie?: string; referer?: string; body: unknown };
-/** The stub API on the catalog origin the build was made with: no published releases, events accepted. */
+/** The catalog the stub publishes: the build bundles catalog v3 re-dated 40 days back, so it has expired
+ * (Phase 15.4); the install-time refresh fetches this copy, re-dated to yesterday so it is valid whenever the
+ * test runs, under a version the telemetry contract accepts (the envelope's `catalog_version`). */
+const yesterday = new Date(Date.now() - 86_400_000).toISOString().slice(0, 10);
+const PUBLISHED: PublishedRelease = {
+  sequence: 1,
+  version: `${yesterday}.e2e.1`,
+  catalog: { ...redateCatalog(CATALOG_V3, yesterday), version: `${yesterday}.e2e.1` },
+  catalog_hash: '3'.repeat(64),
+  published_at: new Date().toISOString(),
+};
+/** The stub API on the catalog origin the build was made with: the catalog above, no merchant release,
+ * events accepted. */
 async function stubApi(testInfo: TestInfo) {
   const key = testInfo.outputPath('test.key'),
     cert = testInfo.outputPath('test.crt');
@@ -73,6 +88,7 @@ async function stubApi(testInfo: TestInfo) {
       if (request.url === '/v1/events')
         reply.end(JSON.stringify({ accepted: (body as { events: unknown[] }).events.length, dropped: 0 }));
       else if (request.url === '/v1/events/delete') reply.end(JSON.stringify({ deleted: 3 }));
+      else if (request.url === '/v1/catalog') reply.end(JSON.stringify({ release: PUBLISHED }));
       else reply.end(JSON.stringify({ release: null }));
     });
   });
@@ -244,13 +260,29 @@ test('Share: the install events, a recommendation at a synthetic store without i
     // The popup opened from the store tab: Suggest this store at the generic store, Report a problem.
     const popup = await openNativePopup(context, cart, id);
     await expect.poll(popup.text).toContain('Suggest this store');
-    await popup.click('Suggest this store');
+    // The button is disabled while the popup's read on open is pending: retry until it takes the click.
+    await expect
+      .poll(() =>
+        popup.click('Suggest this store').then(
+          () => true,
+          () => false,
+        ),
+      )
+      .toBe(true);
     await expect.poll(popup.text).toContain('domain was sent');
     await popup.evaluate("document.querySelector('#report-problem summary').click()");
     await popup.evaluate(
       "(() => { const s = document.getElementById('problem-reason'); s.value = 'no-badge'; s.dispatchEvent(new Event('change', { bubbles: true })); })()",
     );
-    await popup.click('Send report');
+    // The button is disabled while the popup's read on open is pending: retry until it takes the click.
+    await expect
+      .poll(() =>
+        popup.click('Send report').then(
+          () => true,
+          () => false,
+        ),
+      )
+      .toBe(true);
     await expect.poll(popup.text).toContain('Your report was sent');
     await expect.poll(() => api.events().length, { timeout: 15_000 }).toBeGreaterThanOrEqual(9);
     const types = api.events().map((e) => e.type);

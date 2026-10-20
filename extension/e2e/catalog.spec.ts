@@ -13,10 +13,11 @@ import type { PublishedMerchantRelease } from '../../packages/rewards-core/src/m
 import { MERCHANTS_V1 } from '../../packages/rewards-core/src/merchants-v1';
 import { addCard, atStore } from './wallet';
 
-test('published catalog and merchants: HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
+test('published catalog and merchants: install-time refresh of an expired bundle, HTTPS refresh, changed rules, rollback rejection, offline restart', async ({
   browserName,
 }, testInfo) => {
   test.skip(!process.env.CATALOG_E2E, 'Requires the isolated catalog-enabled build.');
+  test.setTimeout(60_000);
   expect(browserName).toBe('chromium');
   const key = testInfo.outputPath('test.key'),
     cert = testInfo.outputPath('test.crt');
@@ -41,6 +42,8 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     ],
     { stdio: 'ignore' },
   );
+  // The build under test (scripts/test-catalog-browser.mjs) bundles a catalog re-dated 40 days back, so it
+  // has expired: the first release the stub publishes is what the install-time refresh (Phase 15.4) fetches.
   const release: PublishedRelease = {
     sequence: 2,
     version: 'synthetic.browser.2',
@@ -52,9 +55,15 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     catalog_hash: '1'.repeat(64),
     published_at: new Date().toISOString(),
   };
-  // Fixture values are not claims about real issuer offers.
-  release.catalog.cards[0].shortName = 'Updated test card';
-  release.catalog.cards[0].rules[0].rateBps = 200;
+  // The next release changes a rule. Fixture values are not claims about real issuer offers.
+  const changed: PublishedRelease = structuredClone({
+    ...release,
+    sequence: 3,
+    version: 'synthetic.browser.3',
+    catalog: { ...release.catalog, version: 'synthetic.browser.3' },
+  });
+  changed.catalog.cards[0].shortName = 'Updated test card';
+  changed.catalog.cards[0].rules[0].rateBps = 200;
   // A hosted merchant release (Phase 14.6) verified after the bundled one, with one store the bundle lacks.
   const merchants: PublishedMerchantRelease = {
     sequence: 2,
@@ -86,6 +95,12 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     responseStatus = 200;
   let merchantResponse: unknown = { release: merchants };
   const requests: { url?: string; cookie?: string; authorization?: string; referer?: string }[] = [];
+  // The stub holds every reply until the test lets it answer, as the hosted API waking from a cold start
+  // would: the install-time refresh stays pending while the popup is first used.
+  let answer!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    answer = resolve;
+  });
   const server = createServer({ key: readFileSync(key), cert: readFileSync(cert) }, (request, reply) => {
     requests.push({
       url: request.url,
@@ -93,9 +108,11 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
       authorization: request.headers.authorization,
       referer: request.headers.referer,
     });
-    const body = request.url === '/v1/merchants' ? merchantResponse : response;
-    reply.writeHead(responseStatus, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-    reply.end(JSON.stringify(body));
+    void gate.then(() => {
+      const body = request.url === '/v1/merchants' ? merchantResponse : response;
+      reply.writeHead(responseStatus, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+      reply.end(JSON.stringify(body));
+    });
   });
   await new Promise<void>((done, reject) => {
     server.once('error', reject);
@@ -130,16 +147,35 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     // The published release is a pilot (v1) catalog, which covers its named stores only, not the generic
     // store the popup defaults to since Phase 15.1: compare at Best Buy, a store it covers.
     await atStore(page, 'best-buy-us');
+    // The install-time refresh (Phase 15.4) reached the stub at once and is still waiting for its answer:
+    // the bundled terms have expired, so a comparison says "checking", never "expired".
+    expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(1);
+    await expect(page.getByText('Checking for updated terms…', { exact: true })).toBeVisible();
+    await page.getByLabel('Purchase amount (USD)').fill('100');
+    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await page.getByRole('button', { name: 'Compare my cards' }).click();
+    await expect(page.getByRole('status').filter({ hasText: 'current copy is being fetched' })).toBeVisible();
+    await expect(page.getByRole('alert')).toHaveCount(0);
+    // The stub answers: the published release is cached, the popup reloads, and the next comparison is a
+    // recommendation under the fetched terms.
+    answer();
+    await expect.poll(async () => (await readCatalogCache(page))?.release?.sequence).toBe(2);
+    await expect(page.getByText('Checking for updated terms…')).toHaveCount(0);
+    await expect(page.getByText(/Card terms expire/)).toBeVisible();
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByText('$1.50', { exact: true })).toBeVisible();
+    // The same refresh fetched the merchant release and cached it; the worker now knows the hosted-only store.
+    expect((await readMerchantCache(page))?.release?.sequence).toBe(2);
+    expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(1);
+
+    response = { release: changed };
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('status')).toContainText('Card terms updated');
-    // The same check fetched the merchant release and cached it; the worker now knows the hosted-only store.
-    await expect.poll(async () => (await readMerchantCache(page))?.release?.sequence).toBe(2);
     expect(await worker.evaluate(() => chrome.alarms.getAll())).toEqual([
-      // Created once at install with a short first delay; browser restarts keep it (never re-created).
+      // Created once at install with a short first delay; the install-time refresh added no alarm and
+      // browser restarts keep it (never re-created).
       expect.objectContaining({ name: 'refresh-releases', periodInMinutes: 7 * 24 * 60 }),
     ]);
     await expect(page.getByText('$1.50', { exact: true })).toHaveCount(0);
@@ -150,14 +186,8 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     await expect(page.getByRole('heading', { name: 'Updated test card', exact: true })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath('published-catalog-360.png') });
 
-    response = {
-      release: {
-        ...release,
-        sequence: 1,
-        version: 'synthetic.browser.1',
-        catalog: { ...release.catalog, version: 'synthetic.browser.1' },
-      },
-    };
+    // The install-time release again: a rollback, refused.
+    response = { release };
     // A rolled-back merchant release is refused the same way; the cached one stays.
     merchantResponse = {
       release: {
@@ -172,11 +202,12 @@ test('published catalog and merchants: HTTPS refresh, changed rules, rollback re
     responseStatus = 503;
     await page.getByRole('button', { name: 'Check for updated terms' }).click();
     await expect(page.getByRole('alert')).toContainText('could not be checked');
-    expect((await readCatalogCache(page))?.release?.sequence).toBe(2);
+    expect((await readCatalogCache(page))?.release?.sequence).toBe(3);
     expect((await readMerchantCache(page))?.release?.sequence).toBe(2);
-    expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(3);
+    // The install-time refresh and three checks from the popup.
+    expect(requests.filter((request) => request.url === '/v1/catalog')).toHaveLength(4);
     // Every check also reached the merchant route, whatever the catalog check's outcome.
-    expect(requests.filter((request) => request.url === '/v1/merchants')).toHaveLength(3);
+    expect(requests.filter((request) => request.url === '/v1/merchants')).toHaveLength(4);
     expect(
       requests.every(
         (request) =>

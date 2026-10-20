@@ -137,6 +137,8 @@ export type BadgeView =
   | { kind: 'locked' }
   | { kind: 'damaged' }
   | { kind: 'no-cards' }
+  /** The catalog in effect has expired and a background refresh is in flight (Phase 15.4). */
+  | { kind: 'checking' }
   /** The cart amount was not read: the owned cards ranked by rate at RATES_REFERENCE_CENTS. */
   | {
       kind: 'rates';

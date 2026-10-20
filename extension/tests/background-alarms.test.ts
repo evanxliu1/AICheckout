@@ -8,6 +8,7 @@ vi.mock('../src/catalog-config', () => ({
   fetchPublishedCatalog: (signal: AbortSignal) => fetchCatalog(signal),
   fetchPublishedMerchants: (signal: AbortSignal) => fetchMerchants(signal),
   telemetryClient: undefined,
+  uninstalledUrl: 'https://api.example/uninstalled/',
 }));
 
 afterEach(() => {
@@ -43,11 +44,13 @@ async function worker(existingAlarm?: { name: string; periodInMinutes: number })
     },
   };
   const sendMessage = vi.fn(async () => undefined);
+  const setUninstallURL = vi.fn(async () => undefined);
   vi.stubGlobal('chrome', {
     runtime: {
       id: 'our-extension',
       getURL: (path: string) => `chrome-extension://our-extension/${path}`,
       onMessage: { addListener: vi.fn() },
+      setUninstallURL,
       onInstalled: {
         addListener: (handler: (details: { reason: string }) => void) => {
           onInstalled = handler;
@@ -63,7 +66,11 @@ async function worker(existingAlarm?: { name: string; periodInMinutes: number })
     action: { openPopup: vi.fn() },
     alarms,
     storage: { local: storage, session: { ...storage, get: vi.fn(async () => ({})) } },
-    tabs: { onUpdated: { addListener: vi.fn() }, onRemoved: { addListener: vi.fn() }, create: vi.fn() },
+    tabs: {
+      onUpdated: { addListener: vi.fn() },
+      onRemoved: { addListener: vi.fn() },
+      create: vi.fn(async () => undefined),
+    },
   });
   const module = await import('../src/background/index');
   return {
@@ -72,6 +79,7 @@ async function worker(existingAlarm?: { name: string; periodInMinutes: number })
     onStartup: onStartup!,
     alarms,
     sendMessage,
+    setUninstallURL,
     data,
     module,
   };
@@ -139,6 +147,44 @@ describe('weekly release refresh (Phase 14.6)', () => {
         periodInMinutes: module.REFRESH_PERIOD_MINUTES,
       }),
     );
+  });
+  /* Phase 15.4: a new install refreshes both releases at once; the weekly alarm is still created once. */
+  it('refreshes both releases once right at install, creates the weekly alarm once, and tells open pages', async () => {
+    const { onInstalled, alarms, sendMessage, setUninstallURL, data, module } = await worker();
+    fetchCatalog.mockResolvedValue({ release: null });
+    fetchMerchants.mockResolvedValue({ release: null });
+    onInstalled({ reason: 'install' });
+    await vi.waitFor(() => expect(sendMessage).toHaveBeenCalledWith({ type: 'terms:checked' }));
+    expect(sendMessage).toHaveBeenCalledWith({ type: 'badge:changed', tabId: null });
+    expect(fetchCatalog).toHaveBeenCalledOnce();
+    expect(fetchMerchants).toHaveBeenCalledOnce();
+    expect(data).toHaveProperty('checkoutCatalogV1');
+    expect(data).toHaveProperty('checkoutMerchantsV1');
+    expect(alarms.create).toHaveBeenCalledOnce();
+    expect(alarms.create).toHaveBeenCalledWith(module.REFRESH_ALARM, {
+      delayInMinutes: module.REFRESH_FIRST_MINUTES,
+      periodInMinutes: module.REFRESH_PERIOD_MINUTES,
+    });
+    // A hosted build names the site's static page, with no parameters.
+    expect(setUninstallURL).toHaveBeenCalledWith('https://api.example/uninstalled/');
+  });
+  it('schedules no retry of its own when the install refresh fails: the weekly alarm, due two minutes later, retries', async () => {
+    const { onInstalled, alarms, sendMessage } = await worker();
+    fetchCatalog.mockRejectedValue(new TypeError('fetch failed'));
+    fetchMerchants.mockRejectedValue(new TypeError('fetch failed'));
+    onInstalled({ reason: 'install' });
+    // Pages still learn that the check settled, so "Checking…" gives way to the expired copy.
+    await vi.waitFor(() => expect(sendMessage).toHaveBeenCalledWith({ type: 'terms:checked' }));
+    expect(fetchCatalog).toHaveBeenCalledOnce();
+    expect(alarms.create).toHaveBeenCalledOnce();
+    expect(alarms.create).not.toHaveBeenCalledWith('refresh-releases-retry', expect.anything());
+  });
+  it('does not refresh on an extension update (the bundle is new; the weekly alarm goes on)', async () => {
+    const { onInstalled } = await worker({ name: module_name(), periodInMinutes: 7 * 24 * 60 });
+    onInstalled({ reason: 'update' });
+    await new Promise((done) => setTimeout(done, 10));
+    expect(fetchCatalog).not.toHaveBeenCalled();
+    expect(fetchMerchants).not.toHaveBeenCalled();
   });
   it('ignores alarms it did not create', async () => {
     const { onAlarm } = await worker();
