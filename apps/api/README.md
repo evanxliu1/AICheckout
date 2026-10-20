@@ -88,6 +88,19 @@ The apply body has exactly `expectedRevision`, `expectedHash`, `reviewNote`, and
 
 The signed-human database operation locks the draft/run, rechecks live authority after waiting, builds the candidate from its immutable trace, and atomically records the application and new draft revision. It returns `{ draft, application }`. An exact retry returns that application while its resulting revision/hash is current. Different decisions, a stale origin, or a later edit return 409; unresolved facts/conditions return 422. The executor cannot call this operation, and it never advances the public head. Publication requires a fresh, separate review of the resulting draft.
 
+## Telemetry routes (Phase 15.2)
+
+The extension's consented telemetry (wiki `product/phase-15-release-a.md` §5) arrives at two anonymous routes and is read through two reviewer routes. The shared contract (`eventBatchSchema`, `TELEMETRY_LIMITS`, the thirteen event schemas with the dictionary's descriptions) is in `packages/catalog-review/src/telemetry.ts`; the database re-validates every event with `telemetry.valid_event_v1`, and `scripts/test-catalog-parity.mjs` runs the shared cases through both. No automatic event carries a domain, URL, merchant name, page text or card number; the two tap events (`store_suggested`, `problem_reported`) carry a registrable domain and may carry a null install id.
+
+| Route | Behavior |
+| --- | --- |
+| `POST /v1/events` | `{ "events": [...] }`, 1–50 events, body ≤ 64 KiB. Forwarded as `anon` to the `security definer` RPC `ingest_events`, which validates, stores each `event_id` once, caps an install at 500 events per UTC day, prunes rows older than 90 days, and answers `{ "accepted": n, "dropped": n }` |
+| `POST /v1/events/delete` | `{ "install_id": "<uuid>" }` → `delete_install`, answers `{ "deleted": n }`. Works while ingest is off |
+| `GET /v1/review/telemetry/suggestions` | Bearer, reviewer: store suggestions (`domain`, `count`, distinct `installs`, `last_seen`), most suggested first, up to 500 |
+| `GET /v1/review/telemetry/summary?days=30` | Bearer, reviewer: events and distinct installs over the last 1–90 days, by type and by UTC day |
+
+Checks on the anonymous routes, in order: `TELEMETRY_INGEST=off` answers `410 telemetry_disabled` on `/v1/events` (clients pause); when `EXTENSION_IDS` is set (comma-separated Chrome extension ids), `Origin` must be `chrome-extension://<id>` for one of them or the answer is `403 origin_not_allowed` (a filter against casual abuse, not authentication); a fixed-window limit of 60 requests a minute per client IP and 600 across all clients per process answers `429 too_many_requests` with `Retry-After`; then the body limit (`413 request_too_large`), Zod (`400 invalid_request`) and the RPC (a database refusal is `400`, anything else `503 telemetry_unavailable`). The client IP is read from `X-Forwarded-For` at `TELEMETRY_PROXY_HOPS` entries from the right (1 on Render, whose proxy appends the real address; 0 locally uses the socket), so entries a client forges on the left never move its bucket; Fastify's `trustProxy` stays `false` server-wide and the review routes' limits are unchanged. The address is used transiently and never stored or logged; no body or event is logged either. The tables live in the private `telemetry` schema with RLS on and no grant to any client role; `anon` can execute the two RPCs and nothing else.
+
 ## Deployment
 
 The current application is a long-running Node process, not a serverless handler. Follow the [deployment and recovery runbook](../../docs/release/deployment-runbook.md) for the exact target, dependencies, TLS/proxy behavior, migration review, private configuration, publication and smoke checks. `/health` is liveness only. Provider/log retention remains unverified; the runbook does not authorize paid model calls.

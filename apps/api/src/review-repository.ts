@@ -12,7 +12,9 @@ export type ReviewOperation =
   | 'get_curation_run'
   | 'list_draft_extractions'
   | 'get_draft_extraction'
-  | 'apply_reviewed_extraction';
+  | 'apply_reviewed_extraction'
+  | 'telemetry_store_suggestions'
+  | 'telemetry_summary';
 export type ReviewRpc = (
   operation: ReviewOperation,
   token: string,

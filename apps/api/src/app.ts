@@ -7,6 +7,8 @@ import { reviewSite } from './review-site.ts';
 import { publicSite } from './public-site.ts';
 import type { ReviewConfig } from '@ai-checkout/catalog-review';
 import type { CurationExecution } from './curation/service.ts';
+import { telemetryRoutes, type TelemetryOptions } from './telemetry-routes.ts';
+import type { TelemetryRpc } from './telemetry-repository.ts';
 
 export function createApp({
   readCatalog,
@@ -22,10 +24,15 @@ export function createApp({
   curation,
   shutdownSignal,
   curationLimit,
+  telemetryRpc,
+  telemetry,
 }: {
   readCatalog: () => Promise<unknown>;
   /** The head merchant release (Phase 14.6); `/v1/merchants` answers 503 while it is not configured. */
   readMerchants?: () => Promise<unknown>;
+  /** The anonymous telemetry RPCs (Phase 15.2); without it `/v1/events` does not exist. */
+  telemetryRpc?: TelemetryRpc;
+  telemetry?: TelemetryOptions;
   clock?: () => number;
   logging?: boolean;
   reviewRpc?: ReviewRpc;
@@ -74,6 +81,8 @@ export function createApp({
     });
   if (reviewRoot && reviewConfig)
     void app.register(reviewSite, { prefix: '/review', root: reviewRoot, config: reviewConfig });
+  if (telemetryRpc)
+    void app.register(telemetryRoutes, { prefix: '/v1', rpc: telemetryRpc, clock, ...telemetry });
   if (siteRoot) void app.register(publicSite, { root: siteRoot });
   app.get('/v1/catalog', async (_request, reply) => {
     reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
