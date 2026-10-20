@@ -12,7 +12,14 @@ export const vaultRequestSchema = z.discriminatedUnion('type', [
   }),
   z.strictObject({ type: z.literal('checkout:vault-unlock'), passphrase: passphraseSchema }),
   z.strictObject({ type: z.literal('checkout:vault-lock') }),
-  z.strictObject({ type: z.literal('checkout:vault-delete'), confirmed: z.literal(true) }),
+  /** Delete all local data. While sharing is on, the worker first deletes the reports stored under the usage
+   * identifier (as Delete my data does) and clears this device only when that succeeded; `keepReports` is the
+   * shopper's "Clear this device anyway" after that step failed. */
+  z.strictObject({
+    type: z.literal('checkout:vault-delete'),
+    confirmed: z.literal(true),
+    keepReports: z.literal(true).optional(),
+  }),
   /** Turns passphrase protection off: the saved state is decrypted back to plain local storage. */
   z.strictObject({ type: z.literal('checkout:vault-remove'), passphrase: passphraseSchema }),
 ]);

@@ -3,6 +3,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import VaultGate from '../src/components/VaultGate';
 import { CATALOG_V2 } from '../src/domain';
 import { emptyState } from '../src/state/contracts';
+import { REPORTS_NOT_DELETED_MESSAGE } from '../src/state/telemetry-contracts';
 import { VAULT_SESSION_KEY } from '../src/state/vault-contracts';
 import type { VaultStatus } from '../src/state/vault-contracts';
 import { cardIndex } from '../src/state/catalog-slice';
@@ -170,6 +171,45 @@ describe('local protection gate', () => {
     await screen.findByLabelText('Local passphrase');
     expect(screen.getByRole('alert').textContent).toContain('could not be saved');
     expect(screen.queryByLabelText('Purchase amount (USD)')).toBeNull();
+  });
+  it('when the usage reports could not be deleted first, nothing is cleared and the shopper chooses: Try again or Clear this device anyway', async () => {
+    render(<VaultGate />);
+    await screen.findByLabelText('Purchase amount (USD)');
+    fireEvent.click(screen.getByText('Delete saved data'));
+    fireEvent.click(screen.getByRole('checkbox', { name: /I want to permanently delete/ }));
+    send.mockImplementationOnce(async () => ({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete all local data' }));
+    const alert = await screen.findByRole('alert');
+    expect(alert.textContent).toContain('could not be deleted from the service, so nothing was cleared');
+    expect(alert.textContent).toContain('expire after 90 days');
+    // Try again repeats the same request; the identifier is still on the device.
+    send.mockImplementationOnce(async () => ({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE }));
+    fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
+    await screen.findByRole('alert');
+    expect(send.mock.calls.filter(([r]) => r.type === 'checkout:vault-delete').map(([r]) => r)).toEqual([
+      { type: 'checkout:vault-delete', confirmed: true },
+      { type: 'checkout:vault-delete', confirmed: true },
+    ]);
+    // Clear this device anyway asks the worker to skip the service.
+    fireEvent.click(screen.getByRole('button', { name: 'Clear this device anyway' }));
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(send).toHaveBeenCalledWith({ type: 'checkout:vault-delete', confirmed: true, keepReports: true });
+    expect(screen.queryByRole('alert')).toBeNull();
+  });
+  it('offers the same two choices in the locked view', async () => {
+    status = 'locked';
+    render(<VaultGate />);
+    await screen.findByLabelText('Local passphrase');
+    fireEvent.click(screen.getByText('Delete saved data'));
+    fireEvent.click(screen.getByRole('checkbox', { name: /I want to permanently delete/ }));
+    send.mockImplementationOnce(async () => ({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE }));
+    fireEvent.click(screen.getByRole('button', { name: 'Delete all local data' }));
+    expect((await screen.findByRole('alert')).textContent).toContain('nothing was cleared');
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeTruthy();
+    expect(screen.queryByLabelText('Purchase amount (USD)')).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear this device anyway' }));
+    await screen.findByLabelText('Purchase amount (USD)');
+    expect(send).toHaveBeenCalledWith({ type: 'checkout:vault-delete', confirmed: true, keepReports: true });
   });
   it('requires explicit reset confirmation for damaged data and then starts fresh', async () => {
     status = 'damaged';

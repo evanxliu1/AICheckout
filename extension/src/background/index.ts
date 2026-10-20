@@ -10,7 +10,12 @@ import { createBadgeService, storeFacts } from './badge-service';
 import { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from '../badge/contracts';
 import { routeMessage } from './routing';
 import { createTelemetry } from '../state/telemetry';
-import { pageForUrl, registrableDomain, telemetryRequestSchema } from '../state/telemetry-contracts';
+import {
+  pageForUrl,
+  registrableDomain,
+  REPORTS_NOT_DELETED_MESSAGE,
+  telemetryRequestSchema,
+} from '../state/telemetry-contracts';
 import type { TelemetryResponse } from '../state/telemetry-contracts';
 import { catalogCacheSchema, emptyCatalogCache } from '../state/contracts';
 import { currentCatalog } from '../state/catalog';
@@ -162,7 +167,17 @@ type PageRequest = {
   purchase?: { merchantId: string; amountCents: number };
   cartId?: string | null;
   merchantId?: string;
+  keepReports?: true;
 };
+/** Delete all local data (Phase 15.5b): `chrome.storage.local.clear()` would take the usage identifier with it,
+ * so while sharing is on the reports stored under it are deleted first, exactly as Delete my data does (a batch
+ * in flight lands, no new one starts, the id goes to `/v1/events/delete`). Only a 2xx lets the clear proceed;
+ * otherwise nothing is cleared and the page offers Try again or Clear this device anyway (`keepReports`). */
+const CLEAR_REQUESTS = new Set(['checkout:vault-delete', 'checkout:clear']);
+async function reportsDeletedFirst(request: PageRequest): Promise<boolean> {
+  if (!CLEAR_REQUESTS.has(request.type) || request.keepReports) return true;
+  return (await telemetry.deleteData()) !== 'unavailable';
+}
 /** The usage events of one handled page request (Phase 15.3). */
 async function reportPage(
   request: PageRequest,
@@ -221,6 +236,7 @@ async function reportPage(
  * comparison and rates view (`recommendation_shown`), a saved wallet (`wallet_changed`) and a manual terms
  * check (`release_refresh`). Nothing here reads the page or the tab. */
 async function handlePage(request: PageRequest): Promise<Awaited<ReturnType<typeof handle>>> {
+  if (!(await reportsDeletedFirst(request))) return { ok: false, error: REPORTS_NOT_DELETED_MESSAGE };
   const before =
     request.type === 'checkout:refresh-catalog' ? await versionsInEffect().catch(() => null) : null;
   const response: Awaited<ReturnType<typeof handle>> = await handle(request);

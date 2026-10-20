@@ -112,6 +112,8 @@ it('states the privacy policy: what the badge reads, the requests, and usage rep
     'Protect with a passphrase',
     'Delete all local data',
     'the usage-reporting state',
+    'Clear this device anyway',
+    'deletes older reports once a day',
     'cannot be deleted on request',
     'href="/uninstalled/"',
   ])
@@ -161,6 +163,7 @@ it('tells an uninstalled shopper what was deleted, the 90-day expiry and that De
     'carries no parameters',
     'Chrome removed the extension’s storage',
     'expire after 90 days',
+    'once a day',
     'stored without one',
     'Delete my data',
     'before',

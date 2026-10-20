@@ -3,9 +3,11 @@ import { AlertInline, ApplicationState, Button, Card, Field, TextInput } from '@
 import Popup from '../popup/Popup';
 import PopupHeader from './PopupHeader';
 import DataProtectionDetails from './DataProtectionDetails';
-import DeleteSavedData from './DeleteSavedData';
+import DeleteSavedData, { ReportsNotDeleted } from './DeleteSavedData';
+import type { DeleteOptions } from './DeleteSavedData';
 import { STATE_KEY } from '../state/keys';
 import { PASSPHRASE_MIN_LENGTH } from '../state/vault-crypto';
+import { REPORTS_NOT_DELETED_MESSAGE } from '../state/telemetry-contracts';
 import { VAULT_SESSION_KEY } from '../state/vault-contracts';
 import type { VaultRequest, VaultStatus } from '../state/vault-contracts';
 import { requestVault } from '../state/vault-client';
@@ -73,7 +75,8 @@ export default function VaultGate() {
       setBusy(false);
     }
   }
-  const remove = () => void act({ type: 'checkout:vault-delete', confirmed: true }, true);
+  const remove = (options?: DeleteOptions) =>
+    void act({ type: 'checkout:vault-delete', confirmed: true, ...options }, true);
   if ((status === 'unlocked' || status === 'unprotected') && !busy)
     return (
       <Popup
@@ -87,10 +90,14 @@ export default function VaultGate() {
     <main className="checkout-popup">
       <PopupHeader />
       <div className="p-4 space-y-4">
-        {error && (
-          <AlertInline color="critical" role="alert">
-            {error}
-          </AlertInline>
+        {error === REPORTS_NOT_DELETED_MESSAGE ? (
+          <ReportsNotDeleted busy={busy} onDelete={remove} />
+        ) : (
+          error && (
+            <AlertInline color="critical" role="alert">
+              {error}
+            </AlertInline>
+          )
         )}
         {status === null || busy ? (
           <ApplicationState
