@@ -29,6 +29,7 @@ jobs:
       - run: npm run catalog:v2:check
       - run: npm run catalog:v3:check
       - run: npm run merchants:check
+      - run: npm run telemetry:check
       - run: npm audit --audit-level=high
       - run: npm run build
       - run: npx playwright install --with-deps chromium

@@ -1,4 +1,5 @@
-import { createCatalogFetcher, createMerchantFetcher } from '@ai-checkout/catalog-client';
+import { createCatalogFetcher, createEventSender, createMerchantFetcher } from '@ai-checkout/catalog-client';
+import { TELEMETRY_ENABLED } from './state/keys';
 
 const endpoint = import.meta.env.VITE_CATALOG_API_URL;
 export const fetchPublishedCatalog = endpoint ? createCatalogFetcher(endpoint) : undefined;
@@ -7,3 +8,7 @@ export const fetchPublishedCatalog = endpoint ? createCatalogFetcher(endpoint) :
 export const fetchPublishedMerchants = endpoint
   ? createMerchantFetcher(new URL('/v1/merchants', endpoint).href)
   : undefined;
+/** Consented usage reporting (Phase 15.3): `POST /v1/events` and `/v1/events/delete` on the same origin,
+ * only in a build with `VITE_TELEMETRY=1`. Worker only; the content scripts never import this module. */
+export const telemetryClient =
+  endpoint && TELEMETRY_ENABLED ? createEventSender(new URL('/v1/events', endpoint).href) : undefined;

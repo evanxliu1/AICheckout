@@ -7,6 +7,13 @@ export const STATE_KEY = 'checkoutStateV1';
 export const CATALOG_KEY = 'checkoutCatalogV1';
 /** The cached published merchant release (`MerchantCache`, Phase 14.6), always plain: public data, up to 2 MiB. */
 export const MERCHANTS_KEY = 'checkoutMerchantsV1';
+/** Phase 15.3: consent, the random install id and the event queue (`TelemetryState`), always plain: it holds
+ * no wallet data, and the id is reset by Stop sharing and Delete my data. */
+export const TELEMETRY_KEY = 'checkoutTelemetryV1';
+/** Usage reporting is a build-time switch: `VITE_TELEMETRY=1` on a hosted build (`VITE_CATALOG_API_URL`).
+ * Without it there is no consent screen, no queue and no request (decision 2026-10-19). */
+export const TELEMETRY_ENABLED =
+  import.meta.env?.VITE_TELEMETRY === '1' && !!import.meta.env?.VITE_CATALOG_API_URL;
 export const RESULT_MAX_AGE_MS = 15 * 60 * 1000;
 export const CART_MAX_AGE_MS = 5 * 60 * 1000;
 export const CART_READ_TIMEOUT_MS = 8_000;

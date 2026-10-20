@@ -7,6 +7,7 @@ vi.mock('../src/checkout/browser', () => ({ readActiveCheckout: vi.fn(), validat
 vi.mock('../src/catalog-config', () => ({
   fetchPublishedCatalog: (signal: AbortSignal) => fetchCatalog(signal),
   fetchPublishedMerchants: (signal: AbortSignal) => fetchMerchants(signal),
+  telemetryClient: undefined,
 }));
 
 afterEach(() => {

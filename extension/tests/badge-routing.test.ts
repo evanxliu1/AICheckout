@@ -25,6 +25,12 @@ describe('worker routing by sender', () => {
     ).toEqual({ kind: 'page' });
     for (const sender of [badge, content, { ...popup, id: 'other' }])
       expect(routeMessage({ type: 'checkout:get-state' }, sender, ids)).toEqual({ kind: 'deny' });
+    // Phase 15.3: the usage-report requests are page requests too; the badge and content scripts never send them.
+    expect(routeMessage({ type: 'telemetry:get' }, popup, ids)).toEqual({ kind: 'page' });
+    for (const sender of [badge, content, { ...popup, id: 'other' }])
+      expect(routeMessage({ type: 'telemetry:consent', granted: true }, sender, ids)).toEqual({
+        kind: 'deny',
+      });
   });
   it('lets the badge iframe use badge:* for its own tab only, identified by Chrome', () => {
     expect(routeMessage({ type: 'badge:get', tabId: 99 }, badge, ids)).toEqual({ kind: 'badge', tabId: 7 });

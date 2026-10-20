@@ -69,6 +69,25 @@ describe('worker message authorization', () => {
       expect(storage.setAccessLevel).toHaveBeenCalledWith({ accessLevel: 'TRUSTED_CONTEXTS' });
     }
   });
+  it('answers the popup’s usage-report requests; a build without reporting says so and stores nothing', async () => {
+    const { listener, get } = await background();
+    const popup = { id: 'our-extension', url: 'chrome-extension://our-extension/src/popup/index.html' };
+    const respond = vi.fn();
+    listener({ type: 'telemetry:get' }, popup, respond);
+    await vi.waitFor(() =>
+      expect(respond).toHaveBeenCalledWith({ ok: true, status: { enabled: false, consent: null } }),
+    );
+    const consent = vi.fn();
+    listener({ type: 'telemetry:consent', granted: true, source: 'onboarding' }, popup, consent);
+    await vi.waitFor(() =>
+      expect(consent).toHaveBeenCalledWith({ ok: true, status: { enabled: false, consent: null } }),
+    );
+    expect(chrome.storage.local.set).not.toHaveBeenCalled();
+    const bad = vi.fn();
+    listener({ type: 'telemetry:consent', granted: 'yes' }, popup, bad);
+    await vi.waitFor(() => expect(bad).toHaveBeenCalledWith(expect.objectContaining({ ok: false })));
+    expect(get).toHaveBeenCalled();
+  });
   it.each([
     { id: 'our-extension', url: 'https://www.bestbuy.com/cart' },
     { id: 'another-extension', url: 'chrome-extension://our-extension/src/popup/index.html' },

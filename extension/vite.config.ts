@@ -33,6 +33,9 @@ export default defineConfig(({ mode }) => {
     }
     configured.host_permissions = [...configured.host_permissions, `${url.origin}/*`];
   }
+  // Usage reporting (Phase 15.3) posts to /v1/events on the catalog origin; it cannot be on without one.
+  if (env.VITE_TELEMETRY && !endpoint)
+    throw new Error('VITE_TELEMETRY needs VITE_CATALOG_API_URL: usage reports go to the catalog origin.');
   // A re-dated bundled catalog is for browser tests only; never let it reach the release dist/.
   const e2eGuard = {
     name: 'e2e-catalog-guard',
