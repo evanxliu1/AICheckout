@@ -34,10 +34,11 @@ export const TELEMETRY_FLUSH_ALARM = 'telemetry-flush';
 export const TELEMETRY_SEND_TIMEOUT_MS = 20_000;
 
 const millis = z.number().int().nonnegative();
-/** `checkoutTelemetryV1` in `chrome.storage.local`, never encrypted (it holds no wallet data). `installId` and
- * `installedAt` exist only while sharing is on; Stop sharing and Delete my data clear them. `installedAt` also
- * anchors `install_month` and `days_since_install` for a tap event sent without an id: it is then the time the
- * consent question was first answered, so no exact install time is ever sent. */
+/** `checkoutTelemetryV1` in `chrome.storage.local`, never encrypted (it holds no wallet data). `installId` exists
+ * only while sharing is on; Stop sharing and Delete my data clear it. `installedAt` is set at each Share (a new
+ * id) and kept after Stop sharing or Delete my data: it anchors `install_month` and `days_since_install` for a
+ * tap event sent without an id (or, when the shopper never shared, the time the consent question was first
+ * answered or the first tap). Only the month and the day bucket are ever sent, never the time itself. */
 export const telemetryStateSchema = z.strictObject({
   consent: z.enum(['granted', 'declined']).nullable(),
   consentVersion: z.literal(TELEMETRY_CONSENT_VERSION),
@@ -132,14 +133,14 @@ export const CONSENT_COPY = {
   lead: 'Share usage reports so the reader, the store list and the recommendations get better. The extension works the same either way.',
   sentHeading: 'What is sent, after you choose Share',
   sent: [
-    'How you use it: the badge shown, expanded or dismissed, the popup opened, a site switched off, when card terms were refreshed.',
-    'Each recommendation: the recommended card, how many cards you have, and the exact cart amount read or the reason it was not read.',
+    'How you use it: the badge shown, expanded or dismissed, the popup opened and what its read found, a site switched off, when card terms were refreshed, and how far an amount you typed was from the one read (a rough range, not the amount).',
+    'Each recommendation: the recommended card, how many cards you have, the store’s category (for example groceries), whether the store is one AI Checkout recognises, whether it was a cart or checkout page, and the exact cart amount read or that it was not read.',
     'The cards you picked, as catalog names (never card numbers, last four digits or balances).',
     'Error codes, without messages or page content.',
-    'A random identifier, so repeated reports can be told apart: no name, email or browsing history.',
+    'A random identifier, so repeated reports can be told apart: no name, email or browsing history. Each report also carries the versions of the extension, card terms and store list, and the month you chose Share.',
   ],
   never:
-    'No store name, web address or page text is ever sent on its own. A store’s domain is sent only when you tap “Suggest this store” or “Report a problem”, and those work whether you share or not.',
+    'No store name, web address or page text is sent with these reports. A store’s domain (for example example.com) is sent only when you tap “Suggest this store” or “Report a problem”, and those work whether you share or not.',
   retention:
     'Reports are kept for 90 days. You can stop sharing or delete your reports any time from Settings in the AI Checkout toolbar button.',
   share: 'Share',
@@ -151,12 +152,12 @@ export const CONSENT_COVERAGE: Record<TelemetryEventType, string> = {
   consent_granted: 'A random identifier',
   onboarding_completed: 'how many cards you have',
   wallet_changed: 'The cards you picked, as catalog names',
-  recommendation_shown: 'the exact cart amount read or the reason it was not read',
+  recommendation_shown: 'the exact cart amount read or that it was not read',
   badge_expanded: 'the badge shown, expanded or dismissed',
   badge_dismissed: 'the badge shown, expanded or dismissed',
   site_disabled: 'a site switched off',
-  amount_typed: 'the exact cart amount read',
-  popup_opened: 'the popup opened',
+  amount_typed: 'how far an amount you typed was from the one read',
+  popup_opened: 'the popup opened and what its read found',
   release_refresh: 'when card terms were refreshed',
   error: 'Error codes, without messages or page content',
   store_suggested: 'Suggest this store',
@@ -186,6 +187,9 @@ export function daysSinceInstallBucket(
 /** Second-level labels under which a registrable domain takes three labels (`shop.co.uk`), a short list
  * standing in for the public suffix list, which the extension does not carry. */
 const SECOND_LEVEL = new Set(['co', 'com', 'net', 'org', 'gov', 'edu', 'ac', 'ne', 'or']);
+/** Shop platforms whose stores are subdomains (public suffix list, private section): the registrable domain is
+ * the shop's own name (`shop.myshopify.com`), else every such shop would be suggested as the platform. */
+const PLATFORM_SUFFIXES = ['myshopify.com'];
 /** The registrable domain of a hostname (`www.shop.example.com` → `example.com`, `shop.example.co.uk` →
  * `example.co.uk`), or null for an IP address, a single label or anything the API's domain rule would refuse.
  * Only the two tap events carry it. */
@@ -194,8 +198,8 @@ export function registrableDomain(host: string): string | null {
   if (labels.length < 2 || !/^[a-z][a-z0-9-]{0,62}$/.test(labels[labels.length - 1]!)) return null;
   const take =
     labels.length >= 3 &&
-    labels[labels.length - 1]!.length === 2 &&
-    SECOND_LEVEL.has(labels[labels.length - 2]!)
+    ((labels[labels.length - 1]!.length === 2 && SECOND_LEVEL.has(labels[labels.length - 2]!)) ||
+      PLATFORM_SUFFIXES.includes(labels.slice(-2).join('.')))
       ? 3
       : 2;
   const domain = labels.slice(-take).join('.');

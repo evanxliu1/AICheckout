@@ -295,7 +295,7 @@ function PanelBody({
           view.merchantId === GENERIC_MERCHANT_ID &&
           (view.suggested ? (
             <p className="supporting" role="status">
-              Thanks. This store’s address was sent so it can be added.
+              Thanks. This store’s domain was sent so it can be added.
             </p>
           ) : (
             <Button

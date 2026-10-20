@@ -28,7 +28,7 @@ const WHEN = {
   wallet_changed:
     'With `consent_granted` (the cards owned when sharing starts) and on every save of the card list in the popup.',
   recommendation_shown:
-    'Once per distinct recommendation in a tab (the reading, store, payment path and top card) when the badge shows the amount or rates view, and in the popup when a read cart is compared or the rates view is shown. A comparison of an amount the shopper typed is not reported (nothing was read).',
+    "Once per distinct recommendation in a tab (the reading, store, payment path and top card) when the badge shows the amount or rates view, and in the popup when a read cart is compared or the rates view is shown. A comparison of an amount the shopper typed is not reported (nothing was read). In this version the rates view's `withheld_reason` is always `withheld` (the reader's finer reasons stay on the device).",
   badge_expanded: 'Each time the badge panel is opened.',
   badge_dismissed: 'Each time "Dismiss for this tab" is chosen.',
   site_disabled: 'Each time "Not on this site" is chosen; the host stays on the device.',
@@ -41,7 +41,7 @@ const WHEN = {
   store_suggested:
     'On the shopper’s tap on "Suggest this store" (popup) or "Store not recognised? Suggest it" (badge panel), at a store the merchant release does not name. Sent whether sharing is on or not; `install_id` is null when it is off.',
   problem_reported:
-    'On the shopper’s tap on "Send report" under "Report a problem" in the popup, with one of the fixed reasons; there is no free text. Sent whether sharing is on or not; `install_id` is null when it is off.',
+    'On the shopper’s tap on "Send report" under "Report a problem" in the popup, with one of the fixed reasons; there is no free text. `view` and `withheld_reason` describe the badge in that tab (`withheld_reason` is always `withheld` in the rates view). Sent whether sharing is on or not; `install_id` is null when it is off.',
 };
 for (const type of TELEMETRY_EVENT_TYPES) if (!WHEN[type]) throw new Error(`No note for ${type}`);
 

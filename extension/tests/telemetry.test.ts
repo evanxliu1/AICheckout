@@ -114,6 +114,7 @@ describe('consent and the install event', () => {
   it('Share mints a random id and sends consent_granted first, then the onboarding funnel and the wallet', async () => {
     const h = harness();
     const status = await h.telemetry.consent(true, { cardIds: CARDS, onboarding: true });
+    await h.telemetry.flush();
     expect(status).toEqual({ enabled: true, consent: 'granted' });
     expect(h.sent).toHaveLength(1);
     const events = h.sent[0]!.events as Record<string, unknown>[];
@@ -139,6 +140,7 @@ describe('consent and the install event', () => {
     expect(h.state().queue).toEqual([]);
     // Sharing again from Settings keeps the id and sends no second consent event.
     await h.telemetry.consent(true, { cardIds: CARDS, onboarding: false });
+    await h.telemetry.flush();
     expect(h.sent).toHaveLength(2);
     expect((h.sent[1]!.events as { type: string }[]).map((e) => e.type)).toEqual(['wallet_changed']);
   });
@@ -157,6 +159,7 @@ describe('consent and the install event', () => {
   it('Stop sharing clears the queue and the id and sends nothing more; a new Share mints a new id', async () => {
     const h = harness({ answer: () => ({ status: 503, retryAfterMs: null }) });
     await h.telemetry.consent(true, { cardIds: CARDS, onboarding: true });
+    await h.telemetry.flush();
     const first = h.state().installId!;
     expect(h.state().queue).toHaveLength(3); // 503: kept for later
     await h.telemetry.consent(false);
@@ -167,6 +170,7 @@ describe('consent and the install event', () => {
     expect(h.state().queue).toEqual([]);
     expect(h.sent).toHaveLength(1);
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     expect(h.state().installId).toMatch(UUID);
     expect(h.state().installId).not.toBe(first);
   });
@@ -176,6 +180,7 @@ describe('Delete my data', () => {
   it('posts the current id to the delete route, then stops sharing and clears the id and the queue', async () => {
     const h = harness();
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     const id = h.state().installId!;
     await h.telemetry.record(shown);
     expect(await h.telemetry.deleteData()).toBe('deleted');
@@ -187,10 +192,85 @@ describe('Delete my data', () => {
   it('keeps the id when the service is unavailable, so the shopper can try again', async () => {
     const h = harness({ answer: () => ({ status: 503, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     const id = h.state().installId!;
     expect(await h.telemetry.deleteData()).toBe('unavailable');
     expect(h.state().installId).toBe(id);
     expect(h.state().consent).toBe('granted');
+  });
+  it('a refusal (403, 400) deleted nothing: the id is kept and the shopper is told to try again', async () => {
+    for (const status of [400, 403]) {
+      let refuse = false;
+      const h = harness({ answer: () => ({ status: refuse ? status : 200, retryAfterMs: null }) });
+      await h.telemetry.consent(true);
+      await h.telemetry.flush();
+      const id = h.state().installId!;
+      refuse = true;
+      expect(await h.telemetry.deleteData()).toBe('unavailable');
+      expect(h.state()).toMatchObject({ consent: 'granted', installId: id });
+    }
+  });
+  it('waits for a batch in flight, so no report of the id reaches the service after its deletion', async () => {
+    let release: (value: EventSendResult) => void = () => undefined;
+    const order: string[] = [];
+    const h = harness({
+      answer: (batch) => {
+        if (batch.events.length === 0) {
+          order.push('delete');
+          return { status: 200, retryAfterMs: null };
+        }
+        order.push('send');
+        return new Promise<EventSendResult>((resolve) => {
+          release = (value) => {
+            order.push('landed');
+            resolve(value);
+          };
+        });
+      },
+    });
+    await h.telemetry.consent(true);
+    await vi.waitFor(() => expect(order).toEqual(['send']));
+    const deletion = h.telemetry.deleteData();
+    await h.telemetry.record(shown);
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(order).toEqual(['send']);
+    release({ status: 200, retryAfterMs: null });
+    expect(await deletion).toBe('deleted');
+    expect(order).toEqual(['send', 'landed', 'delete']);
+    await h.telemetry.flush();
+    expect(order).toEqual(['send', 'landed', 'delete']);
+    expect(h.state()).toMatchObject({ consent: 'declined', installId: null, queue: [] });
+  });
+});
+
+describe('a slow or asleep service', () => {
+  it('never holds up recording or the status while a request waits', async () => {
+    let release: ((value: EventSendResult) => void) | null = null;
+    const h = harness({
+      answer: () =>
+        release === null
+          ? new Promise<EventSendResult>((resolve) => {
+              release = resolve;
+            })
+          : { status: 200, retryAfterMs: null },
+    });
+    await h.telemetry.consent(true);
+    await vi.waitFor(() => expect(h.sent).toHaveLength(1));
+    // The request is still open: everything else answers at once.
+    await h.telemetry.record(shown);
+    expect(h.state().queue.map((e) => e.type)).toContain('recommendation_shown');
+    expect(await h.telemetry.status()).toEqual({ enabled: true, consent: 'granted' });
+    // A second flush joins the one in flight instead of sending the same events again.
+    const joined = h.telemetry.flush();
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(h.sent).toHaveLength(1);
+    release!({ status: 200, retryAfterMs: null });
+    await joined;
+    // Only the sent events left the queue; the one recorded meanwhile waits for the next flush.
+    expect(h.state().queue.map((e) => e.type)).toEqual(['recommendation_shown']);
+    await h.telemetry.flush();
+    expect(h.sent).toHaveLength(2);
+    expect(h.state().queue).toEqual([]);
   });
 });
 
@@ -198,12 +278,14 @@ describe('the queue and the flush', () => {
   it('queues automatic events after consent, creates the alarm once, flushes at 50 and clears the alarm', async () => {
     const h = harness();
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     h.alarms.created.length = 0;
     for (let i = 0; i < 49; i++) await h.telemetry.record({ type: 'badge_expanded', view: 'amount' });
     expect(h.state().queue).toHaveLength(49);
     expect(h.alarms.created).toEqual([TELEMETRY_FLUSH_ALARM]);
     expect(h.sent).toHaveLength(1);
     await h.telemetry.record({ type: 'badge_expanded', view: 'rates' });
+    await h.telemetry.flush();
     expect(h.sent).toHaveLength(2);
     expect(h.sent[1]!.events).toHaveLength(50);
     expect(h.state().queue).toEqual([]);
@@ -216,6 +298,7 @@ describe('the queue and the flush', () => {
       },
     });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     for (let i = 0; i < TELEMETRY_QUEUE_MAX + 20; i++)
       await h.telemetry.record({ type: 'error', code: `code-${i}`, surface: 'worker' }).then(() =>
         // The error cap is 20 a day; use expansions to fill the queue instead.
@@ -228,6 +311,7 @@ describe('the queue and the flush', () => {
   it('the alarm flushes; a foreign alarm does nothing', async () => {
     const h = harness({ answer: () => ({ status: 503, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     expect(h.sent).toHaveLength(1);
     h.advance(16 * 60 * 1000);
     await h.telemetry.onAlarm('refresh-releases');
@@ -238,6 +322,7 @@ describe('the queue and the flush', () => {
   it('a 410 pauses sending for 7 days and drops what waited', async () => {
     const h = harness({ answer: () => ({ status: 410, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     expect(h.state().queue).toEqual([]);
     expect(h.state().pausedUntil).toBe(T0 + 7 * 24 * 60 * 60 * 1000);
     await h.telemetry.record(shown);
@@ -252,6 +337,7 @@ describe('the queue and the flush', () => {
   it.each([429, 503])('backs off after a %i, honouring Retry-After, and keeps the events', async (status) => {
     const h = harness({ answer: () => ({ status, retryAfterMs: 120_000 }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     expect(h.state().queue).toHaveLength(1);
     expect(h.state().retryAt).toBe(T0 + 120_000);
     h.advance(60_000);
@@ -265,16 +351,19 @@ describe('the queue and the flush', () => {
   it('a refused batch (400, 403) is dropped, never retried', async () => {
     const h = harness({ answer: () => ({ status: 400, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     expect(h.state().queue).toEqual([]);
     expect(h.state().retryAt).toBeNull();
   });
   it('never queues an event the contract refuses (a fixture catalog version), and caps error events at 20 a day', async () => {
     const bad = harness({ versions: { catalog: 'test-v3.e2e', merchants: VERSIONS.merchants } });
     await bad.telemetry.consent(true);
+    await bad.telemetry.flush();
     expect(bad.sent).toEqual([]);
     expect(bad.state().consent).toBe('granted');
     const h = harness({ answer: () => ({ status: 503, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     for (let i = 0; i < 25; i++)
       await h.telemetry.record({ type: 'error', code: 'request-failed', surface: 'page' });
     expect(h.state().queue.filter((e) => e.type === 'error')).toHaveLength(20);
@@ -290,6 +379,7 @@ describe('tap events', () => {
     expect(
       await h.telemetry.recordTap({ type: 'store_suggested', domain: 'example.com', page: 'cart' }),
     ).toBe(true);
+    await h.telemetry.flush();
     expect(h.sent).toHaveLength(1);
     const event = h.sent[0]!.events[0] as Record<string, unknown>;
     expect(event).toMatchObject({
@@ -311,12 +401,15 @@ describe('tap events', () => {
       view: 'amount',
       withheld_reason: null,
     });
+    await h.telemetry.flush();
     expect(h.sent[1]!.events[0]).toMatchObject({ install_id: null, days_since_install: '7-13' });
   });
   it('carry the id while sharing is on', async () => {
     const h = harness();
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     await h.telemetry.recordTap({ type: 'store_suggested', domain: 'shop.example', page: 'checkout' });
+    await h.telemetry.flush();
     expect(h.sent[1]!.events[0]).toMatchObject({ install_id: h.state().installId, domain: 'shop.example' });
   });
   it('refuse a domain the contract rejects', async () => {
@@ -407,6 +500,7 @@ describe('property: no automatic event carries a domain, URL or host', () => {
   it('over 300 random automatic events built in the worker', async () => {
     const h = harness({ answer: () => ({ status: 503, retryAfterMs: null }) });
     await h.telemetry.consent(true);
+    await h.telemetry.flush();
     const r = rng(15_3);
     const types = new Set<string>();
     for (let i = 0; i < 300; i++) {
@@ -444,6 +538,11 @@ describe('property: no automatic event carries a domain, URL or host', () => {
     expect(registrableDomain('secure.newegg.com')).toBe('newegg.com');
     expect(registrableDomain('192.168.0.1')).toBeNull();
     expect(registrableDomain('localhost')).toBeNull();
+    // A shop platform's subdomain is the shop (public suffix list, private section), not the platform.
+    expect(registrableDomain('checkout.cool-socks.myshopify.com')).toBe('cool-socks.myshopify.com');
+    expect(registrableDomain('myshopify.com')).toBe('myshopify.com');
+    expect(registrableDomain('www.example.com.au')).toBe('example.com.au');
+    expect(registrableDomain('shop.example.us')).toBe('example.us');
   });
   it('buckets days since install and reads the page kind from the URL only', () => {
     const day = 86_400_000;

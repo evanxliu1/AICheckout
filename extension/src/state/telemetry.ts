@@ -5,7 +5,7 @@
 // the shopper's own action and carry no id when sharing is off. Content scripts never reach this module.
 import { telemetryEventSchema, TELEMETRY_LIMITS } from '@ai-checkout/catalog-review/telemetry';
 import type { TelemetryEvent } from '@ai-checkout/catalog-review/telemetry';
-import type { EventSender } from '@ai-checkout/catalog-client';
+import type { EventSender, EventSendResult } from '@ai-checkout/catalog-client';
 import { GENERIC_READER_VERSION } from '../checkout/merchants';
 import { localDate, TELEMETRY_KEY } from './keys';
 import {
@@ -154,13 +154,12 @@ export function createTelemetry({
     return next;
   }
 
-  /** One flush: the oldest events that fit one request. Serialised with every other operation. */
-  async function flushNow(): Promise<void> {
-    if (!client) return;
+  /** Picks the oldest events that fit one request, or null when nothing may be sent now. */
+  async function pickBatch(): Promise<TelemetryEvent[] | null> {
     const state = await read();
     const now = clock();
-    if (state.queue.length === 0) return;
-    if ((state.pausedUntil ?? 0) > now || (state.retryAt ?? 0) > now) return;
+    if (state.queue.length === 0) return null;
+    if ((state.pausedUntil ?? 0) > now || (state.retryAt ?? 0) > now) return null;
     const batch: TelemetryEvent[] = [];
     let bytes = 2 + '"events":[]'.length;
     for (const event of state.queue.slice(0, TELEMETRY_LIMITS.batchEvents)) {
@@ -169,17 +168,13 @@ export function createTelemetry({
       batch.push(event);
       bytes += size;
     }
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TELEMETRY_SEND_TIMEOUT_MS);
-    let result: Awaited<ReturnType<EventSender['send']>>;
-    try {
-      result = await client.send({ events: batch }, controller.signal);
-    } catch {
-      // Offline or the service asleep: the next alarm tries again.
-      return;
-    } finally {
-      clearTimeout(timer);
-    }
+    return batch;
+  }
+  /** Applies the service's answer to the queue as it is now (events may have been added, or sharing stopped,
+   * while the request was in flight): the sent ids leave it on 2xx and on a final refusal. */
+  async function settle(batch: TelemetryEvent[], result: EventSendResult): Promise<void> {
+    const state = await read();
+    const now = clock();
     const sent = new Set(batch.map((e) => e.event_id));
     const remaining = state.queue.filter((e) => !sent.has(e.event_id));
     let next: TelemetryState;
@@ -196,6 +191,63 @@ export function createTelemetry({
     else next = { ...state, queue: remaining };
     await write(next);
     await syncAlarm(next);
+  }
+  /** One flush. The queue is read and settled under the lock, but the request itself runs outside it, so a
+   * cold or unreachable service (up to the 20 s timeout) never delays another telemetry operation, the
+   * Settings panel or a page request. One flush at a time; a second call joins the one in flight. A worker
+   * stopped mid-request leaves the batch queued, and the service stores a repeated `event_id` once. */
+  let inFlight: Promise<void> | null = null;
+  /** Set while Delete my data runs: no batch may start, so none can reach the service after the deletion. */
+  let deleting = false;
+  function flushNow(): Promise<void> {
+    if (!client || deleting) return Promise.resolve();
+    inFlight ??= (async () => {
+      const batch = await serial(pickBatch);
+      if (!batch) return;
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TELEMETRY_SEND_TIMEOUT_MS);
+      let result: EventSendResult;
+      try {
+        result = await client.send({ events: batch }, controller.signal);
+      } catch {
+        // Offline or the service asleep: the next alarm tries again.
+        return;
+      } finally {
+        clearTimeout(timer);
+      }
+      await serial(() => settle(batch, result));
+    })().finally(() => {
+      inFlight = null;
+    });
+    return inFlight;
+  }
+
+  /** Delete my data, under the lock: the current id to `/v1/events/delete`, then the Stop sharing state. */
+  async function deleteNow(): Promise<DeleteOutcome> {
+    const state = await read();
+    const reset = async (): Promise<void> => {
+      const next: TelemetryState = { ...state, consent: 'declined', installId: null, queue: [] };
+      await write(next);
+      await syncAlarm(next);
+    };
+    if (!client || !state.installId) {
+      await reset();
+      return 'nothing-to-delete';
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), TELEMETRY_SEND_TIMEOUT_MS);
+    try {
+      const result = await client.deleteInstall(state.installId, controller.signal);
+      // Only a 2xx means the rows are gone; any refusal (429, 5xx, but also 400 or 403) deleted nothing,
+      // so the id is kept and the shopper is told to try again.
+      if (result.status < 200 || result.status >= 300) return 'unavailable';
+    } catch {
+      return 'unavailable';
+    } finally {
+      clearTimeout(timer);
+    }
+    await reset();
+    return 'deleted';
   }
 
   const status = (state: TelemetryState): TelemetryStatus => ({ enabled, consent: state.consent });
@@ -223,7 +275,8 @@ export function createTelemetry({
           return;
         }
         const next = await enqueue(counted, [event]);
-        if (next.queue.length >= TELEMETRY_FLUSH_AT) await flushNow();
+        // Started, not awaited: the request runs outside the lock and the caller never waits for it.
+        if (next.queue.length >= TELEMETRY_FLUSH_AT) void flushNow();
       }),
     /** A tap event (Suggest this store, Report a problem): sent whether sharing is on or not, with the id only
      * when it is; flushed at once. Returns false when the event could not be built (an address the contract
@@ -245,7 +298,7 @@ export function createTelemetry({
         );
         if (!event) return false;
         await enqueue(state, [event]);
-        await flushNow();
+        void flushNow();
         return true;
       }),
     /** Share (true): a new random id unless one exists, `consent_granted` first, then the onboarding funnel and
@@ -271,7 +324,9 @@ export function createTelemetry({
         const consenting: TelemetryState =
           state.consent === 'granted' && state.installId
             ? state
-            : { ...state, consent: 'granted', installId: randomUUID(), installedAt: now, queue: [] };
+            : // A tap that waited while sharing was off is dropped, never sent in one request with the new
+              // id's events (which would tie the id-less tap to the id).
+              { ...state, consent: 'granted', installId: randomUUID(), installedAt: now, queue: [] };
         const inputs: AutomaticInput[] = [];
         if (consenting !== state) inputs.push({ type: 'consent_granted' });
         if (context?.onboarding)
@@ -283,39 +338,26 @@ export function createTelemetry({
           if (event) events.push(event);
         }
         const next = await enqueue(consenting, events);
-        await flushNow();
+        void flushNow();
         return status(next);
       }),
     /** Delete my data: the current id to `/v1/events/delete`; on success sharing stops and the id, the queue
      * are cleared (a new Share mints a new id). With no id there is nothing to delete beyond the queue. */
-    deleteData: (): Promise<DeleteOutcome> =>
-      serial(async () => {
-        const state = await read();
-        const reset = async (): Promise<void> => {
-          const next: TelemetryState = { ...state, consent: 'declined', installId: null, queue: [] };
-          await write(next);
-          await syncAlarm(next);
-        };
-        if (!client || !state.installId) {
-          await reset();
-          return 'nothing-to-delete';
-        }
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), TELEMETRY_SEND_TIMEOUT_MS);
-        try {
-          const result = await client.deleteInstall(state.installId, controller.signal);
-          if (RETRY_STATUSES.has(result.status) || result.status >= 500) return 'unavailable';
-        } catch {
-          return 'unavailable';
-        } finally {
-          clearTimeout(timer);
-        }
-        await reset();
-        return 'deleted';
-      }),
-    flush: () => serial(flushNow),
+    deleteData: async (): Promise<DeleteOutcome> => {
+      // A batch already in flight is let to land first, so the deletion also covers it.
+      deleting = true;
+      try {
+        await inFlight;
+        return await serial(deleteNow);
+      } finally {
+        deleting = false;
+      }
+    },
+    /** Sends the oldest waiting events (or joins the flush in flight) and resolves when it is settled. */
+    flush: () => serial(async () => undefined).then(flushNow),
     /** The `telemetry-flush` alarm; other alarms are ignored. */
-    onAlarm: (name: string) => (name === TELEMETRY_FLUSH_ALARM ? serial(flushNow) : Promise.resolve()),
+    onAlarm: (name: string) =>
+      name === TELEMETRY_FLUSH_ALARM ? serial(async () => undefined).then(flushNow) : Promise.resolve(),
   };
 }
 export type Telemetry = ReturnType<typeof createTelemetry>;

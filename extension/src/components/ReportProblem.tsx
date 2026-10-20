@@ -33,8 +33,10 @@ export default function ReportProblem({ tabId }: { tabId: number | null }) {
         }}
       >
         <p>
-          Pick what went wrong on this page. The report carries the store’s web address and the reason,
-          nothing you type: there is no text field, so no order details or personal information can be sent.
+          Pick what went wrong on this page. The report carries the store’s domain (for example example.com),
+          the reason and what the badge showed (an amount or not), plus your random identifier only if you
+          share usage reports. There is no text field, so no order details or personal information can be
+          sent.
         </p>
         {error && (
           <AlertInline color="critical" role="alert">

@@ -40,7 +40,7 @@ export default function TelemetrySettings() {
       {notice && <AlertInline role="status">{notice}</AlertInline>}
       <Fieldset
         legend="Usage reports"
-        helperText="With sharing on, usage reports leave this device under a random identifier: no name, email or browsing history, and never a store’s address unless you tap Suggest this store or Report a problem. Turning sharing off clears the identifier and anything waiting to be sent."
+        helperText="With sharing on, usage reports leave this device under a random identifier: no name, email or browsing history, and never a store’s address unless you tap Suggest this store or Report a problem. Turning sharing off clears the identifier and anything waiting to be sent; reports already sent can then no longer be deleted from here, and expire after 90 days."
       >
         <Toggle
           label="Sharing usage data"
@@ -60,7 +60,8 @@ export default function TelemetrySettings() {
         />
         <p className="supporting">
           Delete my data asks the service to delete the reports sent under your current identifier, then stops
-          sharing. Reports expire after 90 days in any case.
+          sharing. To delete reports, use it before turning sharing off. Reports expire after 90 days in any
+          case.
         </p>
         <Button
           size="small"
@@ -72,7 +73,7 @@ export default function TelemetrySettings() {
               () => telemetryRequest({ type: 'telemetry:delete' }),
               sharing
                 ? 'Your reports were deleted and sharing stopped.'
-                : 'Nothing was waiting to be sent; sharing is off.',
+                : 'Sharing is off and this device holds no identifier, so there was nothing to delete. Reports sent earlier expire after 90 days.',
             )
           }
         >

@@ -128,17 +128,18 @@ const badge = createBadgeService({
   telemetry,
 });
 
-/** A page request, with the usage events the worker derives from what it handled (Phase 15.3): the popup's
- * comparison and rates view (`recommendation_shown`), a saved wallet (`wallet_changed`) and a manual terms
- * check (`release_refresh`). Nothing here reads the page or the tab. */
-async function handlePage(request: {
+type PageRequest = {
   type: string;
   purchase?: { merchantId: string; amountCents: number };
   cartId?: string | null;
   merchantId?: string;
-}): Promise<Awaited<ReturnType<typeof handle>>> {
-  const before = request.type === 'checkout:refresh-catalog' ? await versionsInEffect() : null;
-  const response: Awaited<ReturnType<typeof handle>> = await handle(request);
+};
+/** The usage events of one handled page request (Phase 15.3). */
+async function reportPage(
+  request: PageRequest,
+  response: Awaited<ReturnType<typeof handle>>,
+  before: Awaited<ReturnType<typeof versionsInEffect>> | null,
+): Promise<void> {
   if (before) {
     const after = await versionsInEffect();
     await telemetry.record({
@@ -151,7 +152,7 @@ async function handlePage(request: {
     });
   }
   // Vault requests answer with a status only; the wallet API answers with the state.
-  if (!response.ok || !('state' in response)) return response;
+  if (!response.ok || !('state' in response)) return;
   if (request.type === 'checkout:save-wallet')
     await telemetry.record({
       type: 'wallet_changed',
@@ -186,6 +187,16 @@ async function handlePage(request: {
       });
     }
   }
+}
+/** A page request, with the usage events the worker derives from what it handled (Phase 15.3): the popup's
+ * comparison and rates view (`recommendation_shown`), a saved wallet (`wallet_changed`) and a manual terms
+ * check (`release_refresh`). Nothing here reads the page or the tab. */
+async function handlePage(request: PageRequest): Promise<Awaited<ReturnType<typeof handle>>> {
+  const before =
+    request.type === 'checkout:refresh-catalog' ? await versionsInEffect().catch(() => null) : null;
+  const response: Awaited<ReturnType<typeof handle>> = await handle(request);
+  // The usage events are derived after the answer, never awaited: the popup never waits for a report.
+  void reportPage(request, response, before).catch(() => undefined);
   return response;
 }
 /** The tab a popup request names, resolved against the merchant release in effect; the URL is read here

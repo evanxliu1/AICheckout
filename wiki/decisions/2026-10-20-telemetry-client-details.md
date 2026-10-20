@@ -54,5 +54,12 @@ As in the table.
 - The tab entry carries three new fields (`page`, `reportedKey`, `suggested`) with defaults, so entries written before 15.3 still parse.
 - `popup_opened` is not sent when the popup opens with no cards or keeps a cart already read or compared in that tab (the contract's `read_outcome` has no value for "did not read"); the dictionary says so.
 
+## Amended after the independent review (2026-10-20)
+The Opus reviewer changed four rows; the rest stand.
+- **Tap events and the alarm:** every flush held the module's lock for its whole request, and the badge service and `handlePage` awaited `record`, so while a request waited on a cold Render instance (the 20 s timeout; the 15-minute alarm meets a sleeping free instance most times) every badge view, popup comparison and the Settings panel's status waited too. The queue is now read and settled under the lock with the request outside it (one at a time, a second flush joins it, sent ids removed from the queue as it is when the answer arrives); consent, taps and the 50th event start the flush without awaiting it; the emit points start `record` without awaiting it.
+- **Delete my data:** a 400, 403 or 413 from `/v1/events/delete` was reported as deleted and cleared the id. Only a 2xx now counts; anything else keeps the id and says nothing was deleted yet. Delete also waits for a batch in flight and blocks new ones, so no report of the id can land after its deletion (the lock no longer serialises them). Settings now says to use Delete my data before turning sharing off, since Stop sharing discards the id.
+- **Registrable domain:** `myshopify.com` is treated as a suffix (public suffix list, private section), so a Shopify subdomain store is suggested as itself, not as the platform. For a U.S. release the short list is otherwise fine: a missed public suffix gives a broader domain (less information, never more), and no checked host gives a subdomain.
+- **Consent copy:** the screen now names what the events carry that it did not: the store's category, whether the store is recognised, cart or checkout page, what the popup's read found, how far a typed amount was from the read one (a range), and the envelope's versions and month. "Sent on its own" became "sent with these reports"; "Report a problem" names the domain, the reason, what the badge showed and the identifier only when sharing. The dictionary notes that `withheld_reason` is always `withheld` in this version.
+
 ## Status
-Accepted 2026-10-20 (implementer, within the plan and the 2026-10-19 decision; agent-verified by tests).
+Accepted 2026-10-20 (implementer, within the plan and the 2026-10-19 decision; agent-verified by tests). Amended 2026-10-20 after the independent Opus review (agent-verified).

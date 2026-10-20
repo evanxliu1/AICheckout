@@ -27,7 +27,7 @@ export default function SuggestStore({ tabId, disabled }: { tabId: number; disab
         </AlertInline>
       )}
       {state === 'sent' ? (
-        <AlertInline role="status">Thanks. This store’s address was sent so it can be added.</AlertInline>
+        <AlertInline role="status">Thanks. This store’s domain was sent so it can be added.</AlertInline>
       ) : (
         <Button
           size="small"

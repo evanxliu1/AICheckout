@@ -95,7 +95,7 @@ describe('Settings: Sharing usage data and Delete my data', () => {
       false,
     );
     fireEvent.click(screen.getByRole('button', { name: 'Delete my data' }));
-    await screen.findByText(/sharing is off/);
+    await screen.findByText(/nothing to delete/);
     expect(sendMessage).toHaveBeenCalledWith({ type: 'telemetry:delete' });
     expect(document.body.textContent?.toLowerCase()).not.toContain('anonymous');
   });

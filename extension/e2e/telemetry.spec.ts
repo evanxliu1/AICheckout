@@ -211,7 +211,7 @@ test('Share: the install events, a recommendation at a synthetic store without i
     // "Store not recognised? Suggest it" sends the registrable domain and flushes what waited.
     await pill.click();
     await badge.getByRole('button', { name: 'Store not recognised? Suggest it' }).click();
-    await expect(badge.getByRole('status').filter({ hasText: 'address was sent' })).toBeVisible();
+    await expect(badge.getByRole('status').filter({ hasText: 'domain was sent' })).toBeVisible();
     await expect.poll(() => api.events().length, { timeout: 15_000 }).toBe(6);
     // Queued in order: the recommendation (at the first view), the expansion, then the tap flushed them.
     const [, , , shown, expanded, suggested] = api.events();
@@ -245,7 +245,7 @@ test('Share: the install events, a recommendation at a synthetic store without i
     const popup = await openNativePopup(context, cart, id);
     await expect.poll(popup.text).toContain('Suggest this store');
     await popup.click('Suggest this store');
-    await expect.poll(popup.text).toContain('address was sent');
+    await expect.poll(popup.text).toContain('domain was sent');
     await popup.evaluate("document.querySelector('#report-problem summary').click()");
     await popup.evaluate(
       "(() => { const s = document.getElementById('problem-reason'); s.value = 'no-badge'; s.dispatchEvent(new Event('change', { bubbles: true })); })()",

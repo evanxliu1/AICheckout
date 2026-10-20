@@ -48,7 +48,7 @@ _No fields beyond the envelope._
 
 ### `recommendation_shown`
 
-**When:** Once per distinct recommendation in a tab (the reading, store, payment path and top card) when the badge shows the amount or rates view, and in the popup when a read cart is compared or the rates view is shown. A comparison of an amount the shopper typed is not reported (nothing was read).
+**When:** Once per distinct recommendation in a tab (the reading, store, payment path and top card) when the badge shows the amount or rates view, and in the popup when a read cart is compared or the rates view is shown. A comparison of an amount the shopper typed is not reported (nothing was read). In this version the rates view's `withheld_reason` is always `withheld` (the reader's finer reasons stay on the device).
 
 | Field                | Type                                                                                                                                                                                                           | Meaning                                                                        |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -138,7 +138,7 @@ _No fields beyond the envelope._
 
 ### `problem_reported` (shopper-initiated; may carry no identifier)
 
-**When:** On the shopper’s tap on "Send report" under "Report a problem" in the popup, with one of the fixed reasons; there is no free text. Sent whether sharing is on or not; `install_id` is null when it is off.
+**When:** On the shopper’s tap on "Send report" under "Report a problem" in the popup, with one of the fixed reasons; there is no free text. `view` and `withheld_reason` describe the badge in that tab (`withheld_reason` is always `withheld` in the rates view). Sent whether sharing is on or not; `install_id` is null when it is off.
 
 | Field             | Type                                                                                                      | Meaning                                                                         |
 | ----------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |

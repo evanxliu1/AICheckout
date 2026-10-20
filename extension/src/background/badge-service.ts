@@ -7,7 +7,7 @@ import { merchantOption, releaseRecord, storeForTab, storeProfile } from '../che
 import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
 import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
 import type { MerchantRelease } from '../domain';
-import type { Telemetry } from '../state/telemetry';
+import type { AutomaticInput, Telemetry } from '../state/telemetry';
 import { pageForUrl, registrableDomain } from '../state/telemetry-contracts';
 import type { AppState } from '../state/contracts';
 import type { StateStorage } from '../state/service';
@@ -135,6 +135,8 @@ export function createBadgeService({
   release = MERCHANTS_V1,
   telemetry,
 }: BadgeDeps) {
+  /** A usage event (Phase 15.3), started and never awaited: the badge never waits for the report. */
+  const report = (input: AutomaticInput) => void telemetry?.record(input).catch(() => undefined);
   let queue = Promise.resolve<unknown>(undefined);
   function serial<T>(operation: () => Promise<T>): Promise<T> {
     const task = queue.then(operation);
@@ -259,7 +261,7 @@ export function createBadgeService({
     if (entry.reportedKey === key) return;
     await saveTab(tabId, { ...entry, reportedKey: key });
     const amount = shown === 'amount' ? entry.reading! : null;
-    await telemetry.record({
+    report({
       type: 'recommendation_shown',
       surface: 'badge',
       view: shown,
@@ -345,7 +347,7 @@ export function createBadgeService({
       else if (value.type === 'badge:set-amount') {
         await saveTab(tabId, { ...entry, amountOverrideCents: value.amountCents });
         if (value.amountCents !== null)
-          await telemetry?.record({
+          report({
             type: 'amount_typed',
             relative_difference_bucket: differenceBucket(value.amountCents, entry.reading?.amountCents),
           });
@@ -353,9 +355,8 @@ export function createBadgeService({
         await saveTab(tabId, { ...entry, paymentPath: value.paymentPath });
       else if (value.type === 'badge:dismiss') {
         await saveTab(tabId, { ...entry, dismissed: true });
-        await telemetry?.record({ type: 'badge_dismissed', view: viewOf(entry) });
-      } else if (value.type === 'badge:expanded')
-        await telemetry?.record({ type: 'badge_expanded', view: viewOf(entry) });
+        report({ type: 'badge_dismissed', view: viewOf(entry) });
+      } else if (value.type === 'badge:expanded') report({ type: 'badge_expanded', view: viewOf(entry) });
       else if (value.type === 'badge:disable-site') {
         // The tab's host, never its id (the generic id is shared by every unmatched store).
         const current = await settings();
@@ -366,7 +367,7 @@ export function createBadgeService({
               disabledSites: [...current.disabledSites, entry.host].slice(-MAX_DISABLED_SITES),
             },
           });
-        await telemetry?.record({
+        report({
           type: 'site_disabled',
           store_kind: storeFacts(entry.merchantId, await merchants()).store_kind,
         });
