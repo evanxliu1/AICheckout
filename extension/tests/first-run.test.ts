@@ -8,6 +8,7 @@ import { localDate } from '../src/state/keys';
 import { CATALOG_V3, redateCatalog } from '../src/domain';
 import { CHECKING_TERMS_TITLE, unavailableCopy } from '../src/components/estimates';
 import type { StateStorage } from '../src/state/service';
+import type { CheckoutResponse } from '../src/state/contracts';
 
 /* Phase 15.4: a store build is installed long after its bundled catalog expired. The install-time refresh
  * runs; until it settles, pages and the badge say "Checking for updated terms…" instead of "expired". */
@@ -149,6 +150,73 @@ describe('first run with an expired bundled catalog (Phase 15.4)', () => {
     expect(ok(await service({ type: 'checkout:get-state' })).checkingTerms).toBe(false);
     catalog.reject();
     await refresh;
+  });
+  /* Review (2026-10-20): the fetch runs outside the queues, so everything written meanwhile must be honoured
+   * at commit. */
+  it('commits against what pages wrote during the fetch: a newer check wins and the late rollback is refused', async () => {
+    const replies: { resolve: (value: unknown) => void }[] = [];
+    const fetch = vi.fn(() => new Promise<unknown>((resolve) => replies.push({ resolve })));
+    const local = memory({ [STATE_KEY]: { ...emptyState(), wallet } });
+    const service = createStateService(local.api, clock, undefined, fetch);
+    const refresh = service.refreshReleases(90_000);
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledOnce());
+    // The shopper presses "Check for updated terms" while the install fetch waits; it gets release 2.
+    const check = service({ type: 'checkout:refresh-catalog', expectedRevision: 0 });
+    await vi.waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+    const newer = renewed();
+    newer.release.sequence = 2;
+    newer.release.version = newer.release.catalog.version = 'renewed.test.2';
+    replies[1].resolve(newer);
+    const checked = ok(await check);
+    expect(checked.catalog.version).toBe('renewed.test.2');
+    // The install fetch answers last, with the older release 1: refused at commit, release 2 stays.
+    replies[0].resolve(renewed());
+    expect(await refresh).toEqual({ catalog: 'failed', merchants: 'skipped' });
+    expect(local.read()).toMatchObject({
+      checkoutCatalogV1: { release: { sequence: 2 } },
+      [STATE_KEY]: { revision: checked.state.revision },
+    });
+  });
+  it('a vault locked during the fetch fails the commit and writes nothing; a locked refresh never says "checking"', async () => {
+    const catalog = pendingFetch(),
+      merchants = pendingFetch();
+    const local = memory({ [STATE_KEY]: { ...emptyState(), wallet } }),
+      session = memory();
+    const vault = createVaultService(
+      local.api,
+      session.api,
+      clock,
+      undefined,
+      catalog.fetch,
+      merchants.fetch,
+    );
+    const phrase = 'test-only purple canyon lantern';
+    expect(
+      await vault({ type: 'checkout:vault-create', passphrase: phrase, disclosureVersion: 1 }),
+    ).toMatchObject({ ok: true });
+    const refresh = vault.refreshReleases(90_000);
+    await vi.waitFor(() => expect(catalog.fetch).toHaveBeenCalledOnce());
+    // The vault's queue is free during the fetch: the lock is answered at once.
+    expect(await vault({ type: 'checkout:vault-lock' })).toEqual({ ok: true, status: 'locked' });
+    const before = local.read();
+    catalog.resolve(renewed());
+    await vi.waitFor(() => expect(merchants.fetch).toHaveBeenCalledOnce());
+    merchants.resolve({ release: null });
+    expect((await refresh).catalog).toBe('failed');
+    expect(local.read()[STATE_KEY]).toEqual(before[STATE_KEY]);
+    expect(local.read().checkoutCatalogV1).toEqual(before.checkoutCatalogV1);
+    // Locked: the catalog step is skipped, so nothing is "checking" even after an unlock while the merchant
+    // fetch is still pending.
+    const locked = vault.refreshReleases(90_000);
+    await vi.waitFor(() => expect(merchants.fetch).toHaveBeenCalledTimes(2));
+    expect(await vault({ type: 'checkout:vault-unlock', passphrase: phrase })).toEqual({
+      ok: true,
+      status: 'unlocked',
+    });
+    const state = (await vault({ type: 'checkout:get-state' })) as CheckoutResponse;
+    expect(ok(state).checkingTerms).toBe(false);
+    merchants.resolve({ release: null });
+    expect((await locked).catalog).toBe('skipped');
   });
   it('shows the badge its "checking" view at a generic store, then the expired view after a failed refresh', async () => {
     const catalog = pendingFetch();

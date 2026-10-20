@@ -96,7 +96,7 @@ export function createStateService(
   fetchMerchants?: (signal: AbortSignal) => Promise<unknown>,
 ) {
   let queue = Promise.resolve<unknown>(undefined);
-  /** Background refreshes (`refreshReleases`) in flight (Phase 15.4). */
+  /** Catalog steps of background refreshes (`refreshReleases`) in flight (Phase 15.4). */
   let refreshing = 0;
   /** The merchant release in effect for the request being handled; `load` sets it from the cache. Requests
    * run one at a time (the queue), so no request sees another's release. */
@@ -479,7 +479,9 @@ export function createStateService(
    * `catalog: false`, when the state cannot be read, as with a locked vault), then the merchant release, each
    * on its own; a fetch that fails (the service asleep, offline) reports `failed` so the caller can retry
    * later. The fetches run outside the queue (they may wait out a cold start), so pages are answered
-   * meanwhile with `checkingTerms` set while the catalog in effect has expired; `commit` joins the queue
+   * meanwhile with `checkingTerms` set while the catalog step is pending and the catalog in effect has
+   * expired. Each commit re-reads the state and cache, so rollback and version checks hold against
+   * anything written during the fetch (a page's write, a "Check for updated terms"); `commit` joins the queue
    * (the vault service runs it in its own queue too) so a cache and the wallet reconciled for it land in
    * one write, never interleaved with a page's write. */
   service.refreshReleases = async (
@@ -490,37 +492,37 @@ export function createStateService(
       commit = (operation) => operation(),
     }: { catalog?: boolean; commit?: <T>(operation: () => Promise<T>) => Promise<T> } = {},
   ): Promise<{ catalog: RefreshOutcome; merchants: RefreshOutcome }> => {
-    refreshing += 1;
-    try {
-      let catalogOutcome: RefreshOutcome = 'skipped',
-        merchantOutcome: RefreshOutcome = 'skipped';
-      if (fetchCatalog && refreshTheCatalog) {
-        try {
-          const input = await fetchCatalogBounded(limit);
-          await commit(() =>
-            serial(async () => {
-              const { state, cache } = await load(clock());
-              await commitCatalog(state, cache, input);
-            }),
-          );
-          catalogOutcome = 'ok';
-        } catch {
-          catalogOutcome = 'failed';
-        }
+    let catalogOutcome: RefreshOutcome = 'skipped',
+      merchantOutcome: RefreshOutcome = 'skipped';
+    if (fetchCatalog && refreshTheCatalog) {
+      // Only the catalog step can cure an expiry, so only it counts as "checking" (a locked vault's
+      // merchant-only refresh never does).
+      refreshing += 1;
+      try {
+        const input = await fetchCatalogBounded(limit);
+        await commit(() =>
+          serial(async () => {
+            const { state, cache } = await load(clock());
+            await commitCatalog(state, cache, input);
+          }),
+        );
+        catalogOutcome = 'ok';
+      } catch {
+        catalogOutcome = 'failed';
+      } finally {
+        refreshing -= 1;
       }
-      if (fetchMerchants) {
-        try {
-          const input = await fetchMerchantsBounded(limit);
-          await commit(() => serial(() => commitMerchants(input)));
-          merchantOutcome = 'ok';
-        } catch {
-          merchantOutcome = 'failed';
-        }
-      }
-      return { catalog: catalogOutcome, merchants: merchantOutcome };
-    } finally {
-      refreshing -= 1;
     }
+    if (fetchMerchants) {
+      try {
+        const input = await fetchMerchantsBounded(limit);
+        await commit(() => serial(() => commitMerchants(input)));
+        merchantOutcome = 'ok';
+      } catch {
+        merchantOutcome = 'failed';
+      }
+    }
+    return { catalog: catalogOutcome, merchants: merchantOutcome };
   };
   // Browser lifecycle events enter the same queue as user writes.
   service.invalidateTab = (tabId: number): Promise<void> => {

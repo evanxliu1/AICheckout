@@ -5,8 +5,8 @@ description: Because every bundled catalog expires 30 days after its verificatio
 status: accepted
 tags: [decision, phase-15, extension, catalog, first-run]
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-20T05:30:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-20T07:00:00Z
 sources:
   - resource: ../product/phase-15-release-a.md
     title: Phase 15 plan (15.4)
@@ -50,6 +50,11 @@ Phase 15.4 implements the chosen column. The "checking" state exists only while 
 - The worker broadcasts `terms:checked` when a refresh settles; the popup reloads on that, not on `badge:changed` (sent after every page request, which would loop).
 - The uninstall URL is the API origin's `/uninstalled/` (the same Render service serves the site), set on worker start in hosted builds only.
 - The no-cards pill opens onboarding and expands nothing, so it has no per-tab "Dismiss" (the table above assumed it did). Left unchanged; the review decides whether to add a panel.
+
+## Amended after the independent review (2026-10-20)
+- `checkingTerms` counts only a refresh's **catalog step** in flight, not the whole call: a locked vault's merchant-only refresh cannot cure an expiry, and an unlock during it used to show "Checking…" for terms nobody was fetching. The weekly refresh still counts (it can cure the expiry).
+- The no-cards pill gets a per-tab dismiss beside it (a round navy icon button, "Dismiss for this tab (AI Checkout)", the existing `badge:dismiss`), as the table assumed: the pill shows at every https cart for a shopper with no cards. No panel was added.
+- Accepted as is: the broadcast after every settled refresh (no loop: nothing a page sends triggers a refresh broadcast), and the few-milliseconds window in which a popup subscribes to `terms:checked` after the refresh settled (it then shows "Checking…" until reopened or until its next request).
 
 ## Status
 Accepted 2026-10-19 (planner; version number listed as decision 5 in the [plan](../product/phase-15-release-a.md#8-decisions-needed-from-evan)).

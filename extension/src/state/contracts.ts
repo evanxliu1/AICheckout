@@ -218,8 +218,9 @@ export type CheckoutResponse =
       comparison: Comparison | UnavailableComparison | null;
       notice: string | null;
       catalogUpdatesAvailable: boolean;
-      /** A background refresh is in flight and the catalog in effect has expired (Phase 15.4): pages say
-       * "Checking for updated terms…" instead of "expired" until the worker's `badge:changed` broadcast. */
+      /** A background refresh's catalog step is in flight and the catalog in effect has expired (Phase
+       * 15.4): pages say "Checking for updated terms…" instead of "expired" until the worker's
+       * `terms:checked` broadcast (badges: `badge:changed`). */
       checkingTerms: boolean;
     }
   | { ok: false; error: string };

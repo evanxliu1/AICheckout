@@ -300,33 +300,39 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
     await context.close();
   }
 });
-
 // Phase 15.4: before any card is picked, the pill at a generic store is the way back to onboarding (the
 // install's onboarding tab is closed first, as a shopper who dismissed it would have). It opens setup and
-// expands nothing, so the per-tab "Dismiss" lives only in the expanded panel of a comparison.
-test('no cards at a generic store: the pill opens onboarding', async ({ browserName }, testInfo) => {
+// expands nothing, so its per-tab dismiss sits beside it; a dismissed tab stays quiet after a reload.
+test('no cards at a generic store: the pill opens onboarding, the dismiss beside it hides it for the tab', async ({
+  browserName,
+}, testInfo) => {
   expect(browserName).toBe('chromium');
   const { context, id } = await launch(testInfo);
+  const onboardingUrl = `chrome-extension://${id}/src/onboarding/index.html`;
+  const onboardingTabs = () => context.pages().filter((p) => p.url() === onboardingUrl);
   try {
-    await expect
-      .poll(() =>
-        context.pages().some((p) => p.url() === `chrome-extension://${id}/src/onboarding/index.html`),
-      )
-      .toBe(true);
-    await context
-      .pages()
-      .find((p) => p.url().endsWith('/src/onboarding/index.html'))!
-      .close();
+    await expect.poll(() => onboardingTabs().length).toBe(1);
+    await onboardingTabs()[0].close();
     const cart = await context.newPage();
     await cart.goto('https://shop.example.com/cart');
     const badge = await badgeFrame(cart);
     const pick = badge.getByRole('button', { name: /Pick your cards to see your best card/ });
     await expect(pick).toBeVisible();
     await axeBadge(badge, 'no cards at a generic store');
-    const pages = context.pages().length;
     await pick.click();
-    await expect.poll(() => context.pages().length).toBe(pages + 1);
-    expect(context.pages().at(-1)!.url()).toBe(`chrome-extension://${id}/src/onboarding/index.html`);
+    // Wait for the new tab to reach the onboarding URL (it opens as about:blank first).
+    await expect.poll(() => onboardingTabs().length).toBe(1);
+    await onboardingTabs()[0].close();
+
+    // A fresh tab (a frame in a tab that was just in the background may not count as visible yet to the
+    // clickjacking guard): the dismiss hides the pill, and the tab stays quiet after a reload.
+    const other = await context.newPage();
+    await other.goto('https://shop.example.com/cart');
+    const otherBadge = await badgeFrame(other);
+    await otherBadge.getByRole('button', { name: 'Dismiss for this tab (AI Checkout)' }).click();
+    await expect.poll(() => hasBadge(other)).toBe(false);
+    await other.reload();
+    await expectNoBadge(other);
   } finally {
     await context.close();
   }

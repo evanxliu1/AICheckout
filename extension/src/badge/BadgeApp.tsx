@@ -252,28 +252,43 @@ export default function BadgeApp() {
           </div>
         </section>
       ) : (
-        <button
-          ref={pill}
-          type="button"
-          className="badge-pill"
-          aria-label={pillLabel}
-          aria-expanded={
-            ['ready', 'rates', 'unavailable', 'checking'].includes(view.kind) ? false : undefined
-          }
-          onClick={pillAction}
-        >
-          <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
-          <span>
-            {pillAmount ? (
-              <>
-                {pillText.slice(0, -pillAmount.length)}
-                <span className="badge-pill__amount">{pillAmount}</span>
-              </>
-            ) : (
-              pillText
-            )}
-          </span>
-        </button>
+        <div className="badge-pill-row">
+          <button
+            ref={pill}
+            type="button"
+            className="badge-pill"
+            aria-label={pillLabel}
+            aria-expanded={
+              ['ready', 'rates', 'unavailable', 'checking'].includes(view.kind) ? false : undefined
+            }
+            onClick={pillAction}
+          >
+            <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
+            <span>
+              {pillAmount ? (
+                <>
+                  {pillText.slice(0, -pillAmount.length)}
+                  <span className="badge-pill__amount">{pillAmount}</span>
+                </>
+              ) : (
+                pillText
+              )}
+            </span>
+          </button>
+          {/* Phase 15.4: the no-cards pill shows at every https cart and expands nothing, so its per-tab
+              dismiss sits beside it (comparisons have theirs in the panel footer). */}
+          {view.kind === 'no-cards' && (
+            <button
+              type="button"
+              className="badge-pill__dismiss"
+              aria-label="Dismiss for this tab (AI Checkout)"
+              disabled={busy}
+              onClick={() => close('badge:dismiss')}
+            >
+              <Icon name="x" size={16} />
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
