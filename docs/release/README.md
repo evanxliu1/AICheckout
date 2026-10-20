@@ -31,7 +31,7 @@ Never put passwords, payment details, provider keys, tokens or private contact d
 ## Gates before submission (milestone 15.7)
 
 - [ ] `npm run build:hosted --workspace=ai-checkout-extension`, `npm run package`, `npm run test:package:browser --workspace=ai-checkout-extension` on the exact ZIP; the inventory's SHA-256, bundled catalog (the renewal, `2026-10-2x.renewal.2`) and bundled store list recorded in [`docs/verification/release-package.md`](../verification/release-package.md).
-- [ ] `node scripts/check-release-docs.mjs --release`: no wording from before the adapters were retired, the random-identifier wording everywhere (never a claim that reports cannot be linked), no `SUPPORT_EMAIL_TBD`, no "Evan to confirm" left.
+- [ ] `node scripts/check-release-docs.mjs --release`: no wording from before the adapters were retired, the random-identifier wording everywhere (never a claim that reports cannot be linked), no support-email placeholder and none of Evan's pending confirmations left (the rules are in `scripts/lib/release-docs.mjs`; this line is worded so it does not trip them itself).
 - [ ] `npm run telemetry:check`: the dictionary matches the contract; the consent copy covers every event (`extension/tests/telemetry-ui.test.tsx`).
 - [ ] The independent reviewer pass (Opus, agent-verified): policy, listing, privacy-tab answers, consent copy, dictionary and the ZIP's behaviour agree; the remote-code answer holds on the ZIP; the permission justifications match `dist/manifest.json`.
 - [ ] Both GitHub workflows green on the submitted revision.

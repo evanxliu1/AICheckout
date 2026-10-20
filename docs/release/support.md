@@ -43,7 +43,7 @@ Under **Settings → Usage reports** in the popup: the **Sharing usage data** to
 
 ## Delete your data
 
-Expand **Delete saved data** in the popup, confirm, and choose **Delete all local data**. It clears your cards, options, settings, purchase inputs, the downloaded terms and store list and the unlock key; card setup returns. It does not affect a store's cart or your browser history, and it does not delete usage reports already sent (use **Delete my data** for those). Uninstalling the extension removes its storage from your device; a page then explains that reports already sent expire within 90 days and that **Delete my data** must be used before uninstalling to delete them earlier.
+Expand **Delete saved data** in the popup, confirm, and choose **Delete all local data**. It clears your cards, options, settings, purchase inputs, the downloaded terms and store list, the unlock key and the usage-reporting identifier and answer; card setup returns. It does not affect a store's cart or your browser history, and it does not delete usage reports already sent: use **Delete my data** first for those, since the identifier is cleared too. Uninstalling the extension removes its storage from your device; a page then explains that reports already sent expire after 90 days and that **Delete my data** must be used before uninstalling to delete them earlier.
 
 ## Report a problem
 

@@ -36,8 +36,11 @@ test('the committed release material has no stale wording', () => {
   assert.deepEqual(checkReleaseDocs(root), []);
 });
 
-test('release mode still refuses the committed material while the support email is a placeholder', () => {
+test('release mode refuses only the placeholders Evan still has to fill', () => {
+  // Until Evan supplies the support email, release mode fails on it (milestone 15.7 runs it before submission);
+  // once every placeholder is filled it passes, so this test does not have to change with them.
   const found = checkReleaseDocs(root, { release: true });
-  assert.ok(found.some((f) => f.rule === 'placeholder' && f.text === 'SUPPORT_EMAIL_TBD'));
   assert.ok(found.every((f) => f.rule === 'placeholder' || f.rule === 'evan-pending'));
+  const placeholders = RELEASE_RULES.some(({ pattern }) => pattern.test('SUPPORT_EMAIL_TBD'));
+  assert.ok(placeholders, 'the placeholder rule recognises SUPPORT_EMAIL_TBD');
 });

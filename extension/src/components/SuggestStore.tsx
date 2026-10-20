@@ -29,16 +29,24 @@ export default function SuggestStore({ tabId, disabled }: { tabId: number; disab
       {state === 'sent' ? (
         <AlertInline role="status">Thanks. This store’s domain was sent so it can be added.</AlertInline>
       ) : (
-        <Button
-          size="small"
-          color="tertiary"
-          icon="plus"
-          isLoading={state === 'busy'}
-          disabled={disabled}
-          onClick={() => void suggest()}
-        >
-          Suggest this store
-        </Button>
+        <>
+          {/* Disclosed before the tap (Chrome Web Store policy, 2026-08-01: every collection is disclosed). */}
+          <p className="supporting" id="suggest-store-note">
+            Not in the store list? A tap sends only this store’s domain (for example example.com) so it can be
+            added.
+          </p>
+          <Button
+            size="small"
+            color="tertiary"
+            icon="plus"
+            isLoading={state === 'busy'}
+            disabled={disabled}
+            aria-describedby="suggest-store-note"
+            onClick={() => void suggest()}
+          >
+            Suggest this store
+          </Button>
+        </>
       )}
     </div>
   );

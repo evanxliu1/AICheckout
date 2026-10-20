@@ -671,9 +671,11 @@ function Privacy(): Rendered {
             <li>The most recent card catalog and store list downloaded (public data).</li>
             <li>
               In builds with usage reporting: your answer to the consent question, the random identifier
-              created when you chose Share, and reports waiting to be sent (at most 200). Never encrypted,
-              because it holds no wallet data; the identifier is deleted by <strong>Stop sharing</strong> and{' '}
-              <strong>Delete my data</strong>.
+              created when you chose Share, reports waiting to be sent (at most 200), and the time sharing
+              started (or, if you never shared, when you first answered or tapped Suggest or Report), from
+              which only a month and an age range are ever sent. Never encrypted, because it holds no wallet
+              data; the identifier and waiting reports are deleted by <strong>Stop sharing</strong>,{' '}
+              <strong>Delete my data</strong> and <strong>Delete all local data</strong>.
             </li>
           </ul>
           <p>
@@ -695,7 +697,8 @@ function Privacy(): Rendered {
               <strong>A packaged script runs on https pages</strong>, in the top frame only, after the page
               has loaded. It first looks at the page’s address and title for a cart or checkout word (cart,
               basket, bag, checkout and their equivalents in other languages). On a page with neither, it
-              reads nothing, watches nothing and ends there.
+              reads nothing from the page and observes none of its content; it only notices when the address
+              changes without a reload (as on single-page stores) and checks the new address the same way.
             </li>
             <li>
               <strong>On a cart or checkout page</strong> it reads the visible text of the main content to
@@ -724,8 +727,9 @@ function Privacy(): Rendered {
             </li>
             <li>
               <strong>The popup</strong> reads the open tab the same way when you open it or choose{' '}
-              <strong>Read cart amount</strong>; it uses the tab’s address in memory to match the store and
-              never saves it.
+              <strong>Read cart amount</strong> (on an http page only when you choose Read cart amount; the
+              badge never runs there); it uses the tab’s address in memory to match the store and never saves
+              it.
             </li>
             <li>
               <strong>Switch it off</strong> for a site with <strong>Not on this site</strong>, or everywhere
@@ -749,11 +753,11 @@ function Privacy(): Rendered {
                 <code>GET /v1/catalog</code> and <code>GET /v1/merchants</code>
               </strong>{' '}
               on <code>https://ai-checkout-api.onrender.com</code>: the published card terms and the store
-              list, validated against fixed schemas before use. They are fetched once right after
-              installation, then weekly (with one retry a few minutes later if the first attempt failed), and
-              whenever you choose <strong>Check for updated terms</strong>. Card terms expire 30 days after
-              they were verified; the weekly check keeps them current. These requests carry no cookies, no
-              referrer and none of your cards, amounts, settings or page addresses.
+              list, validated against fixed schemas before use. They are fetched right after installation and
+              again a few minutes later, then weekly (with one retry a few minutes later if a weekly attempt
+              failed), and whenever you choose <strong>Check for updated terms</strong>. Card terms expire 30
+              days after they were verified; the weekly check keeps them current. These requests carry no
+              cookies, no referrer and none of your cards, amounts, settings or page addresses.
             </li>
             <li>
               <strong>Usage reports</strong>, only after you choose Share (next section).
@@ -779,7 +783,8 @@ function Privacy(): Rendered {
             After you pick your cards, the extension asks once whether to <strong>Share</strong> usage reports
             to help improve the reader, the store list and the recommendations, or <strong>Not now</strong>.
             The extension works the same either way, and you can change your answer any time under Settings in
-            the toolbar popup. Nothing about your use leaves the device before you choose Share.
+            the toolbar popup. Apart from the two things you send on purpose (below), nothing about your use
+            leaves the device before you choose Share.
           </p>
           <ul className="prose-list">
             <li>
@@ -787,8 +792,10 @@ function Privacy(): Rendered {
               an identifier created when you chose Share, so repeated reports from one install can be told
               apart. Because it persists and some reports carry exact amounts, this data is pseudonymous: it
               can’t be tied to you by name, but reports from one install can be linked to each other. Each
-              report also carries the versions of the extension, card terms and store list in use, the month
-              you chose Share and how long ago that was (in ranges).
+              report also carries its own random report identifier, the time it was built, the versions of the
+              extension, card terms, store list and cart reader in use, the versions of the consent text and
+              of the dictionary, and the month you chose Share with how long ago that was (as a range: 0, 1–6,
+              7–13, 14–29, 30–59 or 60+ days).
             </li>
             <li>
               <strong>What is sent</strong> (the full list is the public{' '}
@@ -797,39 +804,46 @@ function Privacy(): Rendered {
               </Link>
               ): that sharing started and that setup finished with how many cards you picked; the cards you
               own, as catalog identifiers, when sharing starts and whenever you change them; each
-              recommendation shown (the recommended card, how many cards you have, the store’s category,
-              whether the store is one the list names and the evidence for its category, whether it was a cart
-              or checkout page or a popup read, and the exact cart amount read in cents and its kind, or that
-              it was not read); the badge expanded or dismissed, a site switched off, the popup opened and
-              what its read found, how far an amount you typed was from the one read (a range), and when card
-              terms or the store list were refreshed; error codes when a request fails, without messages or
-              page content.
+              recommendation shown (in the badge or the popup and in which view, the recommended card, how
+              many cards you have, the store’s category, whether the store is one the list names and the
+              evidence for its category, whether it was a cart or checkout page or a popup read, the exact
+              cart amount read in cents and its kind, or that it was not read, and whether an unanswered card
+              question could change the ranking); the badge expanded or dismissed (with its view), a site
+              switched off and the popup opened (what its read found), each with whether the list names the
+              store; how far an amount you typed was from the one read (a range); each refresh of card terms
+              or the store list (what started it, whether it worked, the versions before and after); error
+              codes and where they happened, without messages or page content.
             </li>
             <li>
-              <strong>Never sent:</strong> a store name, domain or web address, the page’s text, item names,
-              card numbers, your name or email, or your browsing history. Reports are built by the extension’s
-              service worker from what it already knows; the scripts that run on web pages send nothing
-              anywhere.
+              <strong>Never in an automatic report:</strong> a store name, domain or web address, the page’s
+              text, item names, card numbers, your name or email, or your browsing history. Reports are built
+              by the extension’s service worker from what it already knows; the scripts that run on web pages
+              send nothing anywhere.
             </li>
             <li>
               <strong>Two things you send on purpose.</strong> “Suggest this store” (in the popup or the badge
               panel, at a store the list does not name) and “Report a problem” (in the popup, a fixed reason
               and no text field) send the store’s registrable domain (for example <code>example.com</code>)
-              with that one request. They work whether you share or not; when you do not share they carry no
-              identifier.
+              with that one request, together with the page kind (Suggest) or the reason and what the badge
+              showed (Report), and the versions, month and age range above. They work whether you share or
+              not; when you do not share they carry no identifier, so they cannot be deleted on request and
+              expire with the 90-day retention.
             </li>
             <li>
               <strong>How reports travel.</strong> They queue on your device and go to{' '}
               <code>POST /v1/events</code> on the same service every 15 minutes while any wait, at once when
               50 are waiting, when you choose Share and when you tap Suggest or Report; at most 200 wait on
-              the device. The service accepts at most 500 reports per identifier per day and stores raw
-              reports for <strong>90 days</strong>, then deletes them; aggregate counts with no identifier
-              (for example how often a store was suggested) may be kept longer.
+              the device. The service accepts at most 500 reports per identifier per day and keeps raw reports
+              for <strong>90 days</strong>; it deletes older reports each time it receives, deletes or
+              summarises reports, so deletion can lag only while it receives no requests at all. Aggregate
+              counts with no identifier (for example how often a store was suggested) may be kept longer.
+              Reports are reviewed as such aggregate counts and as the list of suggested store domains with
+              their counts.
             </li>
             <li>
               <strong>Your controls, in Settings.</strong> <strong>Stop sharing</strong> (the toggle off)
               deletes the identifier and anything waiting on the device and sends nothing more; reports
-              already sent can then no longer be matched to you and expire within 90 days.{' '}
+              already sent can then no longer be deleted from the extension and expire after 90 days.{' '}
               <strong>Delete my data</strong> sends your current identifier to{' '}
               <code>POST /v1/events/delete</code>, which deletes every report stored under it, and then stops
               sharing; use it before stopping sharing if you want earlier reports deleted. Choosing Share
@@ -873,8 +887,10 @@ function Privacy(): Rendered {
             <li>
               <strong>Delete all local data</strong> (expand <strong>Delete saved data</strong> in the popup
               and confirm) clears everything the extension saved, including the downloaded catalog and store
-              list and the unlock key; card setup returns. It does not affect a store’s cart, your browser
-              history, or reports already sent.
+              list, the unlock key and the usage-reporting state (your answer, the identifier and waiting
+              reports); card setup returns, and nothing is shared until you choose Share again. It does not
+              affect a store’s cart, your browser history, or reports already sent; because the identifier is
+              cleared too, use <strong>Delete my data</strong> first if you want those deleted.
             </li>
             <li>
               <strong>Delete my data</strong> (Settings) deletes the usage reports stored under your
@@ -883,7 +899,7 @@ function Privacy(): Rendered {
             <li>
               <strong>Uninstalling</strong> removes the extension’s storage from your device; Chrome then
               opens a <Link href="/uninstalled/">page on this site</Link> with no parameters that repeats
-              these points. Reports already sent expire within 90 days; to delete them earlier, use{' '}
+              these points. Reports already sent expire after 90 days; to delete them earlier, use{' '}
               <strong>Delete my data</strong> before uninstalling, since the identifier leaves with the
               extension.
             </li>
@@ -1042,11 +1058,11 @@ function Support(): Rendered {
           <p>
             Expand <strong>Delete saved data</strong> in the popup, confirm, and choose{' '}
             <strong>Delete all local data</strong>: your cards, options, settings, purchase inputs, the
-            downloaded terms and store list and the unlock key; card setup returns. It does not affect a
-            store’s cart or your browser history, and it does not delete usage reports already sent (use{' '}
-            <strong>Delete my data</strong> for those). Uninstalling removes the extension’s storage from your
-            device; reports already sent expire within 90 days, so use Delete my data first to delete them
-            earlier.
+            downloaded terms and store list, the unlock key and the usage-reporting identifier and answer;
+            card setup returns. It does not affect a store’s cart or your browser history, and it does not
+            delete usage reports already sent: use <strong>Delete my data</strong> first for those, since the
+            identifier is cleared too. Uninstalling removes the extension’s storage from your device; reports
+            already sent expire after 90 days, so use Delete my data first to delete them earlier.
           </p>
         </Section>
         <Section id="limits" title="Known limitations">
@@ -1288,8 +1304,8 @@ function Uninstalled(): Rendered {
         <Section id="server" title="Usage reports you shared">
           <p>
             If you chose <strong>Share</strong>, reports already sent are stored on the AI Checkout service
-            under your random identifier and <strong>expire within 90 days</strong>, after which they are
-            deleted. They carry no name, email or browsing history, and no store address unless you tapped
+            under your random identifier and <strong>expire after 90 days</strong>, when the service deletes
+            them. They carry no name, email or browsing history, and no store address unless you tapped
             Suggest this store or Report a problem.
           </p>
           <p>
@@ -1297,7 +1313,8 @@ function Uninstalled(): Rendered {
             <strong>Delete my data</strong> (Settings → Usage reports in the popup) has to be used{' '}
             <em>before</em> uninstalling: it deletes every report stored under the identifier at once. If you
             reinstall, a new identifier is created; the old reports cannot be found again and expire on their
-            own. If you never chose Share, nothing of yours is on the service.
+            own. If you never chose Share, the service holds nothing under an identifier; a store suggestion
+            or problem report you tapped was stored without one and expires after 90 days.
           </p>
         </Section>
         <Section id="more" title="More">

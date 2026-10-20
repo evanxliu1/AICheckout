@@ -48,5 +48,8 @@ As in the table.
 - The committed store media still show 2.0.0 and the three-store flow; 15.6 regenerates them and the home page's `SCREENSHOTS` alt text must then be updated with them.
 - The README's demo video still shows the old flow (15.6 re-records or retires it).
 
+## Amended after the independent review (2026-10-20)
+The Opus reviewer (agent-verified) kept every choice above and changed: the `--release` gate line in `docs/release/README.md` no longer quotes the placeholder rules (it made release mode unpassable), and the release-mode test asserts only that every release-mode finding is a placeholder or a pending confirmation, so it keeps passing once Evan fills them. The policy and site now describe Delete all local data as clearing the usage-reporting state too, the taps as the exception to "nothing before Share" (stored without an identifier, not deletable on request), the full report envelope, retention as pruning on calls, and reports reviewed as aggregates. "Suggest this store" gained a disclosure line before the tap in the popup and the badge panel. Details in the [plan's progress](../product/phase-15-release-a.md#progress).
+
 ## Status
-Accepted 2026-10-20 (implementer, within the plan; agent-verified by the gates).
+Accepted 2026-10-20 (implementer, within the plan; agent-verified by the gates). Amended 2026-10-20 after the independent review (agent-verified).

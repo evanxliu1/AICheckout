@@ -43,7 +43,7 @@ No account or login is needed. 1) Install; a setup tab opens. Under "Add a card"
 - **Settings → Usage reports**: the toggle reflects the consent answer. Off (Stop sharing) says nothing more will be sent. **Delete my data** with sharing on: "Your reports were deleted and sharing stopped" (a `POST /v1/events/delete`); with sharing off it says there is no identifier to delete. On again: a new identifier and a new `consent_granted`.
 - **Settings → Protect with a passphrase**: a disposable passphrase of at least 15 characters. **Lock saved inputs** hides inputs in every open view; the badge says **Unlock to see your best card**; a wrong passphrase fails; restart Chrome and unlocking is required again. Protection can be turned off with the passphrase.
 - **Data and protection details** (popup footer) is readable during setup, locked and unlocked.
-- **Delete saved data → Delete all local data**: setup returns with no cards; the badge shows the no-cards pill again. Both locked and unlocked deletion require the confirmation checkbox, neither the passphrase. Remove the extension when testing ends; Chrome opens `https://ai-checkout-api.onrender.com/uninstalled/`.
+- **Delete saved data → Delete all local data**: setup returns with no cards and Settings → Usage reports shows sharing off (the identifier and answer are cleared with everything else, so with sharing on, run **Delete my data** first to delete reports already sent); the badge shows the no-cards pill again. Both locked and unlocked deletion require the confirmation checkbox, neither the passphrase. Remove the extension when testing ends; Chrome opens `https://ai-checkout-api.onrender.com/uninstalled/`.
 
 ## 5. Accessibility and recovery
 

@@ -84,7 +84,7 @@ it('states the privacy policy: what the badge reads, the requests, and usage rep
     'Operator: Evan Liu',
     'access to every https website',
     'address and title for a cart or checkout word',
-    'reads nothing, watches nothing',
+    'reads nothing from the page and observes none of its content',
     'The script makes no network request.',
     'The store is matched on your device.',
     'Isolated badge.',
@@ -111,9 +111,13 @@ it('states the privacy policy: what the badge reads, the requests, and usage rep
     'United States only',
     'Protect with a passphrase',
     'Delete all local data',
+    'the usage-reporting state',
+    'cannot be deleted on request',
     'href="/uninstalled/"',
   ])
     expect(privacy).toContain(text);
+  // Two taps send a domain without sharing, so the policy never says nothing leaves before Share without the exception.
+  expect(privacy).toContain('Apart from the two things you send on purpose');
   expect(privacy).not.toMatch(/\banonym/i);
   expect(privacy).not.toContain('Only a request for the card catalog');
   expect(privacy).not.toContain('No analytics');
@@ -156,7 +160,8 @@ it('tells an uninstalled shopper what was deleted, the 90-day expiry and that De
   for (const text of [
     'carries no parameters',
     'Chrome removed the extension’s storage',
-    'expire within 90 days',
+    'expire after 90 days',
+    'stored without one',
     'Delete my data',
     'before',
     'href="/privacy/"',
