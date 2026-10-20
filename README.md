@@ -17,13 +17,11 @@
 <p align="center">
   <a href="https://ai-checkout-api.onrender.com/">Site</a> ·
   <a href="https://ai-checkout-api.onrender.com/results/">Eval results</a> ·
-  <a href="docs/readme/demo.mp4">Demo video</a> ·
+  <a href="docs/release/assets/shopper-demo.mp4">Shopper walkthrough</a> ·
   <a href="docs/release/assets/full-stack-demo.mp4">Curation walkthrough</a> ·
   <a href="wiki/system/architecture.md">Architecture</a> ·
   <a href="wiki/index.md">Development wiki</a>
 </p>
-
-https://github.com/user-attachments/assets/f6575a3d-7a54-449f-818d-8e5908a4fafb
 
 ## Why it's built this way
 

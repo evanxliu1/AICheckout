@@ -17,7 +17,8 @@ const npm = (args, extra = {}) =>
     env: { ...process.env, ...extra },
   });
 script('render-brand.mjs');
-npm(['run', 'build', '--workspace', 'extension']);
+// The hosted build: the consent screen the media show exists only in builds with usage reporting.
+npm(['run', 'build:hosted', '--workspace', 'extension']);
 npm(['run', 'package', '--workspace', 'extension']);
 npm(['run', 'test:browser', '--workspace', 'extension', '--', 'e2e/release-assets.spec.ts'], {
   RELEASE_ASSETS: '1',

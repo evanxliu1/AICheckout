@@ -2,7 +2,7 @@
 type: Decision
 title: README demo video (Ocean cinematic, extension only) and SVG diagrams
 description: Evan chose an extension-only motion-graphic demo in the Ocean cinematic style for the README, committed under docs/readme/ and embedded inline from a GitHub upload; the README's Mermaid chart became hand-drawn light/dark SVG diagrams.
-status: accepted
+status: superseded
 tags: [decision, docs, release, design]
 generated:
   by: claude-code/claude-opus-5-5
@@ -50,4 +50,4 @@ Evan asked on 2026-10-04 for an up-to-date repository README with better-looking
 - An independent review (agent-verified) corrected the README and diagram wording before merge. Quotes that don't match the page are flagged for review, not rejected. The catalog is bundled, and the `/v1/catalog` refresh is optional. The real catalog is verified by agents and published by a person, not reviewed condition by condition. All seven held-out rows are shown.
 
 ## Status
-accepted (Evan, 2026-10-05)
+Superseded for the video on 2026-10-20 by [2026-10-20-store-assets-choices](2026-10-20-store-assets-choices.md): the `user-attachments` embed and `docs/readme/demo.mp4` showed the three-store flow and were retired; the README links the regenerated `docs/release/assets/shopper-demo.mp4`. The SVG diagrams stand. (Originally accepted by Evan, 2026-10-05.)

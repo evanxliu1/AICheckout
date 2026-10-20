@@ -5,8 +5,8 @@ description: Pointer to the npm scripts that regenerate store and portfolio medi
 status: stable
 tags: [ops, release, media]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:28:14Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-20T23:45:00Z
 sources:
   - resource: ../../package.json
     title: release:media and release:portfolio scripts
@@ -16,37 +16,40 @@ sources:
     title: Portfolio demo build
   - resource: ../../extension/scripts/render-release-assets.mjs
     title: Store screenshot and shopper video composition
+  - resource: ../../extension/e2e/release-assets.spec.ts
+    title: Release media capture and recording
 ---
 
 # Release media
 
-Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun the relevant one whenever a UI change alters what the screenshots or videos show, so the pinned hashes match. What the assets are and how they are used is documented in [`docs/release/assets/README.md`](../../docs/release/assets/README.md), outside the wiki. Both were last run on 2026-10-03 (branch `release-media-ocean`, from `ca0d10e`) for the Ocean theme and the 178-card catalog, then rerun the same day after an independent review (agent-verified) changed the specs: screenshot crops, a shopper-demo caption, the full-stack footer and one still.
+Two npm scripts regenerate hash-pinned media under `docs/release/assets/`. Rerun the relevant one whenever a UI change alters what the screenshots or videos show, so the pinned hashes match. What the assets are and how they are used is documented in [`docs/release/assets/README.md`](../../docs/release/assets/README.md), outside the wiki. `release:media` was last run on 2026-10-20 (Phase 15.6, branch `phase15-6-store-assets`) for extension 2.1.0; `release:portfolio` on 2026-10-03 (branch `release-media-ocean`), and the curation side it records is unchanged since.
 
 | Script | Runs | Prerequisites |
 | --- | --- | --- |
-| `npm run release:media` | [`scripts/build-release-media.mjs`](../../scripts/build-release-media.mjs): renders brand assets, builds and packages the extension, runs `extension/e2e/release-assets.spec.ts` (`RELEASE_ASSETS=1`), renders and verifies the release assets | `ffmpeg` and `ffprobe` on `PATH`; Playwright Chromium; must be started via `npm run` |
+| `npm run release:media` | [`scripts/build-release-media.mjs`](../../scripts/build-release-media.mjs): renders brand assets, builds the **hosted** extension (`build:hosted`, since 15.6: the consent screen exists only with usage reporting) and packages it, runs `extension/e2e/release-assets.spec.ts` (`RELEASE_ASSETS=1`), renders and verifies the release assets | `ffmpeg` and `ffprobe` on `PATH`; Playwright Chromium; must be started via `npm run` |
 | `npm run release:portfolio` | [`scripts/build-portfolio-demo.mjs`](../../scripts/build-portfolio-demo.mjs): builds API and review app, runs the review `e2e/portfolio-demo.spec.mjs` (`PORTFOLIO_DEMO=1`), then `scripts/render-full-stack-demo.mjs` | `ffmpeg` and `ffprobe`; Playwright Chromium; local Supabase stack already running at `http://127.0.0.1:54321` (`npm run db:start:api`); must be started via `npm run` |
 
-## Current media (2026-10-03)
+## Current media (2026-10-20, Phase 15.6)
 
-- Store screenshots 1–6 (640×400) show the Ocean popup and badge with card search; the presentation panel and video caption panel are Ocean navy (`#0c2a4d`, soft text `#a9c6ea`) in Bricolage Grotesque and Figtree, embedded from `@fontsource-variable` by `render-release-assets.mjs`. Bound to ZIP SHA-256 `09bdfaf7…1cfe0`, catalog `2026-10-05.renewal.1` (regenerated 2026-10-05T05:40Z; earlier `0fbf73fc…af2f7` with `2026-10-02.expansion.1`).
-- Crops: screenshots 1–5 are the top 400 CSS pixels of a 498px native popup capture. `fitCrop` in `release-assets.spec.ts` scrolls the popup (never the pixels) by the smallest amount that leaves no text line, row, chip or control cut at the crop edge or the top edge; screenshot 3 first scrolls to the Blue Cash Everyday row so its $1.00–$3.00 range is in the image. If the UI changes so that no clean position exists within 60px (150px when anchored), the spec fails rather than cropping mid-line.
-- Shopper demo: 41.2 s, 960×720 H.264, about 1.1 MB, 10 caption cues (one added for turning on passphrase protection in Settings). Full-stack demo: 59.5 s, 1280×960, about 2.5 MB, 11 chapters, with an Ocean navy footer in embedded Figtree and Bricolage Grotesque (`render-full-stack-demo.mjs`), plus 12 distinct stills (`full-stack-extracted.png` now shows the run summary under the extraction controls and `full-stack-evidence.png` the quoted facts; they were byte-identical before). `full-stack-confirmation.png` (the publish dialog) is new to the committed media, though the spec step dates from the Helios review app. The Web Store takes videos only as a YouTube link, so no upload limit applies.
-- Not changed: the promo (440×280) and the toolbar icons use the Helios action blue of `extension/assets/cart-mark.svg` (`#2563eb`); `render-brand.mjs` renders them from that file. Evan decided on 2026-10-03 to keep this mark with the Ocean theme ([decision](../decisions/2026-10-03-keep-helios-blue-cart-mark.md)).
-- The full-stack stills show whatever other drafts the shared local database holds (a local `2026-10-02.expansion.1` draft) and its release sequence; they are local state, not hosted. `synthetic-candidate.*` is the fixture's own second draft and is removed at cleanup. The review left the foreign draft in place rather than reset the shared stack: the sidebar is labelled local and the recording's captions and cleanup evidence cover only the fixture's records.
+- Five store screenshots at 1280×800 ([decision](../decisions/2026-10-20-store-assets-choices.md)): `1-wallet` (the popup's card editor with a "Savor" search), `2-badge` (the amount view expanded at Lidl with the evidence line), `3-rates` (the rates view where a gift card is applied), `4-comparison` (the popup comparison at the generic store), `5-consent` (the onboarding consent screen). Every image is one pixel per CSS pixel: a 400 px Ocean presentation column (`#0c2a4d`, soft text `#a9c6ea`, Bricolage Grotesque and Figtree embedded from `@fontsource-variable`) beside the untouched capture: the extension in an 880×800 window (badge scenes, consent) or the popup page in a tab at 360×600, placed whole. Bound to the hosted-build ZIP SHA-256 `f5a27208…e501` (catalog `2026-10-05.renewal.1`, store list `2026-10-11.mcc.3`).
+- Captures: `release-assets.spec.ts` needs `dist` to be the hosted build matching `artifacts/ai-checkout-2.1.0.inventory.json` (it asserts `catalogOrigin`), resolves that origin to 127.0.0.1 with `--host-resolver-rules` (worker fetches bypass `context.route`) and blocks all other page traffic except the two fixtures `extension/tests/fixtures/sample-cart.html` (served at `https://www.lidl.com/cart`, a `definition`-basis supermarket record, so the panel shows "Treated as a supermarket …") and `sample-cart-gift-card.html` (at `https://shop.example.com/cart`; the credit row makes the reader withhold). Sample wallet: Double Cash, Quicksilver, Freedom Unlimited, Blue Cash Everyday with $0 online-retail spend (Blue Cash Preferred shows a range at a release supermarket because its cap has no spend input). The popup scenes keep the `fitCrop` rule: the popup is scrolled (never the pixels) by the smallest amount that leaves no text line, row, chip or control cut at its 600 px edge or the top; the comparison first anchors the result card. The badge's amount panel is clamped by the 800 px window and scrolls, so its rows after Double Cash are below the fold; the alt text says so.
+- Shopper demo: one tab recorded at 880×660 (first run and the consent question answered Not now, the badge at Lidl and its panel, the rates view, the popup comparison), 35.6 s, composed at 1280×720 H.264 with a 380 px caption column, about 1.0 MB, 9 caption cues. Full-stack demo unchanged from 2026-10-03: 59.5 s, 1280×960, about 2.5 MB, 11 chapters, 12 stills (`render-full-stack-demo.mjs`); its stills show the shared local database's state of that day, labelled local. The Web Store takes videos only as a YouTube link, so no upload limit applies.
+- Not changed: the promo (440×280) and the toolbar icons use the Helios action blue of `extension/assets/cart-mark.svg` (`#2563eb`); `render-brand.mjs` re-rendered them on 2026-10-20 with identical bytes ([decision](../decisions/2026-10-03-keep-helios-blue-cart-mark.md)). No marquee image.
+- Earlier sets: 2026-10-03/05, six 640×400 crops of the native toolbar popup and the badge on `mock-cart.html` at the Best Buy cart URL, bound to `09bdfaf7…1cfe0` (removed from the tree in 15.6; in history).
 
-## README demo video (2026-10-05)
+## README demo video
 
-`docs/readme/demo.mp4` (40.6 s, 1920×1080, 60 fps) is presentation media for the README, separate from the hash-pinned assets above. It was rendered from an HTML scene with real captures in a session scratchpad and is not reproducible from the repository; remake it if the extension's UI changes visibly ([decision](../decisions/2026-10-05-readme-demo-video-and-diagrams.md)).
+The README's inline demo (a `user-attachments` upload of `docs/readme/demo.mp4`, 2026-10-05, [decision](../decisions/2026-10-05-readme-demo-video-and-diagrams.md)) showed the three-store flow and the savings history; both were retired on 2026-10-20 and the README header links `docs/release/assets/shopper-demo.mp4` instead. GitHub plays videos inline only from `user-attachments` URLs, so an inline player returns only when Evan uploads the new MP4 in the GitHub web UI and the README embeds that URL.
 
 ## Gotchas
 
 - `release:portfolio` reuses the running local stack and never resets or migrates a database; start it first ([Local setup](local-setup.md#database-suite-docker)).
 - Intermediate caption renders (`docs/release/assets/video-captions/`, `full-stack-captions/`) are gitignored.
-- The release media is bound to the bundled catalog and the packaged ZIP: after any catalog renewal or extension change, rerun `npm run release:media` before a Web Store submission (last run 2026-10-05 for `2026-10-05.renewal.1`). The extension has changed since (Phase 11 generic store, Phase 13b popup read, Phase 13c badge at any https store and rates view), so the current media show the pre-Phase-11 UI and the ZIP hash they are bound to is stale; regenerate before the Phase 15 submission (not re-checked 2026-10-10).
+- The release media is bound to the bundled catalog, the bundled store list and the packaged ZIP: after the 15.R renewal or any extension change, rerun `npm run release:media` on the ZIP to be submitted and update the hash in `docs/release/assets/README.md` (last run 2026-10-20 for 2.1.0 with `2026-10-05.renewal.1`). `verify-release-assets.mjs` passes only while `extension/dist` is that hosted build; a plain `npm run build` or `test:package:browser` overwrites `dist` and the ZIP, so rebuild with `build:hosted` and `package` before verifying again.
 
 ## Related
 
 * [Local setup](local-setup.md)
 * [Helios design system decision](../decisions/2026-09-28-helios-design-system.md)
 * [Ocean theme decision](../decisions/2026-10-02-ocean-theme.md): media regenerated in the Ocean look on 2026-10-03; the site's `/media/*.png` are copied from screenshots 1–4 by `apps/site/vite.config.ts`
+* [Phase 15.6 store assets decision](../decisions/2026-10-20-store-assets-choices.md)

@@ -1,25 +1,110 @@
-import { chromium, expect, test } from '@playwright/test';
-import { closeOnboarding } from './onboarding';
+// Release media (milestone 15.6): five captures of the real packaged extension for the Web Store images and
+// the staged shopper recording. Everything is captured at 1 CSS pixel per image pixel: the popup page at its
+// 360×600 popup size, the badge on a neutral fictional store page and the onboarding consent screen in an
+// 880×800 window. Fixture pages carry no retailer branding; the one store the merchant release names (Lidl)
+// appears only as the name the extension renders. The hosted build is required (the consent screen exists
+// only in builds with usage reporting); its catalog origin is mapped to the loopback address so no request
+// leaves the machine.
+import { chromium, expect, test, type BrowserContext, type Page } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { openNativePopup, REAL_CARD_NAMES } from './native-popup';
-import {
-  deleteNativeVault,
-  deleteVault,
-  protectNativeVault,
-  startNativePopup,
-  startPopup,
-  TEST_PASSPHRASE,
-} from './vault';
 import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
+import { MERCHANTS_V1 } from '../../packages/rewards-core/src/merchants-v1';
 import { addCard } from './wallet';
 
-test('capture real release UI and record the staged offline shopper walkthrough', async ({
+/** The sample wallet: four cards from the catalog; Blue Cash Everyday's online-retail spend is reported as $0. */
+const SAMPLE_CARDS = [
+  'Citi Double Cash',
+  'Capital One Quicksilver',
+  'Chase Freedom Unlimited',
+  'American Express Blue Cash Everyday',
+];
+/** A store the bundled merchant release names, with a supermarket category on the `definition` basis, so the
+ * badge panel carries the evidence line. Only its name is shown; the page is the neutral sample cart. */
+const NAMED_STORE = { id: 'lidl-us', host: 'www.lidl.com', name: 'Lidl' };
+const GENERIC_HOST = 'shop.example.com';
+const WINDOW = { width: 880, height: 800 };
+const POPUP = { width: 360, height: 600 };
+const BADGE = '/src/badge/index.html';
+
+type Frame = {
+  name: string;
+  sha256: string;
+  width: number;
+  height: number;
+  text: string;
+  viewport: { width: number; height: number; scale: number; scroll: number };
+};
+
+const hash = (data: Buffer) => createHash('sha256').update(data).digest('hex');
+const fixture = (file: string) => readFileSync(`tests/fixtures/${file}`, 'utf8');
+
+async function launch(
+  extension: string,
+  catalogOrigin: string,
+  profile: string,
+  extra: Parameters<typeof chromium.launchPersistentContext>[1] = {},
+) {
+  const context = await chromium.launchPersistentContext(profile, {
+    channel: 'chromium',
+    headless: true,
+    deviceScaleFactor: 1,
+    viewport: WINDOW,
+    args: [
+      `--disable-extensions-except=${extension}`,
+      `--load-extension=${extension}`,
+      // The worker's install-time refresh and any usage report would go to the catalog origin; the
+      // worker's fetches bypass context.route, so the host is resolved to the loopback address instead.
+      `--host-resolver-rules=MAP ${new URL(catalogOrigin).hostname} 127.0.0.1`,
+    ],
+    ...extra,
+  });
+  // All page traffic is blocked except the two in-memory sample carts.
+  await context.route(/^https?:\/\//, (route) => {
+    const url = route.request().url();
+    if (url === `https://${NAMED_STORE.host}/cart`)
+      return route.fulfill({ contentType: 'text/html', body: fixture('sample-cart.html') });
+    if (url === `https://${GENERIC_HOST}/cart`)
+      return route.fulfill({ contentType: 'text/html', body: fixture('sample-cart-gift-card.html') });
+    return route.abort();
+  });
+  const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+  const id = new URL(worker.url()).host;
+  const onboarding = await onboardingTab(context, id);
+  return { context, worker, id, onboarding };
+}
+/** The onboarding tab a fresh install opens. */
+async function onboardingTab(context: BrowserContext, id: string) {
+  const url = `chrome-extension://${id}/src/onboarding/index.html`;
+  await expect.poll(() => context.pages().some((p) => p.url() === url), { timeout: 10_000 }).toBe(true);
+  return context.pages().find((p) => p.url() === url)!;
+}
+/** Picks the sample cards in a wallet editor (onboarding or popup) and reports $0 online-retail spend. */
+async function pickSampleCards(page: Page) {
+  for (const name of SAMPLE_CARDS) await addCard(page, name);
+  await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
+}
+async function badgeFrame(page: Page) {
+  await expect.poll(() => page.frames().some((f) => f.url().includes(BADGE)), { timeout: 10_000 }).toBe(true);
+  return page.frames().find((f) => f.url().includes(BADGE))!;
+}
+/** Expands the badge and lets the frame reach its size for this window. */
+async function expandBadge(page: Page, pill: RegExp) {
+  const badge = await badgeFrame(page);
+  const button = badge.getByRole('button', { name: pill });
+  await expect(button).toBeVisible();
+  await button.click();
+  await expect(badge.getByRole('button', { name: 'Collapse' })).toBeVisible();
+  await page.waitForTimeout(500);
+  return badge;
+}
+
+test('capture the real release UI and record the staged shopper walkthrough', async ({
   browserName,
 }, testInfo) => {
   test.skip(process.env.RELEASE_ASSETS !== '1', 'Explicit release-media generation only.');
-  test.setTimeout(120_000);
+  test.setTimeout(180_000);
   expect(browserName).toBe('chromium');
   const output = resolve('../docs/release/assets'),
     captures = resolve(output, 'captures');
@@ -27,57 +112,115 @@ test('capture real release UI and record the staged offline shopper walkthrough'
   const extension = resolve('dist');
   const inventory = JSON.parse(readFileSync('artifacts/ai-checkout-2.1.0.inventory.json', 'utf8')) as {
     sha256: string;
+    catalogOrigin: string | null;
     files: { path: string; sha256: string }[];
   };
-  const hash = (data: Buffer) => createHash('sha256').update(data).digest('hex');
   expect(hash(readFileSync('artifacts/ai-checkout-2.1.0.zip'))).toBe(inventory.sha256);
   for (const file of inventory.files)
     expect(hash(readFileSync(resolve(extension, file.path)))).toBe(file.sha256);
-  const context = await chromium.launchPersistentContext(testInfo.outputPath('native-profile'), {
-    channel: 'chromium',
-    headless: true,
-    deviceScaleFactor: 2,
-    args: [
-      `--disable-extensions-except=${extension}`,
-      `--load-extension=${extension}`,
-      '--enable-unsafe-extension-debugging',
-    ],
-  });
-  const frames: {
-    name: string;
-    sha256: string;
-    width: number;
-    height: number;
-    text: string;
-    viewport: unknown;
-  }[] = [];
+  expect(
+    inventory.catalogOrigin,
+    'Release media needs the hosted build (npm run build:hosted): the consent screen exists only there.',
+  ).toBeTruthy();
+  const store = MERCHANTS_V1.merchants.find((record) => record.id === NAMED_STORE.id);
+  expect(store?.name).toBe(NAMED_STORE.name);
+  expect(store?.category).toBe('supermarkets');
+  expect(store?.evidence.basis).toBe('definition');
+
+  const frames: Frame[] = [];
+  const { context, worker, id, onboarding } = await launch(
+    extension,
+    inventory.catalogOrigin!,
+    testInfo.outputPath('capture-profile'),
+  );
   try {
-    // All HTTP traffic is blocked except this exact in-memory merchant fixture.
-    // (Only http(s) is intercepted: the badge iframe's own extension resources are not network traffic.)
-    await context.route(/^https?:\/\//, (route) => route.abort());
-    const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
-    await closeOnboarding(context);
-    const id = new URL(worker.url()).host,
-      merchant = await context.newPage();
-    await merchant.route('https://secure.newegg.com/shop/cart', (route) =>
-      route.fulfill({
-        contentType: 'text/html',
-        body: readFileSync('tests/fixtures/newegg-observed-subtotal.html', 'utf8'),
-      }),
+    async function capture(name: string, page: Page, text: string, scroll = 0) {
+      const data = await page.screenshot();
+      writeFileSync(resolve(captures, `${name}.png`), data);
+      const viewport = page.viewportSize()!;
+      frames.push({
+        name,
+        sha256: hash(data),
+        width: data.readUInt32BE(16),
+        height: data.readUInt32BE(20),
+        text,
+        viewport: { ...viewport, scale: 1, scroll },
+      });
+    }
+
+    // 5. The consent screen: onboarding after the cards are saved (hosted builds only).
+    await expect(onboarding.getByRole('heading', { name: 'Welcome to AI Checkout' })).toBeVisible();
+    await pickSampleCards(onboarding);
+    await onboarding.getByRole('button', { name: 'Save cards' }).click();
+    const consent = onboarding.getByRole('heading', { name: 'Help improve AI Checkout' });
+    await expect(consent).toBeVisible();
+    await expect(onboarding.getByRole('button', { name: 'Share' })).toBeVisible();
+    await expect(onboarding.getByRole('button', { name: 'Not now' })).toBeVisible();
+    // The whole screen fits the window: nothing is below the fold.
+    expect(await onboarding.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(
+      WINDOW.height,
     );
-    await merchant.goto('https://secure.newegg.com/shop/cart');
-    let popup = await openNativePopup(context, merchant, id);
-    // The store images show the top 400 CSS pixels of the 498px native popup. Move the popup's
-    // own scroll (never the pixels) by the smallest amount that puts that crop edge, and the top
-    // edge, between lines of text and outside rows, chips and controls. An optional
-    // anchor (a card's heading in the result list) first scrolls that card's row to the top.
-    const scroller = `(() => { const main = document.querySelector('main');
-      return main.scrollHeight > main.clientHeight ? main : document.scrollingElement; })()`;
+    await capture('consent', onboarding, await onboarding.locator('body').innerText());
+    await onboarding.getByRole('button', { name: 'Not now' }).click();
+    await expect(onboarding.getByRole('heading', { name: 'You’re set' })).toBeVisible();
+    await onboarding.close();
+    // Not now: consent declined, no identifier, nothing queued or sent.
+    expect(
+      await worker.evaluate(async () => {
+        const state = (await chrome.storage.local.get('checkoutTelemetryV1')).checkoutTelemetryV1 as {
+          consent: string;
+          installId: string | null;
+          queue: unknown[];
+        };
+        return { consent: state.consent, installId: state.installId, queued: state.queue.length };
+      }),
+    ).toEqual({ consent: 'declined', installId: null, queued: 0 });
+
+    // 2. The badge's amount view at a store the release names, expanded, with the evidence line.
+    const named = await context.newPage();
+    await named.goto(`https://${NAMED_STORE.host}/cart`);
+    let badge = await expandBadge(named, /Use Blue Cash Everyday · \$3\.00 back on this cart/);
+    await expect(
+      badge.getByText(`Based on $100.00 cart estimated total at ${NAMED_STORE.name}.`, { exact: false }),
+    ).toBeVisible();
+    await expect(badge.getByText('Treated as a supermarket', { exact: false })).toBeVisible();
+    await expect(badge.getByText('3% on “U.S. online retail purchases”', { exact: false })).toBeVisible();
+    await capture('badge', named, await badge.locator('body').innerText());
+    // Only the store's id and host reached the extension: no path, no page text.
+    const session = JSON.stringify(await worker.evaluate(() => chrome.storage.session.get(null)));
+    expect(session).toContain(`"merchantId":"${NAMED_STORE.id}"`);
+    expect(session).not.toMatch(/\/cart|Sample item|Order summary/);
+    await named.close();
+
+    // 3. The rates view at a store the release does not name: a gift card is applied, so the reader withholds
+    // the amount and the badge ranks the cards by rate instead.
+    const generic = await context.newPage();
+    await generic.goto(`https://${GENERIC_HOST}/cart`);
+    badge = await expandBadge(generic, /Use Blue Cash Everyday · 3% back at this store/);
+    await expect(badge.getByText(/The cart amount wasn’t read on this page/)).toBeVisible();
+    await expect(badge.getByRole('list', { name: 'Your cards by rate, best first' })).toBeVisible();
+    await expect(badge.getByLabel('Amount (USD, optional)')).toHaveValue('');
+    await capture('rates', generic, await badge.locator('body').innerText());
+    await generic.close();
+
+    // The popup page at the toolbar popup's own size. In a tab the popup has no store tab, so its Merchant is
+    // the generic store ("Another U.S. online store"), as at any store the release does not name.
+    const popup = await context.newPage();
+    await popup.setViewportSize(POPUP);
+    await popup.goto(`chrome-extension://${id}/src/popup/index.html`);
+    await expect(popup.getByRole('heading', { name: 'Your cards' })).toBeVisible();
+    await expect(popup.getByLabel('Merchant')).toHaveValue('generic-us-online');
+    // The popup scrolls inside its 600px height. Before each capture, move its own scroll (never the
+    // pixels) by the smallest amount that puts the bottom edge, and the top edge, between lines of text
+    // and outside rows, chips and controls. An optional anchor (a heading's text) first scrolls that
+    // heading's section to the top.
+    const scroller = `(() => [...document.querySelectorAll('.checkout-popup, main')]
+      .find((el) => el.scrollHeight > el.clientHeight) ?? document.scrollingElement)()`;
     async function fitCrop(anchor?: string) {
       const offset = await popup.evaluate<number | null>(`(() => {
-        const box = ${scroller}, crop = 400, clear = 3, anchor = ${JSON.stringify(anchor ?? '')};
+        const box = ${scroller}, crop = ${POPUP.height}, clear = 3, anchor = ${JSON.stringify(anchor ?? '')};
         if (anchor) {
-          const target = [...document.querySelectorAll('h3')].find((h) => h.textContent.trim() === anchor)?.closest('li');
+          const target = [...document.querySelectorAll('h2, h3')].find((h) => h.textContent.trim() === anchor)?.closest('.ac-card, section, li');
           if (!target) throw Error('Crop anchor not found');
           box.scrollTop += target.getBoundingClientRect().top;
         }
@@ -105,126 +248,47 @@ test('capture real release UI and record the staged offline shopper walkthrough'
         };
         for (let step = 0; step <= 200; step++) {
           const d = step % 2 ? (step + 1) / 2 : -step / 2;
-          // Keep an anchored row's top in view: only scroll back from it.
+          // Keep an anchored section's top in view: only scroll back from it.
           if (d < (anchor ? -150 : -60) || (anchor && d > 0)) continue;
           box.scrollTop = base + d;
           if (Math.abs(box.scrollTop - (base + d)) <= 0.5 && fits()) return box.scrollTop;
         }
         return null;
       })()`);
-      expect(offset, 'No clean 400px crop for this capture').not.toBeNull();
+      expect(offset, 'No clean crop for this capture').not.toBeNull();
+      return offset!;
     }
-    async function capture(name: string, expected: string[], anchor?: string) {
-      for (const text of expected) await expect.poll(popup.text).toContain(text);
-      await fitCrop(anchor);
-      const data = await popup.screenshot();
-      writeFileSync(resolve(captures, `${name}.png`), data);
-      frames.push({
-        name,
-        sha256: hash(data),
-        width: data.readUInt32BE(16),
-        height: data.readUInt32BE(20),
-        text: await popup.text(),
-        viewport: await popup.evaluate(
-          `({width:innerWidth,height:innerHeight,scale:devicePixelRatio,scroll:${scroller}.scrollTop})`,
-        ),
-      });
-    }
-    await startNativePopup(popup);
-    await popup.checkCards(REAL_CARD_NAMES);
-    await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail-v2', '0');
-    await popup.evaluate(
-      "document.querySelector('[aria-labelledby=wallet-heading]').scrollIntoView({block:'start'})",
-    );
-    await capture('wallet', ['Citi', 'Capital One Quicksilver', 'American Express Blue Cash Everyday']);
-    await popup.click('Save cards');
-    await expect.poll(popup.text).toContain('Read cart amount');
-    await popup.fill('purchase-amount', '100');
-    async function confirm() {
-      await popup.evaluate(`{ const select=document.getElementById('online-eligibility');
-        Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(select,'eligible');
-        select.dispatchEvent(new Event('change',{bubbles:true}));
-        const box=document.querySelector('form input[type=checkbox]'); if(!box.checked) box.click(); }`);
-      await popup.click('Compare my cards');
-    }
-    await confirm();
-    await capture('comparison', ['Saved estimate for a $100.00 Best Buy US purchase.', '$3.00', '$1.50']);
-    // The automatic badge on a neutral sample cart (no retailer branding), at store-image scale.
-    // Another tab takes focus, which closes the native popup; it is reopened afterwards.
-    await popup.close();
-    const mock = await context.newPage();
-    await mock.setViewportSize({ width: 360, height: 400 });
-    await mock.route('https://www.bestbuy.com/cart', (route) =>
-      route.fulfill({
-        contentType: 'text/html',
-        body: readFileSync('tests/fixtures/mock-cart.html', 'utf8'),
-      }),
-    );
-    await mock.goto('https://www.bestbuy.com/cart');
-    await expect
-      .poll(() => mock.frames().some((f) => f.url().includes('/src/badge/index.html')), { timeout: 10_000 })
-      .toBe(true);
-    const badgeFrame = mock.frames().find((f) => f.url().includes('/src/badge/index.html'))!;
+
+    // 1. Wallet search: the popup's card editor with a search under way (three matches) above the sample cards.
+    await popup.getByRole('button', { name: 'Edit cards' }).click();
+    const search = popup.getByRole('combobox', { name: 'Add a card' });
+    await search.fill('Savor');
+    await expect(popup.getByRole('option', { name: 'Capital One Savor', exact: true })).toBeVisible();
+    await expect(popup.getByRole('listbox', { name: 'Matching cards' }).getByRole('option')).toHaveCount(3);
+    await expect(popup.getByText('Cards you own (4)')).toBeVisible();
+    await capture('wallet', popup, await popup.locator('body').innerText(), await fitCrop());
+    await popup.getByRole('button', { name: 'Cancel' }).click();
+
+    // 4. The comparison: a $100 eligible purchase at the generic store, the best card with its rule in the
+    // issuer's words and its conditions.
+    await popup.getByLabel('Purchase amount (USD)').fill('100');
+    await popup.getByLabel('Online retail bonus eligibility').selectOption('eligible');
+    await popup.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
+    await popup.getByRole('button', { name: 'Compare my cards' }).click();
+    await expect(popup.getByRole('heading', { name: 'Use Blue Cash Everyday' })).toBeVisible();
     await expect(
-      badgeFrame.getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back/ }),
+      popup.getByText('Saved estimate for a $100.00 Another U.S. online store purchase.'),
     ).toBeVisible();
-    await mock.waitForTimeout(300);
-    const badgeShot = await mock.screenshot();
-    writeFileSync(resolve(captures, 'badge.png'), badgeShot);
-    frames.push({
-      name: 'badge',
-      sha256: hash(badgeShot),
-      width: badgeShot.readUInt32BE(16),
-      height: badgeShot.readUInt32BE(20),
-      text: await badgeFrame.evaluate(() => document.body.innerText),
-      viewport: await mock.evaluate(() => ({
-        width: innerWidth,
-        height: innerHeight,
-        scale: devicePixelRatio,
-        scroll: 0,
-      })),
-    });
-    await mock.close();
-    popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Edit cards');
-    await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail-v2', '');
-    await popup.click('Save cards');
-    await expect.poll(popup.text).toContain('Read cart amount');
-    await confirm();
+    await expect(popup.getByText('3% on “U.S. online retail purchases”', { exact: false })).toBeVisible();
+    await expect(popup.getByText('$3.00', { exact: true })).toBeVisible();
     await capture(
-      'uncertainty',
-      [
-        'Compare the conditions',
-        '$1.00–$3.00',
-        'Your online retail spend toward this year’s bonus limit is unknown.',
-      ],
-      'Blue Cash Everyday',
+      'comparison',
+      popup,
+      await popup.locator('body').innerText(),
+      await fitCrop('Use Blue Cash Everyday'),
     );
-    await popup.click('Edit cards');
-    await expect.poll(popup.text).toContain('online retail spend this year');
-    await popup.fill('spend-bce-online-retail-v2', '0');
-    await popup.click('Save cards');
-    await expect.poll(popup.text).toContain('Read cart amount');
-    await popup.click('Read cart amount');
-    await expect.poll(popup.text).toContain('Read $249.99 as a subtotal before tax and shipping');
-    await confirm();
-    await capture('subtotal', [
-      'Saved estimate for a $249.99 Newegg US subtotal.',
-      'Subtotal only; tax and shipping are not included.',
-      '$7.49',
-      '$3.74',
-    ]);
-    await protectNativeVault(popup);
-    await popup.click('Lock saved inputs');
-    await capture('locked', ['Unlock your saved inputs', 'Local passphrase']);
-    expect(await popup.text()).not.toContain('$7.49');
-    await deleteNativeVault(popup);
-    await startNativePopup(popup);
-    expect(await worker.evaluate(() => chrome.storage.local.get(null))).toEqual({});
-    expect(await worker.evaluate(() => chrome.storage.session.get(null))).toEqual({});
+    await popup.close();
+
     writeFileSync(
       resolve(output, 'capture-manifest.json'),
       JSON.stringify(
@@ -233,12 +297,16 @@ test('capture real release UI and record the staged offline shopper walkthrough'
           browser: context.browser()?.version(),
           artifactSha256: inventory.sha256,
           extensionVersion: '2.1.0',
+          catalogOrigin: inventory.catalogOrigin,
           catalogVersion: CATALOG_V3.version,
           catalogExpiresAt: CATALOG_V3.expiresAt,
+          merchantReleaseVersion: MERCHANTS_V1.version,
           source:
-            'Actual native toolbar popup; all seven card products selected as a sample; intercepted Newegg summary fixture.',
+            'Actual packaged extension (hosted build): the popup page at its 360×600 popup size, the badge on a neutral fictional sample cart in an 880×800 window, the onboarding consent screen; four sample cards.',
+          sampleCards: SAMPLE_CARDS,
+          namedStore: `${NAMED_STORE.name} (${NAMED_STORE.id}, served the sample cart at https://${NAMED_STORE.host}/cart)`,
           liveMerchant: false,
-          network: 'HTTP blocked except the in-memory route fixture; no model requests.',
+          network: `Page traffic blocked except the two in-memory sample carts; the catalog origin ${inventory.catalogOrigin} resolved to 127.0.0.1, so no refresh or usage report left the machine; "Not now" chosen on the consent screen.`,
           amountsAre: 'Conditional estimates using sample inputs, not customer savings or earned rewards.',
           frames,
         },
@@ -246,7 +314,6 @@ test('capture real release UI and record the staged offline shopper walkthrough'
         2,
       ) + '\n',
     );
-    await popup.close();
   } finally {
     await context.close();
   }
@@ -260,21 +327,17 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     return;
   }
 
-  // Actual interactive screen recording of the packaged extension page. This is
-  // deliberately labeled separately from native-toolbar and live-merchant evidence.
-  const demo = await chromium.launchPersistentContext(testInfo.outputPath('demo-profile'), {
-    channel: 'chromium',
-    headless: true,
-    viewport: { width: 360, height: 600 },
-    recordVideo: { dir: testInfo.outputPath('video'), size: { width: 360, height: 600 } },
-    args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
+  // The staged shopper walkthrough: one tab, recorded, through the first run, a cart at the named store,
+  // the rates view at the generic store and the popup comparison. Synthetic inputs; nothing leaves the machine.
+  const VIDEO = { width: 880, height: 660 };
+  const demo = await launch(extension, inventory.catalogOrigin!, testInfo.outputPath('demo-profile'), {
+    viewport: VIDEO,
+    recordVideo: { dir: testInfo.outputPath('video'), size: VIDEO },
   });
   const chapters: { atSeconds: number; caption: string }[] = [];
   try {
-    await demo.setOffline(true);
-    const worker = demo.serviceWorkers()[0] ?? (await demo.waitForEvent('serviceworker'));
-    await closeOnboarding(demo);
-    const page = await demo.newPage(),
+    await demo.onboarding.close();
+    const page = await demo.context.newPage(),
       video = page.video();
     if (!video) throw new Error('Demo recording was not created');
     const started = Date.now();
@@ -283,67 +346,68 @@ test('capture real release UI and record the staged offline shopper walkthrough'
       // Deliberate presentation dwell for the recording, never a readiness check.
       await page.waitForTimeout(seconds * 1000);
     };
-    await page.goto(`chrome-extension://${new URL(worker.url()).host}/src/popup/index.html`);
-    await startPopup(page);
+    await page.goto(`chrome-extension://${demo.id}/src/onboarding/index.html`);
+    await expect(page.getByRole('heading', { name: 'Welcome to AI Checkout' })).toBeVisible();
     await pause(
-      'Staged offline demo. Actual extension page; sample inputs; no live retailer or model call.',
+      'Staged demo of the actual extension with sample inputs. No live store, no model, nothing sent.',
+      3,
+    );
+    await pickSampleCards(page);
+    await pause(
+      'First run: search the 178-card catalog and add the cards you own. No card numbers or bank login.',
+    );
+    await page.getByRole('button', { name: 'Save cards' }).click();
+    await expect(page.getByRole('heading', { name: 'Help improve AI Checkout' })).toBeVisible();
+    await pause('One question: share usage reports or not. The extension works the same either way.', 4);
+    await page.getByRole('button', { name: 'Not now' }).click();
+    await expect(page.getByRole('heading', { name: 'You’re set' })).toBeVisible();
+    await pause('Not now: nothing about your use is sent.', 2);
+    await page.goto(`https://${NAMED_STORE.host}/cart`);
+    let badge = await badgeFrame(page);
+    const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back on this cart/ });
+    await expect(pill).toBeVisible();
+    await pause(
+      'On a cart page, the badge names your best card from the order summary. This sample store is one the store list names.',
       4,
     );
-    await addCard(page, 'Capital One Quicksilver');
-    await addCard(page, 'American Express Blue Cash Everyday');
-    await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
-    await pause('Choose two card products. Reported annual online-retail spend is $0 for this example.');
-    await page.getByRole('button', { name: 'Save cards' }).click();
+    await pill.click();
+    await expect(badge.getByRole('button', { name: 'Collapse' })).toBeVisible();
+    await pause(
+      'Every card you own, ranked, with the rule in the issuer’s words, its conditions and why the store’s category applies.',
+      5,
+    );
+    await page.goto(`https://${GENERIC_HOST}/cart`);
+    badge = await badgeFrame(page);
+    const ratePill = badge.getByRole('button', { name: /Use Blue Cash Everyday · 3% back at this store/ });
+    await expect(ratePill).toBeVisible();
+    await ratePill.click();
+    await expect(badge.getByText(/The cart amount wasn’t read on this page/)).toBeVisible();
+    await pause(
+      'A gift card is applied here, so the amount is not certain: the badge ranks your cards by rate instead of guessing.',
+      5,
+    );
+    await page.goto(`chrome-extension://${demo.id}/src/popup/index.html`);
+    await expect(page.getByRole('heading', { name: 'Your cards' })).toBeVisible();
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByLabel('Online retail bonus eligibility').selectOption('eligible');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
-    await pause('Enter a $100 eligible Best Buy US purchase and explicitly confirm its exclusions.');
+    await pause('The toolbar popup compares any amount you type, at any store.', 3);
     await page.getByRole('button', { name: 'Compare my cards' }).click();
     await expect(page.getByRole('heading', { name: 'Use Blue Cash Everyday' })).toBeVisible();
-    await expect(page.getByText('$3.00', { exact: true })).toBeVisible();
+    await page
+      .getByRole('heading', { name: 'Use Blue Cash Everyday' })
+      .evaluate((h) => h.closest('section')?.scrollIntoView({ block: 'start' }));
     await pause(
-      'The rules engine estimates $3.00 and $1.50. These are conditional estimates, not earned rewards.',
+      '$3.00 on $100: a conditional estimate from the issuer’s published terms, not an earned reward.',
       5,
-    );
-    await page.getByText('Card terms and sources', { exact: true }).click();
-    await pause('The result includes source links, a terms expiry and eligibility limitations.', 4);
-    await page.getByRole('button', { name: 'Edit cards' }).click();
-    await page.getByLabel(/Blue Cash Everyday online retail spend/).fill('');
-    await page.getByRole('button', { name: 'Save cards' }).click();
-    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
-    await page.getByRole('button', { name: 'Compare my cards' }).click();
-    await expect(page.getByText('$1.00–$3.00', { exact: true })).toBeVisible();
-    await pause('Unknown annual usage produces a $1.00–$3.00 range; the best card may change.', 5);
-    await page.getByText('Settings', { exact: true }).click();
-    await page.getByLabel('New local passphrase', { exact: true }).fill(TEST_PASSPHRASE);
-    await page.getByLabel('Confirm local passphrase').fill(TEST_PASSPHRASE);
-    await page.getByRole('checkbox', { name: /cannot be recovered/ }).check();
-    await page.getByRole('button', { name: 'Protect with a passphrase' }).scrollIntoViewIfNeeded();
-    await pause('Optional: turn on passphrase protection in Settings. The phrase cannot be recovered.', 4);
-    await page.getByRole('button', { name: 'Protect with a passphrase' }).click();
-    await expect(page.getByRole('button', { name: 'Lock saved inputs' })).toBeVisible();
-    await page.getByRole('button', { name: 'Lock saved inputs' }).click();
-    await expect(page.getByLabel('Local passphrase', { exact: true })).toBeVisible();
-    await pause('Lock hides private inputs and clears the session key. The local record stays encrypted.', 4);
-    await page.getByText('Delete saved data', { exact: true }).click();
-    await page.getByRole('checkbox', { name: /I want to permanently delete/ }).scrollIntoViewIfNeeded();
-    await pause('Deletion requires explicit confirmation and can be done without the forgotten phrase.', 4);
-    await page.getByText('Delete saved data', { exact: true }).click();
-    await deleteVault(page);
-    await startPopup(page);
-    expect(await page.evaluate(() => chrome.storage.local.get(null))).toEqual({});
-    expect(await page.evaluate(() => chrome.storage.session.get(null))).toEqual({});
-    await pause(
-      'Local data is cleared. This offline demo is not deployment, live LLM evaluation or store approval.',
-      4,
     );
     writeFileSync(
       resolve(output, 'demo-chapters.json'),
       JSON.stringify(
         {
           artifactSha256: inventory.sha256,
-          kind: 'Actual extension-page interaction recording; synthetic inputs; offline.',
-          viewport: { width: 360, height: 600 },
+          kind: 'Actual extension interaction recording in one tab (onboarding, sample carts, the popup page); synthetic inputs; nothing sent.',
+          viewport: VIDEO,
           chapters,
         },
         null,
@@ -355,6 +419,6 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     await page.close();
     await video.saveAs(resolve(output, 'shopper-demo.webm'));
   } finally {
-    await demo.close();
+    await demo.context.close();
   }
 });

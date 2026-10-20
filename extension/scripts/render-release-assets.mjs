@@ -11,45 +11,52 @@ const capture = JSON.parse(readFileSync(resolve(output, 'capture-manifest.json')
 const hash = (data) => createHash('sha256').update(data).digest('hex');
 const escape = (value) =>
   value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+// Store screenshots: 1280×800, one image pixel per CSS pixel. The left 400 px are presentation; the right
+// 880×800 are the untouched capture (a window capture fills them; the 360×600 popup page sits centred).
+const IMAGE = { width: 1280, height: 800 },
+  PANEL = 400;
+const POPUP_NOTE = 'Actual popup page at its 360×600 size.';
+const WINDOW_NOTE = 'Actual extension in an 880×800 window.';
 const scenes = [
   {
     name: 'wallet',
+    kind: 'popup',
     title: 'Your cards. Your choice.',
-    copy: 'Search 178 cards by name or bank and add the ones you own. No card numbers or bank connection.',
-    alt: 'Actual wallet editor: a search field for the 178-card catalog above the list of seven sample cards added, starting with Citi Double Cash, Wells Fargo Active Cash and Capital One Quicksilver.',
-  },
-  {
-    name: 'comparison',
-    title: 'Compare a $100 purchase.',
-    copy: 'For this sample: eligible online goods and $0 annual spend. Actual rewards depend on issuer terms.',
-    alt: 'Actual result for a sample $100 eligible Best Buy purchase: use Blue Cash Everyday, $3.00 (3%) on U.S. online retail purchases, with its U.S.-merchant and $6,000 yearly cap conditions.',
-  },
-  {
-    name: 'uncertainty',
-    title: 'Keep unknowns visible.',
-    copy: 'Leave annual spend blank to see a reward range. Confirming the conditions can change which card comes first.',
-    alt: 'Actual result with unknown annual spend: Blue Cash Everyday shows a $1.00–$3.00 range because its online retail spend toward the yearly bonus limit is unknown.',
-  },
-  {
-    name: 'subtotal',
-    title: 'Know what the amount includes.',
-    copy: 'The sample cart has no final total. Its subtotal estimate excludes tax and shipping.',
-    alt: 'Actual Newegg fixture result explicitly labels a $249.99 subtotal and excludes tax and shipping.',
-  },
-  {
-    name: 'locked',
-    title: 'Lock your saved inputs.',
-    copy: 'Optional: protect saved inputs with a local passphrase. Unlock after restarting Chrome, or delete and start again if you forget it.',
-    alt: 'Actual locked popup asks for the local passphrase before showing saved inputs; protection can be turned off in Settings after unlocking.',
+    copy: 'Search 178 cards by name or bank and add the ones you own. No card numbers or bank login.',
+    alt: 'Actual card editor in the popup: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
+    note: POPUP_NOTE,
   },
   {
     name: 'badge',
+    kind: 'window',
     title: 'Your best card, on your cart.',
-    copy: 'On supported carts a small badge shows which of your cards earns the most. Click it for every card and the terms behind it.',
-    alt: 'Actual cart badge on a neutral sample cart with a $100.00 total: Use Blue Cash Everyday · $3.00 back.',
-    note: 'Actual badge on a sample cart page.',
-    composition:
-      'Actual packaged badge on a neutral sample cart page (no retailer branding) served at a supported cart URL, 360×400 CSS pixels at 2× scale, without text or geometry alteration. Explanatory left panel is presentation, not application UI.',
+    copy: 'On a cart page the badge names the card that earns the most, and says why the store’s category applies.',
+    alt: 'Actual badge panel “Best card for this cart” over a neutral sample cart page (“Your cart”, “Sample cart · 2 items”, Sample item Qty 1, Another sample item Qty 2): “Based on $100.00 cart estimated total at Lidl. Treated as a supermarket (its own pages; fits Bank of America, Chase, Discover and U.S. Bank’s supermarket definition).” An amount field reads 100.00, the payment method is “Card entered at checkout”, then Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, “Activation is not mentioned on the issuer’s pages”, “Rules that don’t apply here (1)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), and a “Rules that don’t apply here (1)” disclosure half hidden by the panel’s own scroll edge above the Dismiss for this tab and Not on this site buttons.',
+    note: WINDOW_NOTE,
+  },
+  {
+    name: 'rates',
+    kind: 'window',
+    title: 'No guess when the amount isn’t certain.',
+    copy: 'A gift card is applied here, so the cart amount isn’t read. The badge ranks your cards by rate instead.',
+    alt: 'Actual badge panel “Best card for this cart” over a neutral sample cart page (“Your cart”, “Sample cart · 2 items”, two sample items and the top of an “Order summary” box): “The cart amount wasn’t read on this page. Each card’s rate doesn’t depend on it, so the best card is the same at any amount, unless a condition below applies. A spend cap on one of these cards could change the order at your cart’s amount.” Then the cards by rate: Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line “A tap sends only this store’s domain (for example example.com) so it can be added”, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
+    note: WINDOW_NOTE,
+  },
+  {
+    name: 'comparison',
+    kind: 'popup',
+    title: 'The rule in the issuer’s words.',
+    copy: 'Compare any amount at any store. Each estimate quotes the issuer’s rule and shows its conditions.',
+    alt: 'Actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, with the conditions U.S. merchants only and up to $6,000.00 per year then 1%, “Activation is not mentioned on the issuer’s pages” and “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
+    note: POPUP_NOTE,
+  },
+  {
+    name: 'consent',
+    kind: 'window',
+    title: 'Usage reports only if you say so.',
+    copy: 'One question after setup. The extension works the same either way, and nothing is sent before you choose Share.',
+    alt: 'Actual onboarding screen “Help improve AI Checkout” under the heading “Welcome to AI Checkout. The best card you already own, shown right on your cart.” It says “Share usage reports so the reader, the store list and the recommendations get better. The extension works the same either way.”, lists what is sent after you choose Share (how you use it, each recommendation, the cards you picked as catalog names, error codes, a random identifier with no name, email or browsing history), says no store name, web address or page text is sent and that a store’s domain is sent only when you tap Suggest this store or Report a problem, that reports are kept for 90 days with a Privacy policy link, and ends with two equal buttons, Share and Not now.',
+    note: WINDOW_NOTE,
   },
 ];
 // Ocean theme presentation type: the same self-hosted fonts the extension bundles (SIL OFL 1.1).
@@ -60,47 +67,53 @@ const icon = `data:image/png;base64,${readFileSync(resolve(root, 'extension/publ
 const browser = await chromium.launch({ channel: 'chromium', headless: true });
 const results = [];
 try {
-  const page = await browser.newPage({ viewport: { width: 640, height: 400 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: IMAGE, deviceScaleFactor: 1 });
   for (const [index, scene] of scenes.entries()) {
     const frame = capture.frames.find((frame) => frame.name === scene.name);
     if (!frame) throw new Error(`Missing actual capture: ${scene.name}`);
     const bytes = readFileSync(resolve(output, `captures/${scene.name}.png`));
     if (hash(bytes) !== frame.sha256) throw new Error(`Capture hash changed: ${scene.name}`);
+    const expected = scene.kind === 'popup' ? { width: 360, height: 600 } : { width: 880, height: 800 };
+    if (frame.width !== expected.width || frame.height !== expected.height || frame.viewport.scale !== 1)
+      throw new Error(`Unexpected capture size: ${scene.name}`);
     const img = `data:image/png;base64,${bytes.toString('base64')}`;
     const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(scene.title)} — AI Checkout</title><style>
-${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{display:grid;grid-template-columns:280px 360px;width:640px;height:400px;background:#0c2a4d;color:#fff}.copy{position:relative;padding:24px}header{display:flex;align-items:center;gap:8px;font-family:Bricolage,Figtree,sans-serif;font-size:17px;font-weight:700}header img{width:32px;height:32px}.story{margin-top:30px}h1{margin:0;font-family:Bricolage,Figtree,sans-serif;font-size:28px;line-height:1.14;letter-spacing:-.02em;font-weight:700}p{margin:16px 0 0;font-size:15px;line-height:1.5;color:#a9c6ea}.note{position:absolute;left:24px;right:24px;bottom:20px;margin:0;font-size:12px;line-height:1.4;color:#a9c6ea}.actual{width:360px;height:400px;overflow:hidden;background:#eef4fb;}.actual img{display:block;width:360px;height:auto;max-width:none}</style></head>
-<body><!-- THESIS: show one actual feature with its conditions and honest sample data. OWN-WORLD: Ocean navy, white, Bricolage and Figtree type and real popup pixels. STORY: understand the capability and inspect it. FIRST VIEWPORT: navy explanatory column beside a 1:1 CSS-pixel native popup detail. FORM: existing brand and interface, not a redesign. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md -->
-<main><section class="copy"><header><img src="${icon}" alt="">AI Checkout</header><div class="story"><h1>${escape(scene.title)}</h1><p>${escape(scene.copy)}</p></div><p class="note">${escape(scene.note ?? 'Actual popup detail.')}<br>Sample inputs; not earned rewards.</p></section><div class="actual"><img src="${img}" alt="${escape(scene.alt)}"></div></main></body></html>`;
+${fonts}*{box-sizing:border-box}html,body{margin:0;width:${IMAGE.width}px;height:${IMAGE.height}px;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{display:grid;grid-template-columns:${PANEL}px ${IMAGE.width - PANEL}px;width:${IMAGE.width}px;height:${IMAGE.height}px;background:#0c2a4d;color:#fff}.copy{position:relative;padding:40px 36px}header{display:flex;align-items:center;gap:10px;font-family:Bricolage,Figtree,sans-serif;font-size:22px;font-weight:700}header img{width:40px;height:40px}.story{margin-top:56px}h1{margin:0;font-family:Bricolage,Figtree,sans-serif;font-size:38px;line-height:1.12;letter-spacing:-.02em;font-weight:700}p{margin:20px 0 0;font-size:19px;line-height:1.5;color:#a9c6ea}.note{position:absolute;left:36px;right:36px;bottom:36px;margin:0;font-size:14px;line-height:1.5;color:#a9c6ea}.actual{width:${IMAGE.width - PANEL}px;height:${IMAGE.height}px;overflow:hidden;background:#eef4fb;display:flex;justify-content:center;align-items:center}.actual img{display:block;max-width:none}.actual img.popup{width:360px;height:600px;box-shadow:0 8px 32px rgba(12,42,77,.18)}.actual img.window{width:880px;height:800px}</style></head>
+<body><!-- THESIS: show one actual feature with its conditions and honest sample data. OWN-WORLD: Ocean navy, white, Bricolage and Figtree type and real extension pixels at 1:1. STORY: understand the capability and inspect it. FIRST VIEWPORT: navy explanatory column beside an untouched capture. FORM: existing brand and interface, not a redesign. -->
+<main><section class="copy"><header><img src="${icon}" alt="">AI Checkout</header><div class="story"><h1>${escape(scene.title)}</h1><p>${escape(scene.copy)}</p></div><p class="note">${escape(scene.note)}<br>Sample inputs; not earned rewards.</p></section><div class="actual"><img class="${scene.kind}" src="${img}" alt="${escape(scene.alt)}"></div></main></body></html>`;
     await page.setContent(html);
     await page.evaluate(() => document.fonts.ready);
     await page.locator('img').evaluateAll((images) => Promise.all(images.map((img) => img.decode())));
     const fits = await page.evaluate(() => {
       const story = document.querySelector('.story').getBoundingClientRect(),
         note = document.querySelector('.note').getBoundingClientRect();
-      return story.bottom + 12 <= note.top && document.documentElement.scrollWidth === 640;
+      return story.bottom + 16 <= note.top && document.documentElement.scrollWidth === 1280;
     });
     if (!fits) throw new Error(`Asset copy overflows: ${scene.name}`);
-    const file = `${index + 1}-${scene.name}-640x400.png`;
+    const file = `${index + 1}-${scene.name}-1280x800.png`;
     writeFileSync(resolve(output, `${scene.name}.html`), html);
     await page.screenshot({ path: resolve(output, file) });
     const rendered = readFileSync(resolve(output, file));
-    if (rendered.readUInt32BE(16) !== 640 || rendered.readUInt32BE(20) !== 400)
+    if (rendered.readUInt32BE(16) !== IMAGE.width || rendered.readUInt32BE(20) !== IMAGE.height)
       throw new Error('Wrong screenshot dimensions');
     results.push({
       file,
       sha256: hash(rendered),
       bytes: rendered.length,
-      width: 640,
-      height: 400,
+      width: IMAGE.width,
+      height: IMAGE.height,
       capture: `captures/${scene.name}.png`,
       captureSha256: frame.sha256,
       composition:
-        scene.composition ??
-        'Actual native capture at 360 CSS pixels wide; top 400 CSS pixels shown without text or geometry alteration (the popup was scrolled so no line or control is cut at the crop edge). Explanatory left panel is presentation, not application UI.',
+        scene.kind === 'popup'
+          ? 'Actual popup page captured at its 360×600 popup size (1 CSS pixel per image pixel), placed whole and centred in the right 880×800; the popup was scrolled (never the pixels) so no line or control is cut at its edges. Explanatory left panel is presentation, not application UI.'
+          : 'Actual extension in an 880×800 window (1 CSS pixel per image pixel), filling the right 880×800 untouched. Explanatory left panel is presentation, not application UI.',
       alt: scene.alt,
     });
   }
   const chapters = JSON.parse(readFileSync(resolve(output, 'demo-chapters.json'), 'utf8'));
+  if (chapters.artifactSha256 !== capture.artifactSha256)
+    throw new Error('Recording and captures come from different artifacts');
   const videoPath = resolve(output, 'shopper-demo.webm');
   const probe = JSON.parse(
     execFileSync(
@@ -120,14 +133,20 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font
   const duration = Number(probe.format.duration);
   if (!Number.isFinite(duration) || duration < chapters.chapters.at(-1).atSeconds + 3)
     throw new Error('Recording ended before the final demonstration step');
+  // The composed video: 1280×720, a caption column on the left, the 880×660 recording at its size on the right.
+  const VIDEO = { width: 1280, height: 720 },
+    recording = chapters.viewport,
+    overlay = { x: VIDEO.width - recording.width - 20, y: (VIDEO.height - recording.height) / 2 };
+  if (probe.streams[0].width !== recording.width || probe.streams[0].height !== recording.height)
+    throw new Error('Recording size differs from its chapters file');
   const captionDir = resolve(output, 'video-captions');
   mkdirSync(captionDir, { recursive: true });
-  const videoPage = await browser.newPage({ viewport: { width: 960, height: 720 }, deviceScaleFactor: 1 });
+  const videoPage = await browser.newPage({ viewport: VIDEO, deviceScaleFactor: 1 });
   const concat = ['ffconcat version 1.0'];
   for (const [index, chapter] of chapters.chapters.entries()) {
     const start = index === 0 ? 0 : chapter.atSeconds,
       end = chapters.chapters[index + 1]?.atSeconds ?? duration;
-    const captionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo caption</title><style>${fonts}*{box-sizing:border-box}html,body{margin:0;width:960px;height:720px;background:#0c2a4d;color:#fff;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{padding:48px;width:560px}header{font-family:Bricolage,Figtree,sans-serif;font-size:24px;font-weight:700}h1{font-family:Bricolage,Figtree,sans-serif;font-size:38px;font-weight:700;line-height:1.15;margin:48px 0 32px;letter-spacing:-.02em}p{font-size:24px;line-height:1.5;margin:0;color:#a9c6ea}.scope{position:absolute;bottom:44px;left:48px;width:460px;font-size:16px;line-height:1.5;color:#a9c6ea}</style><body><main><header>AI Checkout</header><h1>Offline shopper demo</h1><p>${escape(chapter.caption)}</p><p class="scope">Synthetic inputs · no live retailer or model call.<br>Actual extension page at its original size.</p></main></body></html>`;
+    const captionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo caption</title><style>${fonts}*{box-sizing:border-box}html,body{margin:0;width:${VIDEO.width}px;height:${VIDEO.height}px;background:#0c2a4d;color:#fff;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{padding:36px 32px;width:${overlay.x}px}header{font-family:Bricolage,Figtree,sans-serif;font-size:20px;font-weight:700}h1{font-family:Bricolage,Figtree,sans-serif;font-size:28px;font-weight:700;line-height:1.15;margin:32px 0 20px;letter-spacing:-.02em}p{font-size:18px;line-height:1.5;margin:0;color:#a9c6ea}.scope{position:absolute;bottom:32px;left:32px;width:${overlay.x - 64}px;font-size:13px;line-height:1.5;color:#a9c6ea}</style><body><main><header>AI Checkout</header><h1>Staged shopper demo</h1><p>${escape(chapter.caption)}</p><p class="scope">Synthetic inputs · no live store, model call or report sent.<br>Actual extension at its original size.</p></main></body></html>`;
     await videoPage.setContent(captionHtml);
     await videoPage.evaluate(() => document.fonts.ready);
     const fits = await videoPage.evaluate(
@@ -158,7 +177,7 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font
       '-i',
       videoPath,
       '-filter_complex',
-      '[0:v]fps=25[bg];[bg][1:v]overlay=576:60:shortest=1,format=yuv420p[v]',
+      `[0:v]fps=25[bg];[bg][1:v]overlay=${overlay.x}:${overlay.y}:shortest=1,format=yuv420p[v]`,
       '-map',
       '[v]',
       '-an',
@@ -192,8 +211,8 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font
     ),
   );
   if (
-    composedProbe.streams[0].width !== 960 ||
-    composedProbe.streams[0].height !== 720 ||
+    composedProbe.streams[0].width !== VIDEO.width ||
+    composedProbe.streams[0].height !== VIDEO.height ||
     composedProbe.streams[0].codec_name !== 'h264' ||
     Math.abs(Number(composedProbe.format.duration) - duration) > 0.2
   )
@@ -207,12 +226,12 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:640px;height:400px;font
     .join('\n\n');
   writeFileSync(resolve(output, 'shopper-demo.vtt'), `WEBVTT\n\n${captions}\n`);
   const gallery = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Checkout release media</title><style>
-*{box-sizing:border-box}body{margin:0;background:#f9fafb;color:#111827;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:960px;margin:auto;padding:32px 24px}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin:40px 0 12px}p{max-width:72ch}a{color:#1d4ed8}figure{margin:0}figure img{display:block;width:100%;max-width:640px;height:auto}figcaption{margin:8px 0 24px;font-size:14px;color:#4b5563}.promo{max-width:440px}video{width:960px;max-width:100%;height:auto;background:#fff}.transcript{max-width:72ch}.transcript li{margin-bottom:12px}code{overflow-wrap:anywhere}a:focus-visible,video:focus-visible{outline:2px solid #1d4ed8;outline-offset:3px}@media(max-width:700px){main{padding:20px 16px}h1{font-size:28px}}</style></head><body><main>
-<h1>AI Checkout release media</h1><p>Reviewable assets for extension 2.1.0. These use the actual packaged interface and synthetic inputs. The Newegg scene uses a controlled fixture. Nothing here establishes customer savings, a live retailer check, deployment, model accuracy or store approval.</p><p>Artifact SHA-256: <code>${capture.artifactSha256}</code>. The bundled catalog ${escape(capture.catalogVersion)} expires ${new Date(capture.catalogExpiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} UTC; reverify terms and recapture before publishing an updated build.</p>
-${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h2><figure><a href="${result.file}"><img src="${result.file}" alt="${escape(result.alt)}"></a><figcaption>640 × 400. Actual extension UI detail with a presentation caption. <a href="${result.capture}">Full original native capture</a>.</figcaption></figure></section>`).join('')}
+*{box-sizing:border-box}body{margin:0;background:#f9fafb;color:#111827;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:960px;margin:auto;padding:32px 24px}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin:40px 0 12px}p{max-width:72ch}a{color:#1d4ed8}figure{margin:0}figure img{display:block;width:100%;max-width:960px;height:auto}figcaption{margin:8px 0 24px;font-size:14px;color:#4b5563}.promo{max-width:440px}video{width:960px;max-width:100%;height:auto;background:#fff}.transcript{max-width:72ch}.transcript li{margin-bottom:12px}code{overflow-wrap:anywhere}a:focus-visible,video:focus-visible{outline:2px solid #1d4ed8;outline-offset:3px}@media(max-width:700px){main{padding:20px 16px}h1{font-size:28px}}</style></head><body><main>
+<h1>AI Checkout release media</h1><p>Reviewable assets for extension 2.1.0 (the hosted build). These use the actual packaged interface, a neutral fictional sample cart and synthetic inputs. The one store the merchant release names (Lidl) appears only as the name the extension renders. Nothing here establishes customer savings, a live store check, model accuracy or store approval.</p><p>Artifact SHA-256: <code>${capture.artifactSha256}</code>. The bundled catalog ${escape(capture.catalogVersion)} expires ${new Date(capture.catalogExpiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} UTC; reverify terms and recapture before publishing an updated build.</p>
+${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h2><figure><a href="${result.file}"><img src="${result.file}" alt="${escape(result.alt)}"></a><figcaption>1280 × 800. Actual extension UI at 1 CSS pixel per image pixel with a presentation caption. <a href="${result.capture}">Original capture</a>.</figcaption></figure></section>`).join('')}
 <section><h2>Promotional image</h2><figure class="promo"><a href="promo-440x280.png"><img src="promo-440x280.png" alt="AI Checkout cart mark and name on the blue brand background"></a><figcaption>440 × 280; a brand image, not a product screenshot.</figcaption></figure><p><a href="icon-inspection.png">Inspect 16, 48 and 128px icons on light and dark backgrounds</a>.</p></section>
-<section><h2>Offline shopper walkthrough</h2><p>Actual 360 × 600 extension-page recording, placed at its original size beside explanatory captions in a 960 × 720 video. It demonstrates manual comparison, uncertainty, locking and deletion with sample inputs. It is separate from the native-toolbar captures above. There is no audio narration; visible captions and the transcript identify each step.</p><div class="demo"><video controls preload="metadata"><source src="shopper-demo.mp4" type="video/mp4"><track default kind="captions" src="shopper-demo.vtt" srclang="en" label="English"></video><ol class="transcript">${chapters.chapters.map((chapter) => `<li><strong>${timestamp(chapter.atSeconds).slice(3, 8)}</strong> ${escape(chapter.caption)}</li>`).join('')}</ol></div><p><a href="shopper-demo.mp4">MP4 recording</a> · <a href="shopper-demo.vtt">Captions</a> · <a href="assets-manifest.json">Asset provenance</a></p></section>
-<p>The separate <a href="full-stack-demo.md">full-stack recording and transcript</a> show the actual local review/API/database flow with simulated model responses. Hosted deployment and live model evaluation remain pending. See <a href="../portfolio-demo.md">the portfolio evidence plan</a> and <a href="../README.md">remaining release requirements</a>.</p></main></body></html>`;
+<section><h2>Staged shopper walkthrough</h2><p>Actual ${recording.width} × ${recording.height} recording of one tab, placed at its original size beside explanatory captions in a ${VIDEO.width} × ${VIDEO.height} video: the first run with the consent question, the badge on a sample cart at a store the release names, the rates view where a gift card makes the amount uncertain, and the popup comparison. There is no audio narration; visible captions and the transcript identify each step.</p><div class="demo"><video controls preload="metadata"><source src="shopper-demo.mp4" type="video/mp4"><track default kind="captions" src="shopper-demo.vtt" srclang="en" label="English"></video><ol class="transcript">${chapters.chapters.map((chapter) => `<li><strong>${timestamp(chapter.atSeconds).slice(3, 8)}</strong> ${escape(chapter.caption)}</li>`).join('')}</ol></div><p><a href="shopper-demo.mp4">MP4 recording</a> · <a href="shopper-demo.vtt">Captions</a> · <a href="assets-manifest.json">Asset provenance</a></p></section>
+<p>The separate <a href="full-stack-demo.md">full-stack recording and transcript</a> (2026-10-03, extension 2.0.0 era) show the local review/API/database flow with simulated model responses; the curation side is unchanged by this release. See <a href="../README.md">remaining release requirements</a>.</p></main></body></html>`;
   writeFileSync(resolve(output, 'index.html'), gallery);
   const promo = readFileSync(resolve(output, 'promo-440x280.png'));
   writeFileSync(
@@ -235,26 +254,26 @@ ${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h
             file: 'shopper-demo.mp4',
             sha256: hash(readFileSync(resolve(output, 'shopper-demo.mp4'))),
             bytes: statSync(resolve(output, 'shopper-demo.mp4')).size,
-            width: 960,
-            height: 720,
+            width: VIDEO.width,
+            height: VIDEO.height,
             durationSeconds: Number(composedProbe.format.duration),
             codec: 'h264',
-            layout:
-              'Unscaled 360×600 interaction recording plus persistent scope label and timed explanation.',
+            layout: `Unscaled ${recording.width}×${recording.height} one-tab recording plus persistent scope label and timed explanation.`,
           },
         },
         limits: [
           'Synthetic inputs, not observed users or savings.',
-          'Native captures use a controlled Newegg fixture.',
-          'Screen recording uses the extension page, not a native toolbar popup.',
-          'No live model call, deployment or store submission.',
+          'Captures use a neutral fictional sample cart; the named store (Lidl) is only the name the extension renders.',
+          'The popup is captured as the popup page in a tab at the popup size, not from the toolbar.',
+          'The badge panel in an 800-pixel window scrolls; rows below the fold are not shown.',
+          'No live store request, model call, report sent, deployment or store submission.',
         ],
       },
       null,
       2,
     ) + '\n',
   );
-  console.log('Rendered six 640×400 store screenshots, captions, gallery and asset provenance.');
+  console.log('Rendered five 1280×800 store screenshots, captions, gallery and asset provenance.');
 } finally {
   await browser.close();
 }
