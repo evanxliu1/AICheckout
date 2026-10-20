@@ -2,7 +2,7 @@
 // the staged shopper recording. Everything is captured at 1 CSS pixel per image pixel: the popup page at its
 // 360×600 popup size, the badge on a neutral fictional store page and the onboarding consent screen in an
 // 880×800 window. Fixture pages carry no retailer branding and no real store is named: the named store is a
-// fictional "Sample Grocery" on a reserved `.example` host, added to a test copy of the bundled merchant release
+// fictional "Sample Kitchen" (a restaurant) on a reserved `.example` host, added to a test copy of the bundled merchant release
 // cached in the capture profile (review of 2026-10-20: promotional media must not name a real retailer). The
 // hosted build is required (the consent screen exists only in builds with usage reporting); its catalog origin
 // is mapped to the loopback address so no request leaves the machine.
@@ -22,22 +22,19 @@ const SAMPLE_CARDS = [
   'Chase Freedom Unlimited',
   'American Express Blue Cash Everyday',
 ];
-/** A fictional store, never a real retailer: a supermarket record on the `definition` basis (so the badge panel
- * carries the evidence line), on a reserved `.example` host, citing the same issuer definitions as the bundled
- * release's supermarket records. It exists only in the test release below; the page is the neutral sample cart. */
-const NAMED_STORE = { id: 'sample-grocery-us', host: 'www.sample-grocery.example', name: 'Sample Grocery' };
-/** The bundled release's supermarket `definition` records cite these issuer pages (Bank of America, Chase,
- * Discover, U.S. Bank); the fictional record cites them too, so its evidence line reads as a real one does. */
-const ISSUER_DEFINITIONS = [
-  'boa-customized-cash-rewards-pricing',
-  'chase-rewards-category-faq',
-  'discover-cashback-calendar',
-  'us-bank-cash-plus-sample-merchants',
-];
+/** A fictional store, never a real retailer: a restaurant (online ordering) on the `definition` basis, so the
+ * badge panel carries the evidence line, on a reserved `.example` host. Like every bundled dining record it sells
+ * no physical goods, so online-retail rules do not apply and the card whose rule the evidence line names wins
+ * outright: Freedom Unlimited's uncapped 3% on dining (review of 2026-10-20: a supermarket record let Blue Cash
+ * Everyday's online-retail rule win under a supermarket evidence line, because its supermarket cap has no spend
+ * input). It exists only in the test release below; the page is the neutral sample cart. */
+const NAMED_STORE = { id: 'sample-kitchen-us', host: 'www.sample-kitchen.example', name: 'Sample Kitchen' };
+/** The issuer page whose dining definition the fictional record cites (the catalog cites it for Chase cards). */
+const ISSUER_DEFINITIONS = ['chase-rewards-category-faq'];
 /** The bundled release plus the fictional record, as a cached hosted release (sequence 1, verified with the
  * bundled one, so the cache is in effect on a tie). Validated with the extension's own schema. */
 function mediaMerchantRelease() {
-  const sourceId = 'sample-grocery-example-page-1';
+  const sourceId = 'sample-kitchen-example-page-1';
   const release = {
     ...MERCHANTS_V1,
     version: `${MERCHANTS_V1.verifiedAt.slice(0, 10)}.media-sample.1`,
@@ -58,8 +55,8 @@ function mediaMerchantRelease() {
         name: NAMED_STORE.name,
         hosts: [NAMED_STORE.host.replace(/^www\./, '')],
         kind: 'merchant' as const,
-        physicalGoods: true,
-        category: 'supermarkets' as const,
+        physicalGoods: false,
+        category: 'dining' as const,
         evidence: { basis: 'definition' as const, sourceIds: [sourceId, ...ISSUER_DEFINITIONS] },
         brandIds: [],
         disabled: false,
@@ -238,17 +235,20 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     // 2. The badge's amount view at a store the release names, expanded, with the evidence line.
     const named = await context.newPage();
     await named.goto(`https://${NAMED_STORE.host}/cart`);
-    let badge = await expandBadge(named, /Use Blue Cash Everyday · \$3\.00 back on this cart/);
+    let badge = await expandBadge(named, /Use Freedom Unlimited · \$3\.00 back on this cart/);
     await expect(
       badge.getByText(`Based on $100.00 cart estimated total at ${NAMED_STORE.name}.`, { exact: false }),
     ).toBeVisible();
     await expect(
-      badge.getByText(
-        'Treated as a supermarket (its own pages; fits Bank of America, Chase, Discover and U.S. Bank',
-        { exact: false },
-      ),
+      badge.getByText("Treated as a restaurant (its own pages; fits Chase's restaurant definition).", {
+        exact: false,
+      }),
     ).toBeVisible();
-    await expect(badge.getByText('3% on “U.S. online retail purchases”', { exact: false })).toBeVisible();
+    await expect(
+      badge.getByText('3% on “dining at restaurants, including takeout and eligible delivery services”', {
+        exact: false,
+      }),
+    ).toBeVisible();
     await capture('badge', named, await badge.locator('body').innerText());
     // Only the store's id and host reached the extension: no path, no page text.
     const session = JSON.stringify(await worker.evaluate(() => chrome.storage.session.get(null)));
@@ -413,7 +413,7 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     await page.goto(`chrome-extension://${demo.id}/src/onboarding/index.html`);
     await expect(page.getByRole('heading', { name: 'Welcome to AI Checkout' })).toBeVisible();
     await pause(
-      'Staged demo of the actual extension with sample inputs. No live store, no model, nothing sent.',
+      'Staged demo of the actual extension with sample inputs. No live store, no model; nothing left this machine.',
       3,
     );
     await pickSampleCards(page);
@@ -428,10 +428,10 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     await pause('Not now: no usage reports are sent.', 2);
     await page.goto(`https://${NAMED_STORE.host}/cart`);
     let badge = await badgeFrame(page);
-    const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back on this cart/ });
+    const pill = badge.getByRole('button', { name: /Use Freedom Unlimited · \$3\.00 back on this cart/ });
     await expect(pill).toBeVisible();
     await pause(
-      'On a cart page, the badge names your best card from the order summary. This fictional sample store is in a test copy of the store list.',
+      'On a cart page, the badge names your best card from the order summary. This fictional sample restaurant is in a test copy of the store list.',
       4,
     );
     await pill.click();
