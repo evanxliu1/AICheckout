@@ -17,7 +17,8 @@ import {
   telemetryRequestSchema,
 } from '../state/telemetry-contracts';
 import type { TelemetryResponse } from '../state/telemetry-contracts';
-import { catalogCacheSchema, emptyCatalogCache } from '../state/contracts';
+import { catalogCacheSchema, emptyCatalogCache, requestSchema } from '../state/contracts';
+import { vaultRequestSchema } from '../state/vault-contracts';
 import { currentCatalog } from '../state/catalog';
 import { currentMerchants, readMerchantCache } from '../state/merchants';
 import { CATALOG_KEY } from '../state/keys';
@@ -176,6 +177,13 @@ type PageRequest = {
 const CLEAR_REQUESTS = new Set(['checkout:vault-delete', 'checkout:clear']);
 async function reportsDeletedFirst(request: PageRequest): Promise<boolean> {
   if (!CLEAR_REQUESTS.has(request.type) || request.keepReports) return true;
+  // Only a well-formed clear deletes anything: a malformed one (no `confirmed`, an unknown field) is refused by
+  // the vault service below, and must not have stopped sharing or deleted the reports on its way there.
+  const schema = request.type === 'checkout:vault-delete' ? vaultRequestSchema : requestSchema;
+  if (!schema.safeParse(request).success) return true;
+  // Not sharing (never asked, Not now, Stop sharing): no identifier, nothing to delete, and the telemetry state
+  // is left as it was, so a clear that then fails does not also turn an unanswered consent into a refusal.
+  if ((await telemetry.status()).consent !== 'granted') return true;
   return (await telemetry.deleteData()) !== 'unavailable';
 }
 /** The usage events of one handled page request (Phase 15.3). */

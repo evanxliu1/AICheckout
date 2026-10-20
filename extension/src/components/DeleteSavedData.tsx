@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AlertInline, Button, Checkbox, Disclosure } from '@ai-checkout/ui';
 import { REPORTS_NOT_DELETED_MESSAGE } from '../state/telemetry-contracts';
 
@@ -45,6 +45,12 @@ export function ReportsNotDeleted({
   busy: boolean;
   onDelete: (options?: DeleteOptions) => void;
 }) {
+  // The Delete all local data button this follows was unmounted while the worker waited, so focus moves to the
+  // first choice instead of falling back to the page.
+  const retry = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!busy) retry.current?.focus();
+  }, [busy]);
   return (
     <AlertInline
       color="critical"
@@ -52,7 +58,7 @@ export function ReportsNotDeleted({
       title={REPORTS_NOT_DELETED_MESSAGE}
       actions={
         <>
-          <Button size="small" color="secondary" disabled={busy} onClick={() => onDelete()}>
+          <Button ref={retry} size="small" color="secondary" disabled={busy} onClick={() => onDelete()}>
             Try again
           </Button>
           <Button

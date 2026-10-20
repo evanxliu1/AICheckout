@@ -182,6 +182,8 @@ describe('local protection gate', () => {
     const alert = await screen.findByRole('alert');
     expect(alert.textContent).toContain('could not be deleted from the service, so nothing was cleared');
     expect(alert.textContent).toContain('expire after 90 days');
+    // The Delete button unmounted while the worker waited; focus lands on the first choice.
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Try again' }));
     // Try again repeats the same request; the identifier is still on the device.
     send.mockImplementationOnce(async () => ({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE }));
     fireEvent.click(screen.getByRole('button', { name: 'Try again' }));

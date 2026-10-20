@@ -198,6 +198,7 @@ select is((select count(*) from telemetry.events where received_at < now() - int
 select is((select count(*) from telemetry.install_days where day < (now() at time zone 'UTC')::date - 90), 0::bigint, 'no install day counter older than 90 days remains');
 select is((select count(*) from telemetry.days where day < (now() at time zone 'UTC')::date - 90), 0::bigint, 'no global day counter older than 90 days remains');
 select is(telemetry.prune_expired(), 0, 'a second run finds nothing to remove');
+select is((select count from telemetry.days where day=(now() at time zone 'UTC')::date), 20000, 'the run leaves today''s global counter (the row it locks first, as ingest does) unchanged');
 set local role anon;
 select throws_ok('select telemetry.prune_expired()','42501',null,'anonymous cannot run the scheduled prune');
 reset role;

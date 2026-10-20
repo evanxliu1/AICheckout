@@ -15,6 +15,11 @@ declare
   removed integer;
   total integer := 0;
 begin
+  -- Take today's global counter row first, as ingest_events does before it prunes. Ingest then waits at that
+  -- row for this run (a day's backlog, at most 20,000 rows under the cap: seconds) instead of locking some old
+  -- rows of a tie in received_at and waiting on others this run holds, which could deadlock the two.
+  insert into telemetry.days(day, count) values ((now() at time zone 'UTC')::date, 0) on conflict (day) do nothing;
+  perform 1 from telemetry.days where day = (now() at time zone 'UTC')::date for update;
   loop
     removed := telemetry.prune(1000);
     total := total + removed;

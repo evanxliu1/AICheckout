@@ -99,7 +99,8 @@ describe('Delete all local data deletes the usage reports first', () => {
     async (type) => {
       const { ask, local, stored } = await background();
       deleteInstall.mockResolvedValue({ status: 503 });
-      expect(await ask({ type, confirmed: true })).toEqual({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE });
+      const request = type === 'checkout:vault-delete' ? { type, confirmed: true } : { type };
+      expect(await ask(request)).toEqual({ ok: false, error: REPORTS_NOT_DELETED_MESSAGE });
       expect(deleteInstall).toHaveBeenCalledWith(INSTALL_ID, expect.any(AbortSignal));
       expect(local.clear).not.toHaveBeenCalled();
       expect((stored[TELEMETRY_KEY] as { installId: string }).installId).toBe(INSTALL_ID);
@@ -126,6 +127,23 @@ describe('Delete all local data deletes the usage reports first', () => {
     expect(stored[TELEMETRY_KEY]).toBeUndefined();
     // The deletion came before the clear: the id was still there to send.
     expect(deleteInstall.mock.invocationCallOrder[0]).toBeLessThan(local.clear.mock.invocationCallOrder[0]!);
+  });
+  it('a malformed clear (no confirmation) deletes nothing on the service and clears nothing', async () => {
+    const { ask, local, stored } = await background();
+    deleteInstall.mockResolvedValue({ status: 200 });
+    expect(await ask({ type: 'checkout:vault-delete' })).toMatchObject({ ok: false });
+    expect(await ask({ type: 'checkout:clear', confirmed: true })).toMatchObject({ ok: false });
+    expect(deleteInstall).not.toHaveBeenCalled();
+    expect(local.clear).not.toHaveBeenCalled();
+    expect(stored[TELEMETRY_KEY]).toMatchObject({ consent: 'granted', installId: INSTALL_ID });
+  });
+  it('not sharing: the service is not asked and the clear goes ahead as before', async () => {
+    const { ask, local, stored } = await background();
+    (stored[TELEMETRY_KEY] as Record<string, unknown>).consent = 'declined';
+    (stored[TELEMETRY_KEY] as Record<string, unknown>).installId = null;
+    expect(await ask({ type: 'checkout:clear' })).toMatchObject({ ok: true });
+    expect(deleteInstall).not.toHaveBeenCalled();
+    expect(local.clear).toHaveBeenCalledOnce();
   });
   it('Clear this device anyway (keepReports) skips the service and clears', async () => {
     const { ask, local } = await background();
