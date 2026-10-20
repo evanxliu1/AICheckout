@@ -6,6 +6,8 @@ import { createApp } from '../apps/api/src/app.ts';
 import { createCatalogRepository } from '../apps/api/src/catalog-repository.ts';
 import { createReviewRepository } from '../apps/api/src/review-repository.ts';
 import { createTokenVerifier } from '../apps/api/src/review-auth.ts';
+import { createTelemetryRepository } from '../apps/api/src/telemetry-repository.ts';
+import { TELEMETRY_EVENT_FIXTURES } from '../packages/catalog-review/test-cases.ts';
 import { catalogResponseSchema } from '../packages/rewards-core/src/schema.ts';
 
 // This test deliberately ignores hosted environment variables. Privileged credentials
@@ -34,6 +36,7 @@ const userIds = [],
   sourceIds = [],
   draftIds = [];
 let initialHead,
+  telemetryEventIds = [],
   fixtureStarted = false,
   app,
   address;
@@ -99,6 +102,7 @@ try {
     readCatalog,
     reviewRpc: createReviewRepository(apiUrl, publicKey),
     verifyReviewToken: createTokenVerifier(apiUrl, publicKey),
+    telemetryRpc: createTelemetryRepository(apiUrl, publicKey),
   });
   address = await app.listen({ host: '127.0.0.1', port: 0 });
   const reviewer = await account(),
@@ -225,6 +229,44 @@ try {
   assert.deepEqual(catalogResponseSchema.parse(await response.json()), { release });
   console.log('PASS: Node HTTP API reads the real public head/snapshot join using only the publishable key.');
 
+  // Telemetry (Phase 15.2): anonymous ingest through the real anon RPC, the reviewer's summary read, Delete my
+  // data. The install id is this run's own, so the rows it leaves are its own to delete.
+  const installId = randomUUID();
+  const telemetryEvents = [
+    { ...TELEMETRY_EVENT_FIXTURES.consent_granted, event_id: randomUUID(), install_id: installId },
+    { ...TELEMETRY_EVENT_FIXTURES.store_suggested, event_id: randomUUID(), install_id: null },
+  ];
+  telemetryEventIds = telemetryEvents.map((event) => event.event_id);
+  const ingest = await fetch(`${address}/v1/events`, {
+    method: 'POST',
+    signal: AbortSignal.timeout(10000),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ events: telemetryEvents }),
+  });
+  assert.equal(ingest.status, 200, 'Anonymous ingest');
+  assert.deepEqual(await ingest.json(), { accepted: 2, dropped: 0 });
+  assert.equal(
+    (await review('GET', '/telemetry/summary?days=1', ordinary.token)).status,
+    403,
+    'A non-reviewer cannot read the summary',
+  );
+  const summary = ok(await review('GET', '/telemetry/summary?days=1', reviewer.token), 'Reviewer summary');
+  assert.ok(summary.events >= 2 && summary.installs >= 1, 'The summary counts the ingested events');
+  const suggestions = ok(
+    await review('GET', '/telemetry/suggestions', reviewer.token),
+    'Reviewer suggestions',
+  );
+  assert.ok(suggestions.some((row) => row.domain === TELEMETRY_EVENT_FIXTURES.store_suggested.domain));
+  const deletion = await fetch(`${address}/v1/events/delete`, {
+    method: 'POST',
+    signal: AbortSignal.timeout(10000),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ install_id: installId }),
+  });
+  assert.equal(deletion.status, 200, 'Delete my data');
+  assert.deepEqual(await deletion.json(), { deleted: 1 });
+  console.log('PASS: anonymous telemetry ingest through the anon RPC, reviewer-only reads, Delete my data.');
+
   ok(await request('/auth/v1/logout?scope=global', { token: reviewer.token }), 'Sign out reviewer');
   assert.equal((await review('GET', `/drafts/${draft.id}`, reviewer.token)).status, 403);
   assert.equal((await review('POST', `/drafts/${draft.id}/publish`, reviewer.token, approval)).status, 403);
@@ -254,6 +296,7 @@ try {
       await owner.query('delete from catalog_private.drafts where id=any($1)', [draftIds]);
       await owner.query('delete from public.catalog_releases where sequence=any($1::bigint[])', [releases]);
       await owner.query('delete from catalog_private.source_documents where id=any($1)', [sourceIds]);
+      await owner.query('delete from telemetry.events where event_id=any($1::uuid[])', [telemetryEventIds]);
       await owner.query('commit');
     }
   } finally {

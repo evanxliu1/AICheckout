@@ -10,6 +10,7 @@ import { createCurationDatabase } from './curation/database.ts';
 import { createCurationLedger } from './curation/ledger.ts';
 import { fixtureRefusalProvider, type CurationExecution } from './curation/service.ts';
 import { createOpenAIProviderFactory } from './curation/openai.ts';
+import { createTelemetryRepository } from './telemetry-repository.ts';
 
 const env = z
   .object({
@@ -29,6 +30,14 @@ const env = z
     CURATION_ALLOW_METERED: z.enum(['false', 'true']).default('false'),
     OPENAI_API_KEY: z.string().min(1).max(4096).optional(),
     CURATION_RATE_LIMIT: z.coerce.number().int().min(1).max(60).default(3),
+    // Telemetry (Phase 15.2): the kill switch, the Chrome extension ids whose Origin is accepted (empty: no
+    // check, until the first Web Store upload assigns one), and the trusted proxy hops in front of the API.
+    TELEMETRY_INGEST: z.enum(['on', 'off']).default('on'),
+    EXTENSION_IDS: z
+      .string()
+      .regex(/^([a-p]{32}(,[a-p]{32})*)?$/)
+      .default(''),
+    TELEMETRY_PROXY_HOPS: z.coerce.number().int().min(0).max(4).default(0),
   })
   .safeParse(process.env);
 if (!env.success)
@@ -89,6 +98,12 @@ const app = createApp({
   curation,
   shutdownSignal: shutdown.signal,
   curationLimit: env.data.CURATION_RATE_LIMIT,
+  telemetryRpc: createTelemetryRepository(env.data.SUPABASE_URL, env.data.SUPABASE_PUBLISHABLE_KEY),
+  telemetry: {
+    ingest: env.data.TELEMETRY_INGEST,
+    extensionIds: env.data.EXTENSION_IDS.split(',').filter(Boolean),
+    proxyHops: env.data.TELEMETRY_PROXY_HOPS,
+  },
 });
 if (curationDatabase)
   app.addHook('onClose', async () => {

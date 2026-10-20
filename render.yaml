@@ -22,6 +22,14 @@ services:
         value: disabled
       - key: CURATION_ALLOW_METERED
         value: 'false'
+      # Telemetry (Phase 15.2): the kill switch, Render's one proxy hop for the client IP bucket, and the
+      # Chrome extension ids whose Origin is accepted (set in the dashboard after the first Web Store upload).
+      - key: TELEMETRY_INGEST
+        value: 'on'
+      - key: TELEMETRY_PROXY_HOPS
+        value: '1'
+      - key: EXTENSION_IDS
+        sync: false
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_PUBLISHABLE_KEY

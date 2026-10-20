@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-10-20
+* [Phase 15.2 implementer choices: the event schema built in SQL from one envelope, the amount rule on recommendation_shown, whole-batch refusal, the API's own fixed-window limiter, the client IP at a configurable proxy hop, reviewer reads through the catalog_private pattern](./2026-10-20-telemetry-backend-details.md) — implementer: the telemetry backend's details within the plan's 15.2 row and the 2026-10-19 design decision; the stale local PostgREST finding.
+
 ## 2026-10-19
 * [Retire the three legacy adapters in Release A; measure for the record; drop order detection and savings](./2026-10-19-retire-legacy-adapters.md) — Evan: "retire … no matter what"; the A4 check becomes a committed before-and-after record, not a gate; URL-only order detection and the savings history go with the adapters; `savings` stays a tolerated field in state schema 3.
 * [Release A telemetry on the existing Supabase and Render API](./2026-10-19-release-a-telemetry-design.md) — planner: private `telemetry` schema reached through anon-granted security-definer RPCs behind the API, caps and 90-day pruning inside the ingest RPC (no pg_cron), 410 kill switch, a build-time switch so Release A can ship without telemetry, fixed problem reasons, tap features without an ID when sharing is off, a generated event dictionary.

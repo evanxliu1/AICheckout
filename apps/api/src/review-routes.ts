@@ -18,6 +18,9 @@ import {
   MAX_DRAFT_REQUEST_BYTES,
   MAX_MERCHANT_PUBLISH_REQUEST_BYTES,
   MAX_CAPTURES_PER_MINUTE,
+  TELEMETRY_LIMITS,
+  storeSuggestionsSchema,
+  telemetrySummarySchema,
 } from '@ai-checkout/catalog-review';
 import { ReviewError, type ReviewRpc } from './review-repository.ts';
 import type { VerifyToken } from './review-auth.ts';
@@ -271,6 +274,20 @@ export async function reviewRoutes(
         p_review_note: value.reviewNote,
       }),
     );
+  });
+  // Telemetry reads (Phase 15.2): two aggregates the database derives under require_reviewer(); never raw rows.
+  app.get('/telemetry/suggestions', async (request) => {
+    input(z.strictObject({}), request.query);
+    return storeSuggestionsSchema.parse(await rpc('telemetry_store_suggestions', bearer(request), {}));
+  });
+  app.get('/telemetry/summary', async (request) => {
+    const { days } = input(
+      z.strictObject({
+        days: z.coerce.number().int().min(1).max(TELEMETRY_LIMITS.summaryDays).default(30),
+      }),
+      request.query,
+    );
+    return telemetrySummarySchema.parse(await rpc('telemetry_summary', bearer(request), { p_days: days }));
   });
   // Merchant releases (Phase 14.6) have no drafts: the pipeline CLI publishes the whole release, built
   // and reviewed in the repository, on Evan's chat instruction. The body can be 2 MiB, so the token is
