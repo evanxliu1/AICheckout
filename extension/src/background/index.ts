@@ -1,6 +1,6 @@
 import { createVaultService } from '../state/vault-service';
 import { readActiveCheckout, validateActiveCheckout } from '../checkout/browser';
-import { fetchPublishedCatalog, fetchPublishedMerchants } from '../catalog-config';
+import { fetchPublishedCatalog, fetchPublishedMerchants, uninstalledUrl } from '../catalog-config';
 import { createBadgeService } from './badge-service';
 import { BADGE_PAGE, ONBOARDING_PAGE, POPUP_PAGE } from '../badge/contracts';
 import { routeMessage } from './routing';
@@ -50,18 +50,34 @@ chrome.alarms?.onAlarm.addListener((alarm) => {
   void ready
     .then(() => handle.refreshReleases(REFRESH_TIMEOUT_MS))
     .then((outcome) => {
+      refreshed();
       if (alarm.name === REFRESH_ALARM && (outcome.catalog === 'failed' || outcome.merchants === 'failed'))
         return chrome.alarms.create(REFRESH_RETRY_ALARM, { delayInMinutes: REFRESH_RETRY_MINUTES });
-      // Badges and pages re-read the releases in effect on their next request; tell open badges now.
-      notify(null);
     })
     .catch(() => undefined);
 });
+/** A new install refreshes both releases at once (Phase 15.4): the bundled catalog of a store build may
+ * have expired, and the pages say "Checking for updated terms…" until this settles. A failure needs no
+ * retry of its own: the weekly alarm's first run follows REFRESH_FIRST_MINUTES later. */
+function refreshAtInstall() {
+  void ready
+    .then(() => handle.refreshReleases(REFRESH_TIMEOUT_MS))
+    .then(refreshed)
+    .catch(() => undefined);
+}
+/** A background refresh settled, with or without new terms: badges and pages re-read the releases in effect
+ * on their next request; open badges reload now, and a popup showing "Checking…" reloads too. */
+function refreshed() {
+  notify(null);
+  void chrome.runtime.sendMessage({ type: 'terms:checked' }).catch(() => undefined);
+}
 chrome.runtime.onStartup?.addListener(() => void scheduleRefresh());
 /** Badge iframes refresh their view on this broadcast. Runtime messages never reach content scripts. */
 function notify(tabId: number | null) {
   void chrome.runtime.sendMessage({ type: 'badge:changed', tabId }).catch(() => undefined);
 }
+// Hosted builds: Chrome opens the site's static page after an uninstall (no parameters; needs no permission).
+if (uninstalledUrl) void chrome.runtime.setUninstallURL(uninstalledUrl).catch(() => undefined);
 async function open(target: 'popup' | 'onboarding') {
   if (target === 'popup') {
     try {
@@ -145,7 +161,9 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.runtime.onInstalled.addListener((details) => {
   void restrictStorage().catch(() => undefined);
   void scheduleRefresh();
-  // First install: pick cards in a full tab, so the badge has something to compare.
-  if (details.reason === 'install')
+  // First install: fetch current terms now, and pick cards in a full tab so the badge has something to compare.
+  if (details.reason === 'install') {
+    refreshAtInstall();
     void chrome.tabs.create({ url: chrome.runtime.getURL(ONBOARDING_PAGE) }).catch(() => undefined);
+  }
 });

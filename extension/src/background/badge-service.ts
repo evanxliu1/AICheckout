@@ -31,7 +31,13 @@ export interface BadgeDeps {
   local: Pick<StateStorage, 'get' | 'set'>;
   session: Pick<StateStorage, 'get' | 'set'>;
   vault: {
-    snapshot: () => Promise<{ status: VaultStatus; state: AppState | null; catalog: Catalog | null }>;
+    snapshot: () => Promise<{
+      status: VaultStatus;
+      state: AppState | null;
+      catalog: Catalog | null;
+      /** A refresh is in flight and the catalog has expired (Phase 15.4). */
+      checkingTerms: boolean;
+    }>;
   };
   clock?: () => number;
   open: (target: 'popup' | 'onboarding') => Promise<void>;
@@ -234,7 +240,11 @@ export function createBadgeService({
       now,
       merchantOption(catalog, entry.merchantId, inEffect),
     );
-    if (result.status === 'unavailable') return { kind: 'unavailable', merchantId: entry.merchantId, result };
+    if (result.status === 'unavailable')
+      // Expired terms with a refresh in flight (Phase 15.4): "checking", never "expired", until it settles.
+      return result.reason === 'catalog-expired' && snapshot.checkingTerms
+        ? { kind: 'checking' }
+        : { kind: 'unavailable', merchantId: entry.merchantId, result };
     if (!amountCents)
       return {
         kind: 'rates',

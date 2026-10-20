@@ -300,3 +300,34 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
     await context.close();
   }
 });
+
+// Phase 15.4: before any card is picked, the pill at a generic store is the way back to onboarding (the
+// install's onboarding tab is closed first, as a shopper who dismissed it would have). It opens setup and
+// expands nothing, so the per-tab "Dismiss" lives only in the expanded panel of a comparison.
+test('no cards at a generic store: the pill opens onboarding', async ({ browserName }, testInfo) => {
+  expect(browserName).toBe('chromium');
+  const { context, id } = await launch(testInfo);
+  try {
+    await expect
+      .poll(() =>
+        context.pages().some((p) => p.url() === `chrome-extension://${id}/src/onboarding/index.html`),
+      )
+      .toBe(true);
+    await context
+      .pages()
+      .find((p) => p.url().endsWith('/src/onboarding/index.html'))!
+      .close();
+    const cart = await context.newPage();
+    await cart.goto('https://shop.example.com/cart');
+    const badge = await badgeFrame(cart);
+    const pick = badge.getByRole('button', { name: /Pick your cards to see your best card/ });
+    await expect(pick).toBeVisible();
+    await axeBadge(badge, 'no cards at a generic store');
+    const pages = context.pages().length;
+    await pick.click();
+    await expect.poll(() => context.pages().length).toBe(pages + 1);
+    expect(context.pages().at(-1)!.url()).toBe(`chrome-extension://${id}/src/onboarding/index.html`);
+  } finally {
+    await context.close();
+  }
+});

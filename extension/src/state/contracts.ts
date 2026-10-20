@@ -218,6 +218,9 @@ export type CheckoutResponse =
       comparison: Comparison | UnavailableComparison | null;
       notice: string | null;
       catalogUpdatesAvailable: boolean;
+      /** A background refresh is in flight and the catalog in effect has expired (Phase 15.4): pages say
+       * "Checking for updated terms…" instead of "expired" until the worker's `badge:changed` broadcast. */
+      checkingTerms: boolean;
     }
   | { ok: false; error: string };
 
@@ -280,6 +283,7 @@ export const responseSchema = z.discriminatedUnion('ok', [
       .max(CATALOG_V3_LIMITS.cards),
     notice: z.string().max(1000).nullable(),
     catalogUpdatesAvailable: z.boolean(),
+    checkingTerms: z.boolean(),
     comparison: z
       .discriminatedUnion('status', [
         z.strictObject({

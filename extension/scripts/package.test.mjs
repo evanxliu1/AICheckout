@@ -49,7 +49,7 @@ function fixture(t) {
       readFileSync(new URL(`../public/icons/icon${size}.png`, import.meta.url)),
     );
   const pkg = join(root, 'package.json');
-  writeFileSync(pkg, JSON.stringify({ version: '2.0.0' }));
+  writeFileSync(pkg, JSON.stringify({ version: '2.1.0' }));
   return {
     root,
     dist,
@@ -170,12 +170,12 @@ test('extra files and symlinks fail closed, including symlinks under ignored nam
     '.vite/private.json',
   ]) {
     f.put(path, 'must not ship');
-    assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Unexpected packaged file/);
+    assert.throws(() => inspectBuild(f.dist, '2.1.0'), /Unexpected packaged file/);
     rmSync(join(f.dist, path));
   }
   for (const path of ['assets/linked.js', 'vite.svg']) {
     symlinkSync(join(f.root, 'package.json'), join(f.dist, path));
-    assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Symlink/);
+    assert.throws(() => inspectBuild(f.dist, '2.1.0'), /Symlink/);
     rmSync(join(f.dist, path));
   }
 });
@@ -183,16 +183,16 @@ test('extra files and symlinks fail closed, including symlinks under ignored nam
 test('bundled woff2 theme fonts are packaged; other font formats are not', (t) => {
   const f = fixture(t);
   f.put('assets/figtree-latin-wght-normal-Ab12.woff2', 'wOF2');
-  assert.doesNotThrow(() => inspectBuild(f.dist, '2.0.0'));
+  assert.doesNotThrow(() => inspectBuild(f.dist, '2.1.0'));
   f.put('assets/figtree-latin-wght-normal-Ab12.ttf', 'ttf');
-  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Unexpected packaged file/);
+  assert.throws(() => inspectBuild(f.dist, '2.1.0'), /Unexpected packaged file/);
 });
 
 test('missing references, private-key tripwires, dev clients and wrongly sized icons fail inspection', (t) => {
   const f = fixture(t);
   const asset = readFileSync(join(f.dist, 'assets/popup-test.js'));
   rmSync(join(f.dist, 'assets/popup-test.js'));
-  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /missing page asset/);
+  assert.throws(() => inspectBuild(f.dist, '2.1.0'), /missing page asset/);
   for (const text of [
     'sk-proj-' + 'x'.repeat(40),
     'sb_secret_' + 'x'.repeat(40),
@@ -200,11 +200,11 @@ test('missing references, private-key tripwires, dev clients and wrongly sized i
     '//# sourceMappingURL=test.js.map',
   ]) {
     f.put('assets/popup-test.js', text);
-    assert.throws(() => inspectBuild(f.dist, '2.0.0'), /credential|Development reference/);
+    assert.throws(() => inspectBuild(f.dist, '2.1.0'), /credential|Development reference/);
   }
   f.put('assets/popup-test.js', asset);
   f.put('public/icons/icon16.png', readFileSync(join(f.dist, 'public/icons/icon128.png')));
-  assert.throws(() => inspectBuild(f.dist, '2.0.0'), /Invalid 16px PNG/);
+  assert.throws(() => inspectBuild(f.dist, '2.1.0'), /Invalid 16px PNG/);
 });
 
 test('the badge reach is exactly every https site (Phase 13c; changing it must change this test)', () => {

@@ -158,7 +158,12 @@ describe('state schema 2 → 3 migration', () => {
     expect((saved[CATALOG_KEY] as CatalogCache).release?.sequence).toBe(4);
     // Locking keeps the public catalog readable and the wallet closed.
     await service({ type: 'checkout:vault-lock' });
-    expect(await service.snapshot()).toEqual({ status: 'locked', state: null, catalog: null });
+    expect(await service.snapshot()).toEqual({
+      status: 'locked',
+      state: null,
+      catalog: null,
+      checkingTerms: false,
+    });
     expect(local.read()[CATALOG_KEY]).toEqual(saved[CATALOG_KEY]);
   });
 });

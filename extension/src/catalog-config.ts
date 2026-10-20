@@ -7,3 +7,6 @@ export const fetchPublishedCatalog = endpoint ? createCatalogFetcher(endpoint) :
 export const fetchPublishedMerchants = endpoint
   ? createMerchantFetcher(new URL('/v1/merchants', endpoint).href)
   : undefined;
+/** The public site is served by the same origin: the static page Chrome opens after an uninstall (Phase
+ * 15.4), with no parameters, so hosting logs never see an install id. Hosted builds only. */
+export const uninstalledUrl = endpoint ? new URL('/uninstalled/', endpoint).href : undefined;

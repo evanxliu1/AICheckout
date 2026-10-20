@@ -67,6 +67,7 @@ export function pageResponse(
   notice: string | null,
   catalogUpdatesAvailable: boolean,
   extraCardIds: string[] = [],
+  checkingTerms = false,
 ): CheckoutResponse {
   return {
     ok: true,
@@ -76,8 +77,13 @@ export function pageResponse(
     comparison,
     notice,
     catalogUpdatesAvailable,
+    checkingTerms,
   };
 }
+/** Phase 15.4: a background refresh is in flight and the catalog in effect has expired, so pages say
+ * "Checking for updated terms…" instead of "expired" until it settles. */
+export const checkingTerms = (catalog: Catalog, refreshing: boolean, now: number) =>
+  refreshing && now >= Date.parse(catalog.expiresAt);
 
 /** Storage is authoritative. Reconnecting popups do not rely on worker memory. */
 export function createStateService(
@@ -90,6 +96,8 @@ export function createStateService(
   fetchMerchants?: (signal: AbortSignal) => Promise<unknown>,
 ) {
   let queue = Promise.resolve<unknown>(undefined);
+  /** Background refreshes (`refreshReleases`) in flight (Phase 15.4). */
+  let refreshing = 0;
   /** The merchant release in effect for the request being handled; `load` sets it from the cache. Requests
    * run one at a time (the queue), so no request sees another's release. */
   let merchants: MerchantRelease = release;
@@ -108,7 +116,16 @@ export function createStateService(
     comparison: Extract<CheckoutResponse, { ok: true }>['comparison'] = null,
     notice: string | null = null,
     extraCardIds: string[] = [],
-  ): CheckoutResponse => pageResponse(state, catalog, comparison, notice, !!fetchCatalog, extraCardIds);
+  ): CheckoutResponse =>
+    pageResponse(
+      state,
+      catalog,
+      comparison,
+      notice,
+      !!fetchCatalog,
+      extraCardIds,
+      checkingTerms(catalog, refreshing > 0, clock()),
+    );
   async function bounded<T>(promise: Promise<T>): Promise<T> {
     let timer: ReturnType<typeof setTimeout>;
     try {
@@ -402,7 +419,11 @@ export function createStateService(
   /** Fetches the published catalog and commits the update: one write, so the new cache and the wallet
    * pruned for it land together or not at all. Throws `CatalogUpdateError`. */
   async function refreshCatalog(state: AppState, cache: CatalogCache, limit: number) {
-    const input = await fetchBounded(fetchCatalog!, limit, CatalogUpdateError, 'card terms');
+    return commitCatalog(state, cache, await fetchCatalogBounded(limit));
+  }
+  const fetchCatalogBounded = (limit: number) =>
+    fetchBounded(fetchCatalog!, limit, CatalogUpdateError, 'card terms');
+  async function commitCatalog(state: AppState, cache: CatalogCache, input: unknown) {
     const update = prepareCatalogUpdate(state, cache, input, clock());
     await storage.set(
       update.state
@@ -413,7 +434,11 @@ export function createStateService(
   }
   /** Fetches the published merchant release and commits the cache (Phase 14.6). Throws `MerchantUpdateError`. */
   async function refreshMerchants(limit: number) {
-    const input = await fetchBounded(fetchMerchants!, limit, MerchantUpdateError, 'store data');
+    return commitMerchants(await fetchMerchantsBounded(limit));
+  }
+  const fetchMerchantsBounded = (limit: number) =>
+    fetchBounded(fetchMerchants!, limit, MerchantUpdateError, 'store data');
+  async function commitMerchants(input: unknown) {
     const update = prepareMerchantUpdate(await readMerchantCache(storage), input, clock(), release);
     await storage.set({ [MERCHANTS_KEY]: update.cache });
     return update;
@@ -430,10 +455,11 @@ export function createStateService(
     return task;
   };
   /** The saved state (migrated if needed) and the catalog in effect, read in the same queue as writes. */
-  service.read = (): Promise<{ state: AppState; catalog: Catalog }> => {
+  service.read = (): Promise<{ state: AppState; catalog: Catalog; checkingTerms: boolean }> => {
     const task = queue.then(async () => {
-      const { state, catalog } = await load(clock());
-      return { state, catalog };
+      const now = clock();
+      const { state, catalog } = await load(now);
+      return { state, catalog, checkingTerms: checkingTerms(catalog, refreshing > 0, now) };
     });
     queue = task.then(
       () => undefined,
@@ -441,21 +467,42 @@ export function createStateService(
     );
     return task;
   };
-  /** The weekly background refresh (Phase 14.6): the catalog (unless `catalog: false`, when the state cannot
-   * be read, as with a locked vault), then the merchant release, each on its own; a fetch that fails (the
-   * service asleep, offline) reports `failed` so the caller can retry later. Nothing is shown to the shopper;
-   * the next page load sees the releases in effect. */
-  service.refreshReleases = (
+  function serial<T>(operation: () => Promise<T>): Promise<T> {
+    const task = queue.then(operation);
+    queue = task.then(
+      () => undefined,
+      () => undefined,
+    );
+    return task;
+  }
+  /** The background refresh (Phase 14.6, weekly; Phase 15.4, also right after install): the catalog (unless
+   * `catalog: false`, when the state cannot be read, as with a locked vault), then the merchant release, each
+   * on its own; a fetch that fails (the service asleep, offline) reports `failed` so the caller can retry
+   * later. The fetches run outside the queue (they may wait out a cold start), so pages are answered
+   * meanwhile with `checkingTerms` set while the catalog in effect has expired; `commit` joins the queue
+   * (the vault service runs it in its own queue too) so a cache and the wallet reconciled for it land in
+   * one write, never interleaved with a page's write. */
+  service.refreshReleases = async (
     limit: number,
-    { catalog: refreshTheCatalog = true }: { catalog?: boolean } = {},
+    {
+      catalog: refreshTheCatalog = true,
+      /** An outer queue the commit also runs in (the vault service's); the state queue is always used. */
+      commit = (operation) => operation(),
+    }: { catalog?: boolean; commit?: <T>(operation: () => Promise<T>) => Promise<T> } = {},
   ): Promise<{ catalog: RefreshOutcome; merchants: RefreshOutcome }> => {
-    const task = queue.then(async () => {
+    refreshing += 1;
+    try {
       let catalogOutcome: RefreshOutcome = 'skipped',
         merchantOutcome: RefreshOutcome = 'skipped';
       if (fetchCatalog && refreshTheCatalog) {
         try {
-          const { state, cache } = await load(clock());
-          await refreshCatalog(state, cache, limit);
+          const input = await fetchCatalogBounded(limit);
+          await commit(() =>
+            serial(async () => {
+              const { state, cache } = await load(clock());
+              await commitCatalog(state, cache, input);
+            }),
+          );
           catalogOutcome = 'ok';
         } catch {
           catalogOutcome = 'failed';
@@ -463,19 +510,17 @@ export function createStateService(
       }
       if (fetchMerchants) {
         try {
-          await refreshMerchants(limit);
+          const input = await fetchMerchantsBounded(limit);
+          await commit(() => serial(() => commitMerchants(input)));
           merchantOutcome = 'ok';
         } catch {
           merchantOutcome = 'failed';
         }
       }
       return { catalog: catalogOutcome, merchants: merchantOutcome };
-    });
-    queue = task.then(
-      () => undefined,
-      () => undefined,
-    );
-    return task;
+    } finally {
+      refreshing -= 1;
+    }
   };
   // Browser lifecycle events enter the same queue as user writes.
   service.invalidateTab = (tabId: number): Promise<void> => {
