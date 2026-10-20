@@ -838,11 +838,11 @@ function Privacy(): Rendered {
               <code>POST /v1/events</code> on the same service every 15 minutes while any wait, at once when
               50 are waiting, when you choose Share and when you tap Suggest or Report; at most 200 wait on
               the device. The service accepts at most 500 reports per identifier per day and keeps raw reports
-              for <strong>90 days</strong>; it deletes older reports each time it receives, deletes or
-              summarises reports, so deletion can lag only while it receives no requests at all. Aggregate
-              counts with no identifier (for example how often a store was suggested) may be kept longer.
-              Reports are reviewed as such aggregate counts and as the list of suggested store domains with
-              their counts.
+              for <strong>90 days</strong>: a scheduled job on the service deletes older reports once a day
+              (03:17 UTC), and the service also deletes them each time it receives, deletes or summarises
+              reports, so a report is gone within about a day after it turns 90 days old. Aggregate counts
+              with no identifier (for example how often a store was suggested) may be kept longer. Reports are
+              reviewed as such aggregate counts and as the list of suggested store domains with their counts.
             </li>
             <li>
               <strong>Your controls, in Settings.</strong> <strong>Stop sharing</strong> (the toggle off)
@@ -892,9 +892,13 @@ function Privacy(): Rendered {
               <strong>Delete all local data</strong> (expand <strong>Delete saved data</strong> in the popup
               and confirm) clears everything the extension saved, including the downloaded catalog and store
               list, the unlock key and the usage-reporting state (your answer, the identifier and waiting
-              reports); card setup returns, and nothing is shared until you choose Share again. It does not
-              affect a store’s cart, your browser history, or reports already sent; because the identifier is
-              cleared too, use <strong>Delete my data</strong> first if you want those deleted.
+              reports). While you are sharing, it first sends your identifier to{' '}
+              <code>POST /v1/events/delete</code>, exactly as <strong>Delete my data</strong> does, and clears
+              this device only once the service confirms the deletion; if the service cannot be reached or
+              refuses, nothing is cleared and the extension offers <strong>Try again</strong> or{' '}
+              <strong>Clear this device anyway</strong>, which keeps the reports already sent until they
+              expire. Card setup returns, and nothing is shared until you choose Share again. It does not
+              affect a store’s cart or your browser history.
             </li>
             <li>
               <strong>Delete my data</strong> (Settings) deletes the usage reports stored under your
@@ -903,8 +907,9 @@ function Privacy(): Rendered {
             <li>
               <strong>Uninstalling</strong> removes the extension’s storage from your device; Chrome then
               opens a <Link href="/uninstalled/">page on this site</Link> with no parameters that repeats
-              these points. Reports already sent expire after 90 days; to delete them earlier, use{' '}
-              <strong>Delete my data</strong> before uninstalling, since the identifier leaves with the
+              these points. Reports already sent are deleted within about a day after they turn 90 days old;
+              to delete them earlier, use <strong>Delete my data</strong> or{' '}
+              <strong>Delete all local data</strong> before uninstalling, since the identifier leaves with the
               extension.
             </li>
           </ul>
@@ -1054,19 +1059,24 @@ function Support(): Rendered {
             or off (<strong>Stop sharing</strong>: the identifier and anything waiting are deleted and nothing
             more is sent). <strong>Delete my data</strong> asks the service to delete every report stored
             under your current identifier, then stops sharing; use it before stopping sharing if you want
-            earlier reports gone. Reports expire after 90 days in any case. What a report contains is in the{' '}
+            earlier reports gone. Reports are deleted by the service within about a day after they turn 90
+            days old in any case. What a report contains is in the{' '}
             <Link href="/privacy/">privacy policy</Link>.
           </p>
         </Section>
         <Section id="delete" title="Delete your data">
           <p>
             Expand <strong>Delete saved data</strong> in the popup, confirm, and choose{' '}
-            <strong>Delete all local data</strong>: your cards, options, settings, purchase inputs, the
-            downloaded terms and store list, the unlock key and the usage-reporting identifier and answer;
-            card setup returns. It does not affect a store’s cart or your browser history, and it does not
-            delete usage reports already sent: use <strong>Delete my data</strong> first for those, since the
-            identifier is cleared too. Uninstalling removes the extension’s storage from your device; reports
-            already sent expire after 90 days, so use Delete my data first to delete them earlier.
+            <strong>Delete all local data</strong>. While you share usage reports, it first asks the service
+            to delete the reports stored under your identifier (as <strong>Delete my data</strong> does) and
+            clears this device only once that succeeded; if the service cannot be reached, nothing is cleared
+            and you can <strong>Try again</strong> or <strong>Clear this device anyway</strong> (the reports
+            already sent then stay until they expire after 90 days). It clears your cards, options, settings,
+            purchase inputs, the downloaded terms and store list, the unlock key and the usage-reporting
+            identifier and answer; card setup returns. It does not affect a store’s cart or your browser
+            history. Uninstalling removes the extension’s storage from your device; reports already sent are
+            deleted within about a day after 90 days, so use Delete my data or Delete all local data first to
+            delete them earlier.
           </p>
         </Section>
         <Section id="limits" title="Known limitations">
@@ -1308,17 +1318,19 @@ function Uninstalled(): Rendered {
         <Section id="server" title="Usage reports you shared">
           <p>
             If you chose <strong>Share</strong>, reports already sent are stored on the AI Checkout service
-            under your random identifier and <strong>expire after 90 days</strong>, when the service deletes
-            them. They carry no name, email or browsing history, and no store address unless you tapped
-            Suggest this store or Report a problem.
+            under your random identifier and <strong>expire after 90 days</strong>: a scheduled job on the
+            service deletes them once a day, so each report is gone within about a day after it turns 90 days
+            old. They carry no name, email or browsing history, and no store address unless you tapped Suggest
+            this store or Report a problem.
           </p>
           <p>
             Deleting them earlier needs the identifier, which left your device with the extension. That is why{' '}
-            <strong>Delete my data</strong> (Settings → Usage reports in the popup) has to be used{' '}
-            <em>before</em> uninstalling: it deletes every report stored under the identifier at once. If you
-            reinstall, a new identifier is created; the old reports cannot be found again and expire on their
-            own. If you never chose Share, the service holds nothing under an identifier; a store suggestion
-            or problem report you tapped was stored without one and expires after 90 days.
+            <strong>Delete my data</strong> (Settings → Usage reports in the popup) or{' '}
+            <strong>Delete all local data</strong> has to be used <em>before</em> uninstalling: either deletes
+            every report stored under the identifier at once. If you reinstall, a new identifier is created;
+            the old reports cannot be found again and expire on their own. If you never chose Share, the
+            service holds nothing under an identifier; a store suggestion or problem report you tapped was
+            stored without one and expires after 90 days.
           </p>
         </Section>
         <Section id="more" title="More">

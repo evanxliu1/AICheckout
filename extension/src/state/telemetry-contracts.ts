@@ -119,6 +119,11 @@ export const telemetryStatusSchema = z.strictObject({
   consent: z.enum(['granted', 'declined']).nullable(),
 });
 export type TelemetryStatus = z.infer<typeof telemetryStatusSchema>;
+/** The worker's answer to Delete all local data when the service could not delete the reports stored under the
+ * usage identifier (offline, 429, 503, a cold instance): nothing was cleared, and the page offers Try again or
+ * Clear this device anyway. The pages recognise this message by equality. */
+export const REPORTS_NOT_DELETED_MESSAGE =
+  'Your usage reports could not be deleted from the service, so nothing was cleared yet.';
 export const telemetryResponseSchema = z.discriminatedUnion('ok', [
   z.strictObject({ ok: z.literal(true), status: telemetryStatusSchema }),
   z.strictObject({ ok: z.literal(false), error: z.string().min(1).max(500) }),

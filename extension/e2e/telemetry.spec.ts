@@ -2,8 +2,9 @@
 // `npm run test:catalog:browser` with the stub API origin). A local HTTPS stub answers /v1/events and
 // /v1/events/delete (the worker's fetches do not pass through context.route). Share → the install events with
 // the contract's shape; a cart at a synthetic store → recommendation_shown without the host; the two taps carry
-// the registrable domain; Stop sharing and Delete my data; Not now → no request until a tap, which carries no
-// id; axe on the consent screen at 360 and 480 px.
+// the registrable domain; Stop sharing and Delete my data; Delete all local data deletes the reports first and
+// clears nothing while the service refuses (15.5b); Not now → no request until a tap, which carries no id; axe
+// on the consent screen and the refused deletion at 360 and 480 px.
 import AxeBuilder from '@axe-core/playwright';
 import {
   chromium,
@@ -72,6 +73,8 @@ async function stubApi(testInfo: TestInfo) {
     { stdio: 'ignore' },
   );
   const hits: Hit[] = [];
+  /** What `/v1/events/delete` answers; a test sets 503 to stand for an unreachable or overloaded service. */
+  let deleteStatus = 200;
   const server = createServer({ key: readFileSync(key), cert: readFileSync(cert) }, (request, reply) => {
     let raw = '';
     request.on('data', (chunk) => (raw += chunk));
@@ -84,7 +87,10 @@ async function stubApi(testInfo: TestInfo) {
         referer: request.headers.referer,
         body,
       });
-      reply.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+      reply.writeHead(request.url === '/v1/events/delete' ? deleteStatus : 200, {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store',
+      });
       if (request.url === '/v1/events')
         reply.end(JSON.stringify({ accepted: (body as { events: unknown[] }).events.length, dropped: 0 }));
       else if (request.url === '/v1/events/delete') reply.end(JSON.stringify({ deleted: 3 }));
@@ -103,6 +109,9 @@ async function stubApi(testInfo: TestInfo) {
   return {
     hits,
     events,
+    deleteStatus: (status: number) => {
+      deleteStatus = status;
+    },
     close: () =>
       new Promise<void>((done, reject) => server.close((error) => (error ? reject(error) : done()))),
   };
@@ -334,6 +343,37 @@ test('Share: the install events, a recommendation at a synthetic store without i
     await cart.waitForTimeout(1500);
     expect((await telemetryState(worker))?.queue).toEqual([]);
     expect(api.events().length).toBe(after);
+    // Delete all local data while sharing (15.5b): the reports under the identifier are deleted first, as Delete
+    // my data does; while the service refuses, nothing is cleared, and the shopper is told so.
+    await toggle.click();
+    await expect(toggle).toBeChecked();
+    const secondId = (await telemetryState(worker))!.installId!;
+    expect(secondId).toMatch(UUID);
+    api.deleteStatus(503);
+    await settings.getByText('Delete saved data', { exact: true }).click();
+    await settings.getByRole('checkbox', { name: /I want to permanently delete/ }).check();
+    await settings.getByRole('button', { name: 'Delete all local data' }).click();
+    await expect(
+      settings.getByRole('alert').filter({ hasText: 'could not be deleted from the service' }),
+    ).toBeVisible();
+    await expect(settings.getByRole('button', { name: 'Clear this device anyway' })).toBeVisible();
+    expect(api.hits.filter((h) => h.url === '/v1/events/delete').map((h) => h.body)).toEqual([
+      { install_id: installId },
+      { install_id: secondId },
+    ]);
+    expect(await telemetryState(worker)).toMatchObject({ consent: 'granted', installId: secondId });
+    await axe(settings, 'delete-refused', testInfo);
+    // Try again once the service answers: the reports go, then the device is cleared.
+    api.deleteStatus(200);
+    await settings.getByRole('button', { name: 'Try again' }).click();
+    // Cleared: the popup is back at card setup, and no telemetry state is left on the device.
+    await expect(settings.getByRole('button', { name: 'Save cards' })).toBeVisible({ timeout: 10_000 });
+    expect(api.hits.filter((h) => h.url === '/v1/events/delete').map((h) => h.body)).toEqual([
+      { install_id: installId },
+      { install_id: secondId },
+      { install_id: secondId },
+    ]);
+    await expect.poll(() => telemetryState(worker)).toBeUndefined();
     // Every request went to the fixed routes with the extension's origin and no cookie or referrer.
     for (const hit of api.hits) {
       expect(['/v1/events', '/v1/events/delete', '/v1/catalog', '/v1/merchants']).toContain(hit.url);

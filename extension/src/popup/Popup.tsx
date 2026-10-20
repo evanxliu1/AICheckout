@@ -4,13 +4,15 @@ import WalletEditor from '../components/WalletEditor';
 import ComparisonResult from '../components/ComparisonResult';
 import RatesResult from '../components/RatesResult';
 import DataProtectionDetails from '../components/DataProtectionDetails';
-import DeleteSavedData from '../components/DeleteSavedData';
+import DeleteSavedData, { ReportsNotDeleted } from '../components/DeleteSavedData';
+import type { DeleteOptions } from '../components/DeleteSavedData';
 import BadgeSettings from '../components/BadgeSettings';
 import ProtectionSettings from '../components/ProtectionSettings';
 import TelemetrySettings from '../components/TelemetrySettings';
 import SuggestStore from '../components/SuggestStore';
 import ReportProblem from '../components/ReportProblem';
 import { telemetryRequest } from '../state/telemetry-client';
+import { REPORTS_NOT_DELETED_MESSAGE } from '../state/telemetry-contracts';
 import type { PopupReadOutcome } from '../state/telemetry-contracts';
 import {
   Disclosure,
@@ -95,7 +97,7 @@ export default function Popup({
   protection = 'off',
 }: {
   onLock?: () => void;
-  onDelete?: () => void;
+  onDelete?: (options?: DeleteOptions) => void;
   vaultError?: string;
   /** Optional passphrase protection (off by default). */
   protection?: 'off' | 'on';
@@ -471,11 +473,11 @@ export default function Popup({
       setPending(null);
     }
   }
-  async function clear() {
+  async function clear(options?: DeleteOptions) {
     setPending('delete');
     setError('');
     try {
-      restore(await checkoutRequest({ type: 'checkout:clear' }));
+      restore(await checkoutRequest({ type: 'checkout:clear', ...options }));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Local data could not be deleted. Try again.');
     } finally {
@@ -502,6 +504,11 @@ export default function Popup({
   const storeLabel = storeName === 'Unsupported merchant' ? 'this store' : storeName;
   const evidence = storeEvidence(merchantId);
   const unvalued = view ? unvaluedPrograms(view.catalog, view.state.wallet) : [];
+  /** Delete all local data: the gate's vault request when mounted under it, else the plain clear (Phase 15.5b:
+   * both stop, nothing cleared, when the service could not delete the usage reports first). */
+  const remove = (options?: DeleteOptions) => (onDelete ? onDelete(options) : void clear(options));
+  const reportsNotDeleted =
+    vaultError === REPORTS_NOT_DELETED_MESSAGE || error === REPORTS_NOT_DELETED_MESSAGE;
   const ownedNames = (view?.state.wallet.cards ?? [])
     .map((c) => catalog?.cards.find((p) => p.id === c.cardId)?.shortName ?? 'Unavailable card')
     .join(' · ');
@@ -510,12 +517,16 @@ export default function Popup({
       <main className="checkout-popup">
         <PopupHeader />
         <div className="p-4 space-y-4">
-          {vaultError && (
-            <AlertInline color="critical" role="alert">
-              {vaultError}
-            </AlertInline>
+          {reportsNotDeleted ? (
+            <ReportsNotDeleted busy={busy} onDelete={remove} />
+          ) : (
+            vaultError && (
+              <AlertInline color="critical" role="alert">
+                {vaultError}
+              </AlertInline>
+            )
           )}
-          {error && (
+          {error && !reportsNotDeleted && (
             <AlertInline
               color="critical"
               role="alert"
@@ -867,7 +878,7 @@ export default function Popup({
             </div>
             {TELEMETRY_ENABLED && <ReportProblem tabId={tab && tab.kind !== 'processor' ? tab.id : null} />}
             <DataProtectionDetails protection={protection} />
-            <DeleteSavedData busy={busy} onDelete={() => (onDelete ? onDelete() : void clear())} />
+            <DeleteSavedData busy={busy} onDelete={remove} />
             {CREDITS_URL && (
               <p>
                 About AI Checkout:{' '}
