@@ -191,7 +191,8 @@ describe('summary rows', () => {
     });
   });
   it('withholds when a credit row has no after-credit total', () => {
-    expect(page(row('Total', '$40.00') + row('Store credit', '-$5.00'))).toEqual({
+    // Since 15.1b the credit must sit beside a summary total; without any summary the total itself is outside one.
+    expect(page(summary(row('Total', '$40.00') + row('Store credit', '-$5.00')))).toEqual({
       shown: false,
       reason: 'credit-unclear',
     });
@@ -815,5 +816,54 @@ describe('Phase 13c.5 coverage round (2026-10-10)', () => {
   it('reads the Egyptian pound abbreviation written without dots', () => {
     const r = page(summary(row('الاجمالي شامل الضريبة', '2,200 ج م')), { lang: 'ar' });
     expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 220000, currency: 'EGP' });
+  });
+});
+
+describe('Phase 15.1b: credit rows count only beside a summary total (2026-10-20)', () => {
+  // A card-offer panel's illustration: its own items total, a hypothetical credit and a new total, no checkout control.
+  const offer = `<div class="offer"><p>Pay with our card and save.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}${row('New subtotal', '$0.00')}</div>`;
+  it('a credit in a panel outside the summary does not block the summary subtotal', () => {
+    const r = page(`<div>${offer}</div><div>${summary(row('Subtotal (1 item)', '$43.49'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
+  });
+  it('a credit in a panel outside the summary does not block the summary total either', () => {
+    const r = page(
+      `<div>${offer}</div><div>${summary(row('Subtotal', '$43.49') + row('Shipping', '$5.00') + row('Total', '$48.49'))}</div>`,
+    );
+    expect(r).toEqual({ shown: true, kind: 'estimatedTotal', amountMinor: 4849, currency: 'USD' });
+  });
+  it('a credit inside the summary still withholds a pre-credit amount', () => {
+    expect(page(summary(row('Subtotal', '$43.49') + row('Gift card applied', '-$10.00')))).toEqual({
+      shown: false,
+      reason: 'credit-unclear',
+    });
+    expect(
+      page(summary(row('Subtotal', '$43.49') + row('Store credit', '-$10.00') + row('Total', '$33.49'))),
+    ).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a credit beside a non-summary total does not make an after-credit total', () => {
+    // The panel's "Amount due" is a plain total outside the summary, never an after-credit amount; two different
+    // totals outside the summary stay ambiguous, and nothing is shown.
+    const panel = `<div>${row('Total', '$50.00')}${row('Gift card savings', '-$50.00')}${row('Amount due', '$0.00')}</div>`;
+    const r = page(`<div>${panel}</div><div>${summary(row('Subtotal', '$50.00'))}</div>`);
+    expect(r).toEqual({ shown: false, reason: 'ambiguous' });
+  });
+  it("an offer panel laid out as the summary list's own sibling still counts (adjacent panel)", () => {
+    // Single-element rows one list apart share a grandparent (`near`): the credit is read as the summary's company,
+    // and the reader stays on the safe side. One wrapper further out (the tests above) it is a separate panel.
+    const panel = `<div><p>Pay with our card and save.</p><p>Current subtotal $43.49</p><p>Gift card savings -$50.00</p></div>`;
+    const r = page(`<div>${summary('<p>Subtotal (1 item) $43.49</p>')}${panel}</div>`);
+    expect(r).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a credit in an outer summary around the chosen summary still counts (nested summaries)', () => {
+    const inner = `<section><p>Subtotal $43.49</p><p>Shipping $5.00</p><p>Total $48.49</p></section>`;
+    const outer = `<section>${inner}<p>Store credit -$5.00</p><button>Checkout</button></section>`;
+    expect(page(outer)).toEqual({ shown: false, reason: 'credit-unclear' });
+  });
+  it('a total below its subtotal is still a misread row when the only credit is outside the summary', () => {
+    const r = page(
+      `<div>${offer}</div><div>${summary(row('Subtotal', '$43.49') + row('Total', '$3.49'))}</div>`,
+    );
+    expect(r).toEqual({ shown: false, reason: 'total-below-subtotal' });
   });
 });

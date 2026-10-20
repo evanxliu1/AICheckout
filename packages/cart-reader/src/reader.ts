@@ -14,7 +14,9 @@
 //    is a total, subtotal or, next to a credit row, an after-credit total. Savings, shipping, tax, points, instalment
 //    and line-item rows are excluded. A total label ending in a bare number the grammar cannot read is a total the
 //    reader cannot show, and withholds. A card offer's hypothetical credit ("upon approval", "statement credit") is
-//    neither a credit nor a total after one. Rows inside a page header (a basket flyout) are left out when a summary
+//    neither a credit nor a total after one. A credit row counts only beside a total that sits in a cart summary
+//    (15.1b, 2026-10-20): one in a card-offer panel outside the summary neither blocks the summary's amount nor makes
+//    an after-credit total. Rows inside a page header (a basket flyout) are left out when a summary
 //    row sits outside every header: the page's own summary outranks the flyout.
 // 3. The most preferred kind present wins (afterCredit > estimatedTotal > subtotal). Two different amounts of that
 //    kind mean withhold, unless only one of them sits in a cart summary (next to shipping, tax or a checkout control)
@@ -244,9 +246,11 @@ export function analyze(
     if (r.why === 'several-amounts' && rows.some((o) => o !== r && r.els.at(-1)!.contains(o.els.at(-1)!)))
       r.kind = null;
   // "Amount due", "balance" and the like are after-credit totals only beside a credit row (same parent); otherwise
-  // they are plain totals when they say so, and nothing at all when they do not.
+  // they are plain totals when they say so, and nothing at all when they do not. A credit counts only beside a total
+  // that sits in a cart summary (15.1b, 2026-10-20): a card-offer panel's illustration outside the summary ("Current
+  // subtotal", "Gift card savings: -$50") is not a credit the shopper's total carries.
   const totals = rows.filter((r) => r.kind !== null && r.kind !== 'credit');
-  const credits = rows.filter((r) => r.kind === 'credit' && totals.some((t) => near(r, t)));
+  const credits = rows.filter((r) => r.kind === 'credit' && totals.some((t) => t.inSummary && near(r, t)));
   const resolved: (Row & { kind: Kind })[] = [];
   for (const r of rows) {
     if (r.kind === 'credit' || r.kind === null) continue;
@@ -309,7 +313,7 @@ export function analyze(
       const first = row.els[0]!;
       const scope = parentOf(parentOf(first) ?? first) ?? first;
       const negative = findAmounts(normalizeText(visibleText(scope, ctx)), isCode).some((a) => a.negative);
-      if (!negative && !rows.some((r) => r.kind === 'credit')) return withhold('total-below-subtotal', rows);
+      if (!negative && credits.length === 0) return withhold('total-below-subtotal', rows);
     }
   }
   if (kind === 'subtotal') {
