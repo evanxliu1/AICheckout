@@ -1,12 +1,12 @@
 ---
 type: System Component
 title: API
-description: apps/api — the Fastify process that serves /health, /v1/catalog, the protected /v1/review routes, and the static review app and public site, with its auth model and security headers.
+description: apps/api — the Fastify process that serves /health, /v1/catalog, /v1/merchants, the anonymous telemetry routes /v1/events (Phase 15.2), the protected /v1/review routes, and the static review app and public site, with its auth model, rate limits and security headers.
 status: stable
 tags: [system, api, fastify, security]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-20T01:30:00Z
 sources:
   - resource: ../../apps/api/src/index.ts
     title: Entrypoint and env schema
@@ -30,6 +30,10 @@ sources:
     title: API README
   - resource: ../../render.yaml
     title: Render blueprint
+  - resource: ../../apps/api/src/telemetry-routes.ts
+    title: Telemetry routes (15.2)
+  - resource: ../../apps/api/src/telemetry-repository.ts
+    title: Anonymous telemetry RPC client
 ---
 
 # API
@@ -50,6 +54,9 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | `CURATION_ALLOW_METERED`, `OPENAI_API_KEY` | `false`, unset | Both required (plus a funded DB policy) before any paid call |
 | `CURATION_DATABASE_URL`, `CURATION_PROFILE_ID`, `CURATION_DATABASE_CA_FILE` | unset | Scoped executor login, operator profile, optional CA; required when curation is enabled |
 | `CURATION_RATE_LIMIT` | `3` | Extraction requests per minute per IP per process (1–60) |
+| `TELEMETRY_INGEST` (15.2) | `on` | `off` makes `POST /v1/events` answer 410 `telemetry_disabled` (clients pause); Delete my data keeps working |
+| `EXTENSION_IDS` (15.2) | empty | Comma-separated Chrome extension ids; when set, `Origin` must be `chrome-extension://<id>` for one of them (403 `origin_not_allowed`). A filter, not authentication. Set on Render after the first Web Store upload (15.7) |
+| `TELEMETRY_PROXY_HOPS` (15.2) | `0` | Trusted proxies that appended to `X-Forwarded-For`; the client IP for the telemetry bucket is that many entries from the right (`1` in `render.yaml`); `0` uses the socket address |
 
 | Server limit | Value |
 | --- | --- |
@@ -60,6 +67,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | Catalog read timeout | 7 s (`AbortSignal.timeout`) |
 | Catalog read cap | 2 MiB for the Data API row (`MAX_CATALOG_READ_BYTES`; JSONB text adds spaces); the catalog itself ≤ 1 MiB for v3 |
 | Merchants read cap | 4 MiB for the Data API row (`MAX_MERCHANTS_READ_BYTES`); the release itself ≤ 2 MiB (14.6) |
+| Telemetry limits (15.2) | `POST /v1/events` body 64 KiB (`TELEMETRY_LIMITS.batchBytes`), 1–50 events; `POST /v1/events/delete` body 1 KiB; a fixed-window counter of the route's own (`createLimiter`): 60 requests a minute per client IP and 600 across all clients per process, 429 `too_many_requests` with `Retry-After`, at most 10,000 keys remembered; the RPC answer read with an 8 KiB cap and a 7 s timeout. The address is used transiently, never stored or logged; no body or event is logged |
 | Request log fields | request ID, route template, method, status, duration (no bodies, tokens or source text) |
 
 ## Routes
@@ -69,7 +77,10 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | `GET /health` | [`app.ts:createApp`](../../apps/api/src/app.ts) | none; liveness only |
 | `GET /v1/catalog` | `createApp` + [`catalog-repository.ts:createCatalogRepository`](../../apps/api/src/catalog-repository.ts) | none |
 | `GET /v1/merchants` (14.6) | `createApp` + [`merchant-repository.ts:createMerchantRepository`](../../apps/api/src/merchant-repository.ts): the merchant head joined to its release, `no-store`, `nosniff`, 503 `merchants_unavailable` when unconfigured, unparseable or dated in the future | none |
+| `POST /v1/events` (15.2) | [`telemetry-routes.ts:telemetryRoutes`](../../apps/api/src/telemetry-routes.ts) + [`telemetry-repository.ts:createTelemetryRepository`](../../apps/api/src/telemetry-repository.ts): `{ events: [...] }` validated by `eventBatchSchema`, forwarded as `anon` to `ingest_events`, answers `{ accepted, dropped }`; 410 when `TELEMETRY_INGEST=off`, 403 on a wrong `Origin` when `EXTENSION_IDS` is set, 429 from the buckets, 413 over 64 KiB, 400 on schema refusal (the API's or the database's), 503 `telemetry_unavailable` otherwise | none (anonymous by design) |
+| `POST /v1/events/delete` (15.2) | `{ install_id }` → `delete_install`, answers `{ deleted }`; same `Origin` filter and buckets; works while ingest is off | none |
 | `GET /v1/review/` | [`review-routes.ts:reviewRoutes`](../../apps/api/src/review-routes.ts) | bearer |
+| `GET /v1/review/telemetry/suggestions`, `GET /v1/review/telemetry/summary?days=30` (15.2) | `telemetry_store_suggestions` (domain, count, distinct installs, last seen; most suggested first, ≤ 500) and `telemetry_summary(p_days)` (events and distinct installs by type and UTC day, 1–90 days, default 30), both under `require_reviewer()` in the database; answers validated by `storeSuggestionsSchema` / `telemetrySummarySchema` | bearer |
 | `GET /v1/review/drafts/:id` | `get_catalog_review_summary`: draft, head, snapshot, source metadata without text | bearer |
 | `GET /v1/review/drafts/:id/sources/:sourceId` | `get_catalog_review_source`: one capture attached to the draft, with text | bearer |
 | `POST /v1/review/sources` | | bearer |
@@ -88,6 +99,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 - **Catalog.** One PostgREST query reads `catalog_head?singleton=eq.true` joined to its `catalog_releases` row through `catalog_head_release_sequence_fkey`, so head and snapshot come from one statement (read with a 2 MiB cap, so a 1 MiB v3 catalog is served; 793,160 bytes for the synthetic 180-card catalog on the local stack). The result is parsed with `publishedReleaseSchema` and rechecked against the clock; a timeout, malformed body, inconsistent head, or expired/future release returns `503 {"error":"catalog_unavailable"}`. Responses carry `Cache-Control: no-store`, `nosniff`. Bodies are read with `readBoundedJson` from `@ai-checkout/catalog-client`.
 - **Review auth.** Every `/v1/review/*` request needs `Authorization: Bearer <access token>`. Two clients use these routes: the review app, and since Phase 9 milestone 5 the pipeline CLI's `publish` with a Supabase session Evan logged in himself (no other credential, same limits and validation; [catalog release](../ops/catalog-release.md#agent-publish-cli)). The large-body routes first check it with [`review-auth.ts:createTokenVerifier`](../../apps/api/src/review-auth.ts) (a pre-check that keeps unauthenticated uploads away from Supabase, not the authority). [`review-repository.ts`](../../apps/api/src/review-repository.ts) calls the public RPC wrappers with that token; the Data API verifies the JWT and the private functions check reviewer membership and a live session ([Database](database.md#authority)). The draft review is the body-free summary RPC; the extraction routes still read `get_catalog_review` with full capture text. Errors map to stable codes (`sign_in_required`, `reviewer_access_required`, `invalid_request`, `review_changed` → 409, `draft_not_found`, `source_not_found`, `invalid_catalog_evidence`, `too_many_requests`, `review_unavailable`); SQL messages never pass through. No CORS, no cookies.
 - **Extraction.** Disabled by default. When enabled, the route verifies the token through the signed review RPC, loads captures from the exact draft revision, and runs [`executeRecordedExtraction`](../../apps/api/src/curation/ledger.ts) with a 75 s route abort above the kernel's own deadlines; client disconnect and SIGTERM cancel it. Ledger errors map to 403/409/422/429/503. Details: [Curation harness](curation-harness.md).
+- **Telemetry (Phase 15.2).** The anonymous routes run their checks in a fixed order (kill switch, `Origin` filter, per-IP then global bucket, body limit, Zod, RPC) and hold no credential beyond the publishable key: the `security definer` RPCs own every cap (batch, per-install day, retention) and are the only write path ([Database](database.md#telemetry-phase-152)). The contract and limits are shared with the extension through `packages/catalog-review` (`telemetry.ts`); no automatic event may carry a domain, URL or free text, and the API's tests assert it over every fixture. Details and the choices made: [decision](../decisions/2026-10-20-telemetry-backend-details.md).
 - **Static contexts.** Each static build is its own Fastify plugin with its own `onSend` headers and [`static-errors.ts:staticErrorHandling`](../../apps/api/src/static-errors.ts) (403/404 → JSON 404 that never echoes the path; other 4xx keep status; 5xx → 500). `/review/config.json` exposes only the Supabase origin and a `sb_publishable_` key (validated by `reviewConfigSchema`, which rejects secret or legacy JWT keys).
 
 ## Security headers
@@ -106,10 +118,12 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 - `/health` returning 200 says nothing about the database.
 - Hosted Supabase signs with asymmetric keys since 2026-10-03 (one ES256 P-256 key in its JWKS), so on Render the pre-check verifies tokens locally, as on the local CLI stack (ES256). Before the switch the project signed with the legacy HS256 secret (empty JWKS) and the pre-check asked Auth once per token per minute; no code or env change was needed ([hosting](../ops/hosting.md#facts)).
 - `createApp` refuses `reviewRpc` without `verifyReviewToken`; tests pass `async () => true`.
+- Without `telemetryRpc`, `/v1/events` does not exist (JSON 404). `index.ts` always wires it; `TELEMETRY_INGEST=off` is the switch, not removing the repository.
+- The telemetry bucket reads `X-Forwarded-For` only when `TELEMETRY_PROXY_HOPS` > 0; with the default 0 a forged header is ignored and every caller behind one proxy shares the socket address (fine locally, wrong on Render, hence the `render.yaml` value `1`).
 
 ## Tests
 
-`apps/api/tests/`: `catalog.test.ts`, `review.test.ts`, `review-auth.test.ts`, `review-site.test.ts`, `public-site.test.ts`, `curation.test.ts`, `curation-http.test.ts`, `openai.test.ts`, `codex.test.ts`, `claude.test.ts`, `evaluation.test.ts`, `extraction-review.test.ts`, `extraction-v2.test.ts`, `summarize-v2.test.ts`. Integration against a real local stack: `db:test:http`, `db:test:curation:http`, `db:test:curation:application` ([Testing](testing.md)).
+`apps/api/tests/`: `catalog.test.ts`, `merchants.test.ts`, `telemetry.test.ts` (15.2: the Zod side of the 96 parity cases, no domain or free text on any automatic fixture, the route order, forged `X-Forwarded-For`, the global bucket, 410, 413, the delete route, the repository, the reviewer reads), `review.test.ts`, `review-auth.test.ts`, `review-site.test.ts`, `public-site.test.ts`, `curation.test.ts`, `curation-http.test.ts`, `openai.test.ts`, `codex.test.ts`, `claude.test.ts`, `evaluation.test.ts`, `extraction-review.test.ts`, `extraction-v2.test.ts`, `summarize-v2.test.ts`. Integration against a real local stack: `db:test:http`, `db:test:curation:http`, `db:test:curation:application` ([Testing](testing.md)).
 
 ## Related
 

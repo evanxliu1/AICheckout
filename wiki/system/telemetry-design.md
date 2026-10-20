@@ -6,7 +6,7 @@ status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T00:30:00Z
+  at: 2026-10-20T01:30:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -63,6 +63,8 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 **Content script vs telemetry.** The badge content script still sends only the reading to the extension's own service worker (decision 2026-10-09). Telemetry events are built and sent by the worker, after consent, from what the worker already holds; the content script never talks to the server.
 
 ## Ingest and storage
+
+**Built 2026-10-20 (15.2):** migration `20261020004702_telemetry_events`, the shared contract `packages/catalog-review/src/telemetry.ts` and the API routes; the as-built facts are on the [API](api.md) and [Database](database.md) pages and in the [implementer decision](../decisions/2026-10-20-telemetry-backend-details.md). Retention is pruning inside `ingest_events`, not `pg_cron`; the bullets below are the design intent.
 
 - `POST /v1/events`, anonymous, through a `security definer` insert-only RPC granted to `anon` that validates and caps rows (no new server secret).
 - Strict Zod schema, per-event and per-batch caps, `Origin: chrome-extension://<id>` and content-type checks (not authentication); token bucket keyed by the client IP that the events route reads itself from Render's `X-Forwarded-For` at a fixed hop count, plus a global cap; Fastify's server-wide `trustProxy` stays `false`, so the review routes' limits are unchanged; a test shows a forged header does not move the key; IP used transiently, never stored; per-install daily caps; unknown versions dropped.
