@@ -1,11 +1,10 @@
-// Bundle a reader into one browser script with esbuild (an IIFE that sets `__aiCheckoutCartReader`) and check what
-// went into it.
-//   generic (packages/cart-reader): only files of packages/cart-reader/src; no reference to the rebuild's
-//     `data-pane-*` attributes (protocol, "No pane-only cues"; the harness also strips them before the reader runs,
-//     this is a tripwire); no answer lookup: no retail-frame-3 domain of the split being run and at most
-//     MAX_FRAME_DOMAINS frame domains anywhere in the bundle.
-//   legacy (evals/reader/legacy-entry.ts): the extension's three store adapters, from extension/src/checkout and
-//     packages/rewards-core/src only. They are per-store readers by design, so the frame tripwire doesn't apply.
+// Bundle the generic reader (packages/cart-reader) into one browser script with esbuild (an IIFE that sets
+// `__aiCheckoutCartReader`) and check what went into it: only files of packages/cart-reader/src; no reference to
+// the rebuild's `data-pane-*` attributes (protocol, "No pane-only cues"; the harness also strips them before the
+// reader runs, this is a tripwire); no answer lookup: no retail-frame-3 domain of the split being run and at most
+// MAX_FRAME_DOMAINS frame domains anywhere in the bundle. The legacy mode (the extension's three store adapters,
+// read apart on their own stores' pages) was removed with the adapters in Phase 15.1 (2026-10-20); its last
+// measurement is docs/evals/legacy-adapter-retirement.md.
 import path from 'node:path';
 import { build } from 'esbuild';
 import { REPO_ROOT, sha256 } from './lib.mjs';
@@ -15,10 +14,6 @@ export const MAX_FRAME_DOMAINS = 3;
 const PANE_CUE = /data-pane|dataset\s*(?:\.\s*pane|\[\s*['"`]pane)/i;
 export const MODES = {
   generic: { entry: 'packages/cart-reader/src/index.ts', allowed: ['packages/cart-reader/src/'] },
-  legacy: {
-    entry: 'evals/reader/legacy-entry.ts',
-    allowed: ['evals/reader/legacy-entry.ts', 'extension/src/checkout/', 'packages/rewards-core/src/'],
-  },
 };
 
 /** Frame domains that occur in the code as whole host names (case-insensitive). */
@@ -63,13 +58,6 @@ export async function bundleReader({
     target: 'chrome120',
     legalComments: 'none',
     logLevel: 'silent',
-    alias: {
-      '@ai-checkout/rewards-core/money': path.resolve(root, 'packages/rewards-core/src/money.ts'),
-      '@ai-checkout/rewards-core/generic-merchant': path.resolve(
-        root,
-        'packages/rewards-core/src/generic-merchant.ts',
-      ),
-    },
   });
   const inputs = Object.keys(result.metafile.inputs)
     .map((p) => p.split(path.sep).join('/'))

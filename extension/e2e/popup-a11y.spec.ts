@@ -7,7 +7,7 @@ import { resolve } from 'node:path';
 import { mutateVaultState, protectVault, startPopup, writeCatalogCache } from './vault';
 import { PILOT_CATALOG } from '../../packages/rewards-core/src/catalog';
 import { redateCatalog } from '../../packages/rewards-core/src/catalog-helpers';
-import { addCard, cacheCatalogV3Fixture } from './wallet';
+import { addCard, atStore, cacheCatalogV3Fixture } from './wallet';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 
@@ -161,7 +161,7 @@ test('every main popup state is axe-clean at 360 and 480 px', async ({ browserNa
 
     // Settings (badge sites, optional protection), then protected and locked.
     await page.getByText('Settings', { exact: true }).click();
-    await expect(page.getByRole('switch', { name: 'Best Buy US' })).toBeChecked();
+    await expect(page.getByRole('switch', { name: 'Show the cart badge at stores' })).toBeChecked();
     await check('settings');
     await page.getByText('Settings', { exact: true }).click();
     await protectVault(page);
@@ -228,7 +228,7 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
     await expect(page.getByText(/No published value for Test Airline Miles/)).toBeVisible();
     await axeCheck(page, 'v3-purchase-form', testInfo);
 
-    await page.getByLabel('Merchant').selectOption('amazon-us');
+    await atStore(page, 'amazon-us');
     await expect(page.getByLabel('How you will pay').locator('option', { hasText: 'Venmo' })).toHaveCount(1);
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
@@ -253,7 +253,7 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
     ])
       await page.getByRole('button', { name: `Remove ${name}` }).click();
     await page.getByRole('button', { name: 'Save cards' }).click();
-    await page.getByLabel('Merchant').selectOption('best-buy-us');
+    await atStore(page, 'best-buy-us');
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
@@ -278,7 +278,7 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
     await addCard(page, 'Test Points Card');
     await addCard(page, 'Test Store Mastercard');
     await page.getByRole('button', { name: 'Save cards' }).click();
-    await page.getByLabel('Merchant').selectOption('amazon-us');
+    await atStore(page, 'amazon-us');
     await page.getByLabel('Purchase amount (USD)').fill('100');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();
@@ -301,7 +301,7 @@ test('catalog v3 popup and onboarding states are axe-clean at 360 and 480 px', a
       for (const name of remove) await page.getByRole('button', { name: `Remove ${name}` }).click();
       await addCard(page, add);
       await page.getByRole('button', { name: 'Save cards' }).click();
-      await page.getByLabel('Merchant').selectOption(merchant);
+      await atStore(page, merchant);
       await page.getByLabel('Purchase amount (USD)').fill('99999.99');
       await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
       await page.getByRole('button', { name: 'Compare my cards' }).click();
@@ -346,7 +346,7 @@ test('long card names and the widest amounts of the bundled catalog fit at 360 a
       await addCard(page, name);
     await axeCheck(page, 'bundled-long-names-wallet', testInfo);
     await page.getByRole('button', { name: 'Save cards' }).click();
-    await page.getByLabel('Merchant').selectOption('amazon-us');
+    await atStore(page, 'amazon-us');
     await page.getByLabel('Purchase amount (USD)').fill('99999.99');
     await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
     await page.getByRole('button', { name: 'Compare my cards' }).click();

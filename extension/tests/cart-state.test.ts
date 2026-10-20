@@ -65,7 +65,7 @@ beforeEach(() => {
     currency: 'USD',
     amountCents: 10000,
     kind: 'total',
-    extractorVersion: 'bestbuy-summary-v1',
+    extractorVersion: 'generic-reader-v1',
   } satisfies CartSnapshot);
   validate.mockReset().mockResolvedValue(undefined);
 });
@@ -90,7 +90,7 @@ describe('durable cart workflow', () => {
       ...(await read()),
       merchantId: 'newegg-us',
       kind: 'subtotal',
-      extractorVersion: 'newegg-summary-v1',
+      extractorVersion: 'generic-reader-v1',
     });
     const captured = await capture();
     expect(

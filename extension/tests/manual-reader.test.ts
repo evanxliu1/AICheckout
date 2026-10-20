@@ -108,21 +108,26 @@ describe('manual reader (Phase 13b)', () => {
       status: 'unavailable',
       reason: 'empty-cart',
     });
-    // A legacy cart URL reports `legacy`, the adapter's reading untouched.
-    expect(readAnyCart(document, 'https://www.bestbuy.com/cart').page).toBe('legacy');
   });
-  it('runs the legacy adapter first on its cart pages', () => {
+  it('reads a former adapter store’s cart page with the generic reader, naming the generic store (Phase 15.1)', () => {
+    // The observed Best Buy fixture (jsdom has no layout, so the reader's box checks do not apply here):
+    // the adapter read it as a $27.23 total; the generic reader shows the same amount as an estimated total.
     const fixture = readFileSync('tests/fixtures/bestbuy-observed-summary.html', 'utf8');
-    expect(page(fixture, 'https://www.bestbuy.com/cart')).toMatchObject({
+    expect(page(fixture, 'https://www.bestbuy.com/cart')).toEqual({
       status: 'found',
-      merchantId: 'best-buy-us',
+      merchantId: 'generic-us-online',
+      currency: 'USD',
       amountCents: 2723,
-      extractorVersion: 'bestbuy-summary-v1',
+      kind: 'estimated-total',
+      extractorVersion: 'generic-reader-v1',
     });
-    // A generic-looking summary on a legacy cart URL is the adapter's call, not the generic reader's.
+    // No URL is special any more: a plain summary on that cart URL is the generic reader's too.
     expect(page(summary(row('Total', '$100.00')), 'https://www.bestbuy.com/cart')).toMatchObject({
-      status: 'unavailable',
+      status: 'found',
+      merchantId: 'generic-us-online',
+      amountCents: 10000,
     });
+    expect(readAnyCart(document, 'https://www.bestbuy.com/cart').page).toBe('cart');
   });
   it('withholds when the reader throws', () => {
     throwNext = true;

@@ -32,7 +32,7 @@ test('native action grants temporary access, reads a cart and rejects changed to
       }),
     );
     await merchant.goto('https://www.bestbuy.com/cart');
-    // Host permissions cover only the supported carts (for the automatic badge).
+    // Host permissions: every https site (for the automatic badge), nothing per store.
     expect((await worker.evaluate(() => chrome.permissions.getAll())).origins?.sort()).toEqual(BADGE_ORIGINS);
 
     const popup = await openNativePopup(context, merchant, id);
@@ -64,7 +64,8 @@ test('native action grants temporary access, reads a cart and rejects changed to
     await popup.click('Save cards');
     await expect.poll(popup.text).toContain('Read cart amount');
     await popup.click('Read cart amount');
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    // Phase 15.1: the generic reader reads the observed Best Buy fixture as an estimated total.
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     expect(await popup.evaluate("document.getElementById('purchase-amount').value")).toBe('27.23');
     await popup.evaluate("document.querySelector('input[type=checkbox]').click()");
     await popup.click('Compare my cards');

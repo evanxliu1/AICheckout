@@ -4,30 +4,23 @@ import type { PageMode, ReaderEnvironment } from '../src/badge/auto-reader';
 import type { ManualRead } from '../src/checkout/manual-reader';
 import { createBadgeFrame, frameMessage } from '../src/badge/frame';
 import { observeCart } from '../src/badge/observe';
-import type { PageRead } from '../src/checkout/page-reader';
 
-const found = (amountCents: number): PageRead => ({
+/** A generic reading (the only reader since Phase 15.1): the content script names the generic store. */
+const found = (amountCents: number): ManualRead => ({
   status: 'found',
-  merchantId: 'best-buy-us',
+  merchantId: 'generic-us-online',
   currency: 'USD',
   amountCents,
   kind: 'total',
-  extractorVersion: 'bestbuy-summary-v1',
+  extractorVersion: 'generic-reader-v1',
 });
 
-/** Legacy cart URLs end in /cart; order pages contain thank-you; a hinted page (the generic detector)
- * contains "basket"; anything else gets no reader. */
+/** A hinted page (the generic detector) ends in /cart or contains "basket"; anything else gets no reader. */
 const modeOf = (url: string): PageMode =>
-  url.includes('thank-you')
-    ? 'order'
-    : url.endsWith('/cart')
-      ? 'legacy'
-      : url.includes('basket')
-        ? 'generic'
-        : 'none';
+  url.endsWith('/cart') || url.includes('basket') ? 'generic' : 'none';
 function environment(overrides: Partial<ReaderEnvironment> = {}) {
   let reading: ManualRead = found(2723);
-  let page: 'legacy' | 'cart' | 'checkout' | 'none' = 'legacy';
+  let page: 'cart' | 'checkout' | 'none' = 'cart';
   let url = 'https://www.bestbuy.com/cart';
   let navigate: (() => void) | null = null;
   let onChange: (() => void) | null = null;
@@ -48,10 +41,8 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
     shown: vi.fn(() => mounted),
     expanded: vi.fn(() => false),
   };
-  let initial: string | null = null;
   const env: ReaderEnvironment = {
     url: () => url,
-    initialUrl: () => initial ?? url,
     read: vi.fn(() => ({ page, reading })),
     mode: modeOf,
     onNavigate: (listener) => {
@@ -91,7 +82,6 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
       url = value;
       navigate?.();
     },
-    setInitialUrl: (value: string) => (initial = value),
     removeFrame: () => (mounted = false),
     mutate: () => onChange?.(),
     observing: () => onChange !== null,
@@ -114,7 +104,7 @@ function environment(overrides: Partial<ReaderEnvironment> = {}) {
 }
 
 describe('automatic cart reader', () => {
-  it('reads on load, sends only the adapter reading, and shows the badge when the worker says so', async () => {
+  it('reads on load, sends only the reading, and shows the badge when the worker says so', async () => {
     const t = environment();
     startAutoReader(t.env);
     await Promise.resolve();
@@ -202,28 +192,19 @@ describe('automatic cart reader', () => {
     await t.flush();
     expect(t.frame.hide).toHaveBeenCalledTimes(1);
   });
-  it('does nothing on other pages, and on an order page only asks the worker (the page is never read)', async () => {
-    const other = environment();
-    other.setUrl('https://www.bestbuy.com/site/some-product');
-    startAutoReader(other.env);
-    expect(other.env.read).not.toHaveBeenCalled();
-    expect(other.env.observe).not.toHaveBeenCalled();
-    expect(other.env.send).not.toHaveBeenCalled();
-    const order = environment();
-    order.setUrl('https://www.bestbuy.com/checkout/r/thank-you');
-    startAutoReader(order.env);
-    await order.flush();
-    expect(order.env.send).toHaveBeenCalledWith({ type: 'order:page', framed: false });
-    expect(order.env.read).not.toHaveBeenCalled();
-    expect(order.env.observe).not.toHaveBeenCalled();
-    expect(order.frame.show).toHaveBeenCalledOnce();
-    // An in-page navigation to an order URL (not the document's own URL) does not count.
-    const pushed = environment();
-    pushed.setInitialUrl('https://www.bestbuy.com/checkout/r/payment');
-    pushed.setUrl('https://www.bestbuy.com/checkout/r/thank-you');
-    startAutoReader(pushed.env);
-    await pushed.flush();
-    expect(pushed.env.send).not.toHaveBeenCalled();
+  it('does nothing on pages without a hint, a former order-confirmation URL included (Phase 15.1)', async () => {
+    for (const url of [
+      'https://www.bestbuy.com/site/some-product',
+      'https://www.bestbuy.com/checkout/r/thank-you',
+    ]) {
+      const other = environment();
+      other.setUrl(url);
+      startAutoReader(other.env);
+      await other.flush();
+      expect(other.env.read, url).not.toHaveBeenCalled();
+      expect(other.env.observe, url).not.toHaveBeenCalled();
+      expect(other.env.send, url).not.toHaveBeenCalled();
+    }
   });
   it('stops observing while hidden or after page hide, and leaves a cart left by in-page navigation', async () => {
     const t = environment();

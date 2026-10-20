@@ -4,14 +4,16 @@ import { readActiveCheckout, validateActiveCheckout } from '../src/checkout/brow
 
 const execute = vi.fn();
 const query = vi.fn();
+// A former adapter store's cart URL: since Phase 15.1 the generic reader reads it like any other page, naming
+// the generic store; the snapshot carries the store the worker resolved (`best-buy-us`).
 const url = 'https://www.bestbuy.com/cart?private-session=do-not-store';
 const reading = {
   status: 'found',
-  merchantId: 'best-buy-us',
+  merchantId: 'generic-us-online',
   currency: 'USD',
   amountCents: 12345,
   kind: 'total',
-  extractorVersion: 'bestbuy-summary-v1',
+  extractorVersion: 'generic-reader-v1',
 };
 beforeEach(() => {
   vi.stubGlobal('crypto', webcrypto);
@@ -24,29 +26,25 @@ beforeEach(() => {
 });
 afterEach(() => vi.unstubAllGlobals());
 describe('checkout browser boundary', () => {
-  it('accepts the matching Newegg reader but rejects a different merchant or reader version on that page', async () => {
+  it('names Newegg’s cart from the worker’s release and rejects a changed kind or a retired adapter version', async () => {
     const nextUrl = 'https://secure.newegg.com/shop/cart';
     query.mockResolvedValue([{ id: 7, url: nextUrl }]);
-    const next = {
-      ...reading,
-      merchantId: 'newegg-us',
-      kind: 'subtotal',
-      extractorVersion: 'newegg-summary-v1',
-    };
+    const next = { ...reading, kind: 'subtotal' };
     execute
       .mockReset()
       .mockResolvedValueOnce([{ frameId: 0, documentId: 'doc-1' }])
       .mockResolvedValue([{ frameId: 0, documentId: 'doc-1', result: { url: nextUrl, reading: next } }]);
     const captured = await readActiveCheckout();
-    expect(captured).toMatchObject({ merchantId: 'newegg-us', kind: 'subtotal' });
+    expect(captured).toMatchObject({
+      merchantId: 'newegg-us',
+      kind: 'subtotal',
+      extractorVersion: 'generic-reader-v1',
+    });
     await expect(validateActiveCheckout(captured)).resolves.toBeUndefined();
+    // The page now reads as a total: the snapshot is stale.
     execute.mockResolvedValue([{ frameId: 0, documentId: 'doc-1', result: { url: nextUrl, reading } }]);
     await expect(validateActiveCheckout(captured)).rejects.toThrow('cart or page changed');
-    execute
-      .mockReset()
-      .mockResolvedValueOnce([{ frameId: 0, documentId: 'doc-1' }])
-      .mockResolvedValue([{ frameId: 0, documentId: 'doc-1', result: { url: nextUrl, reading } }]);
-    await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+    // The retired adapter's version is refused by the probe contract (Phase 15.1).
     execute
       .mockReset()
       .mockResolvedValueOnce([{ frameId: 0, documentId: 'doc-1' }])
@@ -54,7 +52,7 @@ describe('checkout browser boundary', () => {
         {
           frameId: 0,
           documentId: 'doc-1',
-          result: { url: nextUrl, reading: { ...next, extractorVersion: 'bestbuy-summary-v1' } },
+          result: { url: nextUrl, reading: { ...next, extractorVersion: 'newegg-summary-v1' } },
         },
       ]);
     await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
@@ -127,7 +125,7 @@ describe('checkout browser boundary', () => {
       ]);
       await expect(validateActiveCheckout(snapshot)).rejects.toThrow('cart or page changed');
     });
-    it('resolves the tab’s store in the worker for a generic reading: a legacy site’s other pages, a release host (Phase 14.2)', async () => {
+    it('resolves the tab’s store in the worker for a generic reading: a release host and its pages (Phase 14.2)', async () => {
       // The content script names the generic store; the snapshot carries the store matched for the tab.
       probe(generic, 'https://www.bestbuy.com/site/some-product');
       const snapshot = await readActiveCheckout();
@@ -135,24 +133,23 @@ describe('checkout browser boundary', () => {
       await expect(validateActiveCheckout(snapshot)).resolves.toBeUndefined();
       probe(generic, 'https://smile.amazon.com/cart');
       await expect(readActiveCheckout()).resolves.toMatchObject({ merchantId: 'amazon-us' });
-      // A reading that names the store itself is refused: only the worker names stores.
+      // A reading that names the store itself is refused by the contract: only the worker names stores.
       probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/site/some-product');
-      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
-    });
-    it('ties the reader version to the URL: generic on a legacy cart URL and an adapter version off it are rejected', async () => {
-      probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/cart');
-      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
-      probe(
-        { ...generic, merchantId: 'best-buy-us', kind: 'total', extractorVersion: 'bestbuy-summary-v1' },
-        'https://www.bestbuy.com/site/some-product',
-      );
-      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
-    });
-    it('rejects a legacy reader version at the generic store and a generic reading that names a legacy cart', async () => {
-      probe({ ...generic, extractorVersion: 'bestbuy-summary-v1' });
       await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
-      probe({ ...generic, merchantId: 'best-buy-us' });
-      await expect(readActiveCheckout()).rejects.toThrow('cart or page changed');
+    });
+    it('refuses a reading that names a store or carries a retired adapter version, on any URL (Phase 15.1)', async () => {
+      // The probe contract accepts only the generic store with the generic version, so both fail validation
+      // before the URL is even compared.
+      for (const url of [
+        'https://www.bestbuy.com/cart',
+        'https://www.bestbuy.com/site/some-product',
+        storeUrl,
+      ]) {
+        probe({ ...generic, merchantId: 'best-buy-us' }, url);
+        await expect(readActiveCheckout(), url).rejects.toThrow('ambiguous');
+        probe({ ...generic, extractorVersion: 'bestbuy-summary-v1' }, url);
+        await expect(readActiveCheckout(), url).rejects.toThrow('ambiguous');
+      }
     });
     it('reports a withheld read as compared by rate (never asks for an amount), and keeps the USD-only message', async () => {
       probe({ status: 'unavailable', reason: 'withheld' });

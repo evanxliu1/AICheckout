@@ -1,5 +1,5 @@
 /** The automatic badge's host permissions (Phase 13c): every https site, so the badge can recognise
- * a cart at any store. The legacy adapters' hosts are a subset. */
+ * a cart at any store. */
 export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
 
 /** What chrome.permissions.getAll() reports as origins: host permissions and content-script matches

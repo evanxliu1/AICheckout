@@ -193,13 +193,8 @@ test('re-check E: a development run refuses a reader that names a held-out domai
   assert.deepEqual(readRuns(path.join(e.root, 'runs.json')).runs, []);
 });
 
-test('review 2: the legacy bundle holds the three extension adapters only', async () => {
-  const b = await bundleReader({ mode: 'legacy' });
-  assert.ok(b.inputs.includes('extension/src/checkout/page-reader.ts'));
-  assert.ok(b.inputs.includes('extension/src/checkout/adapters/amazon-us.json'));
-  assert.ok(
-    b.inputs.every((p) =>
-      /^(evals\/reader\/legacy-entry\.ts|extension\/src\/checkout\/|packages\/rewards-core\/src\/)/.test(p),
-    ),
-  );
+test('Phase 15.1: the harness bundles the generic reader only (no legacy mode)', async () => {
+  const b = await bundleReader();
+  assert.ok(b.inputs.every((p) => p.startsWith('packages/cart-reader/src/')));
+  await assert.rejects(bundleReader({ mode: 'legacy' }));
 });

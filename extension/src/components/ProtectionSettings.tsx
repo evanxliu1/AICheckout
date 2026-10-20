@@ -46,7 +46,7 @@ export default function ProtectionSettings({ protection }: { protection: 'off' |
     >
       <p>
         {protection === 'off'
-          ? 'Optional. Encrypt your cards, savings and purchase inputs with a passphrase. You unlock once per browser session; the badge asks you to unlock before it can show your best card. A forgotten passphrase cannot be recovered.'
+          ? 'Optional. Encrypt your cards and purchase inputs with a passphrase. You unlock once per browser session; the badge asks you to unlock before it can show your best card. A forgotten passphrase cannot be recovered.'
           : 'Your saved data is encrypted with your passphrase. Turning protection off keeps your data and stores it unencrypted in this Chrome profile, like the default.'}
       </p>
       {error && (

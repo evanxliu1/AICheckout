@@ -81,7 +81,7 @@ test('the inspected upload ZIP installs and completes a native comparison', asyn
         'Double Cash · Active Cash · Quicksilver · Savor · Freedom Unlimited · Blue Cash Everyday · Blue Cash Preferred',
       );
     await popup.click('Read cart amount');
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     await popup.evaluate(`const select = document.getElementById('online-eligibility');
       Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set.call(select, 'eligible');
       select.dispatchEvent(new Event('change', { bubbles: true }));`);

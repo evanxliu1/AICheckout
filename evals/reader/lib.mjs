@@ -44,7 +44,7 @@ export const RunRow = z.strictObject({
   frozenVariantLabelSha256: sha,
   freezeSha256: sha,
   readerBundleSha256: sha,
-  /** The legacy adapters' bundle; a detector run has none. */
+  /** The legacy adapters' bundle, written by reader runs before Phase 15.1 (2026-10-20); kept so those rows parse. */
   legacyBundleSha256: sha.optional(),
   chromium: z.string(),
   pageStates: z.number().int().nonnegative(),

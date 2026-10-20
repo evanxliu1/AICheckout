@@ -76,7 +76,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
     await pageCdp.detach();
     await expect.poll(async () => (await readVaultState(worker)).cart?.amountCents).toBe(2723);
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     expect(await popup.evaluate("document.getElementById('purchase-amount').value")).toBe('27.23');
     expect(await popup.evaluate("document.querySelector('input[type=checkbox]').checked")).toBe(false);
     expect(await popup.text()).not.toContain('Your card estimate');
@@ -88,7 +88,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
     // The reload invalidated the capture and its comparison; the popup reads the page again on open
     // (Phase 13c) and shows a fresh, unconfirmed capture.
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     expect(await popup.text()).not.toContain('Your card estimate');
     expect(await popup.evaluate("document.querySelector('input[type=checkbox]').checked")).toBe(false);
     await compareCapture(popup);
@@ -116,7 +116,7 @@ test('popup closure preserves an unconfirmed capture; navigation invalidates it 
     // https pages are readable through the badge's host permission (https://*/*), http never.
     expect(await canRead(cartTab)).toBe(true);
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     expect(await popup.text()).not.toContain('Your card estimate');
     await compareCapture(popup);
     await popup.close();
@@ -143,7 +143,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     let merchant = await merchantFixture(context);
     let popup = await chooseCard(context, merchant, id);
     await popup.click('Read cart amount');
-    await expect.poll(popup.text).toContain('Read $27.23 as the order total');
+    await expect.poll(popup.text).toContain('Read $27.23 as an estimated total');
     await compareCapture(popup);
     const bootTime = await worker.evaluate(() => performance.timeOrigin);
     const observer = await fixture.observe(merchant.url(), id);
@@ -194,7 +194,7 @@ test('a real idle worker stop preserves saved comparison and revalidates the car
     // The restored comparison fails its re-read and is dropped; the popup then reads the page on
     // open (Phase 13c) and offers the current amount, unconfirmed, never the stale estimate.
     popup = await openNativePopup(context, merchant, id);
-    await expect.poll(popup.text).toContain('Read $40.00 as the order total');
+    await expect.poll(popup.text).toContain('Read $40.00 as an estimated total');
     expect(await popup.text()).not.toContain('Your card estimate');
     expect(await popup.text()).not.toContain('$0.54');
     const permissions = await restarted.evaluate(() => chrome.permissions.getAll());

@@ -1,7 +1,7 @@
 // The automatic cart reader, kept free of DOM globals so it can be tested: the content script
-// passes in the page, the messaging and the frame. It reads the order summary through the bundled
-// adapter on a legacy store's cart URLs and through the generic detector and reader everywhere else
-// (Phase 13c), sends only the reading, and learns only whether to show the badge.
+// passes in the page, the messaging and the frame. It reads the order summary through the generic
+// detector and reader on every hinted page (Phase 13c; the only reader since Phase 15.1), sends only
+// the reading, and learns only whether to show the badge.
 import type { PageKind } from '@ai-checkout/cart-reader';
 import type { ManualRead } from '../checkout/manual-reader';
 
@@ -20,18 +20,15 @@ export interface BadgeFrameControl {
   /** The shopper has the panel open: keep it while the cart is briefly unreadable. */
   expanded(): boolean;
 }
-export type ReaderMessage =
-  { type: 'cart:reading'; reading: ManualRead; framed: boolean } | { type: 'order:page'; framed: boolean };
-/** Which reader a URL gets: a legacy adapter's order page or cart, the generic detector (the URL or
- * title carries a cart or checkout word), or none (no DOM is read and nothing is observed). */
-export type PageMode = 'order' | 'legacy' | 'generic' | 'none';
+export type ReaderMessage = { type: 'cart:reading'; reading: ManualRead; framed: boolean };
+/** Which reader a URL gets: the generic detector (the URL or title carries a cart or checkout word), or
+ * none (no DOM is read and nothing is observed). */
+export type PageMode = 'generic' | 'none';
 export interface ReaderEnvironment {
   url(): string;
-  /** The document's own URL when it loaded (in-page navigation changes url() but not this). */
-  initialUrl(): string;
   mode(url: string): PageMode;
-  /** One pass: the detector's verdict (`legacy` on an adapter's cart URL) and the reading. */
-  read(): { page: PageKind | 'legacy'; reading: ManualRead };
+  /** One pass: the detector's verdict and the reading. */
+  read(): { page: PageKind; reading: ManualRead };
   send(message: ReaderMessage): Promise<{ show?: unknown; nonce?: unknown } | undefined>;
   /** Calls back on summary-relevant DOM changes; returns a disconnect function. */
   observe(onChange: () => void): () => void;
@@ -59,21 +56,7 @@ function apply(frame: BadgeFrameControl, reply: { show?: unknown; nonce?: unknow
 }
 
 export function startAutoReader(env: ReaderEnvironment) {
-  const startUrl = env.url();
   let stopped = false;
-  if (env.mode(startUrl) === 'order') {
-    // URL-only order detection: the page is never read. Only a document that loaded at the order
-    // URL counts, not an in-page navigation to it; the worker decides whether to ask.
-    if (env.initialUrl() !== startUrl) return { stop: () => void (stopped = true), sends: () => 0 };
-    void env
-      .send({ type: 'order:page', framed: env.frame.shown() })
-      .then((reply) => {
-        if (!stopped) apply(env.frame, reply);
-      })
-      .catch(() => undefined);
-    return { stop: () => void (stopped = true), sends: () => 0 };
-  }
-
   let sends = 0,
     lastKey = '',
     /** The worker's last answer: the badge should be showing. */
@@ -89,11 +72,8 @@ export function startAutoReader(env: ReaderEnvironment) {
     disconnect?.();
     disconnect = null;
   }
-  /** The reader is on a page that gets a reader (an adapter's cart or a hinted page). */
-  const active = () => {
-    const mode = env.mode(env.url());
-    return mode === 'legacy' || mode === 'generic';
-  };
+  /** The reader is on a page that gets a reader (a hinted page). */
+  const active = () => env.mode(env.url()) === 'generic';
   function connect() {
     if (!stopped && !paused && !disconnect && active()) disconnect = env.observe(schedule);
   }

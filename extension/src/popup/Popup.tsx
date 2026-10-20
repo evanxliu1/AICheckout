@@ -7,7 +7,6 @@ import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
 import BadgeSettings from '../components/BadgeSettings';
 import ProtectionSettings from '../components/ProtectionSettings';
-import SavingsHistory from '../components/SavingsHistory';
 import {
   Disclosure,
   AlertInline,
@@ -29,7 +28,6 @@ import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
 import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
 import { emptyState } from '../state/contracts';
-import { MERCHANT_IDS, isLegacyMerchant } from '../checkout/merchants';
 import {
   merchantName,
   releaseRecord,
@@ -40,9 +38,9 @@ import {
 import type { TabStore } from '../checkout/store-match';
 
 type View = Extract<CheckoutResponse, { ok: true }>;
-/** The stores the popup always offers: the supported stores, then any other U.S. online store. A store
- * matched from the tab (a merchant release record) is offered while it is selected. */
-const STORE_IDS: string[] = [...MERCHANT_IDS, GENERIC_MERCHANT_ID];
+/** The store the popup always offers: any other U.S. online store. The tab's matched store (a merchant
+ * release record) is offered by name while it is selected (since Phase 15.1 the only other option). */
+const STORE_IDS: string[] = [GENERIC_MERCHANT_ID];
 
 /** The store of the tab the popup was opened on (its URL is granted by `activeTab`), or null for a non-web
  * page, and whether the tab is an https page the popup reads on open (Phase 13c). A payment processor's
@@ -64,9 +62,9 @@ async function activeTabMerchant(): Promise<{
   }
 }
 /** Online retail eligibility for a newly chosen store: the generic store and a release record sell
- * physical goods online (their profiles, as the badge derives them); a legacy store asks the shopper. */
+ * physical goods online (their profiles, as the badge derives them); any other saved id asks the shopper. */
 const storeOnlineRetail = (id: string): Eligibility =>
-  !isLegacyMerchant(id) && (id === GENERIC_MERCHANT_ID || releaseRecord(id)) ? 'eligible' : 'unknown';
+  id === GENERIC_MERCHANT_ID || releaseRecord(id) ? 'eligible' : 'unknown';
 
 export default function Popup({
   onLock,
@@ -82,13 +80,13 @@ export default function Popup({
 } = {}) {
   const [view, setView] = useState<View | null>(null);
   const [editing, setEditing] = useState(false);
-  const [pending, setPending] = useState<
-    'load' | 'read' | 'save' | 'compare' | 'delete' | 'catalog' | 'savings' | null
-  >(null);
+  const [pending, setPending] = useState<'load' | 'read' | 'save' | 'compare' | 'delete' | 'catalog' | null>(
+    null,
+  );
   const busy = pending !== null;
   const [error, setError] = useState('');
   const [amount, setAmount] = useState('');
-  const [merchantId, setMerchantId] = useState<string>('best-buy-us');
+  const [merchantId, setMerchantId] = useState<string>(GENERIC_MERCHANT_ID);
   const [eligible, setEligible] = useState(false);
   const [onlineRetail, setOnlineRetail] = useState<Eligibility>('unknown');
   const [paymentPath, setPaymentPath] = useState<PaymentPathV3>('card');
@@ -142,7 +140,7 @@ export default function Popup({
     const hasPendingCart = !!cart && !next.state.comparison;
     const saved = hasPendingCart
       ? cart.merchantId
-      : (next.state.purchase?.merchantId ?? cart?.merchantId ?? 'best-buy-us');
+      : (next.state.purchase?.merchantId ?? cart?.merchantId ?? GENERIC_MERCHANT_ID);
     const changed = !hasPendingCart && tabMerchant !== null && tabMerchant !== saved;
     setAmount(
       changed
@@ -157,8 +155,11 @@ export default function Popup({
     setCartId(changed ? null : (cart?.id ?? null));
     // Restored results are labeled saved; a new comparison requires renewed confirmation.
     setEligible(false);
+    // No saved purchase: the store's own eligibility (the generic store and a release store start eligible).
     setOnlineRetail(
-      changed ? storeOnlineRetail(tabMerchant) : (next.state.purchase?.onlineRetail ?? 'unknown'),
+      changed
+        ? storeOnlineRetail(tabMerchant)
+        : (next.state.purchase?.onlineRetail ?? storeOnlineRetail(saved)),
     );
     // Venmo is offered only with catalog v3 terms.
     const path = next.state.purchase?.paymentPath ?? 'card';
@@ -194,7 +195,7 @@ export default function Popup({
         restore(next);
         if (found.store?.kind === 'processor') setPaymentPage(found.store.name);
         // An https store tab is read on open: a certain amount fills in, otherwise the rates view. A
-        // cart read in this very tab, or a comparison saved for this legacy store, is kept instead
+        // cart read in this very tab, or a comparison saved for this matched store, is kept instead
         // (reopening the popup must not discard it); the generic id is every other store, so a saved
         // generic comparison never suppresses the read at another site. "Read cart amount" re-reads.
         const settled = next.state.cart
@@ -407,20 +408,6 @@ export default function Popup({
       restore(await checkoutRequest({ type: 'checkout:clear' }));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Local data could not be deleted. Try again.');
-    } finally {
-      setPending(null);
-    }
-  }
-  async function deleteSavings() {
-    if (!view) return;
-    setPending('savings');
-    setError('');
-    try {
-      restore(
-        await checkoutRequest({ type: 'checkout:delete-savings', expectedRevision: view.state.revision }),
-      );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'The history could not be deleted. Try again.');
     } finally {
       setPending(null);
     }
@@ -762,14 +749,6 @@ export default function Popup({
                 </div>
               </>
             ))}
-          {view && !editing && view.state.wallet.cards.length > 0 && (
-            <SavingsHistory
-              entries={view.state.savings}
-              cards={view.cardIndex}
-              busy={busy}
-              onDelete={() => void deleteSavings()}
-            />
-          )}
           <Disclosure title="Settings" id="popup-settings">
             <div className="space-y-4">
               <BadgeSettings />
@@ -783,8 +762,8 @@ export default function Popup({
           </Disclosure>
           <footer className="supporting space-y-3 pt-2">
             <p>
-              Cards, purchase inputs and savings stay on this device. This comparison works offline and
-              requires no API key.
+              Cards and purchase inputs stay on this device. This comparison works offline and requires no API
+              key.
             </p>
             {catalog && <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>}
             <div className="flex flex-wrap gap-2">

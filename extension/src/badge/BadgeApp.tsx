@@ -73,10 +73,9 @@ export default function BadgeApp() {
     };
   }, [load]);
 
-  // An order question and a just-recorded order open as a panel; nothing else opens by itself.
+  // Nothing opens the panel by itself; a hidden view hides the frame.
   const kind = view?.kind;
   useEffect(() => {
-    if (kind === 'order' || kind === 'recorded') setExpanded(true);
     if (kind === 'hidden') postToHost({ type: 'hide' });
   }, [kind]);
 
@@ -175,7 +174,7 @@ export default function BadgeApp() {
     pillLabel = `${pillText.replace(' · est. ', ' · estimated ')}${valued} on this cart (AI Checkout). Show details`;
     pillAction = expand;
   } else if (view.kind === 'locked') {
-    pillText = view.order ? 'Unlock to record this order' : 'Unlock to see your best card';
+    pillText = 'Unlock to see your best card';
     pillLabel = `${pillText} (AI Checkout). Opens AI Checkout`;
     pillAction = () => open('popup');
   } else if (view.kind === 'no-cards') {
@@ -194,13 +193,9 @@ export default function BadgeApp() {
     pillText = `Use ${name} · ${pillAmount}`;
     pillLabel = `${pillText.replace(' (est. ', ' (estimated ')} at this store (AI Checkout). The cart amount was not read. Show details`;
     pillAction = expand;
-  } else if (view.kind === 'unavailable') {
+  } else {
     pillText = 'Card terms need attention';
     pillLabel = `${pillText} (AI Checkout). Show details`;
-    pillAction = expand;
-  } else {
-    pillText = 'Did you pay with your recommended card?';
-    pillLabel = `${pillText} (AI Checkout). Show question`;
     pillAction = expand;
   }
 
@@ -219,11 +214,7 @@ export default function BadgeApp() {
           <div className="badge-panel__header">
             <Icon name="shopping-cart" size={16} className="text-action" />
             <h2 id="badge-heading" ref={heading} tabIndex={-1} className="section-title">
-              {view.kind === 'order'
-                ? `Did you pay with ${view.cards.find((c) => c.id === view.recommendedCardId)?.name ?? 'the recommended card'}?`
-                : view.kind === 'recorded'
-                  ? 'Order recorded'
-                  : 'Best card for this cart'}
+              Best card for this cart
             </h2>
             <Button
               size="small"
@@ -231,9 +222,9 @@ export default function BadgeApp() {
               icon="x"
               isIconOnly
               className="badge-panel__close"
-              onClick={view.kind === 'recorded' ? () => postToHost({ type: 'hide' }) : collapse}
+              onClick={collapse}
             >
-              {view.kind === 'recorded' ? 'Close' : 'Collapse'}
+              Collapse
             </Button>
           </div>
           <div className="badge-panel__body space-y-3">
@@ -244,21 +235,14 @@ export default function BadgeApp() {
             )}
             <PanelBody view={view} busy={busy} apply={apply} open={open} />
           </div>
-          {view.kind !== 'recorded' && (
-            <div className="badge-panel__footer">
-              <Button size="small" color="secondary" disabled={busy} onClick={() => close('badge:dismiss')}>
-                Dismiss for this tab
-              </Button>
-              <Button
-                size="small"
-                color="tertiary"
-                disabled={busy}
-                onClick={() => close('badge:disable-site')}
-              >
-                Not on this site
-              </Button>
-            </div>
-          )}
+          <div className="badge-panel__footer">
+            <Button size="small" color="secondary" disabled={busy} onClick={() => close('badge:dismiss')}>
+              Dismiss for this tab
+            </Button>
+            <Button size="small" color="tertiary" disabled={busy} onClick={() => close('badge:disable-site')}>
+              Not on this site
+            </Button>
+          </div>
         </section>
       ) : (
         <button
@@ -266,7 +250,7 @@ export default function BadgeApp() {
           type="button"
           className="badge-pill"
           aria-label={pillLabel}
-          aria-expanded={['ready', 'rates', 'unavailable', 'order'].includes(view.kind) ? false : undefined}
+          aria-expanded={['ready', 'rates', 'unavailable'].includes(view.kind) ? false : undefined}
           onClick={pillAction}
         >
           <Icon name={view.kind === 'locked' ? 'lock' : 'credit-card'} size={16} />
@@ -307,15 +291,6 @@ function PanelBody({
           Open AI Checkout
         </Button>
       </>
-    );
-  if (view.kind === 'order') return <OrderBody view={view} busy={busy} apply={apply} />;
-  if (view.kind === 'recorded')
-    return (
-      <p role="status">
-        {view.extraCents !== null && view.baselineCardName
-          ? `About ${formatUsd(Math.abs(view.extraCents))} ${view.extraCents >= 0 ? 'more' : 'less'} ${view.rewardTerm === 'cash back' ? 'cash back' : 'in rewards'} than ${view.baselineCardName}, your default card (estimated).${view.valueNote ? ` ${view.valueNote}` : ''} See all-time savings in AI Checkout.`
-          : `Saved to your order history in AI Checkout.${view.valueNote ? ` ${view.valueNote}` : ''}`}
-      </p>
     );
   // locked / no-cards / damaged open the popup or setup from the pill; nothing to expand.
   return (
@@ -446,78 +421,6 @@ function ReadyBody({
             cart leaves your device.
           </p>
         </>
-      )}
-    </>
-  );
-}
-
-function OrderBody({
-  view,
-  busy,
-  apply,
-}: {
-  view: Extract<BadgeView, { kind: 'order' }>;
-  busy: boolean;
-  apply: (request: BadgeAction) => Promise<unknown>;
-}) {
-  const [choosing, setChoosing] = useState(false);
-  const others = view.cards.filter((card) => card.id !== view.recommendedCardId);
-  const [cardId, setCardId] = useState(others[0]?.id ?? '');
-  const answer = (choice: 'yes' | 'other' | 'unsure', card: string | null = null) =>
-    void apply({ type: 'badge:answer-order', answer: choice, cardId: card });
-  return (
-    <>
-      <p className="supporting">
-        Your answer adds an estimate to your all-time rewards total in AI Checkout. Only this page’s address
-        was checked; nothing on it was read.
-      </p>
-      {choosing ? (
-        <form
-          className="space-y-3"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (cardId) answer('other', cardId);
-          }}
-        >
-          <Field id="badge-used-card" label="Card you paid with">
-            {(control) => (
-              <Select
-                {...control}
-                value={cardId}
-                disabled={busy}
-                onChange={(event) => setCardId(event.target.value)}
-              >
-                {others.map((card) => (
-                  <option key={card.id} value={card.id}>
-                    {card.name}
-                  </option>
-                ))}
-              </Select>
-            )}
-          </Field>
-          <div className="badge-amount__actions">
-            <Button type="submit" size="small" disabled={busy || !cardId}>
-              Save
-            </Button>
-            <Button size="small" color="tertiary" disabled={busy} onClick={() => setChoosing(false)}>
-              Back
-            </Button>
-          </div>
-        </form>
-      ) : (
-        <div className="badge-answers">
-          <Button size="small" disabled={busy} onClick={() => answer('yes')}>
-            Yes
-          </Button>
-          {others.length > 0 && (
-            <Button size="small" color="secondary" disabled={busy} onClick={() => setChoosing(true)}>
-              Another card
-            </Button>
-          )}
-          <Button size="small" color="tertiary" disabled={busy} onClick={() => answer('unsure')}>
-            Not sure
-          </Button>
-        </div>
       )}
     </>
   );

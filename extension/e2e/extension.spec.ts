@@ -10,7 +10,7 @@ import {
   mutateVaultState,
 } from './vault';
 import { BADGE_ORIGINS } from './hosts';
-import { addCard, cacheCatalogV3Fixture } from './wallet';
+import { addCard, atStore, cacheCatalogV3Fixture } from './wallet';
 
 test('packaged wallet: offline comparison, browser restart, expiry, and deletion', async ({
   browserName,
@@ -183,7 +183,7 @@ test('catalog v3: the ranking follows chosen categories, point values and member
     await popup.getByRole('button', { name: 'Save cards' }).click();
     const first = () => popup.locator('.estimate-list h3').first();
     async function compare(merchant = 'best-buy-us') {
-      await popup.getByLabel('Merchant').selectOption(merchant);
+      await atStore(popup, merchant);
       await popup.getByLabel('Purchase amount (USD)').fill('100');
       await popup.getByLabel('Online retail bonus eligibility').selectOption('eligible');
       await popup.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
@@ -284,7 +284,7 @@ test('bundled catalog v3: real cards re-rank when a category, a point value or P
     await popup.getByRole('button', { name: 'Save cards' }).click();
     const first = () => popup.locator('.estimate-list h3').first();
     async function compare(merchant: string) {
-      await popup.getByLabel('Merchant').selectOption(merchant);
+      await atStore(popup, merchant);
       await popup.getByLabel('Purchase amount (USD)').fill('100');
       await popup.getByLabel('Online retail bonus eligibility').selectOption('eligible');
       await popup.getByRole('checkbox', { name: /I confirmed the amount/ }).check();

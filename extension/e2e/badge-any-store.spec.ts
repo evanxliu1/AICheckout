@@ -1,9 +1,9 @@
-// Phase 13c: the automatic badge at a store with no adapter. Synthetic fixture pages are served at
-// https hosts through context.route (no real store is contacted): the amount view, the rates view when
-// the reader withholds, no badge on a product page with an open cart drawer, an empty cart or a non-USD
-// cart, single-page navigation into and out of a cart, the "other stores" toggle and the per-site
-// switch, a legacy store unchanged, and axe on the badge. Phase 14.2: a store named from the bundled
-// merchant release on a page its adapter does not cover, and no badge on a payment processor's page.
+// Phase 13c: the automatic badge at any store. Synthetic fixture pages are served at https hosts through
+// context.route (no real store is contacted): the amount view, the rates view when the reader withholds,
+// no badge on a product page with an open cart drawer, an empty cart or a non-USD cart, single-page
+// navigation into and out of a cart, the badge toggle and the per-site switch, and axe on the badge.
+// Phase 14.2: a store named from the bundled merchant release, and no badge on a payment processor's
+// page. Phase 15.1: the former adapter stores are ordinary release stores (the toggle covers them too).
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type BrowserContext, type Frame, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -64,8 +64,8 @@ const fixtures: Record<string, string> = {
   ),
   'https://shop.example.com/': SPA,
   'https://other.example.com/cart': page('Basket', cartBody(USD_ROWS, 'Your basket')),
-  // A seed store (amazon.com) on a subdomain and path its adapter does not cover: the generic reader at
-  // the store's own id. A processor (pay.amazon.com, paypal.com): a cart-like page that is never read.
+  // A release store (amazon.com) on a subdomain: the generic reader at the store's own id, named by the
+  // release. A processor (pay.amazon.com, paypal.com): a cart-like page that is never read.
   'https://smile.amazon.com/cart': page('Your cart', cartBody(USD_ROWS)),
   'https://pay.amazon.com/checkout/x': page('Checkout', cartBody(USD_ROWS, 'Review your order')),
   'https://www.paypal.com/checkoutnow': page('Checkout', cartBody(USD_ROWS, 'Pay with PayPal')),
@@ -148,7 +148,7 @@ async function axePage(p: Page, label: string) {
   ).toEqual([]);
 }
 
-test('badge at any store: amount view, rates view, drawer, empty and non-USD carts hidden, single-page navigation, toggles, legacy unchanged', async ({
+test('badge at any store: amount view, rates view, drawer, empty and non-USD carts hidden, single-page navigation, toggles', async ({
   browserName,
 }, testInfo) => {
   test.setTimeout(150_000);
@@ -222,7 +222,7 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
     await named.goto('https://smile.amazon.com/cart');
     badge = await badgeFrame(named);
     await badge.getByRole('button', { name: /\$3\.00 back on this cart/ }).click();
-    await expect(badge.getByText('Based on $100.00 cart estimated total at Amazon US.')).toBeVisible();
+    await expect(badge.getByText('Based on $100.00 cart estimated total at Amazon.')).toBeVisible();
     const namedTabs = JSON.stringify(await worker.evaluate(() => chrome.storage.session.get(null)));
     expect(namedTabs).toContain('"merchantId":"amazon-us"');
     expect(namedTabs).toContain('smile.amazon.com');
@@ -275,8 +275,8 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
     await cart.reload();
     await badgeFrame(cart);
 
-    // The "other stores" toggle hides every store without an adapter; a legacy store is unchanged.
-    const toggle = popup.getByRole('switch', { name: 'Show the badge at other stores' });
+    // The badge toggle hides every store, a former adapter store (Best Buy, Phase 15.1) included.
+    const toggle = popup.getByRole('switch', { name: 'Show the cart badge at stores' });
     await expect(toggle).toBeChecked();
     await toggle.click();
     await expect(toggle).not.toBeChecked();
@@ -284,16 +284,18 @@ test('badge at any store: amount view, rates view, drawer, empty and non-USD car
     await expectNoBadge(cart);
     await other.reload();
     await expectNoBadge(other);
-    const legacy = await context.newPage();
-    await legacy.goto('https://www.bestbuy.com/cart');
-    const legacyBadge = await badgeFrame(legacy);
-    await expect(
-      legacyBadge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ }),
-    ).toBeVisible();
+    const bestBuy = await context.newPage();
+    await bestBuy.goto('https://www.bestbuy.com/cart');
+    await expectNoBadge(bestBuy);
     await toggle.click();
     await expect(toggle).toBeChecked();
     await cart.reload();
     await badgeFrame(cart);
+    await bestBuy.reload();
+    const bestBuyBadge = await badgeFrame(bestBuy);
+    await expect(
+      bestBuyBadge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ }),
+    ).toBeVisible();
   } finally {
     await context.close();
   }

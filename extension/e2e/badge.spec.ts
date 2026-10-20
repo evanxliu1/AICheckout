@@ -1,7 +1,8 @@
-// The automatic cart badge in the packaged extension: onboarding on install, the badge on each
-// supported cart (fixtures served at the real hosts), live updates, isolation from page scripts,
-// dismiss, per-site off, the URL-only order question and savings, the no-cards and locked prompts,
-// and axe on the badge and panel. Screenshots of each state are saved for review.
+// The automatic cart badge in the packaged extension: onboarding on install, the badge on three cart
+// fixtures served at real store hosts (Best Buy, Newegg and Amazon, every one read by the generic reader
+// and named by the merchant release since Phase 15.1), live updates, isolation from page scripts,
+// dismiss, per-site off, the no-cards and locked prompts, and axe on the badge and panel. Screenshots
+// of each state are saved for review.
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type BrowserContext, type Frame, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -12,13 +13,15 @@ import { addCard, cacheCatalogV3Fixture } from './wallet';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 const extension = resolve('dist-e2e');
-const fixtures = {
-  'https://www.bestbuy.com/cart': 'tests/fixtures/bestbuy-observed-summary.html',
-  'https://secure.newegg.com/shop/cart': 'tests/fixtures/newegg-observed-subtotal.html',
-  'https://www.amazon.com/gp/cart/view.html': 'tests/fixtures/amazon-observed-subtotal.html',
+/** A synthetic cart at Amazon's cart URL (no retailer markup): the generic reader shows its $100.00 total. */
+const row = (label: string, amount: string) => `<div><span>${label}</span><span>${amount}</span></div>`;
+const AMAZON_CART = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Your cart</title></head><body><main><h1>Your cart</h1><section class="summary">${row('Subtotal', '$90.00') + row('Shipping', '$10.00') + row('Order total', '$100.00')}<button type="button">Checkout</button></section></main></body></html>`;
+const fixtures: Record<string, () => string> = {
+  'https://www.bestbuy.com/cart': () => readFileSync('tests/fixtures/bestbuy-observed-summary.html', 'utf8'),
+  'https://secure.newegg.com/shop/cart': () =>
+    readFileSync('tests/fixtures/newegg-observed-subtotal.html', 'utf8'),
+  'https://www.amazon.com/cart': () => AMAZON_CART,
 };
-/** A neutral stand-in: only the URL matters, the order page is never read. */
-const ORDER_PAGE = 'https://www.bestbuy.com/checkout/r/thank-you';
 
 async function launch(testInfo: { outputPath: (name: string) => string }) {
   const context = await chromium.launchPersistentContext(testInfo.outputPath('profile'), {
@@ -28,14 +31,9 @@ async function launch(testInfo: { outputPath: (name: string) => string }) {
     args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`],
   });
   await context.route(/^https:\/\/(www\.bestbuy\.com|secure\.newegg\.com|www\.amazon\.com)\//, (route) => {
-    const url = route.request().url().split('?')[0] as keyof typeof fixtures;
-    if (fixtures[url])
-      return route.fulfill({ contentType: 'text/html', body: readFileSync(fixtures[url], 'utf8') });
-    if ((url as string) === ORDER_PAGE)
-      return route.fulfill({
-        contentType: 'text/html',
-        body: '<!doctype html><html lang="en"><title>Order placed</title><main><h1>Thank you</h1></main></html>',
-      });
+    const url = route.request().url().split('?')[0];
+    const body = fixtures[url];
+    if (body) return route.fulfill({ contentType: 'text/html', body: body() });
     return route.fulfill({ status: 404, body: 'not found' });
   });
   const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
@@ -94,7 +92,7 @@ async function axeBadge(frame: Frame, label: string) {
   expect(violations, label).toEqual([]);
 }
 
-test('badge: onboarding, every supported cart, live updates, isolation, dismiss, per-site off, order savings', async ({
+test('badge: onboarding, three store carts through the generic reader, live updates, isolation, dismiss, per-site off', async ({
   browserName,
 }, testInfo) => {
   test.setTimeout(120_000);
@@ -106,10 +104,12 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await axe(onboarding, 'onboarding');
     await onboarding.getByRole('button', { name: 'Save cards' }).click();
     await expect(onboarding.getByRole('heading', { name: 'You’re set' })).toBeVisible();
+    await expect(onboarding.getByText(/Open a cart at any U\.S\. online store/)).toBeVisible();
     expect(await onboarding.evaluate(() => document.activeElement?.id)).toBe('onboarding-done');
     await onboarding.screenshot({ path: testInfo.outputPath('onboarding-done.png'), fullPage: true });
 
-    // Best Buy: $27.23 total; Blue Cash Everyday's 3% online retail beats Double Cash's 2%.
+    // Best Buy: the observed fixture reads as a $27.23 estimated total; Blue Cash Everyday's 3% online
+    // retail beats Double Cash's 2% (the release record is online retail, electronics).
     const cart = await context.newPage();
     await cart.goto('https://www.bestbuy.com/cart');
     let badge = await badgeFrame(cart);
@@ -165,9 +165,20 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     badge = await badgeFrame(cart);
     pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$0\.81 back on this cart/ });
     await expect(pill).toBeVisible({ timeout: 3000 });
-    // Clickjacking guard: while the page makes the badge (nearly) invisible, pointer clicks on it are
-    // ignored (IntersectionObserver v2); once it is fully visible again they work.
-    await cart.evaluate(() => document.documentElement.style.setProperty('opacity', '0.05'));
+    // Clickjacking guard: while the page covers the badge (a near-opaque overlay painted over it; dimming
+    // the whole page would also hide the cart from the generic reader, which hides the badge), pointer
+    // clicks on it are ignored (IntersectionObserver v2); once it is unobscured again they work.
+    const cover = (on: boolean) =>
+      cart.evaluate((show) => {
+        document.getElementById('e2e-cover')?.remove();
+        if (!show) return;
+        const overlay = document.createElement('div');
+        overlay.id = 'e2e-cover';
+        overlay.style.cssText =
+          'position:fixed;inset:0;z-index:2147483647;background:rgba(255,255,255,0.97);pointer-events:none';
+        document.documentElement.append(overlay);
+      }, on);
+    await cover(true);
     await cart.waitForTimeout(400);
     await pill.click({ force: true });
     await cart.waitForTimeout(300);
@@ -178,12 +189,12 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
       timeout: 6000,
     });
     await expect(badge.locator('p[role="status"]').first()).toBeAttached();
-    await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
+    await cover(false);
     await cart.waitForTimeout(400);
 
     await pill.click();
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toBeFocused();
-    await expect(badge.getByText('Based on $27.23 cart order total at Best Buy US.')).toBeVisible();
+    await expect(badge.getByText('Based on $27.23 cart estimated total at Best Buy.')).toBeVisible();
     await expect(badge.getByText('2% if the balance is paid (1% at purchase).')).toBeVisible();
     await expect(
       badge.getByRole('list', { name: 'Your cards, best first' }).getByRole('listitem'),
@@ -194,12 +205,12 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await expect(pill).toBeFocused();
     // A covered panel (e.g. a site's floating chat button over it) still collapses from its close button.
     await pill.click();
-    await cart.evaluate(() => document.documentElement.style.setProperty('opacity', '0.05'));
+    await cover(true);
     await cart.waitForTimeout(400);
     await badge.getByRole('button', { name: 'Collapse' }).click({ force: true });
     await expect(badge.getByRole('heading', { name: 'Best card for this cart' })).toHaveCount(0);
     await expect(pill).toBeVisible();
-    await cart.evaluate(() => document.documentElement.style.removeProperty('opacity'));
+    await cover(false);
     await cart.waitForTimeout(400);
 
     // The cart changes without navigation (quantity 2): the badge follows the summary.
@@ -219,29 +230,33 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await badge.getByLabel('Payment method').selectOption('card');
     await badge.getByLabel('Amount (USD)').fill('100');
     await badge.getByRole('button', { name: 'Update' }).click();
-    await expect(badge.getByText('Based on $100.00 you entered, at Best Buy US.')).toBeVisible();
+    await expect(badge.getByText('Based on $100.00 you entered, at Best Buy.')).toBeVisible();
     await badge.getByRole('button', { name: 'Use cart amount' }).click();
-    await expect(badge.getByText('Based on $54.46 cart order total at Best Buy US.')).toBeVisible();
+    await expect(badge.getByText('Based on $54.46 cart estimated total at Best Buy.')).toBeVisible();
     await badge.getByRole('button', { name: 'Collapse' }).click();
 
-    // Newegg (subtotal) and Amazon (subtotal).
-    for (const [url, name, amount] of [
-      ['https://secure.newegg.com/shop/cart', 'newegg', '$7.49'],
-      ['https://www.amazon.com/gp/cart/view.html', 'amazon', '$0.20'],
-    ]) {
-      const page = await context.newPage();
-      await page.goto(url);
-      const frame = await badgeFrame(page);
-      const button = frame.getByRole('button', { name: new RegExp(`${amount.replace('$', '\\$')} back`) });
-      await expect(button).toBeVisible();
-      await page.screenshot({ path: testInfo.outputPath(`${name}-collapsed.png`) });
-      await button.click();
-      await expect(frame.getByText(/cart subtotal at/)).toBeVisible();
-      await expect(frame.getByText('Tax and shipping are not included.', { exact: false })).toBeVisible();
-      await page.screenshot({ path: testInfo.outputPath(`${name}-expanded.png`) });
-      await axeBadge(frame, `${name} panel`);
-      await page.close();
-    }
+    // Newegg: the observed fixture reads as a $249.99 subtotal (3% = $7.49).
+    const newegg = await context.newPage();
+    await newegg.goto('https://secure.newegg.com/shop/cart');
+    const neweggBadge = await badgeFrame(newegg);
+    await neweggBadge.getByRole('button', { name: /\$7\.49 back/ }).click();
+    await expect(neweggBadge.getByText('Based on $249.99 cart subtotal at Newegg.')).toBeVisible();
+    await expect(neweggBadge.getByText('Tax and shipping are not included.', { exact: false })).toBeVisible();
+    await newegg.screenshot({ path: testInfo.outputPath('newegg-expanded.png') });
+    await axeBadge(neweggBadge, 'newegg panel');
+    await newegg.close();
+    // Amazon (Phase 15.1): a cart fixture at www.amazon.com/cart badged through the generic reader and
+    // named "Amazon" by the merchant release; its id and host are what the worker stores for the tab.
+    const amazon = await context.newPage();
+    await amazon.goto('https://www.amazon.com/cart');
+    const amazonBadge = await badgeFrame(amazon);
+    await amazonBadge
+      .getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back on this cart/ })
+      .click();
+    await expect(amazonBadge.getByText('Based on $100.00 cart estimated total at Amazon.')).toBeVisible();
+    await amazon.screenshot({ path: testInfo.outputPath('amazon-expanded.png') });
+    await axeBadge(amazonBadge, 'amazon panel');
+    await amazon.close();
 
     // Dismiss lasts for this tab, even after a reload; other tabs still show the badge.
     const dismissed = await context.newPage();
@@ -254,31 +269,8 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await dismissed.waitForTimeout(1500);
     expect(hasBadge(dismissed)).toBe(false);
 
-    // The order page (URL only) in the tab where the badge recommended a card: one question.
-    await cart.goto(ORDER_PAGE);
-    badge = await badgeFrame(cart);
-    await expect(badge.getByRole('heading', { name: 'Did you pay with Blue Cash Everyday?' })).toBeVisible();
-    await cart.screenshot({ path: testInfo.outputPath('order-prompt.png') });
-    await axeBadge(badge, 'order prompt');
-    await badge.getByRole('button', { name: 'Yes', exact: true }).click();
-    // $54.46: Blue Cash Everyday $1.63 vs default Double Cash $1.08 → $0.55 more.
-    await expect(badge.getByText(/About \$0\.55 more cash back than Double Cash/)).toBeVisible();
-    await cart.screenshot({ path: testInfo.outputPath('order-recorded.png') });
-    await badge.getByRole('button', { name: 'Close' }).click();
-    await expect.poll(() => hasBadge(cart)).toBe(false);
-    await cart.reload();
-    await cart.waitForTimeout(1500);
-    expect(hasBadge(cart)).toBe(false);
-
-    const popup = await context.newPage();
-    await popup.setViewportSize({ width: 360, height: 900 });
-    await popup.goto(popupUrl);
-    await expect(popup.getByRole('heading', { name: 'All-time: $0.55 extra in rewards' })).toBeVisible();
-    await popup.getByText('Order history (1)').click();
-    await expect(popup.getByText(/Best Buy US · \$54\.46 cart/)).toBeVisible();
-    await popup.screenshot({ path: testInfo.outputPath('savings.png'), fullPage: true });
-
-    // Per-site off from the panel, visible in Settings, and back on from Settings.
+    // Per-site off from the panel records the host (never a store id since Phase 15.1), visible in
+    // Settings, and back on from Settings.
     const off = await context.newPage();
     await off.goto('https://www.bestbuy.com/cart');
     const offFrame = await badgeFrame(off);
@@ -289,13 +281,16 @@ test('badge: onboarding, every supported cart, live updates, isolation, dismiss,
     await another.goto('https://www.bestbuy.com/cart');
     await another.waitForTimeout(1500);
     expect(hasBadge(another)).toBe(false);
-    await popup.reload();
+    const popup = await context.newPage();
+    await popup.setViewportSize({ width: 360, height: 900 });
+    await popup.goto(popupUrl);
     await popup.getByText('Settings', { exact: true }).click();
-    const toggle = popup.getByRole('switch', { name: 'Best Buy US' });
-    await expect(toggle).not.toBeChecked();
-    // The switch saves first, then reflects the saved setting.
-    await toggle.click();
-    await expect(toggle).toBeChecked();
+    const site = popup.getByRole('switch', { name: 'www.bestbuy.com' });
+    await expect(site).not.toBeChecked();
+    await popup.screenshot({ path: testInfo.outputPath('settings.png'), fullPage: true });
+    // The switch saves first, then disappears from the list of sites switched off.
+    await site.click();
+    await expect(popup.getByRole('switch', { name: 'www.bestbuy.com' })).toHaveCount(0);
     await another.reload();
     await badgeFrame(another);
   } finally {
@@ -410,18 +405,6 @@ test('badge on catalog v3: points with their value basis, a store card not accep
     await expect(
       badge.getByRole('button', { name: /Use Points · estimated \$0\.32 in points/ }),
     ).toBeVisible();
-
-    // The order line names points as rewards with the value they were counted at, not cash back.
-    await cart.goto(ORDER_PAGE);
-    const order = await badgeFrame(cart);
-    await expect(order.getByText(/all-time rewards total/)).toBeVisible();
-    await order.getByRole('button', { name: 'Yes', exact: true }).click();
-    await expect(
-      order.getByText(
-        /^About \$0\.00 more in rewards than Points, your default card \(estimated\)\. Counts .+ at 1\.2¢ each \(estimate\)\./,
-      ),
-    ).toBeVisible();
-    await axeBadge(order, 'v3 order recorded');
   } finally {
     await context.close();
   }

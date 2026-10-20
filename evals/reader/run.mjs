@@ -5,8 +5,8 @@
 //      passes (every hash; pane snapshots and variant exports re-hashed);
 //   2. a held-out split is under its run limit (heldout-a: 2 in total) and `--confirm-heldout-run <n>` names this
 //      run's number; a held-out run also needs packages/cart-reader and the harness committed;
-//   3. the generic reader (packages/cart-reader) and the legacy adapters (legacy-entry.ts) are bundled with esbuild
-//      and checked (bundle.mjs: inputs, data-pane cue, answer-lookup tripwire; inputs tracked by git);
+//   3. the generic reader (packages/cart-reader) is bundled with esbuild and checked (bundle.mjs: inputs, data-pane
+//      cue, answer-lookup tripwire; inputs tracked by git);
 //   4. the run is appended to runs.json (text-free) under an O_EXCL lock that re-checks the limit, BEFORE reader
 //      code executes on any page, so a crashed or partial run still counts;
 //   5. each real page-state, then each frozen variant, is loaded once in Playwright Chromium with every network
@@ -14,8 +14,8 @@
 //      with JavaScript disabled; robot captures from page.mhtml through replay.mjs (manifest checked). Every
 //      `data-pane-*` attribute is removed before the readers are injected. The generic reader gets one untimed
 //      warm-up read, three timed reads and a stability pair 500 ms apart (each timed; the wait is not); every read
-//      is checked against the harness's contract (contract.mjs). On a page whose URL a legacy adapter matches, the
-//      legacy reader is read the same way and recorded apart.
+//      is checked against the harness's contract (contract.mjs). (The legacy adapters, read apart on their own
+//      stores' pages until Phase 15.1, are gone; see docs/evals/legacy-adapter-retirement.md.)
 // An integrity failure (a hash that doesn't match the freeze) aborts the whole run (status `failed`); any other
 // failure on a page is recorded as a harness error and that page is scored as missing.
 // Per-page outputs go to runs/<runId>/outputs.jsonl (gitignored; for a held-out split read only by the class-only
@@ -54,11 +54,8 @@ import {
 export const STABILITY_GAP_MS = 500;
 export const TIMED_READS = 3;
 export const GENERIC = '__aiCheckoutGenericReader';
-export const LEGACY = '__aiCheckoutLegacyReader';
 const READER_DIR = 'packages/cart-reader';
 const HARNESS_PATHS = ['evals/reader', 'evals/merchants/capture/rebuild.mjs', 'evals/merchants/capture/replay.mjs'];
-/** The legacy adapters' source (read in held-out runs too, so it must be committed). */
-const LEGACY_PATHS = ['extension/src/checkout', 'packages/rewards-core/src'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** A frozen input whose hash doesn't match: the whole run stops. */
@@ -321,23 +318,15 @@ export async function run({
     : gitState(readerRoot, [READER_DIR]);
   const testState = { commit: testOnlyReaderCommit, dirty: false };
   const harness = testOnlyReaderCommit ? testState : gitState(REPO_ROOT, HARNESS_PATHS);
-  const legacyState = testOnlyReaderCommit ? testState : gitState(REPO_ROOT, LEGACY_PATHS);
-  if (heldout && (reader.dirty || harness.dirty || legacyState.dirty))
-    throw new Error(
-      'the reader, the harness or the legacy adapters have uncommitted changes; a held-out run must name commits',
-    );
+  if (heldout && (reader.dirty || harness.dirty))
+    throw new Error('the reader or the harness has uncommitted changes; a held-out run must name commits');
   const bundle = await bundleReader({
     root: readerRoot,
     frameDomains: frozen.frameDomains(),
     // Every held-out domain, on development runs too: no run may carry held-out answers.
     splitDomains: [...new Set([...frozen.splitDomains(split), ...frozen.nonDevelopmentDomains()])],
   });
-  // The legacy adapters are harness-side: always the repository's extension code.
-  const legacy = await bundleReader({ root: REPO_ROOT, mode: 'legacy' });
-  if (!testOnlyReaderCommit) {
-    git(readerRoot, ['ls-files', '--error-unmatch', '--', ...bundle.inputs]);
-    git(REPO_ROOT, ['ls-files', '--error-unmatch', '--', ...legacy.inputs]);
-  }
+  if (!testOnlyReaderCommit) git(readerRoot, ['ls-files', '--error-unmatch', '--', ...bundle.inputs]);
   const sites = entries.some((e) => e.method === 'robot')
     ? JSON.parse(readFileSync(path.resolve(root, sitesFile), 'utf8')).sites
     : [];
@@ -402,7 +391,6 @@ export async function run({
         frozenVariantLabelSha256: variants.sha256,
         freezeSha256: frozen.freezeSha256,
         readerBundleSha256: bundle.sha256,
-        legacyBundleSha256: legacy.sha256,
         chromium: browser.version(),
         pageStates: entries.length,
         variants: targets.length - entries.length,
@@ -420,7 +408,6 @@ export async function run({
           runId,
           split,
           reader: { ...reader, bundleSha256: bundle.sha256, inputs: bundle.inputs },
-          legacy: { ...legacyState, paths: LEGACY_PATHS, bundleSha256: legacy.sha256, inputs: legacy.inputs },
           harness: { ...harness, paths: HARNESS_PATHS },
           chromium: browser.version(),
           machine: {
@@ -446,14 +433,6 @@ export async function run({
         await installReader(opened.page, bundle.code, GENERIC);
         opened.network.mark();
         Object.assign(row, await readPage(opened.page, opened.url, { gapMs, name: GENERIC }));
-        // The generic reader is gone before the legacy one arrives, so neither can see the other.
-        await opened.page.evaluate((name) => delete globalThis[name], GENERIC);
-        await installReader(opened.page, legacy.code, LEGACY);
-        const legacyMatches = await opened.page.evaluate(
-          ({ name, url }) => globalThis[name].matches(url),
-          { name: LEGACY, url: opened.url },
-        );
-        if (legacyMatches) row.legacy = await readPage(opened.page, opened.url, { gapMs, name: LEGACY });
         row.networkAttempts = opened.network.since();
       } catch (e) {
         if (e instanceof IntegrityError) throw new IntegrityError(`${say(t.id, i)}: ${e.message}`);

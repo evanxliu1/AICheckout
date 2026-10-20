@@ -76,7 +76,7 @@ async function open(target: 'popup' | 'onboarding') {
 const badge = createBadgeService({
   local: chrome.storage.local,
   session: chrome.storage.session,
-  vault: { snapshot: handle.snapshot, handle },
+  vault: { snapshot: handle.snapshot },
   open,
   notify,
 });
