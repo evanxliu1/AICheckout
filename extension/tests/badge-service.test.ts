@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import { createBadgeService } from '../src/background/badge-service';
+import { createBadgeService, differenceBucket } from '../src/background/badge-service';
+import type { BadgeDeps } from '../src/background/badge-service';
 import { BADGE_TABS_KEY, SETTINGS_KEY } from '../src/badge/contracts';
 import type { BadgeView } from '../src/badge/contracts';
 import { createVaultService } from '../src/state/vault-service';
@@ -55,6 +56,7 @@ function setupWith(
   cat: Catalog = catalog,
   merchants?: MerchantRelease,
   settings?: unknown,
+  telemetry?: BadgeDeps['telemetry'],
 ) {
   const local = memory({
     ...(state
@@ -77,6 +79,7 @@ function setupWith(
     open,
     notify,
     release: merchants,
+    telemetry,
   });
   return { badge, vault, local, session, open, notify };
 }
@@ -547,5 +550,150 @@ describe('badge review fixes', () => {
     expect(t.session.read()[BADGE_TABS_KEY]).toHaveProperty('4');
     expect(t.session.read()).not.toHaveProperty('checkoutVaultSessionV1');
     expect(await view(t)).toEqual({ kind: 'locked' });
+  });
+});
+
+describe('usage reports from the badge (Phase 15.3)', () => {
+  const v3 = redateCatalog(CATALOG_V3, '2026-10-01');
+  const walletV3 = {
+    ...wallet,
+    cards: wallet.cards.map((c) => ({
+      ...c,
+      usage: c.usage.map((u) => ({ ...u, ruleId: 'bce-online-retail-v2' })),
+    })),
+  };
+  function reporting(merchants?: MerchantRelease) {
+    const record = vi.fn<(input: unknown) => Promise<void>>(async () => undefined);
+    const recordTap = vi.fn<(input: unknown) => Promise<boolean>>(async () => true);
+    const t = setupWith({ wallet: walletV3 }, v3, merchants, undefined, { record, recordTap });
+    return { t, record, recordTap };
+  }
+  const GENERIC_CHECKOUT = 'https://shop.example.com/checkout/payment';
+  it('reports recommendation_shown once per distinct recommendation, without the host, and again when the reading changes', async () => {
+    const { t, record } = reporting();
+    await send(t, genericReading(10000), 4, GENERIC);
+    await view(t);
+    await view(t);
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(record).toHaveBeenCalledWith({
+      type: 'recommendation_shown',
+      surface: 'badge',
+      view: 'amount',
+      withheld_reason: null,
+      page: 'cart',
+      store_kind: 'generic',
+      evidence_basis: 'none',
+      category: 'general-merchandise',
+      amount_cents: 10000,
+      amount_kind: 'estimated-total',
+      top_card_id: 'amex-blue-cash-everyday',
+      cards_count: 2,
+      ranking_may_change: false,
+    });
+    expect(JSON.stringify(record.mock.calls)).not.toMatch(/example|shop|https/);
+    // A changed cart is a new recommendation; the same one again is not.
+    await send(t, genericReading(5446), 4, GENERIC);
+    await view(t);
+    await view(t);
+    expect(record).toHaveBeenCalledTimes(2);
+    expect(record.mock.calls[1]![0]).toMatchObject({ amount_cents: 5446 });
+  });
+  it('reports the rates view with the reader’s reason and the checkout page kind from the URL', async () => {
+    const { t, record } = reporting();
+    await send(t, withheld, 4, GENERIC_CHECKOUT);
+    await view(t);
+    expect(record).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'recommendation_shown',
+        view: 'rates',
+        withheld_reason: 'withheld',
+        page: 'checkout',
+        amount_cents: null,
+        amount_kind: null,
+      }),
+    );
+    // A typed amount is `amount_typed` (no-read: nothing was read), never a recommendation with an amount.
+    record.mockClear();
+    await act(t, { type: 'badge:set-amount', amountCents: 5000 }, 4);
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(record).toHaveBeenCalledWith({ type: 'amount_typed', relative_difference_bucket: 'no-read' });
+  });
+  it('names a release store with its evidence basis and category', async () => {
+    const { t, record } = reporting(MERCHANT_RELEASE_FIXTURE);
+    await send(t, genericReading(10000), 4, 'https://www.kroger.com/cart');
+    await view(t);
+    expect(record).toHaveBeenCalledWith(
+      expect.objectContaining({
+        store_kind: 'named',
+        evidence_basis: 'corroborated',
+        category: 'supermarkets',
+      }),
+    );
+    expect(JSON.stringify(record.mock.calls)).not.toMatch(/kroger/);
+  });
+  it('reports typed amounts, expansions, dismissals and Not on this site without the host', async () => {
+    const { t, record } = reporting();
+    await send(t, genericReading(10000), 4, GENERIC);
+    await view(t);
+    record.mockClear();
+    await act(t, { type: 'badge:set-amount', amountCents: 10050 }, 4);
+    await act(t, { type: 'badge:expanded' }, 4);
+    await act(t, { type: 'badge:dismiss' }, 4);
+    expect(record.mock.calls.map((c) => c[0])).toEqual([
+      { type: 'amount_typed', relative_difference_bucket: '<1%' },
+      { type: 'badge_expanded', view: 'amount' },
+      { type: 'badge_dismissed', view: 'amount' },
+    ]);
+    await send(t, genericReading(10000), 5, GENERIC);
+    await view(t, 5);
+    record.mockClear();
+    await act(t, { type: 'badge:disable-site' }, 5);
+    expect(record).toHaveBeenCalledWith({ type: 'site_disabled', store_kind: 'generic' });
+    expect(JSON.stringify(record.mock.calls)).not.toMatch(/example/);
+    expect(differenceBucket(103, 100)).toBe('1-5%');
+    expect(differenceBucket(115, 100)).toBe('5-20%');
+    expect(differenceBucket(200, 100)).toBe('>20%');
+  });
+  it('the no-cards pill (and any pill without the amount or rates view) reports no expansion or dismissal', async () => {
+    const record = vi.fn<(input: unknown) => Promise<void>>(async () => undefined);
+    const recordTap = vi.fn<(input: unknown) => Promise<boolean>>(async () => true);
+    const t = setupWith(null, v3, undefined, undefined, { record, recordTap });
+    await send(t, genericReading(10000), 4, GENERIC);
+    expect(await view(t)).toEqual({ kind: 'no-cards' });
+    await act(t, { type: 'badge:expanded' }, 4);
+    expect((await act(t, { type: 'badge:dismiss' }, 4)).ok).toBe(true);
+    expect(await view(t)).toEqual({ kind: 'hidden' });
+    expect(record).not.toHaveBeenCalled();
+  });
+  it('Suggest it sends the registrable domain at a generic store only, once per tab', async () => {
+    const { t, recordTap } = reporting();
+    await send(t, genericReading(10000), 4, 'https://www.shop.example.com/cart');
+    const before = (await view(t)) as Extract<BadgeView, { kind: 'ready' }>;
+    expect(before.suggested).toBe(false);
+    const reply = await act(t, { type: 'badge:suggest-store' }, 4);
+    expect(reply).toMatchObject({ ok: true, view: { suggested: true } });
+    expect(recordTap).toHaveBeenCalledWith({ type: 'store_suggested', domain: 'example.com', page: 'cart' });
+    // A named store (the bundled release names Best Buy) cannot be suggested.
+    await send(t, reading(10000), 5, cart);
+    expect(await act(t, { type: 'badge:suggest-store' }, 5)).toMatchObject({ ok: false });
+    expect(recordTap).toHaveBeenCalledTimes(1);
+    // An address the contract refuses (an IP) is not sent.
+    await send(t, genericReading(10000), 6, 'https://192.168.0.1/cart');
+    expect(await act(t, { type: 'badge:suggest-store' }, 6)).toMatchObject({ ok: false });
+    expect(recordTap).toHaveBeenCalledTimes(1);
+  });
+  it('tells the popup what the badge shows in a tab, for a problem report', async () => {
+    const { t } = reporting();
+    expect(await t.badge.shownIn(9)).toEqual({ view: null, withheld_reason: null });
+    await send(t, genericReading(10000), 4, GENERIC);
+    expect(await t.badge.shownIn(4)).toEqual({ view: 'amount', withheld_reason: null });
+    await send(t, withheld, 5, GENERIC);
+    expect(await t.badge.shownIn(5)).toEqual({ view: 'rates', withheld_reason: 'withheld' });
+  });
+  it('without the reporting module nothing is recorded and Suggest it is refused', async () => {
+    const t = setupWith({ wallet: walletV3 }, v3);
+    await send(t, genericReading(10000), 4, GENERIC);
+    await view(t);
+    expect(await act(t, { type: 'badge:suggest-store' }, 4)).toMatchObject({ ok: false });
   });
 });

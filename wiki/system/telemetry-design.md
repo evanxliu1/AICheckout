@@ -6,7 +6,7 @@ status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T01:30:00Z
+  at: 2026-10-20T04:30:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -61,6 +61,8 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 **Deferred** to the affiliate phase: the "opportunity" event (best owned vs best catalog rate). Reserved names, not emitted: `offer_impression`, `offer_click` with `offer_id`, `placement`, client `click_id`. Dictionary published as `docs/telemetry/events.md` (public, like `docs/evals/`, not wiki material).
 
 **Content script vs telemetry.** The badge content script still sends only the reading to the extension's own service worker (decision 2026-10-09). Telemetry events are built and sent by the worker, after consent, from what the worker already holds; the content script never talks to the server.
+
+**Client built 2026-10-20 (15.3, branch `phase15-3-telemetry-client`):** the worker module `extension/src/state/telemetry.ts`, the consent screen, the Settings controls, the two taps and the generated dictionary `docs/telemetry/events.md`; the as-built facts are on the [Extension](extension.md#usage-reporting-phase-153) page and in the [implementer decision](../decisions/2026-10-20-telemetry-client-details.md). Two differences from this draft: "Report a problem" carries a fixed reason and no note (decision 2026-10-19), and a suggested store is not checked against a top-retail allowlist (the plan dropped it; the reviewer sees the domains).
 
 ## Ingest and storage
 

@@ -53,6 +53,11 @@ export const badgeRequestSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('badge:dismiss'), nonce }),
   z.strictObject({ type: z.literal('badge:disable-site'), nonce }),
   z.strictObject({ type: z.literal('badge:open'), nonce, target: z.enum(['popup', 'onboarding']) }),
+  /** Phase 15.3: the panel was opened (usage reporting only; the view is unchanged). */
+  z.strictObject({ type: z.literal('badge:expanded'), nonce }),
+  /** Phase 15.3: "Store not recognised? Suggest it" at a generic store; the worker sends the tab's registrable
+   * domain, with the random id only while sharing is on. */
+  z.strictObject({ type: z.literal('badge:suggest-store'), nonce }),
 ]);
 /** A badge request as the iframe writes it, before its nonce is attached. */
 export type BadgeAction = BadgeRequest extends infer R
@@ -114,6 +119,14 @@ export const tabEntrySchema = z.strictObject({
   paymentPath: z.enum(PAYMENT_PATHS_V3),
   /** The current badge frame's nonce; a new frame replaces it. */
   frameNonce: z.string().regex(NONCE_PATTERN).nullable().default(null),
+  /** Phase 15.3: whether the reading came from a cart or a checkout page (a word in the sender URL's path, never
+   * the path itself), the dictionary's `page`. */
+  page: z.enum(['cart', 'checkout']).default('cart'),
+  /** Phase 15.3: the last recommendation this tab reported (`recommendation_shown` is sent once per distinct
+   * reading, store, payment path and top card); null until the first. */
+  reportedKey: z.string().max(200).nullable().default(null),
+  /** Phase 15.3: the shopper already suggested this tab's store (the button says so). */
+  suggested: z.boolean().default(false),
 });
 export type TabEntry = z.infer<typeof tabEntrySchema>;
 export const tabStoreSchema = z.record(z.string().regex(/^[0-9]{1,10}$/), tabEntrySchema);
@@ -134,11 +147,14 @@ export type BadgeView =
       result: Comparison;
       catalog: Catalog;
       wallet: Wallet;
+      /** Phase 15.3: "Store not recognised? Suggest it" was already tapped in this tab. */
+      suggested: boolean;
     }
   | { kind: 'unavailable'; merchantId: string; result: UnavailableComparison }
   | {
       kind: 'ready';
       merchantId: string;
+      suggested: boolean;
       cartAmountCents: number | null;
       amountKind: 'total' | 'estimated-total' | 'subtotal' | null;
       amountCents: number;

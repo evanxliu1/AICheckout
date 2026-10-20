@@ -7,6 +7,11 @@ import DataProtectionDetails from '../components/DataProtectionDetails';
 import DeleteSavedData from '../components/DeleteSavedData';
 import BadgeSettings from '../components/BadgeSettings';
 import ProtectionSettings from '../components/ProtectionSettings';
+import TelemetrySettings from '../components/TelemetrySettings';
+import SuggestStore from '../components/SuggestStore';
+import ReportProblem from '../components/ReportProblem';
+import { telemetryRequest } from '../state/telemetry-client';
+import type { PopupReadOutcome } from '../state/telemetry-contracts';
 import {
   Disclosure,
   AlertInline,
@@ -26,7 +31,7 @@ import type { Comparison, Eligibility, PaymentPathV3, Wallet } from '../domain';
 import { RATES_READ_MESSAGES, READ_COPY } from '../checkout/read-copy';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY } from '../state/keys';
+import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY, TELEMETRY_ENABLED } from '../state/keys';
 import { emptyState } from '../state/contracts';
 import {
   merchantName,
@@ -65,6 +70,15 @@ async function activeTabMerchant(): Promise<{
  * physical goods online (their profiles, as the badge derives them); any other saved id asks the shopper. */
 const storeOnlineRetail = (id: string): Eligibility =>
   id === GENERIC_MERCHANT_ID || releaseRecord(id) ? 'eligible' : 'unknown';
+/** The dictionary's `popup_opened.read_outcome` for a read on open that did not fill an amount (Phase 15.3). */
+const READ_OUTCOMES: Record<string, PopupReadOutcome> = {
+  [READ_COPY.withheld]: 'withheld',
+  [READ_COPY['not-a-cart']]: 'not-a-cart',
+  [READ_COPY['empty-cart']]: 'empty',
+  [READ_COPY['unsupported-currency']]: 'non-usd',
+  [READ_COPY['unsupported-page']]: 'non-web',
+  [READ_COPY['payment-page']]: 'payment-page',
+};
 
 export default function Popup({
   onLock,
@@ -96,6 +110,9 @@ export default function Popup({
   const [rates, setRates] = useState<{ merchantId: string; result: Comparison } | null>(null);
   /** The popup was opened on a payment processor's page (Phase 14.2): nothing is read or compared there. */
   const [paymentPage, setPaymentPage] = useState<string | null>(null);
+  /** The tab the popup opened on (Phase 15.3): its id and store kind, for Suggest this store and Report a
+   * problem; the worker resolves the tab's address itself from the id. */
+  const [tab, setTab] = useState<{ id: number; kind: TabStore['kind'] } | null>(null);
   const resultAnchor = useRef<HTMLDivElement>(null);
   // The catalog in effect comes from the worker with every response; pages bundle none.
   const catalog = view?.catalog;
@@ -190,10 +207,11 @@ export default function Popup({
       return { ...found, id };
     });
     void Promise.all([checkoutRequest({ type: 'checkout:get-state' }), tab])
-      .then(([next, found]) => {
+      .then(async ([next, found]) => {
         if (cancelled) return;
         restore(next);
         if (found.store?.kind === 'processor') setPaymentPage(found.store.name);
+        if (found.store && found.tabId !== null) setTab({ id: found.tabId, kind: found.store.kind });
         // An https store tab is read on open: a certain amount fills in, otherwise the rates view. A
         // cart read in this very tab, or a comparison saved for this matched store, is kept instead
         // (reopening the popup must not discard it); the generic id is every other store, so a saved
@@ -203,8 +221,19 @@ export default function Popup({
           : !!next.state.comparison &&
             found.id !== GENERIC_MERCHANT_ID &&
             next.state.purchase?.merchantId === found.id;
+        // Phase 15.3: `popup_opened` with what the read on open found, when one happened or could not (a
+        // payment page, a non-web tab); nothing when a read cart or saved comparison is kept.
+        let outcome: PopupReadOutcome | null = null;
         if (found.https && found.id && next.state.wallet.cards.length && !settled)
-          void readCart(true, next, found.id);
+          outcome = await readCart(true, next, found.id);
+        else if (found.store?.kind === 'processor') outcome = 'payment-page';
+        else if (!found.store && next.state.wallet.cards.length) outcome = 'non-web';
+        if (TELEMETRY_ENABLED && outcome && !cancelled)
+          void telemetryRequest({
+            type: 'telemetry:popup-opened',
+            tabId: found.tabId,
+            readOutcome: outcome,
+          }).catch(() => undefined);
       })
       .catch((err) => {
         if (!cancelled)
@@ -289,15 +318,30 @@ export default function Popup({
   }, [restore, view]);
   // Phase 15.4: the worker broadcasts `terms:checked` when a background refresh settles; while this popup
   // stands in for expired terms with "Checking…", reload so it shows the outcome (new terms, or the expiry).
+  // The listener is attached from the first render and counts every broadcast; a view that says "Checking…"
+  // after a broadcast it has not acted on reloads at once. Attached only once "Checking…" had rendered (as
+  // before 2026-10-20), a broadcast landing before React ran that effect, or before the response that said
+  // "Checking…" was rendered, was lost and the popup stayed on "Checking…" (a flaky first-run-copy test on CI).
+  const [termsChecks, setTermsChecks] = useState(0);
+  const broadcasts = useRef(0);
+  const handled = useRef(0);
   const checking = view?.checkingTerms === true;
   useEffect(() => {
-    if (!checking) return;
+    if (!checking || broadcasts.current === handled.current) return;
+    handled.current = broadcasts.current;
+    void load();
+  }, [checking, view, termsChecks, load]);
+  useEffect(() => {
     const onMessage = (message: unknown) => {
-      if ((message as { type?: unknown } | null)?.type === 'terms:checked') void load();
+      if ((message as { type?: unknown } | null)?.type !== 'terms:checked') return;
+      broadcasts.current += 1;
+      // A render that says "Checking…" acts on it through the effect above.
+      setTermsChecks(broadcasts.current);
     };
-    chrome.runtime.onMessage.addListener(onMessage);
-    return () => chrome.runtime.onMessage.removeListener(onMessage);
-  }, [checking, load]);
+    // Optional: unit tests stub `chrome.runtime` without it; extension pages always have it.
+    chrome.runtime.onMessage?.addListener(onMessage);
+    return () => chrome.runtime.onMessage?.removeListener(onMessage);
+  }, []);
 
   /** The cards ranked by rate at `store` (read-only; nothing is stored). */
   async function loadRates(store: string, online: Eligibility) {
@@ -311,8 +355,12 @@ export default function Popup({
   }
   /** Reads the open tab. `auto` (on open): a found amount fills in, a cart whose amount was not read
    * shows the rates view, any other outcome changes nothing; the button shows every message. */
-  async function readCart(auto = false, base: View | null = view, tabStore: string = merchantId) {
-    if (!base) return;
+  async function readCart(
+    auto = false,
+    base: View | null = view,
+    tabStore: string = merchantId,
+  ): Promise<PopupReadOutcome | null> {
+    if (!base) return null;
     setPending('read');
     setError('');
     if (!auto) {
@@ -337,6 +385,7 @@ export default function Popup({
         setMerchantId(next.state.cart.merchantId);
         store.current = next.state.cart.merchantId;
       }
+      return next.state.cart ? 'found' : null;
     } catch (err) {
       const message = err instanceof Error ? err.message : '';
       if (RATES_READ_MESSAGES.includes(message)) {
@@ -350,6 +399,7 @@ export default function Popup({
         }
       } else if (!auto || message === READ_COPY['unsupported-currency'])
         setError(message || 'The cart could not be read. Read it again.');
+      return READ_OUTCOMES[message] ?? null;
     } finally {
       setPending(null);
     }
@@ -578,6 +628,9 @@ export default function Popup({
                       )}
                     </Field>
                     {evidence && <p className="supporting">{evidence}</p>}
+                    {TELEMETRY_ENABLED && tab?.kind === 'generic' && merchantId === GENERIC_MERCHANT_ID && (
+                      <SuggestStore tabId={tab.id} disabled={busy} />
+                    )}
                     {!catalogMerchantIds(view.catalog).includes(merchantId) &&
                       !storeProfile(view.catalog, merchantId) && (
                         <AlertInline color="warning" role="status">
@@ -765,6 +818,7 @@ export default function Popup({
           <Disclosure title="Settings" id="popup-settings">
             <div className="space-y-4">
               <BadgeSettings />
+              {TELEMETRY_ENABLED && <TelemetrySettings />}
               <section className="space-y-2" aria-labelledby="protection-heading">
                 <h2 id="protection-heading" className="section-title">
                   Passphrase protection: {protection === 'on' ? 'on' : 'off'}
@@ -803,6 +857,7 @@ export default function Popup({
                 </Button>
               )}
             </div>
+            {TELEMETRY_ENABLED && <ReportProblem tabId={tab && tab.kind !== 'processor' ? tab.id : null} />}
             <DataProtectionDetails protection={protection} />
             <DeleteSavedData busy={busy} onDelete={() => (onDelete ? onDelete() : void clear())} />
           </footer>

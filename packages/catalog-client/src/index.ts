@@ -82,3 +82,58 @@ export function createMerchantFetcher(url: string, fetcher: typeof fetch = fetch
     MAX_MERCHANTS_RESPONSE_BYTES,
   );
 }
+
+/** `POST /v1/events` and `POST /v1/events/delete` (Phase 15.3). The response is reduced to its status
+ * and `Retry-After`; the body is never read (nothing in it is needed and nothing in it is trusted). */
+export interface EventSendResult {
+  status: number;
+  /** From `Retry-After` in seconds, when the server sent one. */
+  retryAfterMs: number | null;
+}
+export interface EventSender {
+  /** Sends one `{ events }` batch (already validated and bounded by the caller). Throws on a network failure. */
+  send: (batch: { events: unknown[] }, signal: AbortSignal) => Promise<EventSendResult>;
+  /** Delete my data: asks the service to delete every row of this install id. */
+  deleteInstall: (installId: string, signal: AbortSignal) => Promise<EventSendResult>;
+}
+function fixedUrl(url: string, what: string): URL {
+  const endpoint = new URL(url);
+  if (
+    endpoint.protocol !== 'https:' ||
+    endpoint.username ||
+    endpoint.password ||
+    endpoint.search ||
+    endpoint.hash
+  ) {
+    throw new Error(`${what} endpoint must be a fixed HTTPS URL without credentials or a query.`);
+  }
+  return endpoint;
+}
+/** The same fixed-URL, bounded request rules as the catalog fetchers: no cookies, referrer or redirects.
+ * `url` is the events endpoint (`/v1/events`); the delete route is `/v1/events/delete` beside it. */
+export function createEventSender(url: string, fetcher: typeof fetch = fetch): EventSender {
+  const events = fixedUrl(url, 'Events');
+  const remove = fixedUrl(`${events.href.replace(/\/$/, '')}/delete`, 'Events');
+  const post = async (endpoint: URL, body: unknown, signal: AbortSignal): Promise<EventSendResult> => {
+    const response = await fetcher(endpoint.href, {
+      method: 'POST',
+      signal,
+      redirect: 'error',
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
+      cache: 'no-store',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body),
+    });
+    await response.body?.cancel().catch(() => undefined);
+    const retryAfter = response.headers.get('retry-after');
+    return {
+      status: response.status,
+      retryAfterMs: retryAfter && /^\d{1,6}$/.test(retryAfter) ? Number(retryAfter) * 1000 : null,
+    };
+  };
+  return {
+    send: (batch, signal) => post(events, batch, signal),
+    deleteInstall: (installId, signal) => post(remove, { install_id: installId }, signal),
+  };
+}

@@ -331,6 +331,21 @@ body {
 .onboarding__body h2:focus {
   outline: none;
 }
+/* The consent screen (Phase 15.3): what is sent as a plain list, Share and Not now equally prominent. */
+.consent-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+.consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.consent-actions > * {
+  flex: 1 1 140px;
+}
 
 /* The rates view (Phase 13c): card name and rate on one line; the clear best card in navy. */
 .rates-row {

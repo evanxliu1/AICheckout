@@ -115,6 +115,24 @@ describe('first run with an expired bundled catalog (Phase 15.4)', () => {
     expect(after.catalog.version).toBe('renewed.test.1');
     expect(ok(await service(compare(after.state.revision))).comparison).toMatchObject({ status: 'ready' });
   });
+  it('an install refresh landing while onboarding is open does not turn its first save into a conflict', async () => {
+    const service = createStateService(
+      memory().api,
+      clock,
+      undefined,
+      vi.fn(async () => renewed()),
+      undefined,
+      vi.fn(async () => ({ release: null })),
+    );
+    // The onboarding page reads the state, then the install-time refresh lands with new terms.
+    const opened = ok(await service({ type: 'checkout:get-state' }));
+    expect(await service.refreshReleases(90_000)).toEqual({ catalog: 'ok', merchants: 'ok' });
+    const saved = ok(
+      await service({ type: 'checkout:save-wallet', wallet, expectedRevision: opened.state.revision }),
+    );
+    expect(saved.state.wallet.cards).toEqual(wallet.cards);
+    expect(saved.catalog.version).toBe('renewed.test.1');
+  });
   it('falls back to the expired copy, with "Check for updated terms", when the refresh fails', async () => {
     const catalog = pendingFetch(),
       merchants = pendingFetch();

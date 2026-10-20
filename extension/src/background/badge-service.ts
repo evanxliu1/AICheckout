@@ -2,10 +2,13 @@
 // wallet data leave the worker only in replies to the badge iframe (an extension page); replies to the
 // content script are a single show/hide flag.
 import { compareRewards } from '../domain';
-import type { Catalog, Purchase, Wallet } from '../domain';
-import { merchantOption, storeForTab, storeProfile } from '../checkout/store-match';
+import type { Catalog, Comparison, Purchase, Wallet } from '../domain';
+import { merchantOption, releaseRecord, storeForTab, storeProfile } from '../checkout/store-match';
 import { MERCHANTS_V1 } from '@ai-checkout/rewards-core/merchants-v1';
+import { GENERIC_MERCHANT_ID } from '@ai-checkout/rewards-core/generic-merchant';
 import type { MerchantRelease } from '../domain';
+import type { AutomaticInput, Telemetry } from '../state/telemetry';
+import { pageForUrl, registrableDomain } from '../state/telemetry-contracts';
 import type { AppState } from '../state/contracts';
 import type { StateStorage } from '../state/service';
 import { localDate } from '../state/keys';
@@ -45,9 +48,11 @@ export interface BadgeDeps {
   notify: (tabId: number | null) => void;
   /** The bundled merchant release (Phase 14.2); the cached hosted release replaces it when newer (14.6). */
   release?: MerchantRelease;
+  /** Consented usage reporting (Phase 15.3); absent in builds without it. */
+  telemetry?: Pick<Telemetry, 'record' | 'recordTap'>;
 }
 
-const newEntry = (merchantId: TabEntry['merchantId'], host: string): TabEntry => ({
+const newEntry = (merchantId: TabEntry['merchantId'], host: string, page: TabEntry['page']): TabEntry => ({
   merchantId,
   host,
   reading: null,
@@ -56,7 +61,30 @@ const newEntry = (merchantId: TabEntry['merchantId'], host: string): TabEntry =>
   amountOverrideCents: null,
   paymentPath: 'card',
   frameNonce: null,
+  page,
+  reportedKey: null,
+  suggested: false,
 });
+/** The dictionary's `store_kind` and `evidence_basis` of a tab's store under the release in effect. */
+export function storeFacts(merchantId: string, release: MerchantRelease) {
+  const record = merchantId === GENERIC_MERCHANT_ID ? undefined : releaseRecord(merchantId, release);
+  return {
+    store_kind: record ? ('named' as const) : ('generic' as const),
+    evidence_basis: record?.evidence.basis ?? ('none' as const),
+  };
+}
+/** `amount_typed.relative_difference_bucket`: how far a typed amount is from the read one. */
+export function differenceBucket(typedCents: number, readCents: number | null | undefined) {
+  if (!readCents) return 'no-read' as const;
+  const ratio = Math.abs(typedCents - readCents) / readCents;
+  return ratio < 0.01 ? '<1%' : ratio < 0.05 ? '1-5%' : ratio < 0.2 ? '5-20%' : '>20%';
+}
+/** The view a tab shows for the usage report: an amount (read or typed) or the rates view. */
+const viewOf = (entry: TabEntry): 'amount' | 'rates' =>
+  entry.reading || entry.amountOverrideCents ? 'amount' : 'rates';
+/** The dictionary's `view` of what a badge shows, or null for a pill that shows neither view. */
+const reportedView = (shown: BadgeView): 'amount' | 'rates' | null =>
+  shown.kind === 'ready' ? 'amount' : shown.kind === 'rates' ? 'rates' : null;
 /** 32 URL-safe characters (192 random bits). */
 function newNonce() {
   const bytes = crypto.getRandomValues(new Uint8Array(24));
@@ -114,7 +142,10 @@ export function createBadgeService({
   open,
   notify,
   release = MERCHANTS_V1,
+  telemetry,
 }: BadgeDeps) {
+  /** A usage event (Phase 15.3), started and never awaited: the badge never waits for the report. */
+  const report = (input: AutomaticInput) => void telemetry?.record(input).catch(() => undefined);
   let queue = Promise.resolve<unknown>(undefined);
   function serial<T>(operation: () => Promise<T>): Promise<T> {
     const task = queue.then(operation);
@@ -183,10 +214,11 @@ export function createBadgeService({
       if (!store || store.kind === 'processor') return { show: false };
       const merchantId = store.id;
       const reading = message.data.reading;
+      const page = pageForUrl(url);
       const base =
         entry && entry.merchantId === merchantId
-          ? { ...entry, host: store.host }
-          : newEntry(merchantId, store.host);
+          ? { ...entry, host: store.host, page }
+          : newEntry(merchantId, store.host, page);
       let next: TabEntry;
       if (reading.status === 'found') {
         const same =
@@ -209,6 +241,49 @@ export function createBadgeService({
       await saveTab(tabId, next);
       notify(tabId);
       return reply(tabId, next, shows(reading) && visible(next, current), framed);
+    });
+  }
+
+  /** `recommendation_shown` for the badge, once per distinct recommendation in a tab (Phase 15.3): the view,
+   * the store's kind and evidence, the category compared at, the amount read (never a typed one: that is
+   * `amount_typed`) and the top card; never the host. A typed amount with no reading is not reported, since
+   * the contract's `amount_kind` names what was read. */
+  async function reportRecommendation(
+    tabId: number,
+    entry: TabEntry,
+    catalog: Catalog,
+    inEffect: MerchantRelease,
+    result: Comparison,
+    cardsCount: number,
+  ) {
+    if (!telemetry) return;
+    const shown = viewOf(entry);
+    if (shown === 'amount' && !entry.reading) return;
+    const key = [
+      shown,
+      entry.merchantId,
+      entry.reading?.amountCents ?? '',
+      entry.reading?.kind ?? '',
+      entry.paymentPath,
+      result.preferredCardId,
+    ].join('|');
+    if (entry.reportedKey === key) return;
+    await saveTab(tabId, { ...entry, reportedKey: key });
+    const amount = shown === 'amount' ? entry.reading! : null;
+    report({
+      type: 'recommendation_shown',
+      surface: 'badge',
+      view: shown,
+      // The content script collapses the reader's reasons into `withheld` (the only rates-view reason today).
+      withheld_reason: shown === 'rates' ? 'withheld' : null,
+      page: entry.page,
+      ...storeFacts(entry.merchantId, inEffect),
+      category: storeProfile(catalog, entry.merchantId, inEffect)?.expectedCategory ?? 'general-merchandise',
+      amount_cents: amount?.amountCents ?? null,
+      amount_kind: amount?.kind ?? null,
+      top_card_id: result.preferredCardId,
+      cards_count: cardsCount,
+      ranking_may_change: result.rankingMayChange,
     });
   }
 
@@ -245,6 +320,7 @@ export function createBadgeService({
       return result.reason === 'catalog-expired' && snapshot.checkingTerms
         ? { kind: 'checking' }
         : { kind: 'unavailable', merchantId: entry.merchantId, result };
+    await reportRecommendation(tabId, entry, catalog, inEffect, result, state.wallet.cards.length);
     if (!amountCents)
       return {
         kind: 'rates',
@@ -253,10 +329,12 @@ export function createBadgeService({
         result,
         catalog: badgeCatalog(catalog, state.wallet, entry.merchantId),
         wallet: state.wallet,
+        suggested: entry.suggested,
       };
     return {
       kind: 'ready',
       merchantId: entry.merchantId,
+      suggested: entry.suggested,
       cartAmountCents: entry.reading?.amountCents ?? null,
       amountKind: entry.reading?.kind ?? null,
       amountCents,
@@ -279,12 +357,26 @@ export function createBadgeService({
       if (!entry || !entry.frameNonce || entry.frameNonce !== value.nonce)
         return { ok: false, error: 'This badge is out of date. Reload the page.' };
       if (value.type === 'badge:open') await open(value.target);
-      else if (value.type === 'badge:set-amount')
+      else if (value.type === 'badge:set-amount') {
         await saveTab(tabId, { ...entry, amountOverrideCents: value.amountCents });
-      else if (value.type === 'badge:set-payment')
+        if (value.amountCents !== null)
+          report({
+            type: 'amount_typed',
+            relative_difference_bucket: differenceBucket(value.amountCents, entry.reading?.amountCents),
+          });
+      } else if (value.type === 'badge:set-payment')
         await saveTab(tabId, { ...entry, paymentPath: value.paymentPath });
-      else if (value.type === 'badge:dismiss') await saveTab(tabId, { ...entry, dismissed: true });
-      else if (value.type === 'badge:disable-site') {
+      else if (value.type === 'badge:dismiss') {
+        // The dictionary's `view` is the amount or rates view; the no-cards, locked, checking and unavailable
+        // pills (Phase 15.4's no-cards dismiss among them) show neither, so they report nothing.
+        const shown = reportedView(await view(tabId));
+        // `view` may have stamped `reportedKey`: dismiss the entry as it is now.
+        await saveTab(tabId, { ...((await tabs())[String(tabId)] ?? entry), dismissed: true });
+        if (shown) report({ type: 'badge_dismissed', view: shown });
+      } else if (value.type === 'badge:expanded') {
+        const shown = reportedView(await view(tabId));
+        if (shown) report({ type: 'badge_expanded', view: shown });
+      } else if (value.type === 'badge:disable-site') {
         // The tab's host, never its id (the generic id is shared by every unmatched store).
         const current = await settings();
         if (entry.host && !current.disabledSites.includes(entry.host))
@@ -294,6 +386,22 @@ export function createBadgeService({
               disabledSites: [...current.disabledSites, entry.host].slice(-MAX_DISABLED_SITES),
             },
           });
+        report({
+          type: 'site_disabled',
+          store_kind: storeFacts(entry.merchantId, await merchants()).store_kind,
+        });
+      } else if (value.type === 'badge:suggest-store') {
+        // A tap: the registrable domain of the tab's host (the only thing about the site that leaves the
+        // device, and only now), at a generic store, whether the shopper shares or not.
+        if (entry.merchantId !== GENERIC_MERCHANT_ID)
+          return { ok: false, error: 'This store is already recognised.' };
+        const domain = registrableDomain(entry.host);
+        const sent =
+          !!domain &&
+          !!telemetry &&
+          (await telemetry.recordTap({ type: 'store_suggested', domain, page: entry.page }));
+        if (!sent) return { ok: false, error: 'This address can’t be suggested.' };
+        await saveTab(tabId, { ...entry, suggested: true });
       }
       return { ok: true, view: await view(tabId) };
     });
@@ -321,5 +429,15 @@ export function createBadgeService({
           await saveTab(tabId, { ...entry, reading: null, unreadable: false, amountOverrideCents: null });
       }),
     removed: (tabId: number) => serial(() => saveTab(tabId, null)),
+    /** What the badge shows in a tab, for a problem report from the popup (Phase 15.3): the view and the
+     * reason, or nulls when no badge reading exists there. */
+    shownIn: (tabId: number) =>
+      serial(async (): Promise<{ view: 'amount' | 'rates' | null; withheld_reason: string | null }> => {
+        const entry = (await tabs())[String(tabId)];
+        if (!entry || (!entry.reading && !entry.unreadable && !entry.amountOverrideCents))
+          return { view: null, withheld_reason: null };
+        const shown = viewOf(entry);
+        return { view: shown, withheld_reason: shown === 'rates' ? 'withheld' : null };
+      }),
   };
 }

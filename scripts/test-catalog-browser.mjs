@@ -6,12 +6,24 @@ const run = (args, env) =>
 run(['run', 'build', '--workspace=ai-checkout-extension', '--', '--outDir', 'dist-catalog-test'], {
   ...process.env,
   VITE_CATALOG_API_URL: 'https://127.0.0.1:9443/v1/catalog',
+  // Phase 15.3: usage reporting on, so e2e/telemetry.spec.ts can post to the stub API on the same origin.
+  VITE_TELEMETRY: '1',
   // Re-date the bundled catalog 40 days back, so it has expired whenever this runs (Phase 15.4: a store
   // build installed after its catalog's 30-day window; the install-time refresh must cure it). Test build
   // only, never packaged.
   VITE_E2E_CATALOG_DATE: new Date(Date.now() - 40 * 86_400_000).toISOString().slice(0, 10),
 });
-run(['run', 'test:browser', '--workspace=ai-checkout-extension', '--', 'e2e/catalog.spec.ts'], {
-  ...process.env,
-  CATALOG_E2E: '1',
-});
+run(
+  [
+    'run',
+    'test:browser',
+    '--workspace=ai-checkout-extension',
+    '--',
+    'e2e/catalog.spec.ts',
+    'e2e/telemetry.spec.ts',
+  ],
+  {
+    ...process.env,
+    CATALOG_E2E: '1',
+  },
+);

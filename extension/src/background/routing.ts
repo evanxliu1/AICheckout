@@ -21,7 +21,7 @@ export function routeMessage(
 ): Route {
   const type = (request as { type?: unknown } | null)?.type;
   if (typeof type !== 'string') return { kind: 'ignore' };
-  if (/^(checkout|settings):/.test(type)) {
+  if (/^(checkout|settings|telemetry):/.test(type)) {
     // Only the extension's own popup and onboarding pages; never a page or content script.
     return sender.id === runtimeId && pageUrls.some((page) => exact(sender.url, page))
       ? { kind: 'page' }

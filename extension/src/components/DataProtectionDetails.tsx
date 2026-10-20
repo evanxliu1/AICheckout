@@ -1,4 +1,5 @@
 import { Disclosure } from '@ai-checkout/ui';
+import { TELEMETRY_ENABLED } from '../state/keys';
 
 export default function DataProtectionDetails({
   protection = 'off',
@@ -16,9 +17,12 @@ export default function DataProtectionDetails({
   return (
     <Disclosure title="Data and protection details">
       <p>
-        {how} Nothing is sent to an AI provider or to us. On cart and checkout pages the extension reads the
-        order summary amount automatically to show the cart badge; it saves amount metadata, never product
-        names, addresses or payment fields.
+        {how}{' '}
+        {TELEMETRY_ENABLED
+          ? 'Nothing is sent to an AI provider. Usage reports reach us only if you chose Share, under a random identifier, and never carry a store’s address unless you tap Suggest this store or Report a problem (see Settings).'
+          : 'Nothing is sent to an AI provider or to us.'}{' '}
+        On cart and checkout pages the extension reads the order summary amount automatically to show the cart
+        badge; it saves amount metadata, never product names, addresses or payment fields.
       </p>
       <p className="mt-2">
         Freshness limits stop stale comparisons; they do not automatically erase saved inputs. With protection

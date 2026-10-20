@@ -19,6 +19,8 @@ import {
   unavailableCopy,
 } from '../components/estimates';
 import { merchantName, storeEvidence } from '../checkout/store-match';
+import { GENERIC_MERCHANT_ID } from '../domain';
+import { TELEMETRY_ENABLED } from '../state/keys';
 import type { BadgeAction, BadgeView } from './contracts';
 import { badgeRequest, postToHost } from './client';
 
@@ -141,6 +143,8 @@ export default function BadgeApp() {
   const expand = () => {
     setExpanded(true);
     requestAnimationFrame(() => heading.current?.focus());
+    // Usage report only (Phase 15.3); the reply is the same view.
+    if (TELEMETRY_ENABLED) void badgeRequest({ type: 'badge:expanded' });
   };
   useEffect(() => {
     if (!expanded) return;
@@ -306,7 +310,30 @@ function PanelBody({
   open: (target: 'popup' | 'onboarding') => void;
 }) {
   if (view.kind === 'ready' || view.kind === 'rates')
-    return <ReadyBody view={view} busy={busy} apply={apply} />;
+    return (
+      <>
+        <ReadyBody view={view} busy={busy} apply={apply} />
+        {/* Phase 15.3: at a store the merchant release does not name, one tap sends its registrable domain
+            (the worker resolves it from the tab; the badge page never sees the address). */}
+        {TELEMETRY_ENABLED &&
+          view.merchantId === GENERIC_MERCHANT_ID &&
+          (view.suggested ? (
+            <p className="supporting" role="status">
+              Thanks. This store’s domain was sent so it can be added.
+            </p>
+          ) : (
+            <Button
+              size="small"
+              color="tertiary"
+              icon="plus"
+              disabled={busy}
+              onClick={() => void apply({ type: 'badge:suggest-store' })}
+            >
+              Store not recognised? Suggest it
+            </Button>
+          ))}
+      </>
+    );
   if (view.kind === 'unavailable' || view.kind === 'checking')
     return (
       <>
