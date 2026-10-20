@@ -55,7 +55,7 @@ describe('checkout browser boundary', () => {
           result: { url: nextUrl, reading: { ...next, extractorVersion: 'newegg-summary-v1' } },
         },
       ]);
-    await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
+    await expect(readActiveCheckout()).rejects.toThrow('could not be read with certainty');
   });
   it('uses the same top-level document and stores no raw page URL or query values', async () => {
     const snapshot = await readActiveCheckout(1000);
@@ -135,7 +135,7 @@ describe('checkout browser boundary', () => {
       await expect(readActiveCheckout()).resolves.toMatchObject({ merchantId: 'amazon-us' });
       // A reading that names the store itself is refused by the contract: only the worker names stores.
       probe({ ...generic, merchantId: 'best-buy-us' }, 'https://www.bestbuy.com/site/some-product');
-      await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
+      await expect(readActiveCheckout()).rejects.toThrow('could not be read with certainty');
     });
     it('refuses a reading that names a store or carries a retired adapter version, on any URL (Phase 15.1)', async () => {
       // The probe contract accepts only the generic store with the generic version, so both fail validation
@@ -146,9 +146,9 @@ describe('checkout browser boundary', () => {
         storeUrl,
       ]) {
         probe({ ...generic, merchantId: 'best-buy-us' }, url);
-        await expect(readActiveCheckout(), url).rejects.toThrow('ambiguous');
+        await expect(readActiveCheckout(), url).rejects.toThrow('could not be read with certainty');
         probe({ ...generic, extractorVersion: 'bestbuy-summary-v1' }, url);
-        await expect(readActiveCheckout(), url).rejects.toThrow('ambiguous');
+        await expect(readActiveCheckout(), url).rejects.toThrow('could not be read with certainty');
       }
     });
     it('reports a withheld read as compared by rate (never asks for an amount), and keeps the USD-only message', async () => {
@@ -191,7 +191,7 @@ describe('checkout browser boundary', () => {
       .mockResolvedValueOnce([
         { documentId: 'doc-1', frameId: 0, result: { url, reading: { ...reading, amountCents: -1 } } },
       ]);
-    await expect(readActiveCheckout()).rejects.toThrow('ambiguous');
+    await expect(readActiveCheckout()).rejects.toThrow('could not be read with certainty');
     execute.mockReset().mockRejectedValue(new Error('private Chrome internals'));
     await expect(readActiveCheckout()).rejects.toThrow('Chrome could not read');
   });

@@ -214,8 +214,8 @@ describe('badge service at any store (Phase 13c)', () => {
     // At $100 the cents are the rate in basis points: a sure 3%.
     expect([best.minRewardCents, best.maxRewardCents]).toEqual([300, 300]);
     expect(JSON.stringify(v)).not.toContain('enter the amount');
-    // Loading, empty and non-USD carts hide the badge.
-    for (const reason of ['page-loading', 'empty-cart', 'unsupported-currency', 'unsupported-page'])
+    // Empty and non-USD carts and non-web pages hide the badge.
+    for (const reason of ['empty-cart', 'unsupported-currency', 'unsupported-page', 'not-a-cart'])
       expect(await send(t, { ...withheld, reading: { status: 'unavailable', reason } }, 5, GENERIC)).toEqual({
         show: false,
       });

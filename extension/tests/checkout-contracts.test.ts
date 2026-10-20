@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cartSnapshotSchema, probeSchema } from '../src/checkout/contracts';
+import { cartSnapshotSchema, probeSchema, storedCartSnapshotSchema } from '../src/checkout/contracts';
 
 const url = 'https://shop.example.com/checkout';
 const generic = {
@@ -54,6 +54,21 @@ describe('checkout contracts (generic readings only, Phase 15.1)', () => {
     expect(probe({ status: 'unavailable', reason: 'not-a-cart' })).toBe(true);
     expect(probe({ status: 'unavailable', reason: 'unsupported-currency' })).toBe(true);
     expect(probe({ status: 'unavailable', reason: 'no-summary' })).toBe(false);
+    // The retired adapters' own reasons (Phase 15.1): nothing produces them any more.
+    for (const reason of ['summary-missing', 'ambiguous-amount', 'page-loading'])
+      expect(probe({ status: 'unavailable', reason }), reason).toBe(false);
     expect(probe({ status: 'unavailable', reason: 'withheld', text: 'page text' })).toBe(false);
+  });
+  it('a stored state’s adapter-read cart (before Phase 15.1) reads as no saved cart', () => {
+    const fields = {
+      ...Object.fromEntries(Object.entries(generic).filter(([key]) => key !== 'status')),
+      ...snapshotFields,
+    };
+    expect(storedCartSnapshotSchema.parse(fields)).toEqual(fields);
+    expect(storedCartSnapshotSchema.parse({ ...fields, extractorVersion: 'bestbuy-summary-v1' })).toBeNull();
+    expect(storedCartSnapshotSchema.parse(null)).toBeNull();
+    expect(
+      storedCartSnapshotSchema.safeParse({ ...fields, extractorVersion: 'generic-reader-v2' }).success,
+    ).toBe(false);
   });
 });

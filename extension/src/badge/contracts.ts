@@ -24,8 +24,8 @@ const host = z
  * cap in the catalog, so a card's reward here is its rate ($100 × bps / 10,000 = bps cents). */
 export const RATES_REFERENCE_CENTS = 10_000;
 /** Unavailable readings that still show the badge, in the rates view: the page is a cart or checkout
- * but its amount could not be read with certainty. Loading, empty and non-USD carts hide it. */
-export const RATES_VIEW_REASONS = ['withheld', 'summary-missing', 'ambiguous-amount'] as const;
+ * but its amount could not be read with certainty. Empty and non-USD carts hide it. */
+export const RATES_VIEW_REASONS = ['withheld'] as const;
 
 /** From the content script. It carries the reading only; never card or wallet data. The retired
  * adapters' `order:page` message (Phase 15.1) is refused like any other shape. */

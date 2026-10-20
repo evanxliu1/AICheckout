@@ -34,7 +34,8 @@ async function readDocument(tabId: number, documentId: string) {
   if (results.length !== 1 || result.documentId !== documentId || result.frameId !== 0)
     throw new Error(changed);
   const parsed = probeSchema.safeParse(result.result);
-  if (!parsed.success) throw new Error(copy['ambiguous-amount']);
+  // A reply the contract refuses is an amount not read with certainty: the rates view, as for `withheld`.
+  if (!parsed.success) throw new Error(copy.withheld);
   if (parsed.data.reading.status === 'unavailable') throw new Error(copy[parsed.data.reading.reason]);
   return { url: parsed.data.url, reading: parsed.data.reading };
 }

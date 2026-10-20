@@ -8,7 +8,7 @@ import {
   UNCERTAINTIES_V3,
 } from '../domain';
 import type { Catalog, Comparison, UnavailableComparison } from '../domain';
-import { cartSnapshotSchema } from '../checkout/contracts';
+import { storedCartSnapshotSchema } from '../checkout/contracts';
 import type { CardIndexEntry } from './catalog-slice';
 import { MAX_WALLET_CARDS } from './keys';
 
@@ -137,7 +137,7 @@ const commonFields = {
     .min(0)
     .max(Number.MAX_SAFE_INTEGER - 1),
   purchase: purchaseSchema.nullable(),
-  cart: cartSnapshotSchema.nullable().default(null),
+  cart: storedCartSnapshotSchema.default(null),
   /** Orders the retired order question recorded (newest first); tolerated, never written since Phase 15.1. */
   savings: z.array(savingsEntrySchema).max(MAX_SAVINGS_ENTRIES).default([]),
   /** A notice that must reach the shopper once (e.g. why migration dropped limits); kept until shown. */

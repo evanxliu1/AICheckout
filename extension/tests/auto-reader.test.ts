@@ -187,7 +187,7 @@ describe('automatic cart reader', () => {
     await t.flush();
     expect(t.frame.hide).toHaveBeenCalledTimes(1);
     t.frame.expanded.mockReturnValue(true);
-    t.setReading({ status: 'unavailable', reason: 'page-loading' });
+    t.setReading({ status: 'unavailable', reason: 'empty-cart' });
     t.mutate();
     await t.flush();
     expect(t.frame.hide).toHaveBeenCalledTimes(1);

@@ -84,6 +84,55 @@ async function compare() {
     }),
   );
 }
+describe('a state saved before Phase 15.1 (retired adapters)', () => {
+  it('still loads with an adapter-read cart, a purchase at a former adapter store and a savings entry', async () => {
+    const legacyCart = {
+      ...(await read()),
+      capturedAt: now - 60_000,
+      merchantId: 'best-buy-us',
+      extractorVersion: 'bestbuy-summary-v1',
+    };
+    const savingsEntry = {
+      id: '0d8f3c1e-6a5b-4c2d-9e7f-1a2b3c4d5e6f',
+      date: localDate(now),
+      recordedAt: now - 120_000,
+      merchantId: 'amazon-us',
+      cartAmountCents: 4349,
+      recommendedCardId: 'capital-one-quicksilver',
+      usedCardId: 'capital-one-quicksilver',
+      estimatedRewardCents: 65,
+      baselineRewardCents: null,
+      extraCents: null,
+    };
+    data[STATE_KEY] = {
+      ...(data[STATE_KEY] as AppState),
+      revision: 3,
+      purchase: purchase(),
+      cart: legacyCart,
+      savings: [savingsEntry],
+      comparison: {
+        inputRevision: 3,
+        catalogVersion: CATALOG_V3.version,
+        computedAt: now - 60_000,
+        cartId: legacyCart.id,
+      },
+    };
+    const loaded = success(await handle()({ type: 'checkout:get-state' }));
+    // The adapter's cart reads as no saved cart; the comparison tied to it asks for a new read.
+    expect(loaded.state.cart).toBeNull();
+    expect(loaded.state.purchase?.merchantId).toBe('best-buy-us');
+    expect(loaded.state.wallet.cards).toHaveLength(1);
+    expect(loaded.state.savings).toHaveLength(1);
+    const recompared = success(
+      await handle()({
+        type: 'checkout:compare',
+        expectedRevision: loaded.state.revision,
+        purchase: purchase(),
+      }),
+    );
+    expect(recompared.comparison).toMatchObject({ status: 'ready' });
+  });
+});
 describe('durable cart workflow', () => {
   it('binds a Newegg capture to its merchant and restores it without dropping the wallet', async () => {
     read.mockResolvedValue({

@@ -1,0 +1,592 @@
+{
+  "schema": "pane-record.1",
+  "protocol": "generic-reader-protocol.12",
+  "method": "pane",
+  "domain": "amazon.com",
+  "stream": "us",
+  "visit": 0,
+  "session": 1,
+  "entryHost": "www.amazon.com",
+  "operator": "claude-code/claude-opus-5-5",
+  "transcriptId": "85b7ed75/agent-acd76db4d5a301ac8",
+  "startUtc": "2026-10-20T00:42:37.789Z",
+  "endUtc": "2026-10-20T00:46:43.156Z",
+  "signedIn": false,
+  "startCartCount": 0,
+  "endCartCount": 0,
+  "removals": [
+    {
+      "n": 1,
+      "item": "own item 1 (both units, via Delete)",
+      "ok": true
+    }
+  ],
+  "robots": [
+    {
+      "host": "www.amazon.com",
+      "status": 200,
+      "sha256": "74fa27e28cd9d80bdd155ffecf3a033ea2e195a80c83d6fa46acb20665c3cb4d",
+      "bytes": 7947,
+      "rootDisallowed": false,
+      "cartDisallowed": true,
+      "checkoutDisallowed": false
+    }
+  ],
+  "navigations": [
+    {
+      "n": 1,
+      "utc": null,
+      "url": "https://www.amazon.com/robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "url": "https://www.amazon.com/"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "url": "https://www.amazon.com/gp/bestsellers/"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "url": "https://www.amazon.com/Bounty-Quick-Size-Paper-Towels-Family/dp/B079VP6DH5/ref=zg_bs_c_hpc_d_sccl_2/:token"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "url": "https://www.amazon.com/cart/smart-wagon"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "url": "https://www.amazon.com/cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "url": "https://www.amazon.com/cart"
+    }
+  ],
+  "actions": [
+    {
+      "n": 1,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "robots.txt"
+    },
+    {
+      "n": 2,
+      "utc": null,
+      "kind": "robots-hash",
+      "role": "",
+      "name": "pane-robots-hash.js"
+    },
+    {
+      "n": 3,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "entry origin"
+    },
+    {
+      "n": 4,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Best Sellers"
+    },
+    {
+      "n": 5,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "best-seller tile (landed on Bounty)"
+    },
+    {
+      "n": 6,
+      "utc": null,
+      "kind": "add-to-cart",
+      "role": "button",
+      "name": "Add to cart"
+    },
+    {
+      "n": 7,
+      "utc": null,
+      "kind": "click",
+      "role": "link",
+      "name": "Go to Cart"
+    },
+    {
+      "n": 8,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-1"
+    },
+    {
+      "n": 9,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity by one (no effect)"
+    },
+    {
+      "n": 10,
+      "utc": null,
+      "kind": "quantity-increment",
+      "role": "button",
+      "name": "Increase quantity by one"
+    },
+    {
+      "n": 11,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "cart-qty2"
+    },
+    {
+      "n": 12,
+      "utc": null,
+      "kind": "remove-item",
+      "role": "button",
+      "name": "Delete"
+    },
+    {
+      "n": 13,
+      "utc": null,
+      "kind": "navigate",
+      "role": "",
+      "name": "cart page by URL"
+    },
+    {
+      "n": 14,
+      "utc": null,
+      "kind": "export",
+      "role": "",
+      "name": "empty-cart"
+    }
+  ],
+  "states": [
+    {
+      "state": "cart-1",
+      "sha256": "e762130cec61a3babfac98bdcdae20e004dbfd689bdd880985c9bc945d363ac7",
+      "bytes": 651580,
+      "chunks": 2,
+      "url": "https://www.amazon.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "cart-qty2",
+      "sha256": "ae6cc868355c06fc7a60ec46b08699ffbc2234630b308e9752dd4500c69d566f",
+      "bytes": 650824,
+      "chunks": 2,
+      "url": "https://www.amazon.com/cart",
+      "startCartCount": 0
+    },
+    {
+      "state": "empty-cart",
+      "sha256": "55891f11b67316bbbf40c3473cc6a8e520eff51d3a170d4ce645e930273cc611",
+      "bytes": 498116,
+      "chunks": 2,
+      "url": "https://www.amazon.com/cart",
+      "startCartCount": 0
+    }
+  ],
+  "evidence": [],
+  "notReached": [
+    {
+      "state": "minicart-1",
+      "reason": "not requested for 15.1m; the add landed on the /cart/smart-wagon confirmation page, which was not exported"
+    },
+    {
+      "state": "cart-2items",
+      "reason": "not requested for 15.1m"
+    }
+  ],
+  "itemPath": {
+    "listingUrl": "https://www.amazon.com/gp/bestsellers/",
+    "productUrl": "https://www.amazon.com/Bounty-Quick-Size-Paper-Towels-Family/dp/B079VP6DH5",
+    "price": "$43.49",
+    "secondProductUrl": null
+  },
+  "observedCurrency": "USD",
+  "observedRegion": "US",
+  "outcome": {
+    "status": "captured",
+    "code": null,
+    "evidenceSha256": null
+  },
+  "challenge": null,
+  "problems": [
+    "Phase 15.1m measurement capture for the legacy-adapter retirement, not an evaluation-set visit (amazon.com is legacy-named-merchant in the frame); visit set to 0; empty-cart was taken after removal, at the end, per the coordinator's state order.",
+    "robots.txt: '/' allowed for '*'; '/gp/cart' disallowed for '*' (the cart actually used was '/cart', not matched); robots.txt also has 'User-agent: Claude-User' with 'Disallow: /'. Recorded only, per protocol (robots.txt never excludes).",
+    "Item: the click aimed at the Amazon Basics AA batteries tile ($15.29) landed on the Bounty Paper Towels tile (#2 in Health & Household, $43.49); that item met the rule (in stock, physical, in band, one-time purchase preselected), so it was kept.",
+    "The first increment click by element ref only scrolled the page; the second, by coordinate, raised the quantity to 2.",
+    "The pane browser had no tabs at start: tabs_create was refused until the pane opened; the pane opened on the first navigate with tab id 'seed', used only by this session and closed at the end.",
+    "Delivery location shown was chosen by the site and left unchanged."
+  ],
+  "timeline": [
+    {
+      "n": 0,
+      "utc": "2026-10-20T00:42:37.789Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 1,
+      "utc": "2026-10-20T00:42:41.548Z",
+      "tool": "Read"
+    },
+    {
+      "n": 2,
+      "utc": "2026-10-20T00:42:42.051Z",
+      "tool": "Read"
+    },
+    {
+      "n": 3,
+      "utc": "2026-10-20T00:42:42.485Z",
+      "tool": "Read"
+    },
+    {
+      "n": 4,
+      "utc": "2026-10-20T00:42:45.101Z",
+      "tool": "Read"
+    },
+    {
+      "n": 5,
+      "utc": "2026-10-20T00:42:48.370Z",
+      "tool": "tabs_create"
+    },
+    {
+      "n": 6,
+      "utc": "2026-10-20T00:42:51.703Z",
+      "tool": "navigate",
+      "url": "https://www.amazon.com/robots.txt"
+    },
+    {
+      "n": 7,
+      "utc": "2026-10-20T00:42:58.281Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "robots"
+    },
+    {
+      "n": 8,
+      "utc": "2026-10-20T00:42:58.734Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 9,
+      "utc": "2026-10-20T00:43:04.377Z",
+      "tool": "navigate",
+      "url": "https://www.amazon.com/"
+    },
+    {
+      "n": 10,
+      "utc": "2026-10-20T00:43:04.382Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 11,
+      "utc": "2026-10-20T00:43:07.525Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 12,
+      "utc": "2026-10-20T00:43:07.904Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 13,
+      "utc": "2026-10-20T00:43:12.667Z",
+      "tool": "find"
+    },
+    {
+      "n": 14,
+      "utc": "2026-10-20T00:43:13.503Z",
+      "tool": "computer",
+      "action": "zoom"
+    },
+    {
+      "n": 15,
+      "utc": "2026-10-20T00:43:17.259Z",
+      "tool": "find"
+    },
+    {
+      "n": 16,
+      "utc": "2026-10-20T00:43:19.797Z",
+      "tool": "find"
+    },
+    {
+      "n": 17,
+      "utc": "2026-10-20T00:43:22.031Z",
+      "tool": "find"
+    },
+    {
+      "n": 18,
+      "utc": "2026-10-20T00:43:24.978Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 19,
+      "utc": "2026-10-20T00:43:27.301Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 20,
+      "utc": "2026-10-20T00:43:27.659Z",
+      "tool": "get_page_text"
+    },
+    {
+      "n": 21,
+      "utc": "2026-10-20T00:43:34.040Z",
+      "tool": "find"
+    },
+    {
+      "n": 22,
+      "utc": "2026-10-20T00:43:36.535Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 23,
+      "utc": "2026-10-20T00:43:38.965Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 24,
+      "utc": "2026-10-20T00:43:39.306Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 25,
+      "utc": "2026-10-20T00:43:48.657Z",
+      "tool": "find"
+    },
+    {
+      "n": 26,
+      "utc": "2026-10-20T00:43:51.195Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 27,
+      "utc": "2026-10-20T00:43:53.783Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 28,
+      "utc": "2026-10-20T00:43:54.194Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 29,
+      "utc": "2026-10-20T00:44:07.941Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 30,
+      "utc": "2026-10-20T00:44:10.286Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 31,
+      "utc": "2026-10-20T00:44:10.619Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 32,
+      "utc": "2026-10-20T00:44:34.146Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 33,
+      "utc": "2026-10-20T00:44:36.758Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 34,
+      "utc": "2026-10-20T00:44:39.418Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 35,
+      "utc": "2026-10-20T00:44:41.762Z",
+      "tool": "find"
+    },
+    {
+      "n": 36,
+      "utc": "2026-10-20T00:44:44.642Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 37,
+      "utc": "2026-10-20T00:44:45.151Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 38,
+      "utc": "2026-10-20T00:44:45.514Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 39,
+      "utc": "2026-10-20T00:44:52.832Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 40,
+      "utc": "2026-10-20T00:44:52.921Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 41,
+      "utc": "2026-10-20T00:44:53.300Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 42,
+      "utc": "2026-10-20T00:45:16.649Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 43,
+      "utc": "2026-10-20T00:45:20.220Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 44,
+      "utc": "2026-10-20T00:45:22.815Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 45,
+      "utc": "2026-10-20T00:45:26.289Z",
+      "tool": "computer",
+      "action": "left_click"
+    },
+    {
+      "n": 46,
+      "utc": "2026-10-20T00:45:26.614Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 47,
+      "utc": "2026-10-20T00:45:27.012Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 48,
+      "utc": "2026-10-20T00:45:34.306Z",
+      "tool": "navigate",
+      "url": "https://www.amazon.com/cart"
+    },
+    {
+      "n": 49,
+      "utc": "2026-10-20T00:45:34.849Z",
+      "tool": "computer",
+      "action": "wait"
+    },
+    {
+      "n": 50,
+      "utc": "2026-10-20T00:45:35.238Z",
+      "tool": "computer",
+      "action": "screenshot"
+    },
+    {
+      "n": 51,
+      "utc": "2026-10-20T00:46:00.680Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "export"
+    },
+    {
+      "n": 52,
+      "utc": "2026-10-20T00:46:02.992Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 53,
+      "utc": "2026-10-20T00:46:05.462Z",
+      "tool": "javascript_tool",
+      "action": "javascript_exec",
+      "js": "chunk"
+    },
+    {
+      "n": 54,
+      "utc": "2026-10-20T00:46:08.760Z",
+      "tool": "tabs_close"
+    },
+    {
+      "n": 55,
+      "utc": "2026-10-20T00:46:09.147Z",
+      "tool": "Bash"
+    },
+    {
+      "n": 56,
+      "utc": "2026-10-20T00:46:31.829Z",
+      "tool": "Write"
+    },
+    {
+      "n": 57,
+      "utc": "2026-10-20T00:46:43.156Z",
+      "tool": "SubagentHandback"
+    }
+  ],
+  "collected": {
+    "by": "collect-pane-exports.mjs",
+    "exports": [
+      {
+        "target": "cart-1",
+        "kind": "state",
+        "sha256": "e762130cec61a3babfac98bdcdae20e004dbfd689bdd880985c9bc945d363ac7"
+      },
+      {
+        "target": "cart-qty2",
+        "kind": "state",
+        "sha256": "ae6cc868355c06fc7a60ec46b08699ffbc2234630b308e9752dd4500c69d566f"
+      },
+      {
+        "target": "empty-cart",
+        "kind": "state",
+        "sha256": "55891f11b67316bbbf40c3473cc6a8e520eff51d3a170d4ce645e930273cc611"
+      }
+    ],
+    "errors": []
+  }
+}

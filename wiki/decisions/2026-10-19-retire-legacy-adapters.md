@@ -5,8 +5,8 @@ description: Evan's 2026-10-19 directive replaces the A4 gate (adapters retire o
 status: accepted
 tags: [decision, phase-15, extension, reader, adapters, savings]
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-20T00:30:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-20T02:30:00Z
 sources:
   - resource: 2026-10-10-audit-calls.md
     title: Decision, audit calls (A4 as a gate)
@@ -45,7 +45,7 @@ What the adapters still own in the code at `main` `96ba5265`: the readers on the
 1. Phase 15.1 removes `extension/src/checkout/adapters/`, `page-reader.ts`, the adapter rules in `merchants.ts` (`merchantForCheckout`, `merchantForOrderConfirmation`, `isLegacyMerchant`, `MERCHANT_IDS`, `MERCHANTS`), the legacy branches of `readAnyCart` and `badge/content.ts:mode`, the adapter validation step in `vite.config.ts`, the adapter fixtures and tests, the legacy e2e flows, `evals/reader/legacy-entry.ts` and the harness's legacy mode, and `extension/scripts/observe-amazon-cart.mjs`. `probeSchema` and `cartSnapshotSchema` accept `generic-reader-v1` only. The three stores are named by the merchant release records (`amazon-us`, `best-buy-us`, `newegg-us`, ids unchanged).
 2. Stored `disabledMerchants` values map once to their hosts in `disabledSites` on read; the setting field goes.
 3. Order detection, the order question, the savings history, its export and the `record-savings` and `delete-savings` requests are removed. `savings` stays in state schema 3 as a tolerated field nothing writes or shows.
-4. The measurement (15.1m): before deletion, both readers run on the committed observed fixtures (`extension/tests/fixtures/*-observed-*.html`) and on fresh pane captures of the three stores' `cart-1`, `cart-qty2` and `empty-cart` states taken under `generic-reader-protocol.11` rules; the text-free table (page, adapter reading, generic reading, reason codes) is committed as `docs/evals/legacy-adapter-retirement.md`. It is a record, not a gate.
+4. The measurement (15.1m): before deletion, both readers run on the committed observed fixtures (`extension/tests/fixtures/*-observed-*.html`) and on fresh pane captures of the three stores' `cart-1`, `cart-qty2` and `empty-cart` states taken under `generic-reader-protocol.12` rules (the protocol in force since 2026-10-07; corrected on 2026-10-20 from `.11`, which this page first named); the text-free table (page, adapter reading, generic reading, reason codes) is committed as `docs/evals/legacy-adapter-retirement.md`. It is a record, not a gate.
 5. The protocol's "Legacy adapters" scoring clause is closed by that record; no amendment is signed (the clause existed to decide retirement, which Evan decided).
 
 ## Consequences
@@ -55,6 +55,7 @@ What the adapters still own in the code at `main` `96ba5265`: the readers on the
 - The popup's Merchant select offers the tab's store by name and "Another U.S. online store"; the default store is the generic one.
 - `docs/release/`, `docs/verification/merchants.md`, `extension/README.md`, the README and the site stop describing the three stores (Phase 15.5).
 - The 2026-10-06 and 2026-10-10 rows that made retirement conditional are superseded on this point; "no store configs" stands.
+- Stored data from before 15.1 stays readable (added by the 15.1 review, 2026-10-20): saved purchases and `savings[]` entries at the three ids parse as before, a saved cart snapshot an adapter wrote (`*-summary-v1`) reads as no saved cart instead of making the whole state unreadable, and `badge:*`/content messages of the old shapes are refused. Measured result of 15.1m: [part 2](../../docs/evals/legacy-adapter-retirement.md#part-2-fresh-captures-151m).
 
 ## Status
 Accepted 2026-10-19 (Evan's directive in chat; the savings drop and the tolerated field are the planner's recommendations, listed as decision 2 in the [plan](../product/phase-15-release-a.md#8-decisions-needed-from-evan)).

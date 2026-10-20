@@ -301,7 +301,7 @@ describe('popup on the merchant release (Phase 14.2)', () => {
     openOn('https://shop.example.com/cart');
     render(<Popup />);
     await screen.findByLabelText('Purchase amount (USD)');
-    for (const reason of ['empty-cart', 'summary-missing', 'ambiguous-amount', 'unsupported-page'] as const) {
+    for (const reason of ['empty-cart', 'withheld', 'not-a-cart', 'unsupported-page'] as const) {
       read.mockRejectedValue(new Error(READ_COPY[reason]));
       fireEvent.click(screen.getByRole('button', { name: 'Read cart amount' }));
       await vi.waitFor(() => expect(read).toHaveBeenCalled());

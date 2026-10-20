@@ -23,16 +23,7 @@ export const probeSchema = z.strictObject({
     reading,
     z.strictObject({
       status: z.literal('unavailable'),
-      reason: z.enum([
-        'unsupported-page',
-        'empty-cart',
-        'summary-missing',
-        'ambiguous-amount',
-        'unsupported-currency',
-        'page-loading',
-        'withheld',
-        'not-a-cart',
-      ]),
+      reason: z.enum(['unsupported-page', 'empty-cart', 'unsupported-currency', 'withheld', 'not-a-cart']),
     }),
   ]),
 });
@@ -44,3 +35,12 @@ export const cartSnapshotSchema = readingFields.omit({ status: true }).extend({
   capturedAt: z.number().int().nonnegative(),
 });
 export type CartSnapshot = z.infer<typeof cartSnapshotSchema>;
+/** The saved cart in a stored state. A snapshot a retired adapter wrote before Phase 15.1 (version
+ * `*-summary-v1`, e.g. a Best Buy cart read from the popup) reads as no saved cart, so a state that still
+ * holds one parses instead of being reported damaged; a comparison tied to it then asks for a new read. */
+export const storedCartSnapshotSchema = z
+  .union([
+    cartSnapshotSchema,
+    z.object({ extractorVersion: z.string().regex(/^[a-z0-9]+-summary-v[0-9]+$/) }).transform(() => null),
+  ])
+  .nullable();

@@ -6,7 +6,7 @@ status: stable
 tags: [system, extension, badge, privacy]
 generated:
   by: claude-code/claude-fable-5-1
-  at: 2026-10-20T03:30:00Z
+  at: 2026-10-20T02:04:00Z
 verified_commit: 7a07113
 sources:
   - resource: ../../extension/src/badge/content.ts

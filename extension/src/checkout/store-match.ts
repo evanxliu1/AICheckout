@@ -138,7 +138,7 @@ const issuerOf = (sourceId: string, catalog: CatalogV3): string | null =>
   catalog.cards.find((card) => card.rules.some((rule) => rule.sourceIds.includes(sourceId)))?.issuer ?? null;
 
 /** Why a bonus category applies at a matched store: the record's category with its evidence basis. Null
- * for a `default` record (it claims no category), the generic store and legacy stores on the catalog's profile.
+ * for a `default` record (it claims no category), the generic store and any id the release lacks.
  * A `definition` record reads "Treated as", naming the issuer whose category definition the store's own pages fit
  * ("Codes as" is for `issuer`, `mcc` and `corroborated`; an `mcc` record reads "Codes as dining in public
  * purchase-card data (mostly in-store)", the openly licensed government datasets, 2026-10-11); no partnership is

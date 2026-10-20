@@ -9,8 +9,8 @@ export type AmountKind = (typeof AMOUNT_KINDS)[number];
 /** What a reader hands the popup or the badge: a generic read of any http(s) page, named
  * `generic-us-online`; the worker resolves the tab's store against the merchant release (Phase 14.2,
  * `store-match.ts`) and refuses a reading that names anything else. Since Phase 15.1 the generic reader
- * is the only reader; `summary-missing`, `ambiguous-amount` and `page-loading` are the retired adapters'
- * reasons, still accepted by the contracts and worded in `read-copy.ts`. */
+ * is the only reader (the retired adapters' `summary-missing`, `ambiguous-amount` and `page-loading`
+ * reasons went with them). */
 export type ManualRead =
   | {
       status: 'found';
@@ -22,15 +22,7 @@ export type ManualRead =
     }
   | {
       status: 'unavailable';
-      reason:
-        | 'unsupported-page'
-        | 'empty-cart'
-        | 'summary-missing'
-        | 'ambiguous-amount'
-        | 'unsupported-currency'
-        | 'page-loading'
-        | 'withheld'
-        | 'not-a-cart';
+      reason: 'unsupported-page' | 'empty-cart' | 'unsupported-currency' | 'withheld' | 'not-a-cart';
     };
 
 const KIND: Record<ReadingKind, AmountKind> = {
