@@ -202,7 +202,8 @@ export const requestSchema = z.discriminatedUnion('type', [
     expectedRevision: z.number().int().nonnegative(),
     cartId: z.string().uuid().nullable().optional(),
   }),
-  z.strictObject({ type: z.literal('checkout:clear') }),
+  /** Delete all local data without the vault; `keepReports` as on `checkout:vault-delete`. */
+  z.strictObject({ type: z.literal('checkout:clear'), keepReports: z.literal(true).optional() }),
 ]);
 export type CheckoutRequest = z.infer<typeof requestSchema>;
 export type CheckoutResponse =

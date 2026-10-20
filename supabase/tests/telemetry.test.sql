@@ -175,6 +175,37 @@ reset role;
 select is((select count from telemetry.days where day=(now() at time zone 'UTC')::date), 20000, 'the global counter stops at the cap');
 select is((select count(*) from telemetry.install_days where install_id='a7e5c3f6-4b8d-4e0f-9a1b-5c6d7e8f9012'), 0::bigint, 'a dropped event counts against no install');
 
+-- Scheduled retention (15.5b): a daily pg_cron job runs prune_expired, which loops the bounded prune until
+-- nothing older than 90 days remains; no client role can call it.
+select is((select count(*) from cron.job where jobname='telemetry-prune'), 1::bigint, 'the daily prune job is scheduled once');
+select is((select schedule from cron.job where jobname='telemetry-prune'), '17 3 * * *', 'the prune job runs daily at 03:17');
+select is((select command from cron.job where jobname='telemetry-prune'), 'select telemetry.prune_expired()', 'the prune job calls telemetry.prune_expired()');
+select is((select active from cron.job where jobname='telemetry-prune'), true, 'the prune job is active');
+select is((select nspname from pg_extension e join pg_namespace n on n.oid=e.extnamespace where extname='pg_cron'), 'pg_catalog', 'pg_cron lives in pg_catalog, not public');
+do $$
+declare e jsonb;
+begin
+  for i in 1..2500 loop
+    e := pg_temp.ev('badge_expanded','{}','d8f6e4a2-5b9c-4e1f-8a2b-6c7d8e9f0a12');
+    insert into telemetry.events(event_id, install_id, type, client_at, received_at, event)
+      values ((e->>'event_id')::uuid, (e->>'install_id')::uuid, e->>'type', (e->>'client_at')::timestamptz, now() - interval '91 days', e);
+  end loop;
+end $$;
+insert into telemetry.install_days(install_id, day, count) values ('d8f6e4a2-5b9c-4e1f-8a2b-6c7d8e9f0a12', (now() at time zone 'UTC')::date - 91, 7);
+insert into telemetry.days(day, count) values ((now() at time zone 'UTC')::date - 91, 7);
+select is(telemetry.prune_expired(), 2500, 'prune_expired removes every report older than 90 days, past the 1000-row bound of one round');
+select is((select count(*) from telemetry.events where received_at < now() - interval '90 days'), 0::bigint, 'no report older than 90 days remains');
+select is((select count(*) from telemetry.install_days where day < (now() at time zone 'UTC')::date - 90), 0::bigint, 'no install day counter older than 90 days remains');
+select is((select count(*) from telemetry.days where day < (now() at time zone 'UTC')::date - 90), 0::bigint, 'no global day counter older than 90 days remains');
+select is(telemetry.prune_expired(), 0, 'a second run finds nothing to remove');
+select is((select count from telemetry.days where day=(now() at time zone 'UTC')::date), 20000, 'the run leaves today''s global counter (the row it locks first, as ingest does) unchanged');
+set local role anon;
+select throws_ok('select telemetry.prune_expired()','42501',null,'anonymous cannot run the scheduled prune');
+reset role;
+set local role authenticated;
+select throws_ok('select telemetry.prune_expired()','42501',null,'a signed-in client cannot run the scheduled prune');
+reset role;
+
 -- Revocation applies to the reviewer reads too.
 delete from auth.sessions where id='96000000-0000-4000-8000-000000000001';
 set local role authenticated;
