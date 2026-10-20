@@ -49,3 +49,36 @@ Amounts are USD cents. Every adapter URL matched (`matches(url)` true on all nin
 - **Empty carts match on all three stores.** The adapter's `empty-cart` and the detector's `none` both hide the badge; the generic reader's withhold reasons on those pages (`credit-unclear`, `total-outside-summary`, `no-summary`) never reach the badge because the detector stops first (`not-a-cart`).
 - **Possible reader follow-up, not a gate:** confining credit rows to the summary block (the way `inSummary` already scopes the chosen row) would turn Amazon's two withholds into shown subtotals; it is a generic reader change, measured on the development split only, not a store config. It is planned as 15.1b in the [Release A plan](../../wiki/product/phase-15-release-a.md#progress).
 - **Caveats.** One capture per state, one read each, no timing; Best Buy `/checkout/...` steps (adapter-matched, never captured) are not measured; the Amazon captures were taken at `/cart` (the adapter also matched `/gp/cart/view.html`, which was not visited).
+
+## Addendum: 15.1b, credit rows scoped to the summary (2026-10-20)
+
+**The rule.** In `packages/cart-reader/src/reader.ts` (commit `9fc5424b`), a credit row (a negative amount with a gift-card, credit, rewards or balance label) counts only when it sits beside a total row that is itself in a cart summary (`inSummary`: an ancestor also holds shipping, tax, a checkout control or, for a total, a subtotal). Before, any credit row beside any total row counted, so the reader withheld `credit-unclear` whenever one existed and the chosen kind was not after-credit. A credit that does not count neither blocks the summary's amount, nor turns an "amount due" beside it into an after-credit total, nor excuses a total below its subtotal (`total-below-subtotal` now looks at the same scoped credits). A credit inside the summary still withholds a pre-credit amount; the test file's 15.1b block covers a credit outside the summary (ignored), inside it (withholds), a panel laid out as the summary list's own sibling (still counts, by the existing "same list within two levels" neighbourhood), nested summaries (counts) and a misread total with only an outside credit (withholds). Generic rule, no store config, no store-specific text.
+
+**15.1m captures, re-read at `9fc5424b`** (same method as part 2: `bundle.mjs` generic bundle `d3fd1144…`, the `run.mjs` pane loader, attributes stripped, `readCartPage`, one read per page, nothing logged):
+
+| Store | State | Before (part 2, `3eff32ca`) | After (`9fc5424b`) | Badge after |
+| --- | --- | --- | --- | --- |
+| amazon.com | cart-1 | withheld `credit-unclear` | **subtotal 4349 USD** | amount $43.49 |
+| amazon.com | cart-qty2 | withheld `credit-unclear` | **subtotal 8698 USD** | amount $86.98 |
+| amazon.com | empty-cart | detector `none`; withheld `credit-unclear` | detector `none`; withheld `subtotal-outside-summary` | nothing (`not-a-cart`) |
+| bestbuy.com | cart-1 / cart-qty2 | estimatedTotal 17491 / 31994 | unchanged | amount |
+| bestbuy.com | empty-cart | detector `none` | unchanged | nothing |
+| secure.newegg.com | cart-1 / cart-qty2 | subtotal 3499 / 6998 | unchanged | amount |
+| secure.newegg.com | empty-cart | detector `none` | unchanged | nothing |
+
+Both Amazon amounts equal the expected amount read by eye in part 2 (Subtotal 4349 and 8698). The panel that produced the credit row carries its own items total, so the shown subtotal is the summary's row (`inSummary`), the only one the reader keeps when kinds tie.
+
+**Development split, official run** `20261020T031217Z-development-6b1857` (reader `9fc5424b`, clean; Chromium 153.0.8010.12; scored with `score.mjs --record`), against the last official development run `20261010T095154Z-development-eaa36b`:
+
+| Development (official runs) | After 13c.5 (`20261010T095154Z-development-eaa36b`) | After 15.1b (`20261020T031217Z-development-6b1857`) |
+| --- | ---: | ---: |
+| Shown correct / wrong / withheld (722 page-states) | 405 / 0 / 317 | **405 / 0 / 317** |
+| Wrong rate, upper bound (page / store / operator) | ≤ 0.74% / ≤ 1.7% / ≤ 2.0% | ≤ 0.74% / ≤ 1.7% / ≤ 2.0% |
+| Coverage on `cart-1` | 89.9% (160 / 178) | 89.9% (160 / 178) |
+| Coverage, all states with an expected amount | 82.8% (376 / 454) | 82.8% (376 / 454) |
+| Offline variants: correct / wrong / withheld (1,088) | 898 / 0 / 190 | 898 / 0 / 190 |
+| p95 read time | 10 ms | 9.3 ms |
+
+A per-page comparison through `dev.mjs` (quick loop, not scored) of the reader at `origin/main` and at `9fc5424b` gave the same output on every one of the 722 real page-states and 1,088 variants: no development page has a credit row that the rule stops counting. The `credit-applied` variant transform (178 eligible) injects its credit into the summary, where it still counts.
+
+**Reading.** Development-only and optimistic: the rule was written against the Amazon captures and checked on development; no held-out run measures it, and no held-out page was opened. The change cannot add a shown amount on development (zero differences), so it is unmeasured on the pages where it matters, apart from the two Amazon cart pages. Its safety argument is structural: it only narrows which credit rows count, every amount it newly shows is a row already inside a cart summary, and a credit in that summary still withholds. The neighbourhood that decides "beside" is the existing two-level one, so a credit row laid out as the summary list's immediate sibling keeps counting (conservative), and a panel one wrapper further away does not.
