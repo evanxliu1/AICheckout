@@ -6,7 +6,7 @@ status: stable
 tags: [ops, setup, testing]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T03:00:00Z
+  at: 2026-10-20T02:40:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts and Node engine
