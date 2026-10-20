@@ -14,6 +14,13 @@ export const TELEMETRY_KEY = 'checkoutTelemetryV1';
  * Without it there is no consent screen, no queue and no request (decision 2026-10-19). */
 export const TELEMETRY_ENABLED =
   import.meta.env?.VITE_TELEMETRY === '1' && !!import.meta.env?.VITE_CATALOG_API_URL;
+/** A page of the public site, which the catalog origin serves (`/privacy/`, `/credits/`, `/uninstalled/`);
+ * null in a build without a catalog endpoint. */
+export function siteUrl(endpoint: string | undefined, path: string): string | null {
+  return endpoint ? new URL(path, endpoint).href : null;
+}
+/** The site's credits page (Phase 15.5): the Oklahoma CC BY attribution and the other data sources. */
+export const CREDITS_URL = siteUrl(import.meta.env?.VITE_CATALOG_API_URL, '/credits/');
 export const RESULT_MAX_AGE_MS = 15 * 60 * 1000;
 export const CART_MAX_AGE_MS = 5 * 60 * 1000;
 export const CART_READ_TIMEOUT_MS = 8_000;

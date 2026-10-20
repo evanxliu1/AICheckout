@@ -1,81 +1,103 @@
-# Store listing draft
+# Store listing and dashboard declarations
 
-Internal preparation only. Copy the public description after the gates in [release preparation](README.md) pass. Match the final ZIP; the text below assumes the hosted-catalog build with the automatic cart badge (Phase 3b): 178 card products (catalog `2026-10-02.expansion.1`) and three US merchant readers (Amazon, Best Buy, Newegg).
+Everything Evan types into the Chrome Web Store developer dashboard for AI Checkout **2.1.0** comes from this file. The text describes the hosted build (`npm run build:hosted`: card terms and the store list downloaded from `https://ai-checkout-api.onrender.com`, usage reporting on). The 15.7 reviewer pass checks each section against the exact upload ZIP and its manifest before submission; the release record in [README.md](README.md) records what was submitted. Two items below are **Evan's alone** and are marked so.
 
 ## Basic fields
 
-| Field | Draft |
+| Field | Value |
 | --- | --- |
 | Name | AI Checkout |
-| Short description | Compare estimated rewards on cards you own, with clear rates and conditions. |
-| Language | English |
-| Intended audience/region | US shoppers; USD only |
-| Publisher | `[[PUBLISHER_NAME]]` |
-| Privacy policy | `[[PRIVACY_URL]]` |
-| Support | `[[SUPPORT_URL]]` |
+| Summary (≤ 132 characters; must equal the manifest `description`, which `release-package.mjs` checks for length) | Compare estimated rewards on cards you own, with clear rates and conditions. |
+| Category | Shopping |
+| Language | English (United States) |
+| Regions | United States only |
+| Pricing | Free |
+| Publisher name shown | Evan Liu (**Evan to confirm**; the dashboard shows the account's publisher name) |
+| Support email | `SUPPORT_EMAIL_TBD` (**Evan to supply**; `node scripts/check-release-docs.mjs --release` refuses a release while the placeholder remains) |
+| Homepage | `https://ai-checkout-api.onrender.com/` |
+| Support URL | `https://ai-checkout-api.onrender.com/support/` |
+| Privacy policy URL | `https://ai-checkout-api.onrender.com/privacy/` |
+| Mature content | No |
+| Directed at children | No |
+| Trader declaration (EU consumer-protection field) | **Non-trader**, recommended: a free, non-commercial portfolio project with no sales, no ads and no paid features. **Evan to confirm**; it is a legal statement about him |
 
-The short description matches the current manifest. Choose the current dashboard's appropriate shopping category and US distribution setting; do not claim other locales or verified-publisher status before they are configured. The name does not mean a live LLM chooses the shopper's card.
+## Detailed description (public copy)
 
-## Detailed description — public copy
+See which card you already own earns the most, right on your cart.
 
-See which card you already own earns the most rewards, right on your cart.
+Pick your cards once. On the cart or checkout page of any U.S. online store, AI Checkout shows a small badge with your best card and its estimated reward for that cart, for example "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions and a payment-method choice. When the cart amount can't be read with certainty, the badge ranks your cards by rate instead of guessing an amount.
 
-On Amazon US, Best Buy US and Newegg US carts, AI Checkout shows a small badge with your best card and its estimated rewards for that cart: "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions, and a payment-method choice. It covers 178 U.S. credit cards; add yours by searching for the card or bank name. Points and miles are counted at a published estimate unless the issuer states a value or you set your own. A few programs have no published value; those cards show points or miles and are listed last until you set a value.
+What it covers:
 
-Features:
+- 178 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points. Add yours by searching for the card or bank name; no card numbers or bank login.
+- More than 600 named U.S. stores with their bonus category (supermarkets, drugstores, home improvement and so on), plus a general profile for every other store, so category bonuses are applied where they count.
+- Card terms are published from the issuers' own terms, checked by independent reviewers, approved by a person before each release, and refreshed by the extension weekly. Points and miles are compared in cash at a published estimate unless the issuer states a value or you set your own.
 
-- Automatic, on the three supported carts only: the badge reads the cart's order-summary amount (for example "Subtotal (N items)" on Amazon) and nothing else on the page. Dismiss it for a tab or turn it off for a site.
-- Every estimate quotes the issuer's terms; unknown spend toward a cap or uncertain payment methods show as a range, never a guess.
-- Correct the amount in the badge, or compare any purchase manually from the toolbar popup.
-- All-time savings: after an order on a supported site, the badge asks once whether you paid with the recommended card and keeps an estimated total of the extra rewards versus your default card. The order page is recognized by its address only and is never read.
-- No account and no AI at checkout. Your cards, settings and savings stay in this Chrome profile; optional passphrase protection encrypts them.
-- Delete everything with **Delete all local data**; export your savings history as JSON.
+How it works:
 
-The extension does not collect card numbers, security codes, bank logins, product names or addresses, and does not send shopping data to us or to an AI provider. The only request it makes is for the published card terms, when you choose **Check for updated terms**. See the privacy policy for the complete data-handling details.
+- The badge reads the cart's order-summary amount and nothing else on the page: never item names, addresses or payment fields. It shows an amount only when it is sure of it.
+- Every estimate quotes the issuer's terms. Unknown spend toward a cap, an unactivated bonus or an uncertain payment method show as a range, never a guess.
+- The comparison runs on your device. No account, no model at checkout, and your cards never leave your browser unless you choose to share usage reports.
+- Dismiss the badge for a tab, turn it off for a site, or switch it off everywhere in Settings. Optional passphrase protection encrypts your saved cards.
+- Optional usage reports (you are asked once, after picking your cards) help improve the reader and the store list. They carry a random identifier, no name, email or browsing history, and never a store's address unless you tap "Suggest this store" or "Report a problem". Stop sharing or delete your reports any time from Settings.
 
 Scope and limitations:
 
-This is a small rewards comparison tool, not a full card-benefits catalog or payment service. It does not apply for cards, link a bank, process a payment, or place an order. Issuer eligibility and merchant coding affect actual rewards. Offers, fees, financing, rewards-covered amounts and unsupported categories are excluded. Card terms expire under a maintenance policy; expired terms block comparisons until updated terms are available. Dollar amounts are estimates and may differ from statement rewards; savings totals are estimates based on the last cart amount, before tax and shipping.
+AI Checkout is a rewards comparison tool, not a card-benefits catalog or a payment service. It does not apply for cards, link a bank, process a payment or place an order. U.S. stores and U.S. dollars only. Issuer eligibility and how a purchase posts affect actual rewards; offers, fees, financing and other benefits are not modeled. Dollar amounts are estimates and may differ from your statement. Card terms expire 30 days after they were verified; the extension refreshes them weekly and when you ask, and tells you when they need a refresh. AI Checkout is an independent project and is not affiliated with any card issuer or retailer.
 
-Automatic reading is limited to Best Buy's observed US cart and checkout summary, `secure.newegg.com/shop/cart`, and the Amazon US cart page (`www.amazon.com/gp/cart/view.html` or `/cart`). Authenticated checkout, international sites and mobile layouts are not verified. AI Checkout is an independent project and is not affiliated with the named issuers or retailers.
+Store categories in the extension's store list are derived in part from public purchase-card transaction data published by the State of Oklahoma (Office of Management and Enterprise Services) under CC BY 4.0, by the Government of the District of Columbia and by the U.S. General Services Administration (CC0), pooled and aggregated to per-store category counts; the State of Oklahoma does not endorse this product. Full credits: https://ai-checkout-api.onrender.com/credits/
 
-## Single purpose — dashboard copy
+## Single purpose (dashboard copy)
 
-Show a shopper which of the supported cards they already own earns the most rewards on their cart at a supported US retailer, from the visible cart amount and packaged reward rules.
+Shows which of the credit cards you already own earns the most on the cart or checkout page you are viewing, from the visible cart amount and the reward rules published by the issuers. Every feature serves it: the badge and popup (the answer), the catalog and store-list downloads (the rules and store categories the answer needs), and optional usage reporting (measuring and improving the answer).
 
-## Permission justifications — dashboard copy
+## Permission justifications (dashboard copy)
 
-| Permission | Reason |
+The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts` and checked by `scripts/release-package.mjs`) declares exactly these; nothing else may appear.
+
+| Manifest entry | Justification |
 | --- | --- |
-| `storage` | Save the user's selected card products, their card options and point values, answers to optional membership, status and account questions, optional reward-limit inputs, badge settings, purchase inputs and savings history locally, so the badge, popup and service worker share them. The user can export the savings history and delete all data from the popup. |
-| Host permissions: `https://www.amazon.com/*`, `https://www.bestbuy.com/*`, `https://bestbuy.com/*`, `https://secure.newegg.com/*` | The automatic cart badge. A packaged content script runs only on these sites' cart, checkout and order-confirmation pages (declared match patterns). On cart pages it reads the visible order-summary amount through a bundled, declarative site adapter; on order-confirmation pages it uses the page address only, to ask whether the recommended card paid. Nothing else on these pages is read, and no other site is accessed. Each host comes from a bundled site adapter; adding a retailer requires an extension update. |
-| Host permission: the catalog origin (`https://ai-checkout-api.onrender.com/*`, hosted builds) | Fetch the published card catalog (reward rules, a JSON document validated against a fixed schema) when the user chooses **Check for updated terms**. The request carries no cookies, referrer, cards or purchase data. |
-| `activeTab` | Obtain temporary access to the current tab when the user opens the extension, so a manual cart read can identify a supported merchant and its summary amount. |
-| `scripting` | Run the packaged, bounded summary reader for a manual read requested from the popup, and recheck the same captured document before using its amount. |
-| Web-accessible resource | The badge itself (`src/badge/index.html`), accessible only on the four hosts above, is shown in an isolated frame so the merchant page cannot read card names. |
+| Host permission `https://*/*` | The badge must recognise a cart or checkout page at any store, so a packaged content script runs on https pages (top frame only, after load). On a page whose address and title carry no cart or checkout word it reads nothing from the page and observes none of its content (it only re-checks the address after a same-document navigation). On a cart or checkout page it reads the visible order-summary amount and its currency and sends only the amount, its kind, the currency and a reader version to the extension's own service worker; never item names, addresses, form values, card numbers or page text, and nothing to any server. The store is matched on the device against the downloaded store list, so no server learns which sites are visited. The same access lets the service worker read the tab's address in memory to match the store and, only when the shopper taps Suggest this store or Report a problem, derive the registrable domain that tap sends. |
+| Host permission `https://ai-checkout-api.onrender.com/*` | Download the published card terms (`/v1/catalog`) and the store list (`/v1/merchants`): schema-validated JSON data, never code, fetched at install, weekly and on "Check for updated terms". After the shopper opts in, send usage reports to `/v1/events` and deletion requests to `/v1/events/delete` on the same origin. Requests carry no cookies, referrer or credentials. |
+| `storage` | Keep the shopper's chosen cards and options, settings, purchase inputs, the downloaded card terms and store list, and the usage-report consent and queue in `chrome.storage.local`, and per-tab badge state in `chrome.storage.session`, on the device. |
+| `activeTab` | When the shopper opens the popup or chooses "Read cart amount", read the current tab's cart total once with the same packaged reader, and match the tab's store. The `https://*/*` host permission covers https tabs; `activeTab` is what lets the shopper read an http:// cart with "Read cart amount" (a click in the popup), where the badge never runs and no host permission is requested. Nothing is read from a tab the shopper has not opened the popup on. |
+| `scripting` | Inject the packaged cart reader (`src/checkout/content.js`) into the active tab for that one read (`chrome.scripting.executeScript` with a packaged file; no remote or generated code). |
+| `alarms` | The weekly refresh of card terms and the store list (with one retry when it fails) and the 15-minute batching of usage reports while any wait. No install warning. |
+| Content script `src/badge/content.js` on `https://*/*` (`document_idle`, top frame only) | The automatic badge described under the `https://*/*` host permission. |
+| Web-accessible resource `src/badge/index.html` on `https://*/*` | The badge is an extension page shown in an isolated frame inside a closed shadow root, so the store's page cannot read card names or amounts. It is the only web-accessible file. |
 
-Remote code declaration for the inspected build: **No**. Reward calculations, site adapters, extraction and UI code are packaged in the extension. The catalog supplies schema-validated values, not executable scripts. Reinspect the actual upload artifact before certifying this.
+## Remote code
 
-## Data-use declarations — maintainer worksheet
+**No.** All code (the rewards engine, the cart reader, the badge and popup) is packaged in the extension. The card catalog and the store list are JSON data validated against fixed schemas before use; no script, stylesheet or WebAssembly is fetched or evaluated. `grep -rn "eval(\|new Function" extension/src` returns nothing, and neither does a grep of the built `extension/dist` bundles for `eval(`, `new Function(`, `importScripts` or `WebAssembly` (15.5 review, 2026-10-19); the 15.7 reviewer confirms this on the upload ZIP.
 
-Do not select “no user data” simply because processing is local. The following is a conservative mapping to check against the dashboard's current definitions, not a claim that a dashboard was submitted:
+## Privacy practices tab
 
-| Data category | Current behavior to disclose |
-| --- | --- |
-| Financial/payment information | Selected card products and their options, answers to optional membership, status and account questions (for example a Prime or Sam's Club membership, a bank relationship or balance tier, or when an account was opened), optional reported annual spend and point values, purchase and cart amounts, reward estimates/conditions and the local savings history (which card the user says paid); no card numbers, bank accounts or payment credentials. |
-| Website content | Automatic reading of the visible order-summary amount on the supported carts (and user-requested reads); no product names, addresses or payment fields. |
-| Web history/browsing activity | On the supported sites, page addresses are matched against cart and order-confirmation patterns in memory; for a manual read a page-identity hash and tab/document identifiers are saved. No browsing history list is requested or built. |
-| Personally identifying/authentication data | No shopper sign-in, email, name, address or token is requested by the extension. Contact sent separately to support and administrator login are distinct services. |
-| Health, communications, location, activity tracking | No corresponding feature or collection. The catalog request reaches the API host, whose access logs record IP address, user agent and time (see the privacy policy). |
+**Does the extension collect or use user data?** Yes.
 
-Certify restricted data use only after the final artifact and service practices match: no sale, no unrelated use/transfer and no creditworthiness/lending use. The extension has no ads, analytics events, tracking pixels or affiliate-link feature. Do not generalize that fact into a promise about an unconfigured website or hosting provider.
+| Dashboard category | Answer | What to disclose |
+| --- | --- | --- |
+| Personally identifiable information | No | No name, address, email, age or identification number. A random identifier is created only when the shopper chooses Share and is explained in the policy. |
+| Health information | No | |
+| Financial and payment information | **Yes** | After opt-in: cart amounts read on cart and checkout pages (exact, in cents, never with a store or domain) and the card products the shopper owns, as catalog identifiers. Never card numbers, security codes, bank accounts or balances. |
+| Authentication information | No | |
+| Personal communications | No | |
+| Location | No | No GPS, IP-derived or address data is collected by the extension (the service's host logs IP addresses as any web host does; the policy says so). |
+| Web history | No | No list of visited pages is read or built. A page's address is checked in memory for a cart word and never stored or sent; a store's domain is sent only when the shopper taps Suggest this store or Report a problem. |
+| User activity | **Yes** | After opt-in: the badge shown, expanded or dismissed, the popup opened, a site switched off, an amount typed (as a range), refresh outcomes and error codes. No keystrokes, mouse positions or scrolling. |
+| Website content | **Yes** | The cart total and its currency read on a cart or checkout page (shown to the shopper; sent only after opt-in and only as the amount), and a store's domain when the shopper taps Suggest this store or Report a problem. |
 
-Chrome requires a narrow purpose, permission explanations and consistent privacy declarations. [Privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy). Local handling still requires disclosure. [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq).
+**Certifications (all three ticked):** I do not sell or transfer user data to third parties, outside of the approved use cases. I do not use or transfer user data for purposes that are unrelated to my item's single purpose. I do not use or transfer user data to determine creditworthiness or for lending purposes.
 
-## Prepared assets
+**Privacy policy URL:** `https://ai-checkout-api.onrender.com/privacy/`. The policy contains the Limited Use statement ("AI Checkout's use and transfer of information received from users adheres to the Chrome Web Store User Data Policy, including the Limited Use requirements").
 
-The [local gallery](assets/index.html) and [asset record](assets/README.md) contain six 640×400 screenshots covering card search and the wallet, a confirmed comparison, unknown cap usage, a controlled Newegg subtotal, locked inputs and the automatic cart badge on a neutral sample cart. Each pairs explanatory copy with an actual extension UI detail at its original scale. Sample inputs and the crop are labeled; these are not earned rewards or live-retailer evidence.
+Consistency rule for the reviewer pass: the consent screen (`extension/src/state/telemetry-contracts.ts:CONSENT_COPY`), the Settings copy, the policy, this tab and the generated dictionary (`docs/telemetry/events.md`, `npm run telemetry:check`) must describe the same data. A build without `VITE_TELEMETRY` has no consent screen and sends nothing; if Chrome review objects to usage reporting, Release A is resubmitted from that build with "User activity" and the financial-data answer reduced to the on-device handling and the policy amended ([decision](../../wiki/decisions/2026-10-19-release-a-telemetry-design.md)).
 
-The 440×280 promotional PNG and shared cart icon are also prepared. The 128×128 icon contains 96×96 artwork with 16px transparent padding; the 16px, 48px and 128px exports were inspected on light and dark backgrounds. Image formats, dimensions, source hashes and the current ZIP association pass local checks. An independent subagent visual review of the October 3, 2026 media (agent-verified, not human-reviewed) found screenshots 2 and 4 cut a line or control at the 400px crop edge and alt text describing content outside the crop; the captures now scroll the popup so no line or control is cut, and the alt text describes only what is visible. After those fixes the review found no remaining material issue; no human has reviewed the media yet. The promotional image and icons still use the earlier action blue pending the owner's brand decision.
+## Test instructions (dashboard field)
 
-Dimensions and required assets were checked against [Chrome's image guidance](https://developer.chrome.com/docs/webstore/images). These assets have not been submitted or approved by Google. Regenerate and recheck them if the upload artifact, terms or product scope changes; no optional marquee was produced.
+Paste the short version from [reviewer-instructions.md](reviewer-instructions.md#short-version-for-the-dashboard). No login, payment or account is needed.
+
+## Assets
+
+Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), screenshots at 1280×800 and the 440×280 promo tile are regenerated against the 2.1.0 ZIP in milestone 15.6 and recorded in [assets/README.md](assets/README.md). The assets committed today were made for 2.0.0 and show the retired three-store flow; they must not be uploaded.
+
+References checked 2026-10-20: [privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), [Limited Use](https://developer.chrome.com/docs/webstore/program-policies/limited-use), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard's wording at submission.

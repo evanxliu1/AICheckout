@@ -37,10 +37,10 @@ Turning pages of issuer terms into structured reward rules is extraction, which 
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/readme/architecture-dark.svg" />
-  <img src="docs/readme/architecture-light.svg" width="100%" alt="Architecture. At checkout, in the browser: a supported cart is read for its order-summary amount, the deterministic rewards engine ranks the cards in your wallet, and the badge and popup show the result; no model runs. On the maintainer side: issuer terms are captured, an LLM extracts rules into a strict schema, quotes are matched against the page and misses are flagged, agents verify and a person signs off, and an immutable catalog release is published. The catalog is bundled with the extension, with an optional refresh from GET /v1/catalog." />
+  <img src="docs/readme/architecture-light.svg" width="100%" alt="Architecture. At checkout, in the browser: a cart or checkout page at any store is read for its order-summary amount, the deterministic rewards engine ranks the cards in your wallet, and the badge and popup show the result; no model runs. On the maintainer side: issuer terms are captured, an LLM extracts rules into a strict schema, quotes are matched against the page and misses are flagged, agents verify and a person signs off, and an immutable catalog release is published. The catalog is bundled with the extension, with an optional refresh from GET /v1/catalog." />
 </picture>
 
-On a supported cart (Amazon, Best Buy and Newegg in the US), a badge shows the best card without a click, for example "Use Blue Cash Everyday · $3.00 back". The popup ranks every card you own for that purchase and names any condition it can't check. The 178-card catalog is bundled. Hosted builds can also check `/v1/catalog` for a newer release when you ask; that is the only network request, and it never sends cart or wallet data.
+On the cart or checkout page of any https store in the US, a badge shows the best card without a click, for example "Use Blue Cash Everyday · $3.00 back", or ranks your cards by rate when the cart amount can't be read with certainty. One generic cart reader serves every store (no per-site code); a merchant release names more than 600 U.S. stores with their bonus category and is matched on the device. The popup ranks every card you own for any purchase and names any condition it can't check. The 178-card catalog and the store list are bundled; hosted builds refresh both from `/v1/catalog` and `/v1/merchants` at install and weekly, and send usage reports only after the shopper opts in ([what they contain](docs/telemetry/events.md); never a store's address, except on a "Suggest this store" or "Report a problem" tap).
 
 ### The curation pipeline
 
@@ -73,7 +73,7 @@ Extraction on real issuer terms for seven cards, scored field by field against a
 
 | Area | Highlights |
 | --- | --- |
-| [Extension](extension/README.md) | React + TypeScript on Manifest V3; minimal permissions; site adapters that read only the order-summary amount, never the items; an optional passphrase lock; state that survives popup closure and worker shutdown |
+| [Extension](extension/README.md) | React + TypeScript on Manifest V3; a generic cart reader that shows an amount only when certain and reads only the order summary, never the items; the store list matched on the device; consented usage reporting with Stop sharing and Delete my data; an optional passphrase lock; state that survives popup closure and worker shutdown |
 | [Rewards engine](packages/rewards-core) | Pure, deterministic ranking over a Zod-validated catalog: caps, rotating and merchant rules, points valued in cash where a value is published, issuer-stated or set by you, ranges for unknowns |
 | [LLM harness](apps/api/src/curation/README.md) | Versioned prompt, context and schema; `known` / `unknown` / `conflicting` states; citation span validation; injection handling; budgets with atomic reservations; once-only runs; a private trace ledger |
 | [Evaluation](evals/curation/README.md) | Offline scorer and trace replay: field accuracy, rule precision and recall, unsupported claims, evidence validity, false "clear" verdicts, cost and latency |
@@ -82,14 +82,15 @@ Extraction on real issuer terms for seven cards, scored field by field against a
 | Testing | About 1,200 unit, component and script tests; Playwright against the packaged extension, review app and site with axe accessibility checks; SQL policy and concurrency tests; CI for both stacks |
 
 ```
-extension/                Chrome extension: popup, service worker, cart badge, site adapters
+extension/                Chrome extension: popup, service worker, cart badge, usage reporting
 packages/rewards-core/    Deterministic rewards engine and catalog schema
-packages/catalog-client/  Bounded catalog fetch used by the extension
+packages/catalog-client/  Bounded catalog, merchant and event requests used by the extension
+packages/cart-reader/     Generic cart detector and reader (any store, amounts only when certain)
 packages/catalog-review/  Shared curation and review contracts
 packages/ui/              React components on the Ocean theme
 apps/api/                 Fastify API; the curation harness is in src/curation/
 apps/review/              Review app
-apps/site/                Public site: overview, results, architecture, privacy, support
+apps/site/                Public site: overview, results, architecture, privacy, support, credits
 tools/catalog-pipeline/   Agent-driven card-expansion pipeline CLI
 evals/curation/           Evaluation corpora and scorer docs
 supabase/                 Migrations, seed, SQL tests
@@ -113,10 +114,10 @@ Then open `chrome://extensions`, turn on Developer mode, and load `extension/dis
 
 | | |
 | --- | --- |
-| **Working** | The extension on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points |
+| **Working** | The extension at any https store on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points, and a merchant release of more than 600 named U.S. stores |
 | **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 3, the renewed 178-card catalog, was published 2026-10-05 and expires 2026-11-04 |
 | **Latest** | Catalog freshness: every source was hash-checked on 2026-10-05, 107 cards were re-verified, and the renewed 178-card catalog was published as release 3 on 2026-10-05 ([freshness results](docs/evals/freshness-2026-10.md)) |
-| **Next** | More checkout sites through a merchant pipeline, then a Chrome Web Store release. See the [roadmap](wiki/product/roadmap.md) |
+| **Next** | The Chrome Web Store release (Release A, version 2.1.0): release docs and public pages done, store assets and the submission pending; the install link appears on the [site](https://ai-checkout-api.onrender.com/) once the listing exists. See the [roadmap](wiki/product/roadmap.md) |
 
 ## License
 
@@ -125,3 +126,5 @@ Then open `chrome://extensions`, turn on Developer mode, and load `extension/dis
 ## Credits
 
 `packages/ui` implements components to the specs of [Helios](https://helios.hashicorp.design), HashiCorp's design system, using its design tokens (`@hashicorp/design-system-tokens`) and [Flight icons](https://helios.hashicorp.design/icons/library) (`@hashicorp/flight-icons`), both MPL-2.0, restyled with AI Checkout's own Ocean theme. Fonts: Figtree and Bricolage Grotesque from Fontsource (`@fontsource-variable/*`), SIL Open Font License 1.1. AI Checkout is not affiliated with or endorsed by HashiCorp.
+
+Store categories in the merchant release are derived in part from public purchase-card transaction data: the State of Oklahoma's Purchase Card datasets (Office of Management and Enterprise Services, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the State of Oklahoma does not endorse this product), the Government of the District of Columbia's Purchase Card Transactions and the U.S. General Services Administration's purchase-card transactions (both CC0), pooled, matched to stores by merchant descriptor and aggregated to per-store category counts; merchant category codes are mapped through the Visa Merchant Data Standards Manual, referenced not reproduced. Points valuations are published estimates from NerdWallet where no issuer value exists. Full notice: [`evals/merchants/db/mcc/NOTICE.md`](evals/merchants/db/mcc/NOTICE.md) and the site's [credits page](https://ai-checkout-api.onrender.com/credits/).

@@ -45,6 +45,8 @@
     "merchants:check": "node scripts/build-merchants-v1.mjs --check",
     "telemetry": "node scripts/build-telemetry-dictionary.mjs",
     "telemetry:check": "node scripts/build-telemetry-dictionary.mjs --check",
+    "release:docs:check": "node scripts/check-release-docs.mjs",
+    "release:docs:check:release": "node scripts/check-release-docs.mjs --release",
     "pipeline": "node tools/catalog-pipeline/src/cli.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

@@ -322,15 +322,21 @@ function PanelBody({
               Thanks. This store’s domain was sent so it can be added.
             </p>
           ) : (
-            <Button
-              size="small"
-              color="tertiary"
-              icon="plus"
-              disabled={busy}
-              onClick={() => void apply({ type: 'badge:suggest-store' })}
-            >
-              Store not recognised? Suggest it
-            </Button>
+            <>
+              <p className="supporting" id="badge-suggest-note">
+                A tap sends only this store’s domain (for example example.com) so it can be added.
+              </p>
+              <Button
+                size="small"
+                color="tertiary"
+                icon="plus"
+                disabled={busy}
+                aria-describedby="badge-suggest-note"
+                onClick={() => void apply({ type: 'badge:suggest-store' })}
+              >
+                Store not recognised? Suggest it
+              </Button>
+            </>
           ))}
       </>
     );

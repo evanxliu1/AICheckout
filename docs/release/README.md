@@ -1,54 +1,59 @@
 # Release preparation
 
-Updated October 1, 2026 for extension 2.0.0 (Helios popup) and catalog `2026-09-29.real.1` (seven cards; Best Buy, Newegg and Amazon US). Since October 3, 2026 the extension bundles catalog `2026-10-02.expansion.1` (178 cards, same three merchants, expires November 1, 2026); screenshots and the shopper and full-stack recordings were regenerated on October 3, 2026 in the Ocean theme with card search, and the store copy states the 178-card scope. These are reviewable drafts and operating instructions, **not evidence of submission or deployment**. See the [design doc](../design.md) for architecture and roadmap.
+The Chrome Web Store material for AI Checkout **2.1.0** (Release A, [plan](../../wiki/product/phase-15-release-a.md)): what Evan submits, what the public pages say, how reviewers test it, and the record of what was submitted. Rewritten 2026-10-20 for the extension on `main` after Phase 15.1–15.4: the badge at any https store through the generic cart reader (the three site adapters, order detection and the savings history are gone), the store list matched on the device, card terms and the store list refreshed at install and weekly, and optional usage reporting behind one consent question. These are drafts until the release record below says otherwise; nothing here is evidence of submission or approval.
 
 ## Contents
 
-- [Store listing and dashboard declarations](store-listing.md)
-- [Public privacy-policy draft](privacy-policy.md)
-- [Public support-page draft](support.md)
-- [Reviewer and tester instructions](reviewer-instructions.md)
-- [Data-handling audit and release decisions](privacy-review.md)
-- [Deployment, maintenance and recovery](deployment-runbook.md)
-- [Portfolio demonstration and honest claims](portfolio-demo.md)
-- [Store images, offline shopper video and reproducible media evidence](assets/README.md)
-- [Full-stack review recording, transcript and cleanup evidence](assets/full-stack-demo.md)
+| File | What it is |
+| --- | --- |
+| [store-listing.md](store-listing.md) | Every dashboard field: listing copy, single purpose, permission justifications, remote-code answer, privacy-tab answers, the CC BY attribution sentence |
+| [privacy-policy.md](privacy-policy.md) | The policy published at `/privacy/` (the site page in `apps/site/src/pages.tsx` renders the same text) |
+| [support.md](support.md) | The support page published at `/support/` |
+| [reviewer-instructions.md](reviewer-instructions.md) | The dashboard's test instructions and the manual tester script |
+| [assets/README.md](assets/README.md) | Store images and media; regenerated against the 2.1.0 ZIP in milestone 15.6 (the committed media still show 2.0.0) |
+| [privacy-review.md](privacy-review.md), [deployment-runbook.md](deployment-runbook.md), [publish-runbook.md](publish-runbook.md), [portfolio-demo.md](portfolio-demo.md) | Dated internal records from the 2.0.0 preparation (September and early October 2026); superseded where they describe the retired per-store adapters or a build with no network requests, kept for history |
 
-The public drafts describe the **default build without a remote catalog endpoint**. They must be revised and checked against the final artifact if hosted catalog updates are enabled. Neither a successful build nor filling in placeholders satisfies the engineering release gates.
+Behaviour is documented from the code; the development record is the wiki ([extension](../../wiki/system/extension.md), [cart badge](../../wiki/system/cart-badge.md), [public site](../../wiki/system/public-site.md)). The public pages are served by the API from `apps/site/dist` ([site README](../../apps/site/README.md)); `/privacy/`, `/support/`, `/credits/` and `/uninstalled/` must load over HTTPS without authentication before submission.
 
-## Inputs still needed from the owner
+## Inputs from Evan
 
-| Input | Used for | Current state |
+| Input | Used for | State |
 | --- | --- | --- |
-| Public publisher name | Listing, privacy-policy operator | `[[PUBLISHER_NAME]]` |
-| Public support email | Support and privacy requests | `[[SUPPORT_EMAIL]]` |
-| Public HTTPS privacy URL | Store privacy field | `[[PRIVACY_URL]]` |
-| Public HTTPS support URL | Store support field | `[[SUPPORT_URL]]` |
-| Final effective date | Published privacy policy | `[[EFFECTIVE_DATE]]` |
-| Publisher account/verification | Dashboard and submission | Not verified; no fee paid by the agent |
-| Hosting origin and provider | API/review and public pages | Not selected/configured; no service spending authorized |
-| Model account, dated snapshot and budget | Live LLM evaluation | Budget remains $0; no live call authorized |
+| Publisher name | Listing, policy operator line | **Evan Liu** (assumed; Evan to confirm) |
+| Support email | Listing support email, policy contact, support page | **`SUPPORT_EMAIL_TBD`** in every file; `node scripts/check-release-docs.mjs --release` fails while it remains |
+| Trader or non-trader declaration | Dashboard | **Non-trader** recommended; Evan to confirm (a legal statement about him) |
+| Developer account, fee, two-step verification | Dashboard | Evan only |
+| `EXTENSION_IDS` on Render | The API's `Origin` filter on `/v1/events` | Set after the first draft upload shows the extension id ([plan, section 6](../../wiki/product/phase-15-release-a.md#6-web-store-submission-checklist)) |
+| GitHub private vulnerability reporting enabled | `SECURITY.md` and the support page point to it | Evan to check |
 
-Do not put passwords, payment details, provider keys, tokens or private contact details in these files. Only the owner can supply public identity/contact choices. Placeholder removal is a content task, not consent to spend or publish.
+Never put passwords, payment details, provider keys, tokens or private contact details in these files.
 
-## Before public submission
+## Gates before submission (milestone 15.7)
 
-- [x] Implement and locally verify passphrase-protected storage, migration, explicit pre-use disclosure, lock and confirmed deletion; update the policy draft. [Design and evidence](../verification/local-protection.md).
-- [ ] Close remaining public-link, operating-practice and final-artifact findings in [privacy review](privacy-review.md). Local verification is not store approval.
-- [ ] Run both declared merchant flows in normal Chrome using the final artifact. Complete Best Buy's combined native/live check; Newegg's current combined evidence is one anonymous desktop cart.
-- [ ] Record a small independent tester pass, including failures and fixes.
-- [ ] Verify clean remote application/database CI on the intended revision. Local checks do not prove remote CI.
-- [ ] Deploy and verify the API/review stack, catalog maintenance path, HTTPS/proxy behavior, scoped roles, backup/recovery and logs. A disabled curation adapter is the starting configuration.
-- [ ] Independently review representative evaluation labels and run the explicitly funded live model evaluation; report failures and cost. This is a portfolio goal, not a Chrome requirement.
-- [x] Record the actual local shopper and full-stack review flows with sample/model-simulation labels, reproducible commands and artifact evidence. These do not replace hosted or live-model evidence.
-- [ ] Reverify terms near release and publish through human review. Do not extend the existing November 1 UTC expiry just to keep a demo running.
-- [ ] Fill public identity/contact fields; publish the actual privacy/support pages and verify they load without authentication.
-- [x] Produce five actual-popup screenshots and the required small promotional image; verify icon artwork, padding and light/dark contrast. [Local gallery and evidence](assets/README.md). These are bound to the current development ZIP and require rechecking against the eventual upload artifact.
-- [ ] Match permissions, privacy declarations, merchant/card scope, listing copy and screenshots to the exact upload ZIP and inventory hash.
-- [ ] Confirm publisher registration/verification, distribution settings and dashboard declarations, then submit only the reviewed artifact. Google decides approval.
+- [ ] `npm run build:hosted --workspace=ai-checkout-extension`, `npm run package`, `npm run test:package:browser --workspace=ai-checkout-extension` on the exact ZIP; the inventory's SHA-256, bundled catalog (the renewal, `2026-10-2x.renewal.2`) and bundled store list recorded in [`docs/verification/release-package.md`](../verification/release-package.md).
+- [ ] `node scripts/check-release-docs.mjs --release`: no wording from before the adapters were retired, the random-identifier wording everywhere (never a claim that reports cannot be linked), no support-email placeholder and none of Evan's pending confirmations left (the rules are in `scripts/lib/release-docs.mjs`; this line is worded so it does not trip them itself).
+- [ ] `npm run telemetry:check`: the dictionary matches the contract; the consent copy covers every event (`extension/tests/telemetry-ui.test.tsx`).
+- [ ] The independent reviewer pass (Opus, agent-verified): policy, listing, privacy-tab answers, consent copy, dictionary and the ZIP's behaviour agree; the remote-code answer holds on the ZIP; the permission justifications match `dist/manifest.json`.
+- [ ] Both GitHub workflows green on the submitted revision.
+- [ ] Catalog release 4 published before 2026-11-04T00:00Z and bundled in the ZIP ([renewal](../../wiki/ops/catalog-release.md#renewing-a-catalog-before-it-expires)).
+- [ ] Store assets regenerated against the 2.1.0 ZIP (15.6) and matching the listing copy.
+- [ ] `/privacy/`, `/support/`, `/credits/`, `/uninstalled/` load on the deployed site.
+- [ ] Upload as a draft first, set `EXTENSION_IDS`, then submit (Evan).
 
 ## Release record
 
-Create a dated record with the source revision, clean CI run URLs, archive SHA-256/inventory, catalog version/source dates/expiry, API/review deployment identifiers, installed Chrome version/OS, merchant and tester evidence, public document URLs/effective date, final listing text/assets, and submission outcome. Do not fill an evidence field with an intended action. Keep prior artifact hashes and published catalogs immutable.
+One entry per submission, appended here, filled only with what happened (an intended action is not evidence).
 
-Official requirements checked September 26: [publishing preparation](https://developer.chrome.com/docs/webstore/prepare), [publisher registration](https://developer.chrome.com/docs/webstore/register), [privacy dashboard](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard at submission.
+```markdown
+### 2.1.0 — submitted YYYY-MM-DD
+
+- Source revision: `<sha>` on `main`; CI runs: <extension workflow URL>, <database workflow URL>
+- ZIP: `ai-checkout-2.1.0.zip`, SHA-256 `<hash>` (inventory `<path>`); bundled catalog `<version>` (expires <date>), store list `<version>`
+- Hosted: `/v1/catalog` serves `<version>`; `/v1/merchants` serves `<version>`; `EXTENSION_IDS` set to `<id>`
+- Tested in Chrome <version> on <OS>, <date>; tester pass: <link or "none">
+- Listing text: store-listing.md at `<sha>`; assets: assets/README.md at `<sha>`
+- Public pages: /privacy/ (last updated <date>), /support/, /credits/, /uninstalled/ checked <date>
+- Outcome: <pending | published <date> | rejected <date>: reason, fix, plan amendment>
+```
+
+Keep earlier hashes and published catalogs immutable. Official requirements last checked 2026-10-20: [publishing preparation](https://developer.chrome.com/docs/webstore/prepare), [publisher registration](https://developer.chrome.com/docs/webstore/register), [privacy dashboard](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [images](https://developer.chrome.com/docs/webstore/images), [2026 policy update](https://developer.chrome.com/blog/cws-policy-updates-2026). Recheck the dashboard at submission.

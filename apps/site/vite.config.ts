@@ -14,6 +14,8 @@ const PAGES = {
   'architecture/index.html': 'architecture',
   'privacy/index.html': 'privacy',
   'support/index.html': 'support',
+  'credits/index.html': 'credits',
+  'uninstalled/index.html': 'uninstalled',
 } as const;
 /** Published path → source file in the repository. */
 export const COPIED: Record<string, string> = {

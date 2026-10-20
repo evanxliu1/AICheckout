@@ -20,6 +20,7 @@ import {
   Card,
   Checkbox,
   Field,
+  Link,
   Select,
   TextInput,
 } from '@ai-checkout/ui';
@@ -31,7 +32,14 @@ import type { Comparison, Eligibility, PaymentPathV3, Wallet } from '../domain';
 import { RATES_READ_MESSAGES, READ_COPY } from '../checkout/read-copy';
 import { checkoutRequest } from '../state/client';
 import type { CheckoutResponse } from '../state/contracts';
-import { localDate, CART_MAX_AGE_MS, RESULT_MAX_AGE_MS, STATE_KEY, TELEMETRY_ENABLED } from '../state/keys';
+import {
+  localDate,
+  CART_MAX_AGE_MS,
+  CREDITS_URL,
+  RESULT_MAX_AGE_MS,
+  STATE_KEY,
+  TELEMETRY_ENABLED,
+} from '../state/keys';
 import { emptyState } from '../state/contracts';
 import {
   merchantName,
@@ -860,6 +868,14 @@ export default function Popup({
             {TELEMETRY_ENABLED && <ReportProblem tabId={tab && tab.kind !== 'processor' ? tab.id : null} />}
             <DataProtectionDetails protection={protection} />
             <DeleteSavedData busy={busy} onDelete={() => (onDelete ? onDelete() : void clear())} />
+            {CREDITS_URL && (
+              <p>
+                About AI Checkout:{' '}
+                <Link href={CREDITS_URL} isExternal>
+                  credits and data sources
+                </Link>
+              </p>
+            )}
           </footer>
         </div>
       </main>
