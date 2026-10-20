@@ -10,7 +10,7 @@ The Chrome Web Store material for AI Checkout **2.1.0** (Release A, [plan](../..
 | [privacy-policy.md](privacy-policy.md) | The policy published at `/privacy/` (the site page in `apps/site/src/pages.tsx` renders the same text) |
 | [support.md](support.md) | The support page published at `/support/` |
 | [reviewer-instructions.md](reviewer-instructions.md) | The dashboard's test instructions and the manual tester script |
-| [assets/README.md](assets/README.md) | Store images and media; regenerated against the 2.1.0 ZIP in milestone 15.6 (the committed media still show 2.0.0) |
+| [assets/README.md](assets/README.md) | Store images and media, regenerated 2026-10-20 (milestone 15.6) against the 2.1.0 hosted-build ZIP whose hash it records |
 | [privacy-review.md](privacy-review.md), [deployment-runbook.md](deployment-runbook.md), [publish-runbook.md](publish-runbook.md), [portfolio-demo.md](portfolio-demo.md) | Dated internal records from the 2.0.0 preparation (September and early October 2026); superseded where they describe the retired per-store adapters or a build with no network requests, kept for history |
 
 Behaviour is documented from the code; the development record is the wiki ([extension](../../wiki/system/extension.md), [cart badge](../../wiki/system/cart-badge.md), [public site](../../wiki/system/public-site.md)). The public pages are served by the API from `apps/site/dist` ([site README](../../apps/site/README.md)); `/privacy/`, `/support/`, `/credits/` and `/uninstalled/` must load over HTTPS without authentication before submission.
@@ -36,7 +36,7 @@ Never put passwords, payment details, provider keys, tokens or private contact d
 - [ ] The independent reviewer pass (Opus, agent-verified): policy, listing, privacy-tab answers, consent copy, dictionary and the ZIP's behaviour agree; the remote-code answer holds on the ZIP; the permission justifications match `dist/manifest.json`.
 - [ ] Both GitHub workflows green on the submitted revision.
 - [ ] Catalog release 4 published before 2026-11-04T00:00Z and bundled in the ZIP ([renewal](../../wiki/ops/catalog-release.md#renewing-a-catalog-before-it-expires)).
-- [ ] Store assets regenerated against the 2.1.0 ZIP (15.6) and matching the listing copy.
+- [ ] Store assets regenerated against the submitted ZIP (`npm run release:media` after the renewal is bundled; the hash in `assets/README.md` must match the release record) and matching the listing copy.
 - [ ] `/privacy/`, `/support/`, `/credits/`, `/uninstalled/` load on the deployed site.
 - [ ] Upload as a draft first, set `EXTENSION_IDS`, then submit (Evan).
 

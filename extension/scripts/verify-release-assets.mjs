@@ -28,7 +28,9 @@ for (const entry of inventory.files)
     hash(readFileSync(resolve(root, 'extension/dist', entry.path))) === entry.sha256,
     `Build changed: ${entry.path}`,
   );
-assert(manifest.frames.length === 6, 'Expected six store screenshots');
+assert(manifest.frames.length === 5, 'Expected five store screenshots');
+for (const frame of manifest.frames)
+  assert(frame.width === 1280 && frame.height === 800, `Store screenshots are 1280×800: ${frame.file}`);
 for (const item of [...manifest.frames, manifest.promotional]) {
   const data = readFileSync(resolve(assets, item.file));
   assert(hash(data) === item.sha256, `Changed image: ${item.file}`);
@@ -111,7 +113,11 @@ try {
       time: video.currentTime,
     };
   });
-  assert(playback.width === 960 && playback.height === 720 && playback.time > 0, 'MP4 cannot play');
+  const composed = manifest.recording.composed;
+  assert(
+    playback.width === composed.width && playback.height === composed.height && playback.time > 0,
+    'MP4 cannot play',
+  );
   assert(
     Math.abs(playback.duration - manifest.recording.composed.durationSeconds) < 0.2,
     'Video duration changed',
@@ -130,7 +136,8 @@ try {
     'Caption cues missing',
   );
   assert(errors.length === 0, `Gallery page errors: ${errors.join(', ')}`);
-  for (const second of [1, 14, 25, 35])
+  // Four stills across the recording for inspection.
+  for (const second of [0.25, 0.5, 0.75, 0.95].map((at) => Math.floor(at * composed.durationSeconds)))
     execFileSync('ffmpeg', [
       '-hide_banner',
       '-loglevel',
@@ -151,7 +158,7 @@ try {
         verifiedAt: new Date().toISOString(),
         browser: browser.version(),
         artifactSha256: inventory.sha256,
-        screenshots: 'Six opaque RGB PNGs, 640×400; source hashes match native captures.',
+        screenshots: 'Five opaque RGB PNGs, 1280×800; source hashes match the captures.',
         promotion: 'Opaque RGB PNG, 440×280.',
         gallery: { widths: [1280, 390], horizontalOverflow: false, pageErrors: errors },
         video: { ...playback, captionCues: cues },

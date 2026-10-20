@@ -98,6 +98,6 @@ Paste the short version from [reviewer-instructions.md](reviewer-instructions.md
 
 ## Assets
 
-Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), screenshots at 1280×800 and the 440×280 promo tile are regenerated against the 2.1.0 ZIP in milestone 15.6 and recorded in [assets/README.md](assets/README.md). The assets committed today were made for 2.0.0 and show the retired three-store flow; they must not be uploaded.
+Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), five screenshots at 1280×800 and the 440×280 promo tile, regenerated on 2026-10-20 (milestone 15.6) against the 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. No marquee and no YouTube video. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload.
 
 References checked 2026-10-20: [privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), [Limited Use](https://developer.chrome.com/docs/webstore/program-policies/limited-use), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard's wording at submission.
