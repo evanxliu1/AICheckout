@@ -54,5 +54,13 @@ As in the table.
 - 15.3 sends `{ events }` batches of at most 50 events and 64 KiB, treats 410 as a 7-day pause, 429 as "try at the next flush", and posts `{ install_id }` to `/v1/events/delete`.
 - Found while testing: the shared local Supabase stack was still running PostgREST v14.5 from an older CLI, where a `40001` raise spins for 60 seconds (Kong 504; `db:test:http` failed on `main` too). Recreating the stack (`supabase stop`, `db:start:api`) brought the pinned v16.3 and the suite passed ([database migrations](../ops/database-migrations.md#gotchas)).
 
+## Amended after the independent review (2026-10-20)
+The Opus reviewer changed four rows; the rest stand.
+- **Events without an install id** and minted ids: the per-install cap bounds honest clients only, since any caller can send a fresh `install_id` per batch, and the per-IP bucket alone allowed about 3,000 rows a minute from one address into the free-tier database that also serves the catalog. Added `telemetry.days`, a global cap of 20,000 stored events per UTC day (`TELEMETRY_LIMITS.globalDay`), tap events without an id included; its row is locked for the whole call, so calls serialise and take the `install_days` locks in one order (two batches naming the same installs in opposite orders could otherwise deadlock).
+- **Validation cost:** one `jsonb_matches_schema` per event, plus the table CHECK running it again per row, held a 50-event batch for about 1 s locally (the thirteen-branch schema is compiled per call). `valid_batch_v1` matches the batch once as an array (about 15 ms); the CHECK on `telemetry.events` is now an object of at most 8 KiB, since `ingest_events` is the only writer.
+- **Retention:** pruning ran on ingest only, so while `TELEMETRY_INGEST=off` (the kill switch returns 410 before any database call) rows could outlive 90 days, and `store_suggestions` read every row. Both reviewer reads and `delete_install` now prune, and both reads see only the last 90 days, as the 2026-10-19 decision allowed ("a reviewer RPC can also prune"); `install_days` gained an index on `day` so its pruning is not a scan on every call.
+- **`client_at` parity:** PostgreSQL's cast accepts `24:00:00` and a leap second that Zod refuses, and refuses year `0000` that Zod accepts (a batch Zod passed would have been refused whole). Both now require a year 20xx, hours 00–23 and seconds 00–59; seven parity cases added (103 in all).
+- **Delete my data** has its own global bucket, so an ingest flood cannot starve it. The byte-cap refusal has its own message (`Event batch is too large`) so the pgTAP test proves that check rather than the schema.
+
 ## Status
-Accepted 2026-10-20 (implementer, within the plan and the 2026-10-19 decision; agent-verified by tests).
+Accepted 2026-10-20 (implementer, within the plan and the 2026-10-19 decision; agent-verified by tests). Amended 2026-10-20 after the independent Opus review (agent-verified).

@@ -67,7 +67,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 | Catalog read timeout | 7 s (`AbortSignal.timeout`) |
 | Catalog read cap | 2 MiB for the Data API row (`MAX_CATALOG_READ_BYTES`; JSONB text adds spaces); the catalog itself ≤ 1 MiB for v3 |
 | Merchants read cap | 4 MiB for the Data API row (`MAX_MERCHANTS_READ_BYTES`); the release itself ≤ 2 MiB (14.6) |
-| Telemetry limits (15.2) | `POST /v1/events` body 64 KiB (`TELEMETRY_LIMITS.batchBytes`), 1–50 events; `POST /v1/events/delete` body 1 KiB; a fixed-window counter of the route's own (`createLimiter`): 60 requests a minute per client IP and 600 across all clients per process, 429 `too_many_requests` with `Retry-After`, at most 10,000 keys remembered; the RPC answer read with an 8 KiB cap and a 7 s timeout. The address is used transiently, never stored or logged; no body or event is logged |
+| Telemetry limits (15.2) | `POST /v1/events` body 64 KiB (`TELEMETRY_LIMITS.batchBytes`), 1–50 events; `POST /v1/events/delete` body 1 KiB; a fixed-window counter of the route's own (`createLimiter`): 60 requests a minute per client IP and 600 across all clients per process (separate global buckets for ingest and Delete my data, so a flood of batches cannot starve a deletion), 429 `too_many_requests` with `Retry-After`, at most 10,000 keys remembered; the RPC answer read with an 8 KiB cap and a 7 s timeout. The address is used transiently, never stored or logged; no body or event is logged |
 | Request log fields | request ID, route template, method, status, duration (no bodies, tokens or source text) |
 
 ## Routes
@@ -123,7 +123,7 @@ Verified 2026-10-03 by reading the code and running `npm test --workspace=@ai-ch
 
 ## Tests
 
-`apps/api/tests/`: `catalog.test.ts`, `merchants.test.ts`, `telemetry.test.ts` (15.2: the Zod side of the 96 parity cases, no domain or free text on any automatic fixture, the route order, forged `X-Forwarded-For`, the global bucket, 410, 413, the delete route, the repository, the reviewer reads), `review.test.ts`, `review-auth.test.ts`, `review-site.test.ts`, `public-site.test.ts`, `curation.test.ts`, `curation-http.test.ts`, `openai.test.ts`, `codex.test.ts`, `claude.test.ts`, `evaluation.test.ts`, `extraction-review.test.ts`, `extraction-v2.test.ts`, `summarize-v2.test.ts`. Integration against a real local stack: `db:test:http`, `db:test:curation:http`, `db:test:curation:application` ([Testing](testing.md)).
+`apps/api/tests/`: `catalog.test.ts`, `merchants.test.ts`, `telemetry.test.ts` (15.2: the Zod side of the 103 parity cases, no domain or free text on any automatic fixture, the route order, forged `X-Forwarded-For`, the global bucket, 410, 413, the delete route, the repository, the reviewer reads), `review.test.ts`, `review-auth.test.ts`, `review-site.test.ts`, `public-site.test.ts`, `curation.test.ts`, `curation-http.test.ts`, `openai.test.ts`, `codex.test.ts`, `claude.test.ts`, `evaluation.test.ts`, `extraction-review.test.ts`, `extraction-v2.test.ts`, `summarize-v2.test.ts`. Integration against a real local stack: `db:test:http`, `db:test:curation:http`, `db:test:curation:application` ([Testing](testing.md)).
 
 ## Related
 

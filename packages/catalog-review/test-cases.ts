@@ -166,6 +166,20 @@ export const telemetryEventCases: Case[] = [
     }),
   ),
   invalid('client_at as a number', withField('consent_granted', { client_at: 1760875200 })),
+  // Times PostgreSQL's cast accepts and Zod does not, and a year the cast refuses (found in the 15.2 review).
+  invalid('client_at at hour 24', withField('consent_granted', { client_at: '2026-10-19T24:00:00Z' })),
+  invalid('client_at on a leap second', withField('consent_granted', { client_at: '2026-12-31T23:59:60Z' })),
+  invalid('client_at in year 0000', withField('consent_granted', { client_at: '0000-01-01T00:00:00Z' })),
+  invalid('client_at before 2000', withField('consent_granted', { client_at: '1999-12-31T23:59:59Z' })),
+  valid(
+    'client_at at the last second of a day',
+    withField('consent_granted', { client_at: '2026-10-19T23:59:59Z' }),
+  ),
+  valid('client_at on a leap day', withField('consent_granted', { client_at: '2028-02-29T00:00:00Z' })),
+  invalid(
+    'client_at on a non-leap 29 February',
+    withField('consent_granted', { client_at: '2027-02-29T00:00:00Z' }),
+  ),
   invalid('install month with a day', withField('consent_granted', { install_month: '2026-10-19' })),
   invalid('install month 13', withField('consent_granted', { install_month: '2026-13' })),
   invalid('unknown days bucket', withField('consent_granted', { days_since_install: '90+' })),

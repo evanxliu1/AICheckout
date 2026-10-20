@@ -2,12 +2,15 @@
 -- wiki/decisions/2026-10-19-release-a-telemetry-design.md). A private schema `telemetry`, not exposed to the
 -- Data API, holding the raw consented events (90 days) and per-install daily counters. The only write path is
 -- `public.ingest_events`, a security-definer RPC granted to `anon` that re-validates every event against the
--- shared envelope (`telemetry.valid_event_v1` mirrors telemetryEventSchema in packages/catalog-review/src/
--- telemetry.ts; scripts/test-catalog-parity.mjs runs the shared telemetryEventCases through both), caps the
--- batch (50 events, 128 KiB as JSONB text, 64 KiB on the wire) and the install's UTC day (500), stores each
--- event id once, and prunes up to 1000 rows older than 90 days on every call (no scheduler). `public.
--- delete_install` removes an install's rows on the shopper's request. Reviewers read two aggregates through
--- `require_reviewer()`: store suggestions and a daily summary. No table grant to any client role.
+-- shared envelope (`telemetry.valid_event_v1`, and `valid_batch_v1` for a whole batch, mirror
+-- telemetryEventSchema in packages/catalog-review/src/telemetry.ts; scripts/test-catalog-parity.mjs runs the
+-- shared telemetryEventCases through them), caps the
+-- batch (50 events, 128 KiB as JSONB text, 64 KiB on the wire), the install's UTC day (500) and the whole
+-- UTC day across every install (20,000, since anyone can mint install ids), stores each event id once, and
+-- prunes up to 1000 rows older than 90 days on every call (no scheduler). `public.delete_install` removes an
+-- install's rows on the shopper's request. Reviewers read two aggregates through `require_reviewer()`: store
+-- suggestions and a daily summary; both prune too, so retention holds while ingest is switched off. No table
+-- grant to any client role.
 
 create schema telemetry;
 revoke all on schema telemetry from public, anon, authenticated, service_role;
@@ -23,7 +26,7 @@ returns jsonb language plpgsql stable security invoker set search_path = '' as $
 declare
   envelope constant jsonb := '{
     "event_id":{"$ref":"#/$defs/uuid"},
-    "client_at":{"type":"string","pattern":"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"},
+    "client_at":{"type":"string","pattern":"^20[0-9]{2}-[0-9]{2}-[0-9]{2}T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?Z$"},
     "install_month":{"type":"string","pattern":"^[0-9]{4}-(0[1-9]|1[0-2])$"},
     "days_since_install":{"enum":["0","1-6","7-13","14-29","30-59","60+"]},
     "consent_version":{"const":1},
@@ -102,16 +105,14 @@ begin
 end;
 $$;
 
--- One event. The schema above, then the checks a JSON schema cannot state: a real timestamp, a category from
--- the merchant category list (a SQL function so a later migration can extend it), and the amount rule of
--- `recommendation_shown` (the amount view carries an amount and no reason; the rates view the reverse).
-create function telemetry.valid_event_v1(payload jsonb)
+-- The checks a JSON schema cannot state, on an event that already matches the schema: at most 8 KiB of JSONB
+-- text, a real timestamp, a category from the merchant category list (a SQL function so a later migration can
+-- extend it), and the amount rule of `recommendation_shown` (the amount view carries an amount and no reason;
+-- the rates view the reverse).
+create function telemetry.event_rules_v1(payload jsonb)
 returns boolean language plpgsql stable security invoker set search_path = '' set timezone = 'UTC' as $$
 begin
-  if payload is null or octet_length(payload::text) > 8192
-     or not extensions.jsonb_matches_schema(telemetry.event_schema()::json, payload) then
-    return false;
-  end if;
+  if octet_length(payload::text) > 8192 then return false; end if;
   perform (payload->>'client_at')::timestamptz;
   if payload->>'type' = 'recommendation_shown' then
     if payload->>'category' <> all(catalog_private.catalog_v3_merchant_categories()) then return false; end if;
@@ -127,6 +128,32 @@ begin
 exception when invalid_datetime_format or datetime_field_overflow or invalid_text_representation then return false;
 end;
 $$;
+
+-- One event: the schema, then the rules.
+create function telemetry.valid_event_v1(payload jsonb)
+returns boolean language plpgsql stable security invoker set search_path = '' as $$
+begin
+  return payload is not null and octet_length(payload::text) <= 8192
+    and extensions.jsonb_matches_schema(telemetry.event_schema()::json, payload)
+    and telemetry.event_rules_v1(payload);
+end;
+$$;
+
+-- A batch of events: the same schema as an array, matched once (compiling the thirteen-branch schema is the
+-- cost: about 5 ms a call, so one match per event would hold a 50-event batch for a quarter of a second), then
+-- the rules on each event. Equivalent to valid_event_v1 on every element; scripts/test-catalog-parity.mjs checks that they agree.
+create function telemetry.valid_batch_v1(p_batch jsonb)
+returns boolean language plpgsql stable security invoker set search_path = '' as $$
+declare
+  event_schema constant jsonb := telemetry.event_schema();
+begin
+  return jsonb_typeof(p_batch) = 'array'
+    and extensions.jsonb_matches_schema(jsonb_build_object(
+      'type', 'array', 'items', jsonb_build_object('oneOf', event_schema->'oneOf'),
+      '$defs', event_schema->'$defs')::json, p_batch)
+    and not exists(select 1 from jsonb_array_elements(p_batch) e where not telemetry.event_rules_v1(e));
+end;
+$$;
 comment on function telemetry.valid_event_v1(jsonb) is
   'Telemetry event schema 1. Mirrors telemetryEventSchema in packages/catalog-review; parity is tested by scripts/test-catalog-parity.mjs.';
 
@@ -136,7 +163,9 @@ create table telemetry.events (
   type text not null,
   client_at timestamptz not null,
   received_at timestamptz not null default now(),
-  event jsonb not null check (telemetry.valid_event_v1(event)),
+  -- ingest_events validates every event (valid_batch_v1) and is the only writer; the table does not run the
+  -- schema a second time per row, which doubled the cost of a batch.
+  event jsonb not null check (jsonb_typeof(event) = 'object' and octet_length(event::text) <= 8192),
   check (event_id = (event->>'event_id')::uuid and type = event->>'type'
          and install_id is not distinct from (event->>'install_id')::uuid)
 );
@@ -149,9 +178,18 @@ create table telemetry.install_days (
   count integer not null check (count between 1 and 500),
   primary key (install_id, day)
 );
+create index install_days_day_idx on telemetry.install_days(day);
+-- Stored events per UTC day across every install, tap events without an id included: the bound on growth
+-- that a client minting fresh install ids cannot move. Its row is locked for the whole ingest call, so
+-- concurrent calls serialise (and take the install_days locks in one order).
+create table telemetry.days (
+  day date primary key,
+  count integer not null check (count between 0 and 20000)
+);
 alter table telemetry.events enable row level security;
 alter table telemetry.install_days enable row level security;
-revoke all on telemetry.events, telemetry.install_days from public, anon, authenticated, service_role;
+alter table telemetry.days enable row level security;
+revoke all on telemetry.events, telemetry.install_days, telemetry.days from public, anon, authenticated, service_role;
 
 -- Pruning: a bounded number of raw rows older than 90 days, and the day counters of the same age.
 create function telemetry.prune(p_limit integer)
@@ -164,13 +202,14 @@ begin
     order by received_at limit p_limit);
   get diagnostics removed = row_count;
   delete from telemetry.install_days where day < (now() at time zone 'UTC')::date - 90;
+  delete from telemetry.days where day < (now() at time zone 'UTC')::date - 90;
   return removed;
 end;
 $$;
 
 -- The write path. Called by the API as `anon` (the publishable key) after its own Zod check and rate limits;
 -- a batch that fails here is refused whole (22023), since a disagreement with the API is a bug, not a shopper.
--- Returns {"accepted": n, "dropped": n}: dropped counts repeated event ids and events over the install's cap.
+-- Returns {"accepted": n, "dropped": n}: dropped counts repeated event ids and events over either day cap.
 create function public.ingest_events(p_batch jsonb)
 returns jsonb language plpgsql security definer set search_path = '' set timezone = 'UTC' as $$
 declare
@@ -178,17 +217,23 @@ declare
   install uuid;
   today date := (now() at time zone 'UTC')::date;
   used integer;
+  total integer;
   accepted integer := 0;
   dropped integer := 0;
 begin
-  if p_batch is null or jsonb_typeof(p_batch) <> 'array' or jsonb_array_length(p_batch) not between 1 and 50
-     or octet_length(p_batch::text) > 131072 then
+  if p_batch is null or jsonb_typeof(p_batch) <> 'array' or jsonb_array_length(p_batch) not between 1 and 50 then
     raise exception 'Event batch is invalid' using errcode='22023';
   end if;
-  if exists(select 1 from jsonb_array_elements(p_batch) e where not telemetry.valid_event_v1(e)) then
+  if octet_length(p_batch::text) > 131072 then
+    raise exception 'Event batch is too large' using errcode='22023';
+  end if;
+  if not telemetry.valid_batch_v1(p_batch) then
     raise exception 'Event batch is invalid' using errcode='22023';
   end if;
+  insert into telemetry.days(day, count) values(today, 0) on conflict (day) do nothing;
+  select d.count into total from telemetry.days d where d.day = today for update;
   for item in select value from jsonb_array_elements(p_batch) loop
+    if total + accepted >= 20000 then dropped := dropped + 1; continue; end if;
     install := (item->>'install_id')::uuid;
     if install is not null then
       select count into used from telemetry.install_days where install_id = install and day = today for update;
@@ -204,6 +249,7 @@ begin
         on conflict (install_id, day) do update set count = telemetry.install_days.count + 1;
     end if;
   end loop;
+  update telemetry.days set count = count + accepted where day = today and accepted > 0;
   perform telemetry.prune(1000);
   return jsonb_build_object('accepted', accepted, 'dropped', dropped);
 end;
@@ -219,22 +265,26 @@ begin
   delete from telemetry.events where install_id = p_install_id;
   get diagnostics removed = row_count;
   delete from telemetry.install_days where install_id = p_install_id;
+  perform telemetry.prune(1000);
   return jsonb_build_object('deleted', removed);
 end;
 $$;
 
 -- Reviewer reads. The store suggestions aggregate (domain, count, distinct installs, last seen) is derived at
 -- read time for the merchant pipeline's growth list; the summary counts events and installs by type and day.
+-- Both prune first and read only the last 90 days, so a backlog left while ingest was off is never shown.
 create function telemetry.store_suggestions()
 returns jsonb language plpgsql security definer set search_path = '' as $$
 begin
   perform catalog_private.require_reviewer();
+  perform telemetry.prune(1000);
   return coalesce((select jsonb_agg(jsonb_build_object(
       'domain', s.domain, 'count', s.count, 'installs', s.installs, 'last_seen', s.last_seen)
       order by s.count desc, s.domain)
     from (select e.event->>'domain' as domain, count(*) as count, count(distinct e.install_id) as installs,
                  max(e.received_at) as last_seen
-          from telemetry.events e where e.type = 'store_suggested'
+          from telemetry.events e
+          where e.type = 'store_suggested' and e.received_at >= now() - interval '90 days'
           group by 1 order by 2 desc, 1 limit 500) s), '[]'::jsonb);
 end;
 $$;
@@ -247,6 +297,7 @@ begin
   if p_days is null or p_days not between 1 and 90 then
     raise exception 'Days must be between 1 and 90' using errcode='22023';
   end if;
+  perform telemetry.prune(1000);
   since := now() - make_interval(days => p_days);
   return jsonb_build_object(
     'days', p_days,
@@ -268,7 +319,8 @@ returns jsonb language sql security invoker set search_path = '' as $$
   select telemetry.summary(p_days);
 $$;
 
-revoke all on function telemetry.event_schema(), telemetry.valid_event_v1(jsonb), telemetry.prune(integer),
+revoke all on function telemetry.event_schema(), telemetry.event_rules_v1(jsonb), telemetry.valid_event_v1(jsonb),
+  telemetry.valid_batch_v1(jsonb), telemetry.prune(integer),
   public.ingest_events(jsonb), public.delete_install(uuid),
   telemetry.store_suggestions(), telemetry.summary(integer),
   public.telemetry_store_suggestions(), public.telemetry_summary(integer)
@@ -277,7 +329,7 @@ grant execute on function public.ingest_events(jsonb), public.delete_install(uui
 grant execute on function telemetry.store_suggestions(), telemetry.summary(integer),
   public.telemetry_store_suggestions(), public.telemetry_summary(integer) to authenticated;
 comment on function public.ingest_events(jsonb) is
-  'The only telemetry write path: consented events from the extension through the API. Validates, caps (50 per batch, 500 per install per UTC day), stores each event id once and prunes rows older than 90 days.';
+  'The only telemetry write path: consented events from the extension through the API. Validates, caps (50 per batch, 500 per install and 20,000 in all per UTC day), stores each event id once and prunes rows older than 90 days.';
 comment on function public.delete_install(uuid) is
   'Delete my data: removes every row of one install id on the shopper''s request.';
 comment on function public.telemetry_store_suggestions() is

@@ -18,6 +18,9 @@ export const TELEMETRY_LIMITS = {
   batchBytes: 65_536,
   /** Events one install may store per UTC day; the rest of the day's events are dropped. */
   installDay: 500,
+  /** Events stored per UTC day across every install (tap events without an id included): the bound on
+   * growth, since any client can mint install ids. The rest of the day's events are dropped. */
+  globalDay: 20_000,
   /** Raw rows and per-install day counters older than this are pruned on every ingest call. */
   retentionDays: 90,
   /** Rows pruned per ingest call. */
@@ -83,7 +86,10 @@ export const TAP_EVENT_TYPES = [
 
 const envelopeFields = {
   event_id: uuidV4.describe('Client-generated id; a repeated id is stored once'),
-  client_at: z.iso.datetime().describe('When the extension built the event (UTC)'),
+  client_at: z.iso
+    .datetime()
+    .regex(/^20[0-9]{2}-/)
+    .describe('When the extension built the event (UTC)'),
   install_month: z
     .string()
     .regex(/^[0-9]{4}-(0[1-9]|1[0-2])$/)
@@ -244,7 +250,7 @@ export const eventBatchSchema = z.strictObject({
   events: z.array(telemetryEventSchema).min(1).max(TELEMETRY_LIMITS.batchEvents),
 });
 export type EventBatch = z.infer<typeof eventBatchSchema>;
-/** `ingest_events` result: `dropped` counts repeated ids and events over the install's day cap. */
+/** `ingest_events` result: `dropped` counts repeated ids and events over the install's or the global day cap. */
 export const ingestResultSchema = z.strictObject({
   accepted: z.number().int().min(0).max(TELEMETRY_LIMITS.batchEvents),
   dropped: z.number().int().min(0).max(TELEMETRY_LIMITS.batchEvents),

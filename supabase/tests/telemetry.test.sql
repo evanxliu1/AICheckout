@@ -77,7 +77,7 @@ select throws_ok($q$select public.ingest_events((select jsonb_agg(pg_temp.ev('ba
   '22023',null,'51 events are refused');
 select lives_ok($q$select public.ingest_events((select jsonb_agg(pg_temp.ev('badge_expanded')) from generate_series(1,50)))$q$,'50 events are accepted');
 select throws_ok($q$select public.ingest_events(pg_temp.batch(pg_temp.ev('consent_granted') || jsonb_build_object('pad', repeat('x', 140000))))$q$,
-  '22023',null,'a batch over the byte cap is refused');
+  '22023','Event batch is too large','a batch over the byte cap is refused by the byte check');
 select set_config('test.dup', pg_temp.ev('wallet_changed')::text, true);
 select is(public.ingest_events(pg_temp.batch(current_setting('test.dup')::jsonb, current_setting('test.dup')::jsonb)),
   '{"accepted":1,"dropped":1}'::jsonb,'a repeated event id in one batch is stored once');
@@ -102,6 +102,8 @@ select is(public.ingest_events(pg_temp.batch(pg_temp.ev('badge_expanded'))),
   '{"accepted":0,"dropped":1}'::jsonb,'a capped install stores nothing more that day');
 reset role;
 select is((select count from telemetry.install_days where install_id='c3a1e9b2-0d4f-4a6b-8c7d-1e2f3a4b5c6d'), 500, 'the counter stops at the cap');
+select is((select count from telemetry.days where day=(now() at time zone 'UTC')::date),
+  (select count(*)::int from telemetry.events), 'the global day counter counts every stored event, tap events without an id included');
 
 -- Pruning on ingest: rows older than 90 days go, newer ones stay.
 insert into telemetry.events(event_id, install_id, type, client_at, received_at, event)
@@ -118,7 +120,11 @@ select is((select count(*) from telemetry.events where received_at < now() - int
 select is((select count(*) from telemetry.events where install_id='e5c3a1d4-2f6b-4c8d-ae9f-3a4b5c6d7e8f'), 1::bigint, 'the 89-day-old row stays');
 select is((select count(*) from telemetry.install_days where day < (now() at time zone 'UTC')::date - 90), 0::bigint, 'old day counters were pruned');
 
--- Reviewer reads.
+-- Reviewer reads. A 91-day-old suggestion left behind (as while ingest is switched off) is pruned by the read
+-- and never shown.
+insert into telemetry.events(event_id, install_id, type, client_at, received_at, event)
+  select (e->>'event_id')::uuid, null, e->>'type', (e->>'client_at')::timestamptz, now() - interval '91 days', e
+  from pg_temp.ev('store_suggested','{"domain":"old.example"}',null) e;
 set local role anon;
 select throws_ok('select public.telemetry_summary(7)','42501',null,'anonymous still cannot read the summary');
 reset role;
@@ -128,8 +134,9 @@ select throws_ok('select public.telemetry_summary(7)','42501','Reviewer authoriz
 select throws_ok('select public.telemetry_store_suggestions()','42501','Reviewer authorization required','a non-reviewer cannot read the suggestions');
 reset role;
 select set_config('request.jwt.claims','{"sub":"95000000-0000-4000-8000-000000000001","session_id":"96000000-0000-4000-8000-000000000001","role":"authenticated"}',true);
-select set_config('test.rows', pg_temp.events_count()::text, true);
-select set_config('test.suggested_at', (select to_jsonb(received_at)::text from telemetry.events where type='store_suggested'), true);
+-- Every row but the 91-day-old suggestion, which the first reviewer read prunes.
+select set_config('test.rows', (pg_temp.events_count() - 1)::text, true);
+select set_config('test.suggested_at', (select to_jsonb(received_at)::text from telemetry.events where type='store_suggested' and received_at = now()), true);
 set local role authenticated;
 select throws_ok('select public.telemetry_summary(0)','22023',null,'a zero-day window is refused');
 select throws_ok('select public.telemetry_summary(91)','22023',null,'a 91-day window is refused');
@@ -145,6 +152,7 @@ select is(public.telemetry_store_suggestions(), jsonb_build_array(jsonb_build_ob
   'the suggestions aggregate one domain with no identified installs');
 select throws_ok('select * from telemetry.events','42501',null,'the reviewer still has no table grant');
 reset role;
+select is((select count(*) from telemetry.events where received_at < now() - interval '90 days'), 0::bigint, 'the reviewer read pruned the old suggestion');
 
 -- Delete my data.
 set local role anon;
@@ -155,6 +163,17 @@ reset role;
 select is((select count(*) from telemetry.events where install_id='c3a1e9b2-0d4f-4a6b-8c7d-1e2f3a4b5c6d'), 0::bigint, 'no event of the deleted install remains');
 select is((select count(*) from telemetry.install_days where install_id='c3a1e9b2-0d4f-4a6b-8c7d-1e2f3a4b5c6d'), 0::bigint, 'no counter of the deleted install remains');
 select is((select count(*) from telemetry.events where install_id is null), 2::bigint, 'tap events without an id are untouched');
+
+-- The global day cap: fresh install ids and tap events without one cannot grow the table past it.
+update telemetry.days set count = 19999 where day=(now() at time zone 'UTC')::date;
+set local role anon;
+select is(public.ingest_events(pg_temp.batch(pg_temp.ev('badge_expanded','{}','f6d4b2e5-3a7c-4d9e-8f0a-4b5c6d7e8f90'),
+    pg_temp.ev('badge_expanded','{}','a7e5c3f6-4b8d-4e0f-9a1b-5c6d7e8f9012'), pg_temp.ev('store_suggested','{}',null))),
+  '{"accepted":1,"dropped":2}'::jsonb,'the 20,000th event of the day is stored; later ones are dropped whatever their install id');
+select throws_ok($q$update telemetry.days set count = 0$q$,'42501',null,'anonymous cannot touch the global counter');
+reset role;
+select is((select count from telemetry.days where day=(now() at time zone 'UTC')::date), 20000, 'the global counter stops at the cap');
+select is((select count(*) from telemetry.install_days where install_id='a7e5c3f6-4b8d-4e0f-9a1b-5c6d7e8f9012'), 0::bigint, 'a dropped event counts against no install');
 
 -- Revocation applies to the reviewer reads too.
 delete from auth.sessions where id='96000000-0000-4000-8000-000000000001';

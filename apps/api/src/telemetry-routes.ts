@@ -21,7 +21,8 @@ export type TelemetryOptions = {
    * client IP is the entry that many places from the right, so entries a client forged on the left never
    * move its bucket; 0 (local) uses the socket address. Fastify's `trustProxy` stays false server-wide. */
   proxyHops?: number;
-  /** Requests a minute per client IP and across all clients, per process. */
+  /** Requests a minute per client IP, and across all clients per process (ingest and Delete my data
+   * have separate global buckets, so a flood of batches cannot starve a deletion). */
   ipLimit?: number;
   globalLimit?: number;
 };
@@ -90,14 +91,16 @@ export async function telemetryRoutes(
   }: TelemetryOptions & { rpc: TelemetryRpc; clock?: () => number },
 ) {
   const perIp = createLimiter(ipLimit, clock),
-    global = createLimiter(globalLimit, clock);
+    globalIngest = createLimiter(globalLimit, clock),
+    globalDelete = createLimiter(globalLimit, clock);
   app.addHook('onRequest', async (request, reply) => {
     reply.header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
-    if (ingest === 'off' && (request.routeOptions.config as { ingest?: boolean }).ingest)
-      throw new TelemetryError(410, 'telemetry_disabled');
+    const ingestRoute = Boolean((request.routeOptions.config as { ingest?: boolean }).ingest);
+    if (ingest === 'off' && ingestRoute) throw new TelemetryError(410, 'telemetry_disabled');
     if (!allowedOrigin(request.headers.origin, extensionIds))
       throw new TelemetryError(403, 'origin_not_allowed');
-    const retry = perIp(clientAddress(request, proxyHops)) ?? global('*');
+    const retry =
+      perIp(clientAddress(request, proxyHops)) ?? (ingestRoute ? globalIngest : globalDelete)('*');
     if (retry !== null) {
       reply.header('Retry-After', String(retry));
       throw new TelemetryError(429, 'too_many_requests');

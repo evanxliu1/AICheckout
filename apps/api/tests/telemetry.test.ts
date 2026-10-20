@@ -220,16 +220,20 @@ describe('telemetry rate limits', () => {
     expect((await post(instance, '/v1/events', { events })).statusCode).toBe(200);
     expect((await post(instance, '/v1/events', { events })).statusCode).toBe(429);
   });
-  it('has a global bucket across all clients', async () => {
+  it('has a global bucket across all clients, separate for ingest and Delete my data', async () => {
     const rpc = vi.fn(async (operation: string) =>
       operation === 'delete_install' ? { deleted: 0 } : ingested,
     );
     const { instance } = app(rpc, { ipLimit: 100, globalLimit: 2 });
     expect((await post(instance, '/v1/events', { events }, {}, '10.0.0.1')).statusCode).toBe(200);
-    expect(
-      (await post(instance, '/v1/events/delete', { install_id: INSTALL }, {}, '10.0.0.2')).statusCode,
-    ).toBe(200);
+    expect((await post(instance, '/v1/events', { events }, {}, '10.0.0.2')).statusCode).toBe(200);
     expect((await post(instance, '/v1/events', { events }, {}, '10.0.0.3')).statusCode).toBe(429);
+    // A flood of batches does not starve a deletion; deletions have their own global bucket.
+    const remove = (address: string) =>
+      post(instance, '/v1/events/delete', { install_id: INSTALL }, {}, address);
+    expect((await remove('10.0.0.4')).statusCode).toBe(200);
+    expect((await remove('10.0.0.5')).statusCode).toBe(200);
+    expect((await remove('10.0.0.6')).statusCode).toBe(429);
   });
   it('bounds the number of buckets it remembers', () => {
     let clock = 0;
