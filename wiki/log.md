@@ -2,6 +2,13 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-19
+* **Create** [Phase 15 plan (Release A)](product/phase-15-release-a.md) on `phase15-plan` after reading the extension, API, site, migrations, release docs and the three adapters: goal and success criteria, scope, what ships, milestones 15.1–15.7 and 15.R with files, tests, verify lists and risks, the event dictionary draft, the Web Store submission checklist, the gaps found (install-time expiry, uninstall page, ingest abuse, pg_cron, free text, "anonymous" wording, the strictly-necessary rule, GDPR/CCPA basics, the CC BY credits) and eight decisions for Evan with recommendations. (claude-code/claude-fable-5-1)
+* **Decision** [2026-10-19-retire-legacy-adapters](decisions/2026-10-19-retire-legacy-adapters.md) — Evan's directive; measurement for the record; order detection and savings dropped.
+* **Decision** [2026-10-19-release-a-telemetry-design](decisions/2026-10-19-release-a-telemetry-design.md) — Supabase + Render, anon RPC behind the API, pruning in the RPC, kill switch, build-time switch, fixed reasons, tap events without an ID.
+* **Decision** [2026-10-19-release-a-first-run-and-expiry](decisions/2026-10-19-release-a-first-run-and-expiry.md) — install-time refresh, "checking" copy, 2.1.0, static uninstall page.
+* **Directive** recorded in [user directives](product/user-directives.md): retire the adapters no matter what; Fable implements, Opus reviews and fixes; telemetry on the existing Supabase and Render; the renewal as a parallel milestone; what Evan does himself. [Roadmap](product/roadmap.md) Phase 15 "Planned 2026-10-19"; [now](now.md) rewritten; [telemetry design](system/telemetry-design.md) points at the plan. (claude-code/claude-fable-5-1)
+
 ## 2026-10-12
 * **Publish** merchant release 1 `2026-10-11.mcc.3` on Evan's chat instruction (2026-10-12T00:31:49Z), from the CLI with Evan's session; `/v1/merchants` serves it. Phase 14 complete. (claude-code/claude-opus-5-5)
 

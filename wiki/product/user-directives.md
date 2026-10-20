@@ -6,7 +6,7 @@ status: stable
 tags: [product, directives, memory]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-20T00:30:00Z
 ---
 
 # User directives
@@ -15,6 +15,11 @@ Standing instructions from the owner, newest first. A directive stays in force u
 
 | Date | Directive | Scope | Source |
 | --- | --- | --- | --- |
+| 2026-10-19 | **Phase 15 (Release A): retire the three legacy adapters no matter what.** Amazon, Best Buy and Newegg adapters go; the generic reader and detector cover them; the A4 check becomes a measurement recorded for the record, not a gate; the order-confirmation and savings features that only the adapters had are planned away or replaced explicitly (dropped, per the plan). | Phase 15.1 | [Decision](../decisions/2026-10-19-retire-legacy-adapters.md), [plan](phase-15-release-a.md), chat 2026-10-19 |
+| 2026-10-19 | **Phase 15 staffing and shape.** Fable 5.1 agents implement every milestone; Opus agents review and fix. Milestones sized for one implementer each, one branch and one PR from the latest `main`, each with an explicit verify list (lint, format:check, typecheck, `npm test`, build, browser suite, `db:test` where relevant, wiki lint). | Phase 15 | [Plan](phase-15-release-a.md), chat 2026-10-19 |
+| 2026-10-19 | **Telemetry storage: the existing hosted Supabase and the Render API**, no new vendor, unless a strong reason against is found (none was). | Phase 15 telemetry | [Decision](../decisions/2026-10-19-release-a-telemetry-design.md), chat 2026-10-19 |
+| 2026-10-19 | **Catalog renewal as a parallel Phase 15 milestone with its deadline:** release 3 expires 2026-11-04T00:00Z; target publish about 2026-10-28; needs Evan's `publish <version>`. | Phase 15.R, catalog | [Plan](phase-15-release-a.md), chat 2026-10-19 |
+| 2026-10-19 | **What Evan does himself in Release A:** pay and submit to the Chrome Web Store, type `publish <version>`, read the privacy policy, enable GitHub private vulnerability reporting. Nobody but Evan signs in anywhere. | Phase 15 | [Plan](phase-15-release-a.md), chat 2026-10-19 |
 | 2026-10-12 | **Publish merchant release.** "publish merchants 2026-10-11.mcc.3" (00:31:49Z). | Merchant release 1 | Chat 2026-10-12 |
 | 2026-10-11 | **Use merchant codes as evidence.** "fix the big names, i think we should use MCC codes, there should be public ones available right, that is enough evidence". | Phase 14.8 | [Decision](../decisions/2026-10-11-mcc-evidence-basis.md), chat 2026-10-11 |
 | 2026-10-11 | **Phase 14: a fourth evidence basis, `mcc`, from public card-transaction data.** "fix the big names, i think we should use MCC codes … that is enough evidence": a bonus category also follows when openly licensed government purchase-card datasets (CC0 and CC BY only) code the store under the category's merchant category code in at least 10 matched rows with one category at 80% or more; `issuer` stays strongest, then `mcc`, `corroborated`, `definition`. Applied to every record, re-audited blind. | Phase 14 | [Decision](../decisions/2026-10-11-mcc-evidence-basis.md), chat 2026-10-11 |

@@ -1,0 +1,206 @@
+---
+type: Product
+title: Phase 15 plan (Release A, the Chrome Web Store release)
+description: Put the extension on the Chrome Web Store with `https://*/*` host permissions, the merchant database, a minimal consented telemetry set (one onboarding opt-in, a persistent random ID, Stop sharing and Delete my data), the three legacy adapters retired, a first run that reaches a recommendation fast, honest release docs and store assets, and the card catalog renewed before 2026-11-04. Milestones sized for one Fable 5.1 implementer each, reviewed and fixed by Opus agents, with the event dictionary draft, the Web Store submission checklist and the decisions Evan still has to take.
+status: stable
+tags: [product, plan, phase-15, release, telemetry, privacy, web-store]
+generated:
+  by: claude-code/claude-fable-5-1
+  at: 2026-10-20T00:30:00Z
+sources:
+  - resource: phase-10-merchant-expansion.md
+    title: Phases 10–17 plan (Release A row, decisions D8, D13, D14)
+  - resource: ../system/telemetry-design.md
+    title: Telemetry design draft v6
+  - resource: ../decisions/2026-10-10-data-collection.md
+    title: Decision, data collection (Evan's 21 answers)
+  - resource: ../decisions/2026-10-10-audit-calls.md
+    title: Decision, audit calls A1–A6 (A4 adapter retirement, A6 site fix)
+  - resource: ../decisions/2026-10-09-badge-on-all-sites.md
+    title: Decision, https://*/* at install
+  - resource: ../decisions/2026-10-19-retire-legacy-adapters.md
+    title: Decision, retire the legacy adapters (2026-10-19)
+  - resource: ../decisions/2026-10-19-release-a-telemetry-design.md
+    title: Decision, Release A telemetry design choices
+  - resource: ../decisions/2026-10-19-release-a-first-run-and-expiry.md
+    title: Decision, first run, install-time refresh, version and uninstall page
+  - resource: ../system/extension.md
+    title: Extension (state, catalog and merchant refresh, popup, onboarding)
+  - resource: ../system/cart-badge.md
+    title: Cart badge (order detection and savings at the legacy stores)
+  - resource: ../ops/catalog-release.md
+    title: Catalog release (renewal before expiry)
+  - resource: ../../extension/scripts/release-package.mjs
+    title: Package inspection (manifest invariants the ZIP must keep)
+  - resource: ../../extension/src/checkout/adapters/amazon-us.json
+    title: Legacy adapter (one of three)
+  - resource: ../../docs/release/README.md
+    title: Release preparation (store docs, outside the wiki)
+  - resource: ../../evals/merchants/db/mcc/NOTICE.md
+    title: CC BY attribution notice for the mcc evidence
+  - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
+    title: Chrome Web Store Limited Use policy
+  - resource: https://developer.chrome.com/docs/webstore/cws-dashboard-privacy
+    title: Chrome Web Store privacy practices tab
+  - resource: https://developer.chrome.com/docs/webstore/images
+    title: Chrome Web Store image requirements
+---
+
+# Phase 15 plan: Release A, the Chrome Web Store release
+
+Planned 2026-10-19 after Phase 14 closed (merchant release 1 published 2026-10-12). Evan's directives of 2026-10-19 ([user directives](user-directives.md)): retire the three legacy adapters whatever the measurement says; Fable 5.1 agents implement every milestone and Opus agents review and fix; telemetry stays on the hosted Supabase and the Render API; the catalog renewal runs in parallel with its deadline; Evan pays and submits to the Web Store, types `publish <version>`, reads the privacy policy and enables GitHub private vulnerability reporting; nobody but Evan signs in anywhere. Format follows the [Phase 13c](phase-13c-cart-detection.md) and [Phase 14](phase-14-merchant-database.md) plans. This page is the plan; the three decision records of 2026-10-19 hold the non-obvious choices.
+
+## 1. Goal and success criteria
+
+**Goal.** A shopper installs AI Checkout from the Chrome Web Store, picks their cards, and at the next cart or checkout page of any https store sees which card they own earns the most, with the merchant database and the reader working as merged in Phases 13c and 14. Evan learns, from consenting installs only, whether the reader shows amounts in the wild, which stores shoppers want added and whether the recommendation is used.
+
+**Success criteria (checked at close):**
+
+| # | Criterion | How it is checked |
+| --- | --- | --- |
+| S1 | The listing passes Chrome Web Store review on the first submission with `https://*/*`, `storage`, `activeTab`, `scripting`, `alarms` and the catalog origin | Review outcome recorded in `docs/release/README.md`'s release record; if rejected, the reason and the fix are recorded and the plan is amended |
+| S2 | Consent screen, privacy policy, store privacy tab, listing copy, event dictionary and the extension's behaviour say the same thing | 15.7's independent reviewer pass (Opus), agent-verified, before Evan submits |
+| S3 | No wallet, cart or page data leaves the device before the onboarding opt-in; after it, only the dictionary's events, never a domain, URL or page text except on a shopper's tap | Browser tests on the packaged ZIP (network interception), unit tests on the worker's telemetry module |
+| S4 | A new install reaches a recommendation in two steps (pick cards, open a cart) and never sees "terms expired" on a fresh install while the API answers | Browser test with a re-dated bundled catalog and a stub API; the install-time refresh |
+| S5 | The three legacy adapters are gone; the generic reader and detector serve amazon.com, bestbuy.com and secure.newegg.com; what changed for those stores is measured and written down | `docs/evals/legacy-adapter-retirement.md`, before and after readings on the same pages |
+| S6 | Catalog release 4 is published before 2026-11-04T00:00Z and the submitted ZIP bundles it | Release history; the inventory's bundled catalog version |
+| S7 | The Oklahoma CC BY attribution is on the site's credits page and in the listing | Site test on the credits page; listing text |
+
+## 2. Scope and non-scope
+
+**In scope:** everything the extension needs to be listed and installed by strangers; the telemetry decided on 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)); the A4 and A6 audit calls ([decision](../decisions/2026-10-10-audit-calls.md)); the release docs under `docs/release/`, `docs/verification/`, `extension/README.md`, the root README and the public site; store assets; the catalog renewal.
+
+**Out of scope (named so nobody adds it):** the reviewer telemetry dashboard, value metrics and affiliate readiness (Phase 17); generic order-confirmation detection and savings at any store (dropped with the adapters, [decision](../decisions/2026-10-19-retire-legacy-adapters.md); a candidate for Phase 17 once telemetry shows demand); shopper accounts; non-USD recommendations; a paid Render or Supabase plan (D14, below); Firefox or Edge listings; any store configs or per-site readers (fixed rule since 2026-10-06).
+
+## 3. What ships in the extension
+
+| Area | Today (`main` at `96ba5265`) | Release A |
+| --- | --- | --- |
+| Readers | Generic detector and reader at any https page; the three legacy adapters on their cart URLs (`manual-reader.ts:readAnyCart`, `badge/content.ts:mode`) | Generic only. `extension/src/checkout/adapters/`, `page-reader.ts`, `merchantForCheckout`, `merchantForOrderConfirmation`, `isLegacyMerchant` and `MERCHANT_IDS` removed; `probeSchema` and `cartSnapshotSchema` accept `generic-reader-v1` only |
+| Store names | The release names stores; legacy ids keep the adapters' names (`Amazon US`) | The release names every store (`amazon-us` is a release record with brands and `electronics` on `mcc` evidence) |
+| Order detection and savings | URL-only order pages at the three stores, the one-tap question, `savings[]`, `SavingsHistory`, JSON export | Dropped: `order:page`, `orderPrompt`, `recommendation` on the tab entry, `checkout:record-savings`, `checkout:delete-savings`, the history UI. `savings` stays in state schema 3 as a tolerated, never-written field ([why](../decisions/2026-10-19-retire-legacy-adapters.md)) |
+| Settings | `disabledMerchants` (legacy ids), `showOnOtherStores`, `disabledSites` | `disabledSites` only; stored `disabledMerchants` values are mapped to their hosts once on read (`www.amazon.com`; `bestbuy.com`, `www.bestbuy.com`; `secure.newegg.com`); a "Sharing usage data" toggle and "Delete my data" |
+| Popup merchant select | Three stores, the generic store, the tab's matched store | The tab's matched store (by name) and "Another U.S. online store"; a saved store the list lacks is shown by name as today |
+| Onboarding | Pick cards, done screen naming the three stores | Pick cards → consent screen ("Help improve AI Checkout", Share / Not now, equally prominent) → done screen for any store; the install-time release refresh runs meanwhile |
+| Network | `GET /v1/catalog` and `GET /v1/merchants` in hosted builds, weekly and on demand | Plus `POST /v1/events` (batches, after consent) and `POST /v1/events/delete` (Delete my data), same origin, same fixed-URL bounded client rules (`packages/catalog-client`) |
+| First run | Weekly alarm 2 minutes after install | A refresh at install (delay under 10 s) before the weekly one; the popup and badge say "Checking for updated terms…" instead of "terms expired" while the first fetch runs ([decision](../decisions/2026-10-19-release-a-first-run-and-expiry.md)) |
+| Version | `2.0.0` (the local pilot) | `2.1.0` (manifest and `extension/package.json`; `release-package.mjs` ties them) |
+| Uninstall | nothing | `chrome.runtime.setUninstallURL` to the site's `/uninstalled/` page, no parameters |
+
+Everything else (vault, wallet editor, rates view, merchant release cache, weekly alarm, CSP, fonts) is unchanged.
+
+## 4. Milestones
+
+One branch and one PR per milestone, cut from the latest `main`. Each milestone has one Fable 5.1 implementer and one independent Opus reviewer who fixes what they find and records the review as agent-verified. Subagents stop at a ready branch; the coordinator merges after CI. **Gates for every milestone:** `npm run lint && npm run format:check && npm run typecheck`, `npm test`, `npm run build`, `npm run test:browser --workspace=ai-checkout-extension`, `python3 scripts/lint_wiki.py`; plus `npm run db:test` and `npm run db:test:catalog` where SQL changes, `npm run merchants:check` and `catalog:v3:check` where generated files change, `npm run test:package:browser --workspace=ai-checkout-extension` where the manifest or package changes, and the site and review browser suites where those apps change.
+
+| # | Milestone | Deliverables | Files touched | Tests | Verify list (beyond the gates) | Risks |
+| --- | --- | --- | --- | --- | --- | --- |
+| 15.0 | Plan | This page, three decisions, roadmap, now, directives, log | `wiki/` | wiki lint | Committed on `phase15-plan` | |
+| 15.1 | Retire the legacy adapters | The table in [section 3](#3-what-ships-in-the-extension), rows Readers, Store names, Order detection and savings, Settings, Popup merchant select; `evals/reader/legacy-entry.ts` and the harness's legacy mode removed (the protocol's legacy scoring is closed by the measurement, [decision](../decisions/2026-10-19-retire-legacy-adapters.md)); `extension/scripts/observe-amazon-cart.mjs` removed; **before deleting**, the implementer runs both readers on the committed observed fixtures and commits the text-free table to `docs/evals/legacy-adapter-retirement.md` (part 1) | `extension/src/checkout/{adapters/,page-reader.ts,merchants.ts,manual-reader.ts,contracts.ts,browser.ts,store-match.ts}`, `badge/{content.ts,auto-reader.ts,contracts.ts,BadgeApp.tsx}`, `background/{badge-service.ts,routing.ts}`, `state/{contracts.ts,service.ts,savings.ts,migrate.ts}`, `components/{BadgeSettings.tsx,SavingsHistory.tsx,DataProtectionDetails.tsx,ProtectionSettings.tsx}`, `popup/Popup.tsx`, `onboarding/Onboarding.tsx`, `vite.config.ts` (adapter validation step), `extension/tests/*` (adapter, reader, savings and legacy cases removed; settings mapping, generic-only contracts and the popup select added), `extension/e2e/{checkout,newegg,badge}.spec.ts` (legacy flows removed or moved to generic fixtures at the same hosts), `evals/reader/{legacy-entry.ts,run.mjs,bundle.mjs,lib.mjs,score.mjs,README.md}` | `settings` mapping; `probeSchema` refuses adapter versions; `badge-service` refuses `order:page`; popup default store generic; e2e: a cart fixture at `www.amazon.com/cart` badged through the generic reader and named "Amazon" by the release | Content-script sizes recorded (both shrink: the adapter interpreter leaves); `grep -r "amazon-summary-v1\|bestbuy-summary-v1\|newegg-summary-v1" extension/src` empty; `catalog:v3:check` and `merchants:check` unchanged (the catalog's three merchant profiles and the release records stay) | Amazon's cart page may read as rates view (subtotal row inside `#sc-buy-box`) where the adapter read the subtotal: measured, not a gate. Best Buy checkout steps: the detector was measured on synthetic checkout pages only |
+| 15.1m | Measurement for the record | Coordinator, in parallel with 15.1: fresh pane captures of amazon.com, bestbuy.com and secure.newegg.com (`cart-1`, `cart-qty2`, `empty-cart`; `generic-reader-protocol.11` rules, never checkout, never sign-in), both readers run on them with `evals/reader/run.mjs` at the commit before deletion; part 2 of `docs/evals/legacy-adapter-retirement.md` | `docs/evals/legacy-adapter-retirement.md`, gitignored captures | none | The table names each page, what the adapter showed and what the generic reader shows (amount, rates view, hidden), with the reason codes | Bot walls on the three stores (Amazon especially): a blocked capture is recorded as such |
+| 15.2 | Telemetry backend | Migration `telemetry_events`: private schema `telemetry` (not exposed to the Data API) with `telemetry.events` (raw rows, `received_at`, 90 days) and `telemetry.install_days` (per-install daily counters); `public.ingest_events(p_batch jsonb)` `security definer`, granted to `anon`, validating the envelope with `jsonb_matches_schema`, capping the batch (≤ 50 events, ≤ 64 KiB), the per-install day (≤ 500) and pruning rows older than 90 days opportunistically on every call; `public.delete_install(p_install_id uuid)` deleting that install's rows; reviewer-only `public.telemetry_store_suggestions()` and `public.telemetry_summary(p_days int)` under `require_reviewer()`; pgTAP; the envelope cases shared between Zod and SQL (parity script); API `POST /v1/events` (Zod `eventBatchSchema`, `Origin` must be `chrome-extension://<id>` for an id in `EXTENSION_IDS` when set, body limit 64 KiB, token bucket per client IP read from `X-Forwarded-For` at the fixed Render hop with `trustProxy` still `false` server-wide, a global bucket, 410 when `TELEMETRY_INGEST=off`), `POST /v1/events/delete`, `GET /v1/review/telemetry/suggestions` and `/summary` (bearer, reviewer); `render.yaml` env names; `./scripts/db-push.sh` by the coordinator after merge | `supabase/migrations/<ts>_telemetry_events.sql`, `supabase/tests/telemetry.test.sql`, `scripts/test-catalog-parity.mjs` (envelope cases), `packages/catalog-review/src/telemetry.ts` (shared Zod envelope and limits; `catalog-review` already holds the API's shared contracts), `apps/api/src/{app.ts,telemetry-routes.ts,telemetry-repository.ts,index.ts,review-routes.ts}`, `apps/api/tests/telemetry.test.ts`, `render.yaml`, `apps/api/.env.example`, `apps/api/README.md` | pgTAP: anon can insert through the RPC only, cannot read; caps; pruning; delete; reviewer reads. API: schema refusal, forged `X-Forwarded-For` does not move the bucket, 413, 429 with `Retry-After`, 410 kill switch, Origin check | `db:test`, `db:test:catalog`, `db:lint`, `db:advisors` clean; `db:test:http` extended with one signed reviewer read; the migration dry-run output in the PR | Render's free instance sleeps: ingest fails cold, clients retry later (15.3). Abuse: an anonymous endpoint can be spammed from outside the extension; the caps bound the damage and `TELEMETRY_INGEST=off` stops it; the `Origin` check is a filter, not authentication |
+| 15.3 | Telemetry client and consent | Worker module `state/telemetry.ts`: `checkoutTelemetryV1` in local storage `{consent: granted \| declined \| null, consentVersion: 1, installId, installMonth, queue[]}` (never encrypted: it holds no wallet data; the ID is reset by Stop sharing and Delete my data); events built in the worker only from what it already holds (never in content scripts), queued (≤ 200, oldest dropped), flushed by a `telemetry-flush` alarm (every 15 minutes while the queue is non-empty, immediately at 50) through `packages/catalog-client`'s fixed-URL bounded fetch to `/v1/events` on the catalog origin; a 410 pauses sending for 7 days; the dictionary's events emitted at the worker's existing decision points (`badge-service.ts:view`, `service.ts` compare and read, `refreshReleases`, wallet save, onboarding); **consent screen** in onboarding after the cards are saved (what is sent, why, "a random identifier, no name, email or browsing history", Share / Not now equally prominent, a link to the privacy policy); Settings: "Sharing usage data" toggle (off = Stop sharing: clears queue and ID, sends nothing) and "Delete my data" (sends the current ID to `/v1/events/delete`, then resets); popup "Suggest this store" at a generic store and "Report a problem" (fixed reasons, no free text); badge panel "Store not recognised? Suggest it" at a generic store; the event dictionary `docs/telemetry/events.md` (public, generated from the Zod schema's descriptions by a script with a `--check`); the consent copy and the dictionary agree by test | `extension/src/state/{telemetry.ts,telemetry-contracts.ts,keys.ts,service.ts,contracts.ts}`, `background/{index.ts,badge-service.ts}`, `onboarding/Onboarding.tsx`, `components/{Consent.tsx,TelemetrySettings.tsx,SuggestStore.tsx,ReportProblem.tsx}`, `popup/Popup.tsx`, `badge/BadgeApp.tsx`, `catalog-config.ts`, `packages/catalog-client/src/index.ts` (`createEventSender`), `scripts/build-telemetry-dictionary.mjs`, `docs/telemetry/events.md`, `package.json` (`telemetry:check`) | Unit: nothing queued before consent; the install event sent after consent; Stop sharing clears queue and ID; Delete posts the ID then resets; no domain or URL on any automatic event (property test over the builders); tap events carry the registrable domain only; 410 pause; queue cap. e2e (`telemetry.spec.ts`, stub API via `context.route`): consent → events with the right shape; Not now → no request ever; a cart at a synthetic store produces a `recommendation_shown` without the host; axe on the consent screen at 360 and 480 px | Content scripts unchanged in bytes except the badge panel button (the panel is an extension page, not the content script); `grep` the content-script bundles for `/v1/events` empty; the dictionary check in CI | Chrome's 2026 single-purpose rule reads "strictly necessary": a reviewer may object to owned cards or amounts leaving the device even with consent. Mitigation: a build without `VITE_TELEMETRY` shows no consent screen and sends nothing, so Release A can ship with telemetry off if review demands it ([decision](../decisions/2026-10-19-release-a-telemetry-design.md)) |
+| 15.4 | First run, install and expiry | The install-time refresh (`REFRESH_FIRST_MINUTES` → a separate `refresh-releases-install` alarm at 0.1 minutes, or a direct `refreshReleases` on `onInstalled` with the weekly alarm unchanged); "Checking for updated terms…" state in popup and badge while the first refresh is pending and the catalog in effect has expired, falling back to the existing expired copy after it; `setUninstallURL(<site>/uninstalled/)` in hosted builds; version `2.1.0`; the badge's no-cards pill opens onboarding (as today) and is dismissable per tab (as today), checked on a generic store | `extension/src/background/index.ts`, `state/{service.ts,catalog.ts}`, `components/ComparisonResult.tsx`, `badge/BadgeApp.tsx`, `popup/Popup.tsx`, `manifest.json`, `extension/package.json`, `extension/e2e/release-assets.spec.ts` and `scripts/package.test.mjs` (version strings) | Unit: install → refresh runs once, the weekly alarm still created once; expired bundled + pending refresh → the checking copy; after a failed refresh → expired copy with "Check for updated terms". e2e (`catalog.spec.ts`): a build re-dated so the bundle has expired reaches a recommendation after the stub API answers | `test:package:browser` with `2.1.0`; `release-package.mjs` invariants unchanged (`setUninstallURL` needs no permission) | A user installing more than 30 days after the submitted build's catalog date depends on the API answering within the first minutes; the copy says so honestly |
+| 15.5 | Release docs and site | `docs/release/privacy-policy.md` rewritten for the badge at any https site, the generic reader's reads (visible summary text, structured-data and meta currency hints, the URL's TLD), the merchant release downloaded whole and matched on the device, the weekly refresh, telemetry (what, when, pseudonymous ID, 90 days, Stop sharing, Delete my data, the hosting providers' logs), the Limited Use statement, no sale, no ads, no creditworthiness, children, contact, US-only; `store-listing.md` (section 6 below: every field, the single purpose, the permission justifications, the privacy tab answers, the attribution sentence); `support.md` (any store, rates view, "Not on this site", Suggest and Report, Stop sharing, Delete my data, expired terms); `reviewer-instructions.md` (a synthetic cart at any https page, the rates view, consent on and off); `docs/release/README.md` (inputs, gates, the release record template); `docs/verification/merchants.md` (adapters retired, link to the measurement); `extension/README.md` and the root README (any store, telemetry, no savings, the store link placeholder); `apps/site`: `/privacy/`, `/support/` (A6), home (any store, Install card → store link once known), new `/credits/` (Oklahoma CC BY notice, DC and GSA, Visa manual reference, NerdWallet, fonts) and `/uninstalled/` (what was deleted on the device, that server rows expire in 90 days and that Delete my data must be used before uninstalling), footer link to credits | `docs/release/*.md`, `docs/verification/merchants.md`, `extension/README.md`, `README.md`, `apps/site/src/{pages.tsx,Layout.tsx,site.css}`, `apps/site/vite.config.ts` (new pages), `apps/site/tests/pages.test.tsx`, `apps/site/e2e/a11y.spec.ts` | Site: pages test asserts the credits page names Oklahoma and CC BY 4.0, privacy page names telemetry and the ID wording ("random identifier", never "anonymous"), no page says "three stores"; a11y spec covers the two new pages | Site browser suite; a grep over `docs/release`, `extension/README.md`, `apps/site/src` for "Amazon US, Best Buy US and Newegg US", "only on", "anonymous" (as a data claim) returns nothing | The policy is read by Evan before submission (his directive); it is not legal advice |
+| 15.6 | Store assets | Screenshots at 1280×800 (five): wallet search; the badge amount view at a generic store named by the release with the evidence line; the rates view; the popup comparison with the rule in the issuer's words; the consent screen; small promo tile 440×280 regenerated with the 2.1.0 ZIP; optional marquee 1400×560 (skipped unless cheap); `docs/release/assets/README.md` and the manifest rebound to the 2.1.0 ZIP; the shopper demo recording re-recorded or retired (the README's demo video shows the old flow) | `extension/scripts/render-release-assets.mjs`, `extension/e2e/release-assets.spec.ts`, `docs/release/assets/*`, `apps/site` copied screenshots and `SCREENSHOTS` alt text | `release-assets.spec.ts` on the new flows; `verify-release-assets.mjs` | Dimensions and formats per Chrome's image guidance; no retailer branding on fixtures; alt text matches the crop (the 2026-10-03 review's rule) | Fixture pages must not look like a real retailer's page |
+| 15.R | Catalog renewal (parallel, deadline) | `pipeline freshness` by 2026-10-26, refresh batches for changed pages, build `2026-10-2x.renewal.2`, merge and deploy, `pipeline handoff`, dry run, Evan types `publish <version>` by about 2026-10-28, the coordinator publishes from the CLI with Evan's session; NerdWallet estimates re-read for a catalog verified after 2026-11-01 | `evals/curation/freshness/`, `evals/curation/batches/*`, `packages/rewards-core/src/catalog-v3.ts`, `evals/curation/catalog-batches.json` | `catalog:v3:check`, quote check, eval | [Renewing a catalog](../ops/catalog-release.md#renewing-a-catalog-before-it-expires); release history entry | The hard limit is 2026-11-04T00:00Z; after it `/v1/catalog` answers 503 and every install's comparisons stop until a release is published |
+| 15.7 | Submission build and release record | `npm run build:hosted` with `VITE_TELEMETRY` on, `npm run package`, `test:package:browser`, the inventory's SHA-256 and bundled catalog (`2026-10-2x.renewal.2`) and merchant release recorded in `docs/verification/release-package.md`; the **pre-submission reviewer pass** (Opus, independent): policy, listing, privacy tab answers, consent copy, dictionary and the ZIP's behaviour agree, remote-code answer true, permission justifications match the manifest; `EXTENSION_IDS` set on Render after Chrome assigns the id; Evan registers, pays, fills the dashboard from `store-listing.md`, uploads the ZIP and submits; the release record (revision, CI run URLs, ZIP hash, catalog and merchant versions, Chrome version, listing text, outcome) | `docs/verification/release-package.md`, `docs/release/README.md`, `render.yaml` (env name only) | `test:package:browser` on the exact ZIP | The ZIP uploaded is the one whose hash is recorded; `/privacy/`, `/support/`, `/credits/` load without authentication over HTTPS | Review time is Google's; a rejection reopens 15.5 or 15.3 |
+
+**Order and dependencies:** 15.1 and 15.2 start in parallel (different files). 15.3 follows both (it edits the popup and onboarding 15.1 touches and the API contracts 15.2 defines). 15.4 follows 15.1 (popup and badge copy) and can run beside 15.3 if the two implementers split `Popup.tsx` by section; otherwise after it. 15.5 follows 15.3 and 15.4 (it documents final behaviour). 15.6 follows 15.5 (the screens need the consent copy). 15.R runs on its own clock from 2026-10-26. 15.7 needs everything, the renewal bundled, and Render serving the 15.2 migration. 15.1m runs beside 15.1 and must finish before 15.1 merges (the captures are read with the pre-deletion commit).
+
+**Rough size:** 15.1 one day; 15.2 one to two days; 15.3 two days; 15.4 half a day; 15.5 one day; 15.6 half a day; 15.7 half a day plus Google's review; 15.R two sessions around 2026-10-26 to 2026-10-28. Submission target: the week of 2026-10-26, after the renewal is bundled.
+
+## 5. Event dictionary draft
+
+Every event carries the envelope; the server adds `received_at`. No automatic event carries a domain, merchant name, URL, page text or card number. Amounts are integer cents. Retention: raw rows 90 days (pruned on ingest); the store-suggestion aggregate (domain, count, distinct installs, last seen) is derived by the reviewer RPC at read time, nothing else is kept. The authoritative dictionary is generated into `docs/telemetry/events.md` in 15.3; this draft is what it starts from.
+
+**Envelope:** `event_id` (client uuid, deduplicated), `type`, `client_at` (ISO UTC), `install_id` (uuid v4, persistent, reset by Stop sharing or Delete my data; nullable only on the two tap events sent without consent), `install_month` (`YYYY-MM`), `days_since_install` bucket (`0`, `1-6`, `7-13`, `14-29`, `30-59`, `60+`), `consent_version` (1), `schema_version` (1), `extension_version`, `catalog_version`, `merchants_version`, `reader_version` (`generic-reader-v1`).
+
+| Event | Fields beyond the envelope | Why it is needed | When |
+| --- | --- | --- | --- |
+| `consent_granted` | none | Cohort start, consent proof (version, time); doubles as the install event (`install_month`) | Once, when Share is chosen; queued first |
+| `onboarding_completed` | `cards_count` | Funnel: did the new user pick cards | Once |
+| `wallet_changed` | `card_ids[]` (catalog ids, ≤ 20) | Which cards shoppers own: which issuers to keep freshest, value of brand rules; Evan's 2026-10-10 answer #10 | On each `save-wallet` |
+| `recommendation_shown` | `surface` (badge, popup), `view` (amount, rates), `withheld_reason` (reader code when `rates`), `page` (cart, checkout, popup-read), `store_kind` (named, generic), `evidence_basis` (issuer, mcc, corroborated, definition, default, none), `category`, `amount_cents` (when `amount`), `amount_kind` (total, estimated-total, subtotal), `top_card_id`, `cards_count`, `ranking_may_change` | Reader coverage in the wild (amount vs rates share and the withheld reasons), merchant coverage (named vs generic share), the headline product metric; exact amounts per Evan's answer #9, without a domain | Once per tab per distinct reading key (the worker already dedupes readings) |
+| `badge_expanded` | `view` | Engagement with the recommendation | Per expand |
+| `badge_dismissed` | `view` | Annoyance signal | Per dismiss |
+| `site_disabled` | `store_kind` | "Not on this site" taps without the host | Per tap |
+| `amount_typed` | `relative_difference_bucket` (`<1%`, `1-5%`, `5-20%`, `>20%`, `no-read`) | Wrong-amount signal in the field (reader quality) | Per typed amount |
+| `popup_opened` | `read_outcome` (found, withheld, not-a-cart, empty, non-usd, payment-page, non-web), `store_kind` | Popup use and the read on open | Per open |
+| `release_refresh` | `kind` (catalog, merchants), `outcome` (ok, skipped, failed), `from_version`, `to_version`, `trigger` (install, weekly, manual) | API availability from the client's side (Render free tier), update lag | Per refresh |
+| `error` | `code`, `surface` | Reliability; no messages, no stack traces | Per caught error, capped 20 a day |
+| `store_suggested` (tap) | `domain` (registrable domain of the tab, from the worker's tab entry host), `page` | The Phase 16 growth list (Evan's answer #21) | Per tap on "Suggest this store" or "Store not recognised? Suggest it", at a generic store only |
+| `problem_reported` (tap) | `domain`, `reason` (wrong-amount, no-badge, wrong-store, wrong-card, other), `view`, `withheld_reason` | Reader and matcher fixes by store; no free text ([decision](../decisions/2026-10-19-release-a-telemetry-design.md)) | Per tap on "Report a problem" |
+
+Reserved, not emitted in Release A: `offer_impression`, `offer_click` (affiliate phase), `opportunity` (best owned vs best catalog rate). A domain appears only on the two tap events. Stop sharing sends nothing (the queue and ID are cleared); Delete my data is a request, not an event.
+
+## 6. Web Store submission checklist
+
+Everything Evan fills in the dashboard comes from `store-listing.md` (15.5). Items marked **Evan** are his alone.
+
+**Account.** Developer account registered and the one-time fee paid (**Evan**); contact email verified; two-step verification on the Google account (**Evan**); trader or non-trader declaration (decision 7 below); publisher name as it will show.
+
+**Listing fields.** Name `AI Checkout` (≤ 45 chars); summary ≤ 132 chars (the manifest description must match; `release-package.mjs` checks the length); detailed description (≤ 16,000 chars; the public copy in `store-listing.md`, with the attribution sentence); category Shopping; language English (United States); regions: United States only; pricing free; homepage `https://ai-checkout-api.onrender.com/`; support URL `/support/`; privacy policy URL `/privacy/`; mature content: no; not directed at children.
+
+**Assets.** Store icon 128×128 PNG (the existing cart mark, 96 px artwork with 16 px padding); one to five screenshots at 1280×800 (preferred) or 640×400, 24-bit no alpha; small promo tile 440×280; marquee 1400×560 optional; no YouTube video unless the demo is re-recorded.
+
+**Single purpose (dashboard copy outline).** "Shows which of the credit cards you already own earns the most on the cart or checkout page you are viewing, from the visible total and reward rules published by the issuers." Every feature serves it: the badge and popup (the answer), the catalog and merchant downloads (the rules and store categories the answer needs), optional usage reporting (measuring and improving the answer).
+
+**Permission justifications (outline).**
+
+| Permission | Justification |
+| --- | --- |
+| Host `https://*/*` | The badge must recognise a cart or checkout page at any store, so a packaged content script runs on https pages. On a page whose address and title carry no cart or checkout word it reads nothing and observes nothing. On a cart or checkout page it reads the visible order-summary amount and its currency, and sends only the amount, its kind, the currency and a reader version to the extension's own service worker; never item names, addresses, form values or page text, and nothing to any server |
+| Host, the catalog origin | Download the published card terms and the store list (schema-validated JSON data, never code) weekly and on demand, and send usage reports only after the shopper opts in |
+| `storage` | The shopper's chosen cards, options and settings, the downloaded releases and the usage queue, on the device |
+| `activeTab` and `scripting` | When the shopper opens the popup, read the current tab's cart total once with the same packaged reader |
+| `alarms` | The weekly refresh of card terms and the store list, the install-time refresh, and the batched usage report; no install warning |
+| Web-accessible resource `src/badge/index.html` | The badge is an extension page in an isolated frame so the store's page cannot read card names |
+
+**Remote code.** No. The catalog and merchant releases are JSON data validated against fixed schemas; no script, CSS or WebAssembly is fetched or evaluated (`grep -rn "eval(\|new Function" extension/src` returns nothing; 15.7 reviewer confirms on the ZIP).
+
+**Privacy practices tab (recommended answers, decision 6).** Collects or uses user data: yes. Categories: **Financial and payment information** (purchase amounts and the card products you own, as catalog identifiers; never card numbers), **Website content** (the cart total read on a cart or checkout page; a store's domain only when the shopper taps Suggest or Report), **User activity** (usage events such as the badge being shown, expanded or dismissed and the popup opened; no keystrokes, no mouse positions). Not collected: personally identifiable information (no name or email; a random identifier is explained in the policy), health, authentication, personal communications, location, web history (no browsing history is read or sent). Certifications: no sale to third parties, no use or transfer unrelated to the single purpose, no use for creditworthiness or lending. Privacy policy URL as above; the policy contains the Limited Use statement.
+
+**Before clicking Submit (Evan).** The ZIP is the one whose hash is in the release record; `/privacy/`, `/support/`, `/credits/` load; `EXTENSION_IDS` can be set only after Chrome shows the extension id on the first upload (upload as draft first, set the env var on Render, then submit); GitHub private vulnerability reporting enabled (`SECURITY.md` already points to it).
+
+## 7. Gaps found while planning, and what the plan does with them
+
+| Gap | Where it is handled |
+| --- | --- |
+| A fresh install after the bundled catalog's 30-day window sees "terms expired" until the weekly alarm fires two minutes later (longer if Render is cold) | 15.4: install-time refresh and a "Checking for updated terms…" state; 15.7: the submitted ZIP bundles the renewed catalog, so the window is as long as it can be |
+| No uninstall page | 15.4 and 15.5: `setUninstallURL` to a static `/uninstalled/` page with no parameters (no ID in a URL, so hosting logs never see it); the page explains the 90-day server expiry and Delete my data |
+| Order detection and savings only existed for the three stores | Dropped with the adapters, said plainly in the [decision](../decisions/2026-10-19-retire-legacy-adapters.md); generic thank-you detection is a Phase 17 candidate if `recommendation_shown` volume justifies it |
+| Settings still carry `disabledMerchants` and the popup still defaults to `best-buy-us` | 15.1 |
+| The public site, README, release docs and the extension README describe three stores (A6) | 15.5 |
+| The Oklahoma CC BY attribution has no public home | 15.5: `/credits/` and the listing sentence; the popup's About line links to credits |
+| An unauthenticated ingest endpoint on a free Render instance can be abused | 15.2: per-IP and global buckets, batch and body caps, per-install daily cap in SQL, `Origin` filter with `EXTENSION_IDS`, `TELEMETRY_INGEST=off` kill switch (410); clients back off |
+| `pg_cron` on the hosted plan is unconfirmed | 15.2: retention runs as opportunistic pruning inside the ingest RPC, no scheduler needed ([decision](../decisions/2026-10-19-release-a-telemetry-design.md)) |
+| Free-text problem reports invite personal data | 15.3: fixed reasons only (decision 4) |
+| "Anonymous" wording would be false with a persistent ID and exact amounts | 15.3 and 15.5: "a random identifier, no name, email or browsing history", the word "pseudonymous" in the policy; a site test fails on "anonymous" as a data claim |
+| The 2026-08-01 single-purpose rule ("strictly necessary") could be read against collecting owned cards and amounts | 15.3: telemetry is a build-time switch; the fallback is Release A without server collection |
+| GDPR and CCPA | US-only distribution; CCPA thresholds not met at MVP; the policy still gives notice, access by request to the support address, deletion through Delete my data, no sale, and the hosting providers' log retention; no cookies |
+| Chrome's version policy | 15.4: `2.1.0`; each later store upload increments the manifest version; the catalog and merchant releases update without a store upload |
+| The extension id is unknown until the first upload, so the API cannot pin `Origin` beforehand | 15.7: upload as draft, set `EXTENSION_IDS`, then submit; until then the check is off |
+| Error states at a store the detector recognises but the reader withholds, at a processor page, on a non-USD cart, with no cards, with a locked vault | Already handled by 13c and 14.2; 15.5 documents each in support; 15.6 shows the rates view |
+| Accessibility of the new screens | 15.3 and 15.6: axe at 360 and 480 px on the consent screen and the Suggest and Report controls; the site a11y spec on the new pages |
+| The README demo video and the full-stack recording show the three-store flow | 15.6 re-records the shopper demo or retires it from the README; the curation walkthrough is unaffected |
+| Accounts for shoppers | Not before the MVP (Evan, 2026-10-10); the uninstall page and Delete my data work without one |
+
+## 8. Decisions needed from Evan
+
+As few as possible; each with the recommendation the plan assumes. A silent "go" adopts the recommendation.
+
+| # | Decision | Recommendation |
+| --- | --- | --- |
+| 1 | Public identity: publisher name and support email for the listing, policy and support page (`[[PUBLISHER_NAME]]`, `[[SUPPORT_EMAIL]]`); a custom domain is optional | Publisher "Evan Liu"; a dedicated support address Evan controls; URLs on the Render origin (a custom domain can come later without a resubmission) |
+| 2 | Order detection and the savings history: drop them with the adapters, or keep a generic version | Drop ([decision](../decisions/2026-10-19-retire-legacy-adapters.md)); revisit in Phase 17 with telemetry in hand |
+| 3 | The two tap features ("Suggest this store", "Report a problem") for a shopper who chose Not now | They work; the request carries the domain and no install ID. The tap is the shopper's own action and the policy says so |
+| 4 | Problem reports: free text or fixed reasons | Fixed reasons only, no free text |
+| 5 | Extension version for the first store upload | `2.1.0` |
+| 6 | Privacy practices tab categories | Financial and payment information, Website content, User activity; the three certifications ticked |
+| 7 | Trader or non-trader declaration in the dashboard (a legal statement about Evan) | Non-trader: a free, non-commercial portfolio project with no sales; Evan confirms |
+| 8 | D14 hosting: stay on the Render and Supabase free tiers until a trigger | Stay; the trigger is 100 weekly active installs (from `recommendation_shown`) or sustained 429s or 503s on ingest or `/v1/catalog`, whichever first |
+
+## Progress
+
+- **2026-10-19: planned** (15.0) on `phase15-plan`, with the decisions [retire the legacy adapters](../decisions/2026-10-19-retire-legacy-adapters.md), [telemetry design](../decisions/2026-10-19-release-a-telemetry-design.md) and [first run and expiry](../decisions/2026-10-19-release-a-first-run-and-expiry.md). Awaiting Evan's answers to section 8; 15.1 and 15.2 can start on the recommendations.
