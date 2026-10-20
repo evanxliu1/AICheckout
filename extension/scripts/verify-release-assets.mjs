@@ -12,7 +12,7 @@ const inspection = resolve(process.env.MEDIA_INSPECTION_DIR ?? '/tmp/aicheckout-
 mkdirSync(inspection, { recursive: true });
 const manifest = JSON.parse(readFileSync(resolve(assets, 'assets-manifest.json'), 'utf8'));
 const inventory = JSON.parse(
-  readFileSync(resolve(root, 'extension/artifacts/ai-checkout-2.0.0.inventory.json'), 'utf8'),
+  readFileSync(resolve(root, 'extension/artifacts/ai-checkout-2.1.0.inventory.json'), 'utf8'),
 );
 const hash = (data) => createHash('sha256').update(data).digest('hex');
 const assert = (value, message) => {
@@ -20,7 +20,7 @@ const assert = (value, message) => {
 };
 assert(manifest.artifactSha256 === inventory.sha256, 'Media and ZIP versions differ');
 assert(
-  hash(readFileSync(resolve(root, 'extension/artifacts/ai-checkout-2.0.0.zip'))) === inventory.sha256,
+  hash(readFileSync(resolve(root, 'extension/artifacts/ai-checkout-2.1.0.zip'))) === inventory.sha256,
   'ZIP hash differs',
 );
 for (const entry of inventory.files)

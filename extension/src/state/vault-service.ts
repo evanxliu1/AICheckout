@@ -226,20 +226,22 @@ export function createVaultService(
   /** The weekly background refresh (Phase 14.6). With a locked or damaged vault the catalog step is skipped
    * (the wallet cannot be reconciled; no retry is worth scheduling); the merchant release, public data,
    * still refreshes. */
-  service.refreshReleases = (limit: number) =>
-    serial(async () => {
-      const current = await status();
-      return stateService.refreshReleases(limit, {
-        catalog: current === 'unlocked' || current === 'unprotected',
-      });
+  service.refreshReleases = async (limit: number) => {
+    // The fetch runs outside this queue (Phase 15.4: pages are answered while an install-time refresh waits
+    // out a cold start); the status check and the commit run in it.
+    const current = await serial(status);
+    return stateService.refreshReleases(limit, {
+      catalog: current === 'unlocked' || current === 'unprotected',
+      commit: serial,
     });
-  /** The current status and, when readable, the saved state and the catalog in effect. For the
-   * badge, which only reads. */
+  };
+  /** The current status and, when readable, the saved state, the catalog in effect and whether a pending
+   * refresh stands in for its expiry (Phase 15.4). For the badge, which only reads. */
   service.snapshot = () =>
     serial(async () => {
       const current = await status();
       if (current !== 'unlocked' && current !== 'unprotected')
-        return { status: current, state: null, catalog: null };
+        return { status: current, state: null, catalog: null, checkingTerms: false };
       return { status: current, ...(await stateService.read()) };
     });
   return service;

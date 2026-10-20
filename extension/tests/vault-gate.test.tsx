@@ -25,6 +25,7 @@ const privateView = {
   comparison: null,
   notice: null,
   catalogUpdatesAvailable: false,
+  checkingTerms: false,
 };
 beforeEach(() => {
   status = 'unprotected';
