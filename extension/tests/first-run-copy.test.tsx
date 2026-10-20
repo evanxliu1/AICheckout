@@ -67,6 +67,30 @@ describe('"Checking for updated terms…" (Phase 15.4)', () => {
     expect(await screen.findByText(/Card terms expire/)).toBeTruthy();
     expect(screen.queryByText(/Checking for updated terms…/)).toBeNull();
   });
+  it('a broadcast that lands before the "Checking…" answer is rendered is not lost', async () => {
+    // The refresh settles while the popup's first request is still in flight: the worker answered "checking"
+    // but the broadcast reaches the page before that answer is rendered.
+    let answer!: () => void;
+    const first = new Promise<void>((resolve) => (answer = resolve));
+    const inner = send.getMockImplementation()!;
+    send.mockImplementation(async (request: { type: string }) => {
+      const reply = await inner(request);
+      if (
+        request.type === 'checkout:get-state' &&
+        (reply as CheckoutResponse & { checkingTerms?: boolean }).checkingTerms
+      )
+        await first;
+      return reply;
+    });
+    render(<Popup />);
+    await vi.waitFor(() => expect(listeners.size).toBeGreaterThan(0));
+    await act(async () => {
+      for (const listener of listeners) listener({ type: 'terms:checked' });
+    });
+    await act(async () => answer());
+    expect(await screen.findByText(/Card terms expire/)).toBeTruthy();
+    expect(screen.queryByText(/Checking for updated terms…/)).toBeNull();
+  });
   it('the comparison result shows the expired copy, with "Check for updated terms", once no refresh is pending', () => {
     render(<ComparisonResult catalog={CATALOG_V3} result={expired} purchase={null} />);
     expect(screen.getByRole('alert').textContent).toContain('Check for updated terms');

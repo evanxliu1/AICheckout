@@ -318,15 +318,30 @@ export default function Popup({
   }, [restore, view]);
   // Phase 15.4: the worker broadcasts `terms:checked` when a background refresh settles; while this popup
   // stands in for expired terms with "Checking…", reload so it shows the outcome (new terms, or the expiry).
+  // The listener is attached from the first render and counts every broadcast; a view that says "Checking…"
+  // after a broadcast it has not acted on reloads at once. Attached only once "Checking…" had rendered (as
+  // before 2026-10-20), a broadcast landing before React ran that effect, or before the response that said
+  // "Checking…" was rendered, was lost and the popup stayed on "Checking…" (a flaky first-run-copy test on CI).
+  const [termsChecks, setTermsChecks] = useState(0);
+  const broadcasts = useRef(0);
+  const handled = useRef(0);
   const checking = view?.checkingTerms === true;
   useEffect(() => {
-    if (!checking) return;
+    if (!checking || broadcasts.current === handled.current) return;
+    handled.current = broadcasts.current;
+    void load();
+  }, [checking, view, termsChecks, load]);
+  useEffect(() => {
     const onMessage = (message: unknown) => {
-      if ((message as { type?: unknown } | null)?.type === 'terms:checked') void load();
+      if ((message as { type?: unknown } | null)?.type !== 'terms:checked') return;
+      broadcasts.current += 1;
+      // A render that says "Checking…" acts on it through the effect above.
+      setTermsChecks(broadcasts.current);
     };
-    chrome.runtime.onMessage.addListener(onMessage);
-    return () => chrome.runtime.onMessage.removeListener(onMessage);
-  }, [checking, load]);
+    // Optional: unit tests stub `chrome.runtime` without it; extension pages always have it.
+    chrome.runtime.onMessage?.addListener(onMessage);
+    return () => chrome.runtime.onMessage?.removeListener(onMessage);
+  }, []);
 
   /** The cards ranked by rate at `store` (read-only; nothing is stored). */
   async function loadRates(store: string, online: Eligibility) {
