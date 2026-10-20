@@ -191,8 +191,7 @@ describe('summary rows', () => {
     });
   });
   it('withholds when a credit row has no after-credit total', () => {
-    // Since 15.1b the credit must sit beside a summary total; without any summary the total itself is outside one.
-    expect(page(summary(row('Total', '$40.00') + row('Store credit', '-$5.00')))).toEqual({
+    expect(page(row('Total', '$40.00') + row('Store credit', '-$5.00'))).toEqual({
       shown: false,
       reason: 'credit-unclear',
     });
@@ -819,9 +818,9 @@ describe('Phase 13c.5 coverage round (2026-10-10)', () => {
   });
 });
 
-describe('Phase 15.1b: credit rows count only beside a summary total (2026-10-20)', () => {
+describe('Phase 15.1b: a card-offer credit beside no summary total is left out (2026-10-20)', () => {
   // A card-offer panel's illustration: its own items total, a hypothetical credit and a new total, no checkout control.
-  const offer = `<div class="offer"><p>Pay with our card and save.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}${row('New subtotal', '$0.00')}</div>`;
+  const offer = `<div class="offer"><p>Get a $50 gift card upon approval of our card.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}${row('New subtotal', '$0.00')}</div>`;
   it('a credit in a panel outside the summary does not block the summary subtotal', () => {
     const r = page(`<div>${offer}</div><div>${summary(row('Subtotal (1 item)', '$43.49'))}</div>`);
     expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
@@ -841,12 +840,18 @@ describe('Phase 15.1b: credit rows count only beside a summary total (2026-10-20
       page(summary(row('Subtotal', '$43.49') + row('Store credit', '-$10.00') + row('Total', '$33.49'))),
     ).toEqual({ shown: false, reason: 'credit-unclear' });
   });
-  it('a credit beside a non-summary total does not make an after-credit total', () => {
-    // The panel's "Amount due" is a plain total outside the summary, never an after-credit amount; two different
-    // totals outside the summary stay ambiguous, and nothing is shown.
+  it('a card-offer credit beside a non-summary total does not make an after-credit total', () => {
+    // The offer panel's rows are the offer's (left out); the summary's subtotal is shown.
+    const panel = `<div><p>Get a $50 gift card upon approval of our card.</p>${row('Total', '$50.00')}${row('Gift card savings', '-$50.00')}${row('Amount due', '$0.00')}</div>`;
+    const r = page(`<div>${panel}</div><div>${summary(row('Subtotal', '$50.00'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 5000, currency: 'USD' });
+  });
+  it('a credit with no offer wording beside a non-summary total still counts (review narrowing)', () => {
+    // Without the offer's words it may be a credit the shopper pays with: its "Amount due" is an after-credit total
+    // outside the summary, and nothing is shown.
     const panel = `<div>${row('Total', '$50.00')}${row('Gift card savings', '-$50.00')}${row('Amount due', '$0.00')}</div>`;
     const r = page(`<div>${panel}</div><div>${summary(row('Subtotal', '$50.00'))}</div>`);
-    expect(r).toEqual({ shown: false, reason: 'ambiguous' });
+    expect(r).toEqual({ shown: false, reason: 'total-outside-summary' });
   });
   it("an offer panel laid out as the summary list's own sibling still counts (adjacent panel)", () => {
     // Single-element rows one list apart share a grandparent (`near`): the credit is read as the summary's company,
@@ -865,5 +870,45 @@ describe('Phase 15.1b: credit rows count only beside a summary total (2026-10-20
       `<div>${offer}</div><div>${summary(row('Subtotal', '$43.49') + row('Total', '$3.49'))}</div>`,
     );
     expect(r).toEqual({ shown: false, reason: 'total-below-subtotal' });
+  });
+});
+
+describe('Phase 15.1b review: credits outside the summary that the shopper does pay with (2026-10-20)', () => {
+  const orderSummary = summary(
+    row('Subtotal', '$43.49') + row('Shipping', '$5.00') + row('Order total', '$48.49'),
+  );
+  it('a gift card applied in a payment section beside its remaining balance withholds', () => {
+    const payment = `<div><h3>Payment method</h3>${row('Gift card ending 1234', '-$25.00')}${row('Remaining balance', '$23.49')}</div>`;
+    expect(page(`<div>${payment}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a gift card applied in a payment section beside an amount due withholds', () => {
+    const payment = `<div><h3>Payment</h3>${row('Gift card applied', '-$25.00')}${row('Amount due', '$23.49')}</div>`;
+    expect(page(`<div>${payment}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('an applied-credits section above the summary with its own totals withholds', () => {
+    const credits = `<div><h3>Your credits</h3>${row('Order total', '$48.49')}${row('Store credit applied', '-$10.00')}${row('Total after credit', '$38.49')}</div>`;
+    expect(page(`<div>${credits}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a rewards balance beside a plain total in a side panel withholds', () => {
+    const panel = `<aside>${row('Rewards balance', '-$5.00')}${row('Total', '$43.49')}</aside>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toMatchObject({ shown: false });
+  });
+  it('a credit split across two columns of the summary (labels and values apart) shows no pre-credit amount', () => {
+    const cols = `<section><div><p>Subtotal</p><p>Gift card</p><p>Total</p></div><div><p>$43.49</p><p>-$10.00</p><p>$33.49</p></div><button>Checkout</button></section>`;
+    const r = page(cols);
+    expect(r.shown && r.amountMinor !== 3349).toBe(false);
+  });
+  it('an offer panel without offer wording withholds (conservative)', () => {
+    const panel = `<div><p>Pay with our card and save.</p>${row('Current subtotal', '$43.49')}${row('Gift card savings', '-$50.00')}</div>`;
+    expect(page(`<div>${panel}</div><div>${orderSummary}</div>`)).toEqual({
+      shown: false,
+      reason: 'credit-unclear',
+    });
+  });
+  it('a card-offer illustration in a table below the offer copy is ignored (the Amazon shape)', () => {
+    const table = `<table><tbody><tr><td>Current subtotal:</td><td>$43.49</td></tr><tr><td>Gift card savings:</td><td>-$50.00</td></tr><tr><td>Cost after savings:</td><td>$0.00</td></tr></tbody></table>`;
+    const offer = `<a><div><div><span>Get a $50 gift card upon approval of our card.</span><div><div>${table}</div></div><span>Learn more</span></div></div></a>`;
+    const r = page(`<div>${offer}</div><div>${summary(row('Subtotal (1 item)', '$43.49'))}</div>`);
+    expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
   });
 });
