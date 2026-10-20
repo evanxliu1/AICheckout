@@ -11,6 +11,8 @@ import type {
 } from '../domain';
 import { merchantName } from '../checkout/store-match';
 import {
+  CHECKING_TERMS_COPY,
+  CHECKING_TERMS_TITLE,
   notAcceptedLines,
   rankingNote,
   rateText,
@@ -226,15 +228,22 @@ export default function ComparisonResult({
   catalog,
   subtotalOnly = false,
   maxAgeMinutes = 15,
+  checking = false,
 }: {
   result: Comparison | UnavailableComparison;
   purchase: Purchase | null;
   catalog: Catalog;
   subtotalOnly?: boolean;
   maxAgeMinutes?: number;
+  /** A refresh is in flight for the expired terms (Phase 15.4): "checking" instead of "expired". */
+  checking?: boolean;
 }) {
   if (result.status === 'unavailable')
-    return (
+    return result.reason === 'catalog-expired' && checking ? (
+      <AlertInline role="status">
+        {CHECKING_TERMS_TITLE} {CHECKING_TERMS_COPY}
+      </AlertInline>
+    ) : (
       <AlertInline color="critical" role="alert">
         {unavailableCopy[result.reason]}
       </AlertInline>

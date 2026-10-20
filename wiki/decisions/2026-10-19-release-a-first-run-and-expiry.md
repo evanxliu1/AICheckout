@@ -5,8 +5,8 @@ description: Because every bundled catalog expires 30 days after its verificatio
 status: accepted
 tags: [decision, phase-15, extension, catalog, first-run]
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-20T00:30:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-20T07:00:00Z
 sources:
   - resource: ../product/phase-15-release-a.md
     title: Phase 15 plan (15.4)
@@ -42,6 +42,19 @@ Phase 15.4 implements the chosen column. The "checking" state exists only while 
 - `extension/package.json`, `manifest.json`, `e2e/release-assets.spec.ts` and `scripts/package.test.mjs` move to `2.1.0`; the store media are regenerated against the `2.1.0` ZIP (15.6).
 - The support page explains the first-run check and the offline case (a valid cached catalog works offline; an expired one needs one successful check).
 - The site gains `/uninstalled/` (15.5).
+
+## Implementation notes (2026-10-20, Phase 15.4)
+- `refreshReleases` is called directly from `onInstalled` (`reason: 'install'`); no second alarm. A failed install refresh schedules no retry of its own: the weekly alarm's first run (2 minutes) is the retry.
+- The fetch had to leave the request queue: both the state service's and the vault service's queues used to be held for the whole fetch, so an install-time fetch would have blocked onboarding's first request for up to 90 s on a cold instance. Only the commit joins the queues now ([extension](../system/extension.md#first-run-and-expiry-phase-154)).
+- `checkingTerms` is true for any `refreshReleases` call in flight (the weekly one too) while the catalog in effect has expired, not only one started at install: the condition is "a refresh that could cure this expiry is pending". The flag is worker memory; a worker stopped mid-fetch shows the expiry.
+- The worker broadcasts `terms:checked` when a refresh settles; the popup reloads on that, not on `badge:changed` (sent after every page request, which would loop).
+- The uninstall URL is the API origin's `/uninstalled/` (the same Render service serves the site), set on worker start in hosted builds only.
+- The no-cards pill opens onboarding and expands nothing, so it has no per-tab "Dismiss" (the table above assumed it did). Left unchanged; the review decides whether to add a panel.
+
+## Amended after the independent review (2026-10-20)
+- `checkingTerms` counts only a refresh's **catalog step** in flight, not the whole call: a locked vault's merchant-only refresh cannot cure an expiry, and an unlock during it used to show "Checking…" for terms nobody was fetching. The weekly refresh still counts (it can cure the expiry).
+- The no-cards pill gets a per-tab dismiss beside it (a round navy icon button, "Dismiss for this tab (AI Checkout)", the existing `badge:dismiss`), as the table assumed: the pill shows at every https cart for a shopper with no cards. No panel was added.
+- Accepted as is: the broadcast after every settled refresh (no loop: nothing a page sends triggers a refresh broadcast), and the few-milliseconds window in which a popup subscribes to `terms:checked` after the refresh settled (it then shows "Checking…" until reopened or until its next request).
 
 ## Status
 Accepted 2026-10-19 (planner; version number listed as decision 5 in the [plan](../product/phase-15-release-a.md#8-decisions-needed-from-evan)).

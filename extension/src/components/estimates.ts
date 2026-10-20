@@ -31,6 +31,12 @@ export const unavailableCopy: Record<UnavailableComparison['reason'], string> = 
     'None of your cards can be used at this store: each is a store card that works only at its own stores. Add a card you can use here to compare.',
 };
 
+/** Phase 15.4: shown instead of the `catalog-expired` copy while a background refresh (right after install,
+ * or weekly) is in flight; the worker's `checkingTerms` flag. */
+export const CHECKING_TERMS_TITLE = 'Checking for updated terms…';
+export const CHECKING_TERMS_COPY =
+  'The card terms this extension came with have expired, so a current copy is being fetched. This can take a minute the first time.';
+
 /** Payment methods in selector order. Venmo exists only in catalog v3 terms (a v2 catalog rejects it),
  * so selectors offer it only then. */
 export const PAYMENT_LABELS: Record<PaymentPathV3, string> = {

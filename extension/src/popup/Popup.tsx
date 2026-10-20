@@ -19,7 +19,7 @@ import {
   TextInput,
 } from '@ai-checkout/ui';
 import PopupHeader from '../components/PopupHeader';
-import { PAYMENT_LABELS } from '../components/estimates';
+import { CHECKING_TERMS_TITLE, PAYMENT_LABELS } from '../components/estimates';
 import { unvaluedPrograms } from '../components/wallet-options';
 import { GENERIC_MERCHANT_ID, catalogMerchantIds, formatUsd, parseUsd, usageInputs } from '../domain';
 import type { Comparison, Eligibility, PaymentPathV3, Wallet } from '../domain';
@@ -268,6 +268,7 @@ export default function Popup({
             comparison: null,
             notice: 'Local data deleted.',
             catalogUpdatesAvailable: view.catalogUpdatesAvailable,
+            checkingTerms: false,
           });
       } else if (next.revision !== view?.state.revision) {
         setView((current) =>
@@ -286,6 +287,17 @@ export default function Popup({
     chrome.storage.onChanged.addListener(onChange);
     return () => chrome.storage.onChanged.removeListener(onChange);
   }, [restore, view]);
+  // Phase 15.4: the worker broadcasts `terms:checked` when a background refresh settles; while this popup
+  // stands in for expired terms with "Checking…", reload so it shows the outcome (new terms, or the expiry).
+  const checking = view?.checkingTerms === true;
+  useEffect(() => {
+    if (!checking) return;
+    const onMessage = (message: unknown) => {
+      if ((message as { type?: unknown } | null)?.type === 'terms:checked') void load();
+    };
+    chrome.runtime.onMessage.addListener(onMessage);
+    return () => chrome.runtime.onMessage.removeListener(onMessage);
+  }, [checking, load]);
 
   /** The cards ranked by rate at `store` (read-only; nothing is stored). */
   async function loadRates(store: string, online: Eligibility) {
@@ -743,6 +755,7 @@ export default function Popup({
                         maxAgeMinutes={
                           (view.state.comparison?.cartId ? CART_MAX_AGE_MS : RESULT_MAX_AGE_MS) / 60_000
                         }
+                        checking={view.checkingTerms}
                       />
                     </div>
                   )}
@@ -765,7 +778,12 @@ export default function Popup({
               Cards and purchase inputs stay on this device. This comparison works offline and requires no API
               key.
             </p>
-            {catalog && <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>}
+            {catalog &&
+              (view.checkingTerms ? (
+                <p role="status">{CHECKING_TERMS_TITLE}</p>
+              ) : (
+                <p>Card terms expire {new Date(catalog.expiresAt).toLocaleString('en-US')}.</p>
+              ))}
             <div className="flex flex-wrap gap-2">
               {onLock && (
                 <Button size="small" color="secondary" icon="lock" disabled={busy} onClick={onLock}>

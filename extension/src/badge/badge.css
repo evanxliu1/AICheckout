@@ -53,6 +53,41 @@ body.badge-body {
   outline: 2px solid transparent;
   box-shadow: var(--token-focus-ring-action-box-shadow);
 }
+/* The pill and, for the no-cards prompt only, its per-tab dismiss (Phase 15.4). */
+.badge-pill-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 352px;
+}
+.badge-pill-row > .badge-pill {
+  min-width: 0;
+}
+.badge-pill__dismiss {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--token-color-foreground-high-contrast);
+  background: var(--ac-color-navy);
+  border: 1px solid var(--ac-color-navy-strong);
+  border-radius: 999px;
+  box-shadow: var(--token-elevation-high-box-shadow);
+  cursor: pointer;
+}
+.badge-pill__dismiss:hover {
+  background: var(--ac-color-navy-strong);
+}
+.badge-pill__dismiss:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: var(--token-focus-ring-action-box-shadow);
+}
+.badge-pill__dismiss:disabled {
+  cursor: default;
+}
 .badge-panel {
   display: flex;
   flex-direction: column;

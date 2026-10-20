@@ -25,12 +25,12 @@ test('capture real release UI and record the staged offline shopper walkthrough'
     captures = resolve(output, 'captures');
   mkdirSync(captures, { recursive: true });
   const extension = resolve('dist');
-  const inventory = JSON.parse(readFileSync('artifacts/ai-checkout-2.0.0.inventory.json', 'utf8')) as {
+  const inventory = JSON.parse(readFileSync('artifacts/ai-checkout-2.1.0.inventory.json', 'utf8')) as {
     sha256: string;
     files: { path: string; sha256: string }[];
   };
   const hash = (data: Buffer) => createHash('sha256').update(data).digest('hex');
-  expect(hash(readFileSync('artifacts/ai-checkout-2.0.0.zip'))).toBe(inventory.sha256);
+  expect(hash(readFileSync('artifacts/ai-checkout-2.1.0.zip'))).toBe(inventory.sha256);
   for (const file of inventory.files)
     expect(hash(readFileSync(resolve(extension, file.path)))).toBe(file.sha256);
   const context = await chromium.launchPersistentContext(testInfo.outputPath('native-profile'), {
@@ -232,7 +232,7 @@ test('capture real release UI and record the staged offline shopper walkthrough'
           capturedAt: new Date().toISOString(),
           browser: context.browser()?.version(),
           artifactSha256: inventory.sha256,
-          extensionVersion: '2.0.0',
+          extensionVersion: '2.1.0',
           catalogVersion: CATALOG_V3.version,
           catalogExpiresAt: CATALOG_V3.expiresAt,
           source:
