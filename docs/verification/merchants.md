@@ -1,8 +1,16 @@
 # Merchant verification evidence
 
-This records observed behavior, not broad merchant compatibility or issuer reward-category guarantees. The extension implements Best Buy US, Newegg US and Amazon US. Best Buy has live reader observations and separate native fixture tests. Newegg also has a passing combined native-toolbar/live-cart comparison at two quantities. Final normal-Chrome and release-build checks remain open.
+## Status (2026-10-20)
 
-## Best Buy US — September 25, 2026
+The three site adapters this file's observations were made for (Best Buy, Newegg and Amazon, `*-summary-v1`) were **retired on 2026-10-20** in Phase 15.1 ([decision](../../wiki/decisions/2026-10-19-retire-legacy-adapters.md)). Since then one generic cart reader (`packages/cart-reader`) reads every https store's cart or checkout page and shows an amount only when it is certain of it; the three are named by the merchant release like any other store, and no store has its own code path. The sections below are the historical record of the adapters' live observations (September 2026) and stay as they were written; the selectors, fixtures and adapter specs they name no longer exist in the extension.
+
+What changed for those three under the generic reader is measured, not guaranteed, in [`docs/evals/legacy-adapter-retirement.md`](../evals/legacy-adapter-retirement.md): on fresh captures of 2026-10-20, Best Buy and Newegg read identically under both readers; Amazon's cart pages read as the rates view (`credit-unclear`) at the retirement and show the subtotal again since the 15.1b reader rule; every empty cart is hidden; no wrong amount on any page. The generic reader's own measurement on the frozen real-page set is [`docs/evals/reader-v1.md`](../evals/reader-v1.md) and the detector's [`docs/evals/cart-detection-v1.md`](../evals/cart-detection-v1.md); the store list's is [`docs/evals/merchant-db-v1.md`](../evals/merchant-db-v1.md). Release-build checks of the badge at a store are in the packaged browser suite (`extension/e2e/badge-any-store.spec.ts`, `badge.spec.ts`), on synthetic fixtures served at real hosts, never a live store.
+
+The remaining release checks listed at the end of the Newegg section were written for the adapters and are closed by the retirement; Release A's gates are in [`docs/release/README.md`](../release/README.md).
+
+## Historical record: the adapters (September 2026)
+
+### Best Buy US — September 25, 2026
 
 Method: isolated Chromium 153 profile, no account sign-in, one temporary physical cable added through the public Add to cart control. No checkout submission or purchase. The packaged `dist/src/checkout/content.js` reader was evaluated against the rendered live cart DOM. This proves the reader's behavior on those pages; Chrome toolbar permission/message/UI tests are separate evidence.
 
@@ -20,7 +28,7 @@ Observed selector contract: `table[data-testid="order-summary__price-summary-tab
 
 The public source page is [Best Buy's cart](https://www.bestbuy.com/cart). The retained fixture [bestbuy-observed-summary.html](../../extension/tests/fixtures/bestbuy-observed-summary.html) contains only the sanitized numeric summary. The empty fixture is observed; the large-price fixture is explicitly synthetic. Raw browser profiles/screenshots stay outside the repository.
 
-Limits: one anonymous desktop cart and one product type; no authenticated checkout, gift card, split payment, promotion, financing, marketplace item, mobile layout, or completed transaction was verified. Issuer category eligibility is still a user-confirmed assumption. Checkout paths may fall back to manual entry if they do not use the observed table contract. Automated fixtures must not be reported as additional live merchants.
+Limits: one logged-out desktop cart and one product type; no authenticated checkout, gift card, split payment, promotion, financing, marketplace item, mobile layout, or completed transaction was verified. Issuer category eligibility is still a user-confirmed assumption. Checkout paths may fall back to manual entry if they do not use the observed table contract. Automated fixtures must not be reported as additional live merchants.
 
 Combined live-toolbar attempts are not counted as a populated-cart pass. Retailer search controls intermittently timed out. One test setup also navigated before Add to cart finished; the real native popup correctly reported that the resulting $0.00 cart had no amount to compare. That setup was corrected to await a populated cart, but the subsequent search controls still timed out. The successful native fixture check and successful live reader observations above remain separate evidence.
 
@@ -28,7 +36,7 @@ A subsequent read-only check confirmed the isolated browser profile's extension 
 
 On September 26, another isolated profile reached the public cart shell, but two public Best Buy product URLs failed with `ERR_HTTP2_PROTOCOL_ERROR` before the product rendered. No item was added in this attempt, and it does not satisfy the combined live-toolbar gate. The newly verified [extracted-ZIP flow](release-package.md) also uses a fixture and remains separate evidence.
 
-## Newegg US — implemented and live-tested, September 26, 2026
+### Newegg US — implemented and live-tested, September 26, 2026
 
 Status: **supported pilot cart path with narrowly scoped live evidence**. An isolated Chromium 153 profile visited the public storefront, followed its cart link to [secure.newegg.com/shop/cart](https://secure.newegg.com/shop/cart), and used the public Add to cart control for one physical SSD sold/shipped by Newegg. The retailer also included a free gift. No address, account sign-in, checkout submission or purchase was used.
 
@@ -43,9 +51,9 @@ The add operation succeeded even though the initial harness waited for the wrong
 
 Observed structure: `.summary-side` contains a `h1.row-title` and `.summary-wrap`; summary rows are `.summary-content > ul > li`, with labels and a sibling amount span/strong. `li.summary-content-total` is labeled `Est. Total`. The selected count includes gifts, so it cannot be used to infer physical quantities or money. The implemented `newegg-summary-v1` reader inspects only bounded visible `Selected Subtotal` and `Est. Total` rows. Only the exact observed `TBD` value allows subtotal fallback. Arbitrary malformed totals, conflicting or duplicate amount rows, loading indicators, and foreign currency fail closed. The URL contract accepts HTTPS `secure.newegg.com/shop/cart` with an optional trailing slash; other Newegg hosts and checkout routes are not supported.
 
-Sanitized fixtures preserve the observed summary containers, labels and amount markup: [quantity 1](../../extension/tests/fixtures/newegg-observed-subtotal.html), [quantity 2](../../extension/tests/fixtures/newegg-observed-quantity.html), and [empty](../../extension/tests/fixtures/newegg-observed-empty.html). The four retained summary rows were compared against both raw live captures before implementation and matched. Promotion/payment controls and unrelated content are omitted. Raw profiles and screenshots remain outside the repository.
+Sanitized fixtures preserve the observed summary containers, labels and amount markup: [quantity 1](../../extension/tests/fixtures/newegg-observed-subtotal.html), [quantity 2](../../extension/tests/fixtures/newegg-observed-quantity.html), and the empty-cart fixture (removed with the adapters on 2026-10-20). The four retained summary rows were compared against both raw live captures before implementation and matched. Promotion/payment controls and unrelated content are omitted. Raw profiles and screenshots remain outside the repository.
 
-### Combined native-toolbar/live-cart check
+#### Combined native-toolbar/live-cart check
 
 The production build passed this flow in a fresh Chromium 153.0.8010.12 profile, without routing or replacing merchant responses. Chrome's actual extension action opened the native popup, which selected both owned cards and recorded zero previous annual online-retail spend. Reading the live cart selected Newegg automatically. With eligible online goods and purchase exclusions explicitly confirmed, the popup showed:
 
@@ -60,16 +68,16 @@ The first attempt reused an unpacked-extension profile from before the implement
 
 The separate native fixture test covers popup close/reopen with confirmation reset, changed amount rejection before comparison, a fresh quantity read, manual merchant switching, and clearing stale inputs/results. Unit/component tests also reject merchant/version mismatches and preserve an older downloaded catalog's original merchant scope. The bundled pilot and unapproved seed are version `.2`; source dates and expiry are unchanged.
 
-Limits: one anonymous desktop cart and physical product type with an included gift. Numeric estimated totals have synthetic regression coverage only. Selected-item changes, final charged totals, authenticated checkout, promotions, alternate sellers, international/mobile layouts, payment methods, completed transactions, and issuer coding remain unverified. When the final charge becomes known, the shopper must enter it or deliberately compare only the displayed subtotal.
+Limits: one logged-out desktop cart and physical product type with an included gift. Numeric estimated totals have synthetic regression coverage only. Selected-item changes, final charged totals, authenticated checkout, promotions, alternate sellers, international/mobile layouts, payment methods, completed transactions, and issuer coding remain unverified. When the final charge becomes known, the shopper must enter it or deliberately compare only the displayed subtotal.
 
-## Remaining release checks
+#### Remaining release checks (as written on September 26, 2026; closed by the retirement)
 
 - Complete the combined Best Buy native-toolbar/live-cart check; its existing live reader and native fixture evidence remain separate.
 - Repeat both declared merchant paths in the final release build. Newegg's current combined flow is passing evidence for this development build.
 - Repeat the [verified packaged lifecycle cases](extension-lifecycle.md) in the final normal Chrome smoke pass. Local fixture checks now cover same-tab reload, popup closure during capture, cross-origin permission revocation, and actual idle-worker shutdown/recovery.
 - Ask a small tester group to reproduce the supported flow before submission; record failures honestly.
 
-## Amazon US — observed structure, September 30, 2026
+### Amazon US — observed structure, September 30, 2026
 
 Status: **implemented from observed structure; no combined native-toolbar/live-cart check yet**. Two headless Chromium runs of `extension/scripts/observe-amazon-cart.mjs` used a logged-out session: open the empty cart, add the first search result for a generic office item through the public Add to cart button, open the cart, increase the quantity once (recording the page while it updated), and record again. No sign-in, address, checkout or purchase. The script records structure only (tag, id, class and `data-name` chains for summary regions, spinners and every subtotal label) plus label/amount text; no item titles. Amazon showed no bot check in either run.
 
@@ -82,4 +90,4 @@ Status: **implemented from observed structure; no combined native-toolbar/live-c
 
 The first run's screenshot also showed a card-offer banner with a "Current subtotal" line; its markup was not recorded and it did not appear in the second run. The reader is scoped to `#sc-buy-box`, and the fixtures include a synthetic lookalike (same `data-name` and label wording) outside the buy box to prove it is never read. No subtotal row under the item list was observed, so the adapter does not read one.
 
-Amazon's cart page shows no tax, shipping or total, so every capture is a **subtotal**; the popup labels it as such. Third-party marketplace sellers, Subscribe & Save, gift options, promotions, authenticated carts and the checkout pages are not verified. Fixtures: [subtotal](../../extension/tests/fixtures/amazon-observed-subtotal.html), [quantity 2](../../extension/tests/fixtures/amazon-observed-quantity.html), [empty](../../extension/tests/fixtures/amazon-observed-empty.html). The adapter spec is [amazon-us.json](../../extension/src/checkout/adapters/amazon-us.json).
+Amazon's cart page shows no tax, shipping or total, so every capture is a **subtotal**; the popup labels it as such. Third-party marketplace sellers, Subscribe & Save, gift options, promotions, authenticated carts and the checkout pages are not verified. Fixtures (`amazon-observed-*.html`) were removed with the adapters on 2026-10-20. The adapter spec (`amazon-us.json`) was removed with the adapters on 2026-10-20.

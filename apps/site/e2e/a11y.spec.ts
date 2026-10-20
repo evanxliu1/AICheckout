@@ -7,7 +7,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { fork, type ChildProcess } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { PAGES } from '../src/Layout.tsx';
+import { ALL_PAGES, PAGES } from '../src/Layout.tsx';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
@@ -54,7 +54,7 @@ async function watchViolations(page: Page) {
   return violations;
 }
 
-for (const entry of PAGES) {
+for (const entry of ALL_PAGES) {
   test(`${entry.label} (${entry.path}): axe-clean at 1280 and 390 px, no CSP violations`, async ({
     page,
   }) => {
@@ -67,9 +67,11 @@ for (const entry of PAGES) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(`${origin}${entry.path}`, { waitUntil: 'networkidle' });
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-      await expect(
-        page.getByRole('navigation', { name: 'Site' }).getByRole('link', { name: entry.label }),
-      ).toHaveAttribute('aria-current', 'page');
+      const nav = page.getByRole('navigation', { name: 'Site' });
+      // The credits and uninstalled pages are reached from the footer or from Chrome, not the navigation.
+      if (PAGES.includes(entry))
+        await expect(nav.getByRole('link', { name: entry.label })).toHaveAttribute('aria-current', 'page');
+      else await expect(nav.locator('[aria-current="page"]')).toHaveCount(0);
       // Lazy screenshots load once scrolled into view; scroll through so every image is checked.
       await page.evaluate(async () => {
         for (let y = 0; y < document.body.scrollHeight; y += 600) {
