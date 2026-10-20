@@ -49,24 +49,24 @@ function Section({ id, title, children }: { id: string; title: string; children:
 const SCREENSHOTS = [
   {
     src: '/media/2-badge.png',
-    alt: 'Badge panel “Best card for this cart” over a neutral sample cart page: based on a $100.00 cart estimated total at Lidl, treated as a supermarket (its own pages; fits Bank of America, Chase, Discover and U.S. Bank’s supermarket definition); an amount field reading 100.00, the payment method “Card entered at checkout”, then Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (1)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), with its disclosure half hidden by the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “Your best card, on your cart.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page with a $100.00 total: based on a $100.00 cart estimated total at Sample Grocery (a fictional store), treated as a supermarket (its own pages; fits Bank of America, Chase, Discover and U.S. Bank’s supermarket definition); an amount field reading 100.00, the payment method “Card entered at checkout”, then Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (1)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), with the top edge of its disclosure cut by the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
     caption:
       'The badge on a cart, expanded: the best card, the rule in the issuer’s words, and why the store’s category applies.',
   },
   {
     src: '/media/3-rates.png',
-    alt: 'Badge panel “Best card for this cart” over a neutral sample cart page: the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “No guess when the amount isn’t certain.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page whose order summary applies a −$25.00 gift card (total $75.00): the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
     caption:
       'When the amount isn’t certain (a gift card is applied here), your cards are ranked by rate, not guessed.',
   },
   {
     src: '/media/1-wallet.png',
-    alt: 'Popup card editor: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
+    alt: 'Presentation panel “Your cards. Your choice.” beside the actual popup card editor: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
     caption: 'Search 178 cards and add the ones you already have. No card numbers or bank login.',
   },
   {
     src: '/media/4-comparison.png',
-    alt: 'Popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
+    alt: 'Presentation panel “The rule in the issuer’s words.” beside the actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
     caption:
       'The popup compares any amount at any store, with each rule quoted from the issuer and its conditions.',
   },

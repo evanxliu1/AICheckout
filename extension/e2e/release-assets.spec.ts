@@ -1,16 +1,18 @@
 // Release media (milestone 15.6): five captures of the real packaged extension for the Web Store images and
 // the staged shopper recording. Everything is captured at 1 CSS pixel per image pixel: the popup page at its
 // 360×600 popup size, the badge on a neutral fictional store page and the onboarding consent screen in an
-// 880×800 window. Fixture pages carry no retailer branding; the one store the merchant release names (Lidl)
-// appears only as the name the extension renders. The hosted build is required (the consent screen exists
-// only in builds with usage reporting); its catalog origin is mapped to the loopback address so no request
-// leaves the machine.
+// 880×800 window. Fixture pages carry no retailer branding and no real store is named: the named store is a
+// fictional "Sample Grocery" on a reserved `.example` host, added to a test copy of the bundled merchant release
+// cached in the capture profile (review of 2026-10-20: promotional media must not name a real retailer). The
+// hosted build is required (the consent screen exists only in builds with usage reporting); its catalog origin
+// is mapped to the loopback address so no request leaves the machine.
 import { chromium, expect, test, type BrowserContext, type Page } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { CATALOG_V3 } from '../../packages/rewards-core/src/catalog-v3';
 import { MERCHANTS_V1 } from '../../packages/rewards-core/src/merchants-v1';
+import { publishedMerchantReleaseSchema } from '../../packages/rewards-core/src/merchant-release';
 import { addCard } from './wallet';
 
 /** The sample wallet: four cards from the catalog; Blue Cash Everyday's online-retail spend is reported as $0. */
@@ -20,9 +22,58 @@ const SAMPLE_CARDS = [
   'Chase Freedom Unlimited',
   'American Express Blue Cash Everyday',
 ];
-/** A store the bundled merchant release names, with a supermarket category on the `definition` basis, so the
- * badge panel carries the evidence line. Only its name is shown; the page is the neutral sample cart. */
-const NAMED_STORE = { id: 'lidl-us', host: 'www.lidl.com', name: 'Lidl' };
+/** A fictional store, never a real retailer: a supermarket record on the `definition` basis (so the badge panel
+ * carries the evidence line), on a reserved `.example` host, citing the same issuer definitions as the bundled
+ * release's supermarket records. It exists only in the test release below; the page is the neutral sample cart. */
+const NAMED_STORE = { id: 'sample-grocery-us', host: 'www.sample-grocery.example', name: 'Sample Grocery' };
+/** The bundled release's supermarket `definition` records cite these issuer pages (Bank of America, Chase,
+ * Discover, U.S. Bank); the fictional record cites them too, so its evidence line reads as a real one does. */
+const ISSUER_DEFINITIONS = [
+  'boa-customized-cash-rewards-pricing',
+  'chase-rewards-category-faq',
+  'discover-cashback-calendar',
+  'us-bank-cash-plus-sample-merchants',
+];
+/** The bundled release plus the fictional record, as a cached hosted release (sequence 1, verified with the
+ * bundled one, so the cache is in effect on a tie). Validated with the extension's own schema. */
+function mediaMerchantRelease() {
+  const sourceId = 'sample-grocery-example-page-1';
+  const release = {
+    ...MERCHANTS_V1,
+    version: `${MERCHANTS_V1.verifiedAt.slice(0, 10)}.media-sample.1`,
+    sources: [
+      ...MERCHANTS_V1.sources,
+      {
+        id: sourceId,
+        url: `https://${NAMED_STORE.host}/about`,
+        kind: 'store-page' as const,
+        capturedAt: MERCHANTS_V1.verifiedAt.slice(0, 10),
+        sha256: hash(Buffer.from(fixture('sample-cart.html'))),
+      },
+    ],
+    merchants: [
+      ...MERCHANTS_V1.merchants,
+      {
+        id: NAMED_STORE.id,
+        name: NAMED_STORE.name,
+        hosts: [NAMED_STORE.host.replace(/^www\./, '')],
+        kind: 'merchant' as const,
+        physicalGoods: true,
+        category: 'supermarkets' as const,
+        evidence: { basis: 'definition' as const, sourceIds: [sourceId, ...ISSUER_DEFINITIONS] },
+        brandIds: [],
+        disabled: false,
+      },
+    ],
+  };
+  return publishedMerchantReleaseSchema.parse({
+    sequence: 1,
+    release,
+    version: release.version,
+    release_hash: hash(Buffer.from(JSON.stringify(release))),
+    published_at: release.verifiedAt,
+  });
+}
 const GENERIC_HOST = 'shop.example.com';
 const WINDOW = { width: 880, height: 800 };
 const POPUP = { width: 360, height: 600 };
@@ -72,6 +123,12 @@ async function launch(
   const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
   const id = new URL(worker.url()).host;
   const onboarding = await onboardingTab(context, id);
+  // The test release with the fictional store, cached as a hosted release would be (the install-time refresh
+  // fails on the loopback address and writes nothing).
+  await worker.evaluate((cache) => chrome.storage.local.set({ checkoutMerchantsV1: cache }), {
+    release: mediaMerchantRelease(),
+    lastCheckedAt: Date.now(),
+  });
   return { context, worker, id, onboarding };
 }
 /** The onboarding tab a fresh install opens. */
@@ -122,10 +179,12 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     inventory.catalogOrigin,
     'Release media needs the hosted build (npm run build:hosted): the consent screen exists only there.',
   ).toBeTruthy();
-  const store = MERCHANTS_V1.merchants.find((record) => record.id === NAMED_STORE.id);
-  expect(store?.name).toBe(NAMED_STORE.name);
-  expect(store?.category).toBe('supermarkets');
-  expect(store?.evidence.basis).toBe('definition');
+  // The named store is fictional: no record of the shipped release matches its host.
+  expect(
+    MERCHANTS_V1.merchants.some((record) =>
+      record.hosts.some((host) => NAMED_STORE.host === host || NAMED_STORE.host.endsWith(`.${host}`)),
+    ),
+  ).toBe(false);
 
   const frames: Frame[] = [];
   const { context, worker, id, onboarding } = await launch(
@@ -183,7 +242,12 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     await expect(
       badge.getByText(`Based on $100.00 cart estimated total at ${NAMED_STORE.name}.`, { exact: false }),
     ).toBeVisible();
-    await expect(badge.getByText('Treated as a supermarket', { exact: false })).toBeVisible();
+    await expect(
+      badge.getByText(
+        'Treated as a supermarket (its own pages; fits Bank of America, Chase, Discover and U.S. Bank',
+        { exact: false },
+      ),
+    ).toBeVisible();
     await expect(badge.getByText('3% on “U.S. online retail purchases”', { exact: false })).toBeVisible();
     await capture('badge', named, await badge.locator('body').innerText());
     // Only the store's id and host reached the extension: no path, no page text.
@@ -304,7 +368,7 @@ test('capture the real release UI and record the staged shopper walkthrough', as
           source:
             'Actual packaged extension (hosted build): the popup page at its 360×600 popup size, the badge on a neutral fictional sample cart in an 880×800 window, the onboarding consent screen; four sample cards.',
           sampleCards: SAMPLE_CARDS,
-          namedStore: `${NAMED_STORE.name} (${NAMED_STORE.id}, served the sample cart at https://${NAMED_STORE.host}/cart)`,
+          namedStore: `${NAMED_STORE.name} (${NAMED_STORE.id}): a fictional store on a reserved .example host, added to a test copy of merchant release ${MERCHANTS_V1.version} cached in the capture profile and served the sample cart at https://${NAMED_STORE.host}/cart; not in the shipped store list`,
           liveMerchant: false,
           network: `Page traffic blocked except the two in-memory sample carts; the catalog origin ${inventory.catalogOrigin} resolved to 127.0.0.1, so no refresh or usage report left the machine; "Not now" chosen on the consent screen.`,
           amountsAre: 'Conditional estimates using sample inputs, not customer savings or earned rewards.',
@@ -361,13 +425,13 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     await pause('One question: share usage reports or not. The extension works the same either way.', 4);
     await page.getByRole('button', { name: 'Not now' }).click();
     await expect(page.getByRole('heading', { name: 'You’re set' })).toBeVisible();
-    await pause('Not now: nothing about your use is sent.', 2);
+    await pause('Not now: no usage reports are sent.', 2);
     await page.goto(`https://${NAMED_STORE.host}/cart`);
     let badge = await badgeFrame(page);
     const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$3\.00 back on this cart/ });
     await expect(pill).toBeVisible();
     await pause(
-      'On a cart page, the badge names your best card from the order summary. This sample store is one the store list names.',
+      'On a cart page, the badge names your best card from the order summary. This fictional sample store is in a test copy of the store list.',
       4,
     );
     await pill.click();
