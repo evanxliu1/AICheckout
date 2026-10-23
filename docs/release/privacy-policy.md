@@ -4,7 +4,7 @@ This is the text published at `https://ai-checkout-api.onrender.com/privacy/` (r
 
 Last updated: 2026-10-20
 Operator: **Evan Liu** (the AI Checkout project, github.com/evanxliu1/AICheckout)
-Privacy and support contact: **SUPPORT_EMAIL_TBD**
+Privacy and support contact: **evanliu7788@gmail.com**
 
 ## What AI Checkout does
 
@@ -91,7 +91,7 @@ AI Checkout is not directed at children under 13 and does not knowingly collect 
 
 ## Your rights
 
-Everything the extension holds about you is on your device, where you can see it in the popup and delete it. For usage reports, the only data the service holds under a person, the controls above let you stop and delete without contacting anyone. For any privacy question, write to **SUPPORT_EMAIL_TBD**. Because the identifier is random and the service holds nothing else about you, no one can find your reports from your name or email; **Delete my data** in Settings is the way to delete them, and the dictionary linked above is the full account of what they contain. AI Checkout does not sell personal information and does not share it for cross-context behavioral advertising.
+Everything the extension holds about you is on your device, where you can see it in the popup and delete it. For usage reports, the only data the service holds under a person, the controls above let you stop and delete without contacting anyone. For any privacy question, write to **evanliu7788@gmail.com**. Because the identifier is random and the service holds nothing else about you, no one can find your reports from your name or email; **Delete my data** in Settings is the way to delete them, and the dictionary linked above is the full account of what they contain. AI Checkout does not sell personal information and does not share it for cross-context behavioral advertising.
 
 ## This website
 

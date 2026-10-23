@@ -195,13 +195,13 @@ As few as possible; each with the recommendation the plan assumes. A silent "go"
 
 | # | Decision | Recommendation |
 | --- | --- | --- |
-| 1 | Public identity: publisher name and support email for the listing, policy and support page (`[[PUBLISHER_NAME]]`, `[[SUPPORT_EMAIL]]`); a custom domain is optional | Publisher "Evan Liu"; a dedicated support address Evan controls; URLs on the Render origin (a custom domain can come later without a resubmission) |
+| 1 | Public identity (**support email `evanliu7788@gmail.com`, Evan 2026-10-22**; publisher name **Evan Liu**, Evan 2026-10-22): publisher name and support email for the listing, policy and support page (`[[PUBLISHER_NAME]]`, `[[SUPPORT_EMAIL]]`); a custom domain is optional | Publisher "Evan Liu"; a dedicated support address Evan controls; URLs on the Render origin (a custom domain can come later without a resubmission) |
 | 2 | Order detection and the savings history: drop them with the adapters, or keep a generic version | Drop ([decision](../decisions/2026-10-19-retire-legacy-adapters.md)); revisit in Phase 17 with telemetry in hand |
 | 3 | The two tap features ("Suggest this store", "Report a problem") for a shopper who chose Not now | They work; the request carries the domain and no install ID. The tap is the shopper's own action and the policy says so |
 | 4 | Problem reports: free text or fixed reasons | Fixed reasons only, no free text |
 | 5 | Extension version for the first store upload | `2.1.0` |
 | 6 | Privacy practices tab categories | Financial and payment information, Website content, User activity; the three certifications ticked |
-| 7 | Trader or non-trader declaration in the dashboard (a legal statement about Evan) | Non-trader: a free, non-commercial portfolio project with no sales; Evan confirms |
+| 7 | Trader or non-trader declaration in the dashboard (a legal statement about Evan) | Non-trader: a free, non-commercial portfolio project with no sales. **Evan confirmed 2026-10-22** |
 | 8 | D14 hosting: stay on the Render and Supabase free tiers until a trigger | Stay; the trigger is 100 weekly active installs (from `recommendation_shown`) or sustained 429s or 503s on ingest or `/v1/catalog`, whichever first |
 
 ## Progress
