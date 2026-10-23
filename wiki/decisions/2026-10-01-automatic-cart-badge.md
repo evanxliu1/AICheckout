@@ -39,3 +39,5 @@ Accepted 2026-10-01 by Evan Liu. Recorded retroactively on 2026-10-02 from the a
 Amended in effect: since Phase 11 (2026-10-05, [generic store profile](2026-10-05-generic-store-profile.md)) the popup also recommends at any U.S. online store with a typed amount, without a badge; since 2026-10-06 ([reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md)) a read amount is shown only when the reader is certain.
 
 Superseded in part 2026-10-09 by [the badge on all https sites](2026-10-09-badge-on-all-sites.md) (badge at any store, `https://*/*` at install, no longer three hosts from adapter `matchPatterns`) and by [never ask for a typed amount](2026-10-09-never-ask-for-an-amount.md) (no typed-amount prompt; rates view when the reader is not certain; the popup reads on open). (Wiki audit 2026-10-10.)
+
+Superseded in part 2026-10-19 by [retire the legacy adapters](2026-10-19-retire-legacy-adapters.md): URL-only order detection and the savings history were dropped in Phase 15.1. The zero-click badge, local-first storage and the optional vault stand. (Wiki audit 2026-10-23.)

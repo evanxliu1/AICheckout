@@ -2,7 +2,9 @@
 type: Runbook
 title: Reader capture workflow (Phase 12.3)
 description: How the coordinating session runs Phase 12.3 — pane capture of the frozen candidate stores by pane-operator subagents in Claude workflows (pilot, full capture, then split, label, review and freeze), written under generic-reader-protocol.10 (.12 binds since 2026-10-07); what it decides alone, when it stops for Evan, and how results reach main.
-status: stable
+status: deprecated
+archived: 2026-10-23
+superseded_by: ../product/phase-12-reader-eval.md
 tags: [ops, runbook, phase-12, capture, workflow]
 generated:
   by: claude-code/claude-opus-5-5
@@ -15,6 +17,8 @@ sources:
   - resource: ../product/phase-12-reader-eval.md
     title: Phase 12 plan
 ---
+
+> Archived under the [archive policy](../guides/archive-policy.md); describes the world as of its date, not current instructions.
 
 # Reader capture workflow (Phase 12.3)
 

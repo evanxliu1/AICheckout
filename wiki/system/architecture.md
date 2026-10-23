@@ -6,7 +6,7 @@ status: stable
 tags: [system, architecture]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:28:17Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: ../../extension/vite.config.ts
     title: Extension build and generated manifest
@@ -38,7 +38,7 @@ Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`);
 | --- | --- | --- | --- | --- |
 | Popup, onboarding, worker, state | `extension/src/{popup,onboarding,background,state}` | Chrome MV3 service worker + extension pages | Wallet, settings, optional passphrase vault, manual comparison, catalog refresh (the savings history was retired in Phase 15.1) | [Extension](extension.md) |
 | Automatic cart badge | `extension/src/badge`, `extension/src/background/badge-service.ts` | Content script on every https page + extension iframe (Phase 13c) | Zero-click best-card pill on any recognised cart or checkout page (dollar estimate when the reader is certain, the card's rate otherwise); the order-page savings prompt at the three former adapter stores was retired in Phase 15.1 | [Cart badge](cart-badge.md) |
-| Manual reader | `extension/src/checkout`, `packages/cart-reader` | Isolated-world content script | Since Phase 13b (2026-10-09) the popup's "Read cart" runs the generic `readCart` (since 13c `readCartPage`: the cart/checkout detector, then the reader) on every web page; the three declarative per-merchant adapters (Best Buy, Newegg, Amazon; legacy since 2026-10-06) were retired in Phase 15.1 (2026-10-20, [measurement](../../docs/evals/legacy-adapter-retirement.md)); `store-match.ts:merchantForTab` maps the popup's tab to a release store or the generic profile | [Extension](extension.md#manual-cart-read-popup) |
+| Manual reader | `extension/src/checkout`, `packages/cart-reader` | Isolated-world content script | The popup's "Read cart" runs the generic `readCartPage` (the cart/checkout detector, then the reader) on every web page. The generic reader is the only reader ([measurement](../../docs/evals/legacy-adapter-retirement.md)); `store-match.ts:merchantForTab` maps the popup's tab to a release store or the generic profile | [Extension](extension.md#manual-cart-read-popup) |
 | Rewards engine and catalog contract | `packages/rewards-core` | Pure TS; imported by extension, API, review app, scripts | Catalog v1/v2/v3 Zod schemas, `compareRewards`, bundled `CATALOG_V2` and `CATALOG_V3` | [Rewards engine](rewards-engine.md) |
 | Catalog client | `packages/catalog-client` | Browser + Node | Bounded, credential-free fetch and JSON read of `/v1/catalog` | [Extension](extension.md#catalog-refresh) |
 | Review and curation contracts | `packages/catalog-review` | Browser + Node | Zod contracts for review RPCs, extraction input/trace, limits | [API](api.md), [Curation harness](curation-harness.md) |
@@ -49,7 +49,7 @@ Verified 2026-10-02 by reading the code at commit `f6d3f79` (branch `llm-wiki`);
 | UI library | `packages/ui` | React 19 components on Helios token names, Ocean theme values | Shared components for popup, badge, onboarding, review app, site | [UI library](ui-library.md) |
 | Database | `supabase/` | PostgreSQL 17 + Supabase Auth/Data API | Immutable releases, head pointer, private drafts/sources/ledger | [Database](database.md) |
 | Evaluation corpus and runs | `evals/curation`, `scripts/` | Local Node CLIs | Corpora, matrix runs, results in `docs/evals/` | [Evaluation](evaluation.md) |
-| Reader eval capture (Phase 12) and harness (Phase 13) | `evals/merchants/`, `.claude/agents/pane-operator.md`, `evals/reader/` (reader and detector runs and scoring, [README](../../evals/reader/README.md)) | Local only: Node scripts, the retired Playwright robot, and `pane-operator` subagents in the Claude desktop app's browser pane | Retail frames, candidate lists, seeded splits, capture records, `pane-export.js` and offline rebuild, transcript audit | [Merchant coverage design](merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12) |
+| Reader eval capture (Phase 12) and harness (Phase 13) | `evals/merchants/`, `.claude/agents/pane-operator.md`, `evals/reader/` (reader and detector runs and scoring, [README](../../evals/reader/README.md)) | Local only: Node scripts, the retired Playwright robot, and `pane-operator` subagents in the Claude desktop app's browser pane | Retail frames, candidate lists, seeded splits, capture records, `pane-export.js` and offline rebuild, transcript audit | [Reader protocol](../../docs/evals/generic-reader-protocol.md), [Phase 12 plan](../product/phase-12-reader-eval.md) |
 | Card-expansion pipeline | `tools/catalog-pipeline` | Local Node CLI (`npm run pipeline`), never on Render | Batch state, gates, multi-batch catalog build, freshness, handoff, CLI publish on Evan's instruction | [Card-expansion pipeline](card-expansion-pipeline.md) |
 
 ## How it fits together

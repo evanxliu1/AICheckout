@@ -176,7 +176,7 @@ Evan sets Y in the Phase 12 protocol. This is the recommendation.
 - **Site classification used a candidate list.** About 300 known U.S. retail domains were looked up in Tranco and the top 1,000 was read in full. The top 100,000 was not classified exhaustively.
 - **Selection bias.** For platform markers, 93 candidate home pages were each fetched once with `curl` before the visits. Domains that answered 403 or 429 were mostly passed over. That biases the sample toward reachable sites, so the 64% cart rate is optimistic for top retailers. Home Depot was chosen despite a 403 and was blocked.
 - **Browser setup.** The browser was Playwright's Chrome for Testing 153 in a fresh probe profile, not branded Chrome. The test extension was loaded throughout, and Nike's refusal cites extensions.
-- **Driver guards were weaker than the rule.** `driver.mjs` has no fill, type or press call. But its `click` refused only text inputs: it did not refuse submit buttons or buttons inside forms. `clickxy` (coordinate clicks) had no guard at all, and its local control server on `127.0.0.1:8765` had no token or Origin check. Staying inside the rules depended on the operator's choices. Phase 12's capture tool must enforce them: refuse submit and in-form clicks except an add-to-cart allowlist, and protect its control server ([design](../../wiki/system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
+- **Driver guards were weaker than the rule.** `driver.mjs` has no fill, type or press call. But its `click` refused only text inputs: it did not refuse submit buttons or buttons inside forms. `clickxy` (coordinate clicks) had no guard at all, and its local control server on `127.0.0.1:8765` had no token or Origin check. Staying inside the rules depended on the operator's choices. Phase 12's capture tool must enforce them: refuse submit and in-form clicks except an add-to-cart allowlist, and protect its control server ([design](../../wiki/archive/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
 - **Clicks beyond size, colour and add-to-cart.** Nothing was typed, and no form was submitted except by add-to-cart buttons.
   - Declining or closing cookie banners and popups. One popup close was a coordinate click inside a third-party iframe.
   - "Continue as Guest" buttons (`type=button`, no enclosing form) on Apple and IKEA, and Ulta's guest link.
@@ -193,5 +193,5 @@ Evan sets Y in the Phase 12 protocol. This is the recommendation.
 ## Related
 
 * [Probe plan](../../wiki/product/phase-10-feasibility-probe.md)
-* [Merchant coverage design](../../wiki/system/merchant-coverage-design.md)
+* [Merchant coverage design](../../wiki/archive/merchant-coverage-design.md)
 * [Decision: probe method choices](../../wiki/decisions/2026-10-05-merchant-probe-method.md)

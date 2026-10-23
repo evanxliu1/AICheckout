@@ -32,7 +32,7 @@ The product covered seven named U.S. cash-back cards ([decision](2026-09-28-seve
 
 ## Consequences
 
-- 180 cards, 65 exclusions and 321 sources in the first pass ([catalog expansion](../system/catalog-expansion.md)).
+- 180 cards, 65 exclusions and 321 sources in the first pass ([catalog expansion](../archive/catalog-expansion.md)).
 - The engine and catalog need new concepts (points currencies, merchant-specific rules, chosen and rotating categories, relationship tiers, closed-loop store cards) and the 30-card / 30-source catalog limits must rise through a new migration.
 - This widens the card list of the [2026-09-28 scope decision](2026-09-28-seven-cards-and-checkout-scope.md) once Phase 7 ships; that record's checkout-scope rule (the engine covers only what an online checkout can hit) still holds.
 

@@ -2,13 +2,17 @@
 type: System Component
 title: Catalog expansion (Phase 7)
 description: How the catalog grew from seven cards to 178 cards of the top-10 U.S. issuers — research, capture, LLM extraction, draft labels with 25-word quotes, per-issuer agent verification and adjudication, the 173-card agent-verified corpus `expansion.v1`, valuation, overlay and the catalog v3 build — with results and known gaps. Done 2026-10-03 (hosted release 2); the Phase 9 pipeline renewal supersedes the build as the current catalog.
-status: stable
+status: deprecated
+archived: 2026-10-23
+superseded_by: ../product/phase-7-stage-2.md
 tags: [system, catalog, curation, expansion, phase-7]
 generated:
   by: claude-code/claude-opus-5-5
   at: 2026-10-07T00:20:00Z
 verified_commit: e940b6f
 ---
+
+> Archived 2026-10-23 under the [archive policy](../guides/archive-policy.md); still-true facts are in the [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md#expansion-corpus-and-first-v3-build).
 
 # Catalog expansion (Phase 7)
 

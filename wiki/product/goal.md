@@ -6,7 +6,7 @@ status: stable
 tags: [product, goal]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:30:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: ../archive/phase2-goal.md
     title: Phase 2–6 plan (archived)
@@ -26,17 +26,17 @@ It is Evan Liu's portfolio project for LLM-engineering roles. The headline is a 
 
 | User | Uses | Needs |
 | --- | --- | --- |
-| Shopper | Extension at any U.S. online store: since Phase 13c (2026-10-10) the automatic badge on cart and checkout pages of every https site, with a dollar estimate when the cart amount is read with certainty and otherwise the rates view (no typed amount); the popup reads on open. (Before: the badge on Amazon US, Best Buy US and Newegg US, and from Phase 11, 2026-10-05, the popup elsewhere with a typed amount) | Correct best-card answer, no account; nothing leaves the device without the shopper's opt-in (from Release A, one onboarding consent covers a minimal telemetry set; [decision](../decisions/2026-10-10-data-collection.md)) |
-| Reviewer (Evan) | Hosted review app; chat approval of each release (since 2026-10-05) | Source-cited drafts, diffs against the published catalog, explicit publish on his approval |
+| Shopper | Extension at any U.S. online store: the automatic badge on cart and checkout pages of every https site, with a dollar estimate when the cart amount is read with certainty and otherwise the rates view (no typed amount); the popup reads on open | Correct best-card answer, no account; nothing leaves the device without the shopper's opt-in (one onboarding consent covers a minimal telemetry set; [decision](../decisions/2026-10-10-data-collection.md)) |
+| Reviewer (Evan) | Hosted review app; chat approval of each release ([catalog release](../ops/catalog-release.md)) | Source-cited drafts, diffs against the published catalog, explicit publish on his approval |
 | Recruiter / reader | Public site, results page, repo | Honest, reproducible numbers |
 
-Real users and usage metrics are goals since the Phase 10–17 plan and the 2026-10-10 data-collection decision ([decision](../decisions/2026-10-10-audit-calls.md)); quality and honesty of claims still come first. *(Until 2026-10-10: "Few real users are expected".)*
+Real users and usage metrics are goals since the Phase 10–17 plan and the 2026-10-10 data-collection decision ([decision](../decisions/2026-10-10-audit-calls.md)); quality and honesty of claims still come first.
 
 ## What success means
 
 1. Measured extraction results on real issuer terms, with held-out data, published in [`docs/evals/results.md`](../../docs/evals/results.md). Done 2026-09-29/30 (see [evaluation](../system/evaluation.md)).
-2. The extension runs on the reviewed catalog served by the hosted API (7 cards in release 1; 178 cards since release 2, 2026-10-03).
-3. The extension ships on the Chrome Web Store (Release A, Phase 15, which replaced Phase 5 on 2026-10-05).
+2. The extension runs on the reviewed catalog served by the hosted API (178 cards; [release history](../ops/catalog-release-history.md)).
+3. The extension ships on the Chrome Web Store (Release A, Phase 15).
 4. Catalog stays current: terms-change detection triggers re-extraction and review.
 
 Status per item: [roadmap](roadmap.md) and [now](../now.md).

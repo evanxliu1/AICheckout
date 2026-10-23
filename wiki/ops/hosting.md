@@ -6,8 +6,7 @@ status: stable
 tags: [ops, hosting, render, supabase]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:28:14Z
-stale_after: 2026-11-04T00:00:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -36,10 +35,9 @@ One Render web service, `ai-checkout-api`, runs a single Node process that serve
 | Health check | `/health` | `render.yaml` |
 | Auto-deploy | `autoDeploy: true` on the linked branch (`main`) | `render.yaml`, [archive](../archive/phase2-goal.md) |
 | Database | Hosted Supabase (Postgres, Auth, Data API); public sign-ups disabled; one provisioned reviewer (as of 2026-09-28) | [archive](../archive/phase2-goal.md) |
-| Hosted state 2026-09-28 | `/health` 200, `/v1/catalog` 200 with `{"release":null}`, `/v1/review/` 401 unauthenticated, `/review/` serves the app | [archive](../archive/phase2-goal.md) |
-| Published catalog | `/v1/catalog` serves release sequence 3, version `2026-10-05.renewal.1` (schema 3, 178 cards, 328 sources), published 2026-10-05T05:20:50Z by the coordinating session with `pipeline publish` on Evan's chat instruction, expires **2026-11-04T00:00:00Z**; canonically identical to `CATALOG_V3` on `main` ([catalog release](catalog-release-history.md#release-3-published-2026-10-05)). A fresh catalog must be published before the expiry, or `/v1/catalog` answers 503. Earlier: release 2 (`2026-10-02.expansion.1`, 2026-10-03T06:15:00Z), release 1 (`2026-09-29.real.1`, 7 cards, 2026-10-02T02:29:41Z) | `GET /v1/catalog`, checked 2026-10-05 after publishing |
-| Deployed code | `main` with the Phase 9 renewal (PR #50): the hosted review bundle (`/review/assets/index-*.js`) contains `2026-10-05.renewal.1` and the refresh batch manifests. Later merges (PRs #51–#54) changed docs, the CLI and one API comment, nothing the hosted service behaves differently on. Since then `main` reached `7a07113` (PR #79, 2026-10-10); between `e9fe387` and `7a07113` the hosted code changed only in one `apps/api/src/review-routes.ts` edit and `packages/rewards-core` (the Phase 11 generic store profile). Checked 2026-10-10: `/health` 200, `/v1/catalog` serves `2026-10-05.renewal.1`, `/review/` serves the app (`index-DgGybilS.js`); the exact deployed commit isn't exposed, but Render auto-deploys `main` | Fetched 2026-10-05T04:40Z; `git diff --stat e9fe387 7a07113` 2026-10-10 |
-| Auth signing | Asymmetric JWT signing keys since 2026-10-03 (Evan switched the project). The JWKS (`/auth/v1/.well-known/jwks.json`) publishes one ES256 P-256 key, `kid` `695ed5b6-5d96-497a-baa2-f0e6b1765c37`, so the API's review token pre-check verifies tokens locally, with no env change ([decision](../decisions/2026-10-03-review-token-precheck.md)). After the switch: `/health` 200, `/v1/catalog` 200, unauthenticated `/v1/review/sources` 401. Until 2026-10-03 the project signed with the legacy HS256 secret (empty JWKS) and the pre-check asked Auth. Evan may revoke the legacy HS256 secret once sessions issued before the switch have expired | Public JWKS endpoint, checked 2026-10-03 |
+| Published catalog | The head release, its version and expiry: [release history](catalog-release-history.md). If it expires before a fresh one is published, `/v1/catalog` answers 503 ([catalog release](catalog-release.md)) | `GET /v1/catalog` |
+| Deployed code | Render deploys `main` on merge; the deployed commit isn't exposed, so check `/health`, `/v1/catalog` and that the `/review/` bundle contains the expected catalog version | `render.yaml` |
+| Auth signing | Asymmetric JWT signing keys. The JWKS (`/auth/v1/.well-known/jwks.json`) publishes one ES256 P-256 key, `kid` `695ed5b6-5d96-497a-baa2-f0e6b1765c37`, so the API's review token pre-check verifies tokens locally, with no env change ([decision](../decisions/2026-10-03-review-token-precheck.md)). The legacy HS256 secret may still be active until Evan revokes it | Public JWKS endpoint, checked 2026-10-03 |
 | Request size | Neither Render nor Supabase documents a request body limit for web services or PostgREST RPC calls that the review routes approach (Cloudflare, in front of both, allows 100 MB on its free plan). Release 1 captured bodies up to 74,938 characters through this path; the largest Stage 2 capture is about 206 KB as JSON and the v3 draft save about 0.62 MB, well under the API's own limits | Docs read 2026-10-03; not exercised on hosted |
 
 ## Environment variables (names only)

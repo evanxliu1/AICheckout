@@ -53,10 +53,9 @@ export function matchMerchant(
   return null;
 }
 
-/** The profile the engine should use for a matched record, given the catalog in effect: always the record's
- * own (`recordToProfile`). Until 2026-10-11 a `default` record deferred to a catalog-authored profile for the
- * three legacy stores; Evan dropped that on 2026-10-11 (decision 2026-10-11-merchant-release-seed-and-contract-
- * details), so Best Buy and Newegg have no electronics bonus until their records carry evidence. */
+/** The profile the engine should use for a matched record, given the catalog in effect: the record's own
+ * (`recordToProfile`), never a catalog-authored profile for the same id
+ * (wiki/decisions/2026-10-11-merchant-release-seed-and-contract-details.md). */
 export function releaseProfileFor(
   record: MerchantRecord,
   catalog: { brands: readonly { id: string }[]; merchants: readonly MerchantProfileV3[] },

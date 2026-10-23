@@ -8,7 +8,7 @@ generated:
   by: claude-code/claude-opus-5-5
   at: 2026-10-07T00:20:00Z
 sources:
-  - resource: ../system/catalog-expansion.md
+  - resource: ../archive/catalog-expansion.md
     title: Catalog expansion (Phase 7)
   - resource: ./2026-09-29-agent-verified-labels.md
     title: Agent-verified labels

@@ -34,3 +34,5 @@ Chrome Web Store policy (checked 2026-09-29) forbids interpreters running comman
 Accepted 2026-09-29. Recorded retroactively on 2026-10-02 from the archived plan; the body summarizes it, the archive holds the original wording.
 
 Partly superseded 2026-10-06 by [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md): no new adapters and no store configs anywhere; the three bundled adapters are legacy and retire once the generic reader matches them. Phase 6 (site coverage harness) was folded into Phases 12, 13 and 16 on 2026-10-05. The bundling rule (reader logic ships in the package, never downloaded) stands for the generic reader.
+
+Superseded in part 2026-10-19 by [retire the legacy adapters](2026-10-19-retire-legacy-adapters.md): the three adapters were retired unconditionally in Phase 15.1 (merged 2026-10-20) and `extension/src/adapters` is gone; the bundling rule stands for the generic reader. (Wiki audit 2026-10-23.)

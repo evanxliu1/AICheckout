@@ -38,7 +38,7 @@ Pages read 2026-10-02; counts are programs of this catalog with a value on the p
 4. Cash back is the program `cash-back` at 100 with basis `cash`; every card the corpus labels `cash-back` uses it, because those rates are already percentages (convention rule 1). Store-only redemption for those cards is an M4 overlay label, not a program value.
 
 ## Consequences
-- 24 programs have published estimates, 11 have issuer-stated values, 16 have none; the full table and card counts are on [catalog expansion](../system/catalog-expansion.md#reward-program-valuation-m3).
+- 24 programs have published estimates, 11 have issuer-stated values, 16 have none; the full table and card counts are on [catalog expansion](../archive/catalog-expansion.md#reward-program-valuation-m3).
 - A large program without a value (U.S. Bank Altitude, Korean Air SKYPASS, Lufthansa, Cathay, Frontier) leaves its cards unranked against cash until the shopper sets a value; a second publisher would change that and needs a new decision.
 - The estimates age: the table's `readOn` must be within 30 days of the catalog release, so the table is re-read with each release.
 

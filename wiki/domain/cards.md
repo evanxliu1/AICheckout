@@ -6,7 +6,7 @@ status: stable
 tags: [domain, cards, catalog]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-07T00:20:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: ../../packages/rewards-core/src/catalog-v3.ts
     title: CATALOG_V3 (generated catalog, version 2026-10-05.renewal.1)
@@ -22,12 +22,11 @@ sources:
     title: Capture manifest (URLs, capture dates, SHA-256)
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, seven cashback cards (checked 2026-09-28)
-stale_after: 2026-11-04T00:00:00Z
 ---
 
 # Cards
 
-The extension covers 178 U.S. personal credit cards from the ten largest issuers: `CATALOG_V3` ([`catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)), version `2026-10-05.renewal.1`, verified 2026-10-05, expiring 2026-11-04T00:00Z, bundled in the extension and published to hosted as release 3 on 2026-10-05 ([catalog release](../ops/catalog-release-history.md#release-3-published-2026-10-05)); release 2, `2026-10-02.expansion.1`, held the same 178 cards before the renewal. The first v3 build (`2026-10-02.expansion.1`) came from the agent-verified `expansion.v1` corpus (171 cards) plus the seven original cards below, whose names, IDs, rule IDs and rules it kept ([catalog expansion](../system/catalog-expansion.md#catalog-v3-build-m5)). In the Phase 9 renewal 111 cards come from pipeline batches with new dated captures (107 from the ten refresh batches, 4 from the Phase 8 Wells Fargo batch), six of the seven original cards among them: they keep their names and rule-ID prefixes, and rules whose terms changed take new IDs ([build report](../../evals/curation/expansion/catalog-build-report.md), [card-expansion pipeline](../system/card-pipeline-internals.md#multi-batch-catalog-builder)).
+The extension covers 178 U.S. personal credit cards from the ten largest issuers: `CATALOG_V3` ([`catalog-v3.ts`](../../packages/rewards-core/src/catalog-v3.ts)), version `2026-10-05.renewal.1`, bundled in the extension; the hosted release it matches is on the [release history](../ops/catalog-release-history.md). The base layer is the agent-verified `expansion.v1` corpus (171 cards) plus the seven original cards below, whose names, IDs, rule IDs and rules the first v3 build kept ([Phase 7 Stage 2 plan](../product/phase-7-stage-2.md#expansion-corpus-and-first-v3-build)). 111 cards come from pipeline batches with new dated captures (107 from the ten refresh batches, 4 from the Phase 8 Wells Fargo batch), six of the seven original cards among them: they keep their names and rule-ID prefixes, and rules whose terms changed take new IDs ([build report](../../evals/curation/expansion/catalog-build-report.md), [card-expansion pipeline](../system/card-pipeline-internals.md#multi-batch-catalog-builder)).
 
 | Issuer | Cards |
 | --- | --- |
@@ -109,7 +108,7 @@ Exclusions (purchases that never earn), as summarized in the catalog:
 ## Open questions
 
 - A human verification pass on the labels has not happened (planned in [phase2-goal](../archive/phase2-goal.md)). The BCE cap period is the first item to decide.
-- `CATALOG_V3` (`2026-10-05.renewal.1`, hosted release 3) expires 2026-11-04; the next renewal must be published before then. Eval corpora stay frozen; the catalog is refreshed through hash-only freshness checks and new dated captures, never by overwriting a capture or a label ([Stage 2 plan, decision 1](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)). Rotating rules (Freedom Flex, Discover Q4) end 2026-12-31.
+- The bundled `CATALOG_V3` expires 30 days after its `verifiedAt`; the served release and its expiry are on the [release history](../ops/catalog-release-history.md), and renewals follow [catalog release](../ops/catalog-release.md#renewing-a-catalog-before-it-expires). Eval corpora stay frozen; the catalog is refreshed through hash-only freshness checks and new dated captures, never by overwriting a capture or a label ([Stage 2 plan, decision 1](../product/phase-7-stage-2.md#decisions-on-the-plans-open-questions)). Rotating rules (Freedom Flex, Discover Q4) end 2026-12-31.
 
 ## Related
 
@@ -118,4 +117,4 @@ Exclusions (purchases that never earn), as summarized in the catalog:
 * [Glossary](glossary.md)
 * [Evaluation](../system/evaluation.md)
 * [Decision: build catalog v2 from gold labels](../decisions/2026-09-30-catalog-v2-from-gold-labels.md)
-* [Catalog expansion](../system/catalog-expansion.md) — Phase 7: how the 171 expansion cards were researched, verified and built into catalog v3
+* [Phase 7 Stage 2 plan](../product/phase-7-stage-2.md) — how the 171 expansion cards were researched, verified and built into catalog v3

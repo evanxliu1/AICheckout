@@ -42,3 +42,5 @@ Accepted 2026-10-06 by Evan in chat ("it should just be correct … at least 99%
 Carried out by `generic-reader-protocol.8` ([capture protocol 8](2026-10-06-capture-protocol-8.md), signed at `a1c994d`): outcomes shown-correct, shown-wrong and withheld; bar = one-sided 95% Clopper–Pearson upper bound of wrong shown amounts ≤ 1% (0 wrong in 299 shown, or 1 in 473); coverage reported with a target of 80% on `cart-1`.
 
 Superseded in part 2026-10-08 by [capture paused; the ≥ 99% bar becomes a quality target](2026-10-08-pause-capture-quality-target.md): the bar is an accuracy target reported with its bound, not a pass condition (criterion 1). Show-only-certain, no `ask`, rates-only fallback and generic reader only stand. (Wiki audit 2026-10-10.)
+
+Superseded in part 2026-10-19 by [retire the legacy adapters](2026-10-19-retire-legacy-adapters.md): the three legacy adapters were retired unconditionally (Phase 15.1), not once the generic reader matched them. (Wiki audit 2026-10-23.)

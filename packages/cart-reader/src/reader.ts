@@ -1,5 +1,5 @@
 // Generic cart reader (Phase 13). Contract: docs/evals/generic-reader-protocol.md and
-// wiki/system/merchant-coverage-design.md#generic-cart-reader. `readCart` is deterministic and synchronous; it reads
+// wiki/system/extension.md#generic-cart-reader. `readCart` is deterministic and synchronous; it reads
 // only the document it is given (open shadow roots included), never the network, a model, storage or the clock, and
 // never the rebuild's `data-pane-*` attributes or any per-domain list. It shows an amount only when certain and
 // otherwise withholds. The evaluation harness is evals/reader/.
