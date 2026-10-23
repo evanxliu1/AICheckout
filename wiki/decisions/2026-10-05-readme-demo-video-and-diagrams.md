@@ -3,6 +3,7 @@ type: Decision
 title: README demo video (Ocean cinematic, extension only) and SVG diagrams
 description: Evan chose an extension-only motion-graphic demo in the Ocean cinematic style for the README, committed under docs/readme/ and embedded inline from a GitHub upload; the README's Mermaid chart became hand-drawn light/dark SVG diagrams.
 status: superseded
+superseded_by: [2026-10-20-store-assets-choices.md, 2026-10-22-motion-graphic-shopper-demo.md]
 tags: [decision, docs, release, design]
 generated:
   by: claude-code/claude-opus-5-5

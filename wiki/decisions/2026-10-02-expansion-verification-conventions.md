@@ -8,7 +8,7 @@ generated:
   by: claude-code/claude-opus-5-5
   at: 2026-10-07T00:20:00Z
 sources:
-  - resource: ../system/catalog-expansion.md
+  - resource: ../archive/catalog-expansion.md
     title: Catalog expansion (Phase 7)
   - resource: ./2026-10-02-expansion-quote-limit-and-verification-format.md
     title: 25-word expansion quotes and the verification format

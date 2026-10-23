@@ -30,8 +30,6 @@ Evan in chat, 2026-10-08: "honestly lets pause at 300 captured stores (if we are
 ## Consequences
 - The held-out result will be a precision estimate with a wide bound (with about 110–120 held-out stores, about 0 wrong in about 250 shown gives an upper bound near 1.2% at page level and about 2.6% at store level). Reports say so.
 - Phase 13 (reader v1) starts after the labels and the split are frozen. More stores can be captured later if a tighter claim is wanted, under the same capture rules.
-</content>
-</invoke>
 
 ## Status
 Accepted 2026-10-08 (Evan, chat). Superseded in part the same day: two labellers and an adjudicator by [one labeller per store](2026-10-08-single-labeller.md); no reader-developer access to held-out pages by [Phase 13 simplified](2026-10-08-phase-13-simplified.md) (no isolation audit, strict isolation not enforced). Status section added 2026-10-10 by the wiki audit.

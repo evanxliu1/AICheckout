@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-13, merchants, reader]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:30:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: phase-12-reader-eval.md
     title: Phase 12 plan (the frozen evaluation set)
@@ -14,13 +14,13 @@ sources:
     title: Reader evaluation set, 2026-10
   - resource: ../../docs/evals/generic-reader-protocol.md
     title: Generic cart reader evaluation protocol
-  - resource: ../system/merchant-coverage-design.md
+  - resource: ../archive/merchant-coverage-design.md
     title: Merchant coverage design (generic cart reader)
 ---
 
 # Phase 13 plan: generic cart reader v1
 
-Started 2026-10-08 after the Phase 12 freeze. Evan, in chat that day: "have a fable 5.1 develop the readCart part of the extension, iterate, and evaluate". The reader is judged on the frozen set ([report](../../docs/evals/reader-captures-2026-10.md)) by the harness in [`evals/reader/`](../../evals/reader/README.md); the protocol's rules bind ([protocol](../../docs/evals/generic-reader-protocol.md), status notes of 2026-10-08: the ≥ 99% bar is a quality target, not a gate).
+Started 2026-10-08 after the Phase 12 freeze. Evan, in chat that day: "have a fable 5.1 develop the readCart part of the extension, iterate, and evaluate". The reader is judged on the frozen set ([report](../../docs/evals/reader-captures-2026-10.md)) by the harness in [`evals/reader/`](../../evals/reader/README.md); the [protocol](../../docs/evals/generic-reader-protocol.md) is the method, and the ≥ 99% bar is a quality target, not a gate ([decision](../decisions/2026-10-08-pause-capture-quality-target.md)).
 
 ## What the reader must do
 
@@ -33,28 +33,28 @@ Started 2026-10-08 after the Phase 12 freeze. Evan, in chat that day: "have a fa
 
 ## Steps
 
-Simplified by Evan on 2026-10-08: "no need for isolation audit or held out A run by another agent, leaking is not a bad thing, we just dont want store specific, generalizing, keep it efficient and simple" ([decision](../decisions/2026-10-08-phase-13-simplified.md)).
+No isolation audit and no separate held-out agent: leaking is acceptable, the reader must be generic ([decision](../decisions/2026-10-08-phase-13-simplified.md)).
 
 | Step | Who | What | Done when |
 | --- | --- | --- | --- |
 | 13.1 Setup | Coordinator | Branch `phase13-reader`; the developer brief (`packages/cart-reader/README.md`) | Brief committed |
 | 13.2 Develop and iterate | **Reader developer: Fable 5.1 (`claude-fable-5-1`)**, one session per round, at most 8 rounds | Write and refine the reader on development pages: `run.mjs --split development`, `score.mjs --failures`, unit tests in the package; commit each round with its development metrics | Development shown-wrong 0 (real pages and variants), coverage on `cart-1` at or above 80% or no longer improving over two rounds, p95 ≤ 50 ms |
 | 13.3 Review | Independent subagent | Code review: generic (no store-specific rules), deterministic, withholds when unsure, tests; fixes by the developer | Review approves |
-| 13.4 Held-out A | Coordinator | `run.mjs --split heldout-a --confirm-heldout-run 1`, commit the `runs.json` row, `score.mjs --record` and `--class-only`; a second run only after a generic fix on development | Scored |
+| 13.4 Held-out A | Coordinator | `run.mjs --split heldout-a --confirm-heldout-run 1`, commit the `runs.json` row, `score.mjs --record` and `--class-only`; at most two runs (harness limit), a second after general, never store-specific, fixes | Scored |
 | 13.5 Report | Coordinator | `docs/evals/reader-v1.md`: precision with exact bounds at page, store and operator level, coverage, by stream, state, currency and variant; wiki; PR | PR merged after CI |
 
 ## Phase 13b: the reader in the extension (planned 2026-10-09)
 
 Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Branch `phase13b-extension`; implementer Fable 5.1; an independent review before the PR.
 
-**Scope: the popup's "Read cart" at any store.** Today the popup reads the cart only at the three legacy stores (Best Buy US, Newegg US, Amazon US) and asks for a typed amount everywhere else (Phase 11).
-- On "Read cart" at any other page, the popup injects the manual reader (`src/checkout/content.js`, `activeTab` + `scripting`, as today) and that reader runs `readCart` from `@ai-checkout/cart-reader` in the isolated world. The legacy adapters keep their three stores and run first there.
+**Scope: the popup's "Read cart" at any store.** Before 13b the popup read the cart only at the three legacy stores (Best Buy US, Newegg US, Amazon US).
+- On "Read cart" at any other page, the popup injects the manual reader (`src/checkout/content.js`, `activeTab` + `scripting`, as today) and that reader runs `readCart` from `@ai-checkout/cart-reader` in the isolated world. The legacy adapters ran first on their three stores (retired in Phase 15.1, [decision](../decisions/2026-10-19-retire-legacy-adapters.md)).
 - **Shown and USD:** the amount fills the purchase like a legacy read (merchant = the store the popup already resolved, usually the generic store profile; kind `afterCredit`→`total`, `estimatedTotal`→`estimated-total`, `subtotal`→`subtotal`; reader version `generic-reader-v1`). The read is validated again before the comparison is saved, as legacy reads are.
 - **Shown in another currency:** "This comparison supports USD only" (the existing message); nothing is filled.
-- **Withheld:** a plain message to enter the amount; the shopper types it (Phase 11 behaviour). No guess, no partial amount. *(Superseded by Phase 13c on 2026-10-10: a withheld read shows the rates view and nothing asks for an amount; [decision](../decisions/2026-10-09-never-ask-for-an-amount.md).)*
+- **Withheld:** no guess, no partial amount; the rates view shows and nothing asks for an amount ([decision](../decisions/2026-10-09-never-ask-for-an-amount.md), Phase 13c).
 - **Privacy unchanged:** the content script returns only the reading (kind, amount, currency, or a reason code), never page text; it reads nothing on its own, only on the shopper's click.
 
-**Out of scope:** the automatic badge stays on the three legacy stores (it would need host access to every site, a Release A decision; *Evan moved it to Phase 13c on 2026-10-09, merged 2026-10-10*); the legacy adapters stay; no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
+**Out of scope:** the automatic badge at any store ([Phase 13c](phase-13c-cart-detection.md)); no store configs; Web Store and privacy texts (`docs/release/`) are flagged for Phase 15, not edited.
 
 **Tests:** unit tests for the mapping, currency and withhold paths and the contracts; Playwright end-to-end tests on local fixture stores (a generic cart page read correctly, a withheld page, a non-USD page, a legacy store unchanged); every existing test green.
 
@@ -62,12 +62,12 @@ Evan, 2026-10-09: "plan phase 13b, then have a fable 5.1 subagent implement". Br
 ## What matters most
 
 - **Generic, not store-specific.** No domain lists, hostnames, per-site selectors or class names: the bundle tripwire refuses split domains, and the review checks for anything that encodes one store.
-- **Tuned on development.** The developer works from development pages and failures; held-out A is read only for the score. Strict isolation is not enforced (Evan): the report says so, and held-out A is a check of generalization across stores the developer did not tune on, not a sealed test.
+- **Tuned mainly on development.** The developer works from development pages and failures; held-out A may be seen, and any fix it informs must stay generic. Isolation is not enforced: the report says so, and held-out A is a check of generalization across stores the rules were not tuned on, not a sealed test.
 
 ## Progress
 
 - **2026-10-09: merged.** Reader v1 as PR #77 and 13b as PR #78 (`6000085`). Phase 13c followed ([plan](phase-13c-cart-detection.md)).
 - **2026-10-09: 13b built** on `phase13b-extension` by Fable 5.1 (independent review before the PR pending). `extension/src/checkout/manual-reader.ts` runs the legacy adapter on its cart URLs and `readCart` elsewhere; the popup offers "Read cart amount" at every store; contracts accept `generic-reader-v1`; the manual reader bundle grew from 8,908 to 34,458 bytes. Unit tests for the split, mapping and contracts; `e2e/generic-read.spec.ts` (generic read, withheld, euro, legacy cart URL). Details: [Extension](../system/extension.md#manual-cart-read-popup), [decision](../decisions/2026-10-09-generic-read-on-legacy-site-pages.md).
-- **2026-10-09: 13.2–13.5 done** on `phase13-reader`. Fable 5.1 built the reader in six rounds (final `94b7b9a`), reviewed by an independent subagent after rounds 3–6 (agent-verified). Development: 384 correct / 0 wrong / 338 withheld, `cart-1` coverage 86%, p95 10 ms. Held-out A run 1 (unbiased): 237 correct / 18 wrong (precision 92.9%, ≤ 10.3%), `cart-1` coverage 76.9%. Run 2 after held-out-informed general fixes: 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used. Report: [reader-v1](../../docs/evals/reader-v1.md). Next: PR, then 13b (extension).
+- **2026-10-09: 13.2–13.5 done** on `phase13-reader`. Fable 5.1 built the reader in six rounds (final `94b7b9a`), reviewed by an independent subagent after rounds 3–6 (agent-verified). Development: 384 correct / 0 wrong / 338 withheld, `cart-1` coverage 86%, p95 10 ms. Held-out A run 1 (unbiased): 237 correct / 18 wrong (precision 92.9%, ≤ 10.3%), `cart-1` coverage 76.9%. Run 2, after general (not store-specific) fixes informed by run 1: 244 / 7 (97.2%, ≤ 5.2%; right amount and currency on 249 of 251), `cart-1` 78.6%, p95 11.6 ms. Both held-out runs are used. Report: [reader-v1](../../docs/evals/reader-v1.md). Next: PR, then 13b (extension).
 
 - **2026-10-08:** plan written; Phase 12 merged (PR #76, `298d6f6`); simplified by Evan the same day.

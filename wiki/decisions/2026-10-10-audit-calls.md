@@ -39,3 +39,5 @@ As in the table. D9 in the [Phases 10–17 plan](../product/phase-10-merchant-ex
 
 ## Status
 Accepted 2026-10-10 (Evan).
+
+A4 superseded 2026-10-19 by [retire the legacy adapters](2026-10-19-retire-legacy-adapters.md): the adapters retire regardless; the check on fresh captures is a measurement for the record, not a gate. (Wiki audit 2026-10-23.)

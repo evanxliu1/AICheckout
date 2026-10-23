@@ -424,7 +424,7 @@ export async function handoffReport(
       `node scripts/check-expansion-quotes.mjs --dir ${quoteDir}${capture.folders.map((folder) => ` --captures ${folder.absolute}`).join('')}`,
     )} (needs the captures)`,
     `- [ ] ${code('python3 scripts/lint_wiki.py')}`,
-    `- [ ] Wiki: ${code('wiki/now.md')}, ${code('wiki/log.md')}, ${code('wiki/system/catalog-expansion.md')} (catalog facts), ${code('wiki/ops/catalog-release.md')} (release facts), ${code('docs/evals/')} if the eval numbers are published, a ${code('wiki/decisions/')} record for any non-obvious choice`,
+    `- [ ] Wiki: ${code('wiki/now.md')}, ${code('wiki/log.md')}, ${code('wiki/domain/cards.md')} (catalog facts), ${code('wiki/ops/catalog-release.md')} (release facts), ${code('docs/evals/')} if the eval numbers are published, a ${code('wiki/decisions/')} record for any non-obvious choice`,
     '- [ ] An independent reviewer subagent reviews the branch before merge (record it as agent-verified).',
     '',
   );

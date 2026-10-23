@@ -12,13 +12,13 @@ sources:
     title: Reward-program table
   - resource: ../../scripts/lib/reward-programs.mjs
     title: Schema and checks
-  - resource: catalog-expansion.md
+  - resource: ../archive/catalog-expansion.md
     title: Catalog expansion (Phase 7), the page this section was split from on 2026-10-07
 ---
 
 # Reward-program valuation
 
-Split out of [catalog expansion](catalog-expansion.md) on 2026-10-07 (one concept per page); the content is unchanged from the M3 section. How the engine uses these values: [rewards engine](rewards-engine.md); the points concepts: [cards](../domain/cards.md).
+Split out of [catalog expansion](../archive/catalog-expansion.md) on 2026-10-07 (one concept per page); the content is unchanged from the M3 section. How the engine uses these values: [rewards engine](rewards-engine.md); the points concepts: [cards](../domain/cards.md).
 
 Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3-valuations` (2026-10-02, merged with PR #20). `evals/curation/expansion/reward-programs.json` maps each of the 180 cards (173 `expansion.v1`, 7 `real.v2.2`) to one of 52 programs, with a verbatim currency anchor of at most 25 words from one of the card's captures, and gives each program a value in hundredths of a cent per unit. Publisher choice and the issuer-stated rule: [decision](../decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md).
 
@@ -85,6 +85,6 @@ Milestone M3 of the [Stage 2 plan](../product/phase-7-stage-2.md), branch `s2-m3
 
 ## Related
 
-* [Catalog expansion](catalog-expansion.md)
+* [Catalog expansion](../archive/catalog-expansion.md)
 * [Points valuation decision](../decisions/2026-10-02-points-valuation-published-estimates.md)
 * [NerdWallet as primary publisher](../decisions/2026-10-02-nerdwallet-primary-valuation-publisher.md)

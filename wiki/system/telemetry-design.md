@@ -1,12 +1,12 @@
 ---
 type: System Component
 title: Telemetry, operations and value metrics design (Phases 15 and 17, draft)
-description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), a persistent random install ID (rotation dropped 2026-10-10) with day-since-install buckets, exact cart amounts without domains and owned card IDs under one onboarding opt-in, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. Draft v6 with Evan's 2026-10-10 data-collection answers; a minimal set ships in Release A (Phase 15), the rest in Phase 17; nothing here is built.
+description: Proposed consented telemetry with no automatic browsing data (no domains or merchants in events; shopper-initiated "Suggest this store" and "Report a problem" instead), a persistent random install ID (rotation dropped 2026-10-10) with day-since-install buckets, exact cart amounts without domains and owned card IDs under one onboarding opt-in, an anonymous rate-limited ingest RPC, 90-day retention, operations and diligence controls, value metrics and a data room for a buyer or partner, and affiliate rules. The design rationale with Evan's 2026-10-10 data-collection answers; the minimal set shipped in Release A (15.2 and 15.3), the rest is Phase 17 scope.
 status: draft
 tags: [system, design, phase-10, telemetry, privacy]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T04:30:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: https://developer.chrome.com/docs/webstore/program-policies/limited-use
     title: Chrome Limited Use (browsing activity only for a user-facing feature; no sale, no ads)
@@ -24,9 +24,9 @@ sources:
 
 # Telemetry, operations and value metrics design (Phases 15 and 17, draft)
 
-**Planned for building on 2026-10-19:** the Release A mechanics (where rows live, the ingest RPC, retention, the kill switch, the build-time switch, the event set) are fixed in the [Phase 15 plan](../product/phase-15-release-a.md) and its [telemetry decision](../decisions/2026-10-19-release-a-telemetry-design.md); where this draft differs, they win. This page stays the design rationale and the Phase 17 scope (dashboard, value metrics, affiliate readiness).
+This page is the design rationale and the Phase 17 scope (dashboard, value metrics, affiliate readiness). The minimal set shipped in Release A (15.2 ingest, 15.3 client); its mechanics are fixed in the [Phase 15 plan](../product/phase-15-release-a.md) and its [telemetry decision](../decisions/2026-10-19-release-a-telemetry-design.md), and the as-built facts are on [Extension](extension.md#usage-reporting-phase-153), [API](api.md) and [Database](database.md); where this page differs, they win.
 
-**Draft v6, not built; Evan approved the data-collection choices on 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)), which override this page where they differ: one opt-in question at onboarding covers every metric; a persistent random install ID (no rotation); exact cart amounts without a domain; owned cards as catalog IDs; no post-purchase category question; a minimal set ships in Release A (Phase 15).** Companion to the [merchant coverage design](merchant-coverage-design.md) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
+**Evan's data-collection choices of 2026-10-10 ([decision](../decisions/2026-10-10-data-collection.md)) override this page where they differ:** one opt-in question at onboarding covers every metric; a persistent random install ID (no rotation); exact cart amounts without a domain; owned cards as catalog IDs; no post-purchase category question. Companion to the [merchant coverage design](../archive/merchant-coverage-design.md) (archived) and the [Phases 10–17 plan](../product/phase-10-merchant-expansion.md). Evan's direction (2026-10-05): collect usage data to run the product and, later, to support affiliate card offers; never sell user data; account-free until after the MVP. The **disclosed** use is measuring product quality and reliability; nothing is collected for affiliate offers until a later consent.
 
 ## Policy frame (Chrome policy text read 2026-10-05)
 
@@ -47,38 +47,38 @@ sources:
 
 Every event: `install_id` (random, persistent, reset by Stop sharing or Delete my data; Evan 2026-10-10, no rotation), `install_month`, `days_since_install` bucket (0, 1–6, 7–13, 14–29, 30–59, 60+), `consent_version`, `schema_version`, extension, catalog, merchant-database and reader versions, client timestamp; the server adds its own.
 
-| Group | Events (no domain, no merchant, no URL; exact amounts allowed since 2026-10-10) |
+| Group | Events (no domain, no merchant, no URL; exact amounts allowed) |
 | --- | --- |
 | Lifecycle | install (after consent), onboarding complete, consent given |
 | Usage | popup opened, badge shown, badge clicked, recommendation shown (named or generic profile; amount view or rates view; top card's catalog ID; exact `amountCents` when read; Evan 2026-10-10) |
 | Wallet | owned cards as catalog card IDs on change (never numbers, last 4 or balances; Evan 2026-10-10) |
-| Reader quality | Shown or withheld (no `ask` since 2026-10-06); reader kind (generic only since Phase 15.1 retired the legacy adapters; no store configs since 2026-10-06); shopper reported a wrong amount or typed one (relative-difference bucket) |
+| Reader quality | Shown or withheld; reader kind (the generic reader is the only one); shopper reported a wrong amount or typed one (relative-difference bucket) |
 | Catalog health | versions in use, refresh success or failure, expiry errors |
 | Errors | error code, extension version |
 
-**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup, and **"Store not recognised? Suggest it"** on the badge at an unrecognised cart (2026-10-10), at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and generic-reader fixes (no store configs since 2026-10-06); monthly replays of our own captures cover drift.
+**Shopper-initiated, per click** (user-facing features, described on the listing and in the UI): **"Suggest this store"** in the popup, and **"Store not recognised? Suggest it"** on the badge at an unrecognised cart (2026-10-10), at a generic store sends its registrable domain (from the merchant release's top-retail allowlist, sensitive categories removed; otherwise refused); **"Report a problem"** sends the domain, the reader result and the shopper's note. These feed the merchant growth list and generic-reader fixes; monthly replays of our own captures cover drift.
 
 **Deferred** to the affiliate phase: the "opportunity" event (best owned vs best catalog rate). Reserved names, not emitted: `offer_impression`, `offer_click` with `offer_id`, `placement`, client `click_id`. Dictionary published as `docs/telemetry/events.md` (public, like `docs/evals/`, not wiki material).
 
 **Content script vs telemetry.** The badge content script still sends only the reading to the extension's own service worker (decision 2026-10-09). Telemetry events are built and sent by the worker, after consent, from what the worker already holds; the content script never talks to the server.
 
-**Client built 2026-10-20 (15.3, branch `phase15-3-telemetry-client`):** the worker module `extension/src/state/telemetry.ts`, the consent screen, the Settings controls, the two taps and the generated dictionary `docs/telemetry/events.md`; the as-built facts are on the [Extension](extension.md#usage-reporting-phase-153) page and in the [implementer decision](../decisions/2026-10-20-telemetry-client-details.md). Two differences from this draft: "Report a problem" carries a fixed reason and no note (decision 2026-10-19), and a suggested store is not checked against a top-retail allowlist (the plan dropped it; the reviewer sees the domains).
+**Client (15.3):** the worker module `extension/src/state/telemetry.ts`, the consent screen, the Settings controls, the two taps and the generated dictionary `docs/telemetry/events.md`; the as-built facts are on the [Extension](extension.md#usage-reporting-phase-153) page and in the [implementer decision](../decisions/2026-10-20-telemetry-client-details.md). Two differences from this design: "Report a problem" carries a fixed reason and no note (decision 2026-10-19), and a suggested store is not checked against a top-retail allowlist (the plan dropped it; the reviewer sees the domains).
 
 ## Ingest and storage
 
-**Built 2026-10-20 (15.2):** migration `20261020004702_telemetry_events`, the shared contract `packages/catalog-review/src/telemetry.ts` and the API routes; the as-built facts are on the [API](api.md) and [Database](database.md) pages and in the [implementer decision](../decisions/2026-10-20-telemetry-backend-details.md). Retention is pruning inside `ingest_events`, not `pg_cron`; the bullets below are the design intent.
+**Ingest (15.2):** migration `20261020004702_telemetry_events`, the shared contract `packages/catalog-review/src/telemetry.ts` and the API routes; the as-built facts are on the [API](api.md) and [Database](database.md) pages and in the [implementer decision](../decisions/2026-10-20-telemetry-backend-details.md). Retention (90 days, a daily `pg_cron` prune with a backstop in ingest) is owned by [Database](database.md); the bullets below are the design intent.
 
 - `POST /v1/events`, anonymous, through a `security definer` insert-only RPC granted to `anon` that validates and caps rows (no new server secret).
 - Strict Zod schema, per-event and per-batch caps, `Origin: chrome-extension://<id>` and content-type checks (not authentication); token bucket keyed by the client IP that the events route reads itself from Render's `X-Forwarded-For` at a fixed hop count, plus a global cap; Fastify's server-wide `trustProxy` stays `false`, so the review routes' limits are unchanged; a test shows a forged header does not move the key; IP used transiently, never stored; per-install daily caps; unknown versions dropped.
 - Batched with `alarms`; capped offline queue.
-- Raw table: RLS on, no client role can read it; daily aggregates read by the reviewer dashboard through an authenticated RPC; raw rows deleted at 90 days by `pg_cron` *(to confirm on the hosted plan)*; no export to third parties; the access list is recorded.
+- Raw table: RLS on, no client role can read it; daily aggregates read by the reviewer dashboard through an authenticated RPC; raw rows deleted at 90 days ([Database](database.md)); no export to third parties; the access list is recorded.
 - Policy wording: the application stores no IP addresses; hosting providers' access logs may, under their retention.
 
 ## Operations and diligence
 
 | Area | Control |
 | --- | --- |
-| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state (no all-sites grant prompt since 2026-10-09: `https://*/*` is required at install; no merchant search since Phase 11's scope cut, no "is that right?" prompt since 2026-10-06) |
+| Accessibility | axe checks at 360 and 480 px on the consent screen, the withheld-amount (rates-only) state |
 | Deletion without accounts | "Stop sharing" clears the queue and ID; "Delete my data" sends the current install ID for deletion of its rows; raw rows expire in 90 days; a reset ID's earlier rows cannot be found and expire at 90 days (the policy says so) |
 | Incident | Remote stop: the ingest answers 410 and clients stop sending; merchant releases roll back by republishing the previous one; `disabled` turns off a merchant profile; support channel and breach-notice owner in `docs/release/support.md` and `deployment-runbook.md` |
 | Security review | Independent threat-model review of the ingest path and the hosted merchant release before Release B |
@@ -94,7 +94,7 @@ Every event: `install_id` (random, persistent, reset by Stop sharing or Delete m
 | Funnel | install → onboarding complete → at least one card → first recommendation → active in week 2 |
 | Retention | D7 and D30 by install cohort from the persistent install ID |
 | Coverage | share of recommendations at named profiles; "Suggest this store" counts by domain |
-| Quality | reader precision (shown-wrong) and coverage on held-out real pages (protocol `.8`); field rate of reported wrong amounts and typed amounts (no `ask` since 2026-10-06) |
+| Quality | reader precision (shown-wrong) and coverage on held-out real pages (protocol `.8`); field rate of reported wrong amounts and typed amounts |
 | Uninstalls | rate and reasons (disclosed `setUninstallURL` survey) |
 | Reputation | Web Store rating and review count; support volume |
 | Availability | API uptime as observed by clients' refresh results |
@@ -107,6 +107,6 @@ Hard rules now: the extension never touches retailer affiliate parameters, cooki
 
 ## Related
 
-* [Merchant coverage design](merchant-coverage-design.md)
+* [Merchant coverage design (archived)](../archive/merchant-coverage-design.md)
 * [Phase 10 plan](../product/phase-10-merchant-expansion.md)
 * [Extension](extension.md)

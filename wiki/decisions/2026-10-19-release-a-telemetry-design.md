@@ -56,3 +56,5 @@ As chosen above, carried out in Phase 15.2 (backend) and 15.3 (client). The enve
 
 ## Status
 Accepted 2026-10-19 (planner's choices within Evan's decisions; decisions 3 and 4 in the plan await Evan's confirmation, the recommendations above are assumed until he answers).
+
+Evan confirmed plan decisions 3 and 4 on 2026-10-20 (the recommendations adopted; see [telemetry client details](2026-10-20-telemetry-client-details.md)). The Retention row is superseded in part 2026-10-20 by [privacy fixes](2026-10-20-privacy-fixes-delete-order-and-scheduled-prune.md): a daily pg_cron job prunes at 03:17 UTC (confirmed active on hosted by Evan 2026-10-22); pruning in the ingest RPC stays as a backstop. (Wiki audit 2026-10-23.)

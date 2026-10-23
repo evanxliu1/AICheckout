@@ -3,6 +3,7 @@ type: Decision
 title: Retire the three legacy adapters (Amazon, Best Buy, Newegg) in Release A; measure the change for the record, not as a gate; drop order detection and savings
 description: Evan's 2026-10-19 directive replaces the A4 gate (adapters retire only when the generic reader matches them on fresh captures) with an unconditional retirement in Phase 15.1; the before-and-after readings are still measured and committed as a record. The URL-only order detection and the savings history, which existed only for those three stores, are dropped rather than rebuilt generically.
 status: accepted
+supersedes: [2026-10-09-generic-read-on-legacy-site-pages.md]
 tags: [decision, phase-15, extension, reader, adapters, savings]
 generated:
   by: claude-code/claude-opus-5-5
@@ -59,3 +60,5 @@ What the adapters still own in the code at `main` `96ba5265`: the readers on the
 
 ## Status
 Accepted 2026-10-19 (Evan's directive in chat; the savings drop and the tolerated field are the planner's recommendations, listed as decision 2 in the [plan](../product/phase-15-release-a.md#8-decisions-needed-from-evan)).
+
+Supersedes [Phase 13b manual read](2026-10-09-generic-read-on-legacy-site-pages.md) (adapter on its cart URLs, readCart elsewhere): with no adapters the generic reader is the only reader. Supersedes in part the adapter clauses of [bundled site adapters](2026-09-29-bundled-site-adapters.md), [automatic cart badge](2026-10-01-automatic-cart-badge.md) (savings), [reader shows only certain amounts](2026-10-06-reader-shows-only-certain-amounts.md), [audit calls](2026-10-10-audit-calls.md) (A4) and [the extension on the merchant release](2026-10-11-extension-on-the-merchant-release.md). Built in Phase 15.1, merged 2026-10-20 (PR #96). (Wiki audit 2026-10-23.)
