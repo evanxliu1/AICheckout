@@ -1,10 +1,10 @@
 # Portfolio demonstration and claims
 
-The [offline shopper recording](assets/shopper-demo.mp4) and [captioned gallery/transcript](assets/index.html) now demonstrate the actual packaged extension page using clearly labeled sample inputs. The recording covers protected setup, two owned cards, a $100 comparison, unknown cap usage, locking and confirmed deletion. The interface appears at its original 360×600 size inside a captioned presentation; it is an extension page recording, not a native toolbar popup recording. The store screenshots separately use genuine native-popup captures. [Provenance and regeneration](assets/README.md) bind both to the current ZIP.
+The [shopper demo](assets/shopper-demo.mp4) (2026-10-22) is a 55-second motion graphic illustrating the product, not a recording: the badge naming Freedom Unlimited at $3.00 on a $100.00 cart at a fictional restaurant, the rule in the issuer's words with the other cards ranked, the rates view when a gift card makes the amount uncertain, and how the catalog is kept current (an LLM drafts, a person approves every change, no model at checkout). Its interface is recreated in HTML/CSS with sample cards; the [store screenshots and gallery](assets/index.html) are the actual 2.1.0 extension. [Provenance and regeneration](assets/README.md) bind the screenshots to the ZIP; the demo has its own [script and render manifest](assets/motion/script.md).
 
 The [56-second full-stack recording](assets/full-stack-demo.mp4) now shows the actual React review interface, compiled Node API, local Supabase Auth/PostgreSQL and an intercepted synthetic SDK response. Eleven captioned chapters cover source quotations, condition decisions, draft application, saved-run recovery, context/accounting and separate publication. [Transcript, provenance and reproduction](assets/full-stack-demo.md) record the exact source/build inputs and verified cleanup. The invented 2.5% example is not issuer evidence; scripted review clicks are not independent human annotation.
 
-Both local demonstration segments are recorded. Live model measurements and hosted deployment evidence remain unfinished. No public traffic, customer savings or live model accuracy is claimed.
+The full-stack segment is a local recording; the shopper demo is an illustration. Live model measurements and hosted deployment evidence remain unfinished. No public traffic, customer savings or live model accuracy is claimed.
 
 ## Story to demonstrate
 

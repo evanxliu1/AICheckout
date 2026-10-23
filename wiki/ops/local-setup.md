@@ -38,7 +38,7 @@ One npm workspace (root `package-lock.json`) covers `extension/`, `packages/*`, 
 | npm | Ships with Node 24 | Install, scripts |
 | Docker daemon | Running | `db:*` scripts; the pinned `supabase` CLI (2.118.0) is an npm devDependency and pulls images on first start |
 | Playwright Chromium | `npx playwright install chromium` (CI adds `--with-deps`) | `test:browser`, `test:catalog:browser`, `test:capture:browser` |
-| ffmpeg, ffprobe | On `PATH` | `release:media`, `release:portfolio` only ([Release media](release-media.md)) |
+| ffmpeg, ffprobe | On `PATH` | `release:media`, `release:motion`, `release:portfolio` only ([Release media](release-media.md)) |
 | Codex CLI / Claude Code CLI | Signed in | Live evals only ([Live model runs](live-model-runs.md)) |
 
 ## Install and check

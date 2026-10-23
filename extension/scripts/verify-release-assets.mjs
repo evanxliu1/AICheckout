@@ -45,8 +45,22 @@ for (const item of [...manifest.frames, manifest.promotional]) {
       'Changed native capture',
     );
 }
-for (const media of [manifest.recording, manifest.recording.composed])
-  assert(hash(readFileSync(resolve(assets, media.file))) === media.sha256, 'Changed recording');
+// The shopper demo is a motion graphic with its own manifest; it is not bound to the ZIP.
+const motion = JSON.parse(readFileSync(resolve(assets, 'motion/motion-manifest.json'), 'utf8'));
+for (const media of Object.values(motion.outputs))
+  assert(
+    hash(readFileSync(resolve(assets, media.file))) === media.sha256,
+    `Changed motion demo: ${media.file}`,
+  );
+assert(
+  manifest.motionDemo.web.sha256 === motion.outputs.web.sha256,
+  'Asset manifest and motion manifest differ; rerun render-release-assets.mjs',
+);
+const poster = readFileSync(resolve(assets, motion.outputs.poster.file));
+assert(
+  poster.readUInt32BE(16) === 1280 && poster.readUInt32BE(20) === 720 && poster[25] === 2,
+  'Poster is not an opaque 1280×720 RGB PNG',
+);
 const mime = {
   '.html': 'text/html',
   '.png': 'image/png',
@@ -113,15 +127,12 @@ try {
       time: video.currentTime,
     };
   });
-  const composed = manifest.recording.composed;
+  const composed = motion.outputs.web;
   assert(
     playback.width === composed.width && playback.height === composed.height && playback.time > 0,
     'MP4 cannot play',
   );
-  assert(
-    Math.abs(playback.duration - manifest.recording.composed.durationSeconds) < 0.2,
-    'Video duration changed',
-  );
+  assert(Math.abs(playback.duration - composed.durationSeconds) < 0.2, 'Video duration changed');
   const cues = await video.evaluate(async (video) => {
     const track = video.querySelector('track');
     if (track.readyState !== 2)
@@ -131,10 +142,7 @@ try {
       });
     return track.track.cues?.length ?? 0;
   });
-  assert(
-    cues === JSON.parse(readFileSync(resolve(assets, 'demo-chapters.json'), 'utf8')).chapters.length,
-    'Caption cues missing',
-  );
+  assert(cues === motion.scenes.length, 'Caption cues missing');
   assert(errors.length === 0, `Gallery page errors: ${errors.join(', ')}`);
   // Four stills across the recording for inspection.
   for (const second of [0.25, 0.5, 0.75, 0.95].map((at) => Math.floor(at * composed.durationSeconds)))
@@ -146,7 +154,7 @@ try {
       '-ss',
       String(second),
       '-i',
-      resolve(assets, 'shopper-demo.mp4'),
+      resolve(assets, composed.file),
       '-frames:v',
       '1',
       resolve(inspection, `video-${second}.png`),

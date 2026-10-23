@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T07:08:21.481Z",
+  "generatedAt": "2026-10-23T02:06:10.060Z",
   "artifactSha256": "f5a272081c747c4392a1146240f3e446d1ecb70fe6b98a62a6a2535b1e91e501",
   "sourceCaptureManifest": "capture-manifest.json",
   "frames": [
@@ -65,22 +65,46 @@
     "height": 280,
     "sha256": "c6ee65a5d2774b54854ae070ac0a84e615fc03a84e58a90e4a596c2302b0df30"
   },
-  "recording": {
-    "file": "shopper-demo.webm",
-    "sha256": "3a44b1390699e3abc37226ef99efdd8a5a0ad3fc3861b6cae752b704d5229f7d",
-    "bytes": 1523638,
-    "kind": "Actual extension interaction recording in one tab (onboarding, sample carts, the popup page); synthetic inputs; nothing sent.",
-    "chapters": "demo-chapters.json",
-    "captions": "shopper-demo.vtt",
-    "composed": {
+  "motionDemo": {
+    "kind": "Motion graphic illustrating the product: the interface recreated in HTML/CSS with sample cards and a fictional store. Not a capture of the extension; the store screenshots are the real extension. Independent of the extension ZIP.",
+    "manifest": "motion/motion-manifest.json",
+    "web": {
       "file": "shopper-demo.mp4",
-      "sha256": "81b8f098d6c35cb301a4ee2754826ac26f93c206578c41f00884a57785734aa8",
-      "bytes": 1169454,
+      "sha256": "beffcfeba43d795cb731d27479e5bd976970aecf8d52502f8267ebc6ae7890b2",
+      "bytes": 1580198,
       "width": 1280,
       "height": 720,
-      "durationSeconds": 38.44,
+      "fps": 30,
+      "durationSeconds": 55,
       "codec": "h264",
-      "layout": "Unscaled 880×660 one-tab recording plus persistent scope label and timed explanation."
+      "pixelFormat": "yuv420p",
+      "audioStreams": 0
+    },
+    "master": {
+      "file": "motion/shopper-demo-1920x1080.mp4",
+      "sha256": "4e11e034fd613c2f30984767032a18a0adbd370c9c1ef35e6dd4dabdff30219a",
+      "bytes": 2960709,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "durationSeconds": 55,
+      "codec": "h264",
+      "pixelFormat": "yuv420p",
+      "audioStreams": 0
+    },
+    "poster": {
+      "file": "shopper-demo-poster.png",
+      "sha256": "04f0ec8032ecd2b0dfc6eadda03d7a5701b1450ec0c06c1fd526dac721e6b7fc",
+      "bytes": 282020,
+      "width": 1280,
+      "height": 720,
+      "seconds": 17
+    },
+    "captions": {
+      "file": "shopper-demo.vtt",
+      "sha256": "abae23f3221a14ef3ce68763e01cc75b95376e24f630d5d03dbeb40a2972d190",
+      "bytes": 1487,
+      "cues": 6
     }
   },
   "limits": [
@@ -88,6 +112,7 @@
     "Captures use a neutral fictional sample cart; the named store (Sample Kitchen, on a reserved .example host) is fictional and was added to a test copy of the store list in the capture profile; it is not in the shipped store list.",
     "The popup is captured as the popup page in a tab at the popup size, not from the toolbar.",
     "The badge panel in an 800-pixel window scrolls; rows below the fold are not shown.",
-    "No live store request, model call, report sent, deployment or store submission."
+    "No live store request, model call, report sent, deployment or store submission.",
+    "The shopper demo is a motion graphic illustrating the product, not a capture; it is not bound to the ZIP."
   ]
 }

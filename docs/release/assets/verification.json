@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-10-20T07:08:23.477Z",
+  "verifiedAt": "2026-10-23T02:06:26.252Z",
   "browser": "153.0.8010.12",
   "artifactSha256": "f5a272081c747c4392a1146240f3e446d1ecb70fe6b98a62a6a2535b1e91e501",
   "screenshots": "Five opaque RGB PNGs, 1280×800; source hashes match the captures.",
@@ -13,11 +13,12 @@
     "pageErrors": []
   },
   "video": {
-    "duration": 38.44,
+    "duration": 55,
     "width": 1280,
     "height": 720,
-    "time": 0.260622,
-    "captionCues": 9
+    "time": 0.261625,
+    "captionCues": 6
   },
-  "scope": "Local static gallery/playback and artifact checks. This does not validate store submission or live retailer/model behavior."
+  "scope": "Local static gallery/playback and artifact checks. This does not validate store submission or live retailer/model behavior.",
+  "note": "2026-10-22 (15.6b, re-run after the independent review): the verifier's checks for the motion-graphic shopper demo (hashes against its manifest, poster, playback, duration, caption cues) and the gallery passed. The ZIP and dist binding checks were skipped in this run (the ZIP is not in the checkout, and origin/main has extension changes since the 15.6 captures (15.5b), so its hosted ZIP is no longer f5a27208…e501); artifactSha256 above is the binding the screenshots record, not one re-checked here. The screenshot hashes were checked against their captures; npm run release:media on the submitted ZIP re-binds everything."
 }

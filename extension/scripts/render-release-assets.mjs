@@ -1,7 +1,6 @@
 /* global document */
 import { chromium } from '@playwright/test';
-import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 
@@ -112,126 +111,19 @@ ${fonts}*{box-sizing:border-box}html,body{margin:0;width:${IMAGE.width}px;height
       alt: `Presentation panel: “${scene.title}” ${scene.copy} ${scene.note} Sample inputs; not earned rewards. ${scene.alt}`,
     });
   }
-  const chapters = JSON.parse(readFileSync(resolve(output, 'demo-chapters.json'), 'utf8'));
-  if (chapters.artifactSha256 !== capture.artifactSha256)
-    throw new Error('Recording and captures come from different artifacts');
-  const videoPath = resolve(output, 'shopper-demo.webm');
-  const probe = JSON.parse(
-    execFileSync(
-      'ffprobe',
-      [
-        '-v',
-        'error',
-        '-show_entries',
-        'format=duration:stream=codec_name,width,height',
-        '-of',
-        'json',
-        videoPath,
-      ],
-      { encoding: 'utf8' },
-    ),
-  );
-  const duration = Number(probe.format.duration);
-  if (!Number.isFinite(duration) || duration < chapters.chapters.at(-1).atSeconds + 3)
-    throw new Error('Recording ended before the final demonstration step');
-  // The composed video: 1280×720, a caption column on the left, the 880×660 recording at its size on the right.
-  const VIDEO = { width: 1280, height: 720 },
-    recording = chapters.viewport,
-    overlay = { x: VIDEO.width - recording.width - 20, y: (VIDEO.height - recording.height) / 2 };
-  if (probe.streams[0].width !== recording.width || probe.streams[0].height !== recording.height)
-    throw new Error('Recording size differs from its chapters file');
-  const captionDir = resolve(output, 'video-captions');
-  mkdirSync(captionDir, { recursive: true });
-  const videoPage = await browser.newPage({ viewport: VIDEO, deviceScaleFactor: 1 });
-  const concat = ['ffconcat version 1.0'];
-  for (const [index, chapter] of chapters.chapters.entries()) {
-    const start = index === 0 ? 0 : chapter.atSeconds,
-      end = chapters.chapters[index + 1]?.atSeconds ?? duration;
-    const captionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><title>Demo caption</title><style>${fonts}*{box-sizing:border-box}html,body{margin:0;width:${VIDEO.width}px;height:${VIDEO.height}px;background:#0c2a4d;color:#fff;font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{padding:36px 32px;width:${overlay.x}px}header{font-family:Bricolage,Figtree,sans-serif;font-size:20px;font-weight:700}h1{font-family:Bricolage,Figtree,sans-serif;font-size:28px;font-weight:700;line-height:1.15;margin:32px 0 20px;letter-spacing:-.02em}p{font-size:18px;line-height:1.5;margin:0;color:#a9c6ea}.scope{position:absolute;bottom:32px;left:32px;width:${overlay.x - 64}px;font-size:13px;line-height:1.5;color:#a9c6ea}</style><body><main><header>AI Checkout</header><h1>Staged shopper demo</h1><p>${escape(chapter.caption)}</p><p class="scope">Synthetic inputs · no live store, model call or report sent.<br>Actual extension at its original size.</p></main></body></html>`;
-    await videoPage.setContent(captionHtml);
-    await videoPage.evaluate(() => document.fonts.ready);
-    const fits = await videoPage.evaluate(
-      () =>
-        document.querySelector('main > p:not(.scope)').getBoundingClientRect().bottom + 20 <=
-        document.querySelector('.scope').getBoundingClientRect().top,
-    );
-    if (!fits) throw new Error(`Video caption overflow: ${index}`);
-    const file = `caption-${String(index).padStart(2, '0')}.png`;
-    await videoPage.screenshot({ path: resolve(captionDir, file) });
-    concat.push(`file '${file}'`, `duration ${(end - start).toFixed(3)}`);
-  }
-  concat.push(`file 'caption-${String(chapters.chapters.length - 1).padStart(2, '0')}.png'`);
-  writeFileSync(resolve(captionDir, 'timeline.ffconcat'), concat.join('\n') + '\n');
-  execFileSync(
-    'ffmpeg',
-    [
-      '-hide_banner',
-      '-loglevel',
-      'error',
-      '-y',
-      '-f',
-      'concat',
-      '-safe',
-      '0',
-      '-i',
-      resolve(captionDir, 'timeline.ffconcat'),
-      '-i',
-      videoPath,
-      '-filter_complex',
-      `[0:v]fps=25[bg];[bg][1:v]overlay=${overlay.x}:${overlay.y}:shortest=1,format=yuv420p[v]`,
-      '-map',
-      '[v]',
-      '-an',
-      '-c:v',
-      'libx264',
-      '-preset',
-      'medium',
-      '-crf',
-      '20',
-      '-r',
-      '25',
-      '-movflags',
-      '+faststart',
-      resolve(output, 'shopper-demo.mp4'),
-    ],
-    { stdio: 'pipe' },
-  );
-  const composedProbe = JSON.parse(
-    execFileSync(
-      'ffprobe',
-      [
-        '-v',
-        'error',
-        '-show_entries',
-        'format=duration:stream=codec_name,width,height',
-        '-of',
-        'json',
-        resolve(output, 'shopper-demo.mp4'),
-      ],
-      { encoding: 'utf8' },
-    ),
-  );
-  if (
-    composedProbe.streams[0].width !== VIDEO.width ||
-    composedProbe.streams[0].height !== VIDEO.height ||
-    composedProbe.streams[0].codec_name !== 'h264' ||
-    Math.abs(Number(composedProbe.format.duration) - duration) > 0.2
-  )
-    throw new Error('Encoded video validation failed');
+  // The shopper demo is a motion graphic rendered separately (npm run release:motion), independent of the
+  // ZIP; the gallery and manifest point at its own manifest.
+  const motion = JSON.parse(readFileSync(resolve(output, 'motion/motion-manifest.json'), 'utf8'));
+  for (const media of Object.values(motion.outputs))
+    if (hash(readFileSync(resolve(output, media.file))) !== media.sha256)
+      throw new Error(`Motion demo changed since its manifest: ${media.file}; run npm run release:motion`);
   const timestamp = (seconds) => new Date(Math.round(seconds * 1000)).toISOString().slice(11, 23);
-  const captions = chapters.chapters
-    .map(
-      (chapter, index) =>
-        `${index + 1}\n${timestamp(chapter.atSeconds)} --> ${timestamp(chapters.chapters[index + 1]?.atSeconds ?? chapter.atSeconds + 4)}\n${chapter.caption}`,
-    )
-    .join('\n\n');
-  writeFileSync(resolve(output, 'shopper-demo.vtt'), `WEBVTT\n\n${captions}\n`);
   const gallery = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Checkout release media</title><style>
 *{box-sizing:border-box}body{margin:0;background:#f9fafb;color:#111827;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:960px;margin:auto;padding:32px 24px}h1{font-size:32px;line-height:1.2}h2{font-size:22px;margin:40px 0 12px}p{max-width:72ch}a{color:#1d4ed8}figure{margin:0}figure img{display:block;width:100%;max-width:960px;height:auto}figcaption{margin:8px 0 24px;font-size:14px;color:#4b5563}.promo{max-width:440px}video{width:960px;max-width:100%;height:auto;background:#fff}.transcript{max-width:72ch}.transcript li{margin-bottom:12px}code{overflow-wrap:anywhere}a:focus-visible,video:focus-visible{outline:2px solid #1d4ed8;outline-offset:3px}@media(max-width:700px){main{padding:20px 16px}h1{font-size:28px}}</style></head><body><main>
-<h1>AI Checkout release media</h1><p>Reviewable assets for extension 2.1.0 (the hosted build). These use the actual packaged interface, a neutral fictional sample cart and synthetic inputs. No real store is shown or named: the named store, Sample Kitchen, is fictional and exists only in a test copy of the store list used for the capture. Nothing here establishes customer savings, a live store check, model accuracy or store approval.</p><p>Artifact SHA-256: <code>${capture.artifactSha256}</code>. The bundled catalog ${escape(capture.catalogVersion)} expires ${new Date(capture.catalogExpiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} UTC; reverify terms and recapture before publishing an updated build.</p>
+<h1>AI Checkout release media</h1><p>Reviewable assets for extension 2.1.0 (the hosted build). The screenshots use the actual packaged interface, a neutral fictional sample cart and synthetic inputs; the shopper demo is a motion graphic illustrating the product. No real store is shown or named: the named store, Sample Kitchen, is fictional and exists only in a test copy of the store list used for the capture. Nothing here establishes customer savings, a live store check, model accuracy or store approval.</p><p>Artifact SHA-256: <code>${capture.artifactSha256}</code>. The bundled catalog ${escape(capture.catalogVersion)} expires ${new Date(capture.catalogExpiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })} UTC; reverify terms and recapture before publishing an updated build.</p>
 ${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h2><figure><a href="${result.file}"><img src="${result.file}" alt="${escape(result.alt)}"></a><figcaption>1280 × 800. Actual extension UI at 1 CSS pixel per image pixel with a presentation caption. <a href="${result.capture}">Original capture</a>.</figcaption></figure></section>`).join('')}
 <section><h2>Promotional image</h2><figure class="promo"><a href="promo-440x280.png"><img src="promo-440x280.png" alt="AI Checkout cart mark and name on the blue brand background"></a><figcaption>440 × 280; a brand image, not a product screenshot.</figcaption></figure><p><a href="icon-inspection.png">Inspect 16, 48 and 128px icons on light and dark backgrounds</a>.</p></section>
-<section><h2>Staged shopper walkthrough</h2><p>Actual ${recording.width} × ${recording.height} recording of one tab, placed at its original size beside explanatory captions in a ${VIDEO.width} × ${VIDEO.height} video: the first run with the consent question, the badge on a sample cart at a fictional store in a test copy of the store list, the rates view where a gift card makes the amount uncertain, and the popup comparison. There is no audio narration; visible captions and the transcript identify each step.</p><div class="demo"><video controls preload="metadata"><source src="shopper-demo.mp4" type="video/mp4"><track default kind="captions" src="shopper-demo.vtt" srclang="en" label="English"></video><ol class="transcript">${chapters.chapters.map((chapter) => `<li><strong>${timestamp(chapter.atSeconds).slice(3, 8)}</strong> ${escape(chapter.caption)}</li>`).join('')}</ol></div><p><a href="shopper-demo.mp4">MP4 recording</a> · <a href="shopper-demo.vtt">Captions</a> · <a href="assets-manifest.json">Asset provenance</a></p></section>
+<section><h2>Shopper demo (motion graphic)</h2><p>A ${motion.outputs.web.durationSeconds.toFixed(1)}-second motion graphic illustrating the product: the badge and its panels recreated in HTML/CSS and animated, with sample cards and fictional stores (Sample Kitchen and shop.example.com). It is an illustration, not a recording; the screenshots above are the real extension. There is no audio; every frame reads without sound, and the scene descriptions below are also a caption track. <a href="motion/script.md">Script</a> and <a href="motion/composition.html">composition</a>.</p><div class="demo"><video controls preload="metadata" poster="${motion.outputs.poster.file}"><source src="${motion.outputs.web.file}" type="video/mp4"><track default kind="captions" src="${motion.outputs.captions.file}" srclang="en" label="English (scene descriptions)"></video><ol class="transcript">${motion.scenes.map((scene) => `<li><strong>${timestamp(scene.start).slice(3, 8)}</strong> ${escape(scene.caption)}</li>`).join('')}</ol></div><p><a href="${motion.outputs.web.file}">MP4, 1280 × 720</a> · <a href="${motion.outputs.master.file}">Master, 1920 × 1080</a> · <a href="${motion.outputs.captions.file}">Scene captions</a> · <a href="motion/motion-manifest.json">Render provenance</a></p></section>
 <p>The separate <a href="full-stack-demo.md">full-stack recording and transcript</a> (2026-10-03, extension 2.0.0 era) show the local review/API/database flow with simulated model responses; the curation side is unchanged by this release. See <a href="../README.md">remaining release requirements</a>.</p></main></body></html>`;
   writeFileSync(resolve(output, 'index.html'), gallery);
   const promo = readFileSync(resolve(output, 'promo-440x280.png'));
@@ -244,23 +136,13 @@ ${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h
         sourceCaptureManifest: 'capture-manifest.json',
         frames: results,
         promotional: { file: 'promo-440x280.png', width: 440, height: 280, sha256: hash(promo) },
-        recording: {
-          file: 'shopper-demo.webm',
-          sha256: hash(readFileSync(resolve(output, 'shopper-demo.webm'))),
-          bytes: statSync(resolve(output, 'shopper-demo.webm')).size,
-          kind: chapters.kind,
-          chapters: 'demo-chapters.json',
-          captions: 'shopper-demo.vtt',
-          composed: {
-            file: 'shopper-demo.mp4',
-            sha256: hash(readFileSync(resolve(output, 'shopper-demo.mp4'))),
-            bytes: statSync(resolve(output, 'shopper-demo.mp4')).size,
-            width: VIDEO.width,
-            height: VIDEO.height,
-            durationSeconds: Number(composedProbe.format.duration),
-            codec: 'h264',
-            layout: `Unscaled ${recording.width}×${recording.height} one-tab recording plus persistent scope label and timed explanation.`,
-          },
+        motionDemo: {
+          kind: motion.kind,
+          manifest: 'motion/motion-manifest.json',
+          web: motion.outputs.web,
+          master: motion.outputs.master,
+          poster: motion.outputs.poster,
+          captions: motion.outputs.captions,
         },
         limits: [
           'Synthetic inputs, not observed users or savings.',
@@ -268,13 +150,14 @@ ${results.map((result, index) => `<section><h2>${escape(scenes[index].title)}</h
           'The popup is captured as the popup page in a tab at the popup size, not from the toolbar.',
           'The badge panel in an 800-pixel window scrolls; rows below the fold are not shown.',
           'No live store request, model call, report sent, deployment or store submission.',
+          'The shopper demo is a motion graphic illustrating the product, not a capture; it is not bound to the ZIP.',
         ],
       },
       null,
       2,
     ) + '\n',
   );
-  console.log('Rendered five 1280×800 store screenshots, captions, gallery and asset provenance.');
+  console.log('Rendered five 1280×800 store screenshots, gallery and asset provenance.');
 } finally {
   await browser.close();
 }
