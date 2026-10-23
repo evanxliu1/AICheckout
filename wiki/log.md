@@ -2,6 +2,9 @@
 
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
+## 2026-10-23
+* **Fix** Dependency advisories that failed CI's `npm audit --audit-level=high` on every PR (published about 2026-10-22, no code change) on `deps-audit-2026-10-23`: vite 7.3.6 → 7.3.7 (high; GHSA-9jrq-w75r-8gcw, GHSA-rq7h-c2jc-7f22 and three launch-editor advisories), fastify 5.12.5 → 5.12.7 (GHSA-389g-gv7q-r4x8), vitest and `@vitest/*` 5.0.2 → 5.0.5 (moderate; GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp), transitive ip-address 10.7.2 → 10.7.4 (moderate; GHSA-rxp7-6hxx-x8q5); exact pins kept in every workspace `package.json`. `npm install` under npm 11.5.2 again stripped other platforms' optional packages (all 25 `@rollup/rollup-*` and `@napi-rs/lzma-linux-x64-gnu`, rollup 4 being nested under `vite/` because `@crxjs/vite-plugin` pins rollup 2), so those 26 unchanged blocks were restored from the previous lockfile by hand ([tailwind 4 decision](decisions/2026-10-03-tailwind-4.md) records the same npm bug); `npm ci` accepts the result and installs the native rollup binding. Audit 0 vulnerabilities; every CI gate passed locally (agent-verified). (claude-code/claude-fable-5-1)
+
 ## 2026-10-22
 * **Update** Evan confirmed the publisher name "Evan Liu" and, in the dashboard SQL editor, the hosted `telemetry-prune` cron job (jobid 1, `17 3 * * *`, active, `select telemetry.prune_expired()`); `release:docs:check:release` is clean.
 * **Update** Evan's answers applied on `phase15-evan-answers`: support email `evanliu7788@gmail.com` in `docs/release/` and the site, non-trader confirmed; GitHub private vulnerability reporting enabled (`gh api`); `supabase db query --linked` refused (login-role permission error), so Evan confirms the `telemetry-prune` cron job in the dashboard; publisher name still open.
