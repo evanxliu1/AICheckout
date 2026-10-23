@@ -17,7 +17,7 @@
 <p align="center">
   <a href="https://ai-checkout-api.onrender.com/">Site</a> ·
   <a href="https://ai-checkout-api.onrender.com/results/">Eval results</a> ·
-  <a href="docs/release/assets/shopper-demo.mp4">Shopper walkthrough</a> ·
+  <a href="docs/release/assets/shopper-demo.mp4">Shopper demo (motion graphic)</a> ·
   <a href="docs/release/assets/full-stack-demo.mp4">Curation walkthrough</a> ·
   <a href="wiki/system/architecture.md">Architecture</a> ·
   <a href="wiki/index.md">Development wiki</a>
