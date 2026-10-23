@@ -225,7 +225,7 @@
         padding: 20px;
       }
       #items .meta {
-        font-size: 19px;
+        font-size: 20px;
         color: #6b7280;
         margin-bottom: 14px;
       }
@@ -251,7 +251,7 @@
         font-weight: 500;
       }
       .item small {
-        font-size: 18px;
+        font-size: 20px;
         color: #6b7280;
       }
       #summary {
@@ -409,7 +409,7 @@
         font-weight: 700;
       }
       .er .less {
-        font-size: 19px;
+        font-size: 20px;
         color: var(--ink-faint);
       }
       .er .val {
@@ -417,7 +417,7 @@
       }
       .er .rate {
         grid-column: 1 / -1;
-        font-size: 19px;
+        font-size: 20px;
         color: var(--ink-faint);
         margin-top: 4px;
       }
@@ -474,14 +474,16 @@
       .fact {
         left: 120px;
         width: 1680px;
-        font-size: 32px;
+        font-size: 44px;
+        line-height: 1.3;
         display: flex;
-        align-items: center;
-        gap: 22px;
+        align-items: flex-start;
+        gap: 28px;
       }
       .fact i {
-        width: 14px;
-        height: 14px;
+        width: 16px;
+        height: 16px;
+        margin-top: 22px;
         border-radius: 50%;
         background: var(--sky);
         flex: none;
@@ -699,6 +701,9 @@
                 The cart amount wasn’t read on this page. Each card’s rate doesn’t depend on it, so the best
                 card is the same at any amount, unless a condition below applies.
               </p>
+              <p class="basis" id="capB" style="margin-top: 12px">
+                A spend cap on one of these cards could change the order at your cart’s amount.
+              </p>
               <div class="rows" style="margin-top: 10px">
                 <div class="rr" id="q1"><span>Blue Cash Everyday</span><span class="val">3% back</span></div>
                 <div class="rr" id="q2"><span>Double Cash</span><span class="val">2% back</span></div>
@@ -739,13 +744,15 @@
           <path id="a3" d="M1376 555H1424m-14 -12l14 12l-14 12" pathLength="1" />
         </g>
       </svg>
-      <div class="abs fact" id="f1" style="top: 716px">
+      <div class="abs fact" id="f1" style="top: 380px">
         <i></i>No model at checkout: the comparison is arithmetic on your device.
       </div>
-      <div class="abs fact" id="f2" style="top: 784px">
+      <div class="abs fact" id="f2" style="top: 500px">
         <i></i>Your cards are saved in your browser. No card numbers, no bank login.
       </div>
-      <div class="abs fact" id="f3" style="top: 852px"><i></i>Usage reports only if you choose Share.</div>
+      <div class="abs fact" id="f3" style="top: 620px">
+        <i></i>Usage reports only if you choose Share. Tapping Suggest or Report sends the store’s domain.
+      </div>
 
       <!-- Scene 6 -->
       <div id="endIcon" class="abs cartmark"></div>
@@ -766,9 +773,9 @@
         width: 1920,
         height: 1080,
         fps: 30,
-        duration: 38,
+        duration: 55,
         poster: 17.0,
-        stills: [4.5, 10.5, 17.0, 24.0, 31.5, 37.0],
+        stills: [4.5, 10.5, 17.0, 25.0, 34.0, 46.0, 53.0],
         scenes: [
           {
             id: 'hook',
@@ -791,19 +798,19 @@
           {
             id: 'rates',
             start: 19,
-            end: 25.5,
+            end: 27,
             caption: 'Amounts only when certain. A gift card is applied, so the cart amount isn’t read; the badge ranks your cards by rate: Blue Cash Everyday 3%, Double Cash 2%, Quicksilver 1.5%, Freedom Unlimited 1.5%.',
           },
           {
             id: 'trust',
-            start: 25.5,
-            end: 33,
-            caption: 'Card terms kept current by an LLM; every change approved by a person. No model at checkout. Your cards are saved in your browser. Usage reports only if you choose Share.',
+            start: 27,
+            end: 48,
+            caption: 'Card terms kept current by an LLM; every change approved by a person: issuer terms, an LLM drafts, a person approves, your extension (178 cards; checks for updates weekly). No model at checkout: the comparison is arithmetic on your device. Your cards are saved in your browser; no card numbers, no bank login. Usage reports only if you choose Share; tapping Suggest or Report sends the store’s domain.',
           },
           {
             id: 'end',
-            start: 33,
-            end: 38,
+            start: 48,
+            end: 55,
             caption: 'AI Checkout. The best card you already own, shown right on your cart. Works at any U.S. online store. Illustration with sample cards and a fictional store.',
           },
         ],
@@ -862,7 +869,7 @@
         const rowsA = ['r1', 'r2', 'r3'].map($);
         const rowsB = ['q1', 'q2', 'q3', 'q4'].map($);
         // Wordmark: scenes 1-5.
-        put($('mark'), life(t, 0.1, 0.6, 33, 0.45, 0).o);
+        put($('mark'), life(t, 0.1, 0.6, 48, 0.45, 0).o);
 
         // Scene 1: the question.
         words.forEach((w, i) => {
@@ -880,7 +887,7 @@
         for (const [id, t0, t1] of [
           ['h2', 5.8, 12],
           ['h3', 12.3, 19],
-          ['h4', 19.3, 25.5],
+          ['h4', 19.3, 27],
         ]) {
           const el = $(id),
             h = life(t, t0, 0.7, t1, 0.4, 36),
@@ -889,10 +896,10 @@
           put(el.querySelector('h1'), h.o, h.y);
           put(el.querySelector('.sub'), s.o, s.y);
         }
-        put($('footer'), life(t, 1.0, 0.6, 25.5, 0.5, 0).o);
+        put($('footer'), life(t, 1.0, 0.6, 27, 0.5, 0).o);
 
         // Browser window: rises in scene 1, leaves at scene 5.
-        const win = life(t, 0.5, 0.9, 25.5, 0.7, 80);
+        const win = life(t, 0.5, 0.9, 27, 0.7, 80);
         put($('win'), win.o, win.p < 1 ? win.y : 140 * win.q);
         put($('items'), life(t, 1.1, 0.5, Infinity, 0, 16).o, life(t, 1.1, 0.5, Infinity, 0, 16).y);
         const sumIn = life(t, 1.3, 0.5, Infinity, 0, 16);
@@ -943,6 +950,8 @@
           put(row, l.o, l.y);
           const v = row.querySelector('.val');
           v.textContent = money(Number(v.dataset.cents) * out(prog(t, 15.0 + i * 0.35, 0.7)));
+          // The difference appears once the amount has landed, so a paused frame never pairs them wrongly.
+          put(row.querySelector('.less'), out(prog(t, 15.7 + i * 0.35, 0.3)));
         });
 
         // Scene 4: the rates view.
@@ -950,6 +959,7 @@
         panelAt($('panelB'), t, 22.35);
         const nb = life(t, 22.6, 0.5, Infinity, 0, 14);
         put($('noticeB'), nb.o, nb.y);
+        put($('capB'), nb.o, nb.y);
         rowsB.forEach((row, i) => {
           const l = life(t, 22.85 + i * 0.2, 0.5, Infinity, 0, 18);
           // Rates are revealed, never counted: a paused frame must not show a rate the card doesn't have.
@@ -958,40 +968,41 @@
 
         // Scene 5: trust.
         for (const [id, t0] of [
-          ['th1', 25.9],
-          ['th2', 26.2],
+          ['th1', 27.4],
+          ['th2', 27.7],
         ]) {
-          const l = life(t, t0, 0.7, 33, 0.45, 36);
+          const l = life(t, t0, 0.7, 36, 0.45, 36);
           put($(id), l.o, l.y);
         }
         put($('trustHead'), 1);
         ['n1', 'n2', 'n3', 'n4'].forEach((id, i) => {
-          const l = life(t, 26.8 + i * 0.45, 0.6, 33, 0.45, 24);
+          const l = life(t, 28.3 + i * 0.45, 0.6, 36, 0.45, 24);
           put($(id), l.o, l.y);
         });
-        const emph = out(prog(t, 28.7, 0.5));
+        const emph = out(prog(t, 30.2, 0.5));
         $('n3').style.borderColor = emph > 0.01 ? `rgba(124, 196, 255, ${(0.25 + 0.75 * emph).toFixed(4)})` : '';
         ['a1', 'a2', 'a3'].forEach((id, i) => {
-          const draw = inOut(prog(t, 27.2 + i * 0.45, 0.4));
+          const draw = inOut(prog(t, 28.7 + i * 0.45, 0.4));
           const a = $(id);
           a.style.strokeDasharray = '1 1';
           a.style.strokeDashoffset = (1 - draw).toFixed(4);
-          a.style.opacity = (draw > 0 ? 1 - inOut(prog(t, 33, 0.45)) : 0).toFixed(4);
+          a.style.opacity = (draw > 0 ? 1 - inOut(prog(t, 36, 0.45)) : 0).toFixed(4);
         });
+        // The three facts get a beat of their own, one at a time, about 3 words a second.
         ['f1', 'f2', 'f3'].forEach((id, i) => {
-          const l = life(t, 29.2 + i * 0.3, 0.6, 33, 0.45, 20);
+          const l = life(t, 36.4 + i * 3.6, 0.6, 48, 0.45, 20);
           put($(id), l.o, l.y);
         });
 
         // Scene 6: end card.
-        put($('endIcon'), out(prog(t, 33.4, 0.3)), 0, 0.6 + 0.4 * spring(prog(t, 33.4, 0.9)));
-        const title = life(t, 33.7, 0.7, Infinity, 0, 30);
+        put($('endIcon'), out(prog(t, 48.4, 0.3)), 0, 0.6 + 0.4 * spring(prog(t, 48.4, 0.9)));
+        const title = life(t, 48.7, 0.7, Infinity, 0, 30);
         put($('endTitle'), title.o, title.y);
         for (const [id, t0] of [
-          ['endTag', 34.1],
-          ['endWorks', 34.5],
-          ['endStore', 34.9],
-          ['endFine', 35.2],
+          ['endTag', 49.1],
+          ['endWorks', 49.5],
+          ['endStore', 49.9],
+          ['endFine', 50.2],
         ]) {
           const l = life(t, t0, 0.6, Infinity, 0, 20);
           put($(id), l.o, l.y);

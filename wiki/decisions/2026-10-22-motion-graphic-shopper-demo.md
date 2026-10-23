@@ -1,12 +1,12 @@
 ---
 type: Decision
 title: "Phase 15.6b: the shopper demo is a motion graphic (HTML/CSS composition, every frame a function of t, rendered with the repository's Playwright and ffmpeg), not a screen recording; the recording pipeline for the demo retired"
-description: Evan asked on 2026-10-22 for the store and README demo to be a motion graphic rather than a screen recording. The demo is now a 38-second, 1920×1080 master and 1280×720 web copy rendered from one self-contained HTML composition with no new dependency; it illustrates the product with recreated, simplified UI and is not bound to the extension ZIP, while the five screenshots stay real captures bound to it.
+description: Evan asked on 2026-10-22 for the store and README demo to be a motion graphic rather than a screen recording. The demo is now a 55-second (38 s before the independent review's pacing fix), 1920×1080 master and 1280×720 web copy rendered from one self-contained HTML composition with no new dependency; it illustrates the product with recreated, simplified UI and is not bound to the extension ZIP, while the five screenshots stay real captures bound to it.
 status: accepted
 tags: [decision, phase-15, release, media, video]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-23T02:30:00Z
+  at: 2026-10-23T03:00:00Z
 sources:
   - resource: ../../docs/release/assets/motion/script.md
     title: Motion demo script (scenes, timings, verbatim text)
@@ -45,5 +45,13 @@ The 15.6 shopper demo was a 38.4 s Playwright recording of one 880×660 tab plac
 - The Web Store takes a video only as a YouTube link; uploading the master is Evan's step. GitHub plays a README video inline only from a `user-attachments` upload, also Evan's.
 - `verify-release-assets.mjs` still fails at its first check on `main` since 15.5b changed the extension after the 15.6 captures (the hosted ZIP is no longer `f5a27208…e501`); this is unchanged by 15.6b and resolves when `npm run release:media` runs on the submitted ZIP (15.7). 15.6b ran the verifier's remaining checks with the ZIP binding skipped.
 
+## Amended after the independent review (2026-10-22)
+An independent Opus reviewer (agent-verified, not the implementer) rendered stills every 0.3–0.6 s around each scene change and checked every on-screen claim against the extension source, screenshots 2 and 3, the privacy policy and the store listing. Kept as they were: "Works at any U.S. online store." (the listing's own wording; the badge runs on https pages, which is every online checkout), "178 cards; checks for updates weekly", "No model at checkout…", "Your cards are saved in your browser. No card numbers, no bank login.", every rate and amount (the sample wallet's engine numbers as screenshots 2 and 3 show them), the fictional stores on reserved domains, the end card's placeholder. Fixed on the branch:
+- **Determinism:** `--check` failed about one run in three on the trust key frame: GPU rasterization changed one pixel of a static frame between renders. The renderer now launches Chromium with `--disable-gpu-rasterization`; five consecutive `--check` runs and two full renders were byte-identical.
+- **Pacing:** the trust scene showed about 39 new words in its last 3.5 s (about 10 words a second) and the three facts left after 3.2 s. The demo is now 55.0 s (1,650 frames): the rates view holds 1.5 s longer (scene 4 19–27 s), the trust scene (27–48 s) has two beats (the pipeline 27–36 s, then the three facts one every 3.6 s, 36–48 s, at 44 px), the end card 48–55 s. Seven key frames (4.5, 10.5, 17.0, 25.0, 34.0, 46.0, 53.0 s).
+- **Truth:** the rates view ended its intro with "unless a condition below applies" but showed no condition; it now shows the spend-cap note the real view shows (screenshot 3). "Usage reports only if you choose Share." was literally true in the policy's terms but read as "nothing leaves without Share", while Suggest and Report send the store's domain either way; the line now adds "Tapping Suggest or Report sends the store’s domain." The other cards' "$… less" appears only after their amount has counted to its value, so a paused frame never pairs a difference with an intermediate amount.
+- **Legibility:** interface text under the script's 20 px floor (item quantities 18 px, cart meta, "less" and rate lines 19 px) raised to 20 px. The renderer's contact sheet tiles 6×5 so it covers the whole demo.
+- Outputs: `shopper-demo.mp4` 1,580,198 bytes `beffcfeb…90b2`, master 2,960,709 bytes `4e11e034…219a`, poster `04f0ec80…b7fc`, VTT `abae23f3…d190`, frame digest `954f39f2…a69b`. The gallery, `assets-manifest.json` and `verification.json` (ZIP binding still skipped, as stated in its note) were regenerated.
+
 ## Status
-Accepted 2026-10-22 by the implementer on Evan's request (agent-verified by the gates and by rendering and reading stills; no independent review yet).
+Accepted 2026-10-22 by the implementer on Evan's request; independently reviewed and amended the same day (agent-verified, Opus reviewer; see the amendment above, which supersedes the timings, key-frame count and trust-scene text in Decision).

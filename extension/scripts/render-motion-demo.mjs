@@ -92,7 +92,13 @@ const ffmpeg = (ffArgs, input) =>
 
 let browser;
 try {
-  browser = await chromium.launch({ channel: 'chromium', headless: true });
+  // GPU rasterization left an occasional one-pixel difference in otherwise identical frames (2026-10-22 review:
+  // a key frame failed --check about one run in three); software rasterization is repeatable.
+  browser = await chromium.launch({
+    channel: 'chromium',
+    headless: true,
+    args: ['--disable-gpu-rasterization'],
+  });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -264,7 +270,7 @@ try {
       },
       renderer: {
         script: 'extension/scripts/render-motion-demo.mjs',
-        browser: `Chromium ${browser.version()} (Playwright, headless, 1920×1080, device scale 1)`,
+        browser: `Chromium ${browser.version()} (Playwright, headless, software rasterization, 1920×1080, device scale 1)`,
         ffmpeg: execFileSync('ffmpeg', ['-version'], { encoding: 'utf8' }).split('\n')[0],
       },
       frames: { count: frames, fps: motion.fps, sha256OfFrameHashes: hash(frameHashes.join('\n')) },
@@ -290,7 +296,7 @@ try {
       '-i',
       outputs.web,
       '-vf',
-      'fps=1/2,scale=320:-1,tile=5x4',
+      'fps=1/2,scale=320:-1,tile=6x5',
       '-frames:v',
       '1',
       resolve(inspection, 'motion-contact-sheet.png'),
