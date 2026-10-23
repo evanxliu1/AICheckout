@@ -19,7 +19,7 @@ Behaviour is documented from the code; the development record is the wiki ([exte
 
 | Input | Used for | State |
 | --- | --- | --- |
-| Publisher name | Listing, policy operator line | **Evan Liu** (assumed; Evan to confirm) |
+| Publisher name | Listing, policy operator line | **Evan Liu** (Evan confirmed 2026-10-22) |
 | Support email | Listing support email, policy contact, support page | **evanliu7788@gmail.com** (Evan, 2026-10-22) |
 | Trader or non-trader declaration | Dashboard | **Non-trader** (Evan confirmed 2026-10-22) |
 | Developer account, fee, two-step verification | Dashboard | Evan only |

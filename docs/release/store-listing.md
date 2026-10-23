@@ -12,7 +12,7 @@ Everything Evan types into the Chrome Web Store developer dashboard for AI Check
 | Language | English (United States) |
 | Regions | United States only |
 | Pricing | Free |
-| Publisher name shown | Evan Liu (**Evan to confirm**; the dashboard shows the account's publisher name) |
+| Publisher name shown | Evan Liu (Evan confirmed 2026-10-22; set as the developer account's publisher display name) |
 | Support email | evanliu7788@gmail.com (Evan, 2026-10-22) |
 | Homepage | `https://ai-checkout-api.onrender.com/` |
 | Support URL | `https://ai-checkout-api.onrender.com/support/` |

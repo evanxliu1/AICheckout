@@ -3,6 +3,7 @@
 Append-only history, newest first, grouped by UTC date. Format and actions: [how to track changes](guides/how-to-track-changes.md).
 
 ## 2026-10-22
+* **Update** Evan confirmed the publisher name "Evan Liu" and, in the dashboard SQL editor, the hosted `telemetry-prune` cron job (jobid 1, `17 3 * * *`, active, `select telemetry.prune_expired()`); `release:docs:check:release` is clean.
 * **Update** Evan's answers applied on `phase15-evan-answers`: support email `evanliu7788@gmail.com` in `docs/release/` and the site, non-trader confirmed; GitHub private vulnerability reporting enabled (`gh api`); `supabase db query --linked` refused (login-role permission error), so Evan confirms the `telemetry-prune` cron job in the dashboard; publisher name still open.
 
 ## 2026-10-20
