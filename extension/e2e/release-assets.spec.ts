@@ -1,5 +1,6 @@
-// Release media (milestone 15.6): five captures of the real packaged extension for the Web Store images and
-// the staged shopper recording. Everything is captured at 1 CSS pixel per image pixel: the popup page at its
+// Release media (milestone 15.6): five captures of the real packaged extension for the Web Store images.
+// The shopper demo is a motion graphic since 15.6b (extension/scripts/render-motion-demo.mjs), no longer a
+// recording made here. Everything is captured at 1 CSS pixel per image pixel: the popup page at its
 // 360×600 popup size, the badge on a neutral fictional store page and the onboarding consent screen in an
 // 880×800 window. Fixture pages carry no retailer branding and no real store is named: the named store is a
 // fictional "Sample Kitchen" (a restaurant) on a reserved `.example` host, added to a test copy of the bundled merchant release
@@ -88,12 +89,7 @@ type Frame = {
 const hash = (data: Buffer) => createHash('sha256').update(data).digest('hex');
 const fixture = (file: string) => readFileSync(`tests/fixtures/${file}`, 'utf8');
 
-async function launch(
-  extension: string,
-  catalogOrigin: string,
-  profile: string,
-  extra: Parameters<typeof chromium.launchPersistentContext>[1] = {},
-) {
+async function launch(extension: string, catalogOrigin: string, profile: string) {
   const context = await chromium.launchPersistentContext(profile, {
     channel: 'chromium',
     headless: true,
@@ -106,7 +102,6 @@ async function launch(
       // worker's fetches bypass context.route, so the host is resolved to the loopback address instead.
       `--host-resolver-rules=MAP ${new URL(catalogOrigin).hostname} 127.0.0.1`,
     ],
-    ...extra,
   });
   // All page traffic is blocked except the two in-memory sample carts.
   await context.route(/^https?:\/\//, (route) => {
@@ -154,9 +149,7 @@ async function expandBadge(page: Page, pill: RegExp) {
   return badge;
 }
 
-test('capture the real release UI and record the staged shopper walkthrough', async ({
-  browserName,
-}, testInfo) => {
+test('capture the real release UI', async ({ browserName }, testInfo) => {
   test.skip(process.env.RELEASE_ASSETS !== '1', 'Explicit release-media generation only.');
   test.setTimeout(180_000);
   expect(browserName).toBe('chromium');
@@ -380,109 +373,5 @@ test('capture the real release UI and record the staged shopper walkthrough', as
     );
   } finally {
     await context.close();
-  }
-
-  if (process.env.RELEASE_ASSETS_ONLY === 'screenshots') {
-    // A visual-only recapture can reuse a completed recording of these exact
-    // packaged bytes; never mix an old video with a changed artifact.
-    const previous = JSON.parse(readFileSync(resolve(output, 'demo-chapters.json'), 'utf8'));
-    expect(previous.artifactSha256).toBe(inventory.sha256);
-    expect(readFileSync(resolve(output, 'shopper-demo.webm')).length).toBeGreaterThan(0);
-    return;
-  }
-
-  // The staged shopper walkthrough: one tab, recorded, through the first run, a cart at the named store,
-  // the rates view at the generic store and the popup comparison. Synthetic inputs; nothing leaves the machine.
-  const VIDEO = { width: 880, height: 660 };
-  const demo = await launch(extension, inventory.catalogOrigin!, testInfo.outputPath('demo-profile'), {
-    viewport: VIDEO,
-    recordVideo: { dir: testInfo.outputPath('video'), size: VIDEO },
-  });
-  const chapters: { atSeconds: number; caption: string }[] = [];
-  try {
-    await demo.onboarding.close();
-    const page = await demo.context.newPage(),
-      video = page.video();
-    if (!video) throw new Error('Demo recording was not created');
-    const started = Date.now();
-    const pause = async (caption: string, seconds = 3) => {
-      chapters.push({ atSeconds: Math.round((Date.now() - started) / 100) / 10, caption });
-      // Deliberate presentation dwell for the recording, never a readiness check.
-      await page.waitForTimeout(seconds * 1000);
-    };
-    await page.goto(`chrome-extension://${demo.id}/src/onboarding/index.html`);
-    await expect(page.getByRole('heading', { name: 'Welcome to AI Checkout' })).toBeVisible();
-    await pause(
-      'Staged demo of the actual extension with sample inputs. No live store, no model; nothing left this machine.',
-      3,
-    );
-    await pickSampleCards(page);
-    await pause(
-      'First run: search the 178-card catalog and add the cards you own. No card numbers or bank login.',
-    );
-    await page.getByRole('button', { name: 'Save cards' }).click();
-    await expect(page.getByRole('heading', { name: 'Help improve AI Checkout' })).toBeVisible();
-    await pause('One question: share usage reports or not. The extension works the same either way.', 4);
-    await page.getByRole('button', { name: 'Not now' }).click();
-    await expect(page.getByRole('heading', { name: 'You’re set' })).toBeVisible();
-    await pause('Not now: no usage reports are sent.', 2);
-    await page.goto(`https://${NAMED_STORE.host}/cart`);
-    let badge = await badgeFrame(page);
-    const pill = badge.getByRole('button', { name: /Use Freedom Unlimited · \$3\.00 back on this cart/ });
-    await expect(pill).toBeVisible();
-    await pause(
-      'On a cart page, the badge names your best card from the order summary. This fictional sample restaurant is in a test copy of the store list.',
-      4,
-    );
-    await pill.click();
-    await expect(badge.getByRole('button', { name: 'Collapse' })).toBeVisible();
-    await pause(
-      'Every card you own, ranked, with the rule in the issuer’s words, its conditions and why the store’s category applies.',
-      5,
-    );
-    await page.goto(`https://${GENERIC_HOST}/cart`);
-    badge = await badgeFrame(page);
-    const ratePill = badge.getByRole('button', { name: /Use Blue Cash Everyday · 3% back at this store/ });
-    await expect(ratePill).toBeVisible();
-    await ratePill.click();
-    await expect(badge.getByText(/The cart amount wasn’t read on this page/)).toBeVisible();
-    await pause(
-      'A gift card is applied here, so the amount is not certain: the badge ranks your cards by rate instead of guessing.',
-      5,
-    );
-    await page.goto(`chrome-extension://${demo.id}/src/popup/index.html`);
-    await expect(page.getByRole('heading', { name: 'Your cards' })).toBeVisible();
-    await page.getByLabel('Purchase amount (USD)').fill('100');
-    await page.getByLabel('Online retail bonus eligibility').selectOption('eligible');
-    await page.getByRole('checkbox', { name: /I confirmed the amount/ }).check();
-    await pause('The toolbar popup compares any amount you type, at any store.', 3);
-    await page.getByRole('button', { name: 'Compare my cards' }).click();
-    await expect(page.getByRole('heading', { name: 'Use Blue Cash Everyday' })).toBeVisible();
-    await page
-      .getByRole('heading', { name: 'Use Blue Cash Everyday' })
-      .evaluate((h) => h.closest('section')?.scrollIntoView({ block: 'start' }));
-    await pause(
-      '$3.00 on $100: a conditional estimate from the issuer’s published terms, not an earned reward.',
-      5,
-    );
-    writeFileSync(
-      resolve(output, 'demo-chapters.json'),
-      JSON.stringify(
-        {
-          artifactSha256: inventory.sha256,
-          kind: 'Actual extension interaction recording in one tab (onboarding, sample carts, the popup page); synthetic inputs; nothing sent.',
-          viewport: VIDEO,
-          chapters,
-        },
-        null,
-        2,
-      ) + '\n',
-    );
-    // Finish the page recording while its persistent browser transport is still
-    // connected; closing the whole context first invalidates the artifact handle.
-    await page.close();
-    await video.saveAs(resolve(output, 'shopper-demo.webm'));
-  } finally {
-    await demo.context.close();
   }
 });

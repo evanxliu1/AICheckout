@@ -22,7 +22,6 @@ npm(['run', 'build:hosted', '--workspace', 'extension']);
 npm(['run', 'package', '--workspace', 'extension']);
 npm(['run', 'test:browser', '--workspace', 'extension', '--', 'e2e/release-assets.spec.ts'], {
   RELEASE_ASSETS: '1',
-  RELEASE_ASSETS_ONLY: '',
 });
 script('render-release-assets.mjs');
 script('verify-release-assets.mjs');
