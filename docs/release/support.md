@@ -2,7 +2,7 @@
 
 This is the text published at `https://ai-checkout-api.onrender.com/support/` (rendered from `apps/site/src/pages.tsx`; keep the two in step). Extension version 2.1.0.
 
-Contact: **SUPPORT_EMAIL_TBD** · Privacy policy: `https://ai-checkout-api.onrender.com/privacy/` · Issues: `https://github.com/evanxliu1/AICheckout/issues`
+Contact: **evanliu7788@gmail.com** · Privacy policy: `https://ai-checkout-api.onrender.com/privacy/` · Issues: `https://github.com/evanxliu1/AICheckout/issues`
 
 ## Getting started
 

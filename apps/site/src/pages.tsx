@@ -638,7 +638,7 @@ function Privacy(): Rendered {
           </p>
           <p className="muted small">
             Last updated 2026-10-20 · Operator: Evan Liu (the AI Checkout project) · Contact:
-            SUPPORT_EMAIL_TBD · Extension version 2.1.0
+            evanliu7788@gmail.com · Extension version 2.1.0
           </p>
         </PageIntro>
         <Section id="does" title="What AI Checkout does">
@@ -922,7 +922,7 @@ function Privacy(): Rendered {
             a person, the controls above let you stop and delete without contacting anyone; because the
             identifier is random and the service holds nothing else about you, no one can find your reports
             from your name or email. AI Checkout does not sell personal information and does not share it for
-            cross-context behavioral advertising. For any privacy question, write to SUPPORT_EMAIL_TBD.
+            cross-context behavioral advertising. For any privacy question, write to evanliu7788@gmail.com.
           </p>
         </Section>
         <Section id="site" title="This website and changes">
@@ -1010,8 +1010,8 @@ function Support(): Rendered {
       <>
         <PageIntro eyebrow="Support" title="Help with AI Checkout">
           <p>
-            Getting started, common issues and how to report a problem. Contact: SUPPORT_EMAIL_TBD. Extension
-            version 2.1.0.
+            Getting started, common issues and how to report a problem. Contact: evanliu7788@gmail.com.
+            Extension version 2.1.0.
           </p>
         </PageIntro>
         <Section id="start" title="Getting started">
