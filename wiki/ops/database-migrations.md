@@ -30,7 +30,7 @@ Schema changes are new files in [`supabase/migrations/`](../../supabase/migratio
 
 | Item | Value |
 | --- | --- |
-| Migrations | 14 on `main` and on hosted ([hosting](hosting.md)); the 14th, `20261020061616_telemetry_scheduled_prune` (Phase 15.5b, pg_cron daily prune), pushed by the coordinator with `./scripts/db-push.sh` on 2026-10-20 after PR #101 merged; Evan confirms the `cron.job` row in the dashboard |
+| Migrations | 14 on `main` and on hosted ([hosting](hosting.md)); the 14th, `20261020061616_telemetry_scheduled_prune` (Phase 15.5b, pg_cron daily prune), pushed by the coordinator with `./scripts/db-push.sh` on 2026-10-20 after PR #101 merged; Evan confirmed the `cron.job` row (jobid 1, `17 3 * * *`, active) in the dashboard on 2026-10-22 |
 | pgTAP tests | [`supabase/tests/`](../../supabase/tests/) (`catalog`, `catalog_v2`, `catalog_v3`, `curation`, `extraction_application`, `review_summary`, `merchant_releases` since 14.6, `telemetry` since 15.2) |
 | Seed | [`supabase/seed.sql`](../../supabase/seed.sql), generated from `packages/rewards-core/src/catalog-v3.ts` (since Stage 2 M5): one **unapproved** private draft, no users or secrets |
 | Hosted push | `./scripts/db-push.sh` runs `npx supabase db push --linked --skip-vault`; DB password from the macOS Keychain item `aicheckout-supabase-db` |

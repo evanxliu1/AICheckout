@@ -19,9 +19,9 @@ Behaviour is documented from the code; the development record is the wiki ([exte
 
 | Input | Used for | State |
 | --- | --- | --- |
-| Publisher name | Listing, policy operator line | **Evan Liu** (assumed; Evan to confirm) |
-| Support email | Listing support email, policy contact, support page | **`SUPPORT_EMAIL_TBD`** in every file; `node scripts/check-release-docs.mjs --release` fails while it remains |
-| Trader or non-trader declaration | Dashboard | **Non-trader** recommended; Evan to confirm (a legal statement about him) |
+| Publisher name | Listing, policy operator line | **Evan Liu** (Evan confirmed 2026-10-22) |
+| Support email | Listing support email, policy contact, support page | **evanliu7788@gmail.com** (Evan, 2026-10-22) |
+| Trader or non-trader declaration | Dashboard | **Non-trader** (Evan confirmed 2026-10-22) |
 | Developer account, fee, two-step verification | Dashboard | Evan only |
 | `EXTENSION_IDS` on Render | The API's `Origin` filter on `/v1/events` | Set after the first draft upload shows the extension id ([plan, section 6](../../wiki/product/phase-15-release-a.md#6-web-store-submission-checklist)) |
 | GitHub private vulnerability reporting enabled | `SECURITY.md` and the support page point to it | Evan to check |
