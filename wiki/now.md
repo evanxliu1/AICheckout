@@ -5,7 +5,7 @@ description: Current state, active work, open questions and next steps. Rewritte
 status: stable
 generated:
   by: claude-code/claude-fable-5-1
-  at: 2026-10-20T23:45:00Z
+  at: 2026-10-23T02:10:00Z
 ---
 
 # Now
@@ -38,4 +38,5 @@ As of 2026-10-20 (coordinator merging 15.6 after PR #101 merged 15.5b).
 6. Phase 9 follow-ups: `check-expansion-quotes.mjs` resolves a source ID to the last folder that has it; `pipeline handoff` should name the merchant MCC freshness record.
 7. Evan's calls: Aer Lingus and Iberia Avios valuation; a second luna repeat against gpt-5.5; the deferred human spot-check of agent-verified labels; revoking the legacy HS256 JWT secret.
 8. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)). D9: merchant data, eval labels and snapshots stay MIT for now (provisional, 2026-10-10).
-9. Housekeeping: the shared local Supabase stack was recreated on 2026-10-20 (it ran a stale PostgREST v14.5; see [database migrations](ops/database-migrations.md#gotchas)); other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md` (it describes a 2026-01 prototype); remove merged worktrees (`.claude/worktrees/agent-*`) when Evan agrees.
+9. **Branch `deps-audit-2026-10-23` (not merged, no PR):** the 2026-10-22 advisories that fail CI's `npm audit --audit-level=high` on every PR fixed (vite 7.3.7, fastify 5.12.7, vitest and `@vitest/*` 5.0.5, ip-address 10.7.4; [log](log.md#2026-10-23)); every gate passed locally. Merge it before any other PR, since their CI is red until then. The lockfile's other-platform optional packages were restored by hand after npm 11.5.2 stripped them again; check `grep -c '"node_modules/@rollup/rollup-' package-lock.json` is 25 after any future `npm install`.
+10. Housekeeping: the shared local Supabase stack was recreated on 2026-10-20 (it ran a stale PostgREST v14.5; see [database migrations](ops/database-migrations.md#gotchas)); other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md` (it describes a 2026-01 prototype); remove merged worktrees (`.claude/worktrees/agent-*`) when Evan agrees.
