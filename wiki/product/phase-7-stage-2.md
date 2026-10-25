@@ -6,10 +6,10 @@ status: stable
 tags: [product, plan, phase-7, catalog, engine, extension]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-05T05:26:46Z
+  at: 2026-10-23T18:12:00Z
 sources:
-  - resource: ../system/catalog-expansion.md
-    title: Catalog expansion (corpus, known gaps)
+  - resource: ../archive/catalog-expansion.md
+    title: Catalog expansion (Phase 7, archived; corpus, verification, overlay and first build)
   - resource: ../../evals/curation/expansion/corpus.json
     title: expansion.v1 corpus (173 cards, agent-verified)
   - resource: ../../evals/curation/expansion/product-notes.verified.json
@@ -20,7 +20,7 @@ sources:
 
 # Phase 7 Stage 2 plan
 
-Stage 2 makes `expansion.v1` (173 agent-verified cards, merged with PR #17 at `23d3d52`) plus the 7 real cards into one published **catalog v3** of 180 cards that the extension ranks by cash-equivalent value, with current docs and a design for the card-expansion pipeline that comes next. Planned 2026-10-02 from `main` `23d3d52`. Status 2026-10-03: **Stage 2 is complete.** Every milestone merged (PRs #18–#31), and Evan published `2026-10-02.expansion.1` as hosted release 2 at 2026-10-03T06:15Z ([catalog release](../ops/catalog-release-history.md#release-2-published-2026-10-03)). The M11 design awaited Evan's approval as the start of Phase 8; he approved it on 2026-10-03 and Phase 8 built it ([card-expansion pipeline](../system/card-expansion-pipeline.md)). This plan is complete and kept as the record; the catalog it produced was replaced as the hosted head by the Phase 9 renewal (release 3, 2026-10-05). Decisions: [points valuation](../decisions/2026-10-02-points-valuation-published-estimates.md), [catalog v3](../decisions/2026-10-02-catalog-v3-schema.md). Order after Stage 2: [roadmap](roadmap.md).
+Stage 2 makes `expansion.v1` (173 agent-verified cards, merged with PR #17 at `23d3d52`) plus the 7 real cards into one published **catalog v3** of 180 cards that the extension ranks by cash-equivalent value, with current docs and a design for the card-expansion pipeline that comes next. Planned 2026-10-02 from `main` `23d3d52`. **Complete:** every milestone merged (PRs #18–#31), Evan published `2026-10-02.expansion.1` as hosted release 2 ([release history](../ops/catalog-release-history.md#release-2-published-2026-10-03)), and the M11 design became Phase 8 ([card-expansion pipeline](../system/card-expansion-pipeline.md)). This plan is kept as the record; the corpus and the first build it produced are summarised under [expansion corpus and first v3 build](#expansion-corpus-and-first-v3-build), and the catalog is now maintained by the pipeline. Decisions: [points valuation](../decisions/2026-10-02-points-valuation-published-estimates.md), [catalog v3](../decisions/2026-10-02-catalog-v3-schema.md). Order after Stage 2: [roadmap](roadmap.md).
 
 ## Facts that shape the plan
 
@@ -87,14 +87,14 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Files.** `catalog-overlay.json`, `merchants.json`, `scripts/lib/catalog-overlay.mjs` (Zod + coverage check), `check-expansion-quotes.mjs`.
 - **Acceptance.** Coverage check passes: no undisposed `other` rule, issue or hint; every anchor verbatim and ≤ 25 words, no adjacency run over 25; corpus files byte-identical.
 - **Risks.** Largest judgment workload of the stage; keep conventions in the general file so issuers agree. Brand names must not imply affiliation in the UI.
-- **Status (2026-10-02).** Implemented on branch `s2-m4-catalog-overlay`: overlay and merchants files, `scripts/lib/catalog-overlay.mjs` with tests, quote check extended; 2 cards held out (no base rate), no new categories, draft catalog 178 cards and about 601 KB ([catalog expansion](../system/catalog-expansion.md#catalog-overlay-m4), [decision](../decisions/2026-10-02-catalog-overlay-conventions.md)). Merged with PR #25.
+- **Status (2026-10-02).** Implemented on branch `s2-m4-catalog-overlay`: overlay and merchants files, `scripts/lib/catalog-overlay.mjs` with tests, quote check extended; 2 cards held out (no base rate), no new categories, draft catalog 178 cards and about 601 KB ([summary](#expansion-corpus-and-first-v3-build), [decision](../decisions/2026-10-02-catalog-overlay-conventions.md)). Merged with PR #25.
 
 ### M5 Catalog builder v3 and the 180-card catalog
 - **Scope.** `scripts/build-catalog-v3.mjs` (`npm run catalog:v3`, `catalog:v3:check` in CI) from `real/corpus.v2.json` (7 cards) + `expansion/corpus.json` + overlay + programs + merchants → `packages/rewards-core/src/catalog-v3.ts`; short rule IDs; version `2026-10-02.expansion.1`, `verifiedAt` 2026-10-02, `expiresAt` 2026-11-01. Build report `evals/curation/expansion/catalog-build-report.md` (held-out cards and why, byte size, per-feature counts). Seed regenerated from v3.
 - **Tests.** Builder unit tests; golden ranking tests on the real catalog for a dozen wallets at the three merchants; `db:seed:check`.
 - **Acceptance.** Catalog parses in Zod and SQL; ≤ 75% of 1 MiB; every held-out card listed with a reason; ladders match hand-computed expectations reviewed by a subagent.
 - **Risks.** Size over budget (drop duplicated issuer wording, shorten IDs); the 2026-11-01 expiry.
-- **Status (2026-10-02).** Implemented on branch `s2-m5-catalog-v3-build`: `CATALOG_V3` `2026-10-02.expansion.1`, 178 cards (2 held out), 820 rules, 602,441 bytes JSON and 643,327 JSONB text (≤ 75% of 1 MiB); real cards pinned to release 1; 8 exclusions omitted for the 25-word quote limit; seed from v3; parity harness accepts it in SQL; 17 golden ladders reviewed against the captures by a subagent (agent-verified, all confirmed, W17 added) ([catalog expansion](../system/catalog-expansion.md#catalog-v3-build-m5), [decision](../decisions/2026-10-02-catalog-v3-build.md)). Merged with PR #27.
+- **Status (2026-10-02).** Implemented on branch `s2-m5-catalog-v3-build`: `CATALOG_V3` `2026-10-02.expansion.1`, 178 cards (2 held out), 820 rules, 602,441 bytes JSON and 643,327 JSONB text (≤ 75% of 1 MiB); real cards pinned to release 1; 8 exclusions omitted for the 25-word quote limit; seed from v3; parity harness accepts it in SQL; 17 golden ladders reviewed against the captures by a subagent (agent-verified, all confirmed, W17 added) ([summary](#expansion-corpus-and-first-v3-build), [decision](../decisions/2026-10-02-catalog-v3-build.md)). Merged with PR #27.
 
 ### M6 Extension state and engine wiring
 - **Scope.** App state schema 3 with migration: catalog cache moves to its own unencrypted key (public data; keeps the vault under 512 KiB); wallet cards gain `choices`; wallet `valueOverrides` and (since the 2026-10-02 M2 review) wallet-level `gates`; prune choices, gates, overrides and usage rows a new catalog no longer has (the engine throws on them); usage rows per card up to 30. Catalog refresh accepts v3; the bundled fallback is `CATALOG_V3`; the badge `ready` view sends only the owned cards, the merchant and their programs, never the whole catalog.
@@ -125,17 +125,50 @@ Start in parallel: M1, M3, M9, M11 (draft). After M1: M2, M4 and M8 in parallel.
 - **Status (2026-10-02).** Implemented on branch `s2-m9-expansion-eval`: loader layout and `--captures`, both scripts, `docs/evals/expansion.*` with all three sections; the gpt-5.5 cross-model run (collected 2026-10-02) scores 76.2% end to end ([decision](../decisions/2026-10-02-expansion-eval-design.md)). Undrafted cards: 21 of 180, of which 15 are in the corpus. Merged with PR #21.
 
 ### M10 Docs, site, publish
-- **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../system/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs (decision 5).
+- **Scope.** Wiki pages ([rewards engine](../system/rewards-engine.md), [reward rules](../domain/reward-rules.md), [cards](../domain/cards.md), [merchants](../domain/merchants.md), [extension](../system/extension.md), [cart badge](../system/cart-badge.md), [review app](../system/review-app.md), [database](../system/database.md), [evaluation](../system/evaluation.md), [catalog expansion](../archive/catalog-expansion.md)); a catalog release runbook in `wiki/ops/`; README and site copy (seven cards → 180); stale package READMEs (decision 5).
 - **Publish steps.** (1) Coordinator confirms both migrations on hosted and `main` deployed on Render. (2) Evan, in the hosted review app: start a draft from `CATALOG_V3`, attach all captures from the local capture folders, review, publish with a note, before 2026-10-28. (3) Coordinator checks `GET /v1/catalog` serves `2026-10-02.expansion.1` and a `build:hosted` extension refreshes to it (closes the Phase 3 M6 check).
 - **Acceptance.** Linter clean; release live; roadmap marks Stage 2 done.
 - **Status (2026-10-03).** Part 1 merged with PR #28: the API checks the review token before reading capture and draft bodies (M8 review follow-up, [decision](../decisions/2026-10-03-review-token-precheck.md)); wiki pages above brought current; [catalog release runbook](../ops/catalog-release.md); README and site copy for 178 cards with the expansion eval on the results page; package READMEs corrected. Hosted check 2026-10-03T01:07Z: Render serves `main` (review bundle offers `CATALOG_V3`), `/v1/catalog` serves release 1. The M7 merge filled in the UI docs.
-- **Status (2026-10-03), part 2.** On branch `s2-m10b-finish`: Citi Double Cash maps to the `cash-back` program under general rule 1 (`CATALOG_V3` rebuilt, version kept because unpublished; engine cents unchanged for the real cards, the golden ladders and every card at the three merchants) and the extension's `cashLikePoints` heuristic is removed; the badge's recorded-order line and the savings history say "rewards" unless both cards pay cash back, with the value points were counted at, and a program with no value is not counted ([decision](../decisions/2026-10-03-double-cash-cash-back.md)); roadmap, this page, [now](../now.md) and the log brought current. **Deferred:** site screenshots (`apps/site/src/pages.tsx`, [public site](../system/public-site.md)) and the Web Store media in `docs/release/assets` (`RELEASE_ASSETS=1`) waited for the Ocean theme, so the media are regenerated once, in the final look (done on branch `release-media-ocean`, 2026-10-03: [release media](../ops/release-media.md)). **Left:** publish step (2), Evan, before 2026-10-28; then step (3) by the coordinator.
-- **Status (2026-10-03), publish: done.** Merged with PR #31; media with PR #33. Step (1): hosted migrations and Render on `main` `577c025`. Step (2): Evan published release 2, `2026-10-02.expansion.1` (178 cards, 328 sources, expires 2026-11-01T00:00Z), at 2026-10-03T06:15Z; the coordinator drove the browser after Evan signed in, and Evan selected the capture folders and ticked the attestation. Step (3): the draft and the served release are canonically identical to `CATALOG_V3` (SHA-256 `147b48c1…eb26`), all 328 sources showed matching evidence, the served release is schema-valid, and the extension's `prepareCatalogUpdate` accepts it over a cached release 1 (closes the Phase 3 M6 check, verified through the update logic rather than a loaded `build:hosted` extension). Details: [catalog release](../ops/catalog-release-history.md#release-2-published-2026-10-03).
+- **Status (2026-10-03), part 2.** On branch `s2-m10b-finish`: Citi Double Cash maps to the `cash-back` program under general rule 1 (`CATALOG_V3` rebuilt, version kept because unpublished; engine cents unchanged for the real cards, the golden ladders and every card at the three merchants) and the extension's `cashLikePoints` heuristic is removed; the badge's recorded-order line and the savings history say "rewards" unless both cards pay cash back, with the value points were counted at, and a program with no value is not counted ([decision](../decisions/2026-10-03-double-cash-cash-back.md)); roadmap, this page, [now](../now.md) and the log brought current. **Deferred:** site screenshots (`apps/site/src/pages.tsx`, [public site](../system/public-site.md)) and the Web Store media in `docs/release/assets` (`RELEASE_ASSETS=1`) waited for the Ocean theme, so the media are regenerated once, in the final look (done on branch `release-media-ocean`, 2026-10-03: [release media](../ops/release-media.md)).
+- **Status (2026-10-03), publish: done.** Merged with PR #31; media with PR #33. Evan published release 2 on 2026-10-03 and the coordinator verified it, closing the Phase 3 M6 check ([release 2](../ops/catalog-release-history.md#release-2-published-2026-10-03)).
 
 ### M11 Card-expansion pipeline readiness
 - **Scope.** Decision record and plan page for the pipeline: a CLI in `tools/catalog-pipeline` (stages research → capture → extract → draft → verify → adjudicate → apply → overlay → build → eval, resumable per batch), the skill `.claude/skills/expand-catalog`, subagent definitions `card-researcher` and `card-verifier` (plus an adjudicator), a hash-only freshness check, the `rate_not_in_evidence` fix for "NX" multiples, and the boundary rule: product code (`extension`, `packages/*`, `apps/*`) never imports `tools/`, enforced by ESLint `no-restricted-imports` and a test. Existing `scripts/*expansion*` move into the CLI in the pipeline phase, not here.
 - **Acceptance.** Evan approves the design; the boundary lint rule lands with a failing-import test.
 - **Status (2026-10-02).** Merged with PR #19. Drafted on branch `stage2-m11-pipeline-design`: [card-expansion pipeline design](../system/card-expansion-pipeline.md) (adds a `validate` stage, the `v2-validator.2` plan for "NX" multiples, and open questions), [decision record (proposed)](../decisions/2026-10-02-agent-driven-card-pipeline.md), draft `.claude/skills/expand-catalog/SKILL.md` and `.claude/agents/card-{researcher,verifier,adjudicator}.md`, the ESLint boundary rule and `scripts/lib/import-boundary.test.mjs`. Waiting for Evan's approval; finalize after M5.
+
+## Expansion corpus and first v3 build
+
+What Stage 1 and this stage produced, kept from the archived [catalog expansion](../archive/catalog-expansion.md) page. Paths are under `evals/curation/expansion/`; the scripts are the ones the [card-expansion pipeline](../system/card-expansion-pipeline.md#stages) wraps. Agent-verified, not human-verified.
+
+| Item | Value |
+| --- | --- |
+| Researched cards | 180 (`cards.json`): 130 co-brand, 32 personal rewards, 10 secured, 8 student; 6 closed-loop store cards. Chase 29, Synchrony 28, Barclays 26, Capital One 21, Bank of America 19, U.S. Bank 18, Citi 16, Amex 11, Discover 6, Wells Fargo 6 |
+| Exclusions | 65 (`exclusions.json`): 44 closed to new applicants, 7 already in the real corpus, 7 earn no rewards, 4 Discover duplicates, 3 merged into another card |
+| Sources | 321 official pages captured 2026-10-02, 0 failed (`sources.json`, `manifest.json`, `capture-report.md`; captures gitignored) |
+| Extraction | Codex CLI, gpt-5.6-luna `xhigh`, prompt `guided.2`, selection `keyword-window.1`; at most 4 documents and ~64k input tokens per card; 168 `needs_review`, 12 `evidence_valid` (`extraction-summary.json`) |
+| Drafts | 159 of 180 cards drafted (21 had no anchored rules or currency); every quote at most 25 words (`corpus.draft.json`, `product-notes.json`, `verify/<issuer>.md`) |
+| Verification | Nine verifier subagents (one per issuer, plus a second opinion on Chase) and eight adjudicator subagents; 1,215 findings accepted, 83 modified, 37 rejected; 10 cards confirmed, 163 fixed, 7 dropped. Conventions in `verification/conventions/` (`general.md` rules 1–22, overlay rules O1–O21, one file per issuer) ([decision](../decisions/2026-10-02-expansion-verification-conventions.md)) |
+| Dropped | `capital-one-kohls-rewards-visa`, `synchrony-mylowes-rewards-credit-card`, `synchrony-dicks-mastercard`, `synchrony-belk-rewards-mastercard`, `us-bank-state-farm-good-neighbor` (no stated earn rate); `synchrony-phillips-66-credit-card`, `synchrony-techron-advantage-visa` (cents-per-gallon fuel rewards) |
+| Corpus `expansion.v1` | `corpus.json`, agent-verified: 173 cards, 863 rules, 396 exclusions, 195 issues; at most 20 rules per card; no `cash-back` card has a point value; no airline or hotel card has a point value (rule 20) |
+| Overlay | `catalog-overlay.json`, `merchants.json`: 173 entries, 2 cards held out (`marriott-bonvoy-bold`, `us-bank-shield`: no base rate); 140 brands, 24 gates, 10 choices, 4 closed-loop cards, 41 added rules, 18 store-credit programs; no new categories ([decision](../decisions/2026-10-02-catalog-overlay-conventions.md)) |
+| First build | `2026-10-02.expansion.1`: 178 cards (171 expansion, 7 real), 820 rules, 328 sources, 70 programs; 602,438 bytes JSON. The current build is described by the [build report](../../evals/curation/expansion/catalog-build-report.md) |
+| Golden ladders | 17 wallets at Amazon, Best Buy and Newegg, hand-computed and reviewed against the captures by a subagent: [`extension/tests/catalog-v3-golden.test.ts`](../../extension/tests/catalog-v3-golden.test.ts) |
+| Eval | [`docs/evals/expansion.md`](../../docs/evals/expansion.md) |
+
+Known label gaps of `expansion.v1`:
+
+- **Rotating rules.** Chase Freedom Flex and the Discover it rotating cards carry only the Q4 2026 categories (end 2026-12-31); Freedom Flex Jan–Mar 2027 is an added overlay rule, Discover's Q1 2027 categories were never captured.
+- **Upromise 1.529%** (`barclays-upromise-world-mastercard`, linked College Savings Plan) has `rateBps` null, because 152.9 bps is not an integer; the base rule is 125.
+- **Judgment calls left as labelled:** One Key's Expedia/Hotels.com/Vrbo portal rule has `usMerchantsOnly: true`; Discover it Chrome treats EV charging as inside its gas rule; Prime Visa's Amazon rule has `usMerchantsOnly: null`; the JCPenney Mastercard per-transaction maximum is not modelled as a cap; inflight purchase rebates are not earning rules.
+- **Key Rewards** (Williams Sonoma, Pottery Barn, West Elm, Key Rewards Visa) are four near-duplicate cards with byte-identical captures and the same labels.
+- Closed-loop store cards with no stated cap guarantee $0 and rank below a flat 2% card; NerdWallet values for bank currencies have no local capture; BofA Customized Cash choice rules are also `enroll-once`.
+
+Gotchas:
+
+- The drafts, packets, findings and corpus are committed only because every quote is at most 25 words, also when read together: anchors of one item must not overlap or abut in the capture into a longer run (general rule 22). Run `node scripts/check-expansion-quotes.mjs` (with `--captures` for `expansion/captures`, `real/captures`, `real/merchant-captures`) before committing them; it also scans the built catalog and build report. Because of rule 22 the catalog omits 8 corpus exclusions on 7 cards (`QUOTE_LIMIT_OMISSIONS`); the corpus keeps them.
+- The 25-word cut keeps the window around the value's token, so an anchor may start or end mid-clause; verifiers must read the capture around it. A long quote that only states another rate or amount is kept and flagged as a mismatch, not dropped.
+- `extract-cards.mjs` redoes any saved extraction made with another configuration, so a set always comes from one configuration; the gitignored `extractions-gpt55/` holds traces of an earlier gpt-5.5 configuration that `draft-expansion-labels.mjs` never reads.
 
 ## Risks across the stage
 
@@ -157,6 +190,7 @@ Resolved by the coordinator on 2026-10-02 under Evan's instruction to follow the
 ## Related
 
 * [Roadmap](roadmap.md)
-* [Catalog expansion](../system/catalog-expansion.md)
+* [Catalog expansion (archived)](../archive/catalog-expansion.md)
+* [Card-expansion pipeline](../system/card-expansion-pipeline.md)
 * [Rewards engine](../system/rewards-engine.md)
 * [User directives](user-directives.md)

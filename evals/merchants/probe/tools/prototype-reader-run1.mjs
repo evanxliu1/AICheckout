@@ -1,6 +1,6 @@
 // PROTOTYPE, Phase 10 merchant probe (wiki/product/phase-10-feasibility-probe.md). Throwaway, not product code.
 //
-// Generic cart reader design steps 1-3 (wiki/system/merchant-coverage-design.md#generic-cart-reader) plus a simple
+// Generic cart reader design steps 1-3 (wiki/system/extension.md#generic-cart-reader) plus a simple
 // decide, run over the dom.json snapshots written by driver.mjs (a JSON tree with computed styles; open shadow
 // roots inlined, closed roots and iframes absent). Usage:
 //   node prototype-reader.mjs                 -> per-snapshot result + timing, compared with labels.json if present

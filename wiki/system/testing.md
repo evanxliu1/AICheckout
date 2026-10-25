@@ -6,7 +6,7 @@ status: stable
 tags: [system, testing, ci]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-20T04:30:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: ../../package.json
     title: Root scripts
@@ -59,20 +59,6 @@ Verified 2026-10-02 by reading the workflows and scripts, and by running the uni
 | Site a11y | `npm run test:browser --workspace=@ai-checkout/site` | built api + site |
 | Wiki | `python3 scripts/lint_wiki.py` | Python 3 |
 
-Historical snapshot (not re-run for this page since 2026-10-02): local results on 2026-10-02 at `f6d3f79`:
-
-| Suite | Files | Tests | Result |
-| --- | --- | --- | --- |
-| extension vitest | 21 | 366 | pass |
-| extension `scripts/package.test.mjs` | 1 | 5 | pass |
-| api vitest | 13 | 250 | pass |
-| review vitest | 6 | 41 | pass |
-| site vitest | 2 | 9 | pass |
-| ui vitest (+ icon check) | 1 | 36 | pass |
-| `test:scripts` | 1 | 8 | pass |
-
-Historical: re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14), all pass: extension vitest 21 files / 378 tests, extension package test 6, api 13 / 250, review 6 / 41, site 2 / 9, ui 1 / 36, `test:scripts` 8.
-
 ## CI
 
 | Workflow | Name | Steps in order |
@@ -80,7 +66,7 @@ Historical: re-run on 2026-10-02 at `7322dec` (after PRs #13 and #14), all pass:
 | [`extension.yml`](../../.github/workflows/extension.yml) | Application checks | wiki lint; `npm ci`; lint; format:check; typecheck; `npm test`; `eval:curation --check`; `eval:v2 --check`; `catalog:v2:check`; `catalog:v3:check`; `merchants:check`; `telemetry:check`; `npm audit --audit-level=high`; build; Playwright install; capture tool browser tests; review a11y; ui browser; site browser; extension browser; `test:catalog:browser`; `test:package:browser`; uploads `chrome-extension` and `browser-test-results` artifacts |
 | [`database.yml`](../../.github/workflows/database.yml) | Database checks | `npm ci`; audit; `db:seed:check`; `db:start:api`; `db:test`; `db:test:concurrency`; `db:test:catalog`; `db:test:http`; `db:test:curation`; build api + review; `db:test:curation:http`; `db:test:curation:application`; review browser; `db:lint`; `db:advisors`; stop |
 
-Both trigger on every `push` and `pull_request` (steps rechecked against the workflows on 2026-10-05; `npm test` includes the `tools/*` workspace). The wiki-lint step and the pre-commit hook were added with the `llm-wiki` branch on 2026-10-02. The pre-commit hook in [`.githooks/pre-commit`](../../.githooks/pre-commit) runs only the wiki linter. Enable it with `git config core.hooksPath .githooks`; in Evan's clone it is already set in the shared `.git/config`, so it applies to every worktree. The path is relative to each worktree, and Git silently skips a hook file that does not exist, so worktrees on branches without `.githooks/` (anything not yet merged with the wiki) run no pre-commit hook at all.
+Both trigger on every `push` and `pull_request` (steps rechecked against the workflows on 2026-10-05; `npm test` includes the `tools/*` workspace). The pre-commit hook in [`.githooks/pre-commit`](../../.githooks/pre-commit) runs only the wiki linter. Enable it with `git config core.hooksPath .githooks`; in Evan's clone it is already set in the shared `.git/config`, so it applies to every worktree. The path is relative to each worktree, and Git silently skips a hook file that does not exist, so worktrees on branches without `.githooks/` (anything not yet merged with the wiki) run no pre-commit hook at all.
 
 ## How the browser layer works
 

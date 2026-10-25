@@ -1,14 +1,14 @@
 ---
 type: Product
 title: Phase 14 plan (merchant database)
-description: A hosted, reviewed merchant database matched on the device. About 500 U.S. stores, each recognised by website, with its brands, kind, goods flag and a category; a bonus category is applied only on issuer evidence or two agreeing public sources, otherwise the general rate. Bundled in the extension first, then published as its own release and refreshed weekly. Built in two tiers (deterministic records for the long tail, a small pipeline with gpt-5.6-luna drafts and Claude verification for the ~200 stores where a model's judgment matters) and audited blind before Release A. Revised after the 2026-10-10 design review.
+description: A hosted, reviewed merchant database matched on the device. About 500 U.S. stores, each recognised by website, with its brands, kind, goods flag and a category; a bonus category is applied only on issuer, mcc, corroborated or definition evidence, otherwise the general rate. Bundled in the extension first, then published as its own release and refreshed weekly. Built in two tiers (deterministic records for the long tail, a small pipeline with gpt-5.6-luna drafts and Claude verification for the ~200 stores where a model's judgment matters) and audited blind before Release A.
 status: stable
 tags: [product, plan, phase-14, merchants]
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-10-11T12:40:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-10-23T18:12:00Z
 sources:
-  - resource: ../system/merchant-coverage-design.md
+  - resource: ../archive/merchant-coverage-design.md
     title: Merchant coverage design
   - resource: phase-10-merchant-expansion.md
     title: Phases 10–17 plan
@@ -101,7 +101,7 @@ Schema `merchant-release.1`, validated in Zod (`packages/rewards-core/src/mercha
 
 | Field | Meaning | Example |
 | --- | --- | --- |
-| `id` | Stable id; the three legacy stores keep `amazon-us`, `best-buy-us`, `newegg-us` so the badge's `disabledMerchants` and savings history keep working | `kroger-us` |
+| `id` | Stable id; the three legacy stores keep `amazon-us`, `best-buy-us`, `newegg-us` | `kroger-us` |
 | `name` | Display name, at most 60 characters, letters, digits and basic punctuation | "Kroger" |
 | `hosts` | 1–20 registrable domains or exact subdomains the store sells and checks out on; never a public suffix or a shared platform domain (gate, offline) | `["kroger.com"]` |
 | `kind` | `merchant`, `marketplace` or `processor` | `merchant` |
@@ -125,13 +125,13 @@ Compared with the first plan, `onlineRetail` and `usMerchant` are gone from the 
 1. **Match, on the device** (`packages/rewards-core/src/merchant-match.ts`, Zod-free like `generic-merchant.ts`).
    - The tab's hostname is lowercased (punycode kept, trailing dot removed, `www.` not special) and matched by **label-boundary suffix**: `secure.newegg.com` matches `newegg.com`, `notnewegg.com` doesn't, `amazon.ca` never matches `amazon.com`. The longest matching host wins; hosts are unique across records, so there is no tie.
    - Country domains must be listed explicitly. IP addresses, `localhost` and non-http(s) URLs never match.
-   - This replaces `merchantForTab`'s last-two-labels rule in `extension/src/checkout/merchants.ts`. The legacy adapters keep their exact cart URLs (`merchantForCheckout`, `merchantForOrderConfirmation`).
+   - This replaces `merchantForTab`'s last-two-labels rule (adapters retired in 15.1).
 2. **Decide.** A `processor` match: no badge and no reader; the popup says it can't compare on a payment page. A `disabled` match or no match: the generic profile. Otherwise the record becomes the merchant profile (`recordToProfile`).
 3. **Rank.** `compareRewards(catalog, wallet, purchase, now, { merchant })`: an optional profile that replaces the catalog lookup when its id equals `purchase.merchantId`; without it `merchantProfilesV3` behaves as today. The profile is the record's `category` as `expectedCategory`, `physicalGoods`, `onlineRetail: true`, `usMerchant: true`, and its brands filtered to the catalog's. Ranking itself is unchanged; engine ranges for uncertain caps, activation, payment paths, choices and gates stay.
 4. **Show.** The badge and popup name the store ("Kroger") instead of "Another U.S. online store". The panel says why a category applies: "Codes as a supermarket (store pages and a public merchant-code lookup)" or "(Chase card terms)". A `default` record shows nothing about categories.
 5. **Freshness** (14.6). A snapshot of the latest published release is bundled (`MERCHANTS_V1`). Once a week a background `alarms` job fetches `GET /v1/merchants` and `GET /v1/catalog`; "Check for updated terms" does the same at once. A fetched release is kept only if valid and its sequence is not below the cached one (rollback protection, as for catalogs); of the cached and bundled releases the newer `verifiedAt` is in effect. If the service is unreachable, the release in hand is used. A comparison is never blocked.
 
-**Out of scope for Phase 14:** order-confirmation pages and savings at generic stores (still only the three legacy stores); telemetry and the "Suggest it" button (Phase 15); non-U.S. stores (USD only, as today); per-store selectors (never); a merchant page in the review app (Evan reviews the committed review table and the publish dry run instead).
+**Out of scope for Phase 14:** order-confirmation pages and savings at generic stores (adapters and savings retired in 15.1); telemetry and the "Suggest it" button (Phase 15); non-U.S. stores (USD only, as today); per-store selectors (never); a merchant page in the review app (Evan reviews the committed review table and the publish dry run instead).
 
 ## 5. The candidates: which ~500 stores
 
@@ -229,8 +229,8 @@ The sizes are guesses from Phases 13–13c; the total is roughly a week of worki
 
 | When | What |
 | --- | --- |
-| Now | Approve this plan |
-| 14.4 | Nothing, unless the handoff lists held-out records (disputed fields) he wants decided |
+| 2026-10-12 | Built and shipped (merchant release 1); Evan's formal approval of the revised plan is still open |
+| 14.4 | Nothing, unless he wants to decide records the handoff lists as downgraded or held out ([rule](../system/merchant-pipeline.md#gates)) |
 | 14.6 | Nothing; `db-push` runs under the standing authorization |
 | 14.7 | Read `evals/merchants/db/review.md` (only the deviations: bonus categories with evidence, brands, processors, services) and `docs/evals/merchant-db-v1.md`; type `publish merchants <version>` |
 | Any time | Change the evidence rule, the size or a store's record |
@@ -246,14 +246,14 @@ The sizes are guesses from Phases 13–13c; the total is roughly a week of worki
 | Release skew (a merchant release names a brand or category the extension's catalog doesn't know) | Unknown brands are ignored and an unknown category fails Zod and keeps the release in hand (tested) |
 | Render free tier sleeps | The client tolerates cold starts; weekly refresh retries; the bundled release is always there |
 | Model cost or stalls | Tier A needs no model; tier B in small packets, frequent commits, resume by packet (as in Phase 8) |
-| A disputed field | The record is held out, not guessed; Evan sees the list |
+| A disputed field | Disputed `evidence` downgrades to `default`; other disputes hold the record out; Evan sees both |
 
 ## 11. Consequences for Phase 15
 
 - The privacy policy and listing say the merchant list is downloaded whole and matched on the device.
 - The `alarms` permission is added (no warning).
 - The badge names stores. Brand names are for matching only and imply no partnership.
-- The A4 adapter retirement check and the A6 site fix are Phase 15 tasks.
+- The A4 adapter retirement check and the A6 site fix are Phase 15 tasks (done in 15.1 and 15.5).
 
 ## 12. Design review (2026-10-10)
 
@@ -265,7 +265,7 @@ Fable 5.1 reviewed the first plan against the code as it is (`compareV3`, `merch
 | (b) Engine integration | Optional `{ merchant }` on `compareRewards`/`compareV3`, replacing the lookup when its id matches | Splice records into `catalog.merchants` before calling: confuses the catalog's identity (`version`, `stableJson`, wallet pruning, the badge slice) and hits the 100 limit. A merged lookup `merchantProfilesV3(catalog, release)`: the engine would import the release contract | One optional argument; the engine stays release-agnostic and `engine-v3.ts` keeps importing no Zod |
 | (c) Record shape | `id, name, hosts, kind, physicalGoods, category, evidence{basis, sourceIds}, brandIds, disabled`; no `expiresAt` on the release | The first plan's record with `onlineRetail`, `usMerchant`, quotes and a 90-day expiry; `plausibleCategories[]` with classes (the pre-decision design) | Two constant flags and shipped quotes removed; the expiry only added an "expired → bundled → generic" ladder that the catalog's own expiry makes redundant |
 | (d) Matching | Label-boundary suffix on authored hosts; PSL offline as a gate | Public Suffix List in the extension (hundreds of KB in the worker, still wrong for brands with several registrable domains); exact hosts (every `secure.`/`checkout.` subdomain authored) | Same as the first plan, plus the platform-domain gate (`myshopify.com`) |
-| (e) Building the 500 | Two tiers: deterministic records for the long tail; research → capture → luna draft → Claude verify → deterministic apply for the ~200 where a category, brand or processor is possible; disputed records held out, no adjudicator; issuer evidence mined from the existing issuer captures | The full card-pipeline variant for all 500 (15–30M tokens, an adjudicator stage, research of issuer pages already captured); brand domains hand-authored from issuer captures only (no category evidence at all) | The evidence rule makes a model useless on tier A; the three legacy merchant profiles were authored this way already |
+| (e) Building the 500 | Two tiers: deterministic records for the long tail; research → capture → luna draft → Claude verify → deterministic apply for the ~200 where a category, brand or processor is possible; disputed evidence downgraded, other disputes held out, no adjudicator; issuer evidence mined from the existing issuer captures | The full card-pipeline variant for all 500 (15–30M tokens, an adjudicator stage, research of issuer pages already captured); brand domains hand-authored from issuer captures only (no category evidence at all) | The evidence rule makes a model useless on tier A; the three legacy merchant profiles were authored this way already |
 | (f) Evaluation | Blind audit of every non-default record plus the frozen 60-domain held-out list; exact bounds; fix after reporting | The first plan's 70/30 split with gold on ~150 stores (labels twice what the pipeline already verified, sample dominated by `default` records); no audit (review only) | Audits the costly error at 100% and reuses the list Phase 12 froze for this purpose |
 | Review surface | `evals/merchants/db/review.md` in the PR and the publish dry run | A merchant review page in `apps/review` with draft, source and publication tables | Evan already reviews PRs; the page would have been the largest piece of 14.2 for a list he can read in a table |
 

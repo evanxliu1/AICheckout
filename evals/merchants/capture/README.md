@@ -26,7 +26,7 @@ node evals/merchants/capture/rebuild.mjs capture/data/pane/<domain>/<state>/dom.
 
 ## Workflow 3 tools (split, label, freeze)
 
-Phase 12.3 after capture ([runbook](../../../wiki/ops/reader-capture-workflow.md#workflow-3-split-label-review-freeze), [protocol](../../../docs/evals/generic-reader-protocol.md#labelling)). Tooling only: none of these runs a reader or decides a label. The offline variant generator and the 10% derived-label sample check are in [`../variants/`](../variants/README.md).
+Phase 12.3 after capture ([runbook](../../../wiki/archive/reader-capture-workflow.md#workflow-3-split-label-review-freeze), [protocol](../../../docs/evals/generic-reader-protocol.md#labelling)). Tooling only: none of these runs a reader or decides a label. The offline variant generator and the 10% derived-label sample check are in [`../variants/`](../variants/README.md).
 
 ```sh
 # 1. split input -> captured.json + captured-methods.json (evals/merchants/), then the split (commit splits.json before any labeller starts)

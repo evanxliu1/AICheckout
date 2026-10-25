@@ -32,7 +32,7 @@ The [probe plan](../product/phase-10-feasibility-probe.md) fixed the questions, 
 | Proposed Y | 70%, 80% or 90% on one-item cart pages | 80%: below the fixed prototype's point estimate and inside both runs' intervals, without pushing `found` on ambiguous pages |
 
 ## Decision
-As chosen above. Clicks were limited to size, colour, add-to-cart, closing popups and cookie banners, non-form checkout and "Continue as guest" buttons. Shopify and Magento checkouts were opened by URL. Nothing was typed, and no form was submitted except by add-to-cart. The prototype driver did not enforce this: `click` did not refuse submit or in-form buttons, `clickxy` had no guard and the control server had no token, so Phase 12's capture tool must enforce it ([design](../system/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
+As chosen above. Clicks were limited to size, colour, add-to-cart, closing popups and cookie banners, non-form checkout and "Continue as guest" buttons. Shopify and Magento checkouts were opened by URL. Nothing was typed, and no form was submitted except by add-to-cart. The prototype driver did not enforce this: `click` did not refuse submit or in-form buttons, `clickxy` had no guard and the control server had no token, so Phase 12's capture tool must enforce it ([design](../archive/merchant-coverage-design.md#real-page-evaluation-pre-registered-in-phase-12)).
 
 ## Consequences
 - The 64% cart rate is optimistic for top retailers because of the selection bias. Phase 12's capture will meet bot walls on most top-1k sites.

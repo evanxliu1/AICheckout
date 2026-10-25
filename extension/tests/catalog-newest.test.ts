@@ -1,5 +1,5 @@
 // @vitest-environment node
-// Which catalog is in effect (coordinator decision, 2026-10-02): of the cached published release and
+// Which catalog is in effect (wiki/decisions/2026-10-03-newest-valid-catalog-wins.md): of the cached published release and
 // the bundled catalog, the one valid now, and the newer one when both are. Here the bundle is the small
 // v3 fixture verified 2026-10-02, standing in for the M5 bundle (`CATALOG_V3`, also verified
 // 2026-10-02; state-migration.test.ts runs the real one), and the cached release is the v2

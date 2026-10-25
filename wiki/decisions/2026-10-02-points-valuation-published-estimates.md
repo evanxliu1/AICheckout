@@ -8,7 +8,7 @@ generated:
   by: claude-code/claude-opus-5-5
   at: 2026-10-02T20:30:00Z
 sources:
-  - resource: ../system/catalog-expansion.md
+  - resource: ../archive/catalog-expansion.md
     title: Catalog expansion (corpus counts and the rate_not_in_evidence gap)
   - resource: ../../evals/curation/expansion/verification/conventions/general.md
     title: Expansion labelling conventions (rules 1, 3, 13, 14, 18, 20)
@@ -43,3 +43,5 @@ The agent-verified expansion corpus (`expansion.v1`) has 102 points or miles car
 
 ## Status
 Accepted 2026-10-02 by Evan Liu (approach); details 4–6 by the planning agent, in the [Stage 2 plan](../product/phase-7-stage-2.md). Publisher chosen in milestone M3: [NerdWallet as the primary valuation publisher](2026-10-02-nerdwallet-primary-valuation-publisher.md) (2026-10-02).
+
+The validator fix for "NX" multiples named under Consequences is not built: it is deferred as `v2-validator.2` ([card pipeline internals](../system/card-pipeline-internals.md#deferred-rate_not_in_evidence-for-nx-multiples)). (Wiki audit 2026-10-23.)

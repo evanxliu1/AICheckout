@@ -10,7 +10,7 @@ generated:
 sources:
   - resource: ../product/phase-14-merchant-database.md
     title: Phase 14 plan
-  - resource: ../system/merchant-coverage-design.md
+  - resource: ../archive/merchant-coverage-design.md
     title: Merchant coverage design
 ---
 
@@ -32,7 +32,7 @@ Evan, 2026-10-10: "before we release to the chrome web store, we should do the m
 As chosen.
 - `category` is a bonus category only with `issuer` or `corroborated` evidence; otherwise `general-merchandise`.
 - Brand rules apply at any matched store regardless of category, because the issuer names the brand.
-- This supersedes the range rule (D5) in the [merchant coverage design](../system/merchant-coverage-design.md#category-evidence).
+- This supersedes the range rule (D5) in the [merchant coverage design](../archive/merchant-coverage-design.md#category-evidence).
 
 ## Consequences
 - **Coverage.** kroger.com and cvs.com can get grocery and drugstore bonuses; walmart.com and costco.com don't get grocery. Most other stores show the general rate.
@@ -42,3 +42,5 @@ As chosen.
 
 ## Status
 Accepted 2026-10-10 (Evan).
+
+Widened 2026-10-11 by the [`definition`](2026-10-11-definition-evidence-basis.md) and [`mcc`](2026-10-11-mcc-evidence-basis.md) evidence bases; precedence issuer > mcc > corroborated > definition. The general-rate fallback on weak evidence stands. (Wiki audit 2026-10-23.)

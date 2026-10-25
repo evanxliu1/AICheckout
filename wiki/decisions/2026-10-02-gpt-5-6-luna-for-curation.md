@@ -44,7 +44,7 @@ The luna run covers dev and held-out together in one repeat, so it is not split 
 
 ## Decision
 
-Live curation and extraction runs use gpt-5.6-luna at `xhigh` effort with `guided.2` and `keyword-window.1`, through the Codex CLI on Evan's subscription, with visible output tokens. The catalog expansion extraction ([catalog expansion](../system/catalog-expansion.md)) already ran with this configuration. The choice is for frontier currency, not measured gain: on this corpus luna ties gpt-5.5.
+Live curation and extraction runs use gpt-5.6-luna at `xhigh` effort with `guided.2` and `keyword-window.1`, through the Codex CLI on Evan's subscription, with visible output tokens. The catalog expansion extraction ([catalog expansion](../archive/catalog-expansion.md)) already ran with this configuration. The choice is for frontier currency, not measured gain: on this corpus luna ties gpt-5.5.
 
 ## Consequences
 

@@ -2,7 +2,8 @@
 type: Decision
 title: Phase 13b manual read: adapter on its cart URLs, readCart everywhere else, merchant from the tab
 description: The popup's "Read cart" splits by URL, not by store: a legacy adapter reads the URLs it matches (unchanged), the generic reader reads every other http(s) page, including a legacy store's product pages, and the reading names the store the popup resolved for the tab; generic readings carry `generic-reader-v1` at any merchant id; a generic store keeps "Eligible" after a read.
-status: accepted
+status: superseded
+superseded_by: 2026-10-19-retire-legacy-adapters.md
 tags: [decision, phase-13, extension, reader]
 generated:
   by: claude-code/claude-fable-5-1
@@ -41,3 +42,5 @@ As chosen above. One reader per URL: when an adapter matches the URL and fails (
 Accepted 2026-10-09 (implementer's choice within the plan; review before the PR pending).
 
 Reviewed (agent-verified, fixes applied) and merged with PR #78 (`6000085`). The withheld message asking the shopper to enter the amount is superseded by [never ask for a typed amount](2026-10-09-never-ask-for-an-amount.md) (2026-10-09; built in 13c: "Your cards are compared by rate"). (Wiki audit 2026-10-10.)
+
+Superseded 2026-10-19 by [retire the legacy adapters](2026-10-19-retire-legacy-adapters.md): no adapter remains, so the generic reader runs on every page; the store comes from `storeForTab` ([2026-10-11](2026-10-11-extension-on-the-merchant-release.md)). (Wiki audit 2026-10-23.)

@@ -2,7 +2,9 @@
 type: System Component
 title: Merchant coverage design (Phases 10–17, draft)
 description: Proposed design for recommending a card at any U.S. online checkout — a hosted, reviewed merchant database matched on the device, engine changes for passed-in and generic profiles with category ranges, a deterministic generic cart reader that shows the total and currency only when certain and otherwise withholds, worldwide (shadow DOM aware, never on payment processors; no store configs since 2026-10-06), a pre-registered real-page eval with three site splits, category evidence rules and permissions. Draft v6 after three review rounds; Phase 11 built the generic profile (2026-10-05), Phases 13–13c the reader, detector and badge at any https store (2026-10-10). Superseded in part: the optional all-sites grant and URL-gated injection by the badge on all https sites at install (2026-10-09), category ranges by the general rate (2026-10-10).
-status: draft
+status: deprecated
+archived: 2026-10-23
+superseded_by: [../system/extension.md, ../system/merchant-pipeline.md, ../product/phase-14-merchant-database.md, ../../docs/evals/generic-reader-protocol.md]
 tags: [system, design, phase-10, merchants]
 generated:
   by: claude-code/claude-opus-5-5
@@ -25,6 +27,8 @@ sources:
   - resource: https://developer.chrome.com/docs/extensions/reference/api/permissions
     title: Chrome permissions API (optional host permissions, user gesture)
 ---
+
+> Archived 2026-10-23 under the [archive policy](../guides/archive-policy.md); describes the design as of 2026-10-10, not current instructions. Still-true facts: the generic reader in [Extension](../system/extension.md#generic-cart-reader), merchant evidence in [Merchant pipeline](../system/merchant-pipeline.md) and the [Phase 14 plan](../product/phase-14-merchant-database.md), the real-page evaluation in the [protocol](../../docs/evals/generic-reader-protocol.md).
 
 # Merchant coverage design (Phases 10–17, draft)
 

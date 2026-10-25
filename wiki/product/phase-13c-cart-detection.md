@@ -6,7 +6,7 @@ status: stable
 tags: [product, plan, phase-13, merchants, reader, badge]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-10T22:30:00Z
+  at: 2026-10-23T18:12:00Z
 sources:
   - resource: phase-13-reader.md
     title: Phase 13 plan (reader v1 and 13b)
@@ -60,7 +60,7 @@ Evan's three calls (2026-10-09, [badge on all sites](../decisions/2026-10-09-bad
   - The implementer evaluates `use_dynamic_url: true`, which makes the extension harder for sites to fingerprint, against the worker's sender check by URL. They record the outcome in the [cart badge](../system/cart-badge.md) page and the decision.
   - `http:` pages stay out, as today, because routing accepts readings from `https` only.
 - **One reader per URL** (unchanged from 13b, [decision](../decisions/2026-10-09-generic-read-on-legacy-site-pages.md)):
-  - a legacy adapter's URL patterns use the adapter exactly as today, order-confirmation pages and savings included;
+  - a legacy adapter's URL patterns used the adapter; the adapters, order detection and savings were retired in Phase 15.1 ([decision](../decisions/2026-10-19-retire-legacy-adapters.md));
   - every other `https` page uses the detector, then `readCart`.
 - **Merchant.** `merchantForTab(url)`, the same rule as 13b: a legacy store's other pages name that store, and every other site gets `generic-us-online`. Readings carry `generic-reader-v1`.
 - **What shows:**
@@ -113,7 +113,7 @@ The detector is new, so the frozen set's held-out A is unseen data for it; its t
 | --- | --- | --- | --- |
 | Frozen set, development | real `cart-1`, `cart-qty2`, `cart-2items`, `cart-other` (cart positives); `minicart-1` (product pages with an open drawer); `empty-cart` (cart page or product page, empty) | positives → `cart`/`checkout`; `minicart-1` and `empty-cart` → badge hidden | tuning only; counts per state |
 | Frozen set, held-out A | the same states | the same | **one** detector run at the end (`--confirm-heldout-run 1`), with exact Clopper–Pearson bounds at page and store level |
-| Live home pages | the home page of every store in `sites.json` plus about 50 popular non-store sites (news, reference, docs, video, government), one load each, logged out, `robots.txt` respected, bot walls never bypassed | `none` | false shows with bounds; loaded vs blocked counts |
+| Live home pages | the home page of every store in `sites.json` plus about 50 popular non-store sites (news, reference, docs, video, government), one load each, logged out, `robots.txt` respected for the home-page sweep, bot walls never bypassed | `none` | false shows with bounds; loaded vs blocked counts |
 | Synthetic fixtures | unit tests and e2e pages: a blog about carts, a `/cart` link page, a product page with an open drawer, empty carts in several languages, a checkout step, single-page navigation | as written | pass/fail |
 
 - **Metrics.**
