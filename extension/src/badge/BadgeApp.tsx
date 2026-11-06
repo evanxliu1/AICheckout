@@ -334,7 +334,7 @@ function PanelBody({
                 aria-describedby="badge-suggest-note"
                 onClick={() => void apply({ type: 'badge:suggest-store' })}
               >
-                Store not recognised? Suggest it
+                Store not recognized? Suggest it
               </Button>
             </>
           ))}

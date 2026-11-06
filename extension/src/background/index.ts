@@ -308,7 +308,7 @@ async function handleTelemetry(input: unknown): Promise<TelemetryResponse> {
   if (!domain) return { ok: false, error: 'This address can’t be sent.' };
   let sent: boolean;
   if (request.type === 'telemetry:suggest-store') {
-    if (store.kind !== 'generic') return { ok: false, error: 'This store is already recognised.' };
+    if (store.kind !== 'generic') return { ok: false, error: 'This store is already recognized.' };
     sent = await telemetry.recordTap({ type: 'store_suggested', domain, page: pageForUrl(url) });
   } else {
     const shown = await badge.shownIn(request.tabId);

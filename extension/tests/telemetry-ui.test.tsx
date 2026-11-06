@@ -158,10 +158,10 @@ describe('Suggest this store and Report a problem', () => {
   });
   it('shows the worker’s refusal', async () => {
     stubChrome();
-    sendMessage.mockResolvedValueOnce({ ok: false, error: 'This store is already recognised.' });
+    sendMessage.mockResolvedValueOnce({ ok: false, error: 'This store is already recognized.' });
     render(<SuggestStore tabId={7} />);
     fireEvent.click(screen.getByRole('button', { name: 'Suggest this store' }));
-    expect((await screen.findByRole('alert')).textContent).toContain('already recognised');
+    expect((await screen.findByRole('alert')).textContent).toContain('already recognized');
     expect(screen.getByRole('button', { name: 'Suggest this store' })).toBeTruthy();
   });
 });
