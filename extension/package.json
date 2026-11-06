@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc -b && tsc -p tsconfig.e2e.json",
-    "test": "vitest run && node --test scripts/package.test.mjs",
+    "test": "vitest run && node --test scripts/package.test.mjs scripts/release-bundles.test.mjs",
     "test:package": "node --test scripts/package.test.mjs",
     "test:package:browser": "npm run package && RELEASE_ZIP_E2E=1 playwright test e2e/package.spec.ts",
     "test:watch": "vitest",

@@ -5,11 +5,13 @@ description: Pointer to the npm scripts that regenerate store and portfolio medi
 status: stable
 tags: [ops, release, media]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:12:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-11-06T19:50:00Z
 sources:
   - resource: ../../package.json
-    title: release:media and release:portfolio scripts
+    title: release:media, release:portfolio and release:bundles:check scripts
+  - resource: ../../extension/scripts/check-release-bundles.mjs
+    title: Bundled-release check on the upload ZIP (15.7)
   - resource: ../../scripts/build-release-media.mjs
     title: Release media build
   - resource: ../../scripts/build-portfolio-demo.mjs
@@ -49,7 +51,8 @@ The README header links `docs/release/assets/shopper-demo.mp4` (link text "Shopp
 
 - `release:portfolio` reuses the running local stack and never resets or migrates a database; start it first ([Local setup](local-setup.md#database-suite-docker)).
 - Intermediate caption renders (`docs/release/assets/video-captions/`, `full-stack-captions/`) are gitignored.
-- The motion demo is not bound to the ZIP, but its scenes state the sample wallet's amounts (Freedom Unlimited $3.00 at a restaurant, the rates at the gift-card store) and the end card has a "Coming soon to the Chrome Web Store" placeholder: if the engine's answers for that wallet change or the listing goes live (15.7), edit `motion/composition.html` and `script.md` together, rerun `npm run release:motion` and `render-release-assets.mjs`.
+- The motion demo is not bound to the ZIP, but its scenes state the sample wallet's amounts (Freedom Unlimited $3.00 at a restaurant, the rates at the gift-card store) and the end card has a "Coming soon to the Chrome Web Store" placeholder: if the engine's answers for that wallet change or the listing goes live, edit `motion/composition.html` and `script.md` together, rerun `npm run release:motion` and `render-release-assets.mjs`. The 15.7 plan keeps the placeholder through the first submission (no listing video) and sets "Now on the Chrome Web Store" after approval; the listing URL does not fit the 600 px end-card box ([plan, step 7](../product/phase-15-release-a.md#92-runbook), [decision](../decisions/2026-11-06-release-a-submission-choices.md)).
+- `npm run release:bundles:check -- --hosted` (`extension/scripts/check-release-bundles.mjs`, 15.7) reads which catalog and store list the packaged ZIP bundles and compares them with the repository and the API; run it on the ZIP the media are bound to before updating the hash in `docs/release/assets/README.md`.
 - `verify-release-assets.mjs` fails its first check on `main`: the media are bound to `f5a27208…e501`, a fresh hosted ZIP is `d1b513a8…1bbd` (15.5b changed the extension after the captures); 15.7's `release:media` on the submitted ZIP fixes it.
 - The release media is bound to the bundled catalog, the bundled store list and the packaged ZIP: after the 15.R renewal or any extension change, rerun `npm run release:media` on the ZIP to be submitted and update the hash in `docs/release/assets/README.md` (last run 2026-10-20 for 2.1.0 with `2026-10-05.renewal.1`). `verify-release-assets.mjs` passes only while `extension/dist` is that hosted build; a plain `npm run build` or `test:package:browser` overwrites `dist` and the ZIP, so rebuild with `build:hosted` and `package` before verifying again.
 
