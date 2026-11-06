@@ -6,7 +6,7 @@ status: stable
 tags: [system, site, static]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:12:00Z
+  at: 2026-11-06T19:30:00Z
 sources:
   - resource: ../../apps/site/vite.config.ts
     title: Site build and copied files
@@ -34,11 +34,11 @@ Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the
 | --- | --- | --- |
 | `/` | `home` | What the extension does at any https store, how it decides (the store list matched on the device, points valued by published estimates), screenshots (the 2.1.0 store screenshots), the cards covered (178 by issuer, `ISSUERS` in [`pages.tsx`](../../apps/site/src/pages.tsx), checked against `CATALOG_V3` by a test) and the stores (any https store; more than 600 named); the install card stays "Coming soon" until the listing exists |
 | `/results/` | `results` | Evaluation tables and charts from `results.json`, and the 173-card expansion section from `expansion.json`: the gpt-5.5 cross-model row, the luna upper bound and the same configuration's 7-card held-out score, with the not-comparable caveat ([Evaluation](evaluation.md)) |
-| `/architecture/` | `architecture` | Two-systems diagram (inline SVG, [`Diagram.tsx`](../../apps/site/src/Diagram.tsx)) and harness summary |
-| `/privacy/` | `privacy` | **The published privacy policy** ([`docs/release/privacy-policy.md`](../../docs/release/privacy-policy.md) is its markdown copy): what stays on the device, what the badge reads on web pages, the catalog and merchant requests, usage reports (random identifier, the dictionary's events, 90 days ([retention](database.md#telemetry-phase-152)), Stop sharing, Delete my data, the Limited Use statement), the vault, retention and deletion, children and rights, this site. Operator Evan Liu; contact `SUPPORT_EMAIL_TBD` until Evan supplies one |
+| `/architecture/` | `architecture` | Two-systems diagram (inline SVG, [`Diagram.tsx`](../../apps/site/src/Diagram.tsx); the public API box serves the catalog and the store list, fetched at install, weekly and on request), the release flow, the engine and the harness summary |
+| `/privacy/` | `privacy` | **The published privacy policy** ([`docs/release/privacy-policy.md`](../../docs/release/privacy-policy.md) is its markdown copy), last updated 2026-11-06: a summary, what stays on the device, what the badge reads on web pages, the catalog and merchant requests, usage reports (random identifier, the dictionary's events, 90 days ([retention](database.md#telemetry-phase-152)), Stop sharing, Delete my data, the Limited Use statement), the vault, retention and deletion, how information is used and shared, your choices and rights, children, this site, changes, contact. "We" is defined as Evan Liu, the operator; contact evanliu7788@gmail.com |
 | `/support/` | `support` | Getting started (consent step included), common issues (rates view, checking, expired, payment pages, Suggest and Report), usage reports, deleting data, limitations, reporting a problem ([`docs/release/support.md`](../../docs/release/support.md)) |
 | `/credits/` | `credits` | Data sources and licences: the Oklahoma CC BY 4.0 notice verbatim from [`NOTICE.md`](../../evals/merchants/db/mcc/NOTICE.md) with DC and GSA (CC0) and the Visa manual reference, NerdWallet valuations, Helios and the fonts. Linked from the footer of every page (`OTHER_PAGES` in [`Layout.tsx`](../../apps/site/src/Layout.tsx)), not from the navigation |
-| `/uninstalled/` | `uninstalled` | The page Chrome opens after an uninstall (`chrome.runtime.setUninstallURL`, hosted builds, no parameters): what Chrome removed from the device, that reports already sent expire within 90 days, that Delete my data had to be used before uninstalling. Not in the navigation |
+| `/uninstalled/` | `uninstalled` | The page Chrome opens after an uninstall (`chrome.runtime.setUninstallURL`, hosted builds, no parameters): what Chrome removed from the device, that reports already sent expire after 90 days (deleted by the daily job), that Delete my data had to be used before uninstalling. Not in the navigation |
 
 | Copied at build (`COPIED` in [`vite.config.ts`](../../apps/site/vite.config.ts)) | From |
 | --- | --- |
@@ -63,6 +63,7 @@ Verified 2026-10-03 on branch `s2-m10-docs-publish` (Stage 2 M10) by reading the
 - The site can never answer `/v1`, `/review` or `/health` (see [API](api.md#gotchas)).
 - Updating eval numbers means regenerating `docs/evals/results.json` (`npm run eval:summarize`) and rebuilding the site; nothing is fetched at runtime.
 - The home page's "What you see" screenshots are copied at build time from the Web Store screenshots 1–4 (`COPIED` in `vite.config.ts`: wallet, badge, rates, comparison, 1280×800), so regenerating the [release media](../ops/release-media.md) updates them; their alt text and captions live in `SCREENSHOTS` in `pages.tsx` and must describe the images as cropped. Last regenerated 2026-10-20 for the 2.1.0 hosted build. The support page's getting-started steps describe the card search and questions.
+- Page copy, the release docs and the public READMEs follow the [house style](../../docs/release/style-guide.md) ([decision](../decisions/2026-11-06-public-docs-house-style.md)).
 - The privacy and support pages describe extension behaviour; when the extension changes (for example the [Cart badge](cart-badge.md) or [usage reporting](extension.md#usage-reporting-phase-153)), these pages, their markdown copies in `docs/release/` and the store listing need a matching edit, and the 15.7 reviewer pass checks they agree with the consent copy and the dictionary. `scripts/lib/release-docs.test.mjs` (in `npm test`) refuses the retired three-store wording and any form of "anonymous" in `apps/site/src` and the release docs, and `node scripts/check-release-docs.mjs --release` also refuses `SUPPORT_EMAIL_TBD` and "Evan to confirm" ([decision](../decisions/2026-10-20-release-docs-choices.md)).
 
 ## Tests

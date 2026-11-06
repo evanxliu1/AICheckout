@@ -26,6 +26,7 @@ As of 2026-10-23 (wiki audit on `wiki-audit-2026-10-23`; `main` at `2c55174e`).
 ## Active work
 
 - **Phase 15:** 15.1–15.6, 15.1b, 15.5b and 15.6b merged. **Next:** 15.R catalog renewal (from 2026-10-26), then 15.7 submission: rerun `npm run release:media` on the submitted ZIP, replace the demo's "Coming soon to the Chrome Web Store" end card with the listing URL and rerun `release:motion`; Evan uploads the demo master to YouTube, pays, submits and publishes.
+- **Public docs house style** on `docs-official-tone` (2026-11-06, pushed, no PR): site, READMEs and release docs rewritten to [`docs/release/style-guide.md`](../docs/release/style-guide.md) ([decision](decisions/2026-11-06-public-docs-house-style.md)); the privacy policy is now dated 2026-11-06, so Evan's pre-submission read uses that version. Live: `/v1/catalog` answers 503 since release 3 expired 2026-11-04 (fixed by 15.R); the site fixes reach Render when the branch merges.
 - **Wiki audit 2026-10-23** on `wiki-audit-2026-10-23` (not committed): [review](reviews/2026-10-23-wiki-audit.md).
 
 ## Open questions and next steps

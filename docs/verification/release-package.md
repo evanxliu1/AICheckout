@@ -1,5 +1,7 @@
 # Extension package verification
 
+> **Status (2026-11-06):** this is a dated verification record for the 2.0.0 package (2026-09-26), kept as written. It is not a description of the current extension: version 2.1.0 adds the badge at any https store, host permissions, the `alarms` permission, catalog and store-list refreshes and optional usage reporting. For current behavior, see the [extension README](../../extension/README.md); the 2.1.0 package is added to this file at submission (milestone 15.7).
+
 Verified locally on September 26, 2026. This is a development artifact, not a claim of release readiness, live merchant compatibility, hosted deployment, or Chrome Web Store approval.
 
 ## Artifact and evidence

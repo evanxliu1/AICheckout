@@ -1,59 +1,59 @@
 # Store listing and dashboard declarations
 
-Everything Evan types into the Chrome Web Store developer dashboard for AI Checkout **2.1.0** comes from this file. The text describes the hosted build (`npm run build:hosted`: card terms and the store list downloaded from `https://ai-checkout-api.onrender.com`, usage reporting on). The 15.7 reviewer pass checks each section against the exact upload ZIP and its manifest before submission; the release record in [README.md](README.md) records what was submitted. Two items below are **Evan's alone** and are marked so.
+This file holds every value Evan enters in the Chrome Web Store developer dashboard for AI Checkout **2.1.0**. It describes the hosted build (`npm run build:hosted`), which downloads card terms and the store list from `https://ai-checkout-api.onrender.com` and has usage reporting on. Before submission, the 15.7 reviewer pass checks each section against the upload ZIP and its manifest; the release record in [README.md](README.md) records what was submitted. Two items are Evan's alone and are marked so.
 
 ## Basic fields
 
 | Field | Value |
 | --- | --- |
 | Name | AI Checkout |
-| Summary (≤ 132 characters; must equal the manifest `description`, which `release-package.mjs` checks for length) | Compare estimated rewards on cards you own, with clear rates and conditions. |
+| Summary (at most 132 characters; must equal the manifest `description`, whose length `extension/scripts/release-package.mjs` checks) | Compare estimated rewards on cards you own, with clear rates and conditions. |
 | Category | Shopping |
 | Language | English (United States) |
 | Regions | United States only |
 | Pricing | Free |
-| Publisher name shown | Evan Liu (Evan confirmed 2026-10-22; set as the developer account's publisher display name) |
-| Support email | evanliu7788@gmail.com (Evan, 2026-10-22) |
+| Publisher name shown | Evan Liu (confirmed by Evan 2026-10-22; set as the developer account's publisher display name) |
+| Support email | evanliu7788@gmail.com (confirmed by Evan 2026-10-22) |
 | Homepage | `https://ai-checkout-api.onrender.com/` |
 | Support URL | `https://ai-checkout-api.onrender.com/support/` |
 | Privacy policy URL | `https://ai-checkout-api.onrender.com/privacy/` |
 | Mature content | No |
 | Directed at children | No |
-| Trader declaration (EU consumer-protection field) | **Non-trader** (Evan confirmed 2026-10-22): a free, non-commercial portfolio project with no sales, no ads and no paid features |
+| Trader declaration (EU consumer-protection field) | **Non-trader** (Evan's declaration, confirmed 2026-10-22): a free, non-commercial portfolio project with no sales, ads or paid features |
 
 ## Detailed description (public copy)
 
 See which card you already own earns the most, right on your cart.
 
-Pick your cards once. On the cart or checkout page of any U.S. online store, AI Checkout shows a small badge with your best card and its estimated reward for that cart, for example "Use Blue Cash Everyday · $3.00 back". Click it to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions and a payment-method choice. When the cart amount can't be read with certainty, the badge ranks your cards by rate instead of guessing an amount.
+Pick your cards once. On the cart or checkout page of any U.S. online store, AI Checkout shows a small badge with your best card and its estimated reward for that cart, for example "Use Blue Cash Everyday · $3.00 back". Click the badge to see every card you own, ranked, with the issuer's rule behind each estimate, its conditions and a payment-method choice. When the cart amount can't be read with certainty, the badge ranks your cards by rate instead of guessing an amount.
 
-What it covers:
+Coverage:
 
-- 178 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points. Add yours by searching for the card or bank name; no card numbers or bank login.
-- More than 600 named U.S. stores with their bonus category (supermarkets, drugstores, home improvement and so on), plus a general profile for every other store, so category bonuses are applied where they count.
-- Card terms are published from the issuers' own terms, checked by independent reviewers, approved by a person before each release, and refreshed by the extension weekly. Points and miles are compared in cash at a published estimate unless the issuer states a value or you set your own.
+- 178 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo), both cash back and points. Add yours by searching for the card or bank name. No card numbers or bank login.
+- More than 600 named U.S. stores with their bonus category (such as supermarkets, drugstores and home improvement), and a general profile for every other store, so category bonuses apply where they count.
+- Card terms come from the issuers' published terms. Each catalog release is checked against the issuers' pages by separate AI verifiers and approved by a person before it's published, and the extension refreshes the terms weekly. Points and miles are compared in cash at a published estimate unless the issuer states a value or you set your own.
 
 How it works:
 
-- The badge reads the cart's order-summary amount and nothing else on the page: never item names, addresses or payment fields. It shows an amount only when it is sure of it.
-- Every estimate quotes the issuer's terms. Unknown spend toward a cap, an unactivated bonus or an uncertain payment method show as a range, never a guess.
-- The comparison runs on your device. No account, no model at checkout, and your cards never leave your browser unless you choose to share usage reports.
-- Dismiss the badge for a tab, turn it off for a site, or switch it off everywhere in Settings. Optional passphrase protection encrypts your saved cards.
-- Optional usage reports (you are asked once, after picking your cards) help improve the reader and the store list. They carry a random identifier, no name, email or browsing history, and never a store's address unless you tap "Suggest this store" or "Report a problem". Stop sharing or delete your reports any time from Settings.
+- The badge takes only the cart's order-summary amount and its currency from the page. It doesn't collect item names, addresses or payment fields. It shows an amount only when it's certain of it.
+- Every estimate quotes the issuer's terms. Unknown spend toward a cap, an unactivated bonus or an uncertain payment method shows as a range, not a guess.
+- The comparison runs on your device. There's no account and no AI model at checkout, and your cards don't leave your browser unless you choose to share usage reports.
+- Dismiss the badge for a tab, turn it off for a site, or turn it off everywhere in Settings. Optional passphrase protection encrypts your saved cards.
+- Usage reports are optional. The extension asks once, after you pick your cards. Reports help improve the cart reader and the store list. They carry a random identifier, no name, email or browsing history, and never a store's address unless you tap "Suggest this store" or "Report a problem". You can stop sharing or delete your reports at any time in Settings.
 
 Scope and limitations:
 
-AI Checkout is a rewards comparison tool, not a card-benefits catalog or a payment service. It does not apply for cards, link a bank, process a payment or place an order. U.S. stores and U.S. dollars only. Issuer eligibility and how a purchase posts affect actual rewards; offers, fees, financing and other benefits are not modeled. Dollar amounts are estimates and may differ from your statement. Card terms expire 30 days after they were verified; the extension refreshes them weekly and when you ask, and tells you when they need a refresh. AI Checkout is an independent project and is not affiliated with any card issuer or retailer.
+AI Checkout compares rewards. It doesn't apply for cards, connect to a bank, process payments or place orders, and it doesn't cover other card benefits. It supports U.S. stores and U.S. dollars only. Issuer eligibility rules and how a purchase posts affect actual rewards; offers, fees, financing and other benefits aren't modeled. Dollar amounts are estimates and may differ from your statement. Card terms expire 30 days after they were verified. The extension refreshes them weekly and when you ask, and tells you when they need a refresh. AI Checkout is an independent project and isn't affiliated with any card issuer or retailer.
 
 Store categories in the extension's store list are derived in part from public purchase-card transaction data published by the State of Oklahoma (Office of Management and Enterprise Services) under CC BY 4.0, by the Government of the District of Columbia and by the U.S. General Services Administration (CC0), pooled and aggregated to per-store category counts; the State of Oklahoma does not endorse this product. Full credits: https://ai-checkout-api.onrender.com/credits/
 
 ## Single purpose (dashboard copy)
 
-Shows which of the credit cards you already own earns the most on the cart or checkout page you are viewing, from the visible cart amount and the reward rules published by the issuers. Every feature serves it: the badge and popup (the answer), the catalog and store-list downloads (the rules and store categories the answer needs), and optional usage reporting (measuring and improving the answer).
+Shows which of the credit cards you already own earns the most on the cart or checkout page you're viewing, based on the visible cart amount and the reward rules the issuers publish. Every feature serves this purpose: the badge and popup show the answer, the catalog and store-list downloads supply the rules and store categories it needs, and optional usage reporting measures and improves it.
 
 ## Permission justifications (dashboard copy)
 
-The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts` and checked by `scripts/release-package.mjs`) declares exactly these; nothing else may appear.
+The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts` and checked by `extension/scripts/release-package.mjs`) declares exactly these entries and no others.
 
 | Manifest entry | Justification |
 | --- | --- |
@@ -68,7 +68,7 @@ The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts
 
 ## Remote code
 
-**No.** All code (the rewards engine, the cart reader, the badge and popup) is packaged in the extension. The card catalog and the store list are JSON data validated against fixed schemas before use; no script, stylesheet or WebAssembly is fetched or evaluated. `grep -rn "eval(\|new Function" extension/src` returns nothing, and neither does a grep of the built `extension/dist` bundles for `eval(`, `new Function(`, `importScripts` or `WebAssembly` (15.5 review, 2026-10-19); the 15.7 reviewer confirms this on the upload ZIP.
+**No.** All code (the rewards engine, the cart reader, the badge and the popup) is packaged in the extension. The card catalog and the store list are JSON data validated against fixed schemas before use; no script, stylesheet or WebAssembly is fetched or evaluated. `grep -rn "eval(\|new Function" extension/src` returns nothing, and neither does a grep of the built `extension/dist` bundles for `eval(`, `new Function(`, `importScripts` or `WebAssembly` (15.5 review, 2026-10-19); the 15.7 reviewer confirms this on the upload ZIP.
 
 ## Privacy practices tab
 
@@ -98,6 +98,6 @@ Paste the short version from [reviewer-instructions.md](reviewer-instructions.md
 
 ## Assets
 
-Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), five screenshots at 1280×800 and the 440×280 promo tile, regenerated on 2026-10-20 (milestone 15.6) against the 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. No marquee and no YouTube video. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload.
+Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), five screenshots at 1280×800 and the 440×280 promo tile, regenerated on 2026-10-20 (milestone 15.6) against the 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. No marquee image. The optional YouTube video is the 55-second motion-graphic demo (`docs/release/assets/shopper-demo.mp4`; master `motion/shopper-demo-1920x1080.mp4`), which Evan uploads to YouTube at submission (15.7) after its end card gets the listing URL. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload.
 
 References checked 2026-10-20: [privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), [Limited Use](https://developer.chrome.com/docs/webstore/program-policies/limited-use), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard's wording at submission.

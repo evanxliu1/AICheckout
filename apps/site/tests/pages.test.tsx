@@ -80,7 +80,7 @@ it('describes the badge at any store and the retired three-store flow nowhere', 
 it('states the privacy policy: what the badge reads, the requests, and usage reports under a random identifier', () => {
   const privacy = body('privacy');
   for (const text of [
-    'Last updated 2026-10-20',
+    'Last updated 2026-11-06',
     'Operator: Evan Liu',
     'access to every https website',
     'address and title for a cart or checkout word',

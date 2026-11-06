@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-11-06
+* [A house style for the public docs and site, following Google and Microsoft, with no serial comma to match the extension's interface text](./2026-11-06-public-docs-house-style.md) — editor, on Evan's request: `docs/release/style-guide.md`; the privacy policy restructured like mainstream product notices.
+
 ## 2026-10-22
 * [Phase 15.6b: the shopper demo is a motion graphic (HTML/CSS composition, every frame a function of t, rendered with the repository's Playwright and ffmpeg), not a screen recording; the recording pipeline for the demo retired](./2026-10-22-motion-graphic-shopper-demo.md) — implementer, on Evan's request: no new dependency (Remotion rejected), each frame from a fresh copy of the DOM so renders are byte-identical, illustrative and not bound to the ZIP while the screenshots stay real captures.
 
