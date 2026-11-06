@@ -1,0 +1,478 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 13
+  },
+  "cards": [
+    {
+      "cardId": "amex-gold",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amex-gold-product",
+        "amex-gold-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 369756,
+      "inputTokenEstimate": 28035,
+      "inputTokens": 20298,
+      "outputTokens": 1908,
+      "runAt": "2026-11-06T19:26:40.094Z"
+    },
+    {
+      "cardId": "amex-platinum",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "reported_missing": 3,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "amex-platinum-product"
+      ],
+      "inputNotes": [
+        "amex-platinum-pricing: dropped to fit the input token limit"
+      ],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 172719,
+      "inputTokenEstimate": 5640,
+      "inputTokens": 6561,
+      "outputTokens": 462,
+      "runAt": "2026-11-06T19:26:40.091Z"
+    },
+    {
+      "cardId": "amex-delta-skymiles-blue",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "quote_not_found": 1,
+        "reported_missing": 1,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "amex-delta-skymiles-blue-product",
+        "amex-delta-skymiles-blue-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 226693,
+      "inputTokenEstimate": 15335,
+      "inputTokens": 12238,
+      "outputTokens": 1703,
+      "runAt": "2026-11-06T19:26:40.108Z"
+    },
+    {
+      "cardId": "amex-delta-skymiles-gold",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "quote_not_found": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "amex-delta-skymiles-gold-product",
+        "amex-delta-skymiles-gold-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 210610,
+      "inputTokenEstimate": 22769,
+      "inputTokens": 16677,
+      "outputTokens": 1667,
+      "runAt": "2026-11-06T19:26:40.097Z"
+    },
+    {
+      "cardId": "amex-delta-skymiles-platinum",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "conflicting",
+        "conflicting",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_conflicting": 3,
+        "reported_missing": 2
+      },
+      "documents": [
+        "amex-delta-skymiles-platinum-product",
+        "amex-delta-skymiles-platinum-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 238084,
+      "inputTokenEstimate": 31412,
+      "inputTokens": 21912,
+      "outputTokens": 1994,
+      "runAt": "2026-11-06T19:26:40.100Z"
+    },
+    {
+      "cardId": "amex-delta-skymiles-reserve",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "rate_not_in_evidence": 1,
+        "reported_missing": 2,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amex-delta-skymiles-reserve-product",
+        "amex-delta-skymiles-reserve-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 255094,
+      "inputTokenEstimate": 39570,
+      "inputTokens": 26762,
+      "outputTokens": 843,
+      "runAt": "2026-11-06T19:26:40.103Z"
+    },
+    {
+      "cardId": "amex-hilton-honors",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "quote_not_found": 2,
+        "reported_conflicting": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "amex-hilton-honors-product",
+        "amex-hilton-honors-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 281113,
+      "inputTokenEstimate": 14499,
+      "inputTokens": 11729,
+      "outputTokens": 1939,
+      "runAt": "2026-11-06T19:26:40.112Z"
+    },
+    {
+      "cardId": "amex-hilton-honors-surpass",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "quote_not_found": 2,
+        "reported_conflicting": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "amex-hilton-honors-surpass-product",
+        "amex-hilton-honors-surpass-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 288420,
+      "inputTokenEstimate": 17932,
+      "inputTokens": 13738,
+      "outputTokens": 2233,
+      "runAt": "2026-11-06T19:26:40.110Z"
+    },
+    {
+      "cardId": "amex-hilton-honors-aspire",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "conflicting",
+        "conflicting",
+        "conflicting",
+        "conflicting"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "quote_not_found": 5,
+        "inconsistent_claim": 1,
+        "reported_missing": 2,
+        "reported_conflicting": 4
+      },
+      "documents": [
+        "amex-hilton-honors-aspire-product",
+        "amex-hilton-honors-aspire-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 291196,
+      "inputTokenEstimate": 24243,
+      "inputTokens": 17441,
+      "outputTokens": 2044,
+      "runAt": "2026-11-06T19:29:32.823Z"
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-bevy",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "quote_not_found": 1,
+        "inconsistent_claim": 1,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amex-marriott-bonvoy-bevy-product",
+        "amex-marriott-bonvoy-bevy-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 285598,
+      "inputTokenEstimate": 16838,
+      "inputTokens": 13176,
+      "outputTokens": 1652,
+      "runAt": "2026-11-06T19:30:10.715Z"
+    },
+    {
+      "cardId": "amex-marriott-bonvoy-brilliant",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "entertainment",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "ambiguous",
+        "ambiguous",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "quote_not_found": 2,
+        "reported_missing": 2,
+        "reported_ambiguous": 2,
+        "reported_out-of-scope": 2
+      },
+      "documents": [
+        "amex-marriott-bonvoy-brilliant-product",
+        "amex-marriott-bonvoy-brilliant-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 321133,
+      "inputTokenEstimate": 22841,
+      "inputTokens": 16675,
+      "outputTokens": 1686,
+      "runAt": "2026-11-06T19:30:26.808Z"
+    },
+    {
+      "cardId": "amex-blue-cash-everyday",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "online-retail",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 6,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amex-blue-cash-everyday-terms",
+        "amex-rewards-info-retail",
+        "amex-blue-cash-everyday-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 195159,
+      "inputTokenEstimate": 23247,
+      "inputTokens": 17420,
+      "outputTokens": 1429,
+      "runAt": "2026-11-06T19:30:38.190Z"
+    },
+    {
+      "cardId": "amex-blue-cash-preferred",
+      "issuer": "American Express",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "streaming",
+        "supermarkets",
+        "transit"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "amex-blue-cash-preferred-terms",
+        "amex-rewards-info-retail",
+        "amex-blue-cash-preferred-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 160336,
+      "inputTokenEstimate": 21269,
+      "inputTokens": 16187,
+      "outputTokens": 1344,
+      "runAt": "2026-11-06T19:30:55.207Z"
+    }
+  ]
+}
