@@ -1,0 +1,668 @@
+{
+  "schemaVersion": 1,
+  "packetId": "4518e8a0-b9d7-49e9-b7b7-dfbe8cfd7e4f",
+  "batch": "capital-one-refresh-2026-11",
+  "issuer": "Capital One",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-11-06",
+    "filesRead": [
+      "evals/curation/batches/capital-one-refresh-2026-11/pipeline/packets/verify.capital-one.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/capital-one.md",
+      "evals/curation/batches/capital-one-refresh-2026-11/verify/capital-one.md",
+      "evals/curation/batches/capital-one-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/capital-one-refresh-2026-11/product-notes.json",
+      "scripts/lib/expansion-verification.mjs",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-venture-x-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-venture-x-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-venture-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-venture-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-ventureone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-ventureone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilverone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilverone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-student-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-student-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-secured-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-secured-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savorone-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savorone-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savor-student-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savor-student-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-t-mobile-visa-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-t-mobile-visa-pricing.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-quicksilver-terms.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savor-product.txt",
+      "evals/curation/batches/capital-one-refresh-2026-11/captures/capital-one-savor-terms.txt"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "capital-one-venture-x",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-venture-x-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "The x100 formula is a travel-redemption rule and cash rates vary, so no fixed cash value is stated (Capital One convention: Venture-family point value null)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "10 miles per dollar on hotels and rental cars booked through Capital One Travel",
+          "corrected": "10X Miles on hotels & rental cars booked through Capital One Travel",
+          "anchor": {
+            "sourceId": "capital-one-venture-x-product",
+            "quote": "10X Miles on hotels & rental cars booked through Capital One Travel"
+          },
+          "note": "Draft wording was not verbatim; replaced with the product-page wording naming the booking types."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Rewards will not be earned on the Credit.",
+          "anchors": [
+            {
+              "sourceId": "capital-one-venture-x-pricing",
+              "quote": "Rewards will not be earned on the Credit."
+            }
+          ],
+          "note": "The portion of a Capital One Travel purchase paid with the $300 annual travel credit earns no miles."
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-venture",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-venture-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "The x100 example is a travel-redemption formula and cash rates vary; no fixed cash value is stated (Capital One convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-ventureone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "capital-one-ventureone-pricing",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "The x100 example is a travel-redemption formula and cash rates vary; no fixed cash value is stated (Capital One convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilverone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilverone-pricing",
+            "quote": "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel"
+          },
+          "note": "The terms state 5% cash back on these Capital One Travel bookings; the draft dropped the rate."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilverone-pricing",
+            "quote": "You will earn 5% cash back on Capital One Entertainment purchases."
+          },
+          "note": "The terms state 5% cash back on Capital One Entertainment purchases; the draft dropped the rate."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase.",
+              "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this"
+            ]
+          },
+          "note": "Conflicting issue rests only on the 1.5% headline versus the higher portal rates in the terms; removed (Capital One convention, general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase.",
+              "You will earn 5% cash back on Capital One Entertainment purchases."
+            ]
+          },
+          "note": "Conflicting issue rests only on the 1.5% headline versus the higher portal rates in the terms; removed (Capital One convention, general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-student",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-quicksilver-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-secured-pricing",
+            "quote": "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel"
+          },
+          "note": "The terms state 5% cash back on these Capital One Travel bookings; the draft dropped the rate."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-quicksilver-secured-pricing",
+            "quote": "You will earn 5% cash back on Capital One Entertainment purchases."
+          },
+          "note": "The terms state 5% cash back on Capital One Entertainment purchases; the draft dropped the rate."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase, every day",
+              "You will earn 5% cash back on hotels, rental cars, and vacation rentals booked through Capital One Travel or Capital One Business Travel using this"
+            ]
+          },
+          "note": "Conflicting issue rests only on the 1.5% headline versus the higher portal rates in the terms; removed (Capital One convention, general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "Earn unlimited 1.5% cash back on every purchase, every day",
+              "You will earn 5% cash back on Capital One Entertainment purchases."
+            ]
+          },
+          "note": "Conflicting issue rests only on the 1.5% headline versus the higher portal rates in the terms; removed (Capital One convention, general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-savorone",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "You will earn 8% cash back on purchases made through the Capital One Entertainment ticketing platform using this Rewards card account, 5% cash back on",
+          "corrected": "and 1% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-savorone-pricing",
+            "quote": "and 1% cash back on all other purchases"
+          },
+          "note": "The base-rule anchor stated the 8% and 5% rates, not the 1% base; replaced with the span stating 1% on all other purchases."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-savorone-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ],
+          "note": "The product page says wallet and third-party payment purchases may not earn the bonus rates; whether a given checkout earns 3% is unclear."
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-savor-student",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "You will earn 8% cash back on purchases made through the Capital One Entertainment ticketing platform using this Rewards card account, 5% cash back on",
+          "corrected": "and 1% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-savor-student-pricing",
+            "quote": "and 1% cash back on all other purchases"
+          },
+          "note": "The base-rule anchor stated the 8% and 5% rates, not the 1% base; replaced with the span stating 1% on all other purchases."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Earnings will apply to net purchases (purchases minus any credits or returns)."
+            ]
+          },
+          "note": "Net-purchase netting is not an ambiguity or an out-of-scope earning rule; removed (general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Your account must be open and in good standing to earn cash back and cash back earned will post to your account within 1-2 billing"
+            ]
+          },
+          "note": "Account-standing and posting timing are not earning ambiguities; removed (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-student-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ],
+          "note": "The product page says wallet and third-party payment purchases may not earn the bonus rates; whether a given checkout earns 3% is unclear."
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-t-mobile-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 500,
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-pricing",
+            "quote": "you will earn 5% back in T-Mobile Rewards on net Qualifying Purchases"
+          },
+          "note": "The terms state 5% back on Qualifying Purchases at T-Mobile; the draft dropped the rate."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "Qualifying Purchases",
+          "corrected": "Earn 5% in rewards on any phone, device, or accessory at T-Mobile.",
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-product",
+            "quote": "Earn 5% in rewards on any phone, device, or accessory at T-Mobile."
+          },
+          "note": "The single-merchant rule's wording should name the merchant and what qualifies (general 4), not the bare defined term."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "other",
+            "issuerWording": "T-Mobile bill",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "T-Mobile bill 2% in rewards1",
+              "There is no cap to the amount of T-Mobile Rewards you can earn on purchases and your T-Mobile Rewards are yours for the life of"
+            ]
+          },
+          "note": "The T-Mobile bill line in the rewards calculator is footnoted to the 2% on all other purchases; it is the base rate, not a separate rule."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Groceries",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Groceries, dining, and entertainment 2% in rewards1",
+              "There is no cap to the amount of T-Mobile Rewards you can earn on purchases and your T-Mobile Rewards are yours for the life of"
+            ]
+          },
+          "note": "Groceries at 2% is the calculator restating the 2% base (footnote 1, all other purchases); not a separate rule."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "dining",
+            "issuerWording": "dining",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Groceries, dining, and entertainment 2% in rewards1",
+              "There is no cap to the amount of T-Mobile Rewards you can earn on purchases and your T-Mobile Rewards are yours for the life of"
+            ]
+          },
+          "note": "Dining at 2% is the calculator restating the 2% base; not a separate rule."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.5",
+          "current": {
+            "category": "entertainment",
+            "issuerWording": "entertainment",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null,
+            "anchors": [
+              "Groceries, dining, and entertainment 2% in rewards1",
+              "There is no cap to the amount of T-Mobile Rewards you can earn on purchases and your T-Mobile Rewards are yours for the life of"
+            ]
+          },
+          "note": "Entertainment at 2% is the calculator restating the 2% base; not a separate rule."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "Accumulated T-Mobile Rewards may only be redeemed to pay your T-Mobile wireless bill or for purchases of phones, devices, or accessories"
+            }
+          ],
+          "note": "Rewards are percentage-back but usable only with T-Mobile (Capital One store-only convention)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-t-mobile-visa-pricing",
+              "quote": "You may not accrue enhanced earning on purchases made using 3rd party digital wallets."
+            }
+          ],
+          "note": "The 5% T-Mobile rate may not apply when paying through a third-party digital wallet."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "capital-one-t-mobile-visa-pricing",
+            "quote": "Qualifying Purchases include phones, devices, and accessories."
+          },
+          "note": "The terms state 5% on phones, devices and accessories at T-Mobile.com, the T-Life app, T-Mobile stores and Authorized Retailers, excluding EIP, wireless service and fees; wallets may not earn the enhanced rate."
+        }
+      ]
+    },
+    {
+      "cardId": "capital-one-quicksilver",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "capital-one-savor",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.0",
+          "current": "You will earn 8% cash back on purchases made through the Capital One Entertainment ticketing platform using this Rewards card account, 5% cash back on",
+          "corrected": "and 1% cash back on all other purchases",
+          "anchor": {
+            "sourceId": "capital-one-savor-terms",
+            "quote": "and 1% cash back on all other purchases"
+          },
+          "note": "The base-rule anchor stated the 8% and 5% rates, not the 1% base; replaced with the span stating 1% on all other purchases."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "capital-one-savor-product",
+              "quote": "Purchases made through third-party payment accounts, mobile or wireless card readers, mobile or digital wallets, or similar technology may not receive a higher percentage reward"
+            }
+          ],
+          "note": "The product page says wallet and third-party payment purchases may not earn the bonus rates; whether a given checkout earns 3% is unclear."
+        }
+      ],
+      "productNoteChanges": []
+    }
+  ]
+}
