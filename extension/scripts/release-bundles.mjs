@@ -40,7 +40,10 @@ function headers(files, pattern, name, pick) {
     throw new Error(
       found.length === 0
         ? `No bundled ${name} header found; the minified shape this check relies on may have changed.`
-        : `${found.length} bundled ${name} headers found (${found.map((item) => item.file).join(', ')}); expected one.`,
+        : `${found.length} bundled ${name} headers found (${found
+            .map((item) => item.file)
+            .sort()
+            .join(', ')}); expected one.`,
     );
   for (const field of ['verifiedAt', 'expiresAt'])
     if (
