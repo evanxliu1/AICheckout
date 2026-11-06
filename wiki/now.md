@@ -4,8 +4,8 @@ title: Now
 description: Current state, active work, open questions and next steps. Rewritten at the end of every session.
 status: stable
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:15:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-11-06T20:30:00Z
 ---
 
 # Now
@@ -40,4 +40,5 @@ As of 2026-10-23 (wiki audit on `wiki-audit-2026-10-23`; `main` at `2c55174e`).
 7. Evan's calls: Aer Lingus and Iberia Avios valuation; a second luna repeat against gpt-5.5; the deferred human spot-check of agent-verified labels; revoking the legacy HS256 JWT secret.
 8. Catalog builder maps gold `usMerchantsOnly: null` to `false`; the catalog omits the Chase Lyft promo and targeted Quicksilver offers ([cards](domain/cards.md)). D9: merchant data, eval labels and snapshots stay MIT for now (provisional, 2026-10-10).
 9. **Evan's call:** formal approval of the revised Phase 14 plan ([decision](decisions/2026-10-10-phase-14-design.md) still says awaiting; the work shipped 2026-10-12).
-10. Housekeeping: the shared local Supabase stack was recreated on 2026-10-20 (see [database migrations](ops/database-migrations.md#gotchas)); after any `npm install`, check `grep -c '"node_modules/@rollup/rollup-' package-lock.json` is 25 (npm 11.5.2 strips other-platform optional packages); other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; remove merged worktrees (`.claude/worktrees/agent-*`) and merged local branches when Evan agrees.
+10. **Merged as PR #109 (2026-11-06):** the advisories that fail CI's `npm audit --audit-level=high` on every PR fixed again (zod 4.6.6, `@fastify/static` 10.1.10 with glob 14, undici 7.30.2, fast-uri 4.2.3 and 3.1.9; [log](log.md#2026-11-06)); every gate passed locally. Merge it before any other PR, since their CI is red until then. Seven moderate findings stay: minimatch 9 under `@typescript-eslint/typescript-estree`, which no typescript-eslint release fixes (lint-time only, below the CI threshold).
+11. Housekeeping: the shared local Supabase stack was recreated on 2026-10-20 (see [database migrations](ops/database-migrations.md#gotchas)); after any `npm install`, check `grep -c '"node_modules/@rollup/rollup-' package-lock.json` is 25 (npm 11.5.2 strips other-platform optional packages); other clones run `git config core.hooksPath .githooks`; Claude Code checkouts need a local `CLAUDE.md` with `@AGENTS.md`; delete the stale local `extension/CLAUDE.md`; remove merged worktrees (`.claude/worktrees/agent-*`) and merged local branches when Evan agrees.
