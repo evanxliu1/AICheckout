@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { checkRewardPrograms, loadRewardPrograms, rewardProgramAnchors } from './reward-programs.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const asOf = '2026-10-02';
+const asOf = '2026-11-06';
 const committed = await loadRewardPrograms(root);
 const copy = () => structuredClone(committed);
 const check = (state, options = { asOf }) => checkRewardPrograms(state.table, state.corpora, options);
@@ -104,11 +104,11 @@ test('an anchor must come from one of the card’s sources and be at most 25 wor
 });
 
 test('a published estimate needs the primary publisher, an https URL and a date within 30 days', () => {
-  assert.deepEqual(check(committed, { asOf: '2026-11-01' }), []);
-  const stale = check(committed, { asOf: '2026-11-02' });
+  assert.deepEqual(check(committed, { asOf: '2026-12-06' }), []);
+  const stale = check(committed, { asOf: '2026-12-07' });
   assert.ok(stale.length > 0);
-  assert.ok(stale.every((problem) => /not within 30 days before 2026-11-02/.test(problem)));
-  assert.ok(check(committed, { asOf: '2026-10-01' }).length > 0, 'read after the as-of date');
+  assert.ok(stale.every((problem) => /not within 30 days before 2026-12-07/.test(problem)));
+  assert.ok(check(committed, { asOf: '2026-11-05' }).length > 0, 'read after the as-of date');
 
   const other = copy();
   program(other, 'delta-skymiles').estimate.publisher = 'Another Publisher';
