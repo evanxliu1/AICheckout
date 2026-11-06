@@ -13,6 +13,7 @@ export const CHECKED_PATHS = [
   'docs/release/support.md',
   'docs/release/reviewer-instructions.md',
   'docs/verification/merchants.md',
+  'docs/verification/release-package.md',
   'extension/README.md',
   'README.md',
   'apps/site/src',

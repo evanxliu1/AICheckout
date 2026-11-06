@@ -1,5 +1,7 @@
 # Local input protection
 
+> **Status (2026-11-06):** the protection design below still applies to version 2.1.0, which links here from the [extension README](../../extension/README.md). The test evidence is dated as written (2026-09-26 and 2026-10-01); references to the earlier toolbar-only flow and pilot catalog are historical.
+
 Implemented and verified locally September 26, 2026. This records application behavior and its limits; it is not an independent security audit or Chrome Web Store approval. The final public identity, privacy/support URLs, installed-Chrome checks and other release gates remain in the [roadmap](../design.md#roadmap).
 
 **Phase 3b change (2026-10-01): protection is optional and off by default.** Without it, `checkoutStateV1` holds the validated AppState in plain local storage (restricted to trusted extension contexts, so pages and content scripts cannot read it). **Settings → Protect with a passphrase** converts it to the encrypted envelope described below; **Turn off passphrase protection** (passphrase required) decrypts it back in one write and drops the session key. Vault statuses are `unprotected | locked | unlocked | damaged`; existing vaults keep working until turned off. When locked, the cart badge shows only "Unlock to see your best card". The rest of this document describes the protected mode.

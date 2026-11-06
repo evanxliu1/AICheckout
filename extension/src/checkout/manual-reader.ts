@@ -33,7 +33,7 @@ const KIND: Record<ReadingKind, AmountKind> = {
 
 /** One reader for every URL (Phase 13b, 13c, 15.1): any http(s) page is the generic detector's, then
  * `readCart`'s, in one pass. Returns only the detection and the reading (or a reason), never page text.
- * A page the detector does not recognise as a cart or checkout (`none`) is `not-a-cart`, distinct from a
+ * A page the detector does not recognize as a cart or checkout (`none`) is `not-a-cart`, distinct from a
  * cart whose amount is uncertain (`withheld`), so the popup can stay quiet on it. */
 export function readAnyCart(document: Document, url: string): { page: PageKind; reading: ManualRead } {
   if (!isWebUrl(url)) return { page: 'none', reading: { status: 'unavailable', reason: 'unsupported-page' } };

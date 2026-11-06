@@ -81,7 +81,7 @@ export type PopupReadOutcome = (typeof POPUP_READ_OUTCOMES)[number];
 export const PROBLEM_REASONS = {
   'wrong-amount': 'The amount shown is wrong',
   'no-badge': 'No badge appeared on a cart or checkout page',
-  'wrong-store': 'The store was recognised as another store',
+  'wrong-store': 'The store was recognized as another store',
   'wrong-card': 'The recommended card looks wrong',
   other: 'Something else',
 } as const;
@@ -121,7 +121,7 @@ export const telemetryStatusSchema = z.strictObject({
 export type TelemetryStatus = z.infer<typeof telemetryStatusSchema>;
 /** The worker's answer to Delete all local data when the service could not delete the reports stored under the
  * usage identifier (offline, 429, 503, a cold instance): nothing was cleared, and the page offers Try again or
- * Clear this device anyway. The pages recognise this message by equality. */
+ * Clear this device anyway. The pages recognize this message by equality. */
 export const REPORTS_NOT_DELETED_MESSAGE =
   'Your usage reports could not be deleted from the service, so nothing was cleared yet.';
 export const telemetryResponseSchema = z.discriminatedUnion('ok', [
@@ -139,7 +139,7 @@ export const CONSENT_COPY = {
   sentHeading: 'What is sent, after you choose Share',
   sent: [
     'How you use it: the badge shown, expanded or dismissed, the popup opened and what its read found, a site switched off, when card terms were refreshed, and how far an amount you typed was from the one read (a rough range, not the amount).',
-    'Each recommendation: the recommended card, how many cards you have, the store’s category (for example groceries), whether the store is one AI Checkout recognises, whether it was a cart or checkout page, and the exact cart amount read or that it was not read.',
+    'Each recommendation: the recommended card, how many cards you have, the store’s category (for example groceries), whether the store is one AI Checkout recognizes, whether it was a cart or checkout page, and the exact cart amount read or that it was not read.',
     'The cards you picked, as catalog names (never card numbers, last four digits or balances).',
     'Error codes, without messages or page content.',
     'A random identifier, so repeated reports can be told apart: no name, email or browsing history. Each report also carries the versions of the extension, card terms and store list, and the month you chose Share.',

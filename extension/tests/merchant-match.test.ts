@@ -130,7 +130,7 @@ describe('the bundled release on the device', () => {
     expect(at('https://www.bestbuy.com/cart')!.id).toBe('best-buy-us');
     expect(at('https://secure.newegg.com/shop/cart')!.id).toBe('newegg-us');
   });
-  it('recognises payment pages', () => {
+  it('recognizes payment pages', () => {
     expect(at('https://www.paypal.com/checkoutnow')!.kind).toBe('processor');
     expect(at('https://shop.app/checkout/123')!.kind).toBe('processor');
     expect(at('https://pay.amazon.com/')!.id).toBe('amazon-pay');
