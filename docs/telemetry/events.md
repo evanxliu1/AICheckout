@@ -129,7 +129,7 @@ _No fields beyond the envelope._
 
 ### `store_suggested` (shopper-initiated; may carry no identifier)
 
-**When:** On the shopper’s tap on "Suggest this store" (popup) or "Store not recognised? Suggest it" (badge panel), at a store the merchant release does not name. Sent whether sharing is on or not; `install_id` is null when it is off.
+**When:** On the shopper’s tap on "Suggest this store" (popup) or "Store not recognized? Suggest it" (badge panel), at a store the merchant release does not name. Sent whether sharing is on or not; `install_id` is null when it is off.
 
 | Field    | Type                                                                                                      | Meaning                                                                         |
 | -------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |

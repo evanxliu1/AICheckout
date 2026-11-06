@@ -1,4 +1,4 @@
-/** The automatic badge's host permissions (Phase 13c): every https site, so the badge can recognise
+/** The automatic badge's host permissions (Phase 13c): every https site, so the badge can recognize
  * a cart at any store. */
 export const BADGE_HOST_PERMISSIONS = ['https://*/*'];
 

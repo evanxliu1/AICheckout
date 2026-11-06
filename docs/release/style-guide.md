@@ -24,7 +24,7 @@ It follows the [Google developer documentation style guide](https://developers.g
 
 ## Terminology
 
-Use these terms consistently. Quote extension interface text exactly as it appears, including its British spellings ("recognised").
+Use these terms consistently. Quote extension interface text exactly as it appears. The interface uses U.S. spelling ("recognized"), like the docs.
 
 | Use | Not | Notes |
 | --- | --- | --- |

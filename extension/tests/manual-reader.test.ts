@@ -85,7 +85,7 @@ describe('manual reader (Phase 13b)', () => {
       extractorVersion: 'generic-reader-v1',
     });
   });
-  it('withholds on a page the detector does not recognise as a cart (Phase 13c)', () => {
+  it('withholds on a page the detector does not recognize as a cart (Phase 13c)', () => {
     // No cart word in the URL or title: no DOM is read, nothing is shown, nothing is asked.
     document.title = 'Leather bag';
     document.body.innerHTML = summary(row('Total', '$100.00'));

@@ -42,5 +42,5 @@ test('release mode refuses only the placeholders Evan still has to fill', () => 
   const found = checkReleaseDocs(root, { release: true });
   assert.ok(found.every((f) => f.rule === 'placeholder' || f.rule === 'evan-pending'));
   const placeholders = RELEASE_RULES.some(({ pattern }) => pattern.test('SUPPORT_EMAIL_TBD'));
-  assert.ok(placeholders, 'the placeholder rule recognises SUPPORT_EMAIL_TBD');
+  assert.ok(placeholders, 'the placeholder rule recognizes SUPPORT_EMAIL_TBD');
 });

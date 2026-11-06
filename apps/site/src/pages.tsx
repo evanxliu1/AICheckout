@@ -46,6 +46,8 @@ function Section({ id, title, children }: { id: string; title: string; children:
 // Copied from the Web Store screenshots in docs/release/assets (vite.config.ts COPIED); regenerated
 // on 2026-10-20 (milestone 15.6) for extension 2.1.0: the badge at any store, the rates view, card search and
 // the popup comparison. The alt text describes the images as they are cropped; keep it in step with them.
+// The rates screenshot still shows the earlier spelling "Store not recognised?"; switch its alt text to
+// "recognized" when 15.7 regenerates the media.
 const SCREENSHOTS = [
   {
     src: '/media/2-badge.png',
@@ -1046,11 +1048,11 @@ function Support(): Rendered {
     ],
     [
       'The wrong store is matched, or its category looks wrong',
-      'The store list matched the site’s address. In the popup, use Report a problem and choose “The store was recognised as another store” or “The recommended card looks wrong”. The report carries the store’s domain, the reason and what the badge showed.',
+      'The store list matched the site’s address. In the popup, use Report a problem and choose “The store was recognized as another store” or “The recommended card looks wrong”. The report carries the store’s domain, the reason and what the badge showed.',
     ],
     [
       '“Another U.S. online store” for a store you expected to be named',
-      'The store list doesn’t name it yet. Choose Suggest this store in the popup, or Store not recognised? Suggest it in the badge panel. The store’s domain is sent so the store can be added.',
+      'The store list doesn’t name it yet. Choose Suggest this store in the popup, or Store not recognized? Suggest it in the badge panel. The store’s domain is sent so the store can be added.',
     ],
     [
       '“Checking for updated terms…”',
@@ -1191,7 +1193,7 @@ function Support(): Rendered {
           <p>
             In the extension, open the popup on the store’s page, choose <strong>Report a problem</strong> and
             pick one of the fixed reasons (“The amount shown is wrong”, “No badge appeared on a cart or
-            checkout page”, “The store was recognised as another store”, “The recommended card looks wrong” or
+            checkout page”, “The store was recognized as another store”, “The recommended card looks wrong” or
             “Something else”). The report carries the store’s domain, the reason and whether the badge showed
             an amount. It includes your random identifier only if you share usage reports. There’s no text
             field.

@@ -1,27 +1,37 @@
 # Store listing and dashboard declarations
 
-This file holds every value Evan enters in the Chrome Web Store developer dashboard for AI Checkout **2.1.0**. It describes the hosted build (`npm run build:hosted`), which downloads card terms and the store list from `https://ai-checkout-api.onrender.com` and has usage reporting on. Before submission, the 15.7 reviewer pass checks each section against the upload ZIP and its manifest; the release record in [README.md](README.md) records what was submitted. Two items are Evan's alone and are marked so.
+This file holds every value Evan enters in the Chrome Web Store developer dashboard for AI Checkout **2.1.0**, tab by tab. It describes the hosted build (`npm run build:hosted`), which downloads card terms and the store list from `https://ai-checkout-api.onrender.com` and has usage reporting on. Before submission, the 15.7 reviewer pass checks each section against the upload ZIP and its manifest; the release record in [README.md](README.md) records what was submitted. The field-by-field steps are in the [15.7 plan](../../wiki/product/phase-15-release-a.md).
 
-## Basic fields
+## Account page
 
 | Field | Value |
 | --- | --- |
-| Name | AI Checkout |
-| Summary (at most 132 characters; must equal the manifest `description`, whose length `extension/scripts/release-package.mjs` checks) | Compare estimated rewards on cards you own, with clear rates and conditions. |
+| Publisher name (shown as "Offered by") | Evan Liu (confirmed by Evan 2026-10-22) |
+| Contact email | evanliu7788@gmail.com (confirmed by Evan 2026-10-22; verified in the dashboard) |
+| Trader status | **Non-trader** (Evan's self-declaration, confirmed 2026-10-22): a free, non-commercial portfolio project with no sales, ads or paid features |
+
+## Store listing tab
+
+| Field | Value |
+| --- | --- |
+| Title | AI Checkout (from the manifest `name`) |
+| Summary | Compare estimated rewards on cards you own, with clear rates and conditions. (From the manifest `description`; at most 132 characters, which `extension/scripts/release-package.mjs` checks.) |
+| Description | The [description](#description-public-copy) below |
 | Category | Shopping |
 | Language | English (United States) |
-| Regions | United States only |
-| Pricing | Free |
-| Publisher name shown | Evan Liu (confirmed by Evan 2026-10-22; set as the developer account's publisher display name) |
-| Support email | evanliu7788@gmail.com (confirmed by Evan 2026-10-22) |
-| Homepage | `https://ai-checkout-api.onrender.com/` |
+| Store icon | `extension/public/icons/icon128.png` (128×128, 96 px artwork with 16 px padding) |
+| Screenshots, in this order | `docs/release/assets/1-wallet-1280x800.png`, `2-badge-1280x800.png`, `3-rates-1280x800.png`, `4-comparison-1280x800.png`, `5-consent-1280x800.png` |
+| Small promo tile | `docs/release/assets/promo-440x280.png` |
+| Marquee promo tile | None |
+| YouTube video | None at the first submission. After approval, the motion-graphic demo is added in a listing-only update (decided in the 15.7 plan, 2026-11-06) |
+| Official URL | None (it requires a site verified in Search Console; the homepage field is enough) |
+| Homepage URL | `https://ai-checkout-api.onrender.com/` |
 | Support URL | `https://ai-checkout-api.onrender.com/support/` |
-| Privacy policy URL | `https://ai-checkout-api.onrender.com/privacy/` |
-| Mature content | No |
-| Directed at children | No |
-| Trader declaration (EU consumer-protection field) | **Non-trader** (Evan's declaration, confirmed 2026-10-22): a free, non-commercial portfolio project with no sales, ads or paid features |
+| Mature content | Off |
 
-## Detailed description (public copy)
+### Description (public copy)
+
+Paste everything from "See which card" through the credits line.
 
 See which card you already own earns the most, right on your cart.
 
@@ -47,17 +57,19 @@ AI Checkout compares rewards. It doesn't apply for cards, connect to a bank, pro
 
 Store categories in the extension's store list are derived in part from public purchase-card transaction data published by the State of Oklahoma (Office of Management and Enterprise Services) under CC BY 4.0, by the Government of the District of Columbia and by the U.S. General Services Administration (CC0), pooled and aggregated to per-store category counts; the State of Oklahoma does not endorse this product. Full credits: https://ai-checkout-api.onrender.com/credits/
 
-## Single purpose (dashboard copy)
+## Privacy tab
+
+### Single purpose (dashboard copy)
 
 Shows which of the credit cards you already own earns the most on the cart or checkout page you're viewing, based on the visible cart amount and the reward rules the issuers publish. Every feature serves this purpose: the badge and popup show the answer, the catalog and store-list downloads supply the rules and store categories it needs, and optional usage reporting measures and improves it.
 
-## Permission justifications (dashboard copy)
+### Permission justifications (dashboard copy)
 
-The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts` and checked by `extension/scripts/release-package.mjs`) declares exactly these entries and no others.
+The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts` and checked by `extension/scripts/release-package.mjs`) declares exactly these entries and no others. The dashboard shows one field per permission and host permission; paste each row's justification.
 
 | Manifest entry | Justification |
 | --- | --- |
-| Host permission `https://*/*` | The badge must recognise a cart or checkout page at any store, so a packaged content script runs on https pages (top frame only, after load). On a page whose address and title carry no cart or checkout word it reads nothing from the page and observes none of its content (it only re-checks the address after a same-document navigation). On a cart or checkout page it reads the visible order-summary amount and its currency and sends only the amount, its kind, the currency and a reader version to the extension's own service worker; never item names, addresses, form values, card numbers or page text, and nothing to any server. The store is matched on the device against the downloaded store list, so no server learns which sites are visited. The same access lets the service worker read the tab's address in memory to match the store and, only when the shopper taps Suggest this store or Report a problem, derive the registrable domain that tap sends. |
+| Host permission `https://*/*` | The badge must recognize a cart or checkout page at any store, so a packaged content script runs on https pages (top frame only, after load). On a page whose address and title carry no cart or checkout word it reads nothing from the page and observes none of its content (it only re-checks the address after a same-document navigation). On a cart or checkout page it reads the visible order-summary amount and its currency and sends only the amount, its kind, the currency and a reader version to the extension's own service worker; never item names, addresses, form values, card numbers or page text, and nothing to any server. The store is matched on the device against the downloaded store list, so no server learns which sites are visited. The same access lets the service worker read the tab's address in memory to match the store and, only when the shopper taps Suggest this store or Report a problem, derive the registrable domain that tap sends. |
 | Host permission `https://ai-checkout-api.onrender.com/*` | Download the published card terms (`/v1/catalog`) and the store list (`/v1/merchants`): schema-validated JSON data, never code, fetched at install, weekly and on "Check for updated terms". After the shopper opts in, send usage reports to `/v1/events` and deletion requests to `/v1/events/delete` on the same origin. Requests carry no cookies, referrer or credentials. |
 | `storage` | Keep the shopper's chosen cards and options, settings, purchase inputs, the downloaded card terms and store list, and the usage-report consent and queue in `chrome.storage.local`, and per-tab badge state in `chrome.storage.session`, on the device. |
 | `activeTab` | When the shopper opens the popup or chooses "Read cart amount", read the current tab's cart total once with the same packaged reader, and match the tab's store. The `https://*/*` host permission covers https tabs; `activeTab` is what lets the shopper read an http:// cart with "Read cart amount" (a click in the popup), where the badge never runs and no host permission is requested. Nothing is read from a tab the shopper has not opened the popup on. |
@@ -66,13 +78,13 @@ The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts
 | Content script `src/badge/content.js` on `https://*/*` (`document_idle`, top frame only) | The automatic badge described under the `https://*/*` host permission. |
 | Web-accessible resource `src/badge/index.html` on `https://*/*` | The badge is an extension page shown in an isolated frame inside a closed shadow root, so the store's page cannot read card names or amounts. It is the only web-accessible file. |
 
-## Remote code
+### Remote code
 
-**No.** All code (the rewards engine, the cart reader, the badge and the popup) is packaged in the extension. The card catalog and the store list are JSON data validated against fixed schemas before use; no script, stylesheet or WebAssembly is fetched or evaluated. `grep -rn "eval(\|new Function" extension/src` returns nothing, and neither does a grep of the built `extension/dist` bundles for `eval(`, `new Function(`, `importScripts` or `WebAssembly` (15.5 review, 2026-10-19); the 15.7 reviewer confirms this on the upload ZIP.
+Answer **"No, I am not using remote code"**. All code (the rewards engine, the cart reader, the badge and the popup) is packaged in the extension. The card catalog and the store list are JSON data validated against fixed schemas before use; no script, stylesheet or WebAssembly is fetched or evaluated. `grep -rn "eval(\|new Function" extension/src` returns nothing, and neither does a grep of the built `extension/dist` bundles for `eval(`, `new Function(`, `importScripts` or `WebAssembly` (15.5 review, 2026-10-19); the 15.7 reviewer confirms this on the upload ZIP.
 
-## Privacy practices tab
+### Data usage
 
-**Does the extension collect or use user data?** Yes.
+The extension collects user data. Tick **Financial and payment information**, **User activity** and **Website content**; leave the other categories unticked. The reason for each answer, should the form ask:
 
 | Dashboard category | Answer | What to disclose |
 | --- | --- | --- |
@@ -86,18 +98,31 @@ The built manifest (`extension/dist/manifest.json`, generated by `vite.config.ts
 | User activity | **Yes** | After opt-in: the badge shown, expanded or dismissed, the popup opened, a site switched off, an amount typed (as a range), refresh outcomes and error codes. No keystrokes, mouse positions or scrolling. |
 | Website content | **Yes** | The cart total and its currency read on a cart or checkout page (shown to the shopper; sent only after opt-in and only as the amount), and a store's domain when the shopper taps Suggest this store or Report a problem. |
 
-**Certifications (all three ticked):** I do not sell or transfer user data to third parties, outside of the approved use cases. I do not use or transfer user data for purposes that are unrelated to my item's single purpose. I do not use or transfer user data to determine creditworthiness or for lending purposes.
+### Certifications
 
-**Privacy policy URL:** `https://ai-checkout-api.onrender.com/privacy/`. The policy contains the Limited Use statement ("AI Checkout's use and transfer of information received from users adheres to the Chrome Web Store User Data Policy, including the Limited Use requirements").
+Tick all three: I do not sell or transfer user data to third parties, outside of the approved use cases. I do not use or transfer user data for purposes that are unrelated to my item's single purpose. I do not use or transfer user data to determine creditworthiness or for lending purposes.
+
+### Privacy policy URL
+
+`https://ai-checkout-api.onrender.com/privacy/`. The policy contains the Limited Use statement ("AI Checkout's use and transfer of information received from users adheres to the Chrome Web Store User Data Policy, including the Limited Use requirements").
 
 Consistency rule for the reviewer pass: the consent screen (`extension/src/state/telemetry-contracts.ts:CONSENT_COPY`), the Settings copy, the policy, this tab and the generated dictionary (`docs/telemetry/events.md`, `npm run telemetry:check`) must describe the same data. A build without `VITE_TELEMETRY` has no consent screen and sends nothing; if Chrome review objects to usage reporting, Release A is resubmitted from that build with "User activity" and the financial-data answer reduced to the on-device handling and the policy amended ([decision](../../wiki/decisions/2026-10-19-release-a-telemetry-design.md)).
 
-## Test instructions (dashboard field)
+## Distribution tab
 
-Paste the short version from [reviewer-instructions.md](reviewer-instructions.md#short-version-for-the-dashboard). No login, payment or account is needed.
+| Field | Value |
+| --- | --- |
+| Visibility | Public |
+| Regions | United States only (clear **All regions**, then select **United States**) |
+
+The tab has no pricing field. AI Checkout is free and has no in-app purchases.
+
+## Test instructions tab
+
+Paste the block in [reviewer-instructions.md](reviewer-instructions.md#test-instructions-for-the-dashboard). No account, login, payment or credentials are needed.
 
 ## Assets
 
-Store icon 128×128 (the cart mark, 96 px artwork with 16 px padding), five screenshots at 1280×800 and the 440×280 promo tile, regenerated on 2026-10-20 (milestone 15.6) against the 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. No marquee image. The optional YouTube video is the 55-second motion-graphic demo (`docs/release/assets/shopper-demo.mp4`; master `motion/shopper-demo-1920x1080.mp4`), which Evan uploads to YouTube at submission (15.7) after its end card gets the listing URL. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload.
+The store icon, the five 1280×800 screenshots and the 440×280 promo tile were regenerated on 2026-10-20 (milestone 15.6) against a 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload. No marquee image and, at the first submission, no YouTube video.
 
 References checked 2026-10-20: [privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), [Limited Use](https://developer.chrome.com/docs/webstore/program-policies/limited-use), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard's wording at submission.

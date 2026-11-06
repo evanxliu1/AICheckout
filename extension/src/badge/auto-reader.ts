@@ -96,7 +96,7 @@ export function startAutoReader(env: ReaderEnvironment) {
     connect();
     const { page, reading } = env.read();
     if (page === 'none') {
-      // A hinted page the detector does not recognise (a drawer, an empty cart): nothing is sent.
+      // A hinted page the detector does not recognize (a drawer, an empty cart): nothing is sent.
       leave();
       connect();
       return;

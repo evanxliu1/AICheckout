@@ -31,12 +31,12 @@ Never put passwords, payment details, provider keys, tokens or private contact d
 
 ## Gates before submission (milestone 15.7)
 
-- [ ] `npm run build:hosted --workspace=ai-checkout-extension`, `npm run package`, `npm run test:package:browser --workspace=ai-checkout-extension` on the exact ZIP; the inventory's SHA-256, bundled catalog (the renewal, `2026-10-2x.renewal.2`) and bundled store list recorded in [`docs/verification/release-package.md`](../verification/release-package.md).
-- [ ] `node scripts/check-release-docs.mjs --release`: no wording from before the adapters were retired, the random-identifier wording everywhere (never a claim that reports cannot be linked), no support-email placeholder and none of Evan's pending confirmations left (the rules are in `scripts/lib/release-docs.mjs`; this line is worded so it does not trip them itself).
+- [ ] `npm run build:hosted --workspace=ai-checkout-extension`, `npm run package`, `npm run test:package:browser --workspace=ai-checkout-extension` on the exact ZIP; the inventory's SHA-256, bundled catalog (the renewal) and bundled store list recorded in the `[[…]]` fields of [`docs/verification/release-package.md`](../verification/release-package.md).
+- [ ] `node scripts/check-release-docs.mjs --release`: no wording from before the adapters were retired, the random-identifier wording everywhere (never a claim that reports cannot be linked), no support-email placeholder, no unfilled `[[…]]` field in the package record and none of Evan's pending confirmations left (the rules are in `scripts/lib/release-docs.mjs`; this line is worded so it does not trip them itself).
 - [ ] `npm run telemetry:check`: the dictionary matches the contract; the consent copy covers every event (`extension/tests/telemetry-ui.test.tsx`).
 - [ ] The independent reviewer pass (Opus, agent-verified): policy, listing, privacy-tab answers, consent copy, dictionary and the ZIP's behaviour agree; the remote-code answer holds on the ZIP; the permission justifications match `dist/manifest.json`.
 - [ ] Both GitHub workflows green on the submitted revision.
-- [ ] Catalog release 4 published before 2026-11-04T00:00Z and bundled in the ZIP ([renewal](../../wiki/ops/catalog-release.md#renewing-a-catalog-before-it-expires)).
+- [ ] Catalog release 4 (the renewal; release 3 expired 2026-11-04T00:00Z) published and bundled in the ZIP ([renewal](../../wiki/ops/catalog-release.md#renewing-a-catalog-before-it-expires)).
 - [ ] Store assets regenerated against the submitted ZIP (`npm run release:media` after the renewal is bundled; the hash in `assets/README.md` must match the release record) and matching the listing copy.
 - [ ] `/privacy/`, `/support/`, `/credits/`, `/uninstalled/` load on the deployed site.
 - [ ] Upload as a draft first, set `EXTENSION_IDS`, then submit (Evan).

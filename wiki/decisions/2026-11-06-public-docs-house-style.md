@@ -33,7 +33,7 @@ One deliberate deviation: **no serial comma**. The extension's shipped interface
 
 ## Consequences
 - The privacy policy's date moved to 2026-11-06 (restructured, no change in what is collected or sent); Evan's pre-submission read of the policy should use this version.
-- Quoted interface text keeps the extension's British spellings ("recognised"); docs otherwise use American spelling.
+- The extension's interface strings were switched to U.S. spelling on the coordinator's request ("Store not recognized? Suggest it", "The store was recognized as another store", "This store is already recognized.", and "recognizes" in the consent text), with the tests that assert them; the 2.1.0 screenshots still show "recognised" until 15.7 regenerates the media, and the site's alt text for the rates screenshot changes with them.
 - The site needs a redeploy (merge to `main`) for the live fixes.
 - Facts were checked by an independent reviewer subagent against the code (agent-verified, not human-verified); its findings were applied.
 

@@ -233,9 +233,9 @@ test('Share: the install events, a recommendation at a synthetic store without i
       .toEqual(['recommendation_shown']);
     const queued = JSON.stringify((await telemetryState(worker))?.queue);
     expect(queued).not.toMatch(/example|shop|https/);
-    // "Store not recognised? Suggest it" sends the registrable domain and flushes what waited.
+    // "Store not recognized? Suggest it" sends the registrable domain and flushes what waited.
     await pill.click();
-    await badge.getByRole('button', { name: 'Store not recognised? Suggest it' }).click();
+    await badge.getByRole('button', { name: 'Store not recognized? Suggest it' }).click();
     await expect(badge.getByRole('status').filter({ hasText: 'domain was sent' })).toBeVisible();
     await expect.poll(() => api.events().length, { timeout: 15_000 }).toBe(6);
     // Queued in order: the recommendation (at the first view), the expansion, then the tap flushed them.
@@ -421,7 +421,7 @@ test('Not now: no request ever until a tap, which carries no identifier', async 
     await again.goto('https://shop.example.com/cart');
     const frame = await badgeFrame(again);
     await frame.getByRole('button', { name: /Show details/ }).click();
-    await frame.getByRole('button', { name: 'Store not recognised? Suggest it' }).click();
+    await frame.getByRole('button', { name: 'Store not recognized? Suggest it' }).click();
     await expect.poll(() => api.events().length, { timeout: 15_000 }).toBe(1);
     expect(api.events()[0]).toMatchObject({
       type: 'store_suggested',
