@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "batch": "wells-fargo-refresh-2026-11",
+  "issuers": [
+    {
+      "name": "Wells Fargo",
+      "slug": "wells-fargo",
+      "domains": [
+        "creditcards.wellsfargo.com",
+        "wellsfargo.com"
+      ]
+    }
+  ],
+  "requestedCards": [
+    "wells-fargo-autograph",
+    "wells-fargo-autograph-journey",
+    "wells-fargo-one-key",
+    "wells-fargo-one-key-plus",
+    "wells-fargo-choice-privileges",
+    "wells-fargo-choice-privileges-select",
+    "wells-fargo-active-cash"
+  ],
+  "refresh": true,
+  "summary": "Renewal 2026-11 (15.R): refresh the cards whose pages changed in the 2026-11-06 freshness check",
+  "createdAt": "2026-11-06T19:11:30.026Z",
+  "seed": {
+    "freshness": "2026-11-06",
+    "layers": [
+      "real.v2.2",
+      "wells-fargo-2026-10",
+      "wells-fargo-refresh-2026-10"
+    ]
+  }
+}
