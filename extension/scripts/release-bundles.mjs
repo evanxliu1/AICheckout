@@ -3,11 +3,24 @@
 // release headers can be read from the archive itself rather than trusted from the checkout that built it:
 //   {schemaVersion:3,version:"2026-10-05.renewal.1",verifiedAt:"2026-10-05T00:00:00Z",expiresAt:"2026-11-04T00:00:00Z",…
 //   {schemaVersion:1,version:"2026-10-11.mcc.3",verifiedAt:"2026-10-11T00:00:00Z",sources:[…
-// The CLI is check-release-bundles.mjs; this module holds the pure parts so they can be tested.
+// The patterns also accept quoted keys, any quote style and whitespace (an unminified or JSON.parse-wrapped
+// literal), and every `.js` entry is searched, so a moved chunk is still found. Anything else fails loudly:
+// no header, more than one, or a timestamp that does not parse. The CLI is check-release-bundles.mjs; this
+// module holds the pure parts so they can be tested.
 import { execFileSync } from 'node:child_process';
+import { parseArgs } from 'node:util';
 
-const CATALOG_HEADER = /\{schemaVersion:3,version:"([^"]+)",verifiedAt:"([^"]+)",expiresAt:"([^"]+)"/g;
-const MERCHANTS_HEADER = /\{schemaVersion:1,version:"([^"]+)",verifiedAt:"([^"]+)",sources:\[/g;
+const key = (name) => String.raw`["']?${name}["']?\s*:\s*`;
+const text = String.raw`["'\x60]([^"'\x60\\]+)["'\x60]`;
+const CATALOG_HEADER = new RegExp(
+  String.raw`\{\s*${key('schemaVersion')}3\s*,\s*${key('version')}${text}\s*,\s*${key('verifiedAt')}${text}\s*,\s*${key('expiresAt')}${text}`,
+  'g',
+);
+const MERCHANTS_HEADER = new RegExp(
+  String.raw`\{\s*${key('schemaVersion')}1\s*,\s*${key('version')}${text}\s*,\s*${key('verifiedAt')}${text}\s*,\s*${key('sources')}\[`,
+  'g',
+);
+const TIMESTAMP = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
 
 /** Every ZIP entry name, as `unzip -Z1` lists them. */
 export function zipEntries(zip) {
@@ -29,6 +42,12 @@ function headers(files, pattern, name, pick) {
         ? `No bundled ${name} header found; the minified shape this check relies on may have changed.`
         : `${found.length} bundled ${name} headers found (${found.map((item) => item.file).join(', ')}); expected one.`,
     );
+  for (const field of ['verifiedAt', 'expiresAt'])
+    if (
+      field in found[0] &&
+      !(TIMESTAMP.test(found[0][field]) && Number.isFinite(Date.parse(found[0][field])))
+    )
+      throw new Error(`The bundled ${name} ${field} "${found[0][field]}" is not an ISO timestamp.`);
   return found[0];
 }
 
@@ -47,14 +66,14 @@ export function findBundledReleases(files) {
   };
 }
 
-/** The releases bundled in an upload ZIP, read from its `assets/*.js` entries. */
+/** The releases bundled in an upload ZIP, read from every `.js` entry (the worker chunk under `assets/` today). */
 export function readZipBundles(zip) {
   const files = new Map(
     zipEntries(zip)
-      .filter((path) => /^assets\/[^/]+\.js$/.test(path))
+      .filter((path) => path.endsWith('.js'))
       .map((path) => [path, zipEntryText(zip, path)]),
   );
-  if (files.size === 0) throw new Error('The ZIP has no assets/*.js entries.');
+  if (files.size === 0) throw new Error('The ZIP has no .js entries.');
   return findBundledReleases(files);
 }
 
@@ -123,7 +142,21 @@ export function compareHosted(bundled, hosted) {
   return differences;
 }
 
-/** Whole days until the bundled catalog expires (negative once it has). */
-export function daysUntilExpiry(bundled, now = Date.now()) {
-  return Math.floor((Date.parse(bundled.catalog.expiresAt) - now) / 86_400_000);
+/** The bundled catalog's expiry as the extension judges it (expired from `expiresAt` on, like
+ * `catalogExpired`), with whole days left or, once expired, whole days since. */
+export function catalogExpiry(bundled, now = Date.now()) {
+  const left = Date.parse(bundled.catalog.expiresAt) - now;
+  return left > 0
+    ? { expired: false, daysLeft: Math.floor(left / 86_400_000) }
+    : { expired: true, daysAgo: Math.floor((now - Date.parse(bundled.catalog.expiresAt)) / 86_400_000) };
+}
+
+/** The CLI's options; an unknown option or a missing value is an error, so a typo never skips a check. */
+export function parseCheckArgs(args) {
+  return parseArgs({
+    args,
+    strict: true,
+    allowPositionals: false,
+    options: { zip: { type: 'string' }, hosted: { type: 'boolean' }, json: { type: 'boolean' } },
+  }).values;
 }

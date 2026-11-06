@@ -5,11 +5,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import {
+  catalogExpiry,
   compareBundles,
   compareHosted,
-  daysUntilExpiry,
   findBundledReleases,
   hostedReleases,
+  parseCheckArgs,
   readZipBundles,
 } from './release-bundles.mjs';
 
@@ -72,18 +73,51 @@ test('refuses bundles with no header or more than one', () => {
   );
 });
 
-test('reads the headers from the assets/*.js entries of a ZIP', (t) => {
+test('accepts quoted keys, other quotes and whitespace, and refuses an unparsable timestamp', () => {
+  const json = JSON.stringify({ schemaVersion: 3, ...BUNDLED.catalog }).slice(0, -1);
+  const loose =
+    "{ schemaVersion: 1, version: '2026-10-11.mcc.3', verifiedAt: '2026-10-11T00:00:00Z', sources: [";
+  assert.deepEqual(findBundledReleases(new Map([['a.js', `JSON.parse('${json},"cards":[]}');${loose}`]])), {
+    catalog: { file: 'a.js', ...BUNDLED.catalog },
+    merchants: { file: 'a.js', ...BUNDLED.merchants },
+  });
+  assert.throws(
+    () =>
+      findBundledReleases(new Map([['a.js', CATALOG.replace('2026-12-10T00:00:00Z', 'soon') + MERCHANTS]])),
+    /catalog expiresAt "soon" is not an ISO timestamp/,
+  );
+});
+
+test('reads the headers from every .js entry of a ZIP, so a second copy anywhere fails', (t) => {
   const zip = zipWith(t, {
     'manifest.json': '{"name":"AI Checkout"}',
     'assets/worker-abc.js': `${NOISE}const q=${CATALOG};const y=${MERCHANTS};`,
     'assets/popup-def.js': NOISE,
-    'src/badge/content.js': CATALOG, // not an assets/ chunk; never read
+    'src/badge/content.js': NOISE,
   });
   const found = readZipBundles(zip);
   assert.equal(found.catalog.file, 'assets/worker-abc.js');
   assert.equal(found.catalog.version, '2026-11-10.renewal.2');
   assert.equal(found.merchants.version, '2026-10-11.mcc.3');
-  assert.throws(() => readZipBundles(zipWith(t, { 'manifest.json': '{}' })), /no assets\/\*\.js entries/);
+  const twice = zipWith(t, {
+    'assets/worker-abc.js': `const q=${CATALOG};const y=${MERCHANTS};`,
+    'src/badge/content.js': CATALOG,
+  });
+  assert.throws(
+    () => readZipBundles(twice),
+    /2 bundled catalog headers found \(assets\/worker-abc\.js, src\/badge\/content\.js\)/,
+  );
+  assert.throws(() => readZipBundles(zipWith(t, { 'manifest.json': '{}' })), /no \.js entries/);
+});
+
+test('refuses unknown options and an option without its value', () => {
+  assert.deepEqual(
+    { ...parseCheckArgs(['--zip', 'x.zip', '--hosted', '--json']) },
+    { zip: 'x.zip', hosted: true, json: true },
+  );
+  assert.deepEqual({ ...parseCheckArgs([]) }, {});
+  assert.throws(() => parseCheckArgs(['--host']), /Unknown option '--host'/);
+  assert.throws(() => parseCheckArgs(['--zip']), /argument missing/);
 });
 
 test('compares the bundled headers with the expected releases', () => {
@@ -150,8 +184,10 @@ test('reads the hosted releases and reports unavailable ones instead of throwing
   assert.deepEqual(offline.catalog, { status: 0, error: 'fetch failed' });
 });
 
-test('counts whole days until the bundled catalog expires', () => {
-  assert.equal(daysUntilExpiry(BUNDLED, Date.parse('2026-11-20T12:00:00Z')), 19);
-  assert.equal(daysUntilExpiry(BUNDLED, Date.parse('2026-12-10T00:00:00Z')), 0);
-  assert.equal(daysUntilExpiry(BUNDLED, Date.parse('2026-12-12T00:00:00Z')), -2);
+test('judges expiry as the extension does: expired from expiresAt on', () => {
+  const at = (iso) => catalogExpiry(BUNDLED, Date.parse(iso));
+  assert.deepEqual(at('2026-11-20T12:00:00Z'), { expired: false, daysLeft: 19 });
+  assert.deepEqual(at('2026-12-09T23:00:00Z'), { expired: false, daysLeft: 0 });
+  assert.deepEqual(at('2026-12-10T00:00:00Z'), { expired: true, daysAgo: 0 });
+  assert.deepEqual(at('2026-12-12T20:00:00Z'), { expired: true, daysAgo: 2 });
 });
