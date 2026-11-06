@@ -5,8 +5,8 @@ description: What runs on the Render web service and hosted Supabase, how deploy
 status: stable
 tags: [ops, hosting, render, supabase]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:12:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-11-06T19:50:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -70,6 +70,7 @@ Detailed procedures (deploy verification, recovery, store publishing) live outsi
 ## Gotchas
 
 - Free-tier sleep: the first request after idle is slow; health checks and Playwright runs against the hosted API must allow for it.
+- Cloudflare fronts the service (`server: cloudflare`, `cf-ray` and `x-render-origin-server: Render` on every response, observed 2026-11-06). Cloudflare appends the connecting address to `X-Forwarded-For`; whether Render's own proxy appends another entry is undocumented, so `TELEMETRY_PROXY_HOPS=1` (the telemetry bucket's client IP, [API](../system/api.md)) is unconfirmed until the 15.7 two-network test ([plan, step 13](../product/phase-15-release-a.md#92-runbook)); a wrong count shares one bucket among all clients, it never lets a forged header through as long as the count is not too high. `EXTENSION_IDS` is entered in the dashboard by Evan with **Save and deploy** (a save without deploy leaves the running process without it) and verified from outside (step 12 of the same plan).
 - In the built-in browser pane, `computer` `type` did not register in Render/Supabase dashboard inputs; `form_input` worked (2026-09-28). Agents should not be driving those dashboards anyway.
 - Do not put `OPENAI_API_KEY` or any service-role key on Render; curation stays `disabled` there ([decision](../decisions/2026-09-28-subscription-cli-providers-local-only.md)).
 

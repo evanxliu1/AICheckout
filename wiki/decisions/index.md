@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-11-06
+* [Phase 15.7: submission choices (version stays 2.1.0, no listing video at first submission, deferred publishing, the ZIP's bundled releases checked against the API, EXTENSION_IDS and the proxy-hop count settled by Evan's dashboard step and an outside test, the telemetry-off build as the rejection fallback)](./2026-11-06-release-a-submission-choices.md) — planner, recommendations Evan can overrule: the ZIP is built only after the 15.R renewal merges (the build has no catalog switch); the end card reads "Now on the Chrome Web Store" after approval; `EXTENSION_IDS` is Evan's dashboard step verified from outside; `TELEMETRY_PROXY_HOPS` is settled by a two-network test.
+
 ## 2026-10-22
 * [Phase 15.6b: the shopper demo is a motion graphic (HTML/CSS composition, every frame a function of t, rendered with the repository's Playwright and ffmpeg), not a screen recording; the recording pipeline for the demo retired](./2026-10-22-motion-graphic-shopper-demo.md) — implementer, on Evan's request: no new dependency (Remotion rejected), each frame from a fresh copy of the DOM so renders are byte-identical, illustrative and not bound to the ZIP while the screenshots stay real captures.
 
