@@ -1,0 +1,1744 @@
+{
+  "schemaVersion": 1,
+  "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+  "batch": "u-s-bank-refresh-2026-11",
+  "issuer": "U.S. Bank",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/u-s-bank-refresh-2026-11/pipeline/packets/verify.u-s-bank.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/verify/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/cards.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-sample-merchants.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-smartly-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-connect-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-connect-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-secured-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-visa-signature-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-hog-elite-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-state-farm-premier-cash-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/state-farm-credit-cards.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-state-farm-premier-cash-rewards-pricing.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-edward-jones-triple-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-edward-jones-triple-rewards-pricing.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-edward-jones-triple-rewards-categories.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-elan-fidelity-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-elan-fidelity-rewards-rewards-terms.txt",
+      "apps/api/src/curation/v2/schema.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/validate.ts",
+      "scripts/lib/expansion-verification.mjs",
+      "tools/catalog-pipeline/src/gates.ts",
+      "tools/catalog-pipeline/src/label-lint.ts",
+      "evals/curation/batches/discover-refresh-2026-11/verification/discover.json"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "TV, Internet & Streaming Services",
+          "corrected": "TV, internet and streaming",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "TV, internet and streaming"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Fast-food restaurants",
+          "corrected": "Fast food",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Fast food"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "wireless phone service provider",
+          "corrected": "Cell phone",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Cell phone"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings",
+          "corrected": "Department stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Department stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.issuerWording",
+          "current": "household utilities",
+          "corrected": "Home utilities",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Home utilities"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "furniture and accessories",
+          "corrected": "Furniture stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Furniture stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.issuerWording",
+          "current": "latest tech products, including televisions, computers and phones",
+          "corrected": "Electronic stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Electronic stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.issuerWording",
+          "current": "most cinemas",
+          "corrected": "Movie theaters",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Movie theaters"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.issuerWording",
+          "current": "sports and outdoor equipment",
+          "corrected": "Sporting goods",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Sporting goods"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.issuerWording",
+          "current": "Select Clothing Stores",
+          "corrected": "Select clothing stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Select clothing stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.issuerWording",
+          "current": "sports and recreation facilities",
+          "corrected": "Gyms/fitness centers",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Gyms/fitness centers"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.issuerWording",
+          "current": "bus and passenger railway tickets, taxi fares and more",
+          "corrected": "Ground transportation",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "Ground transportation"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Gas stations and EV charging stations"
+            ]
+          },
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-product",
+              "quote": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back."
+            }
+          ],
+          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
+            }
+          ],
+          "note": "The 5% Fast food option covers only part of dining (general 19)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
+            }
+          ],
+          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Video and DVD rentals (such as Redbox), online movie purchases and live theatrical performances do not qualify."
+            }
+          ],
+          "note": "The 5% Movie theaters option covers only part of entertainment (general 19)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "On your first $2,000 in combined eligible purchases each quarter in two categories you choose. 2,3"
+          },
+          "note": "The 12 options, the $2,000 combined quarterly cap then 1% and the quarterly choice are on the product page and FAQ; the 45-day and 5-day windows are in the FAQ."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-product",
+            "quote": "In one category you choose each quarter: gas and EV charging*, grocery stores* or restaurants. 3"
+          },
+          "note": "Three 2% options chosen quarterly, no limit on 2% earnings; grocery and gas exclude discount stores/supercenters and wholesale clubs."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Earn unlimited 2% cash back on every purchase.1"
+          },
+          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rewardCurrency.anchors.0",
+          "current": "These rewards are earned as “Points”, and U.S. Bank will credit your U.S. Bank SmartlyTM Visa Signature® Card with 2 Points for every $1 spent",
+          "note": "This anchor says the rewards are tracked as points; it no longer supports the cash-back currency."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "Earn unlimited 2% cash back on every purchase.1",
+          "corrected": "every purchase",
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Earn unlimited 2% cash back on every purchase.1"
+          },
+          "note": "The issuer wording is the category, not the whole headline sentence."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "Account must be open and in good standing (not past due or overlimit) on the closing date of the billing cycle to earn and redeem"
+            ]
+          },
+          "note": "Account good standing is a general account condition, not an earning ambiguity (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Between $10,000 - $49,999.99, to earn a total of 2.5 Points per $1 of eligible Net Purchases"
+          },
+          "note": "Tier, total rate, $10,000 per billing cycle bonus cap and Smartly Savings plus qualifying balance requirement are all in footnote 1."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "Between $50,000 - $99,999.99, to earn a total of 3 Points per $1 of eligible Net Purchases"
+          },
+          "note": "Stated in footnote 1 with the same cap and requirements."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 2,
+          "anchor": {
+            "sourceId": "us-bank-smartly-product",
+            "quote": "$100,000 or more to earn a total of 4 Points per $1 of eligible Net Purchases"
+          },
+          "note": "Stated in footnote 1 with the same cap and requirements."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "verdict": "confirmed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "(2) 4 Points (1 base and 3 bonus Points) for every $1 on travel category purchases (such as purchases made directly with airlines, hotels, car…",
+          "corrected": "travel category purchases",
+          "anchor": {
+            "sourceId": "us-bank-altitude-connect-product",
+            "quote": "You will earn 4 Points (1 base and 3 bonus Points) for every $1 spent on travel category purchases"
+          },
+          "note": "The drafted wording was cut mid-sentence and is not verbatim; the category name is \"travel category purchases\"."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem (general 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "TV, Internet & Streaming Services",
+          "corrected": "TV, internet and streaming",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "TV, internet and streaming"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "Fast-food restaurants",
+          "corrected": "Fast food",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Fast food"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "wireless phone service provider",
+          "corrected": "Cell phone",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Cell phone"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.issuerWording",
+          "current": "clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings",
+          "corrected": "Department stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Department stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.5.issuerWording",
+          "current": "household utilities",
+          "corrected": "Home utilities",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Home utilities"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "furniture and accessories",
+          "corrected": "Furniture stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Furniture stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.issuerWording",
+          "current": "latest tech products",
+          "corrected": "Electronic stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Electronic stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.8.issuerWording",
+          "current": "most cinemas",
+          "corrected": "Movie theaters",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Movie theaters"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.issuerWording",
+          "current": "sports and outdoor equipment",
+          "corrected": "Sporting goods",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Sporting goods"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.issuerWording",
+          "current": "Select Clothing Stores",
+          "corrected": "Select clothing stores",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Select clothing stores"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.issuerWording",
+          "current": "sports and recreation facilities",
+          "corrected": "Gyms/fitness centers",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Gyms/fitness centers"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.issuerWording",
+          "current": "bus and passenger railway tickets, taxi fares and more",
+          "corrected": "Ground transportation",
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "Ground transportation"
+          },
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "earn an additional 4% cash back for every $1 in eligible Net Purchases spent on prepaid air, car and hotel reservations in the travel center"
+            ]
+          },
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Get your burgers, subs, tacos, baked goods and more — plus earn cash back. Eat in or take out!",
+              "Find everything you need — from clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings."
+            ]
+          },
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-secured-product",
+              "quote": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back."
+            }
+          ],
+          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
+            }
+          ],
+          "note": "The 5% Fast food option covers only part of dining (general 19)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
+            }
+          ],
+          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-cash-plus-sample-merchants",
+              "quote": "Video and DVD rentals (such as Redbox), online movie purchases and live theatrical performances do not qualify."
+            }
+          ],
+          "note": "The 5% Movie theaters option covers only part of entertainment (general 19)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "cardholder-chosen-category",
+            "summary": "5% on two categories chosen each quarter from 12 options, such as Fast food, Home utilities, Department stores, Cell phone and Electronic stores",
+            "rate": "5%",
+            "cap": "first $2,000 in combined eligible purchases each quarter across both 5% categories, then 1%",
+            "conditions": "Cardmember must enroll in categories each quarter, or all purchases earn no more than 1%.",
+            "activation": "required (see conditions)"
+          },
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
+          },
+          "note": "The drafted conditions (45-day selection window, 5-day lock) come from the Cash+ FAQ, which is not a capture of this card; the Secured captures state only quarterly enrollment."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "us-bank-cash-plus-secured-product",
+            "quote": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants3"
+          },
+          "note": "Three 2% options chosen quarterly; footnote 3 says there are no limits on 2% earnings and names the discount store and wholesale club exclusions."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "gas station purchases",
+          "corrected": "gas station and EV charging station purchases",
+          "anchor": {
+            "sourceId": "us-bank-altitude-go-secured-rewards-terms",
+            "quote": "2 Points (1 base and 1 bonus Point) for every $1 on gas station and EV charging station purchases."
+          },
+          "note": "\"gas station purchases\" is not verbatim in the captures; the program rules name the combined category."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-visa-signature",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-visa-signature-product",
+            "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
+          },
+          "note": "The only stated value is an H-D Gift Card value, not cash; point value null with the value in a product note (general 3, U.S. Bank convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "The 10,000 points can be redeemed for a $100 H-D Gift Card.",
+          "note": "The gift-card anchor supported the removed point value."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "H-D & GAS STATIONS 3X Points",
+              "DINING, BARS, HOTELS & OTHER LODGING 2X Points"
+            ]
+          },
+          "note": "The missing issue pointed at the dropped base rule, now added (general 11)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere else Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-visa-signature-product",
+              "quote": "1X POINT everywhere else Visa is accepted2"
+            }
+          ],
+          "note": "The 1X base rule was dropped by the drafting."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "3X points at merchants classified as H-D (the other rule); gas stations also earn 3X under the gas rule",
+            "rate": "3X",
+            "cap": "none stated",
+            "conditions": "H-D purchases identified by merchant classification; gas by Visa category code.",
+            "merchants": [
+              "Harley-Davidson"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-visa-signature-product",
+            "quote": "3X POINTS at H‑D & gas stations2"
+          },
+          "note": "The hint was unanchored; the product page states the 3X rate at H-D and gas stations."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem for H-D Gift Cards: 10,000 points for a $100 H-D Gift Card. Gift-card value, so point value stays null.",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-visa-signature-product",
+            "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
+          },
+          "note": "Records the H-D redemption value removed from the point value (general 3 and 18)."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.issuerWording",
+          "current": "H-D & GAS STATIONS",
+          "corrected": "gas stations",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "5X POINTS at H‑D & gas stations2"
+          },
+          "note": "U.S. Bank convention splits \"H-D & gas stations\" into a gas rule and an other rule for H-D merchants (added below)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.issuerWording",
+          "current": "DINING, BARS, HOTELS & OTHER LODGING",
+          "corrected": "restaurants, bars",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "2X POINTS at restaurants, bars, hotels & other lodging2"
+          },
+          "note": "U.S. Bank convention splits dining and bars from hotels and other lodging (lodging rule added below)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue; the dropped base rule it stood for is added (general 11 and 16)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "H-D",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "H-D & GAS STATIONS 5X Points"
+            }
+          ],
+          "note": "Merchants classified as H-D earn 5X (single-merchant rule, general 4)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "hotels & other lodging",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "2X POINTS at restaurants, bars, hotels & other lodging2"
+            },
+            {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "Lodging to include hotels, bed and breakfast establishments, resorts, cabins, cottages, hostels, short-term property rentals less than 30 days in length, and local inns."
+            }
+          ],
+          "note": "Hotels and other lodging earn 2X, split from dining per the U.S. Bank convention; lodging must be booked directly with the merchant."
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere else Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-hog-elite-product",
+              "quote": "1X POINT everywhere else Visa is accepted2"
+            }
+          ],
+          "note": "The 1X base rule was dropped by the drafting."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "5X points at merchants classified as H-D (the other rule); gas stations also earn 5X under the gas rule",
+            "rate": "5X",
+            "cap": "none stated",
+            "conditions": "H-D purchases identified by merchant classification; gas by Visa category code.",
+            "merchants": [
+              "Harley-Davidson"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "5X POINTS at H‑D & gas stations2"
+          },
+          "note": "The hint was unanchored; the product page states the 5X rate at H-D and gas stations."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem for H-D Gift Cards: 10,000 points for a $100 H-D Gift Card. Gift-card value, so point value stays null.",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-hog-elite-product",
+            "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
+          },
+          "note": "Records the H-D redemption value; point value stays null (general 3 and 18, U.S. Bank convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "1X POINT everywhere Visa is accepted1"
+          },
+          "note": "The card earns points (1X on every purchase)."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "$25 AT H-D for every 2,500 points earned"
+          },
+          "note": "The only stated value is $25 at H-D per 2,500 points, an H-D gift-card value, not cash; null under general 3 and the U.S. Bank convention."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "everywhere Visa is accepted",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "1X POINT everywhere Visa is accepted1"
+            }
+          ],
+          "note": "The only earning rule: 1X point on every eligible purchase. No category bonuses are stated for the secured card."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Convenience Checks, Balance Transfers, Advances, interest charges and fees, credit insurance premiums, prepaid card funding, U.S. Mint currency and cash convertible items",
+          "anchors": [
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "transactions posting as Convenience Checks; Balance Transfers; Advances (including ATM withdrawals, wire transfers, traveler’s checks, money orders, foreign cash transactions, betting transactions, and lottery tickets);"
+            },
+            {
+              "sourceId": "us-bank-harley-davidson-secured-product",
+              "quote": "credit insurance premiums; and transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items."
+            }
+          ],
+          "note": "Footnote 1 lists the transactions that are not Purchases and do not earn."
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "add",
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "Points redeem at H-D: $25 at H-D for every 2,500 points. Gift-card value, so point value stays null.",
+            "merchants": [
+              "Harley-Davidson"
+            ]
+          },
+          "anchor": {
+            "sourceId": "us-bank-harley-davidson-secured-product",
+            "quote": "$25 AT H-D for every 2,500 points earned"
+          },
+          "note": "Records the H-D redemption value (general 3 and 18, U.S. Bank convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.1.rateBps",
+          "current": null,
+          "corrected": 300,
+          "anchor": {
+            "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
+            "quote": "earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement and 1%"
+          },
+          "note": "The standing insurance rate is 3% on the first $4,000 each year, then 1%; the draft left the rate null."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.limitedTime",
+          "current": {
+            "endsOn": null
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
+            "quote": "earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement and 1%"
+          },
+          "note": "The 3% insurance rate is standing, not limited-time; the agent-application \"up to 5%\" first-year offer is an ambiguous issue (U.S. Bank convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.1.anchors.1",
+          "current": "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year.",
+          "note": "The \"up to 5%\" agent offer does not state the standing 3% rule; it stays as the ambiguous issue."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.issuerWording",
+          "current": "restaurants, fast-food restaurants, bars, food delivery services",
+          "corrected": "restaurants, fast-food restaurants, bars",
+          "anchor": {
+            "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
+            "quote": "will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants, bars,"
+          },
+          "note": "The drafted wording is not verbatim; the footnote lists restaurants, fast-food restaurants, bars, then grocery stores, then food delivery services."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "conflicting",
+            "anchors": [
+              "You will earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement",
+              "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year."
+            ]
+          },
+          "note": "The \"up to 5%\" agent offer is an ambiguous issue, not a conflict (U.S. Bank convention); issue 1 keeps it."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "out-of-scope",
+            "anchors": [
+              "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year."
+            ]
+          },
+          "note": "Duplicates the ambiguous agent-offer issue 1."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants,",
+              "You will earn 1% cash back for every $1 on all other eligible Purchases."
+            ]
+          },
+          "note": "The anchors restate the 2% and 1% rules and name no missing value (general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.4",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "You will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants,"
+            ]
+          },
+          "note": "The anchor restates the 2% rule and names no missing value (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Charity & Non-Profits",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Charity & Non-Profits Charitable & social service organizations, religious organizations."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Clothing & Department Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Clothing & Department Stores Clothing stores, shoe stores, department stores."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "dining",
+            "issuerWording": "Dining",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Dining Restaurants, fast-food restaurants, bars, takeout & food delivery services."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "drugstores",
+            "issuerWording": "Drugstores & Personal Care",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Drugstores & Personal Care Drug stores, pharmacies, salons, barber shops, spas."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "Electric Vehicle Charging & Gas Stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Electric Vehicle Charging & Gas Stations Public charging stations, automated fuel dispensers, fuel service stations."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Electronic & Appliance Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Electronic & Appliance Stores Electronic appliance stores, household appliance stores, computer software stores."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Furniture Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Furniture Stores Home furnishings & equipment (excludes appliance stores), furniture specialty shops."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "Grocery Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Grocery Stores Supermarkets, food stores. Discount/warehouse such as Walmart and Target are excluded."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "transit",
+            "issuerWording": "Ground Transportation",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Ground Transportation Taxis, car services, trains, buses, parking garages & lots, tolls."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Hardware Stores",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Hardware Stores Home supply warehouses, non-commercial lumber & building materials stores, nurseries, lawn & garden stores."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Health Care",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Health Care Medical services, health practices, dentists, orthodontics, hospitals, optometrists."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Pet Shops & Veterinary Services",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Pet Shops & Veterinary Services Pet supply stores, pet food stores, veterinary offices."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "entertainment",
+            "issuerWording": "Recreation",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Recreation Amusement parks, golf courses, movie theaters, arcades, campgrounds, tourist attraction tickets."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Sundry Retail",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Sundry Retail Floral shops, artist supply stores, craft stores, office supply stores, jewelry stores"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Specialty Food & Catering",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Specialty Food & Catering Specialty food markets, convenience stores, caterers, bakeries."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Travel",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Travel Airlines, auto rental, hotel/motel, cruise lines, travel & tour agencies."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "streaming",
+            "issuerWording": "Utilities & Streaming",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Utilities & Streaming Cellular phone service providers, telecom, electric, gas, water, sanitation, cable, satellite, streaming services."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Vehicle Sales, Parts & Service",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": "none",
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "2 additional (3 total) Loyalty Points for every $1 spent in Eligible Net Purchases in the top three categories of spend each month"
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Vehicle Sales, Parts & Service New & used automotive dealers, automotive service shops, automotive parts & accessory stores, car washes."
+            },
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
+            }
+          ],
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+        },
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "prepaid reservations in the Travel Rewards Center",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "You will earn 5 Loyalty Points for every $1 spent in Eligible Net Purchases on prepaid reservations in the Travel Rewards Center"
+            }
+          ],
+          "note": "5X on prepaid Travel Rewards Center reservations (U.S. Bank convention, Travel Center rules)."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Convenience Checks",
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "transactions posting as Convenience Checks"
+            }
+          ],
+          "note": "Listed in footnote 2 as not a Purchase."
+        },
+        {
+          "text": "Advances (ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash, betting, lottery tickets), interest charges and fees, credit insurance premiums",
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets); interest charges and fees; credit insurance premiums;"
+            }
+          ],
+          "note": "Listed in footnote 2 as not Purchases."
+        },
+        {
+          "text": "Transactions to fund certain prepaid card products, buy currency from the U.S. Mint, or buy cash convertible items",
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-product",
+              "quote": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items."
+            }
+          ],
+          "note": "Listed in footnote 2 as not Purchases."
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+              "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
+            }
+          ],
+          "note": "Only the top three categories of spend each month earn 3X; the other options earn the 1X base (general 6, U.S. Bank convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-categories",
+            "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
+          },
+          "note": "Automatic monthly top three of 18 categories, Amazon and discount stores excluded, Travel Center purchases do not also earn in Travel: all on the categories page."
+        },
+        {
+          "action": "add",
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Loyalty Points are worth up to $150 per 15,000 points; maximum value only when redeemed into an eligible Edward Jones account. Point value stays null."
+          },
+          "anchor": {
+            "sourceId": "us-bank-edward-jones-triple-rewards-product",
+            "quote": "Maximum value applies to Loyalty Points® redeemed for a deposit into an eligible Edward Jones Account."
+          },
+          "note": "Records the \"worth up to\" value, which is not a stated cash value (general 3 and 18, U.S. Bank convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-product",
+            "quote": "Earn unlimited 2% cash back1 when deposited into an eligible, Fidelity account2"
+          },
+          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rewardCurrency.anchors.0",
+          "current": "Then earn Reward Points for every purchase you make with your card.",
+          "note": "This anchor says the card earns Reward Points; it no longer supports the cash-back currency."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-product",
+            "quote": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account."
+          },
+          "note": "A cash-back card has no point value (general 13, U.S. Bank convention); the Fidelity-deposit condition is an ambiguous issue and a product note."
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "You earn 2 Points for every $1 that you spend on eligible net purchases that you charge with your Fidelity® Rewards Visa Signature® Card.",
+          "note": "Supported the removed point value."
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.1",
+          "current": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account.",
+          "note": "Supported the removed point value; the sentence moves to the ambiguous issue."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "us-bank-elan-fidelity-rewards-rewards-terms",
+              "quote": "The 2% cash back rewards value applies only to Points redeemed for a deposit into an eligible Fidelity account."
+            }
+          ],
+          "note": "The 2% value holds only when points are deposited into an eligible Fidelity account; other redemptions are worth less (U.S. Bank convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "add",
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "2% value only when Points are deposited into an eligible Fidelity account; other redemptions (travel, merchandise, gift cards, statement credit) are worth less."
+          },
+          "anchor": {
+            "sourceId": "us-bank-elan-fidelity-rewards-product",
+            "quote": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account."
+          },
+          "note": "Records the Fidelity-deposit redemption condition (U.S. Bank convention, general 18)."
+        }
+      ]
+    }
+  ]
+}
