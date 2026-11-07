@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+  "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
   "batch": "wells-fargo-refresh-2026-11",
   "issuer": "Wells Fargo",
   "provenance": "agent-verified",
@@ -54,7 +54,37 @@
       "evals/curation/batches/wells-fargo-refresh-2026-10/product-notes.json"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/wells-fargo-refresh-2026-11/pipeline/packets/adjudicate.wells-fargo.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/verification/wells-fargo.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/product-notes.json",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/wells-fargo.md",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-autograph-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-autograph-rewards-terms.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-autograph-pricing.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-autograph-journey-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-autograph-journey-pricing.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-one-key-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-one-key-plus-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-choice-privileges-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-choice-privileges-rewards-terms.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-choice-privileges-select-product.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-choice-privileges-select-rewards-terms.txt",
+      "evals/curation/batches/wells-fargo-refresh-2026-11/captures/wells-fargo-active-cash-product.txt",
+      "tools/catalog-pipeline/src/label-lint.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "scripts/lib/expansion-verification.mjs",
+      "scripts/lib/expansion-quotes.mjs",
+      "apps/api/src/curation/v2/validate.ts"
+    ]
+  },
   "cards": [
     {
       "cardId": "wells-fargo-autograph",
@@ -83,7 +113,11 @@
               "You can earn unlimited Rewards Points, unless we tell you otherwise."
             ]
           },
-          "note": "Grocery stores are not a bonus category on this card: the product page lists restaurants, travel, gas, transit, streaming and phone plans, and the terms name grocery stores only among places that may not earn the gas and dining bonus. Grocery purchases earn the 1X base."
+          "note": "Grocery stores are not a bonus category on this card: the product page lists restaurants, travel, gas, transit, streaming and phone plans, and the terms name grocery stores only among places that may not earn the gas and dining bonus. Grocery purchases earn the 1X base.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page lists restaurants, travel, gas, transit, streaming and phone plans as the 3X categories; the terms name grocery stores only as places where gas or dining purchases may not earn the bonus. Grocery is not a bonus category on this card, so the rule is removed."
+          }
         },
         {
           "op": "remove",
@@ -107,7 +141,11 @@
               "You can earn unlimited Rewards Points, unless we tell you otherwise."
             ]
           },
-          "note": "The terms use \"Entertainment\" as the heading of the streaming group (books, music, subscriptions, pay TV, digital goods, movies); the product page calls the same group Popular Streaming Services. It is the streaming rule (rule 6), not a general entertainment category."
+          "note": "The terms use \"Entertainment\" as the heading of the streaming group (books, music, subscriptions, pay TV, digital goods, movies); the product page calls the same group Popular Streaming Services. It is the streaming rule (rule 6), not a general entertainment category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms' Entertainment heading covers books, music, subscriptions, pay television, digital goods and movies, the same group the product page calls popular streaming services (rule 6). It is not a separate entertainment category, so the duplicate rule is removed."
+          }
         },
         {
           "op": "set",
@@ -118,7 +156,11 @@
             "sourceId": "wells-fargo-autograph-product",
             "quote": "Travel: airline, hotel/motel, timeshare, or vehicle/auto rental, cruise lines, travel agencies, discount travel sites, campgrounds."
           },
-          "note": "The Travel bonus pays on travel merchant codes (airlines, hotels, rentals, agencies), not on a program-run booking portal; Wells Fargo convention maps Travel to other."
+          "note": "The Travel bonus pays on travel merchant codes (airlines, hotels, rentals, agencies), not on a program-run booking portal; Wells Fargo convention maps Travel to other.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3X Travel bonus pays on travel merchant codes (airlines, hotels, rentals, agencies, cruise lines), not on a program-run booking site; the Wells Fargo convention maps Travel to other. The anchor is verbatim in the product capture and stands apart from the rule's pricing anchors."
+          }
         },
         {
           "op": "remove",
@@ -142,7 +184,11 @@
               "You can earn unlimited Rewards Points, unless we tell you otherwise."
             ]
           },
-          "note": "Duplicate of rule 8 (the same Travel bonus); the captures state one Travel category."
+          "note": "Duplicate of rule 8 (the same Travel bonus); the captures state one Travel category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A second Travel rule identical to rule 8; the captures state one Travel category."
+          }
         },
         {
           "op": "set",
@@ -153,7 +199,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -164,7 +214,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -175,7 +229,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -186,7 +244,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -197,7 +259,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -208,7 +274,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -219,7 +289,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -230,7 +304,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "remove",
@@ -239,7 +317,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A missing issue with no anchor and no stated problem; removed under general 11 and 16."
+          }
         },
         {
           "op": "remove",
@@ -251,7 +333,11 @@
               "Popular Streaming Services"
             ]
           },
-          "note": "Made moot by removing the entertainment rule; replaced by an added issue on how wide the streaming group is."
+          "note": "Made moot by removing the entertainment rule; replaced by an added issue on how wide the streaming group is.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Moot once the entertainment rule is removed; the added issue on the width of the streaming group carries the same point with anchors that state it (general 11)."
+          }
         }
       ],
       "addedRules": [],
@@ -268,7 +354,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points (Wells Fargo convention: one per line)."
+          "note": "Listed among transactions that do not earn Rewards Points (Wells Fargo convention: one per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Overdraft protection advances",
@@ -282,7 +372,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points."
+          "note": "Listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Disputed or illegal purchases",
@@ -296,7 +390,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points."
+          "note": "Listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Fees and interest that post to the account",
@@ -306,7 +404,11 @@
               "quote": "Any kind of fees or interest that post to your Credit Card Account, such as:"
             }
           ],
-          "note": "Fees and interest are listed among transactions that do not earn Rewards Points."
+          "note": "Fees and interest are listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The heading of this group in the terms' list of transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. The anchor is verbatim in the pricing capture."
+          }
         },
         {
           "text": "Gambling transactions",
@@ -316,7 +418,11 @@
               "quote": "Any kind of gambling transactions you make, including:"
             }
           ],
-          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn Rewards Points."
+          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The heading of this group in the terms' list of transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. The anchor is verbatim in the pricing capture."
+          }
         }
       ],
       "addedIssues": [
@@ -332,7 +438,11 @@
               "quote": "Third-party delivery services"
             }
           ],
-          "note": "Dining at bakeries, grocery stores that serve food, and through third-party delivery may not earn the 3X bonus."
+          "note": "Dining at bakeries, grocery stores that serve food, and through third-party delivery may not earn the 3X bonus.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say food purchases at bakeries, grocery stores that serve food and third-party delivery services may not earn the dining bonus, a real ambiguity in the dining rule's reach. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "code": "ambiguous",
@@ -346,7 +456,11 @@
               "quote": "Streaming services bundled with another product, membership, or service"
             }
           ],
-          "note": "The streaming bonus covers pay TV, digital goods, books, movies, music and subscriptions (wider than streaming), but bundled or third-party-billed streaming may not earn it."
+          "note": "The streaming bonus covers pay TV, digital goods, books, movies, music and subscriptions (wider than streaming), but bundled or third-party-billed streaming may not earn it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The streaming group is wider than streaming (pay television, digital goods, books, movies, music, subscriptions) while bundled or third-party-billed streaming may not earn the bonus. The anchors are verbatim, from two captures."
+          }
         }
       ],
       "productNoteChanges": [
@@ -360,7 +474,11 @@
             "sourceId": "wells-fargo-autograph-pricing",
             "quote": "This includes purchases you make using a third-party payment account, with a mobile/wireless card reader, or through an online marketplace with multiple retailers."
           },
-          "note": "The terms reserve the right to deny bonus points on these checkout methods."
+          "note": "The terms reserve the right to deny bonus points on these checkout methods.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say Wells Fargo decides which purchases qualify for bonus points, including purchases through a third-party payment account, a mobile/wireless card reader or an online marketplace; a checkout-method hint records that, as the Wells Fargo convention does for the Choice cards. Anchor verbatim (23 words), summary 24 words."
+          }
         }
       ]
     },
@@ -378,7 +496,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -389,7 +511,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -400,7 +526,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -411,7 +541,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -422,7 +556,11 @@
             "sourceId": "wells-fargo-autograph-rewards-terms",
             "quote": "A Wells Fargo Rewards account is automatically created for you when you open an eligible Wells Fargo rewards-based credit card."
           },
-          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7)."
+          "note": "The rewards page says a Wells Fargo Rewards account is created automatically when the card is opened, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rewards page says a Wells Fargo Rewards account is created automatically when an eligible rewards card is opened, so rewards are enrolled automatically and activation is none (general 7). The anchor comes from the rewards-terms capture, apart from the rule's other anchors."
+          }
         },
         {
           "op": "remove",
@@ -433,7 +571,11 @@
               "Rewards only have cash value when or after you redeem them."
             ]
           },
-          "note": "The anchor says only that rewards have cash value once redeemed; it states no labelling problem (general 11). The point value stays null because the captures state only a travel value."
+          "note": "The anchor says only that rewards have cash value once redeemed; it states no labelling problem (general 11). The point value stays null because the captures state only a travel value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor only says rewards have cash value once redeemed; it states no labelling problem (general 11). The null point value already follows from the product page stating only a travel value (general 3)."
+          }
         },
         {
           "op": "remove",
@@ -445,7 +587,11 @@
               "Purchases you make outside of the approved categories do not qualify for bonus Points."
             ]
           },
-          "note": "The anchors state the hotel rate and that non-category purchases earn no bonus; neither states an ambiguity (general 11)."
+          "note": "The anchors state the hotel rate and that non-category purchases earn no bonus; neither states an ambiguity (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchors state the hotel rate and that purchases outside the categories earn no bonus; neither states an ambiguity (general 11)."
+          }
         }
       ],
       "addedRules": [],
@@ -462,7 +608,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points (Wells Fargo convention: one per line)."
+          "note": "Listed among transactions that do not earn Rewards Points (Wells Fargo convention: one per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Overdraft protection advances",
@@ -476,7 +626,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points."
+          "note": "Listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Disputed or illegal purchases",
@@ -490,7 +644,11 @@
               "quote": "The following transactions do not earn Rewards Points for your Account:"
             }
           ],
-          "note": "Listed among transactions that do not earn Rewards Points."
+          "note": "Listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under the terms' transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the pricing capture and do not abut."
+          }
         },
         {
           "text": "Fees and interest that post to the account",
@@ -500,7 +658,11 @@
               "quote": "Any kind of fees or interest that post to your Credit Card Account, such as:"
             }
           ],
-          "note": "Fees and interest are listed among transactions that do not earn Rewards Points."
+          "note": "Fees and interest are listed among transactions that do not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The heading of this group in the terms' list of transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. The anchor is verbatim in the pricing capture."
+          }
         },
         {
           "text": "Gambling transactions",
@@ -510,7 +672,11 @@
               "quote": "Any kind of gambling transactions you make, including:"
             }
           ],
-          "note": "Gambling does not earn Rewards Points."
+          "note": "Gambling does not earn Rewards Points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The heading of this group in the terms' list of transactions that do not earn Rewards Points; the Wells Fargo convention labels these one per line. The anchor is verbatim in the pricing capture."
+          }
         }
       ],
       "addedIssues": [],
@@ -525,7 +691,11 @@
             "sourceId": "wells-fargo-autograph-journey-pricing",
             "quote": "This includes purchases you make using a third-party payment account, with a mobile/wireless card reader, or through an online marketplace with multiple retailers."
           },
-          "note": "The terms reserve the right to deny bonus points on these checkout methods."
+          "note": "The terms reserve the right to deny bonus points on these checkout methods.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say Wells Fargo decides which purchases qualify for bonus points, including purchases through a third-party payment account, a mobile/wireless card reader or an online marketplace; a checkout-method hint records that, as the Wells Fargo convention does for the Choice cards. Anchor verbatim (23 words), summary 24 words."
+          }
         }
       ]
     },
@@ -543,7 +713,11 @@
             "sourceId": "wells-fargo-one-key-product",
             "quote": "electric vehicle charging stations"
           },
-          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording."
+          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: the EV rule split from Gas takes the wording electric vehicle charging stations. The corrected value is verbatim in footnote 2 and its anchor sits seven words after the rule's existing anchor, so the two do not abut."
+          }
         },
         {
           "op": "remove",
@@ -552,7 +726,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A missing issue with no anchor and no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [
@@ -577,7 +755,11 @@
               "quote": "Groceries: grocery stores, supermarkets, delis and bakeries."
             }
           ],
-          "note": "The draft dropped this rule; the footnote pays 3% at grocery stores, supermarkets, delis and bakeries, and the headline says 3% at grocery stores."
+          "note": "The draft dropped this rule; the footnote pays 3% at grocery stores, supermarkets, delis and bakeries, and the headline says 3% at grocery stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 pays 3% (1.5% base plus 1.5% bonus) in OneKeyCash on Mastercard grocery codes (grocery stores, supermarkets, delis, bakeries) and the headline says 3% at grocery stores; drafting dropped the rule for want of a resolving quote. Rate 300 bps on a cash-back card (general 1); cap null as the capture states no limit (general 21). The two anchors are separated by the Gas sentence and do not abut."
+          }
         },
         {
           "rule": {
@@ -600,7 +782,11 @@
               "quote": "Dining: eating places and restaurants, drinking places, fast food restaurants, and/or caterers."
             }
           ],
-          "note": "The draft dropped this rule; the footnote pays 3% on dining, and the headline says 3% on dining."
+          "note": "The draft dropped this rule; the footnote pays 3% on dining, and the headline says 3% on dining.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 pays 3% (1.5% base plus 1.5% bonus) in OneKeyCash on Mastercard dining codes (eating places, drinking places, fast food, caterers) and the headline says 3% on dining; drafting dropped the rule for want of a resolving quote. Rate 300 bps, cash-back (general 1); cap null (general 21). The anchors are separated by the Gas and Groceries sentences and do not abut."
+          }
         }
       ],
       "addedExclusions": [
@@ -616,7 +802,11 @@
               "quote": "wire transfers); balance transfers;"
             }
           ],
-          "note": "Footnote 1 lists balance transfers among purchases that do not earn rewards."
+          "note": "Footnote 1 lists balance transfers among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists this among purchases that do not apply to the offer and do not earn rewards, a card-level exclusion the draft lacked. The header and item anchors are verbatim in the product capture and stand apart."
+          }
         },
         {
           "text": "Disputes, illegal actions, and violations",
@@ -630,7 +820,11 @@
               "quote": "disputes, illegal actions, and violations (such as disputed or illegal purchases"
             }
           ],
-          "note": "Listed among purchases that do not earn rewards."
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists this among purchases that do not apply to the offer and do not earn rewards, a card-level exclusion the draft lacked. The header and item anchors are verbatim in the product capture and stand apart."
+          }
         },
         {
           "text": "Fees and interest of any kind",
@@ -644,7 +838,11 @@
               "quote": "fees and interest of any kind (such as late fees, returned payment fees, monthly or annual fees)"
             }
           ],
-          "note": "Listed among purchases that do not earn rewards."
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists this among purchases that do not apply to the offer and do not earn rewards, a card-level exclusion the draft lacked. The header and item anchors are verbatim in the product capture and stand apart."
+          }
         },
         {
           "text": "Gambling transactions of any kind",
@@ -658,7 +856,11 @@
               "quote": "gambling transactions of any kind (such as bets or wagers transmitted over the internet, casino gaming chips, lottery tickets or off-track wagers)"
             }
           ],
-          "note": "Listed among purchases that do not earn rewards."
+          "note": "Listed among purchases that do not earn rewards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists this among purchases that do not apply to the offer and do not earn rewards, a card-level exclusion the draft lacked. The header and item anchors are verbatim in the product capture and stand apart."
+          }
         }
       ],
       "addedIssues": [
@@ -670,7 +872,11 @@
               "quote": "OneKeyCash is not redeemable for cash and can only be used on Expedia, Hotels.com and Vrbo."
             }
           ],
-          "note": "OneKeyCash is dollar-denominated but usable only on Expedia, Hotels.com and Vrbo (general 8)."
+          "note": "OneKeyCash is dollar-denominated but usable only on Expedia, Hotels.com and Vrbo (general 8).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "OneKeyCash is dollar-denominated but usable only on Expedia, Hotels.com and Vrbo: cash-back with an ambiguous issue saying so (general 8, Wells Fargo convention). Anchor verbatim on the product page."
+          }
         }
       ],
       "productNoteChanges": [
@@ -691,7 +897,11 @@
             "sourceId": "wells-fargo-one-key-product",
             "quote": "in OneKeyCash* on Expedia, Hotels.com and Vrbo"
           },
-          "note": "The booking rule pays only on the three Expedia Group sites."
+          "note": "The booking rule pays only on the three Expedia Group sites.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 3% booking rule pays only on the U.S. Expedia, Hotels.com and Vrbo sites; a merchant-specific hint naming them matches the Wells Fargo overlay convention for this rule. The anchor is verbatim on the product page (it ends at a footnote marker, which the quote matcher accepts)."
+          }
         },
         {
           "action": "add",
@@ -703,7 +913,11 @@
             "sourceId": "wells-fargo-one-key-product",
             "quote": "The following transactions are not eligible and may not earn bonus rewards: 1) purchases made through PayPal,"
           },
-          "note": "Footnote 2 excludes PayPal purchases from the booking bonus."
+          "note": "Footnote 2 excludes PayPal purchases from the booking bonus.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 lists purchases made through PayPal first among transactions not eligible for the booking bonus; the overlay convention already excludes PayPal on this rule, and a checkout-method hint records it. Anchor verbatim, 17 words."
+          }
         }
       ]
     },
@@ -715,7 +929,11 @@
       "addedRules": [],
       "addedExclusions": [],
       "addedIssues": [],
-      "productNoteChanges": []
+      "productNoteChanges": [],
+      "verdictAdjudication": {
+        "decision": "accepted",
+        "reason": "The card's only capture is the Wells Fargo all-cards list page. It presents eight cards (Active Cash, Autograph Journey, Autograph, Reflect, One Key, Choice Privileges, Choice Privileges Select, Signify Business Cash) and never names One Key+; the One Key entry it does carry is the sibling product. No earn rate, currency or exclusion for One Key+ can be read from the captures, so the card is dropped (general 9)."
+      }
     },
     {
       "cardId": "wells-fargo-choice-privileges",
@@ -731,7 +949,11 @@
             "sourceId": "wells-fargo-choice-privileges-product",
             "quote": "electric vehicle charging stations"
           },
-          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording."
+          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: the EV rule split from Gas takes the wording electric vehicle charging stations. The corrected value is verbatim in the product footnote and its anchor is separated from the rule's existing anchor by the Gas list, so the two do not abut."
+          }
         },
         {
           "op": "set",
@@ -742,7 +964,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -753,7 +979,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -764,7 +994,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -775,7 +1009,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -786,7 +1024,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -797,7 +1039,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -808,7 +1054,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -819,7 +1069,11 @@
             "sourceId": "wells-fargo-choice-privileges-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "remove",
@@ -828,7 +1082,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A missing issue with no anchor and no stated problem; removed under general 11 and 16."
+          }
         },
         {
           "op": "remove",
@@ -837,7 +1095,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A missing issue with no anchor and no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
@@ -854,7 +1116,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that are not Qualifying Net Purchases and do not earn points (Wells Fargo convention: one per line)."
+          "note": "Listed among items that are not Qualifying Net Purchases and do not earn points (Wells Fargo convention: one per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Overdraft protection advances",
@@ -868,7 +1134,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that do not earn points."
+          "note": "Listed among items that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Disputed or illegal purchases",
@@ -882,7 +1152,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that do not earn points."
+          "note": "Listed among items that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Gambling charges",
@@ -896,7 +1170,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn points."
+          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         }
       ],
       "addedIssues": [],
@@ -915,7 +1193,11 @@
             "sourceId": "wells-fargo-choice-privileges-product",
             "quote": "Points on stays at participating Choice Hotels® properties2 plus on Choice Privileges point purchases3"
           },
-          "note": "The stay and point-purchase rules pay only with Choice Hotels."
+          "note": "The stay and point-purchase rules pay only with Choice Hotels.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5X stay and point-purchase rules pay only with Choice Hotels, the co-brand partner (Wells Fargo convention); a merchant-specific hint names it and the Choice Privileges account the terms open for the cardholder. Anchor verbatim on the product page, 14 words."
+          }
         },
         {
           "action": "add",
@@ -927,7 +1209,11 @@
             "sourceId": "wells-fargo-choice-privileges-product",
             "quote": "You may not earn bonus points for purchases made through third-party payment accounts, at online marketplaces,"
           },
-          "note": "The product page and terms both list these checkout methods (Wells Fargo convention)."
+          "note": "The product page and terms both list these checkout methods (Wells Fargo convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: Choice bonus points may not be earned through third-party payment accounts, online marketplaces, mobile card readers or mobile/digital wallets, stated on the product page and in the terms, so a checkout-method hint is right. Anchor verbatim, 16 words; summary 23 words."
+          }
         }
       ]
     },
@@ -945,7 +1231,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-product",
             "quote": "electric vehicle charging stations"
           },
-          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording."
+          "note": "Wells Fargo convention: the EV rule split from Gas uses the EV charging wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: the EV rule split from Gas takes the wording electric vehicle charging stations. The corrected value is verbatim in the product footnote and its anchor is separated from the rule's existing anchor by the Gas list, so the two do not abut."
+          }
         },
         {
           "op": "set",
@@ -956,7 +1246,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -967,7 +1261,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -978,7 +1276,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -989,7 +1291,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -1000,7 +1306,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -1011,7 +1321,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -1022,7 +1336,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "set",
@@ -1033,7 +1351,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-rewards-terms",
             "quote": "The Card Rewards Program is automatically available to You"
           },
-          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7)."
+          "note": "The terms say the Card Rewards Program is automatically available to an open account, so no enrollment is needed (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the Card Rewards Program is automatically available to an open account and that a Choice Privileges Rewards Account is opened for the cardholder if needed, so no enrollment is required (general 7; holding a loyalty account is not enrollment). The anchor is from the terms capture and stands apart from the rule's other anchors."
+          }
         },
         {
           "op": "remove",
@@ -1044,7 +1366,11 @@
               "You can redeem your points only at Choice Privileges."
             ]
           },
-          "note": "The anchor says points redeem only at Choice Privileges, which is why the point value is null (general 20); it states no labelling problem (general 11)."
+          "note": "The anchor says points redeem only at Choice Privileges, which is why the point value is null (general 20); it states no labelling problem (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states a redemption restriction, not a labelling problem (general 11). Points spendable only with the hotel program take a null point value with the redemption kept in a product note (general 20), and the sibling Choice Privileges card carries no such issue."
+          }
         },
         {
           "op": "remove",
@@ -1053,7 +1379,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16)."
+          "note": "Missing issue with no anchor and no stated problem; removed (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A missing issue with no anchor and no stated problem; removed under general 11 and 16."
+          }
         }
       ],
       "addedRules": [],
@@ -1070,7 +1400,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that are not Qualifying Net Purchases and do not earn points (Wells Fargo convention: one per line)."
+          "note": "Listed among items that are not Qualifying Net Purchases and do not earn points (Wells Fargo convention: one per line).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Overdraft protection advances",
@@ -1084,7 +1418,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that do not earn points."
+          "note": "Listed among items that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Disputed or illegal purchases",
@@ -1098,7 +1436,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Listed among items that do not earn points."
+          "note": "Listed among items that do not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         },
         {
           "text": "Gambling charges",
@@ -1112,7 +1454,11 @@
               "quote": "The following items are not Qualifying Net Purchases and do not earn points:"
             }
           ],
-          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn points."
+          "note": "Gambling (online bets, casino chips, lottery tickets, off-track wagers) does not earn points.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Listed under items that are not Qualifying Net Purchases and do not earn points; the Wells Fargo convention labels these one per line. Both anchors are verbatim in the terms capture and do not abut."
+          }
         }
       ],
       "addedIssues": [],
@@ -1131,7 +1477,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-product",
             "quote": "Points on stays at participating Choice Hotels® properties2 plus on Choice Privileges point purchases3"
           },
-          "note": "The stay and point-purchase rules pay only with Choice Hotels."
+          "note": "The stay and point-purchase rules pay only with Choice Hotels.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 10X stay and point-purchase rules pay only with Choice Hotels, the co-brand partner (Wells Fargo convention); a merchant-specific hint names it and the Choice Privileges account the terms open for the cardholder. Anchor verbatim on the product page, 14 words."
+          }
         },
         {
           "action": "add",
@@ -1143,7 +1493,11 @@
             "sourceId": "wells-fargo-choice-privileges-select-product",
             "quote": "You may not earn bonus points for purchases made through third-party payment accounts, at online marketplaces,"
           },
-          "note": "The product page and terms both list these checkout methods (Wells Fargo convention)."
+          "note": "The product page and terms both list these checkout methods (Wells Fargo convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wells Fargo convention: Choice bonus points may not be earned through third-party payment accounts, online marketplaces, mobile card readers or mobile/digital wallets, stated on the product page and in the terms, so a checkout-method hint is right. Anchor verbatim, 16 words; summary 23 words."
+          }
         }
       ]
     },
