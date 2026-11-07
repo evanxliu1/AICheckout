@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+  "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
   "batch": "bank-of-america-refresh-2026-11",
   "provenance": "agent-verified",
   "issuer": "Bank of America",
@@ -59,7 +59,56 @@
       "tools/catalog-pipeline/src/label-lint.ts"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-opus-5-5",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/bank-of-america-refresh-2026-11/pipeline/packets/adjudicate.bank-of-america.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/bank-of-america.md",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/verification/bank-of-america.json",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/verify/bank-of-america.md",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-air-france-klm-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-air-france-klm-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-allways-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-allways-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-atmos-rewards-ascent-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-atmos-rewards-ascent-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-atmos-rewards-summit-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-atmos-rewards-summit-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-cash-back-category-choices.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-secured-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-secured-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-students-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-customized-cash-rewards-students-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-norwegian-cruise-line-world-mastercard-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-norwegian-cruise-line-world-mastercard-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-premium-rewards-elite-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-premium-rewards-elite-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-premium-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-premium-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-royal-one-plus-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-royal-one-plus-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-royal-one-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-royal-one-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-susan-g-komen-customized-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-susan-g-komen-customized-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-travel-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-travel-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-travel-rewards-secured-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-travel-rewards-students-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-unlimited-cash-rewards-pricing.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-unlimited-cash-rewards-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-unlimited-cash-rewards-secured-product.txt",
+      "evals/curation/batches/bank-of-america-refresh-2026-11/captures/boa-unlimited-cash-rewards-students-product.txt"
+    ]
+  },
   "cards": [
     {
       "cardId": "boa-customized-cash-rewards",
@@ -75,7 +124,11 @@
             "sourceId": "boa-customized-cash-rewards-product",
             "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
           },
-          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention)."
+          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page calls the 2% grocery and wholesale club rate automatic; the issuer convention (pre-merge review) sets activation none on this rule."
+          }
         },
         {
           "op": "set",
@@ -86,7 +139,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -97,7 +154,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -108,7 +169,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -119,7 +184,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -130,7 +199,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -141,7 +214,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -152,7 +229,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -164,7 +245,11 @@
               "After the first year from account opening, you'll earn 3% cash back on purchases in your choice category."
             ]
           },
-          "note": "This out-of-scope issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention)."
+          "note": "This out-of-scope issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         }
       ],
       "addedRules": [
@@ -202,7 +287,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -238,7 +327,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -274,7 +367,11 @@
               "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app)."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -310,7 +407,11 @@
               "quote": "The Dining category includes purchases in a variety of merchant categories including: restaurants and takeout, fast food, caterers, bars and taverns."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -346,7 +447,11 @@
               "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -382,7 +487,11 @@
               "quote": "The Drug Stores category includes purchases made at drug stores and pharmacies."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -418,7 +527,11 @@
               "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         }
       ],
       "addedExclusions": [],
@@ -431,7 +544,11 @@
               "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected."
             }
           ],
-          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6)."
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say only the one selected choice category earns the bonus; the convention calls for one such ambiguous issue (general 6)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -450,7 +567,11 @@
             "sourceId": "boa-customized-cash-rewards-product",
             "quote": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice"
           },
-          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page."
+          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -467,7 +588,11 @@
             "sourceId": "boa-cash-back-category-choices",
             "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
           },
-          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms."
+          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -483,7 +608,11 @@
             "sourceId": "boa-customized-cash-rewards-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -496,7 +625,11 @@
             "sourceId": "boa-customized-cash-rewards-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -514,7 +647,11 @@
             "sourceId": "boa-unlimited-cash-rewards-pricing",
             "quote": "fees, interest charges, fraudulent transactions and certain other charges."
           },
-          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does."
+          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "remove",
@@ -523,7 +660,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -532,7 +673,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -543,7 +688,11 @@
               "will not earn cash rewards: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions and certain"
             ]
           },
-          "note": "Anchored only on the exclusions sentence; it states no ambiguity (Bank of America convention)."
+          "note": "Anchored only on the exclusions sentence; it states no ambiguity (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         }
       ],
       "addedRules": [],
@@ -564,7 +713,11 @@
             "sourceId": "boa-unlimited-cash-rewards-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -582,7 +735,11 @@
             "sourceId": "boa-travel-rewards-pricing",
             "quote": "Each point redeemed for cash is worth $0.006 (2,500 points = $15)."
           },
-          "note": "The terms state a cash redemption value of $0.006 a point (60); the $0.01 value applies only to travel credits (general 3, Bank of America convention). The ambiguous issue keeps the difference."
+          "note": "The terms state a cash redemption value of $0.006 a point (60); the $0.01 value applies only to travel credits (general 3, Bank of America convention). The ambiguous issue keeps the difference.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state $0.006 a point for cash redemption; the issuer convention uses that, not the travel-credit value (general 3)."
+          }
         }
       ],
       "addedRules": [],
@@ -603,7 +760,11 @@
             "sourceId": "boa-travel-rewards-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -621,7 +782,11 @@
               "Visit BofA Rewards to learn more about eligibility and enrollment."
             ]
           },
-          "note": "Anchored only on the \"Visit BofA Rewards\" pointer; it states no problem (Bank of America convention)."
+          "note": "Anchored only on the \"Visit BofA Rewards\" pointer; it states no problem (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -630,7 +795,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -651,7 +820,11 @@
             "sourceId": "boa-premium-rewards-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -664,7 +837,11 @@
             "sourceId": "boa-premium-rewards-pricing",
             "quote": "your purchase is processed through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -680,7 +857,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -689,7 +870,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -710,7 +895,11 @@
             "sourceId": "boa-premium-rewards-elite-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -723,7 +912,11 @@
             "sourceId": "boa-premium-rewards-elite-pricing",
             "quote": "your purchase is processed through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -741,7 +934,11 @@
             "sourceId": "boa-customized-cash-rewards-students-product",
             "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
           },
-          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention)."
+          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page calls the 2% grocery and wholesale club rate automatic; the issuer convention (pre-merge review) sets activation none on this rule."
+          }
         },
         {
           "op": "set",
@@ -752,7 +949,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -763,7 +964,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -774,7 +979,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -785,7 +994,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -796,7 +1009,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -807,7 +1024,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -818,7 +1039,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -834,7 +1059,11 @@
             "sourceId": "boa-customized-cash-rewards-students-product",
             "quote": "Unlimited 1% cash back on all other purchases"
           },
-          "note": "The product page states unlimited 1% on all other purchases, so the base rate has no cap (general 21)."
+          "note": "The product page states unlimited 1% on all other purchases, so the base rate has no cap (general 21).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page says the 1% on all other purchases is unlimited, so cap none (general 21)."
+          }
         },
         {
           "op": "set",
@@ -845,7 +1074,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "fees, interest charges, fraudulent transactions and certain other charges."
           },
-          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does."
+          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "remove",
@@ -857,7 +1090,11 @@
               "After the first year from account opening, you'll earn 3% cash back on purchases in your choice category."
             ]
           },
-          "note": "This missing issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention)."
+          "note": "This missing issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         }
       ],
       "addedRules": [
@@ -895,7 +1132,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -931,7 +1172,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -967,7 +1212,11 @@
               "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app)."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1003,7 +1252,11 @@
               "quote": "The Dining category includes purchases in a variety of merchant categories including: restaurants and takeout, fast food, caterers, bars and taverns."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1039,7 +1292,11 @@
               "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1075,7 +1332,11 @@
               "quote": "The Drug Stores category includes purchases made at drug stores and pharmacies."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1111,7 +1372,11 @@
               "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1124,7 +1389,11 @@
               "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected."
             }
           ],
-          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6)."
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say only the one selected choice category earns the bonus; the convention calls for one such ambiguous issue (general 6)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1143,7 +1412,11 @@
             "sourceId": "boa-customized-cash-rewards-students-product",
             "quote": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice"
           },
-          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page."
+          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -1160,7 +1433,11 @@
             "sourceId": "boa-cash-back-category-choices",
             "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
           },
-          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms."
+          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -1176,7 +1453,11 @@
             "sourceId": "boa-customized-cash-rewards-students-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -1189,7 +1470,11 @@
             "sourceId": "boa-customized-cash-rewards-students-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -1216,7 +1501,11 @@
             "sourceId": "boa-unlimited-cash-rewards-students-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -1234,7 +1523,11 @@
             "sourceId": "boa-travel-rewards-students-product",
             "quote": "which can be redeemed for a $250 statement credit toward travel and dining purchases"
           },
-          "note": "The only value in the capture is a bonus redeemable as a statement credit toward travel and dining purchases; no cash redemption value is stated, so the point value is null (general 3)."
+          "note": "The only value in the capture is a bonus redeemable as a statement credit toward travel and dining purchases; no cash redemption value is stated, so the point value is null (general 3).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only stated value is a statement credit toward travel and dining, not cash; Travel Rewards uses the cash value per the issuer convention, and none is captured here (general 3)."
+          }
         }
       ],
       "addedRules": [],
@@ -1255,7 +1548,11 @@
             "sourceId": "boa-travel-rewards-students-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -1273,7 +1570,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-product",
             "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
           },
-          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention)."
+          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page calls the 2% grocery and wholesale club rate automatic; the issuer convention (pre-merge review) sets activation none on this rule."
+          }
         },
         {
           "op": "set",
@@ -1284,7 +1585,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1295,7 +1600,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1306,7 +1615,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1317,7 +1630,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1328,7 +1645,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1339,7 +1660,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1350,7 +1675,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1361,7 +1690,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1372,7 +1705,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1383,7 +1720,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1394,7 +1735,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1405,7 +1750,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1416,7 +1765,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1427,7 +1780,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1438,7 +1795,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "fees, interest charges, fraudulent transactions and certain other charges."
           },
-          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does."
+          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "remove",
@@ -1449,7 +1810,11 @@
               "Visit BofA Rewards to learn more about eligibility and enrollment."
             ]
           },
-          "note": "This ambiguous issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention)."
+          "note": "This ambiguous issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -1458,7 +1823,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [
@@ -1496,7 +1865,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1532,7 +1905,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1568,7 +1945,11 @@
               "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app)."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1604,7 +1985,11 @@
               "quote": "The Dining category includes purchases in a variety of merchant categories including: restaurants and takeout, fast food, caterers, bars and taverns."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1640,7 +2025,11 @@
               "quote": "The Drug Stores category includes purchases made at drug stores and pharmacies."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1676,7 +2065,11 @@
               "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -1712,7 +2105,11 @@
               "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1725,7 +2122,11 @@
               "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected."
             }
           ],
-          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6)."
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say only the one selected choice category earns the bonus; the convention calls for one such ambiguous issue (general 6)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1744,7 +2145,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-product",
             "quote": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice"
           },
-          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page."
+          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -1761,7 +2166,11 @@
             "sourceId": "boa-cash-back-category-choices",
             "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
           },
-          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms."
+          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -1777,7 +2186,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -1790,7 +2203,11 @@
             "sourceId": "boa-customized-cash-rewards-secured-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -1817,7 +2234,11 @@
             "sourceId": "boa-unlimited-cash-rewards-secured-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -1835,7 +2256,11 @@
               "Earn unlimited 1.5 points for every $1 you spend on everyday purchases."
             ]
           },
-          "note": "Anchored only on the earn line; it states no missing value (Bank of America convention)."
+          "note": "Anchored only on the earn line; it states no missing value (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         }
       ],
       "addedRules": [],
@@ -1856,7 +2281,11 @@
             "sourceId": "boa-travel-rewards-secured-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
     },
@@ -1874,7 +2303,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
             "quote": "Automatic 2% cash back at grocery stores and wholesale clubs"
           },
-          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention)."
+          "note": "The product page calls the 2% grocery and wholesale club rate automatic, so activation is none (Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page calls the 2% grocery and wholesale club rate automatic; the issuer convention (pre-merge review) sets activation none on this rule."
+          }
         },
         {
           "op": "set",
@@ -1885,7 +2318,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1896,7 +2333,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1907,7 +2348,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
           },
-          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6)."
+          "note": "Gas & EV Charging Stations is the default choice category, so this option earns without a selection (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms name Gas & EV Charging Stations as the default choice category, so this option earns with no selection (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1918,7 +2363,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1929,7 +2378,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1940,7 +2393,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1951,7 +2408,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1962,7 +2423,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1973,7 +2438,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1984,7 +2453,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -1995,7 +2468,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -2006,7 +2483,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -2017,7 +2498,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "If no change is made the category will remain the same."
           },
-          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6)."
+          "note": "A non-default option must be selected once in Online or Mobile Banking and stays until changed, so activation is enroll-once (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A non-default choice is picked once and the terms say it stays until changed, so enroll-once (general 6, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -2028,7 +2513,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "post to your account within 365 days of the account open date."
           },
-          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture."
+          "note": "The first-year 6% runs 365 days from account opening; no calendar end date is stated, and 3650 dates are not in any capture.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The first-year rate runs 365 days from account opening with no calendar date; the 3650 date is not in the capture (general 10, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -2040,7 +2529,11 @@
               "After the first year from account opening, you'll earn 3% cash back on purchases in your choice category."
             ]
           },
-          "note": "This out-of-scope issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention)."
+          "note": "This out-of-scope issue is anchored on earn lines or a BofA Rewards pointer and states no real problem; the selection issue is added instead (general 11, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         }
       ],
       "addedRules": [
@@ -2078,7 +2571,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2114,7 +2611,11 @@
               "quote": "When the new account is opened the default Choice Category is Gas & EV Charging Stations."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation none: it is the default option; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2150,7 +2651,11 @@
               "quote": "The Online Shopping category includes purchases made online via a website or a digital application (an app)."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2186,7 +2691,11 @@
               "quote": "The Dining category includes purchases in a variety of merchant categories including: restaurants and takeout, fast food, caterers, bars and taverns."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2222,7 +2731,11 @@
               "quote": "The Travel category includes purchases in a wide variety of merchant categories including: airlines, cruises, hotels and resorts"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2258,7 +2771,11 @@
               "quote": "The Drug Stores category includes purchases made at drug stores and pharmacies."
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         },
         {
           "rule": {
@@ -2294,7 +2811,11 @@
               "quote": "The Home Improvement & Furnishings category includes purchases in a wide variety of merchant categories including: home supply warehouse stores"
             }
           ],
-          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%."
+          "note": "The draft has only the first-year 6% rule for this option; the standing 3% choice-category rate (after the first year) is missing. Activation enroll-once: the cardholder selects it once; $2,500 combined quarterly cap, then 1%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms give 3% in the one selected choice category after the first-year bonus; the convention wants a 3% rule per option beside the 6% rule, with the $2,500 shared quarterly cap."
+          }
         }
       ],
       "addedExclusions": [],
@@ -2307,7 +2828,11 @@
               "quote": "on Net Purchases made at eligible merchants in the one Choice Category you have selected."
             }
           ],
-          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6)."
+          "note": "Only the one selected choice category earns 3% (6% in the first year); the other options earn 1% (general 6).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say only the one selected choice category earns the bonus; the convention calls for one such ambiguous issue (general 6)."
+          }
         }
       ],
       "productNoteChanges": [
@@ -2326,7 +2851,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
             "quote": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice"
           },
-          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page."
+          "note": "Hint true per the captures, but the summary was truncated and \"activation required\" is wrong for the default Gas & EV option; rewritten from the terms and product page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -2343,7 +2872,11 @@
             "sourceId": "boa-cash-back-category-choices",
             "quote": "Choose which category you want to earn 3% cash back from the six categories shown below."
           },
-          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms."
+          "note": "Hint true, but the summary was truncated and activation overstated; the six options, default and monthly change rule are on the category page and in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms and category page give the six options, Gas & EV default, monthly change and shared $2,500 cap; the rewrite matches them."
+          }
         },
         {
           "action": "fix",
@@ -2359,7 +2892,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so."
+          "note": "The product page names a BofA Rewards bonus on card purchases but gives no tier percentages, balance thresholds or start date; the research values are not in any capture, so the hint now says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         },
         {
           "action": "add",
@@ -2372,7 +2909,11 @@
             "sourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -2390,7 +2931,11 @@
             "sourceId": "boa-atmos-rewards-ascent-pricing",
             "quote": "Visit atmosrewards.com/cardbenefits for the complete list of participating restaurants"
           },
-          "note": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, not across dining, so the category is other (general 4, Bank of America convention). 1 + 0.5 = 150 stays."
+          "note": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, not across dining, so the category is other (general 4, Bank of America convention). 1 + 0.5 = 150 stays.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, so other (general 4, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -2401,7 +2946,11 @@
             "sourceId": "boa-atmos-rewards-ascent-pricing",
             "quote": "Digital Goods Media – Books, Movies, Digital artwork/images, Music"
           },
-          "note": "This other rule at 2 points is the Digital Goods Media part of the 2-point list; the issuer wording repeated the whole gas/streaming/transit sentence."
+          "note": "This other rule at 2 points is the Digital Goods Media part of the 2-point list; the issuer wording repeated the whole gas/streaming/transit sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list Digital Goods Media as its own item in the 2-point list; this rule is that item, so the wording names it."
+          }
         },
         {
           "op": "set",
@@ -2412,7 +2961,11 @@
             "sourceId": "boa-atmos-rewards-ascent-pricing",
             "quote": "fees, interest charges, fraudulent transactions and certain other charges."
           },
-          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does."
+          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "remove",
@@ -2421,7 +2974,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2435,7 +2992,11 @@
             "sourceId": "boa-atmos-rewards-ascent-pricing",
             "quote": "3 Points: Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Purchases."
           },
-          "note": "True: 3 points per $1 on eligible Alaska Airlines and Hawaiian Airlines purchases booked directly; no cap stated."
+          "note": "True: 3 points per $1 on eligible Alaska Airlines and Hawaiian Airlines purchases booked directly; no cap stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the hint's rate and merchant or account condition as summarised."
+          }
         },
         {
           "action": "confirm",
@@ -2444,7 +3005,11 @@
             "sourceId": "boa-atmos-rewards-ascent-product",
             "quote": "You can also earn a 10% rewards bonus on all points earned on card purchases if you have an eligible Bank of America® account."
           },
-          "note": "True: 10% Relationship Bonus Points with a Qualifying Account (checking, savings or Merrill), separate from BofA Rewards tiers."
+          "note": "True: 10% Relationship Bonus Points with a Qualifying Account (checking, savings or Merrill), separate from BofA Rewards tiers.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the hint's rate and merchant or account condition as summarised."
+          }
         },
         {
           "action": "add",
@@ -2461,7 +3026,11 @@
             "sourceId": "boa-atmos-rewards-ascent-pricing",
             "quote": "Your card will be automatically enrolled in Atmos™ Rewards Dining, a dining rewards program operated by Rewards Network Establishment Services Inc."
           },
-          "note": "The terms list Atmos Rewards Dining as Bonus Points at participating restaurants only, with automatic enrollment; no hint covered it."
+          "note": "The terms list Atmos Rewards Dining as Bonus Points at participating restaurants only, with automatic enrollment; no hint covered it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list Atmos Rewards Dining as bonus points at participating restaurants with automatic enrollment; the issuer convention wants a merchant note."
+          }
         }
       ]
     },
@@ -2479,7 +3048,11 @@
             "sourceId": "boa-atmos-rewards-summit-pricing",
             "quote": "You'll earn 1 point for every $2 spent at participating restaurants."
           },
-          "note": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, so the category is other (general 4, Bank of America convention)."
+          "note": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, so the category is other (general 4, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Atmos Rewards Dining pays only at participating Rewards Network restaurants, so other (general 4, issuer convention)."
+          }
         },
         {
           "op": "set",
@@ -2490,7 +3063,11 @@
             "sourceId": "boa-atmos-rewards-summit-pricing",
             "quote": "Earn 3 points for every $1 spent on eligible Dining Net Purchases."
           },
-          "note": "The Bonus Points stack on the 3-point dining rate at participating restaurants: 3 + 0.5 = 350, not the 50 increment (rateBps is the total; Bank of America convention)."
+          "note": "The Bonus Points stack on the 3-point dining rate at participating restaurants: 3 + 0.5 = 350, not the 50 increment (rateBps is the total; Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The issuer convention records Atmos Rewards Dining as bonus points stacked on the card rate: Summit dining 3 + 0.5 = 350 (rateBps is the total)."
+          }
         },
         {
           "op": "set",
@@ -2501,7 +3078,11 @@
             "sourceId": "boa-atmos-rewards-summit-pricing",
             "quote": "Your card will be automatically enrolled in Atmos™ Rewards Dining"
           },
-          "note": "The terms say the card is enrolled automatically, so activation is none (general 7)."
+          "note": "The terms say the card is enrolled automatically, so activation is none (general 7).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say the card is enrolled in Atmos Rewards Dining automatically, so activation none (general 7, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -2510,7 +3091,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2524,7 +3109,11 @@
             "sourceId": "boa-atmos-rewards-summit-product",
             "quote": "Plus, earn a 10% rewards bonus on all points earned from card purchases if you have an eligible Bank of America® account."
           },
-          "note": "True: 10% bonus on points earned with a Qualifying Account; the terms list checking, savings, CD or Merrill accounts."
+          "note": "True: 10% bonus on points earned with a Qualifying Account; the terms list checking, savings, CD or Merrill accounts.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the hint's rate and merchant or account condition as summarised."
+          }
         },
         {
           "action": "add",
@@ -2542,7 +3131,11 @@
             "sourceId": "boa-atmos-rewards-summit-pricing",
             "quote": "Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Net Purchases."
           },
-          "note": "The co-brand airline rule had no merchant hint on this card."
+          "note": "The co-brand airline rule had no merchant hint on this card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state the merchant rate and its statement or merchant-of-record condition, and the redemption has no cash value; the hint matches."
+          }
         },
         {
           "action": "add",
@@ -2559,7 +3152,11 @@
             "sourceId": "boa-atmos-rewards-summit-pricing",
             "quote": "Your card will be automatically enrolled in Atmos™ Rewards Dining, a dining rewards program operated by Rewards Network Establishment Services Inc."
           },
-          "note": "The terms list Atmos Rewards Dining as Bonus Points at participating restaurants only, with automatic enrollment; no hint covered it."
+          "note": "The terms list Atmos Rewards Dining as Bonus Points at participating restaurants only, with automatic enrollment; no hint covered it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list Atmos Rewards Dining as bonus points at participating restaurants with automatic enrollment; the issuer convention wants a merchant note."
+          }
         }
       ]
     },
@@ -2577,7 +3174,11 @@
               "You can redeem your points for rewards, such as onboard credits and cruise discounts, by logging into your guest account through the available website or"
             ]
           },
-          "note": "Anchored only on the redemption sentence; onboard-credit redemption is a product note, not a missing value (general 3, 11)."
+          "note": "Anchored only on the redemption sentence; onboard-credit redemption is a product note, not a missing value (general 3, 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Its only anchors are earn lines, the exclusions sentence, a redemption line or a BofA Rewards pointer, which state no problem (general 11, issuer convention)."
+          }
         },
         {
           "op": "remove",
@@ -2586,7 +3187,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -2595,7 +3200,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2621,7 +3230,11 @@
             "sourceId": "boa-royal-one-product",
             "quote": "3 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases"
           },
-          "note": "Hint true; added the statement-name condition from the terms and the onboard-credit redemption (point value stays null, general 3)."
+          "note": "Hint true; added the statement-name condition from the terms and the onboard-credit redemption (point value stays null, general 3).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state the merchant rate and its statement or merchant-of-record condition, and the redemption has no cash value; the hint matches."
+          }
         },
         {
           "action": "add",
@@ -2634,7 +3247,11 @@
             "sourceId": "boa-royal-one-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -2650,7 +3267,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -2659,7 +3280,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -2668,7 +3293,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "set",
@@ -2679,7 +3308,11 @@
             "sourceId": "boa-royal-one-plus-pricing",
             "quote": "will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees,"
           },
-          "note": "The anchor was the bare word \"fees\", which does not say the item never earns; this span from the exclusions sentence does."
+          "note": "The anchor was the bare word \"fees\", which does not say the item never earns; this span from the exclusions sentence does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "set",
@@ -2690,7 +3323,11 @@
             "sourceId": "boa-royal-one-plus-pricing",
             "quote": "will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges,"
           },
-          "note": "The anchor was the bare word \"interest charges\", which does not say the item never earns; this span from the exclusions sentence does."
+          "note": "The anchor was the bare word \"interest charges\", which does not say the item never earns; this span from the exclusions sentence does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "set",
@@ -2701,7 +3338,11 @@
             "sourceId": "boa-royal-one-plus-pricing",
             "quote": "will not earn points: Balance Transfers and Cash Advances (each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions,"
           },
-          "note": "The anchor was the bare word \"fraudulent transactions\", which does not say the item never earns; this span from the exclusions sentence does."
+          "note": "The anchor was the bare word \"fraudulent transactions\", which does not say the item never earns; this span from the exclusions sentence does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "set",
@@ -2712,7 +3353,11 @@
             "sourceId": "boa-royal-one-plus-pricing",
             "quote": "(each as defined in your Credit Card Agreement), fees, interest charges, fraudulent transactions, and certain other charges."
           },
-          "note": "The anchor was the bare word \"certain other charges\", which does not say the item never earns; this span from the exclusions sentence does."
+          "note": "The anchor was the bare word \"certain other charges\", which does not say the item never earns; this span from the exclusions sentence does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         }
       ],
       "addedRules": [],
@@ -2738,7 +3383,11 @@
             "sourceId": "boa-royal-one-plus-product",
             "quote": "4 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases"
           },
-          "note": "Hint true; added the statement-name condition from the terms and the onboard-credit redemption (point value stays null, general 3)."
+          "note": "Hint true; added the statement-name condition from the terms and the onboard-credit redemption (point value stays null, general 3).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state the merchant rate and its statement or merchant-of-record condition, and the redemption has no cash value; the hint matches."
+          }
         },
         {
           "action": "add",
@@ -2751,7 +3400,11 @@
             "sourceId": "boa-royal-one-plus-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -2769,7 +3422,11 @@
             "sourceId": "boa-allways-rewards-product",
             "quote": "equal to $300 off a future Allegiant trip"
           },
-          "note": "The only value stated is $300 off a future Allegiant trip for 30,000 points: an airline-only redemption, not a cash value, so the point value is null (general 3, 20)."
+          "note": "The only value stated is $300 off a future Allegiant trip for 30,000 points: an airline-only redemption, not a cash value, so the point value is null (general 3, 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only stated value is a discount on Allegiant travel, an airline-only redemption, so null (general 3, 20)."
+          }
         },
         {
           "op": "set",
@@ -2780,7 +3437,11 @@
             "sourceId": "boa-allways-rewards-pricing",
             "quote": "fees, interest charges, fraudulent transactions and certain other charges."
           },
-          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does."
+          "note": "The anchor stopped at \"and certain\" and did not state \"certain other charges\"; this span does.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The replacement span is verbatim in the terms and states that the item does not earn, which the old fragment did not."
+          }
         },
         {
           "op": "remove",
@@ -2789,7 +3450,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2803,7 +3468,11 @@
               "quote": "Eligible Dining purchases include purchases at the following merchants: (a) Caterers; Eating Places and Restaurants; and (b) Drinking Places. Fast Food is excluded."
             }
           ],
-          "note": "The 2-point dining rule excludes fast food (and Allegiant purchases), so it covers only part of the shared dining category."
+          "note": "The 2-point dining rule excludes fast food (and Allegiant purchases), so it covers only part of the shared dining category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms limit the 2-point dining rate to caterers, restaurants and drinking places and exclude fast food, so it covers only part of dining; the anchor states that."
+          }
         }
       ],
       "productNoteChanges": [
@@ -2824,7 +3493,11 @@
             "sourceId": "boa-allways-rewards-product",
             "quote": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)"
           },
-          "note": "Hint true; added the merchant-of-record condition and the Allegiant-only redemption that replaces the dropped point value."
+          "note": "Hint true; added the merchant-of-record condition and the Allegiant-only redemption that replaces the dropped point value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state the merchant rate and its statement or merchant-of-record condition, and the redemption has no cash value; the hint matches."
+          }
         }
       ]
     },
@@ -2842,7 +3515,11 @@
             "sourceId": "boa-air-france-klm-pricing",
             "quote": "so that you can be enrolled into the Flying Blue program"
           },
-          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention)."
+          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Flying Blue membership comes with the account and no sentence requires enrolling for rewards; the issuer convention keeps such rules at null (general 7)."
+          }
         },
         {
           "op": "set",
@@ -2853,7 +3530,11 @@
             "sourceId": "boa-air-france-klm-pricing",
             "quote": "so that you can be enrolled into the Flying Blue program"
           },
-          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention)."
+          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Flying Blue membership comes with the account and no sentence requires enrolling for rewards; the issuer convention keeps such rules at null (general 7)."
+          }
         },
         {
           "op": "set",
@@ -2864,7 +3545,11 @@
             "sourceId": "boa-air-france-klm-pricing",
             "quote": "so that you can be enrolled into the Flying Blue program"
           },
-          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention)."
+          "note": "Flying Blue membership comes with the application; holding a loyalty account is not a rewards enrollment, and no sentence says rewards need enrolling, so activation is null (general 7, Bank of America convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Flying Blue membership comes with the account and no sentence requires enrolling for rewards; the issuer convention keeps such rules at null (general 7)."
+          }
         },
         {
           "op": "set",
@@ -2875,7 +3560,11 @@
             "sourceId": "boa-air-france-klm-product",
             "quote": "Earn 3 Miles for every $1 spent on eligible dining purchases."
           },
-          "note": "The dining rule's first anchor was cut before \"eligible Dining merchants\" and stated only the airline part; this line states the dining rate."
+          "note": "The dining rule's first anchor was cut before \"eligible Dining merchants\" and stated only the airline part; this line states the dining rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The old anchor stated only the airline 3-mile rate; the product line states the dining rate this rule carries."
+          }
         },
         {
           "op": "remove",
@@ -2884,7 +3573,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2898,7 +3591,11 @@
             "sourceId": "boa-air-france-klm-product",
             "quote": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases."
           },
-          "note": "True: 3 miles per $1 (not in addition to 1.5) on purchases made directly with Air France, KLM and SkyTeam member airlines."
+          "note": "True: 3 miles per $1 (not in addition to 1.5) on purchases made directly with Air France, KLM and SkyTeam member airlines.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the hint's rate and merchant or account condition as summarised."
+          }
         },
         {
           "action": "add",
@@ -2911,7 +3608,11 @@
             "sourceId": "boa-air-france-klm-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         }
       ]
     },
@@ -2927,7 +3628,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -2936,7 +3641,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -2945,7 +3654,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "A bare missing issue with no anchor (general 16)."
+          "note": "A bare missing issue with no anchor (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Bare issue with no anchor stating a problem (general 16)."
+          }
         }
       ],
       "addedRules": [],
@@ -2959,7 +3672,11 @@
             "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
             "quote": "Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian Cruise Line."
           },
-          "note": "True: 3 points per $1 when the statement shows Norwegian Cruise Line or a Norwegian vessel name."
+          "note": "True: 3 points per $1 when the statement shows Norwegian Cruise Line or a Norwegian vessel name.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the hint's rate and merchant or account condition as summarised."
+          }
         },
         {
           "action": "add",
@@ -2972,7 +3689,11 @@
             "sourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
             "quote": "processes through a third-party payment account"
           },
-          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate."
+          "note": "The terms say purchases through a third-party payment account or a wallet that does not pass the merchant category code lose the bonus rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms say purchases through a third-party payment account or an unsupported wallet do not get the bonus rate; the hint matches."
+          }
         },
         {
           "action": "add",
@@ -2987,9 +3708,27 @@
             "sourceId": "boa-norwegian-cruise-line-world-mastercard-product",
             "quote": "starting with a rewards bonus on every credit card purchase."
           },
-          "note": "The product page names the BofA Rewards bonus on card purchases; the captures give no percentages, so the hint says so."
+          "note": "The product page names the BofA Rewards bonus on card purchases; the captures give no percentages, so the hint says so.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures name a BofA Rewards bonus but give no percentages, thresholds or dates; the issuer convention says the hint must say so."
+          }
         }
       ]
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "boa-atmos-rewards-ascent",
+      "ruleIndex": 5,
+      "check": "rate",
+      "reason": "split-anchors"
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "ruleIndex": 2,
+      "check": "rate",
+      "reason": "split-anchors"
     }
   ]
 }
