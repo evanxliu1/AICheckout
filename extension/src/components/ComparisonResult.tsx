@@ -25,6 +25,8 @@ import {
 } from './estimates';
 
 const money = (cents: number) => formatUsd(cents);
+/** Closes a sentence after quoted issuer wording, unless the wording already ends one. */
+const closing = (wording: string) => (/[.!?]$/.test(wording.trim()) ? '' : '.');
 const periodCopy: Record<string, string> = {
   'calendar-year': 'per calendar year',
   'cardmember-year': 'per card-member year',
@@ -154,11 +156,11 @@ export function EstimateRow({
               {(estimate.minBonusSpendCents !== estimate.maxBonusSpendCents ||
                 estimate.maxBonusSpendCents < amountCents) &&
                 ` for ${estimate.minBonusSpendCents === estimate.maxBonusSpendCents ? '' : 'up to '}${money(estimate.maxBonusSpendCents)} of this purchase`}
-              ; otherwise {rate(base.rateBps)} on “{base.issuerWording}”.
+              ; otherwise {rate(base.rateBps)} on “{base.issuerWording}”{closing(base.issuerWording)}
             </>
           ) : (
             <>
-              {rate(base.rateBps)} on “{base.issuerWording}”.
+              {rate(base.rateBps)} on “{base.issuerWording}”{closing(base.issuerWording)}
             </>
           )}
         </p>
