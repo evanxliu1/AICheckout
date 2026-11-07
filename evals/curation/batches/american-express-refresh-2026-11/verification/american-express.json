@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "a3f19fd7-5baf-4b94-88f5-3ab74b723b59",
+  "packetId": "3a0002c6-69f9-4b2b-89c6-032414a87576",
   "batch": "american-express-refresh-2026-11",
   "provenance": "agent-verified",
   "issuer": "American Express",
@@ -52,7 +52,51 @@
       "evals/curation/batches/american-express-refresh-2026-11/captures/amex-blue-cash-preferred-terms.txt"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-11-06",
+    "filesRead": [
+      "evals/curation/batches/american-express-refresh-2026-11/pipeline/packets/adjudicate.american-express.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/american-express.md",
+      "evals/curation/batches/american-express-refresh-2026-11/verification/american-express.json",
+      "evals/curation/batches/american-express-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/american-express-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-gold-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-gold-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-platinum-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-platinum-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-blue-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-blue-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-gold-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-gold-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-platinum-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-platinum-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-reserve-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-delta-skymiles-reserve-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-surpass-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-surpass-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-aspire-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-hilton-honors-aspire-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-marriott-bonvoy-bevy-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-marriott-bonvoy-bevy-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-marriott-bonvoy-brilliant-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-marriott-bonvoy-brilliant-pricing.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-blue-cash-everyday-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-blue-cash-everyday-terms.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-rewards-info-retail.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-blue-cash-preferred-product.txt",
+      "evals/curation/batches/american-express-refresh-2026-11/captures/amex-blue-cash-preferred-terms.txt",
+      "tools/catalog-pipeline/src/label-lint.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/schema.ts"
+    ]
+  },
   "cards": [
     {
       "cardId": "amex-gold",
@@ -68,7 +112,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "on the first $50,000 of eligible purchases per calendar year at restaurants worldwide"
           },
-          "note": "The restaurant cap is $50,000 a calendar year, not $5,000."
+          "note": "The restaurant cap is $50,000 a calendar year, not $5,000.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms cap 4X restaurants at the first $50,000 per calendar year; the draft carried $5,000."
+          }
         },
         {
           "op": "set",
@@ -79,7 +127,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "on the first $25,000 of eligible purchases per calendar year at supermarkets located in the U.S."
           },
-          "note": "The U.S. supermarket cap is $25,000 a calendar year, not $2,500."
+          "note": "The U.S. supermarket cap is $25,000 a calendar year, not $2,500.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms cap 4X U.S. supermarkets at the first $25,000 per calendar year; the draft carried $2,500."
+          }
         },
         {
           "op": "set",
@@ -90,7 +142,11 @@
             "sourceId": "amex-gold-pricing",
             "quote": "airfare charged directly through American Express Travel"
           },
-          "note": "This rule becomes the AmexTravel flight rule; airline-direct flights are a separate other rule (Amex conventions)."
+          "note": "This rule becomes the AmexTravel flight rule; airline-direct flights are a separate other rule (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 4 becomes the AmexTravel flight rule and airline-direct flights move to their own other rule (Amex airline-direct convention); wording verbatim in the terms."
+          }
         }
       ],
       "addedRules": [
@@ -115,7 +171,11 @@
               "quote": "airfare on a scheduled flight charged directly with passenger airlines"
             }
           ],
-          "note": "3X on flights charged directly with passenger airlines, split from the portal flight rule (Amex conventions)."
+          "note": "3X on flights charged directly with passenger airlines, split from the portal flight rule (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X on flights charged directly with passenger airlines as a separate other rule (Amex convention); both anchors verbatim in the pricing terms, not abutting."
+          }
         },
         {
           "rule": {
@@ -134,7 +194,11 @@
               "quote": "at least 1 additional point (for a total of 2 Membership Rewards points or 2X points) for each dollar charged for eligible travel bookings"
             }
           ],
-          "note": "Separate 2X American Express Travel Online offer (covers e.g. Airbnb short-term rentals); it does not combine with the card bonuses (Amex conventions)."
+          "note": "Separate 2X American Express Travel Online offer (covers e.g. Airbnb short-term rentals); it does not combine with the card bonuses (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 2X American Express Travel Online offer is a Gold rule under the Amex convention; the terms limit only Platinum to cruises. Activation null because MR enrollment is not activation."
+          }
         }
       ],
       "addedExclusions": [],
@@ -155,7 +219,11 @@
             "sourceId": "amex-platinum-pricing",
             "quote": "4 additional points (for a total of 5 Membership Rewards points or 5x points)"
           },
-          "note": "Flights earn 5X (4 additional points on top of the base point); the draft left the rate null."
+          "note": "Flights earn 5X (4 additional points on top of the base point); the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 4 additional points for a total of 5 on eligible air and lodging bookings; the draft left the rate null."
+          }
         },
         {
           "op": "set",
@@ -166,7 +234,11 @@
             "sourceId": "amex-platinum-pricing",
             "quote": "air tickets on scheduled flights, of up to $500,000 in charges per calendar year, booked directly with passenger airlines or through American Express Travel"
           },
-          "note": "This rule becomes the AmexTravel flight rule under the shared $500,000 flight cap; airline-direct flights are added as an other rule (Amex conventions)."
+          "note": "This rule becomes the AmexTravel flight rule under the shared $500,000 flight cap; airline-direct flights are added as an other rule (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Rule 0 becomes the AmexTravel flight rule under the shared $500,000 calendar-year flight cap (Amex convention); wording verbatim in the terms."
+          }
         },
         {
           "op": "set",
@@ -177,7 +249,11 @@
             "sourceId": "amex-platinum-product",
             "quote": "Booked directly with airlines or through American Express Travel®, on up to $500,000 on these purchases per calendar year."
           },
-          "note": "One $500,000 calendar-year flight cap is shared by the portal and airline-direct flight rules: one ambiguous issue on the cap sentence (Amex conventions)."
+          "note": "One $500,000 calendar-year flight cap is shared by the portal and airline-direct flight rules: one ambiguous issue on the cap sentence (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The shared $500,000 flight cap gets one ambiguous issue anchored on the cap sentence, as the Amex convention requires."
+          }
         },
         {
           "op": "remove",
@@ -186,7 +262,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         },
         {
           "op": "remove",
@@ -197,7 +277,11 @@
               "Booked directly with airlines or through American Express Travel®, on up to $500,000 on these purchases per calendar year."
             ]
           },
-          "note": "Duplicate of issue 0 on the same cap sentence; moot once the rate and rules are filled in (general 11)."
+          "note": "Duplicate of issue 0 on the same cap sentence; moot once the rate and rules are filled in (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Duplicate of issue 0 on the same product-page sentence; moot once the rate and the flight rules are filled in (general 11)."
+          }
         },
         {
           "op": "remove",
@@ -208,7 +292,11 @@
               "Booked on American Express Travel®."
             ]
           },
-          "note": "Flagged the prepaid hotel line, which is now an added rule (general 11)."
+          "note": "Flagged the prepaid hotel line, which is now an added rule (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Flagged the prepaid-hotel line, which is now an added rule; moot under general 11."
+          }
         }
       ],
       "addedRules": [
@@ -229,7 +317,11 @@
               "quote": "Basic Card Members will get 1 Membership Rewards® point for each dollar charged for eligible purchases"
             }
           ],
-          "note": "Base 1X, missing from the draft."
+          "note": "Base 1X, missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base 1X stated in the Membership Rewards paragraph of the terms; missing from the draft."
+          }
         },
         {
           "rule": {
@@ -257,7 +349,11 @@
               "quote": "air tickets on scheduled flights, of up to $500,000 in charges per calendar year, booked directly with passenger airlines"
             }
           ],
-          "note": "5X on flights booked directly with airlines, sharing the $500,000 flight cap (Amex conventions); no after-cap rate stated."
+          "note": "5X on flights booked directly with airlines, sharing the $500,000 flight cap (Amex conventions); no after-cap rate stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5X on flights booked directly with passenger airlines as an other rule carrying the shared $500,000 calendar-year cap (Amex convention); no after-cap rate is stated."
+          }
         },
         {
           "rule": {
@@ -280,7 +376,11 @@
               "quote": "prepaid hotel reservations booked through American Express Travel"
             }
           ],
-          "note": "5X on prepaid hotels through American Express Travel; the flight cap does not apply to lodging."
+          "note": "5X on prepaid hotels through American Express Travel; the flight cap does not apply to lodging.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5X on prepaid hotels through American Express Travel is item (ii) of the eligible lodging bookings; the cap sentence covers flights only."
+          }
         },
         {
           "rule": {
@@ -303,7 +403,11 @@
               "quote": "prepaid short-term rental reservations booked with Airbnb through AmexTravel.com or the Amex Travel App™"
             }
           ],
-          "note": "5X on prepaid Airbnb short-term rentals booked through AmexTravel (an Airbnb account linked to the Amex account is required)."
+          "note": "5X on prepaid Airbnb short-term rentals booked through AmexTravel (an Airbnb account linked to the Amex account is required).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5X on prepaid Airbnb short-term rentals through AmexTravel is item (iii) of the 5x section of the terms."
+          }
         },
         {
           "rule": {
@@ -326,7 +430,11 @@
               "quote": "prepaid car rental bookings through AmexTravel.com"
             }
           ],
-          "note": "2X on prepaid car rentals through AmexTravel, missing from the draft."
+          "note": "2X on prepaid car rentals through AmexTravel, missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2X on prepaid car rentals through AmexTravel is item (i) of the 2x section of the terms; missing from the draft."
+          }
         },
         {
           "rule": {
@@ -349,7 +457,11 @@
               "quote": "prepaid cruise reservations booked through AmexTravel.com"
             }
           ],
-          "note": "2X on prepaid cruises through AmexTravel, missing from the draft. Platinum Destination Vacation phone bookings are left out (not an online portal)."
+          "note": "2X on prepaid cruises through AmexTravel, missing from the draft. Platinum Destination Vacation phone bookings are left out (not an online portal).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "2X on prepaid cruises through AmexTravel is item (ii) of the 2x section; activation null per the Amex convention on MR portal rules."
+          }
         }
       ],
       "addedExclusions": [
@@ -361,7 +473,11 @@
               "quote": "The charge on your Card for an Add Money transaction does not earn rewards"
             }
           ],
-          "note": "Stated in the pricing terms; missing from the draft."
+          "note": "Stated in the pricing terms; missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated in the Send & Split paragraph of the pricing capture; missing from the draft."
+          }
         }
       ],
       "addedIssues": [],
@@ -381,7 +497,11 @@
             "sourceId": "amex-delta-skymiles-blue-pricing",
             "quote": "Eligible only on Delta and Delta Connection® carrier-operated and ticketed flights booked at delta.com"
           },
-          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions)."
+          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The $50 per 5,000 miles figure is Pay with Miles toward Delta flights, a travel-only value: point value null (Amex convention, general 3 and 20)."
+          }
         },
         {
           "op": "remove",
@@ -390,7 +510,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue for the dropped base rule, which is added (general 11, 16)."
+          "note": "Anchorless missing issue for the dropped base rule, which is added (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue for the dropped base rule, which is added (general 11 and 16)."
+          }
         }
       ],
       "addedRules": [
@@ -411,7 +535,11 @@
               "quote": "Basic Card Members will earn 1 mile for each dollar of eligible purchases"
             }
           ],
-          "note": "Base 1X, dropped by the draft."
+          "note": "Base 1X, dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base 1X stated in the terms; dropped by the draft."
+          }
         }
       ],
       "addedExclusions": [],
@@ -424,7 +552,11 @@
             "sourceId": "amex-delta-skymiles-blue-pricing",
             "quote": "charged directly with Delta where Delta is the merchant of record"
           },
-          "note": "2X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases."
+          "note": "2X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the merchant-of-record condition of Delta Purchases; the hint matches the rule in the terms."
+          }
         },
         {
           "action": "add",
@@ -443,7 +575,11 @@
             "sourceId": "amex-delta-skymiles-blue-pricing",
             "quote": "Five thousand miles generally provides $50 of value."
           },
-          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20)."
+          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A merchant-specific Delta note recording the Pay with Miles value is what the Amex convention asks for; summary within 25 words, anchor verbatim."
+          }
         }
       ]
     },
@@ -461,7 +597,11 @@
             "sourceId": "amex-delta-skymiles-gold-pricing",
             "quote": "Eligible only on Delta and Delta Connection® carrier-operated and ticketed flights booked at delta.com"
           },
-          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions)."
+          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The $50 per 5,000 miles figure is Pay with Miles toward Delta flights, a travel-only value: point value null (Amex convention, general 3 and 20)."
+          }
         },
         {
           "op": "remove",
@@ -470,7 +610,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         }
       ],
       "addedRules": [],
@@ -484,7 +628,11 @@
             "sourceId": "amex-delta-skymiles-gold-pricing",
             "quote": "charged directly with Delta where Delta is the merchant of record"
           },
-          "note": "2X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases."
+          "note": "2X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the merchant-of-record condition of Delta Purchases; the hint matches the rule in the terms."
+          }
         },
         {
           "action": "add",
@@ -503,7 +651,11 @@
             "sourceId": "amex-delta-skymiles-gold-pricing",
             "quote": "Five thousand miles generally provides $50 of value."
           },
-          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20)."
+          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A merchant-specific Delta note recording the Pay with Miles value is what the Amex convention asks for; summary within 25 words, anchor verbatim."
+          }
         }
       ]
     },
@@ -521,7 +673,11 @@
             "sourceId": "amex-delta-skymiles-platinum-pricing",
             "quote": "Eligible only on Delta and Delta Connection® carrier-operated and ticketed flights booked at delta.com"
           },
-          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions)."
+          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The $50 per 5,000 miles figure is Pay with Miles toward Delta flights, a travel-only value: point value null (Amex convention, general 3 and 20)."
+          }
         },
         {
           "op": "set",
@@ -532,7 +688,11 @@
             "sourceId": "amex-delta-skymiles-platinum-pricing",
             "quote": "charged at restaurants worldwide"
           },
-          "note": "The terms pay 2X at restaurants worldwide (Amex conventions: worldwide is usMerchantsOnly false)."
+          "note": "The terms pay 2X at restaurants worldwide (Amex conventions: worldwide is usMerchantsOnly false).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 2X at restaurants worldwide; worldwide restaurant rules are usMerchantsOnly false (Amex convention)."
+          }
         },
         {
           "op": "set",
@@ -543,7 +703,11 @@
             "sourceId": "amex-delta-skymiles-platinum-pricing",
             "quote": "2x Miles at U.S. Supermarkets"
           },
-          "note": "U.S. supermarkets earn 2X; the draft left the rate null."
+          "note": "U.S. supermarkets earn 2X; the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 2x miles at U.S. supermarkets; the draft left the rate null."
+          }
         },
         {
           "op": "remove",
@@ -555,7 +719,11 @@
               "a total of 2 miles) for each dollar of eligible purchases on their Card or any Additional Cards on the Card Account charged at supermarkets"
             ]
           },
-          "note": "No conflict: the 1X base and the 2X supermarket rate are separate rules."
+          "note": "No conflict: the 1X base and the 2X supermarket rate are separate rules.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 1X base and the 2X supermarket rate are separate rules; the anchors state no conflict."
+          }
         },
         {
           "op": "remove",
@@ -567,7 +735,11 @@
               "3X miles on Delta Purchases"
             ]
           },
-          "note": "The 2X Delta line is from the Delta Gold comparison block, not this card (general 12)."
+          "note": "The 2X Delta line is from the Delta Gold comparison block, not this card (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 2X Delta Purchases line sits in the Delta Gold block of the product page, not this card (general 12, Amex convention)."
+          }
         },
         {
           "op": "remove",
@@ -579,7 +751,11 @@
               "a total of 2 miles) for each dollar of eligible purchases on their Card or any Additional Cards on the Card Account charged at restaurants"
             ]
           },
-          "note": "U.S. takeout and delivery on the product page does not conflict with worldwide restaurants in the terms (Amex conventions)."
+          "note": "U.S. takeout and delivery on the product page does not conflict with worldwide restaurants in the terms (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. takeout and delivery on the product page does not conflict with worldwide restaurants in the terms (Amex convention)."
+          }
         },
         {
           "op": "remove",
@@ -588,7 +764,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         },
         {
           "op": "remove",
@@ -597,7 +777,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         }
       ],
       "addedRules": [
@@ -622,7 +806,11 @@
               "quote": "charged directly with Delta where Delta is the merchant of record"
             }
           ],
-          "note": "3X on Delta Purchases, dropped by the draft (co-brand partner rule, other)."
+          "note": "3X on Delta Purchases, dropped by the draft (co-brand partner rule, other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "3X on Delta Purchases stated in the terms; a co-brand partner rule is other (Amex convention, general 4); dropped by the draft."
+          }
         }
       ],
       "addedExclusions": [],
@@ -635,7 +823,11 @@
             "sourceId": "amex-delta-skymiles-platinum-pricing",
             "quote": "charged directly with Delta where Delta is the merchant of record"
           },
-          "note": "3X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases."
+          "note": "3X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the merchant-of-record condition of Delta Purchases; the hint matches the rule in the terms."
+          }
         },
         {
           "action": "add",
@@ -654,7 +846,11 @@
             "sourceId": "amex-delta-skymiles-platinum-pricing",
             "quote": "Five thousand miles generally provides $50 of value."
           },
-          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20)."
+          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A merchant-specific Delta note recording the Pay with Miles value is what the Amex convention asks for; summary within 25 words, anchor verbatim."
+          }
         }
       ]
     },
@@ -672,7 +868,11 @@
             "sourceId": "amex-delta-skymiles-reserve-pricing",
             "quote": "Eligible only on Delta and Delta Connection® carrier-operated and ticketed flights booked at delta.com"
           },
-          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions)."
+          "note": "The $50 per 5,000 miles value is Pay with Miles toward Delta flights at delta.com, a travel-only value: point value null (general 3, 20; Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The $50 per 5,000 miles figure is Pay with Miles toward Delta flights, a travel-only value: point value null (Amex convention, general 3 and 20)."
+          }
         },
         {
           "op": "remove",
@@ -681,7 +881,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue for the dropped base rule, which is added (general 11, 16)."
+          "note": "Anchorless missing issue for the dropped base rule, which is added (general 11, 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue for the dropped base rule, which is added (general 11 and 16)."
+          }
         },
         {
           "op": "remove",
@@ -690,7 +894,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         }
       ],
       "addedRules": [
@@ -711,7 +919,11 @@
               "quote": "Basic Card Members will earn 1 mile for each dollar of eligible purchases"
             }
           ],
-          "note": "Base 1X, dropped by the draft."
+          "note": "Base 1X, dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base 1X stated in the terms; dropped by the draft."
+          }
         }
       ],
       "addedExclusions": [
@@ -723,7 +935,11 @@
               "quote": "The charge on your Card for an Add Money transaction does not earn rewards"
             }
           ],
-          "note": "Stated in the pricing terms; missing from the draft."
+          "note": "Stated in the pricing terms; missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated in the Send & Split paragraph of the pricing capture; missing from the draft."
+          }
         }
       ],
       "addedIssues": [],
@@ -735,7 +951,11 @@
             "sourceId": "amex-delta-skymiles-reserve-pricing",
             "quote": "charged directly with Delta where Delta is the merchant of record"
           },
-          "note": "3X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases."
+          "note": "3X on Delta Purchases where Delta is merchant of record; Delta Gift Cards and deltashop.com are not Delta Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the merchant-of-record condition of Delta Purchases; the hint matches the rule in the terms."
+          }
         },
         {
           "action": "add",
@@ -754,7 +974,11 @@
             "sourceId": "amex-delta-skymiles-reserve-pricing",
             "quote": "Five thousand miles generally provides $50 of value."
           },
-          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20)."
+          "note": "Records the Pay with Miles value as a travel-only redemption, not a point value (Amex conventions, general 20).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A merchant-specific Delta note recording the Pay with Miles value is what the Amex convention asks for; summary within 25 words, anchor verbatim."
+          }
         }
       ]
     },
@@ -772,7 +996,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "You will receive 3 Hilton Honors Bonus Points for each dollar of eligible purchases."
           },
-          "note": "The draft anchor is the sentence on groceries and gas at superstores, not the base rate; the terms state 3 points per dollar on eligible purchases."
+          "note": "The draft anchor is the sentence on groceries and gas at superstores, not the base rate; the terms state 3 points per dollar on eligible purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft anchor was the superstore-grocery carve-out; the base-rate sentence of the terms states 3 points per dollar on eligible purchases."
+          }
         },
         {
           "op": "set",
@@ -783,7 +1011,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "You will receive 3 Hilton Honors Bonus Points for each dollar of eligible purchases."
           },
-          "note": "Base-rate wording from the terms."
+          "note": "Base-rate wording from the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base-rate wording from the terms; the draft wording came from the carve-out sentence."
+          }
         },
         {
           "op": "set",
@@ -794,7 +1026,11 @@
             "sourceId": "amex-hilton-honors-product",
             "quote": "Earn 5X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets"
           },
-          "note": "U.S. gas stations earn 5X (2 additional points, total 5); the draft left the rate null."
+          "note": "U.S. gas stations earn 5X (2 additional points, total 5); the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 2 additional points for a total of 5 at U.S. gas stations; the anchor is this card's own entry on its product page, not another card's block."
+          }
         },
         {
           "op": "remove",
@@ -806,7 +1042,11 @@
               "You will receive 2 additional Hilton Honors Bonus Points, for a total of 5, for each dollar of eligible purchases at the following categories of"
             ]
           },
-          "note": "No conflict: the anchor runs from the 5X gas line into the next 3X base line; gas is 5X in the terms."
+          "note": "No conflict: the anchor runs from the 5X gas line into the next 3X base line; gas is 5X in the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft anchor ran from the 5X gas line into the following 3X base line; the terms pay 5X on gas, so there is no conflict."
+          }
         },
         {
           "op": "remove",
@@ -815,7 +1055,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         }
       ],
       "addedRules": [],
@@ -829,7 +1073,11 @@
               "quote": "Purchases of gasoline at supermarkets, superstores, and warehouse clubs will only get 3 Bonus Points per dollar."
             }
           ],
-          "note": "Gas bought at supermarkets, superstores or warehouse clubs earns only the 3X base, not the 5X gas rate."
+          "note": "Gas bought at supermarkets, superstores or warehouse clubs earns only the 3X base, not the 5X gas rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state that gasoline bought at supermarkets, superstores and warehouse clubs earns only the 3X base; anchored on that sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -840,7 +1088,11 @@
             "sourceId": "amex-hilton-honors-pricing",
             "quote": "charged directly with a property within the Hilton portfolio, including bookings and incidental charges"
           },
-          "note": "7X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel, incidentals when charged to the room."
+          "note": "7X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel, incidentals when charged to the room.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the charged-directly-with-a-Hilton-property condition; the hint matches the Hilton rule in the terms."
+          }
         }
       ]
     },
@@ -858,7 +1110,11 @@
             "sourceId": "amex-hilton-honors-surpass-pricing",
             "quote": "You will receive 3 Hilton Honors Bonus Points for each dollar of eligible purchases."
           },
-          "note": "The draft anchor is the 6X category sentence, not the base rate; the terms state 3 points per dollar on eligible purchases."
+          "note": "The draft anchor is the 6X category sentence, not the base rate; the terms state 3 points per dollar on eligible purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft anchor was the 6X category sentence; the base-rate sentence of the terms states 3 points per dollar on eligible purchases."
+          }
         },
         {
           "op": "set",
@@ -869,7 +1125,11 @@
             "sourceId": "amex-hilton-honors-surpass-pricing",
             "quote": "You will receive 3 Hilton Honors Bonus Points for each dollar of eligible purchases."
           },
-          "note": "The draft wording (\"3 additional ... Points\") is from the 6X sentence; base-rate wording from the terms."
+          "note": "The draft wording (\"3 additional ... Points\") is from the 6X sentence; base-rate wording from the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Base-rate wording from the terms; the draft wording was lifted from the 6X sentence."
+          }
         },
         {
           "op": "set",
@@ -880,7 +1140,11 @@
             "sourceId": "amex-hilton-honors-surpass-product",
             "quote": "Earn 6X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets."
           },
-          "note": "U.S. gas stations earn 6X (3 additional points, total 6); the draft left the rate null."
+          "note": "U.S. gas stations earn 6X (3 additional points, total 6); the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 3 additional points for a total of 6 at U.S. gas stations; the anchor is this card's own entry on its product page."
+          }
         },
         {
           "op": "remove",
@@ -892,7 +1156,11 @@
               "Earn 6X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets.‡"
             ]
           },
-          "note": "No conflict: the anchor runs from the 6X gas line into the next 4X online retail line."
+          "note": "No conflict: the anchor runs from the 6X gas line into the next 4X online retail line.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft anchor ran from the 6X gas line into the following 4X online retail line; no conflict."
+          }
         },
         {
           "op": "remove",
@@ -901,7 +1169,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         },
         {
           "op": "remove",
@@ -910,7 +1182,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         }
       ],
       "addedRules": [],
@@ -924,7 +1200,11 @@
             "sourceId": "amex-hilton-honors-surpass-pricing",
             "quote": "charged directly with a property within the Hilton portfolio, including bookings and incidental charges"
           },
-          "note": "12X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel, incidentals when charged to the room."
+          "note": "12X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel, incidentals when charged to the room.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the charged-directly-with-a-Hilton-property condition; the hint matches the Hilton rule in the terms."
+          }
         },
         {
           "action": "add",
@@ -941,7 +1221,11 @@
             "sourceId": "amex-hilton-honors-surpass-pricing",
             "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not receive additional points."
           },
-          "note": "Surpass terms state outright that these purchases get only the base rate."
+          "note": "Surpass terms state outright that these purchases get only the base rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Surpass terms state outright that third-party payment account and online marketplace purchases earn no additional points; checkout-method is the right hint type."
+          }
         }
       ]
     },
@@ -966,7 +1250,11 @@
               "Earn 4X Hilton Honors Bonus Points on U.S. Online Retail Purchases.‡"
             ]
           },
-          "note": "4X online retail is from the Surpass comparison block; the Aspire terms have no online retail rule (general 12)."
+          "note": "4X online retail is from the Surpass comparison block; the Aspire terms have no online retail rule (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 4X online retail line sits in the Surpass block of the product page; the Aspire terms have no online retail bonus (general 12, Amex convention)."
+          }
         },
         {
           "op": "remove",
@@ -984,7 +1272,11 @@
               "Earn 6X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets.‡"
             ]
           },
-          "note": "6X supermarkets is from the Surpass comparison block; Aspire supermarkets earn the 3X base (general 12)."
+          "note": "6X supermarkets is from the Surpass comparison block; Aspire supermarkets earn the 3X base (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 6X supermarket line sits in the Surpass block; the Aspire terms give supermarkets no bonus (general 12)."
+          }
         },
         {
           "op": "remove",
@@ -1002,7 +1294,11 @@
               "Earn 6X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets.‡"
             ]
           },
-          "note": "6X gas is from the Surpass comparison block; Aspire gas earns the 3X base (general 12)."
+          "note": "6X gas is from the Surpass comparison block; Aspire gas earns the 3X base (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 6X gas line sits in the Surpass block; the Aspire terms give gas stations no bonus (general 12)."
+          }
         },
         {
           "op": "set",
@@ -1013,7 +1309,11 @@
             "sourceId": "amex-hilton-honors-aspire-pricing",
             "quote": "You will receive 4 additional Hilton Honors Bonus Points, for a total of 7,"
           },
-          "note": "U.S. restaurants earn 7X (4 additional points, total 7); the draft left the rate null."
+          "note": "U.S. restaurants earn 7X (4 additional points, total 7); the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 4 additional points for a total of 7 at U.S. restaurants; the draft left the rate null."
+          }
         },
         {
           "op": "set",
@@ -1024,7 +1324,11 @@
             "sourceId": "amex-hilton-honors-aspire-product",
             "quote": "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel"
           },
-          "note": "The draft anchor (\"Points cap applies.\") is from the Platinum comparison block; this rule is the 7X AmexTravel flight rule."
+          "note": "The draft anchor (\"Points cap applies.\") is from the Platinum comparison block; this rule is the 7X AmexTravel flight rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the Platinum-block anchor with the Aspire FAQ sentence, which states 7X on flights booked through American Express Travel."
+          }
         },
         {
           "op": "set",
@@ -1035,7 +1339,11 @@
             "sourceId": "amex-hilton-honors-aspire-product",
             "quote": "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel"
           },
-          "note": "The draft wording (5X prepaid hotels and flights) is from the Platinum comparison block; Aspire pays 7X on flights through AmexTravel."
+          "note": "The draft wording (5X prepaid hotels and flights) is from the Platinum comparison block; Aspire pays 7X on flights through AmexTravel.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Wording from the Aspire FAQ; the draft wording was the Platinum block's 5X line (general 12)."
+          }
         },
         {
           "op": "set",
@@ -1046,7 +1354,11 @@
             "sourceId": "amex-hilton-honors-aspire-product",
             "quote": "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel"
           },
-          "note": "AmexTravel flights earn 7X; the draft left the rate null."
+          "note": "AmexTravel flights earn 7X; the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Aspire FAQ states 7X on flights booked through American Express Travel; the draft left the rate null."
+          }
         },
         {
           "op": "remove",
@@ -1055,7 +1367,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue (general 16)."
+          "note": "Anchorless missing issue (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchorless issue with no detail; removed under general 16."
+          }
         },
         {
           "op": "remove",
@@ -1066,7 +1382,11 @@
               "Points cap applies."
             ]
           },
-          "note": "Anchored on the Platinum comparison block (general 12)."
+          "note": "Anchored on the Platinum comparison block (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on the Platinum block's cap note (general 12)."
+          }
         },
         {
           "op": "remove",
@@ -1078,7 +1398,11 @@
               "Earn 12X Hilton Honors Bonus Points on eligible Hilton purchases.‡"
             ]
           },
-          "note": "The 12X line is from the Surpass comparison block; Aspire is 14X on Hilton (general 12)."
+          "note": "The 12X line is from the Surpass comparison block; Aspire is 14X on Hilton (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 12X line is the Surpass block; Aspire pays 14X on Hilton (general 12)."
+          }
         },
         {
           "op": "remove",
@@ -1090,7 +1414,11 @@
               "Earn 6X Hilton Honors Bonus Points at U.S. restaurants, U.S. gas stations, and U.S. supermarkets.‡"
             ]
           },
-          "note": "The 6X line is from the Surpass comparison block (general 12)."
+          "note": "The 6X line is from the Surpass comparison block (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 6X line is the Surpass block (general 12)."
+          }
         },
         {
           "op": "remove",
@@ -1101,7 +1429,11 @@
               "Earn 7X Hilton Honors Bonus Points at U.S. Restaurants and on Select Travel Purchases‡"
             ]
           },
-          "note": "Single-anchor conflict with no counterpart; the 7X restaurant and travel rate agrees with the terms."
+          "note": "Single-anchor conflict with no counterpart; the 7X restaurant and travel rate agrees with the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "A single anchor stating the card's own 7X rate names no conflict (general 16)."
+          }
         },
         {
           "op": "remove",
@@ -1113,7 +1445,11 @@
               "Card Members can earn 7X Points on purchases of Flights booked directly with airlines or flights booked through American Express Travel, Car rentals purchased directly"
             ]
           },
-          "note": "The 5X line is from the Platinum comparison block (general 12)."
+          "note": "The 5X line is from the Platinum comparison block (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5X line is the Platinum block (general 12)."
+          }
         }
       ],
       "addedRules": [
@@ -1138,7 +1474,11 @@
               "quote": "Card Members can earn 14X Points on purchases made directly with hotels and resorts within the Hilton portfolio."
             }
           ],
-          "note": "14X on Hilton portfolio purchases, dropped by the draft (co-brand partner rule, other)."
+          "note": "14X on Hilton portfolio purchases, dropped by the draft (co-brand partner rule, other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "14X on Hilton portfolio purchases stated in the terms and the FAQ; a co-brand partner rule is other (Amex convention); dropped by the draft."
+          }
         },
         {
           "rule": {
@@ -1161,7 +1501,11 @@
               "quote": "airfare on a scheduled flight charged directly with passenger airlines or amextravel.com"
             }
           ],
-          "note": "7X on flights charged directly with passenger airlines, a separate other rule (Amex conventions)."
+          "note": "7X on flights charged directly with passenger airlines, a separate other rule (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "7X on flights charged directly with passenger airlines as a separate other rule (Amex convention); the two anchors are separated by other words and do not abut."
+          }
         },
         {
           "rule": {
@@ -1184,7 +1528,11 @@
               "quote": "purchases directly from select major car rental companies listed at americanexpress.com/rewards-info"
             }
           ],
-          "note": "7X on car rentals bought directly from select major rental companies (list at americanexpress.com/rewards-info, not in the captures)."
+          "note": "7X on car rentals bought directly from select major rental companies (list at americanexpress.com/rewards-info, not in the captures).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "7X on purchases directly from select major car rental companies stated in the terms; a named set of merchants, so other."
+          }
         }
       ],
       "addedExclusions": [
@@ -1196,7 +1544,11 @@
               "quote": "The charge on your Card for an Add Money transaction does not earn rewards"
             }
           ],
-          "note": "Stated in the pricing terms; missing from the draft."
+          "note": "Stated in the pricing terms; missing from the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Stated in the Send & Split paragraph of the pricing capture; missing from the draft."
+          }
         }
       ],
       "addedIssues": [],
@@ -1208,7 +1560,11 @@
             "sourceId": "amex-hilton-honors-aspire-pricing",
             "quote": "charged directly with a property within the Hilton portfolio, including bookings and incidental charges"
           },
-          "note": "14X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel."
+          "note": "14X on purchases charged directly with Hilton portfolio properties; bookings must be through a Hilton-operated channel.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the charged-directly-with-a-Hilton-property condition; the hint matches the Hilton rule in the terms."
+          }
         },
         {
           "action": "fix",
@@ -1226,7 +1582,11 @@
             "sourceId": "amex-hilton-honors-aspire-pricing",
             "quote": "purchases directly from select major car rental companies listed at americanexpress.com/rewards-info"
           },
-          "note": "The hint named Hilton as the merchant; the rule pays at select car rental companies, which the captures do not list."
+          "note": "The hint named Hilton as the merchant; the rule pays at select car rental companies, which the captures do not list.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rule pays at select car rental companies the captures do not list, not at Hilton; clearing merchants is right."
+          }
         }
       ]
     },
@@ -1252,7 +1612,11 @@
               "Points cap applies."
             ]
           },
-          "note": "5X on AmexTravel prepaid hotels and flights is from the Platinum comparison block; the Bevy terms have no portal rule (general 12)."
+          "note": "5X on AmexTravel prepaid hotels and flights is from the Platinum comparison block; the Bevy terms have no portal rule (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 5X AmexTravel line sits in the Platinum block of the product page; the Bevy terms have no portal rule (general 12, Amex convention)."
+          }
         },
         {
           "op": "set",
@@ -1263,7 +1627,11 @@
             "sourceId": "amex-marriott-bonvoy-bevy-pricing",
             "quote": "Once you reach $15,000 in combined purchases at restaurants worldwide and U.S. supermarkets"
           },
-          "note": "The draft anchor (\"Points cap applies.\") is from the Platinum comparison block."
+          "note": "The draft anchor (\"Points cap applies.\") is from the Platinum comparison block.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the Platinum-block anchor with the Bevy cap sentence of the terms."
+          }
         },
         {
           "op": "set",
@@ -1274,7 +1642,11 @@
             "sourceId": "amex-marriott-bonvoy-bevy-pricing",
             "quote": "Once you reach $15,000 in combined purchases at restaurants worldwide and U.S. supermarkets"
           },
-          "note": "The $15,000 calendar-year cap is combined across restaurants and U.S. supermarkets: one ambiguous issue on the cap sentence (Amex conventions)."
+          "note": "The $15,000 calendar-year cap is combined across restaurants and U.S. supermarkets: one ambiguous issue on the cap sentence (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The combined $15,000 restaurant-and-supermarket cap gets one ambiguous issue on the cap sentence, as the Amex convention requires."
+          }
         }
       ],
       "addedRules": [],
@@ -1287,7 +1659,11 @@
               "quote": "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of traveler's checks, person-to-person transactions,"
             }
           ],
-          "note": "Eligible-purchase exclusions in the terms; the draft had only Add Money."
+          "note": "Eligible-purchase exclusions in the terms; the draft had only Add Money.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Eligible-purchase exclusions stated in the terms; the draft carried only Add Money."
+          }
         }
       ],
       "addedIssues": [],
@@ -1299,7 +1675,11 @@
             "sourceId": "amex-marriott-bonvoy-bevy-pricing",
             "quote": "charged directly with participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores"
           },
-          "note": "6X on purchases charged directly with participating Marriott Bonvoy properties and Marriott-branded retail and online stores."
+          "note": "6X on purchases charged directly with participating Marriott Bonvoy properties and Marriott-branded retail and online stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the participating-properties and Marriott-branded-stores condition; the hint matches the 6X rule in the terms."
+          }
         }
       ]
     },
@@ -1317,7 +1697,11 @@
             "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
             "quote": "airfare on a scheduled flight charged directly with passenger airlines (charter flights and private jet flights are excluded)"
           },
-          "note": "Airline-direct flight wording from the terms (Amex conventions)."
+          "note": "Airline-direct flight wording from the terms (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Airline-direct wording from the terms, as the Amex convention requires; the rule stays other."
+          }
         },
         {
           "op": "remove",
@@ -1339,7 +1723,11 @@
               "Offer ends 12/31/2026."
             ]
           },
-          "note": "The Venue Collection 10% back is an enrolled Amex Offer paid as statement credits, not Marriott Bonvoy earn; it stays as out-of-scope issue 4 (Amex conventions)."
+          "note": "The Venue Collection 10% back is an enrolled Amex Offer paid as statement credits, not Marriott Bonvoy earn; it stays as out-of-scope issue 4 (Amex conventions).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Venue Collection 10% back is an enrolled Amex Offer paid as statement credits under the Amex Offers terms, not Marriott Bonvoy earn; it stays as out-of-scope issue 4."
+          }
         },
         {
           "op": "remove",
@@ -1351,7 +1739,11 @@
               "2X points on all other eligible purchases‡"
             ]
           },
-          "note": "Anchored on the Bevy comparison block; the base rule is added (general 11, 12)."
+          "note": "Anchored on the Bevy comparison block; the base rule is added (general 11, 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the Bevy block of the product page; the base rule is added (general 11 and 12)."
+          }
         },
         {
           "op": "remove",
@@ -1362,7 +1754,11 @@
               "6X points at hotels participating in Marriott Bonvoy®‡"
             ]
           },
-          "note": "The 6X Marriott rule is added (general 11)."
+          "note": "The 6X Marriott rule is added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Moot: the 6X Marriott rule is added (general 11)."
+          }
         },
         {
           "op": "remove",
@@ -1374,7 +1770,11 @@
               "Earn 5X points on prepaid hotels and flights booked through American Express Travel®. Points cap applies.‡"
             ]
           },
-          "note": "Anchored on the Bevy and Platinum comparison blocks (general 12)."
+          "note": "Anchored on the Bevy and Platinum comparison blocks (general 12).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored on the Bevy and Platinum blocks (general 12)."
+          }
         },
         {
           "op": "remove",
@@ -1385,7 +1785,11 @@
               "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of traveler's checks, person-to-person transactions, the purchase or reloading of prepaid cards, and"
             ]
           },
-          "note": "The eligible-purchase exclusions are not an ambiguity; they are added as an exclusion."
+          "note": "The eligible-purchase exclusions are not an ambiguity; they are added as an exclusion.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The eligible-purchase exclusions are not an ambiguity; they are added as an exclusion."
+          }
         },
         {
           "op": "remove",
@@ -1397,7 +1801,11 @@
               "calendar year after using their enrolled Card to make qualifying food and beverage concessions purchases at stadiums and arenas in the American Express Venue Collection™."
             ]
           },
-          "note": "Duplicates out-of-scope issue 4 with a stray 6X anchor."
+          "note": "Duplicates out-of-scope issue 4 with a stray 6X anchor.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Duplicates out-of-scope issue 4 and carries a stray 6X anchor."
+          }
         }
       ],
       "addedRules": [
@@ -1418,7 +1826,33 @@
               "quote": "You will receive 2 Marriott Bonvoy® points for each U.S. dollar of eligible purchases"
             }
           ],
-          "note": "Base 2X, dropped by the draft."
+          "note": "Base 2X, dropped by the draft.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The 2X rate is right, but the terms phrase it as points for each U.S. dollar, which the label lint cannot read. The card's own How You Earn tile on its product page states 2X on other eligible purchases; added as a second anchor from a different capture. Rule fields unchanged.",
+            "replacement": {
+              "rule": {
+                "category": "all-purchases",
+                "issuerWording": "eligible purchases",
+                "rateBps": 200,
+                "paidOnPaymentBps": 0,
+                "cap": null,
+                "activation": null,
+                "usMerchantsOnly": null,
+                "limitedTime": null
+              },
+              "anchors": [
+                {
+                  "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
+                  "quote": "You will receive 2 Marriott Bonvoy® points for each U.S. dollar of eligible purchases"
+                },
+                {
+                  "sourceId": "amex-marriott-bonvoy-brilliant-product",
+                  "quote": "2X Points For Each Dollar Spent on other eligible purchases."
+                }
+              ]
+            }
+          }
         },
         {
           "rule": {
@@ -1441,7 +1875,11 @@
               "quote": "charged directly with participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores"
             }
           ],
-          "note": "6X on Marriott Bonvoy properties and Marriott-branded retail and online stores, dropped by the draft (co-brand partner rule, other)."
+          "note": "6X on Marriott Bonvoy properties and Marriott-branded retail and online stores, dropped by the draft (co-brand partner rule, other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "6X on Marriott Bonvoy properties and Marriott-branded stores stated in the terms; a co-brand partner rule is other (Amex convention); anchors do not abut."
+          }
         }
       ],
       "addedExclusions": [
@@ -1453,7 +1891,11 @@
               "quote": "Eligible purchases do NOT include fees or interest charges, cash advances, purchases of traveler's checks, person-to-person transactions,"
             }
           ],
-          "note": "Eligible-purchase exclusions in the terms (was mislabelled as an ambiguous issue)."
+          "note": "Eligible-purchase exclusions in the terms (was mislabelled as an ambiguous issue).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Eligible-purchase exclusions stated in the terms; the draft had mislabelled them as an ambiguous issue."
+          }
         }
       ],
       "addedIssues": [],
@@ -1465,7 +1907,11 @@
             "sourceId": "amex-marriott-bonvoy-brilliant-pricing",
             "quote": "charged directly with participating Marriott Bonvoy properties, standalone Marriott branded retail establishments, and Marriott branded online stores"
           },
-          "note": "6X on purchases charged directly with participating Marriott Bonvoy properties and Marriott-branded retail and online stores."
+          "note": "6X on purchases charged directly with participating Marriott Bonvoy properties and Marriott-branded retail and online stores.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor states the participating-properties and Marriott-branded-stores condition; the hint matches the 6X rule in the terms."
+          }
         }
       ]
     },
@@ -1497,7 +1943,11 @@
               "quote": "3% cash back on the first $6,000 of U.S. online retail purchases across the Card Account (then 1%)"
             }
           ],
-          "note": "3% on U.S. online retail, $6,000 cap then 1%; the terms give no period and the product page says per year. Dropped by the draft."
+          "note": "3% on U.S. online retail, $6,000 cap then 1%; the terms give no period and the product page says per year. Dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 3% on the first $6,000 of U.S. online retail purchases then 1%; the terms give no period, so year-unspecified is the conservative reading."
+          }
         },
         {
           "rule": {
@@ -1521,7 +1971,11 @@
               "quote": "3% cash back on the first $6,000 of purchases of gasoline at gas stations located in the U.S across the Card Account (then 1%)"
             }
           ],
-          "note": "3% on U.S. gas stations, $6,000 cap then 1%; the terms give no period and the product page says per year. Dropped by the draft."
+          "note": "3% on U.S. gas stations, $6,000 cap then 1%; the terms give no period and the product page says per year. Dropped by the draft.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state 3% on the first $6,000 of U.S. gas station purchases then 1%; no period in the terms, so year-unspecified."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1534,7 +1988,11 @@
               "quote": "At U.S. gas stations, on up to $6,000 per year in purchases (then 1%)."
             }
           ],
-          "note": "The online retail and gas caps say only per year; the terms state calendar year for supermarkets alone."
+          "note": "The online retail and gas caps say only per year; the terms state calendar year for supermarkets alone.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page says per year for the online retail and gas caps while the terms state a period only for supermarkets; ambiguous fits."
+          }
         }
       ],
       "productNoteChanges": []
@@ -1553,7 +2011,11 @@
             "sourceId": "amex-blue-cash-preferred-terms",
             "quote": "if a subscription is bundled with another product or service or billed by a third party, the purchase may not be eligible"
           },
-          "note": "The provider list is in the rewards-info capture, so nothing is missing; the real gap is that bundled or third-party-billed subscriptions may not qualify."
+          "note": "The provider list is in the rewards-info capture, so nothing is missing; the real gap is that bundled or third-party-billed subscriptions may not qualify.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The provider list is in the rewards-info capture, so nothing is missing; the open point is bundled or third-party-billed subscriptions, stated in the terms."
+          }
         },
         {
           "op": "set",
@@ -1564,7 +2026,11 @@
             "sourceId": "amex-blue-cash-preferred-terms",
             "quote": "if a subscription is bundled with another product or service or billed by a third party, the purchase may not be eligible"
           },
-          "note": "Bundled or third-party-billed streaming subscriptions may not earn 6%."
+          "note": "Bundled or third-party-billed streaming subscriptions may not earn 6%.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Ambiguous is the right code: eligibility of bundled subscriptions is uncertain, not absent."
+          }
         }
       ],
       "addedRules": [],
@@ -1578,7 +2044,11 @@
             "sourceId": "amex-rewards-info-retail",
             "quote": "the purchase must be made from a provider that is included on our list of Select U.S. Streaming Subscriptions"
           },
-          "note": "6% streaming applies only to providers on the rewards-info list (in the captures); bundled or third-party-billed subscriptions may not qualify."
+          "note": "6% streaming applies only to providers on the rewards-info list (in the captures); bundled or third-party-billed subscriptions may not qualify.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The anchor from the rewards-info capture, a source of this card, states the select-provider condition; the hint matches."
+          }
         }
       ]
     }
