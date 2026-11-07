@@ -1,6 +1,647 @@
 {
   "schemaVersion": 1,
-  "generatedBy": "renewal session 2026-11-07 (no apply ran: no card was captured)",
-  "description": "Product hints of the verified cards: none, since no card of this batch was captured.",
-  "cards": []
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "First-year 6% (3% plus a 3% bonus) in one chosen category of six; default Gas & EV Charging Stations.",
+          "rate": "6% for 365 days from account opening, then 3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Change once per calendar month in Online or Mobile Banking; no change keeps the category. No BofA Rewards bonus on the extra 3%.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice",
+          "anchorSourceId": "boa-customized-cash-rewards-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "3% in one chosen category: gas and EV charging, online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Default Gas & EV Charging Stations; change once per calendar month. Online Shopping counts only purchases made online via a website or app.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Choose which category you want to earn 3% cash back from the six categories shown below.",
+          "anchorSourceId": "boa-cash-back-category-choices",
+          "verification": "fixed"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-customized-cash-rewards-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus cash rewards; third-party buy now, pay later may not qualify. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-customized-cash-rewards-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-unlimited-cash-rewards-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-travel-rewards-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-premium-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-premium-rewards-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the Travel and Dining rate; those purchases earn 1.5 points per $1. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "your purchase is processed through a third-party payment account",
+          "anchorSourceId": "boa-premium-rewards-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-premium-rewards-elite",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-premium-rewards-elite-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the Travel and Dining rate; those purchases earn 1.5 points per $1. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "your purchase is processed through a third-party payment account",
+          "anchorSourceId": "boa-premium-rewards-elite-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "First-year 6% (3% plus a 3% bonus) in one chosen category of six; default Gas & EV Charging Stations.",
+          "rate": "6% for 365 days from account opening, then 3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Change once per calendar month in Online or Mobile Banking; no change keeps the category. No BofA Rewards bonus on the extra 3%.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice",
+          "anchorSourceId": "boa-customized-cash-rewards-students-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "3% in one chosen category: gas and EV charging, online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Default Gas & EV Charging Stations; change once per calendar month. Online Shopping counts only purchases made online via a website or app.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Choose which category you want to earn 3% cash back from the six categories shown below.",
+          "anchorSourceId": "boa-cash-back-category-choices",
+          "verification": "fixed"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-customized-cash-rewards-students-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus cash rewards; third-party buy now, pay later may not qualify. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-customized-cash-rewards-students-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-unlimited-cash-rewards-students-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-travel-rewards-students-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "First-year 6% (3% plus a 3% bonus) in one chosen category of six; default Gas & EV Charging Stations.",
+          "rate": "6% for 365 days from account opening, then 3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Change once per calendar month in Online or Mobile Banking; no change keeps the category. No BofA Rewards bonus on the extra 3%.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice",
+          "anchorSourceId": "boa-customized-cash-rewards-secured-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "3% in one chosen category: gas and EV charging, online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Default Gas & EV Charging Stations; change once per calendar month. Online Shopping counts only purchases made online via a website or app.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Choose which category you want to earn 3% cash back from the six categories shown below.",
+          "anchorSourceId": "boa-cash-back-category-choices",
+          "verification": "fixed"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-customized-cash-rewards-secured-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus cash rewards; third-party buy now, pay later may not qualify. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-customized-cash-rewards-secured-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-unlimited-cash-rewards-secured-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-travel-rewards-secured",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-travel-rewards-secured-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "First-year 6% (3% plus a 3% bonus) in one chosen category of six; default Gas & EV Charging Stations.",
+          "rate": "6% for 365 days from account opening, then 3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Change once per calendar month in Online or Mobile Banking; no change keeps the category. No BofA Rewards bonus on the extra 3%.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% cash back + 3% first-year cash back bonus in the category of your choice",
+          "anchorSourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "3% in one chosen category: gas and EV charging, online shopping, dining, travel, drug stores, or home improvement and furnishings.",
+          "rate": "3%",
+          "cap": "$2,500 combined quarterly with the 2% grocery and wholesale club category, then 1%",
+          "conditions": "Default Gas & EV Charging Stations; change once per calendar month. Online Shopping counts only purchases made online via a website or app.",
+          "activation": "none for the default option; a non-default option is selected once and stays until changed",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Choose which category you want to earn 3% cash back from the six categories shown below.",
+          "anchorSourceId": "boa-cash-back-category-choices",
+          "verification": "fixed"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-susan-g-komen-customized-cash-rewards-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus cash rewards; third-party buy now, pay later may not qualify. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-susan-g-komen-customized-cash-rewards-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-ascent",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Alaska Airlines and Hawaiian Airlines purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Alaska Airlines / Hawaiian Airlines (Atmos Rewards)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3 Points: Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "boa-atmos-rewards-ascent-pricing"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Atmos 10% rewards boost with eligible Bank of America account",
+          "rate": "+10% points",
+          "cap": "none stated",
+          "conditions": "Requires eligible BofA account; card-specific feature, distinct from BofA Rewards tiers",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "You can also earn a 10% rewards bonus on all points earned on card purchases if you have an eligible Bank of America® account.",
+          "verification": "confirmed",
+          "anchorSourceId": "boa-atmos-rewards-ascent-product"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Atmos Rewards Dining: 1 bonus point per $2 at participating Rewards Network restaurants, on top of the card rate (1.5 points per $1).",
+          "merchants": [
+            "Participating Atmos Rewards Dining restaurants (Rewards Network)"
+          ],
+          "conditions": "Card is enrolled automatically; the restaurant list is at atmosrewards.com/cardbenefits, not in the captures.",
+          "activation": "none (automatic enrollment)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Your card will be automatically enrolled in Atmos™ Rewards Dining, a dining rewards program operated by Rewards Network Establishment Services Inc.",
+          "anchorSourceId": "boa-atmos-rewards-ascent-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "10% points bonus with eligible Bank of America account",
+          "rate": "+10% points",
+          "cap": "none stated",
+          "conditions": "Requires eligible BofA account",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Plus, earn a 10% rewards bonus on all points earned from card purchases if you have an eligible Bank of America® account.",
+          "verification": "confirmed",
+          "anchorSourceId": "boa-atmos-rewards-summit-product"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Alaska Airlines and Hawaiian Airlines purchases booked directly earn 3 points per $1.",
+          "rate": "3 points per $1",
+          "merchants": [
+            "Alaska Airlines",
+            "Hawaiian Airlines"
+          ],
+          "conditions": "Purchases through a third-party merchant such as a travel agency do not earn 3 points.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 points for every $1 of eligible Alaska Airlines and Hawaiian Airlines Net Purchases.",
+          "anchorSourceId": "boa-atmos-rewards-summit-pricing",
+          "verification": "added"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Atmos Rewards Dining: 1 bonus point per $2 at participating Rewards Network restaurants, on top of the card rate (3.5 points per $1).",
+          "merchants": [
+            "Participating Atmos Rewards Dining restaurants (Rewards Network)"
+          ],
+          "conditions": "Card is enrolled automatically; the restaurant list is at atmosrewards.com/cardbenefits, not in the captures.",
+          "activation": "none (automatic enrollment)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Your card will be automatically enrolled in Atmos™ Rewards Dining, a dining rewards program operated by Rewards Network Establishment Services Inc.",
+          "anchorSourceId": "boa-atmos-rewards-summit-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-royal-one",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Royal Caribbean, Celebrity Cruises and Silversea purchases earn 3 points per $1.",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "merchants": [
+            "Royal Caribbean",
+            "Celebrity Cruises",
+            "Silversea"
+          ],
+          "conditions": "The cruise line or ship name must appear as the merchant on the statement. Points redeem for onboard credits and cruise discounts; no cash value is stated.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases",
+          "anchorSourceId": "boa-royal-one-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus points. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-royal-one-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-royal-one-plus",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Royal Caribbean, Celebrity Cruises and Silversea purchases earn 4 points per $1.",
+          "rate": "4 points per $1",
+          "cap": "none stated",
+          "merchants": [
+            "Royal Caribbean",
+            "Celebrity Cruises",
+            "Silversea"
+          ],
+          "conditions": "The cruise line or ship name must appear as the merchant on the statement. Points redeem for onboard credits and cruise discounts; no cash value is stated.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "4 points per dollar spent on eligible Royal Caribbean®, Celebrity Cruises® and Silversea® purchases",
+          "anchorSourceId": "boa-royal-one-plus-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus points. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-royal-one-plus-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-allways-rewards",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Allegiant purchases (air, hotel, car rental, attractions) where Allegiant is the merchant of record earn 3 points per $1.",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "merchants": [
+            "Allegiant"
+          ],
+          "conditions": "Points redeem for Allegiant travel, car rentals, hotel stays and attractions; 30,000 points equal $300 off an Allegiant trip (no cash value).",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3 points per $1 spent on Allegiant purchases (air, hotel, car rental and attractions)",
+          "anchorSourceId": "boa-allways-rewards-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Eligible Air France, KLM and SkyTeam member airline purchases",
+          "rate": "3 miles per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Air France-KLM (Flying Blue)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Miles for every $1 spent on eligible Air France, KLM Royal Dutch Airlines and SkyTeam member airline purchases.",
+          "verification": "confirmed",
+          "anchorSourceId": "boa-air-france-klm-product"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the member airlines or Dining rate of 3 miles; those purchases earn 1.5 miles per $1. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-air-france-klm-pricing",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "issuer": "Bank of America",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Norwegian purchases",
+          "rate": "3 points per $1",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Norwegian Cruise Line"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 points (consisting of 2 bonus points and 1 base point) for every $1 spent on eligible Net Purchases charged through Norwegian Cruise Line.",
+          "verification": "confirmed",
+          "anchorSourceId": "boa-norwegian-cruise-line-world-mastercard-pricing"
+        },
+        {
+          "type": "checkout-method",
+          "summary": "Purchases through a third-party payment account or an unsupported wallet earn only the base rate.",
+          "conditions": "Covers the bonus rewards. Merchant category codes must reach Bank of America.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "processes through a third-party payment account",
+          "anchorSourceId": "boa-norwegian-cruise-line-world-mastercard-pricing",
+          "verification": "added"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "BofA Rewards credit card rewards bonus on purchases; the captures state no tier percentages, thresholds, enrollment rules or start date.",
+          "rate": "not stated in the captures",
+          "cap": "not stated",
+          "conditions": "Join BofA Rewards; eligibility and enrollment are on a page that was not captured.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "starting with a rewards bonus on every credit card purchase.",
+          "anchorSourceId": "boa-norwegian-cruise-line-world-mastercard-product",
+          "verification": "added"
+        }
+      ]
+    }
+  ]
 }

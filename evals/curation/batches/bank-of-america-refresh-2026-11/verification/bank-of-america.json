@@ -1525,8 +1525,13 @@
           },
           "note": "The only value in the capture is a bonus redeemable as a statement credit toward travel and dining purchases; no cash redemption value is stated, so the point value is null (general 3).",
           "adjudication": {
-            "decision": "accepted",
-            "reason": "The only stated value is a statement credit toward travel and dining, not cash; Travel Rewards uses the cash value per the issuer convention, and none is captured here (general 3)."
+            "decision": "modified",
+            "corrected": null,
+            "anchor": {
+              "sourceId": "boa-travel-rewards-students-product",
+              "quote": "earning points to use for statement credit to pay for flights, hotels, vacation packages, cruises, rental cars or baggage fees"
+            },
+            "reason": "Null is right: points go to statement credits for travel and dining only, with no cash value stated (general 3). The verifier's anchor overlapped the draft anchor, so a separate travel-use line replaces it."
           }
         }
       ],
