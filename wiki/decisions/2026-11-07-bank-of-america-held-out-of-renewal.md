@@ -1,7 +1,7 @@
 ---
 type: Decision
-title: The 19 Bank of America cards are held out of renewal 2026-11-07.renewal.2 because the issuer blocks the capture
-description: Every Bank of America page answered the pipeline's headless Chromium capture with HTTP 403 (bot wall) on 2026-11-06 and 2026-11-07, in three freshness re-checks and two batch captures; the request hint returns static HTML without the earn rates; so the seeded batch bank-of-america-refresh-2026-11 ships as a layer with an empty corpus and all 19 cards dropped with that reason, and a later batch restores them when the host answers. Amended 2026-11-07: the pages were captured in the desktop browser pane through `pipeline capture-import` (same normalization and gates) and the batch is through verify; adjudicate waits on the pinned model's limit.
+title: Bank of America in renewal 2026-11-07.renewal.2 — held out after headless capture was blocked, then restored from browser-pane captures
+description: Outcome — all 19 cards ship in 2026-11-07.renewal.2 (second amendment); the original hold-out below no longer applies. Every Bank of America page answered the pipeline's headless Chromium capture with HTTP 403 (bot wall) on 2026-11-06 and 2026-11-07, in three freshness re-checks and two batch captures; the request hint returns static HTML without the earn rates; so the seeded batch bank-of-america-refresh-2026-11 ships as a layer with an empty corpus and all 19 cards dropped with that reason, and a later batch restores them when the host answers. Amended 2026-11-07: the pages were captured in the desktop browser pane through `pipeline capture-import` (same normalization and gates) and the batch is through verify; adjudicate waits on the pinned model's limit.
 status: accepted
 tags: [decision, catalog, pipeline, phase-15, renewal]
 generated:
@@ -18,7 +18,9 @@ sources:
     title: Catalog release runbook, step 3 of renewing
 ---
 
-# The 19 Bank of America cards are held out of renewal `2026-11-07.renewal.2` (2026-11-07)
+# Bank of America in renewal `2026-11-07.renewal.2`: held out, then restored (2026-11-07)
+
+> **Current outcome:** all 19 Bank of America cards ship in `2026-11-07.renewal.2` (177 cards in all). The hold-out in the Decision and Consequences sections was reversed by the second amendment at the end of this record.
 
 ## Context
 The hosted catalog `2026-10-05.renewal.1` expired on 2026-11-04T00:00Z. The renewal's freshness check on 2026-11-06 found all 35 Bank of America sources `flagged`: `bankofamerica.com` answered headless Chromium with an access-denied page (`bot-wall`, `http-error`, `short`) for every page, where the 2026-10-05 check had rendered 34 of them. Two `--only` re-checks the same day (one host at a time) and two captures of the seeded batch `bank-of-america-refresh-2026-11` (18:30 UTC and 03:20 UTC the next day) got HTTP 403 on all 35 pages. A scratch probe with the capture script's documented `request` hint (a plain fetch of the static HTML, used for Synchrony, State Farm and Fidelity pages) returned the product page with 886 of its 1,568 words and none of its earn rates ("1.5%" 0 of 2 mentions), and the pricing pages as a 58-character shell, so that path is no evidence base. A cited source older than 30 days before `verifiedAt` makes the build refuse ([catalog v3 contract](2026-10-02-catalog-v3-contract-details.md)), and every Bank of America source is dated 2026-10-02 or 2026-10-05.
