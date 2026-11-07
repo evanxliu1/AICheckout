@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+  "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
   "batch": "barclays-refresh-2026-11",
   "provenance": "agent-verified",
   "issuer": "Barclays",
@@ -57,7 +57,61 @@
       "apps/api/src/curation/v2/corpus.ts"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-11-06",
+    "filesRead": [
+      "evals/curation/batches/barclays-refresh-2026-11/pipeline/packets/adjudicate.barclays.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/barclays.md",
+      "evals/curation/batches/barclays-refresh-2026-11/verification/barclays.json",
+      "evals/curation/batches/barclays-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/barclays-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/barclays-refresh-2026-11/cards.json",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-titanium-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-titanium-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-black-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-black-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-gold-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-mastercard-gold-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-jetblue-plus-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-jetblue-plus-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-jetblue-premier-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-jetblue-premier-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-plus-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-plus-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-premier-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-wyndham-rewards-earner-premier-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-upromise-world-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-upromise-world-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-lufthansa-miles-more-world-elite-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-lufthansa-miles-more-world-elite-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-emirates-skywards-rewards-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-emirates-skywards-rewards-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-emirates-skywards-premium-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-emirates-skywards-premium-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-barnes-noble-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-barnes-noble-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-gap-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-gap-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-old-navy-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-old-navy-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-banana-republic-encore-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-banana-republic-encore-mastercard-pricing.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-aarp-essential-rewards-mastercard-product.txt",
+      "evals/curation/batches/barclays-refresh-2026-11/captures/barclays-aarp-essential-rewards-mastercard-pricing.txt",
+      "tools/catalog-pipeline/src/label-lint.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "scripts/lib/expansion-verification.mjs",
+      "scripts/lib/expansion-quotes.mjs",
+      "wiki/system/card-expansion-pipeline.md"
+    ]
+  },
   "cards": [
     {
       "cardId": "barclays-mastercard-titanium",
@@ -73,7 +127,11 @@
             "sourceId": "barclays-mastercard-titanium-pricing",
             "quote": "Redemptions for Account statement credits have a redemption rate of 1%."
           },
-          "note": "The terms give a fixed 1% statement-credit (and bank-deposit) redemption rate, so a point is worth 1 cents (Barclays luxury-card convention); the 2% airfare rate is travel-only."
+          "note": "The terms give a fixed 1% statement-credit (and bank-deposit) redemption rate, so a point is worth 1 cents (Barclays luxury-card convention); the 2% airfare rate is travel-only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state a fixed 1% statement-credit (and bank-deposit) redemption rate; the Barclays luxury-card convention sets Titanium to 100, and the 2% airfare rate is travel-only."
+          }
         }
       ],
       "addedRules": [],
@@ -95,7 +153,11 @@
             "sourceId": "barclays-mastercard-black-pricing",
             "quote": "Redemptions for Account statement credits have a redemption rate of 1.5%."
           },
-          "note": "The terms give a fixed 1.5% statement-credit (and bank-deposit) redemption rate, so a point is worth 1.5 cents (Barclays luxury-card convention); the 2% airfare rate is travel-only."
+          "note": "The terms give a fixed 1.5% statement-credit (and bank-deposit) redemption rate, so a point is worth 1.5 cents (Barclays luxury-card convention); the 2% airfare rate is travel-only.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state a fixed 1.5% statement-credit redemption rate; the Barclays luxury-card convention sets Black to 150, and the 2% airfare rate is travel-only."
+          }
         }
       ],
       "addedRules": [],
@@ -115,7 +177,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         },
         {
           "op": "remove",
@@ -124,7 +190,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -146,7 +216,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -157,7 +231,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -168,7 +246,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -179,7 +261,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -190,7 +276,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -201,7 +291,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -212,7 +306,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "must be booked directly through truebluetravel.com"
           },
-          "note": "TrueBlue Travel is the program's booking site (truebluetravel.com): travel-portal under general 4 and the Barclays JetBlue convention."
+          "note": "TrueBlue Travel is the program's booking site (truebluetravel.com): travel-portal under general 4 and the Barclays JetBlue convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms require TrueBlue Travel purchases to be booked through truebluetravel.com, the program's own booking site: travel-portal under general 4 and the Barclays JetBlue convention."
+          }
         },
         {
           "op": "remove",
@@ -221,7 +319,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -235,7 +337,11 @@
             "sourceId": "barclays-jetblue-plus-pricing",
             "quote": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
           },
-          "note": "The terms pay 6X on JetBlue, JetBlue Vacations and TrueBlue Travel purchases as the hint says; the channels and exclusions match the terms."
+          "note": "The terms pay 6X on JetBlue, JetBlue Vacations and TrueBlue Travel purchases as the hint says; the channels and exclusions match the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms' 6X heading and channel definitions match the hint's JetBlue, JetBlue Vacations and TrueBlue Travel description."
+          }
         }
       ]
     },
@@ -253,7 +359,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -264,7 +374,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -275,7 +389,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -286,7 +404,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -297,7 +419,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -308,7 +434,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "a new Membership Account number will be assigned to you and added to your Card Account."
           },
-          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none."
+          "note": "Barclays convention: the terms assign a TrueBlue number to a cardmember without one, so no enrollment step of their own; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms assign a TrueBlue number to a cardmember without one, so there is no enrollment step; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -319,7 +449,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "booked through JetBlue channels (jetblue.com, JetBlue reservations and JetBlue airport ticket counters)"
           },
-          "note": "JetBlue Purchases pay at one merchant (the airline's own channels), not a program booking portal: other under general 4."
+          "note": "JetBlue Purchases pay at one merchant (the airline's own channels), not a program booking portal: other under general 4.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "JetBlue Purchases are items billed by JetBlue through its own channels, one merchant and not a program booking portal: other under general 4 and the JetBlue convention."
+          }
         },
         {
           "op": "set",
@@ -330,7 +464,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "booked through JetBlue Vacations channels (jetbluevacations.com or JetBlue Vacations packages booked over the phone)"
           },
-          "note": "JetBlue Vacations Purchases pay at one merchant: other under general 4 and the Barclays JetBlue convention."
+          "note": "JetBlue Vacations Purchases pay at one merchant: other under general 4 and the Barclays JetBlue convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "JetBlue Vacations Purchases are billed by JetBlue Vacations through its own channels, one merchant: other under general 4 and the JetBlue convention."
+          }
         },
         {
           "op": "remove",
@@ -339,7 +477,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -353,7 +495,11 @@
             "sourceId": "barclays-jetblue-premier-pricing",
             "quote": "6X on JetBlue, JetBlue Vacations and TrueBlue TravelTM Purchases"
           },
-          "note": "The terms pay 6X on JetBlue, JetBlue Vacations and TrueBlue Travel purchases as the hint says; the channels and exclusions match the terms."
+          "note": "The terms pay 6X on JetBlue, JetBlue Vacations and TrueBlue Travel purchases as the hint says; the channels and exclusions match the terms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms' 6X heading and channel definitions match the hint's JetBlue, JetBlue Vacations and TrueBlue Travel description."
+          }
         }
       ]
     },
@@ -371,7 +517,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -382,7 +532,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -393,7 +547,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -404,7 +562,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -415,7 +577,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -426,7 +592,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -437,7 +607,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "remove",
@@ -446,7 +620,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -460,7 +638,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-product",
             "quote": "eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles"
           },
-          "note": "Product page states 5 points per $1 at Hotels by Wyndham including Travel Bundles; the terms add Caesars Rewards and Trademark Collection properties as the conditions say."
+          "note": "Product page states 5 points per $1 at Hotels by Wyndham including Travel Bundles; the terms add Caesars Rewards and Trademark Collection properties as the conditions say.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 5 points per $1 at Hotels by Wyndham including Wyndham Travel Bundles, as the hint says."
+          }
         }
       ]
     },
@@ -478,7 +660,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -489,7 +675,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -500,7 +690,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -511,7 +705,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -522,7 +720,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -533,7 +735,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -544,7 +750,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
             "quote": "4X on Wyndham Destinations, Dining, Grocery Store and Travel Purchases"
           },
-          "note": "The terms pay 4X on Wyndham Destinations (Club Wyndham, WorldMark, Margaritaville and Shell Vacations properties, maintenance fees, timeshare loans); the draft dropped the rate."
+          "note": "The terms pay 4X on Wyndham Destinations (Club Wyndham, WorldMark, Margaritaville and Shell Vacations properties, maintenance fees, timeshare loans); the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 4X heading names Wyndham Destinations and the following sentence pays 4 points per $1 at the Club Wyndham, WorldMark and Margaritaville properties; the draft dropped the rate."
+          }
         },
         {
           "op": "remove",
@@ -553,7 +763,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         },
         {
           "op": "remove",
@@ -562,7 +776,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         },
         {
           "op": "remove",
@@ -574,7 +792,11 @@
               "Additionally, purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not earn additional points."
             ]
           },
-          "note": "Anchored only on the mobile-wallet and third-party payment boilerplate, which the Barclays convention does not record per card."
+          "note": "Anchored only on the mobile-wallet and third-party payment boilerplate, which the Barclays convention does not record per card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on the wallet and third-party-payment boilerplate, which the Barclays convention does not record per card."
+          }
         }
       ],
       "addedRules": [
@@ -612,7 +834,11 @@
               "quote": "there is no limit to the total points you can earn using your Card Account."
             }
           ],
-          "note": "Travel purchases include gas, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other)."
+          "note": "Travel purchases include gas, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define travel purchases to include gas, which has its own shared category; split out at 4X as on the Premier draft, with the uncapped-points sentence and the enrollment clause anchored."
+          }
         },
         {
           "rule": {
@@ -648,7 +874,11 @@
               "quote": "there is no limit to the total points you can earn using your Card Account."
             }
           ],
-          "note": "Travel purchases include EV charging, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other)."
+          "note": "Travel purchases include EV charging, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define travel purchases to include EV charging, which has its own shared category; split out at 4X as on the Premier draft, with the uncapped-points sentence and the enrollment clause anchored."
+          }
         },
         {
           "rule": {
@@ -684,7 +914,11 @@
               "quote": "there is no limit to the total points you can earn using your Card Account."
             }
           ],
-          "note": "Travel purchases include rideshare and trains, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other)."
+          "note": "Travel purchases include rideshare and trains, which has its own shared category; split out as on the Premier card (rule 4 keeps airfare, car rental and tolls as other).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define travel purchases to include rideshare, tolls and trains, which has its own shared category; split out at 4X as on the Premier draft, with the uncapped-points sentence and the enrollment clause anchored."
+          }
         }
       ],
       "addedExclusions": [],
@@ -697,7 +931,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-plus-product",
             "quote": "eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles"
           },
-          "note": "Product page states 6 points per $1 at Hotels by Wyndham including Travel Bundles; the terms' 6X Properties match."
+          "note": "Product page states 6 points per $1 at Hotels by Wyndham including Travel Bundles; the terms' 6X Properties match.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 6 points per $1 at Hotels by Wyndham including Wyndham Travel Bundles, as the hint says."
+          }
         }
       ]
     },
@@ -715,7 +953,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -726,7 +968,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -737,7 +983,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -748,7 +998,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -759,7 +1013,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -770,7 +1028,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -781,7 +1043,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -792,7 +1058,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "set",
@@ -803,7 +1073,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window."
+          "note": "Barclays convention: a cardmember without a Wyndham Rewards number consents to and is enrolled in the program, so activation is none. The draft's enroll-once read the clipped invalid-number window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Wyndham Rewards number by consent, with no step of their own; activation none per the Barclays activation convention. The draft's enroll-once read only the clipped invalid-number window."
+          }
         },
         {
           "op": "remove",
@@ -812,7 +1086,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -826,7 +1104,11 @@
             "sourceId": "barclays-wyndham-rewards-earner-premier-product",
             "quote": "eligible purchases made at Hotels by Wyndham including Wyndham Travel Bundles"
           },
-          "note": "Product page states 8 points per $1 at Hotels by Wyndham including Travel Bundles; the terms' 8X Properties match."
+          "note": "Product page states 8 points per $1 at Hotels by Wyndham including Travel Bundles; the terms' 8X Properties match.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 8 points per $1 at Hotels by Wyndham including Wyndham Travel Bundles, as the hint says."
+          }
         }
       ]
     },
@@ -844,7 +1126,11 @@
             "sourceId": "barclays-upromise-world-mastercard-pricing",
             "quote": "when your Upromise Program Account is linked to an eligible College Savings Plan"
           },
-          "note": "The enroll-once on the 1.529% rule is the one-time link to a College Savings Plan (Barclays convention); anchor the link condition instead of the program-enrollment window."
+          "note": "The enroll-once on the 1.529% rule is the one-time link to a College Savings Plan (Barclays convention); anchor the link condition instead of the program-enrollment window.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 1.529% rule's enroll-once is the one-time link to a College Savings Plan (Barclays Upromise convention); anchoring the link condition instead of the enrollment window states that step."
+          }
         },
         {
           "op": "set",
@@ -855,7 +1141,11 @@
             "sourceId": "barclays-upromise-world-mastercard-pricing",
             "quote": "are enrolled in the Upromise Program"
           },
-          "note": "Barclays convention: cardmembers are enrolled in the Upromise Program as part of the application, so the 1.25% base needs no step; activation none."
+          "note": "Barclays convention: cardmembers are enrolled in the Upromise Program as part of the application, so the 1.25% base needs no step; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are enrolled in the Upromise Program as part of their application, so the 1.25% base needs no step; activation none per the Barclays convention."
+          }
         },
         {
           "op": "remove",
@@ -873,7 +1163,11 @@
               "Cardmembers who are not already Upromise members are enrolled in the Upromise Program and accept the terms of the Upromise Member Agreement as part of"
             ]
           },
-          "note": "The MyGiftCardsPlus benefit states no earn rate, only an annual maximum; Barclays convention makes it a merchant product note, not a rule."
+          "note": "The MyGiftCardsPlus benefit states no earn rate, only an annual maximum; Barclays convention makes it a merchant product note, not a rule.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The MyGiftCardsPlus benefit states a yearly rewards maximum and no earn rate; the Barclays convention makes it a merchant product note, not a rule."
+          }
         },
         {
           "op": "remove",
@@ -884,7 +1178,11 @@
               "Get up to $250 in Cash Back Rewards per calendar year on eligible gift card purchases at MyGiftCardsPlus, powered by Upromise."
             ]
           },
-          "note": "Duplicates the out-of-scope MyGiftCardsPlus issue (issue 3) on the same sentence."
+          "note": "Duplicates the out-of-scope MyGiftCardsPlus issue (issue 3) on the same sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "This missing issue duplicates the out-of-scope issue anchored on the same MyGiftCardsPlus sentence, which stays."
+          }
         },
         {
           "op": "remove",
@@ -896,7 +1194,11 @@
               "Additionally, purchases made through third parties, including online marketplaces and resellers, or using a third-party payment account will not earn additional Cash Back Rewards."
             ]
           },
-          "note": "Anchored only on the mobile-wallet and third-party payment boilerplate, which the Barclays convention does not record per card."
+          "note": "Anchored only on the mobile-wallet and third-party payment boilerplate, which the Barclays convention does not record per card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on the wallet and third-party-payment boilerplate, which the Barclays convention does not record per card."
+          }
         }
       ],
       "addedRules": [],
@@ -919,7 +1221,11 @@
             "sourceId": "barclays-upromise-world-mastercard-product",
             "quote": "Get up to $250 in Cash Back Rewards per calendar year on eligible gift card purchases at MyGiftCardsPlus"
           },
-          "note": "Records the gift-card benefit removed as a rule; the cap is on rewards earned, and no earn rate is stated."
+          "note": "Records the gift-card benefit removed as a rule; the cap is on rewards earned, and no earn rate is stated.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Records the removed gift-card rule as a merchant note with its $250 yearly rewards cap and no stated rate, anchored on the product page."
+          }
         }
       ]
     },
@@ -937,7 +1243,11 @@
             "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
             "quote": "You earn 1 Mile for every $1 spent on all other Net Purchases made with your Card Account."
           },
-          "note": "The terms pay 1 Mile per $1 on all other purchases; the draft dropped the rate."
+          "note": "The terms pay 1 Mile per $1 on all other purchases; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 1 Mile for every $1 on all other Net Purchases; the draft dropped the base rate."
+          }
         },
         {
           "op": "set",
@@ -948,7 +1258,11 @@
             "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
             "quote": "You earn 1 Mile for every $1 spent on all other Net Purchases made with your Card Account."
           },
-          "note": "The status-conversion sentence does not state the earn currency; anchor the Miles earning sentence (miles count as points)."
+          "note": "The status-conversion sentence does not state the earn currency; anchor the Miles earning sentence (miles count as points).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The status-conversion sentence does not state the earn currency; the Miles earning sentence does, and miles are labelled as points."
+          }
         },
         {
           "op": "remove",
@@ -960,7 +1274,11 @@
               "Purchases must be submitted by merchants using the merchant category codes (and merchant identifiers) for purchases in the above-specified categories to qualify for the additional"
             ]
           },
-          "note": "Missing issue anchored on the status conversion and the merchant-coding boilerplate; the missing 2X rule is added below."
+          "note": "Missing issue anchored on the status conversion and the merchant-coding boilerplate; the missing 2X rule is added below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The issue is anchored on the status conversion and the merchant-coding boilerplate; the 2X rule it hinted at is added, so it is moot (general 11, Barclays issues convention)."
+          }
         }
       ],
       "addedRules": [
@@ -998,7 +1316,11 @@
               "quote": "there is no limit to the total Miles you can earn using your Card Account."
             }
           ],
-          "note": "2 Miles per $1 on tickets bought directly from the nine named integrated partner airlines (Lufthansa, SWISS, Austrian and others); single airline group, so other. Enroll-once per the Barclays Lufthansa convention."
+          "note": "2 Miles per $1 on tickets bought directly from the nine named integrated partner airlines (Lufthansa, SWISS, Austrian and others); single airline group, so other. Enroll-once per the Barclays Lufthansa convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 2 Miles per $1 on tickets bought directly from the named integrated partner airlines: one airline group, so other; enroll-once per the Barclays Lufthansa convention; the no-limit sentence states uncapped Miles."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1011,7 +1333,11 @@
             "sourceId": "barclays-lufthansa-miles-more-world-elite-product",
             "quote": "spent on Miles & More partner airline tickets"
           },
-          "note": "Product page and terms state 2 miles per $1 on Miles & More partner airline tickets."
+          "note": "Product page and terms state 2 miles per $1 on Miles & More partner airline tickets.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The product page states 2 Miles per $1 on Miles & More partner airline tickets, matching the hint and the terms."
+          }
         }
       ]
     },
@@ -1029,7 +1355,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the clipped invalid-number window with the clause that states the enrollment, as the Barclays convention directs."
+          }
         },
         {
           "op": "set",
@@ -1040,7 +1370,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -1051,7 +1385,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the clipped invalid-number window with the clause that states the enrollment, as the Barclays convention directs."
+          }
         },
         {
           "op": "set",
@@ -1062,7 +1400,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -1073,7 +1415,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the clipped invalid-number window with the clause that states the enrollment, as the Barclays convention directs."
+          }
         },
         {
           "op": "set",
@@ -1084,7 +1430,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -1095,7 +1445,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "You earn 1 Skywards Mile for every $1 (USD 1) spent on all other Net Purchases made with your Card Account."
           },
-          "note": "The terms pay 1 Skywards Mile per $1 on all other purchases; the draft dropped the rate."
+          "note": "The terms pay 1 Skywards Mile per $1 on all other purchases; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 1 Skywards Mile for every $1 on all other Net Purchases; the draft dropped the base rate."
+          }
         },
         {
           "op": "remove",
@@ -1107,7 +1461,11 @@
               "Miles for every $1 (USD 1) spent on eligible Net Purchases made with your Card Account on airfare, hotel and car rental purchases (“Travel Spends”)."
             ]
           },
-          "note": "Missing issue anchored only on earning sentences that are already rules."
+          "note": "Missing issue anchored only on earning sentences that are already rules.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on earning sentences already labelled as rules (Barclays issues convention)."
+          }
         },
         {
           "op": "remove",
@@ -1118,7 +1476,11 @@
               "Emirates Skywards manages the Program including redemption. You can obtain information regarding the redemption options available online at emirates.com or via the Emirates App."
             ]
           },
-          "note": "Missing issue anchored only on a redemption pointer."
+          "note": "Missing issue anchored only on a redemption pointer.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Anchored only on a redemption pointer, which states no labelling problem (Barclays issues convention)."
+          }
         }
       ],
       "addedRules": [],
@@ -1132,7 +1494,11 @@
             "sourceId": "barclays-emirates-skywards-rewards-pricing",
             "quote": "Emirates Spends are categorized as transactions made on emirates.com or at the Emirates Sales office."
           },
-          "note": "The terms pay 3 Skywards Miles per $1 on Emirates Spends (emirates.com, Emirates Sales office) and exclude inflight purchases, as the hint says."
+          "note": "The terms pay 3 Skywards Miles per $1 on Emirates Spends (emirates.com, Emirates Sales office) and exclude inflight purchases, as the hint says.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define Emirates Spends as emirates.com and Emirates Sales office transactions and exclude inflight purchases, as the hint says."
+          }
         }
       ]
     },
@@ -1150,7 +1516,16 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "modified",
+            "reason": "The clipped invalid-number window should go, as the verifier says, but rule 0's remaining evidence (the product page's 1 Skywards Mile on all other purchases) states no per-dollar unit. Replace it with the terms' sentence stating 1 Skywards Mile for every $1 on all other Net Purchases; the enrollment clause still joins this rule's anchors through fix 1, so the Barclays activation convention is met.",
+            "corrected": "You earn 1 Skywards Mile for every $1 (USD 1) spent on all other Net Purchases made with your Card Account.",
+            "anchor": {
+              "sourceId": "barclays-emirates-skywards-premium-pricing",
+              "quote": "You earn 1 Skywards Mile for every $1 (USD 1) spent on all other Net Purchases made with your Card Account."
+            }
+          }
         },
         {
           "op": "set",
@@ -1161,7 +1536,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -1172,7 +1551,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the clipped invalid-number window with the clause that states the enrollment, as the Barclays convention directs."
+          }
         },
         {
           "op": "set",
@@ -1183,7 +1566,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "set",
@@ -1194,7 +1581,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment."
+          "note": "The clipped invalid-number window abuts the enrollment clause; replace it with the clause that states the enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Replaces the clipped invalid-number window with the clause that states the enrollment, as the Barclays convention directs."
+          }
         },
         {
           "op": "set",
@@ -1205,7 +1596,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "you consent to and will be enrolled in the Program"
           },
-          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none."
+          "note": "Barclays convention: a cardmember without a Skywards number consents to and is enrolled in the program; activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms enroll a cardmember without a Skywards number by consent; activation none per the Barclays activation convention."
+          }
         },
         {
           "op": "remove",
@@ -1214,7 +1609,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -1228,7 +1627,11 @@
             "sourceId": "barclays-emirates-skywards-premium-pricing",
             "quote": "Emirates Spends are categorized as transactions made on emirates.com or at the Emirates Sales office."
           },
-          "note": "The terms pay 3 Skywards Miles per $1 on Emirates Spends (emirates.com, Emirates Sales office) and exclude inflight purchases, as the hint says."
+          "note": "The terms pay 3 Skywards Miles per $1 on Emirates Spends (emirates.com, Emirates Sales office) and exclude inflight purchases, as the hint says.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define Emirates Spends as emirates.com and Emirates Sales office transactions and exclude inflight purchases, as the hint says."
+          }
         }
       ]
     },
@@ -1246,7 +1649,11 @@
             "sourceId": "barclays-barnes-noble-mastercard-pricing",
             "quote": "“Points” are the Program rewards currency earned for transactions made with your Account."
           },
-          "note": "The program currency is Points (2X restaurants, 1X elsewhere); the 5% store rebate is a statement credit, flagged as an issue."
+          "note": "The program currency is Points (2X restaurants, 1X elsewhere); the 5% store rebate is a statement credit, flagged as an issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms define Points as the program rewards currency; the 5% rebate is a statement credit kept as a rule with its own issue."
+          }
         },
         {
           "op": "set",
@@ -1257,7 +1664,11 @@
             "sourceId": "barclays-barnes-noble-mastercard-pricing",
             "quote": "You will automatically be issued Barnes & Noble eGiftCards by email delivery each time you accumulate 2,500 Points."
           },
-          "note": "Points redeem only as Barnes & Noble eGiftCards per 2,500 points; gift cards are not a point value (general 3, Barclays convention), so null."
+          "note": "Points redeem only as Barnes & Noble eGiftCards per 2,500 points; gift cards are not a point value (general 3, Barclays convention), so null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Points redeem only as Barnes & Noble eGiftCards per 2,500 Points; gift cards set no point value (general 3 and the Barclays B&N convention), so null with the anchor recorded."
+          }
         }
       ],
       "addedRules": [
@@ -1286,7 +1697,11 @@
               "quote": "Get 5% back on all B&N and Paper Source"
             }
           ],
-          "note": "5% statement-credit rebate at the Barnes & Noble family of stores and bn.com; single merchant family, so other (general 4). The no-limit sentence covers Points only, so cap null."
+          "note": "5% statement-credit rebate at the Barnes & Noble family of stores and bn.com; single merchant family, so other (general 4). The no-limit sentence covers Points only, so cap null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "5% statement-credit rebate at the listed Barnes & Noble family stores and bn.com: one merchant family, so other (general 4). The no-limit sentence covers Points, not rebates, so cap stays null (general 21). Terms say nothing about enrollment, so activation null."
+          }
         },
         {
           "rule": {
@@ -1318,7 +1733,11 @@
               "quote": "there is no limit to the total Points you can earn and your Points will not expire."
             }
           ],
-          "note": "2X at restaurants and fast-food restaurants by merchant category code, excluding Barnes & Noble Café."
+          "note": "2X at restaurants and fast-food restaurants by merchant category code, excluding Barnes & Noble Café.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 2 Points per $1 at restaurants and fast-food restaurants by merchant category code, Barnes & Noble Cafe excluded; the no-limit sentence states uncapped Points."
+          }
         },
         {
           "rule": {
@@ -1346,7 +1765,11 @@
               "quote": "there is no limit to the total Points you can earn and your Points will not expire."
             }
           ],
-          "note": "1X base on everything else; Barnes & Noble purchases earn the rebate instead."
+          "note": "1X base on everything else; Barnes & Noble purchases earn the rebate instead.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 1 Point per $1 on all other Net Purchases, Barnes & Noble purchases excluded; the no-limit sentence states uncapped Points."
+          }
         }
       ],
       "addedExclusions": [
@@ -1358,7 +1781,11 @@
               "quote": "fees, interest charges and unauthorized/fraudulent purchases are not considered Net Purchases and do not earn Points."
             }
           ],
-          "note": "Standard Barclays non-earning transactions."
+          "note": "Standard Barclays non-earning transactions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list these transactions as not Net Purchases and not earning Points."
+          }
         },
         {
           "text": "No Points are earned while the Account is past due.",
@@ -1368,7 +1795,11 @@
               "quote": "You may not earn Points through the use of your Account during any period in which your Account is past due."
             }
           ],
-          "note": "Past-due periods earn nothing."
+          "note": "Past-due periods earn nothing.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms state no Points are earned while the Account is past due."
+          }
         }
       ],
       "addedIssues": [
@@ -1380,7 +1811,11 @@
               "quote": "You will automatically be issued Barnes & Noble eGiftCards by email delivery each time you accumulate 2,500 Points."
             }
           ],
-          "note": "Store-only rewards: Points are usable only as Barnes & Noble eGiftCards (general 14, Barclays convention)."
+          "note": "Store-only rewards: Points are usable only as Barnes & Noble eGiftCards (general 14, Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Store-only redemption issue required by general 14 and the Barclays B&N convention, anchored on the eGiftCard sentence."
+          }
         },
         {
           "code": "ambiguous",
@@ -1390,7 +1825,11 @@
               "quote": "Rebates will be reflected as a credit on your billing statement."
             }
           ],
-          "note": "The 5% store rebate is a statement credit while the other rules earn Points redeemed as gift cards, so one card mixes two reward forms."
+          "note": "The 5% store rebate is a statement credit while the other rules earn Points redeemed as gift cards, so one card mixes two reward forms.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The rebate posts as a statement credit while the other rules earn Points; the anchor states the mixed reward form the schema cannot express."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1401,7 +1840,11 @@
             "sourceId": "barclays-barnes-noble-mastercard-pricing",
             "quote": "Doubleday, Ink Newstand and Charlesbank stores (“Barnes & Noble Stores”) or online at bn.com."
           },
-          "note": "The terms pay a 5% rebate at the listed Barnes & Noble family stores and online at bn.com, as the hint says."
+          "note": "The terms pay a 5% rebate at the listed Barnes & Noble family stores and online at bn.com, as the hint says.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms list the Barnes & Noble family stores and bn.com for the 5% rebate, as the hint says."
+          }
         },
         {
           "action": "add",
@@ -1416,7 +1859,11 @@
             "sourceId": "barclays-barnes-noble-mastercard-product",
             "quote": "Automatically receive a $25 Barnes & Noble Gift Card"
           },
-          "note": "Records the gift-card-only redemption that keeps the point value null (Barclays convention)."
+          "note": "Records the gift-card-only redemption that keeps the point value null (Barclays convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Closed-loop note for the gift-card-only redemption that keeps the point value null (Barclays B&N convention); the $25 figure is on the product page."
+          }
         }
       ]
     },
@@ -1434,7 +1881,11 @@
             "sourceId": "barclays-gap-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20."
+          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Encore points are store-only points with a stated fixed value of 500 points = $1; 20 under general 14 and the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1445,7 +1896,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1456,7 +1911,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1467,7 +1926,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1478,7 +1941,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1489,7 +1956,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "remove",
@@ -1498,7 +1969,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [
@@ -1536,7 +2011,11 @@
               "quote": "will be automatically enrolled in the Program"
             }
           ],
-          "note": "Family-of-brands purchases made through a payment platform earn 5 points per $1 at the Mastercard level (10 at World levels), as on the sibling cards."
+          "note": "Family-of-brands purchases made through a payment platform earn 5 points per $1 at the Mastercard level (10 at World levels), as on the sibling cards.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 5 points per dollar on Family of Brands purchases made through a payment platform at the Mastercard level; the Gap draft lacked the rule the sibling drafts carry."
+          }
         }
       ],
       "addedExclusions": [],
@@ -1549,7 +2028,11 @@
               "quote": "10 points for every dollar spent if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention)."
+          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Labels use the Mastercard-level rates; the World and World Elite 10-point rate is recorded as ambiguous per the Gap convention."
+          }
         },
         {
           "code": "ambiguous",
@@ -1559,7 +2042,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14)."
+          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Store-only Encore points carry the ambiguous issue required by general 14, anchored on the product page's redemption sentence."
+          }
         },
         {
           "code": "conflicting",
@@ -1573,7 +2060,11 @@
               "quote": "or using a third-party payment account will not qualify."
             }
           ],
-          "note": "Payment-platform purchases earn 5 points, yet purchases using a third-party payment account do not qualify; the terms conflict for PayPal-type checkouts."
+          "note": "Payment-platform purchases earn 5 points, yet purchases using a third-party payment account do not qualify; the terms conflict for PayPal-type checkouts.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 5 points on payment-platform purchases yet say third-party payment accounts do not qualify; a genuine conflict, also labelled on the sibling drafts."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1595,7 +2086,11 @@
             "sourceId": "barclays-gap-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates."
+          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures never mention gap.com, oldnavy.com or outlets; the restated hint follows the terms' Family of Brands definition and stated rates."
+          }
         },
         {
           "action": "add",
@@ -1607,7 +2102,11 @@
             "sourceId": "barclays-gap-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption behind the point value of 20."
+          "note": "Records the store-only redemption behind the point value of 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Closed-loop note recording the Encore Market and Gap Inc. brands redemption behind the point value of 20."
+          }
         }
       ]
     },
@@ -1625,7 +2124,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20."
+          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Encore points are store-only points with a stated fixed value of 500 points = $1; 20 under general 14 and the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1636,7 +2139,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1647,7 +2154,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1658,7 +2169,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1669,7 +2184,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1680,7 +2199,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1691,7 +2214,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1702,7 +2229,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "apparel/clothing store Net Purchases outside our Family of Brands, in locations outside the United States or Puerto Rico"
           },
-          "note": "The draft wording is not verbatim; use the terms' wording."
+          "note": "The draft wording is not verbatim; use the terms' wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was clipped or not verbatim; the corrected text is the terms' own wording."
+          }
         },
         {
           "op": "set",
@@ -1713,7 +2244,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "on these platforms, you will earn 5 points for every dollar spent"
           },
-          "note": "Payment-platform purchases earn 5 points per $1 at the Mastercard level; the draft dropped the rate."
+          "note": "Payment-platform purchases earn 5 points per $1 at the Mastercard level; the draft dropped the rate.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The terms pay 5 points per dollar on payment-platform purchases at the Mastercard level; the draft dropped the rate."
+          }
         },
         {
           "op": "remove",
@@ -1722,7 +2257,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -1736,7 +2275,11 @@
               "quote": "10 points for every dollar spent if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention)."
+          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Labels use the Mastercard-level rates; the World and World Elite 10-point rate is recorded as ambiguous per the Gap convention."
+          }
         },
         {
           "code": "ambiguous",
@@ -1746,7 +2289,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14)."
+          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Store-only Encore points carry the ambiguous issue required by general 14, anchored on the product page's redemption sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1768,7 +2315,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates."
+          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures never mention gap.com, oldnavy.com or outlets; the restated hint follows the terms' Family of Brands definition and stated rates."
+          }
         },
         {
           "action": "add",
@@ -1780,7 +2331,11 @@
             "sourceId": "barclays-old-navy-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption behind the point value of 20."
+          "note": "Records the store-only redemption behind the point value of 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Closed-loop note recording the Encore Market and Gap Inc. brands redemption behind the point value of 20."
+          }
         }
       ]
     },
@@ -1798,7 +2353,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20."
+          "note": "Encore points are store-only points with a stated fixed value, 500 points = $1 Reward (general 14, Barclays Gap convention): 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Encore points are store-only points with a stated fixed value of 500 points = $1; 20 under general 14 and the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1809,7 +2368,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1820,7 +2383,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1831,7 +2398,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1842,7 +2413,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1853,7 +2428,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1864,7 +2443,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "will be automatically enrolled in the Program when applying for a Gap Inc. credit card"
           },
-          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none."
+          "note": "Barclays convention: cardmembers are automatically enrolled in the Encore program when applying, so activation none.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Cardmembers are automatically enrolled in the Encore program when applying; activation none per the Barclays Gap convention."
+          }
         },
         {
           "op": "set",
@@ -1875,7 +2458,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "our brands in locations outside of the United States and Puerto Rico"
           },
-          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording."
+          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was clipped or not verbatim; the corrected text is the terms' own wording."
+          }
         },
         {
           "op": "set",
@@ -1886,7 +2473,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "Apparel Purchases Outside our Family of Brands"
           },
-          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording."
+          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was clipped or not verbatim; the corrected text is the terms' own wording."
+          }
         },
         {
           "op": "set",
@@ -1897,7 +2488,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "apparel/clothing store Net Purchases outside our Family of Brands, in locations outside the United States or Puerto Rico"
           },
-          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording."
+          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was clipped or not verbatim; the corrected text is the terms' own wording."
+          }
         },
         {
           "op": "set",
@@ -1908,7 +2503,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "payment platform such as Afterpay, Klarna, PayPal or TikTok"
           },
-          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording."
+          "note": "The draft wording is clipped with an ellipsis and not verbatim; use the terms' wording.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The draft wording was clipped or not verbatim; the corrected text is the terms' own wording."
+          }
         },
         {
           "op": "remove",
@@ -1917,7 +2516,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
@@ -1931,7 +2534,11 @@
               "quote": "10 points for every dollar spent if your Account is at the World Mastercard or World Elite Mastercard level"
             }
           ],
-          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention)."
+          "note": "Labels use the Mastercard-level rates; World and World Elite accounts earn 10 points on the 5-point rules (Barclays Gap convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Labels use the Mastercard-level rates; the World and World Elite 10-point rate is recorded as ambiguous per the Gap convention."
+          }
         },
         {
           "code": "ambiguous",
@@ -1941,7 +2548,11 @@
               "quote": "redeemable in the Encore Market with exclusive products, offers, and experiences or on purchases at the Gap Inc. brands"
             }
           ],
-          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14)."
+          "note": "Store-only rewards: Encore points redeem only in the Encore Market or at Gap Inc. brands (general 14).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Store-only Encore points carry the ambiguous issue required by general 14, anchored on the product page's redemption sentence."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1963,7 +2574,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
             "quote": "“Family of Brands” means Gap, Old Navy, Banana Republic, and Athleta brands."
           },
-          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates."
+          "note": "The captures do not name gap.com/oldnavy.com or outlets; restate the hint from the terms' Family of Brands definition and rates.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The captures never mention gap.com, oldnavy.com or outlets; the restated hint follows the terms' Family of Brands definition and stated rates."
+          }
         },
         {
           "action": "add",
@@ -1975,7 +2590,11 @@
             "sourceId": "barclays-banana-republic-encore-mastercard-product",
             "quote": "500 points = $1 Reward"
           },
-          "note": "Records the store-only redemption behind the point value of 20."
+          "note": "Records the store-only redemption behind the point value of 20.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Closed-loop note recording the Encore Market and Gap Inc. brands redemption behind the point value of 20."
+          }
         }
       ]
     },
@@ -1991,13 +2610,67 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Missing issue with no anchor; anchorless issues are removed (general 16)."
+          "note": "Missing issue with no anchor; anchorless issues are removed (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Missing issue with no anchor and no detail; general 16 removes it."
+          }
         }
       ],
       "addedRules": [],
       "addedExclusions": [],
       "addedIssues": [],
       "productNoteChanges": []
+    }
+  ],
+  "labelLintAcks": [
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 0,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 1,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "ruleIndex": 4,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "ruleIndex": 3,
+      "check": "rate",
+      "reason": "anchor-truncated"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "ruleIndex": 4,
+      "check": "rate",
+      "reason": "anchor-truncated"
     }
   ]
 }
