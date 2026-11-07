@@ -690,8 +690,13 @@
           },
           "note": "The terms pay 2X at restaurants worldwide (Amex conventions: worldwide is usMerchantsOnly false).",
           "adjudication": {
-            "decision": "accepted",
-            "reason": "The terms pay 2X at restaurants worldwide; worldwide restaurant rules are usMerchantsOnly false (Amex convention)."
+            "decision": "modified",
+            "reason": "The value (usMerchantsOnly false) is right, but the verifier's anchor overlaps the end of the draft's 25-word dining anchor in the pricing terms and extends the run to 26 words, failing the joined-run quote check. Replaced with the product page's own FAQ line stating 2X miles at restaurants worldwide: a different capture, so it cannot abut.",
+            "corrected": false,
+            "anchor": {
+              "sourceId": "amex-delta-skymiles-platinum-product",
+              "quote": "2X miles at restaurants worldwide"
+            }
           }
         },
         {
