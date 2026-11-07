@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "timeout": 6,
+    "needs_review": 9
+  },
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-strata-product",
+        "citi-strata-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 8,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1043955,
+      "inputTokenEstimate": 10087,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:16:20.452Z"
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 7,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 7,
+        "reported_missing": 1
+      },
+      "documents": [
+        "citi-strata-premier-product",
+        "citi-strata-premier-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 141862,
+      "inputTokenEstimate": 9014,
+      "inputTokens": 8763,
+      "outputTokens": 1723,
+      "runAt": "2026-11-06T19:47:39.010Z"
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "reported_missing": 2,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "citi-strata-elite-product",
+        "citi-strata-elite-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 167772,
+      "inputTokenEstimate": 15604,
+      "inputTokens": 12985,
+      "outputTokens": 1849,
+      "runAt": "2026-11-06T19:47:39.016Z"
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-costco-anywhere-visa-product",
+        "citi-costco-anywhere-visa-rewards-terms",
+        "citi-costco-anywhere-visa-categories"
+      ],
+      "inputNotes": [],
+      "runs": 6,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1043948,
+      "inputTokenEstimate": 9020,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:16:20.460Z"
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "citi-aadvantage-platinum-select-product",
+        "citi-aadvantage-platinum-select-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 106989,
+      "inputTokenEstimate": 12250,
+      "inputTokens": 10629,
+      "outputTokens": 1097,
+      "runAt": "2026-11-06T19:47:39.028Z"
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "citi-aadvantage-mileup-product",
+        "citi-aadvantage-mileup-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 170206,
+      "inputTokenEstimate": 9006,
+      "inputTokens": 8710,
+      "outputTokens": 968,
+      "runAt": "2026-11-06T19:47:39.039Z"
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 1
+      },
+      "documents": [
+        "citi-aadvantage-executive-product",
+        "citi-aadvantage-executive-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 208644,
+      "inputTokenEstimate": 20693,
+      "inputTokens": 15966,
+      "outputTokens": 1147,
+      "runAt": "2026-11-06T19:47:39.031Z"
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "reported_missing": 1
+      },
+      "documents": [
+        "citi-aadvantage-globe-product",
+        "citi-aadvantage-globe-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 208975,
+      "inputTokenEstimate": 16279,
+      "inputTokens": 13339,
+      "outputTokens": 1528,
+      "runAt": "2026-11-06T19:47:39.042Z"
+    },
+    {
+      "cardId": "citi-att-points-plus",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "rate_not_in_evidence": 5,
+        "reported_missing": 1
+      },
+      "documents": [
+        "citi-att-points-plus-product",
+        "citi-att-points-plus-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 133384,
+      "inputTokenEstimate": 7883,
+      "inputTokens": 8047,
+      "outputTokens": 1390,
+      "runAt": "2026-11-06T19:47:39.036Z"
+    },
+    {
+      "cardId": "citi-wayfair-mastercard",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-wayfair-mastercard-product",
+        "citi-wayfair-mastercard-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 8,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1043952,
+      "inputTokenEstimate": 10644,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:16:20.455Z"
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "citi-tsc-visa-product"
+      ],
+      "inputNotes": [],
+      "runs": 5,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 124832,
+      "inputTokenEstimate": 3792,
+      "inputTokens": 5436,
+      "outputTokens": 979,
+      "runAt": "2026-11-07T03:50:37.930Z"
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-dillards-mastercard-product"
+      ],
+      "inputNotes": [],
+      "runs": 8,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1043957,
+      "inputTokenEstimate": 4745,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:16:20.445Z"
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-macys-amex-product"
+      ],
+      "inputNotes": [],
+      "runs": 8,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1335666,
+      "inputTokenEstimate": 4106,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:57:35.470Z"
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "issuer": "Citi",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "citi-bloomingdales-amex-product"
+      ],
+      "inputNotes": [],
+      "runs": 8,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1335651,
+      "inputTokenEstimate": 3841,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T06:57:35.487Z"
+    },
+    {
+      "cardId": "citi-double-cash",
+      "issuer": "Citi",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "travel-portal"
+      ],
+      "issues": [],
+      "findings": {
+        "rate_not_in_evidence": 1,
+        "quote_not_found": 1
+      },
+      "documents": [
+        "citi-double-cash-additional-info",
+        "citi-double-cash-product",
+        "citi-double-cash-terms-pdf"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 186511,
+      "inputTokenEstimate": 18450,
+      "inputTokens": 14922,
+      "outputTokens": 788,
+      "runAt": "2026-11-06T19:51:07.684Z"
+    }
+  ]
+}

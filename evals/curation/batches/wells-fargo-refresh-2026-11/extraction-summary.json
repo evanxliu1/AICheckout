@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 1500000,
+      "totalTimeoutMs": 1800000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "timeout": 5,
+    "needs_review": 2
+  },
+  "cards": [
+    {
+      "cardId": "wells-fargo-autograph",
+      "issuer": "Wells Fargo",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "wells-fargo-autograph-product",
+        "wells-fargo-autograph-rewards-terms",
+        "wells-fargo-autograph-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 10,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 2024520,
+      "inputTokenEstimate": 12110,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T15:10:52.417Z"
+    },
+    {
+      "cardId": "wells-fargo-autograph-journey",
+      "issuer": "Wells Fargo",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "wells-fargo-autograph-journey-product",
+        "wells-fargo-autograph-rewards-terms",
+        "wells-fargo-autograph-journey-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 10,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 2024512,
+      "inputTokenEstimate": 12359,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T15:10:52.425Z"
+    },
+    {
+      "cardId": "wells-fargo-one-key",
+      "issuer": "Wells Fargo",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 4,
+        "reported_missing": 1
+      },
+      "documents": [
+        "wells-fargo-one-key-product"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 150823,
+      "inputTokenEstimate": 5521,
+      "inputTokens": 6457,
+      "outputTokens": 1555,
+      "runAt": "2026-11-07T01:53:36.281Z"
+    },
+    {
+      "cardId": "wells-fargo-one-key-plus",
+      "issuer": "Wells Fargo",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "wells-fargo-one-key-plus-product"
+      ],
+      "inputNotes": [],
+      "runs": 10,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 2024574,
+      "inputTokenEstimate": 12109,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T15:10:52.358Z"
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges",
+      "issuer": "Wells Fargo",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "wells-fargo-choice-privileges-product",
+        "wells-fargo-choice-privileges-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 10,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 2024528,
+      "inputTokenEstimate": 9412,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T15:10:52.409Z"
+    },
+    {
+      "cardId": "wells-fargo-choice-privileges-select",
+      "issuer": "Wells Fargo",
+      "status": "timeout",
+      "rules": null,
+      "categories": null,
+      "issues": null,
+      "findings": {},
+      "documents": [
+        "wells-fargo-choice-privileges-select-product",
+        "wells-fargo-choice-privileges-select-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 10,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 1772186,
+      "inputTokenEstimate": 10303,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "runAt": "2026-11-07T16:17:48.950Z"
+    },
+    {
+      "cardId": "wells-fargo-active-cash",
+      "issuer": "Wells Fargo",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "wells-fargo-active-cash-product"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 106330,
+      "inputTokenEstimate": 7375,
+      "inputTokens": 7676,
+      "outputTokens": 615,
+      "runAt": "2026-11-07T01:53:36.329Z"
+    }
+  ]
+}

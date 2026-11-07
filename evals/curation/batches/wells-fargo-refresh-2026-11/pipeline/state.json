@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-11",
-  "updatedAt": "2026-11-06T22:15:13.939Z",
+  "updatedAt": "2026-11-07T16:52:17.317Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -49,8 +49,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:c7623c9f656f0bae5147e4dda26052c0e24ed1d63d5f007337c8304a145575ff",
-          "finishedAt": "2026-11-06T22:15:13.938Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T16:52:17.316Z",
+          "attempts": 5,
           "reason": "extract-failed"
         }
       },
@@ -103,8 +103,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:2931d4551f181db414e6dd77681bd478ddd8f4e6d9bd3a3b2fd0fbb22b61a693",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T16:52:17.317Z",
+          "attempts": 5,
           "reason": "extract-failed"
         }
       },
@@ -138,12 +138,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:2d8a342579c162f365ee39cbe590d6dcbf182ab16acd17aafb5ca6ae434ddc87",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-one-key",
+              "sha256": "d5ef78da7f8ad0e817b08a6a1c9c88e52b4b256e49c0309c2b55965e80764000"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:15:02.248Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -179,8 +184,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:ec59600795af1ac559cf4b2907046ee4d643518c4dc6c74c3b5ab121b0fef2bf",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T16:52:17.317Z",
+          "attempts": 5,
           "reason": "extract-failed"
         }
       },
@@ -225,8 +230,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:95f4d344a27af42595cb09b404b3df0336312349f6a2edcb589f77c9071b0b66",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T16:52:17.317Z",
+          "attempts": 5,
           "reason": "extract-failed"
         }
       },
@@ -271,8 +276,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:4ad69a376402bb05f2a856ee82bc9b1b70a7a6d1c9349af6ebb90524a40b86df",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T16:52:17.317Z",
+          "attempts": 5,
           "reason": "extract-failed"
         }
       },
@@ -306,12 +311,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:bac44419552d228c4e389abc852a3f989620782b5e15e1ad0209463ca764d935",
-          "finishedAt": "2026-11-06T22:15:13.939Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-active-cash",
+              "sha256": "fd94638435bd9f53d417ec033fac1305c3c6ef1105699947e1ffe1009d79a3eb"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:15:02.249Z",
+          "attempts": 2
         }
       },
       "dropped": null,

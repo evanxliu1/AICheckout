@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-11",
-  "updatedAt": "2026-11-07T01:32:45.697Z",
+  "updatedAt": "2026-11-07T07:19:51.203Z",
   "cards": {
     "citi-strata": {
       "stages": {
@@ -41,8 +41,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:1d9883c01de82667e4f8fbd18b58352630219494ba78cae1915fa9b8bdde80f5",
-          "finishedAt": "2026-11-06T20:28:11.609Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T07:19:51.202Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -192,6 +192,14 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:d28bd5ecfb54175ffdefe7b071cf88a61c420655f496cdf7835c9f930516eed4",
+          "finishedAt": "2026-11-07T07:19:51.202Z",
+          "attempts": 3,
+          "reason": "extract-failed"
         }
       },
       "dropped": null,
@@ -490,8 +498,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:a59dfc2dfab2e3bc531a260817cb536ed0a02e28f7b67b8d51e2e46b7e8fbf22",
-          "finishedAt": "2026-11-06T20:28:11.615Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T07:19:51.202Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -525,12 +533,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:9820c3decc4536d48dc920f91fc213841804579a7f127a30bb84d875c48e98b2",
-          "finishedAt": "2026-11-06T20:28:11.616Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-tsc-visa",
+              "sha256": "23caf648994f43b4718e17056bba0c3926f7aac6f2425ed1ec8139933a8af37f"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:22:08.076Z",
+          "attempts": 3
         }
       },
       "dropped": null,
@@ -566,8 +579,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:5a2958e762bdb8bb75c263d1243297f44acc6df94c3ce353b205a450dd88f1c7",
-          "finishedAt": "2026-11-06T20:28:11.616Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T07:19:51.203Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -604,8 +617,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:7afc463b1465cbaed96a32da0047043c2ad04a364570028ed00b470aed740d11",
-          "finishedAt": "2026-11-06T20:28:11.617Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T07:19:51.203Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -642,8 +655,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:0df9e33a07030f79cefbf827ccf7ba84f6d1de801586f418411ffad6c1ecdc11",
-          "finishedAt": "2026-11-06T20:28:11.617Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T07:19:51.203Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },

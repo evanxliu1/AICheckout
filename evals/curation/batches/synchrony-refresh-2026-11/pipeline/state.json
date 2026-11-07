@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-11",
-  "updatedAt": "2026-11-07T00:59:26.625Z",
+  "updatedAt": "2026-11-07T08:21:39.447Z",
   "cards": {
     "synchrony-premier-world-mastercard": {
       "stages": {
@@ -38,12 +38,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:26a4ec290d6476efd9f8ba9cdd0bc5ac346e2684be7ca4cdd90e25d30f9363b9",
-          "finishedAt": "2026-11-06T21:51:24.058Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-premier-world-mastercard",
+              "sha256": "fbdbb7e3ac1a475522dc7133acdbefe5aaaeda670f4a3e71cec495ea4984ef37"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.593Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -92,12 +97,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:786fd8f2052699c4dcd10eb63236b243af8d6eaf1f9d5c51859f7f64e96685bd",
-          "finishedAt": "2026-11-06T21:51:24.058Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-store-card",
+              "sha256": "2370b47114a2513d110616bedae7a92dbce4faf1a95ea86c4721e7a5c2e90e94"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.593Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -130,12 +140,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:1072f8ceeb5f6aaf24c2d00685fb84ab4ad3047f2617f97e09af11c2f599e28f",
-          "finishedAt": "2026-11-06T21:51:24.058Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-secured-card",
+              "sha256": "751b7cbd3e6f7d6f930f385f207d02b8f5b9fb9ed92fa55a774c9de4eb057351"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.594Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -184,12 +199,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:97787fa190025ba729fc6fe665ec28cd4f52e723dfa2a38c5b151dc0372971da",
-          "finishedAt": "2026-11-06T21:51:24.058Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-paypal-cashback-mastercard",
+              "sha256": "f84bf47f36dc3370cd667ba5a1f356b35a4dbc90aa4390a0e54b88bfcc62d7e7"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.595Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -241,8 +261,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:99648490a02f3408f6a302f6f04e8fc13195027d184c47572d1738ab84700e98",
-          "finishedAt": "2026-11-06T21:51:24.058Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T08:21:39.444Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -287,8 +307,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:8e62092656e509b4b3e3e5fa678d184e56c59cf841be24d8cac144ab123f9fd7",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T08:21:39.445Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -333,8 +353,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:5f5d4ab1e4cae4f788c0a83dd9e8fcec52cd8713ef21e84ec4befd62e8936394",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T08:21:39.445Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -382,6 +402,14 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:544579035faf6032cfeb0bb8937641f2d23678978c0100a67d06c9fc12154cf0",
+          "finishedAt": "2026-11-07T08:21:39.446Z",
+          "attempts": 3,
+          "reason": "extract-failed"
         }
       },
       "dropped": null,
@@ -428,6 +456,14 @@
             "sources": 3,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f47b635223c314918efd8d3a392368086fafe3e00e55f2a4fd0781d7f6bf08dc",
+          "finishedAt": "2026-11-07T08:21:39.446Z",
+          "attempts": 3,
+          "reason": "extract-failed"
         }
       },
       "dropped": null,
@@ -458,6 +494,19 @@
             "sources": 1,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ea1febd1ea879ab87d2464b4c44ded068168508946f9ea7cef6e646b0b461195",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-tjx-rewards-platinum-mastercard",
+              "sha256": "5e61f9b740e09e2ca62b92c76df53555ebbc25fde090bf1e2b3884e4123fa664"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -496,6 +545,19 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:487f32a7b6f1d81e21205c925100dc9ca0ed8d1f18cd50eae5a5d9c04c1a5f63",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-newegg-store-credit-card",
+              "sha256": "cdef2616e0b68f3f81f1eb631859183598a228f24aaebf4b994bfc110a518ea3"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -534,6 +596,14 @@
             "sources": 2,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1e441114d6b878111146d5bf0ac6a8c69d16942436537a872c5112f1b0f4a74a",
+          "finishedAt": "2026-11-07T08:21:39.446Z",
+          "attempts": 3,
+          "reason": "extract-failed"
         }
       },
       "dropped": null,
@@ -564,6 +634,19 @@
             "sources": 1,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:dd232a0f5d4b56211ec3db840ea6b1272999fe8485ac3a9696bc9fb4abd01363",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-ae-real-rewards-visa",
+              "sha256": "dd3a588c05a5be23b66ae83ad1b3ef9ad9f0b97043471cebef84281196d5c47a"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -594,6 +677,19 @@
             "sources": 1,
             "flags": 0
           }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:e42962d2842336596e856bc70e84229e45c410765ea39b562673d75ded7034d3",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-at-home-mastercard",
+              "sha256": "3474c72c9ff6e78fb526bb4d943421ada98b8054b8b6d8241a4c68d504265c93"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -626,12 +722,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:fc4d56d6895339fda41a355d3135cdac69ff6baae6a511b42263b23c4946a7d7",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-chicos-mastercard",
+              "sha256": "841503a097d335cc224d942d38c9be413ee6a2cd557d8f7e3d5349113a1427c5"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -664,12 +765,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:726ee6932d2369f4d5ffbd1cebcb69e889a352fba5c71eedab27224e597c0707",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-soma-mastercard",
+              "sha256": "b24145762a647e54be6c755a0aa6187c4ab53b6402a63c2721c74c9aa9d863ac"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -705,8 +811,8 @@
           "status": "failed-gate",
           "stageVersion": "extract.1",
           "inputHash": "sha256:975b1319d7366dec005a281a5d62f0a36b6be31c3b8765b004be19048fb0c2ac",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
+          "finishedAt": "2026-11-07T08:21:39.447Z",
+          "attempts": 4,
           "reason": "extract-failed"
         }
       },
@@ -740,12 +846,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:f03b79fdc8f43a3d7d3e3fbd89b7345c4706a46d335af196ea250028c96a1561",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-jcrew-mastercard",
+              "sha256": "a45625c7bf56545bdb23e80fde98517c9bb3f31026d4666b3eadf7606379771b"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -778,12 +889,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:9ee8106bc2c6e85970896309e3b16fc4c89b908e9e534e9820f10ea8f37b7572",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-harbor-freight-credit-card",
+              "sha256": "4a4790deeb2a4c24457da718b7db988f229e62acd76e780fda0b6fd32649d2e7"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -816,12 +932,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:4834e1e2a1624d6c0d907526b2975af38ea84464ac7eb8cee6d946ea99f2ce36",
-          "finishedAt": "2026-11-06T21:51:24.059Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-cathay-world-elite-mastercard",
+              "sha256": "48f08b3c8eea15bb732a8cf283bc24ad80827363099512315fb3ab921100306f"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -854,12 +975,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:6554e29d466dddc4842896b086143f172d9b25813dee844a2593e8c68c2ff2e2",
-          "finishedAt": "2026-11-06T21:51:24.060Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-virgin-red-rewards-mastercard",
+              "sha256": "a04aaa3d0543fb32d471cb8c11ccac695f2f603902a0d3a0bdb16465cab819db"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
@@ -900,12 +1026,17 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:5d3358639d55a9b8ae4ed498f511b0d6216b31e7dad23d84921f86335c0d7ba8",
-          "finishedAt": "2026-11-06T21:51:24.060Z",
-          "attempts": 1,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:synchrony-sun-country-visa-signature",
+              "sha256": "c6ab04d199e2bfd154bc94b6e5a1fa97a48ab4b07d6815042871a794a380b110"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
         }
       },
       "dropped": null,
