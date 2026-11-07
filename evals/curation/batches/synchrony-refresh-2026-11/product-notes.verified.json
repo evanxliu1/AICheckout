@@ -1,0 +1,567 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "issuer": "Synchrony",
+      "hints": []
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon.com and Whole Foods Market (\"5% back at Amazon.com, Whole Foods Market (In-Store Code usage required at Whole Foods Market), and more\")",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Store Card). Non-Prime Amazon Store Card earns no % back. Cannot be combined with Equal Monthly Payments or special financing…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market (In-Store Code required)12 with an eligible Prime membership",
+          "verification": "confirmed",
+          "anchorSourceId": "amazon-store-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card usable at Amazon.com, select physical Amazon stores, participating Whole Foods (In-Store Code) and Amazon Pay merchants; no card network.",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores",
+          "anchorSourceId": "amazon-store-card-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Amazon purchases (\"Prime rewards: 2% back on Amazon purchases with an eligible Prime membership\")",
+          "rate": "2%",
+          "cap": "none stated",
+          "conditions": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "merchants": [
+            "Amazon"
+          ],
+          "membership": "Requires eligible Prime membership (Prime Secured Card); security deposit required; Amazon Pay purchases excluded; % back cannot be combined with financing offers",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6",
+          "verification": "confirmed",
+          "anchorSourceId": "amazon-store-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Secured card usable at Amazon.com, select physical Amazon stores, participating Whole Foods (In-Store Code) and Amazon Pay merchants; no card network.",
+          "merchants": [
+            "Amazon"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores",
+          "anchorSourceId": "amazon-store-card-product",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "checkout-method",
+          "summary": "purchases made through your PayPal account online, and sending money to PayPal users (\"3% on Eligible Purchases you make using your Card Account through your…",
+          "rate": "3%",
+          "cap": "none stated (\"no maximum amount of Eligible Purchases\")",
+          "conditions": "card must be the linked payment method at PayPal checkout; authorized users earn 1.5% (unless they later add card to own PayPal)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3% on Eligible Purchases you make using your Card Account through your PayPal account online, or when you use your Card Account to send money",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-paypal-cashback-mastercard-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon purchases (Verizon stores, Verizon online, phone, exclusive Authorized Retailers; devices and accessories)",
+          "rate": "4%",
+          "cap": "no limit",
+          "conditions": "excludes bill payments",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative or",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-verizon-visa-card-rewards-terms"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Verizon Wireless / Fios bill payments",
+          "rate": "1%",
+          "cap": "no limit",
+          "conditions": "plus Verizon Loyalty adds 1% for paying bill with card (marketing page)",
+          "merchants": [
+            "Verizon"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "1% on Verizon Wireless Account bill or Verizon Fios Account bill payment",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-verizon-visa-card-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Sam's Club purchases",
+          "rate": "3% for Plus members; 1% for Club members",
+          "cap": "$5,000 Sam's Cash/yr overall",
+          "conditions": "excludes tobacco, prescriptions, gift/prepaid cards, cash equivalents",
+          "membership": null,
+          "status": "anchored",
+          "verification": "confirmed",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3% back in Sam’s Cash on Sam’s Club purchases for Plus members. Club members earn 1%.*",
+          "anchorSourceId": "synchrony-sams-club-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "CareCredit provider network purchases under $200",
+          "rate": "4 points/$",
+          "cap": "none stated",
+          "conditions": "purchases >= $200 in network where promotional financing applies earn no points",
+          "merchants": [
+            "CareCredit (Synchrony health network)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "You will, however, earn 4 points per $1 on purchases under $200 in the CareCredit network through 12/31/27.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-carecredit-rewards-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart (US stores, Walmart-branded gas stations, Walmart app, Walmart.com) with Walmart+",
+          "rate": "5%",
+          "cap": "none stated (\"unlimited\")",
+          "conditions": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": "Walmart+ membership must be linked to the card by email; excludes Sam's Club and third-party marketplace sellers on Walmart.com",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% Cash Back at Walmart with Walmart+: If you are a Walmart+ member, instead of earning 3% cash back on your Purchases at Walmart",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-onepay-cashrewards-card-rewards-terms"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Walmart without Walmart+",
+          "rate": "3%",
+          "cap": "none stated",
+          "conditions": "same Walmart definition",
+          "merchants": [
+            "OnePay / Walmart"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3% Cash Back at Walmart: You earn OnePay Points equal to 3% of each $1 spent on Purchases at Walmart with your CashRewards Card",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-onepay-cashrewards-card-rewards-terms"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Walgreens brand purchases at Walgreens, Duane Reade, Walgreens.com",
+          "rate": "10%",
+          "cap": "none stated",
+          "conditions": "exclusions apply; myWalgreens membership required",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": "exclusions apply; myWalgreens membership required",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "You will earn Walgreens Cash rewards equal to 10% of every USD spent for Eligible Purchases of retail products branded with Walgreens marks or logos",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-mywalgreens-mastercard-rewards-terms"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "all other brands and pharmacy purchases at Walgreens",
+          "rate": "5%",
+          "cap": "none stated",
+          "conditions": "exclusions apply",
+          "merchants": [
+            "Walgreens"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% on all other brands and pharmacy purchases",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-mywalgreens-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "TJX family of stores incl. tjmaxx.com, marshalls.com, sierra.com",
+          "rate": "5 points/$ (\"5% back in Rewards\")",
+          "cap": "\"No limit to what you can earn\"",
+          "conditions": null,
+          "merchants": [
+            "TJX (TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense)"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5% back in Rewards Points every time you shop our family of stores. That’s 5 Points for every $1 spent.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-tjx-rewards-platinum-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Newegg purchases (\"4% off every day when you choose the discount option at checkout\")",
+          "rate": "4% discount",
+          "cap": "none stated",
+          "conditions": "must choose discount option instead of special financing (6 mo on $199+, 12 mo on $499+); excludes gift cards, warranties, taxes, shipping; may not stack…",
+          "merchants": [
+            "Newegg"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "When entering your Newegg Store Credit Card, you’ll be prompted to select either special financing (if eligible) or the 4% everyday discount.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-newegg-store-credit-card-product"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store card listed as a Newegg payment method apart from card networks; captures name no network but never say it works only at Newegg.",
+          "merchants": [
+            "Newegg"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Newegg Store Credit Card Gift cards, subscriptions, pre-orders, and backorders.",
+          "anchorSourceId": "synchrony-newegg-store-credit-card-categories",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "JCPenney purchases (\"7.5% Back in CashPass Rewards, 1.5 points for every dollar\")",
+          "rate": "7.5%",
+          "cap": "none stated",
+          "conditions": "tiered program: page shows 7.5% for Insider/Elite cardholders and 10% at VIP ($1,000 spend); qualifying purchases",
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-jcpenney-mastercard-product"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "AE and Aerie purchases: 40 points per $1 with the card; loyalty and card accounts must use the same email.",
+          "rate": "40 pts/$",
+          "cap": "none stated",
+          "conditions": "must use same email for loyalty and card accounts",
+          "merchants": [
+            "American Eagle Outfitters"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Real Rewards credit cardmembers earn 40 points per $1 spent with their Real Rewards credit card/Real Rewards Visa credit card.",
+          "anchorSourceId": "synchrony-ae-real-rewards-visa-partner",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "At Home purchases, annual spend under $350",
+          "rate": "6%",
+          "cap": "none stated",
+          "conditions": null,
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-at-home-mastercard-partner"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "At Home purchases, annual spend over $350",
+          "rate": "7.5%",
+          "cap": "none stated",
+          "conditions": null,
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 7.5% Back in Rewards on At Home purchases when you spend $350 or more annually.",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-at-home-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Chico's store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "Chico's"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "7.5% back in points on qualifying purchases made using your Chico’s Mastercard or Chico’s Credit Card at Chico’s, Chico’s Outlets, Chico’s Off The Rack stores",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-chicos-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Soma store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "Soma"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "You can earn 7.5% back in points on qualifying purchases made using your Soma Mastercard or Soma Credit Card at Soma, Soma Outlets, and online",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-soma-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "White House Black Market store, outlet and website purchases",
+          "rate": "7.5% (7.5 pts/$)",
+          "cap": "none stated",
+          "conditions": "limited exclusions apply",
+          "merchants": [
+            "White House Black Market"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "verification": "confirmed",
+          "anchorMethod": "verifier",
+          "anchor": "You can earn 7.5% back in points on qualifying purchases made using your WHBM Mastercard or WHBM Credit Card at WHBM, WHBM Outlets, and online",
+          "anchorSourceId": "synchrony-whbm-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "J.Crew & J.Crew Factory purchases",
+          "rate": "7.5% (GOLD) / 5% (NAVY)",
+          "cap": "none stated",
+          "conditions": "depends on J.Crew Passport tier",
+          "membership": null,
+          "status": "anchored",
+          "verification": "confirmed",
+          "anchorMethod": "verifier",
+          "anchor": "Cardmembers with NAVY Access earn 5% back in rewards while GOLD Access cardmembers earn 7.5% back in rewards.*",
+          "anchorSourceId": "synchrony-jcrew-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Harbor Freight store and HarborFreight.com purchases",
+          "rate": "5% back in Harbor Freight Money",
+          "cap": "\"unlimited\"",
+          "conditions": "alternative: 0% equal monthly payments on $299+",
+          "merchants": [
+            "Harbor Freight"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-harbor-freight-credit-card-partner"
+        },
+        {
+          "type": "closed-loop",
+          "summary": "Store-named card used at Harbor Freight stores and HarborFreight.com; captures name no card network but never say only.",
+          "merchants": [
+            "Harbor Freight"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Yes, the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com.",
+          "anchorSourceId": "synchrony-harbor-freight-credit-card-partner",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Cathay and HK Express purchases",
+          "rate": "3 Asia Miles/$",
+          "cap": "none stated",
+          "conditions": "Cathay membership must be linked",
+          "merchants": [
+            "Cathay Pacific"
+          ],
+          "membership": "Cathay membership must be linked",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Asia Miles per $1 spent on Cathay and HK Express purchases.1",
+          "verification": "confirmed",
+          "anchorSourceId": "synchrony-cathay-world-elite-mastercard-partner"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Virgin Atlantic, Virgin Hotels, Virgin Voyages",
+          "rate": "3 pts/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Virgin Red"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn 3 Virgin Points for every $1 you spend with Virgin Atlantic, Virgin Hotels and Virgin Voyages.",
+          "anchorSourceId": "synchrony-virgin-red-rewards-mastercard-partner",
+          "verification": "fixed"
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "issuer": "Synchrony",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Sun Country purchases: 3x from the card (2x more from flying is airline earn); 100 points = $1 toward Sun Country purchases only.",
+          "rate": "3 pts/$",
+          "cap": "none stated",
+          "conditions": null,
+          "merchants": [
+            "Sun Country Airlines"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Earn up to 5x points per $1 on Sun Country purchases. 3x when you buy with your card,* and 2x when you fly**",
+          "anchorSourceId": "synchrony-sun-country-visa-signature-partner",
+          "verification": "fixed"
+        }
+      ]
+    }
+  ]
+}
