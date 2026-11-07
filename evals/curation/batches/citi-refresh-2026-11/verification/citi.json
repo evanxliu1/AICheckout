@@ -1,0 +1,1259 @@
+{
+  "schemaVersion": 1,
+  "packetId": "1470bde5-36dc-452b-8027-ebfb15240126",
+  "batch": "citi-refresh-2026-11",
+  "provenance": "agent-verified",
+  "issuer": "Citi",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/citi-refresh-2026-11/pipeline/packets/verify.citi.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/citi.md",
+      "evals/curation/batches/citi-refresh-2026-11/verify/citi.md",
+      "evals/curation/batches/citi-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/citi-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/citi-refresh-2026-11/pipeline/batch.json",
+      "evals/curation/batches/citi-refresh-2026-10/verification/citi.json",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/validate.ts",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/schema.ts",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-premier-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-premier-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-elite-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-strata-elite-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-costco-anywhere-visa-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-costco-anywhere-visa-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-costco-anywhere-visa-categories.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-platinum-select-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-platinum-select-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-mileup-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-mileup-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-executive-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-executive-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-globe-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-aadvantage-globe-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-att-points-plus-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-att-points-plus-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-wayfair-mastercard-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-wayfair-mastercard-rewards-terms.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-tsc-visa-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-dillards-mastercard-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-macys-amex-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-bloomingdales-amex-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-double-cash-product.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-double-cash-additional-info.txt",
+      "evals/curation/batches/citi-refresh-2026-11/captures/citi-double-cash-terms-pdf.txt"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "citi-strata",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.rules.6.anchors.1",
+          "current": "To change your Self-Select Category the primary card member must register for an online account and sign-in at citi.com/selfselect or call 1-800-842-6596 (TTY: We accept",
+          "note": "The anchor about changing the category abuts the default-category sentence in the terms; dropped so the default sentence can anchor the streaming rule."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.6.activation",
+          "current": "enroll-once",
+          "corrected": "none",
+          "anchor": {
+            "sourceId": "citi-strata-rewards-terms",
+            "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
+          },
+          "note": "Select Streaming Services is the default Self-Select option at account opening, so no choice is needed (Citi convention: activation none)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-product",
+              "quote": "and choose which Self-Select Category to activate"
+            }
+          ],
+          "note": "Only the one selected Self-Select Category earns 3X; the five options are alternatives (general 6)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-strata-rewards-terms",
+              "quote": "Includes ticket purchases for live entertainment, including concerts, live sporting events, live theatrical productions, amusement parks, and orchestras."
+            }
+          ],
+          "note": "Live Entertainment covers only live-event tickets, part of the entertainment category (general 19)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-strata-rewards-terms",
+            "quote": "When your account is opened, the default Self-Select Category is Select Streaming Services."
+          },
+          "note": "The terms state the five 3X options, the streaming default and the once-per-calendar-quarter change at citi.com/selfselect."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-strata-premier",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Redeem your ThankYou® Points for gift cards to your favorite retailers and more at thankyou.com"
+            ]
+          },
+          "note": "The missing issue only quotes a gift-card redemption line and states no problem; the null point value already follows general 3. Removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "citi-strata-elite",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "6 ThankYou Points for each $1 spent at restaurants, including restaurant delivery services, for purchases authorized between Friday 6:00 PM through Saturday 6:00 AM ET,…",
+          "corrected": "Restaurants on Citi Nights® purchases",
+          "anchor": {
+            "sourceId": "citi-strata-elite-rewards-terms",
+            "quote": "6 points per dollar spent at Restaurants on Citi Nights® purchases, Friday and Saturday from 6 PM - 6 AM ET"
+          },
+          "note": "The draft wording ends in an ellipsis and is not verbatim; replaced with the capture name of the Citi Nights restaurant category."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "citi-costco-anywhere-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.category",
+          "current": "gas",
+          "corrected": "other",
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-rewards-terms",
+            "quote": "5% cash back on gas purchased at Costco warehouse locations worldwide"
+          },
+          "note": "Gas at Costco warehouses pays at one merchant, so the category is other (general 4, Citi convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.exclusions.1",
+          "current": {
+            "text": "Goods and services provided by vendors other than Costco, including most Costco Travel purchases, are not eligible.",
+            "anchors": [
+              "Goods and services provided by vendors other than Costco, including most Costco Travel purchases, are not eligible."
+            ]
+          },
+          "note": "This sentence is about which Costco purchases qualify for the Citi Flex Pay $0-fee plan, not about earning; it is not a rewards exclusion."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Goods and services provided by vendors other than Costco, including most Costco Travel purchases, are not eligible.",
+              "restaurant (including cafes, bars, lounges and fast food restaurants) and eligible travel purchases worldwide, including airfare, hotels, car rentals, travel agencies, cruise lines and Costco"
+            ]
+          },
+          "note": "The ambiguity rests on the Flex Pay eligibility sentence, which is not about rewards; the terms put Costco Travel in the 3% rule without conflict."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-costco-anywhere-visa-product",
+              "quote": "5% and 4% earn is on a combined $7,000 spend per year, 1% thereafter"
+            }
+          ],
+          "note": "The $7,000 yearly cap is shared by Costco gas, other gas and EV charging; each rule carries it separately (Citi convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-rewards-terms",
+            "quote": "for the first $7,000 per year in combined Costco and other eligible gas and/or EV charging purchases, and then 1% thereafter."
+          },
+          "note": "5% Costco warehouse gas within the combined $7,000 yearly cap, then 1%; the card is only for Costco members per the FAQ."
+        },
+        {
+          "action": "confirm",
+          "hintIndex": 1,
+          "anchor": {
+            "sourceId": "citi-costco-anywhere-visa-rewards-terms",
+            "quote": "2% cash back on all other purchases from Costco and Costco.com."
+          },
+          "note": "The terms state 2% on other Costco and Costco.com purchases."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-platinum-select",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Use your AAdvantage® miles for flights to nearly 1,100 destinations worldwide on American Airlines, oneworld® and partner airlines."
+            ]
+          },
+          "note": "The missing issue only quotes the travel redemption line and states no problem; miles are travel-only so the point value stays null (general 20). Removed (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-platinum-select-rewards-terms",
+            "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+          },
+          "note": "2X on purchases billed by American Airlines; aadvantagecars.com and aadvantagehotels.com bookings do not qualify, per the terms."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-mileup",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "No mileage cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-mileup-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No mileage cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.1",
+          "current": "No mileage cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-mileup-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No mileage cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.1",
+          "current": "No mileage cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-mileup-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No mileage cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": [
+              "Use your AAdvantage® miles for flights to nearly 1,100 destinations worldwide on American Airlines, oneworld® and partner airlines."
+            ]
+          },
+          "note": "The missing issue only quotes the travel redemption line and states no problem; miles are travel-only so the point value stays null (general 20). Removed (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-mileup-rewards-terms",
+            "quote": "Eligible American Airlines purchases are items billed by American Airlines as the merchant of record."
+          },
+          "note": "2X on purchases billed by American Airlines as merchant of record, per the terms."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-executive",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.cap",
+          "current": {
+            "kind": "spend",
+            "amountCents": 15000000,
+            "period": "calendar-year",
+            "rateAfterCapBps": 500
+          },
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "After you spend $150,000 in purchases in a calendar year, earn a total of 5 AAdvantage® miles"
+          },
+          "note": "The $150,000 calendar-year spend raises American Airlines purchases from 4X to 5X; a threshold, not a cap, so cap null with an out-of-scope issue (general 9, Citi convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.issuerWording",
+          "current": "miles , for a total of 12 AAdvantage® miles, for each $1 spent on hotel purchases using your Citi® / AAdvantage® Executive World Legend Mastercard",
+          "corrected": "eligible AAdvantage Hotels® bookings",
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "Earn 12 AAdvantage® miles for every $1 spent on eligible AAdvantage Hotels® bookings"
+          },
+          "note": "The draft wording is a fragment starting mid-sentence; replaced with the product page name of the hotel category."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.1",
+          "current": "No Mileage Cap",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-rewards-terms",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+          },
+          "note": "The \"No Mileage Cap\" heading is not evidence of no cap (general 21); replaced by the no-maximum sentence."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "travel-portal",
+            "issuerWording": "eligible AAdvantage Cars® bookings",
+            "rateBps": 1200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-product",
+              "quote": "and eligible AAdvantage Cars® bookings"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "for a total of 12 AAdvantage® miles, for each $1 spent on eligible car rental purchases"
+            },
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate through your Citi® / AAdvantage® credit card account."
+            }
+          ],
+          "note": "12X on car rentals booked through aadvantagecars.com, a partner booking portal (Citi convention: travel-portal); missing from the draft."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-aadvantage-executive-rewards-terms",
+              "quote": "Upon reaching $150,000 in spend on your Citi® / AAdvantage® Executive World Legend Mastercard in a calendar year"
+            }
+          ],
+          "note": "American Airlines purchases rise from 4X to 5X for the rest of the calendar year after $150,000 in total card spend; a spend threshold the schema cannot express (general 9)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-executive-product",
+            "quote": "Earn 4 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+          },
+          "note": "4X on American Airlines purchases, 5X after $150,000 in a calendar year for the rest of that year; merchant-of-record condition stated in the terms."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-aadvantage-globe",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.anchors.1",
+          "current": "No limit on the amount of miles you can earn",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No limit on the amount of miles you can earn\" heading is not evidence (general 21) and abuts the sentence; replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.1.anchors.1",
+          "current": "No limit on the amount of miles you can earn",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No limit on the amount of miles you can earn\" heading is not evidence (general 21) and abuts the sentence; replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.2.anchors.1",
+          "current": "No limit on the amount of miles you can earn",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No limit on the amount of miles you can earn\" heading is not evidence (general 21) and abuts the sentence; replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.1",
+          "current": "No limit on the amount of miles you can earn",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No limit on the amount of miles you can earn\" heading is not evidence (general 21) and abuts the sentence; replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.4.anchors.1",
+          "current": "No limit on the amount of miles you can earn",
+          "corrected": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card.",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-product",
+            "quote": "There is no maximum number of American Airlines AAdvantage® miles that you can accumulate with your card."
+          },
+          "note": "The \"No limit on the amount of miles you can earn\" heading is not evidence (general 21) and abuts the sentence; replaced by the no-maximum sentence."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.issuerWording",
+          "current": "3X AAdvantage® miles on American Airlines purchases benefit",
+          "corrected": "eligible American Airlines purchases",
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-rewards-terms",
+            "quote": "Earn 3 AAdvantage® miles for every $1 spent on eligible American Airlines purchases"
+          },
+          "note": "The draft wording names the benefit from the Admirals Club sentence; the rule is 3X on American Airlines purchases, which includes Admirals Club food and beverage."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-aadvantage-globe-rewards-terms",
+            "quote": "Food and beverage purchases made at the American Airlines Admirals Club® will be awarded 3 AAdvantage® miles for each $1 spent"
+          },
+          "note": "3X on American Airlines purchases, and Admirals Club food and beverage earns 3X as part of that benefit."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-att-points-plus",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "citi-att-points-plus-product",
+            "quote": "Earn 1 ThankYou® Point for every $1 spent on all other purchases."
+          },
+          "note": "Undrafted card: it earns ThankYou Points per dollar."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-att-points-plus-product",
+            "quote": "Choose from gift cards, travel rewards, online shopping at participating merchants and more."
+          },
+          "note": "Undrafted card: no capture states a fixed cash value for a point, so the point value stays null (general 3)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "gas",
+            "issuerWording": "gas and EV charging stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn 3 ThankYou® Points for every $1 spent at gas and EV charging stations"
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "3 ThankYou Points for every $1 spent at gas and electric vehicle (EV) charging stations."
+            },
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn unlimited points that do not expire and redeem them your way."
+            }
+          ],
+          "note": "3X at gas stations; points are unlimited per the product page (general 21)."
+        },
+        {
+          "rule": {
+            "category": "ev-charging",
+            "issuerWording": "gas and EV charging stations",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn 3 ThankYou® Points for every $1 spent at gas and EV charging stations"
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "3 ThankYou Points for every $1 spent at gas and electric vehicle (EV) charging stations."
+            },
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn unlimited points that do not expire and redeem them your way."
+            }
+          ],
+          "note": "The same 3X sentence covers EV charging stations."
+        },
+        {
+          "rule": {
+            "category": "supermarkets",
+            "issuerWording": "grocery stores",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn 2 ThankYou® Points for every $1 spent at grocery stores"
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "including grocery delivery services, supermarkets, meat/seafood stores, dairy stores, bakeries and miscellaneous food/convenience stores."
+            },
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn unlimited points that do not expire and redeem them your way."
+            }
+          ],
+          "note": "2X at grocery stores, including supermarkets and grocery delivery; superstores and warehouse clubs excluded."
+        },
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "products and services purchased directly from AT&T, including payment of monthly phone or internet bills",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn 2 ThankYou® Points for every $1 spent on AT&T products and services"
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "2 ThankYou Points for every $1 spent on products and services purchased directly from AT&T, including payment of monthly phone or internet bills."
+            },
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn unlimited points that do not expire and redeem them your way."
+            }
+          ],
+          "note": "2X on purchases directly from AT&T; one merchant, so category other (general 4)."
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "all other purchases",
+            "rateBps": 100,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "none",
+              "amountCents": null,
+              "period": null,
+              "rateAfterCapBps": null
+            },
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn 1 ThankYou® Point for every $1 spent on all other purchases."
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "1 ThankYou Point for every $1 spent on other purchases, including the non-qualifying purchases listed above."
+            },
+            {
+              "sourceId": "citi-att-points-plus-product",
+              "quote": "Earn unlimited points that do not expire and redeem them your way."
+            }
+          ],
+          "note": "Base rate 1X."
+        }
+      ],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers, cash advances, Citi Flex Loans, account checks, returns, interest, fees, travelers checks, money orders, wire transfers, lottery tickets and gaming chips",
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "Balance transfers, cash advances, Citi Flex Loans, checks that access your Card Account, items returned for credit, unauthorized charges, interest and account fees, travelers checks,"
+            },
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "lottery tickets, gaming chips (and similar betting transactions) do not earn ThankYou Points."
+            }
+          ],
+          "note": "Transactions the terms say never earn points."
+        }
+      ],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-att-points-plus-rewards-terms",
+              "quote": "If you spend $1,000 or more on purchases in a billing cycle, you will receive a $20 statement credit."
+            }
+          ],
+          "note": "A $20 statement credit each billing cycle with $1,000 or more in purchases; a spend-threshold reward the rate schema cannot express."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-att-points-plus-rewards-terms",
+            "quote": "2 ThankYou Points for every $1 spent on products and services purchased directly from AT&T, including payment of monthly phone or internet bills."
+          },
+          "note": "2X directly from AT&T; the terms exclude independent dealers and resellers unless paying for an AT&T service."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-wayfair-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.exclusions.0.anchors.0",
+          "current": ",",
+          "note": "A lone comma is not an anchor; the remaining anchor states the excluded transactions."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-wayfair-mastercard-product",
+              "quote": "Reward Dollars have no cash value and are not redeemable for cash."
+            }
+          ],
+          "note": "Rewards are Wayfair Reward Dollars with no cash value, usable only with Wayfair (general 8, Citi convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-wayfair-mastercard-product",
+            "quote": "The Wayfair Family of Brands includes Wayfair, Joss & Main, AllModern, Birch Lane and Perigold."
+          },
+          "note": "7% across the five Family of Brands sites, apps and stores; 5% when promotional financing is applied, per footnote 2."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-tsc-visa",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "Shop at Tractor Supply and Earn 5%in Rewards"
+          },
+          "note": "Rewards are stated as a percentage back, so the currency is cash-back (general 1, Citi convention for TSC)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rewardCurrency.anchors.0",
+          "current": "How do I redeem reward points on my TSC® Credit Card?",
+          "note": "An FAQ heading about redeeming points does not support the cash-back currency."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-tsc-visa-product",
+              "quote": "You can redeem your rewards at Tractor Supply stores, online at TractorSupply.com, or in the TSC App."
+            }
+          ],
+          "note": "Rewards are redeemed only with Tractor Supply, so they are store credit rather than general cash back (Citi convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "merchant-specific",
+            "summary": "5% in Rewards at Tractor Supply; the capture does not say TractorSupply.com or Petsense purchases earn 5%",
+            "rate": "5%",
+            "cap": "none stated",
+            "conditions": "Special financing on purchases of $199 and up can be chosen instead of rewards",
+            "merchants": [
+              "Tractor Supply"
+            ],
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-tsc-visa-product",
+            "quote": "Shop at Tractor Supply and Earn 5%in Rewards"
+          },
+          "note": "Anchored on the product page; TractorSupply.com and Petsense are named only as places the store card works, not as 5% earners."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-dillards-mastercard",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.issues.0.code",
+          "current": "missing",
+          "corrected": "ambiguous",
+          "anchor": {
+            "sourceId": "citi-dillards-mastercard-product",
+            "quote": "Welcome Shopping Pass, Shopping Passes, and Rewards Certificates cannot be credited to an account, redeemed for cash,"
+          },
+          "note": "Points buy a 10% pass (the default) or a $10 certificate usable only at Dillard's; that is an ambiguity of value, not a missing value (Citi convention)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [],
+      "productNoteChanges": [
+        {
+          "action": "confirm",
+          "hintIndex": 0,
+          "anchor": {
+            "sourceId": "citi-dillards-mastercard-product",
+            "quote": "Get 2 points per $1 spent at Dillard’s on net eligible purchases"
+          },
+          "note": "2 points per $1 on eligible Dillard's purchases, stated in footnote 4."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-macys-amex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "Anchorless missing issue with no stated problem; removed (general 11, 16)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Everyday Shopping at Macy’s",
+            "rateBps": 200,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "2 points per $1 spent for Silver members"
+            },
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "New credit cards are opened at Silver status."
+            },
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "Earn points on every Macy’s purchase (except gift cards, services and fees)."
+            }
+          ],
+          "note": "The Macy's purchase rule was dropped in drafting; recorded at the Silver tier new cards open at (Citi convention); one merchant, so other."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-macys-amex-product",
+              "quote": "Points add up to Star Money that you can use to purchase merchandise at Macy’s, Macy’s Backstage, or macys.com."
+            }
+          ],
+          "note": "Star Money is usable only at Macy's, Macy's Backstage or macys.com (general 14, Citi convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Macy's purchases: 2/3/5 points per $1 for Silver/Gold/Platinum; new cards open at Silver",
+            "rate": "2/3/5 points per $1 for Silver/Gold/Platinum Star Rewards members",
+            "cap": "none stated",
+            "conditions": "Gold with $500-$1,199 and Platinum with $1,200+ annual spend at Macy's with the card",
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-macys-amex-product",
+            "quote": "Cardholders can access Gold status with $500 - $1,199 annual spend at Macy’s with their Card"
+          },
+          "note": "Anchored; the conditions now give the spend each tier needs, as the product page states."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-bloomingdales-amex",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": null,
+          "corrected": "points",
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "Loyallists: 3 points per $1 spent"
+          },
+          "note": "Undrafted card: it earns points per dollar (Citi convention: store cards that state only points stay points)."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": null,
+          "corrected": 50,
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "5,000 Points = $25 Reward"
+          },
+          "note": "Undrafted card: 5,000 points buy a $25 store Reward, half a cent a point (general 14, Citi convention)."
+        }
+      ],
+      "addedRules": [
+        {
+          "rule": {
+            "category": "other",
+            "issuerWording": "Shopping at Bloomingdale’s",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Earn more points per dollar when you shop at Bloomingdale’s"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Shopping at Bloomingdale’s 3 points per $1 spent for Loyallist"
+            }
+          ],
+          "note": "Bloomingdale's purchases at the Loyallist tier (Citi convention: the tier a new cardholder starts in); one merchant, so other (general 4)."
+        },
+        {
+          "rule": {
+            "category": "all-purchases",
+            "issuerWording": "Shopping Outside of Bloomingdale’s",
+            "rateBps": 300,
+            "paidOnPaymentBps": 0,
+            "cap": null,
+            "activation": null,
+            "usMerchantsOnly": null,
+            "limitedTime": null
+          },
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Rack up points outside of Bloomingdale’s too!"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Shopping Outside of Bloomingdale’s 3 points per $1 spent for Loyallist"
+            },
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "You can use the Bloomingdale’s American Express Card anywhere that American Express is accepted"
+            }
+          ],
+          "note": "The American Express card earns 3 points per $1 outside Bloomingdale's at the Loyallist tier; the store card does not."
+        }
+      ],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "10 points per $1 spent for Top of the List Unlocked"
+            }
+          ],
+          "note": "Higher tiers (Top of the List, Top of the List Unlocked) earn 4X or 10X at Bloomingdale's and 4X outside; the capture does not state how tiers are reached (general 17)."
+        },
+        {
+          "code": "ambiguous",
+          "anchors": [
+            {
+              "sourceId": "citi-bloomingdales-amex-product",
+              "quote": "Redeem your Reward for merchandise purchased at Bloomingdale’s, bloomingdales.com or Bloomingdale’s The Outlet Store."
+            }
+          ],
+          "note": "Rewards are usable only at Bloomingdale's (general 14)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "relationship-tier",
+            "summary": "Loyallist tiers: 3/4/10 points per $1 at Bloomingdale's and 3/4/4 outside for Loyallist/Top of the List/Unlocked",
+            "rate": "Loyallist 3, Top of the List 4, Top of the List Unlocked 10 at Bloomingdale's; 3, 4, 4 outside",
+            "cap": "none stated",
+            "conditions": "Tier qualification is not stated in the capture",
+            "membership": null
+          },
+          "anchor": {
+            "sourceId": "citi-bloomingdales-amex-product",
+            "quote": "4 points per $1 spent for Top of the List"
+          },
+          "note": "Anchored on the comparison table; outside Bloomingdale's Top of the List Unlocked earns 4, not 10."
+        }
+      ]
+    },
+    {
+      "cardId": "citi-double-cash",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rewardCurrency.value",
+          "current": "points",
+          "corrected": "cash-back",
+          "anchor": {
+            "sourceId": "citi-double-cash-product",
+            "quote": "Unlimited 2% cash back on purchases"
+          },
+          "note": "The card states its rates as percentage cash back, so the currency is cash-back even though it is tracked as ThankYou Points (general 1)."
+        },
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "citi-double-cash-product",
+            "quote": "Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase."
+          },
+          "note": "A cash-back card has no point value (general 13)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [
+        {
+          "text": "Balance transfers, cash advances, account checks, returns, unauthorized purchases, money orders, wire transfers, lottery tickets, gaming chips and person-to-person payments",
+          "anchors": [
+            {
+              "sourceId": "citi-double-cash-additional-info",
+              "quote": "The following transactions are not purchases and will not earn Points: balance transfers, cash advances, checks that access your Card Account, items returned for credit,"
+            },
+            {
+              "sourceId": "citi-double-cash-additional-info",
+              "quote": "person-to-person payments, Citi® Flex Loans, the creation of Citi® Flex Pays"
+            }
+          ],
+          "note": "The additional-information terms list transactions that never earn; the draft dropped this exclusion."
+        }
+      ],
+      "addedIssues": [],
+      "productNoteChanges": []
+    }
+  ]
+}
