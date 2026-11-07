@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-11",
-  "updatedAt": "2026-11-07T18:55:56.153Z",
+  "updatedAt": "2026-11-07T19:22:22.840Z",
   "cards": {
     "citi-strata": {
       "stages": {
@@ -1773,10 +1773,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:9121a642f26f6b84556589eb900b99524606795e23781fb69f8c416c35658538",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:22.840Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:69ca27afb83f1e3535c1ab9b9b68675108c546a7cd27aa95ed63f154cff2dfbc",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "fac0277ab808cfb93f5b6dcaa69f8e3bdcb0435a54a3288421e1cb4dd72e6365"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:05.700Z",
+      "attempts": 1
     }
   },
   "resolvedFlags": {

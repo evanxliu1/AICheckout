@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-11",
-  "updatedAt": "2026-11-07T19:14:55.635Z",
+  "updatedAt": "2026-11-07T19:22:25.051Z",
   "cards": {
     "synchrony-premier-world-mastercard": {
       "stages": {
@@ -2522,10 +2522,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:cb90cf56e89fe76af4e764024b544f0135d98961ec9f296b5644143bebf0e33e",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:25.051Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:aa209376525776eb03c6c323f2fb5c7c56593240d8b78367f4bac59afe4cd432",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "5c6400c5b72026f2d522653cde7d0d35845ae3b5503bdcecce28f6905d3cf633"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:07.459Z",
+      "attempts": 1
     }
   }
 }

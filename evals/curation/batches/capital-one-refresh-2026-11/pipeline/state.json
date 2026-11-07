@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "capital-one-refresh-2026-11",
-  "updatedAt": "2026-11-07T02:51:56.360Z",
+  "updatedAt": "2026-11-07T19:22:20.509Z",
   "cards": {
     "capital-one-venture-x": {
       "stages": {
@@ -1331,10 +1331,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:92ae66d2be0678561fafd44718b92ba469d859939cc62ad147fe590c7530b0b2",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:20.509Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:601da5b261eaafd98a919ae2521c9441c764f0659e47d3c6cedbc487391c9a1e",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "ead222b60869a60669984061b9883684dc12e5ba5888a21bca17b1abc84b308d"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:03.823Z",
+      "attempts": 1
     }
   }
 }

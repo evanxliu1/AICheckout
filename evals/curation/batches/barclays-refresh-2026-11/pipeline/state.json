@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "barclays-refresh-2026-11",
-  "updatedAt": "2026-11-07T02:51:58.049Z",
+  "updatedAt": "2026-11-07T19:22:19.418Z",
   "cards": {
     "barclays-mastercard-titanium": {
       "stages": {
@@ -2026,10 +2026,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:a460a308e10e488ea3b25756de472a6e483457be60d5f47d4d8c7127fca8da77",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:19.418Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:8c1a18dd8a7689cf5ff286ca0973bb06a8bdbb2bb0ba6e4581e631b0d455b51c",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "c52dc6b7df7d6059f2f23a6ccb2bf32c8a419b3e6fc379abbf6df9041aaa501c"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:03.037Z",
+      "attempts": 1
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "u-s-bank-refresh-2026-11",
-  "updatedAt": "2026-11-07T18:48:18.244Z",
+  "updatedAt": "2026-11-07T19:22:26.143Z",
   "cards": {
     "us-bank-cash-plus": {
       "stages": {
@@ -1432,10 +1432,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:7b09949268707e8c8dee953ba7505bff92e98d5deec33af6f02eb6e2930ec9f3",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:26.143Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:2f27309ecf70203159ae0ff6799abd41819f4366b2963820b2e99a8f9fa95f56",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "1e80d64d7956452ce1ca95adeb72d88948c19e9e119861133f7840a7533780ea"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:08.280Z",
+      "attempts": 1
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "chase-refresh-2026-11",
-  "updatedAt": "2026-11-07T18:48:17.732Z",
+  "updatedAt": "2026-11-07T19:22:21.723Z",
   "cards": {
     "chase-freedom-flex": {
       "stages": {
@@ -2818,10 +2818,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:647501fdc68fd9aa684e4a421e69e182b14da601b88bafc34762b3f45c329ac4",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:21.723Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:74a01a7abf0b92b8cf6200fd4621b0860fd53c74f48144fb2e9e2072cf5e1e11",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "fd013fc202647d1a96c3a030833033b68e1085deee9521e3245ea4d0dc58fe15"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:04.821Z",
+      "attempts": 1
     }
   },
   "resolvedFlags": {

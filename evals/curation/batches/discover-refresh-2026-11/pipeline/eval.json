@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": 1,
+  "batch": "discover-refresh-2026-11",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "discover-refresh-2026-11.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "discover.json"
+      ]
+    },
+    "totals": {
+      "cards": 6,
+      "inCorpus": 6,
+      "drafted": 6,
+      "undrafted": 0,
+      "confirmed": 0,
+      "fixed": 6,
+      "dropped": 0,
+      "draftRules": 53,
+      "rulesRemoved": 24,
+      "rulesAdded": 0,
+      "verifiedRules": 29,
+      "draftRulesUnchanged": 25,
+      "ruleFieldValues": 232,
+      "ruleFieldsChanged": 4,
+      "cardFieldValues": 12,
+      "cardFieldsChanged": 1,
+      "ruleFieldCorrectionRate": 0.0172,
+      "cardFieldCorrectionRate": 0.0833,
+      "draftRulesRemovedRate": 0.4528,
+      "draftRulesUnchangedRate": 0.4717
+    },
+    "ruleFields": {
+      "category": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      },
+      "issuerWording": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      },
+      "rateBps": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      },
+      "cap": {
+        "count": 3,
+        "total": 29,
+        "rate": 0.1034
+      },
+      "activation": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      },
+      "usMerchantsOnly": {
+        "count": 1,
+        "total": 29,
+        "rate": 0.0345
+      },
+      "limitedTime": {
+        "count": 0,
+        "total": 29,
+        "rate": 0
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 0,
+        "total": 6,
+        "rate": 0
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 1,
+        "total": 6,
+        "rate": 0.1667
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 0,
+      "issuesRemoved": 10,
+      "issuesAdded": 6
+    },
+    "undraftedRulesAdded": 0,
+    "findings": {
+      "accepted": 67,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Discover": {
+        "cards": 6,
+        "inCorpus": 6,
+        "drafted": 6,
+        "undrafted": 0,
+        "confirmed": 0,
+        "fixed": 6,
+        "dropped": 0,
+        "draftRules": 53,
+        "rulesRemoved": 24,
+        "rulesAdded": 0,
+        "verifiedRules": 29,
+        "draftRulesUnchanged": 25,
+        "ruleFieldValues": 232,
+        "ruleFieldsChanged": 4,
+        "cardFieldValues": 12,
+        "cardFieldsChanged": 1,
+        "ruleFieldCorrectionRate": 0.0172,
+        "cardFieldCorrectionRate": 0.0833,
+        "draftRulesRemovedRate": 0.4528,
+        "draftRulesUnchangedRate": 0.4717
+      }
+    },
+    "cards": {
+      "confirmed": [],
+      "dropped": [],
+      "undrafted": [],
+      "valuesUnchanged": [
+        "discover-it-chrome",
+        "discover-it-student-chrome"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "discover-refresh-2026-11.v1",
+      "hash": "c9c9d8dfa27a485f45d48fdbcc5b6fe8bdbc526fd36492d7a42edef5b89a02bb",
+      "cases": 6
+    },
+    "upperBound": true,
+    "files": 6,
+    "scored": 6,
+    "skipped": 0,
+    "all": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 29,
+          "total": 29,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 29,
+          "total": 53,
+          "rate": 0.5472
+        },
+        "fieldAccuracy": {
+          "correct": 213,
+          "total": 219,
+          "rate": 0.9726
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 213,
+          "total": 219,
+          "rate": 0.9726
+        },
+        "claimPrecision": {
+          "correct": 120,
+          "total": 271,
+          "rate": 0.4428
+        },
+        "evidenceValidity": {
+          "correct": 478,
+          "total": 479,
+          "rate": 0.9979
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 11,
+          "rate": 0.4545
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 11,
+          "total": 12,
+          "rate": 0.9167
+        },
+        "unsupportedClaims": 151,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "missing": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 2,
+            "total": 8,
+            "rate": 0.25
+          }
+        },
+        "exclusionRecall": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 295593,
+          "p95": 392143
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 15,
+            "total": 15,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 15,
+            "total": 15,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 12,
+            "total": 15,
+            "rate": 0.8
+          },
+          "activation": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 28,
+            "total": 29,
+            "rate": 0.9655
+          },
+          "limitedTime": {
+            "correct": 27,
+            "total": 29,
+            "rate": 0.931
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 6,
+      "observed": 6,
+      "complete": true,
+      "overall": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 29,
+          "total": 29,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 29,
+          "total": 53,
+          "rate": 0.5472
+        },
+        "fieldAccuracy": {
+          "correct": 213,
+          "total": 219,
+          "rate": 0.9726
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 213,
+          "total": 219,
+          "rate": 0.9726
+        },
+        "claimPrecision": {
+          "correct": 120,
+          "total": 271,
+          "rate": 0.4428
+        },
+        "evidenceValidity": {
+          "correct": 478,
+          "total": 479,
+          "rate": 0.9979
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 11,
+          "rate": 0.4545
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 11,
+          "total": 12,
+          "rate": 0.9167
+        },
+        "unsupportedClaims": 151,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "missing": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 2,
+            "total": 8,
+            "rate": 0.25
+          }
+        },
+        "exclusionRecall": {
+          "correct": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 6
+        },
+        "latencyMs": {
+          "p50": 295593,
+          "p95": 392143
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 15,
+            "total": 15,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 15,
+            "total": 15,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 12,
+            "total": 15,
+            "rate": 0.8
+          },
+          "activation": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 28,
+            "total": 29,
+            "rate": 0.9655
+          },
+          "limitedTime": {
+            "correct": 27,
+            "total": 29,
+            "rate": 0.931
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 0,
+      "observed": 0,
+      "complete": true,
+      "overall": {
+        "runs": 0,
+        "ruleRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "rulePrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "fieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "claimPrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "evidenceValidity": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "statuses": {},
+        "latencyMs": {
+          "p50": null,
+          "p95": null
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "paidOnPaymentBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capKind": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "usMerchantsOnly": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "limitedTime": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Discover": {
+        "runs": 6,
+        "ruleRecall": {
+          "correct": 29,
+          "total": 29,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 29,
+          "total": 53,
+          "rate": 0.5472
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 213,
+          "total": 219,
+          "rate": 0.9726
+        },
+        "cardFieldAccuracy": {
+          "correct": 11,
+          "total": 12,
+          "rate": 0.9167
+        },
+        "issueRecall": {
+          "correct": 5,
+          "total": 11,
+          "rate": 0.4545
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 6,
+      "cardsIdentical": 2,
+      "rules": {
+        "frozen": 27,
+        "batch": 29,
+        "matched": 27,
+        "onlyFrozen": 0,
+        "onlyBatch": 2
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 27,
+          "total": 27,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 27,
+          "total": 27,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 25,
+          "total": 27,
+          "rate": 0.9259
+        },
+        "activation": {
+          "agree": 27,
+          "total": 27,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 27,
+          "total": 27,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 27,
+          "total": 27,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 160,
+        "total": 162,
+        "rate": 0.9877
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 6,
+          "total": 6,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 6,
+          "total": 6,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 12,
+        "batch": 12
+      },
+      "issues": {
+        "frozen": 10,
+        "batch": 11
+      }
+    },
+    "cards": [
+      {
+        "cardId": "discover-it-cash-back",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "discover-it-chrome",
+        "rules": {
+          "frozen": 5,
+          "batch": 6,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [
+          "ev-charging"
+        ],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 4,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "discover-it-miles",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 3,
+            "rate": 0.3333
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "discover-it-secured-cash-back",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "discover-it-student-cash-back",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "discover-it-student-chrome",
+        "rules": {
+          "frozen": 3,
+          "batch": 4,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [
+          "ev-charging"
+        ],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 2,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 3
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:11:28.972Z",
+        "lastFinishedAt": "2026-11-06T19:11:28.972Z",
+        "models": []
+      },
+      "capture": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:31:32.594Z",
+        "lastFinishedAt": "2026-11-06T19:31:32.596Z",
+        "models": []
+      },
+      "extract": {
+        "records": 6,
+        "done": 6,
+        "attempts": 22,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T01:53:35.777Z",
+        "lastFinishedAt": "2026-11-07T17:38:55.987Z",
+        "models": []
+      },
+      "draft": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T17:39:32.817Z",
+        "lastFinishedAt": "2026-11-07T17:39:32.819Z",
+        "models": []
+      },
+      "verify": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T17:44:28.065Z",
+        "lastFinishedAt": "2026-11-07T17:44:28.065Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T17:55:03.526Z",
+        "lastFinishedAt": "2026-11-07T17:55:03.526Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T17:55:04.337Z",
+        "lastFinishedAt": "2026-11-07T17:55:04.339Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 6,
+        "done": 6,
+        "attempts": 6,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:06:46.429Z",
+        "lastFinishedAt": "2026-11-07T18:06:46.429Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:16:43.060Z",
+        "lastFinishedAt": "2026-11-07T19:16:43.060Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "discover-it-cash-back",
+          "runs": 4,
+          "modelMinutes": 6.5,
+          "inputTokens": 11684,
+          "outputTokens": 6294
+        },
+        {
+          "cardId": "discover-it-miles",
+          "runs": 4,
+          "modelMinutes": 3.08,
+          "inputTokens": 9698,
+          "outputTokens": 1115
+        },
+        {
+          "cardId": "discover-it-chrome",
+          "runs": 13,
+          "modelMinutes": 4.93,
+          "inputTokens": 10487,
+          "outputTokens": 2338
+        },
+        {
+          "cardId": "discover-it-student-cash-back",
+          "runs": 4,
+          "modelMinutes": 6.54,
+          "inputTokens": 7692,
+          "outputTokens": 6642
+        },
+        {
+          "cardId": "discover-it-student-chrome",
+          "runs": 4,
+          "modelMinutes": 2.71,
+          "inputTokens": 6227,
+          "outputTokens": 1715
+        },
+        {
+          "cardId": "discover-it-secured-cash-back",
+          "runs": 13,
+          "modelMinutes": 6.2,
+          "inputTokens": 11343,
+          "outputTokens": 6913
+        }
+      ],
+      "totals": {
+        "cards": 6,
+        "modelMinutes": 29.96,
+        "inputTokens": 57131,
+        "outputTokens": 25017
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 15.39,
+      "tokens": 392232,
+      "perCard": {
+        "modelMinutes": 2.56,
+        "tokens": 65372
+      }
+    }
+  }
+}

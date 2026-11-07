@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "bank-of-america-refresh-2026-11",
-  "updatedAt": "2026-11-07T19:14:49.398Z",
+  "updatedAt": "2026-11-07T19:22:27.257Z",
   "cards": {
     "boa-customized-cash-rewards": {
       "stages": {
@@ -2251,10 +2251,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:1d6e2597cc4f107a7b201e4adcc388d9fbdafcdbac3cf1434229af6fb3a28294",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:27.257Z",
+      "attempts": 2,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:94182f122491e7c2a27f2c4f98ada7af5c1c6993ea474bc9b9bb911978a19b46",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "4d8d87f4175485f48568e4dbe04bd367b8d57b920610135234ed6aaa803d2579"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:18:13.949Z",
+      "attempts": 4
     }
   }
 }

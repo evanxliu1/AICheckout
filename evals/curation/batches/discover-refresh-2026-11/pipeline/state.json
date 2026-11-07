@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "discover-refresh-2026-11",
-  "updatedAt": "2026-11-07T18:06:46.543Z",
+  "updatedAt": "2026-11-07T19:22:23.902Z",
   "cards": {
     "discover-it-cash-back": {
       "stages": {
@@ -777,10 +777,31 @@
   },
   "batchStages": {
     "build": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:7d68c1619d60b88f2f1e80338dfbb3ecfc3f90fd64b6b5a67f33d3fd92b260c5",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:23.902Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
     },
     "eval": {
-      "status": "pending"
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:b45b4de79f5d42d6d8af1ce0436ca2a6522723cd7e81d7e2630095e2c9cb347a",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "28345a39f9ed852312c941811bbf79ccc42b74884719ec689128d04e8b0c8fa0"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:06.509Z",
+      "attempts": 1
     }
   }
 }
