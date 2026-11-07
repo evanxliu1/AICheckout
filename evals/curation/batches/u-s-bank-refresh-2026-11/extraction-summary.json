@@ -19,175 +19,284 @@
     ]
   },
   "counts": {
-    "timeout": 11,
-    "needs_review": 1
+    "needs_review": 11,
+    "evidence_valid": 1
   },
   "cards": [
     {
       "cardId": "us-bank-cash-plus",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 18,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "entertainment",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_missing": 2
+      },
       "documents": [
         "us-bank-cash-plus-product",
         "us-bank-cash-plus-rewards-terms",
         "us-bank-cash-plus-sample-merchants"
       ],
       "inputNotes": [],
-      "runs": 8,
+      "runs": 11,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 689703,
+      "durationMs": 376871,
       "inputTokenEstimate": 14526,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T08:48:05.736Z"
+      "inputTokens": 12800,
+      "outputTokens": 5392,
+      "runAt": "2026-11-07T17:39:32.154Z"
     },
     {
       "cardId": "us-bank-smartly",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "out-of-scope",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 2,
+        "reported_ambiguous": 1
+      },
       "documents": [
         "us-bank-smartly-product"
       ],
       "inputNotes": [],
-      "runs": 8,
+      "runs": 11,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 689720,
+      "durationMs": 220604,
       "inputTokenEstimate": 6138,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T08:48:05.717Z"
+      "inputTokens": 7010,
+      "outputTokens": 1295,
+      "runAt": "2026-11-07T17:39:32.073Z"
     },
     {
       "cardId": "us-bank-altitude-go",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_missing": 1
+      },
       "documents": [
         "us-bank-altitude-go-product",
         "us-bank-altitude-go-rewards-terms"
       ],
       "inputNotes": [],
-      "runs": 8,
+      "runs": 11,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 689713,
+      "durationMs": 155528,
       "inputTokenEstimate": 13423,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T08:48:05.725Z"
+      "inputTokens": 11318,
+      "outputTokens": 1837,
+      "runAt": "2026-11-07T17:39:32.133Z"
     },
     {
       "cardId": "us-bank-altitude-connect",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 8,
+        "reported_ambiguous": 2,
+        "reported_missing": 2
+      },
       "documents": [
         "us-bank-altitude-connect-product",
         "us-bank-altitude-connect-rewards-terms"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 9,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 689707,
+      "durationMs": 276399,
       "inputTokenEstimate": 14431,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T08:48:05.731Z"
+      "inputTokens": 11935,
+      "outputTokens": 2653,
+      "runAt": "2026-11-07T17:39:32.142Z"
     },
     {
       "cardId": "us-bank-cash-plus-secured",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 18,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "entertainment",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 2
+      },
       "documents": [
         "us-bank-cash-plus-secured-product",
         "us-bank-cash-plus-sample-merchants"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 9,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 1001683,
+      "durationMs": 386087,
       "inputTokenEstimate": 8314,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T09:23:50.767Z"
+      "inputTokens": 8502,
+      "outputTokens": 5340,
+      "runAt": "2026-11-07T17:39:32.150Z"
     },
     {
       "cardId": "us-bank-altitude-go-secured",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_missing": 1
+      },
       "documents": [
         "us-bank-altitude-go-secured-product",
         "us-bank-altitude-go-secured-rewards-terms"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 9,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 1001686,
+      "durationMs": 177255,
       "inputTokenEstimate": 12061,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T09:23:50.765Z"
+      "inputTokens": 10413,
+      "outputTokens": 1619,
+      "runAt": "2026-11-07T17:39:32.147Z"
     },
     {
       "cardId": "us-bank-harley-davidson-visa-signature",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
       "documents": [
         "us-bank-harley-davidson-visa-signature-product"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 9,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 1001688,
+      "durationMs": 226509,
       "inputTokenEstimate": 5543,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T09:23:50.762Z"
+      "inputTokens": 6586,
+      "outputTokens": 975,
+      "runAt": "2026-11-07T17:39:32.119Z"
     },
     {
       "cardId": "us-bank-harley-davidson-hog-elite",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "rate_not_in_evidence": 2,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
       "documents": [
         "us-bank-harley-davidson-hog-elite-product"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 9,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 1001694,
+      "durationMs": 185315,
       "inputTokenEstimate": 6337,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T09:23:50.754Z"
+      "inputTokens": 7144,
+      "outputTokens": 761,
+      "runAt": "2026-11-07T17:39:32.121Z"
     },
     {
       "cardId": "us-bank-harley-davidson-secured",
@@ -222,67 +331,93 @@
     {
       "cardId": "us-bank-state-farm-premier-cash-rewards",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 7,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "ambiguous",
+        "out-of-scope",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_conflicting": 1,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1,
+        "reported_missing": 2
+      },
       "documents": [
         "us-bank-state-farm-premier-cash-rewards-product",
         "state-farm-credit-cards",
         "us-bank-state-farm-premier-cash-rewards-pricing"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 7,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 782037,
+      "durationMs": 187953,
       "inputTokenEstimate": 8042,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T10:00:35.407Z"
+      "inputTokens": 8194,
+      "outputTokens": 2117,
+      "runAt": "2026-11-07T17:42:07.670Z"
     },
     {
       "cardId": "us-bank-edward-jones-triple-rewards",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {
+        "rate_not_in_evidence": 1,
+        "quote_not_found": 3
+      },
       "documents": [
         "us-bank-edward-jones-triple-rewards-product",
         "us-bank-edward-jones-triple-rewards-pricing",
         "us-bank-edward-jones-triple-rewards-categories"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 7,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 782043,
+      "durationMs": 224555,
       "inputTokenEstimate": 7550,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T10:00:35.401Z"
+      "inputTokens": 7836,
+      "outputTokens": 438,
+      "runAt": "2026-11-07T17:42:29.405Z"
     },
     {
       "cardId": "us-bank-elan-fidelity-rewards",
       "issuer": "U.S. Bank",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
+      "status": "evidence_valid",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
       "findings": {},
       "documents": [
         "us-bank-elan-fidelity-rewards-product",
         "us-bank-elan-fidelity-rewards-rewards-terms"
       ],
       "inputNotes": [],
-      "runs": 6,
+      "runs": 7,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 782082,
+      "durationMs": 158044,
       "inputTokenEstimate": 6937,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T10:00:35.357Z"
+      "inputTokens": 7362,
+      "outputTokens": 560,
+      "runAt": "2026-11-07T17:42:37.438Z"
     }
   ]
 }

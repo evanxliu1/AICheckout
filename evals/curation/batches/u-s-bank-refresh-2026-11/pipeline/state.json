@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "u-s-bank-refresh-2026-11",
-  "updatedAt": "2026-11-07T10:13:37.560Z",
+  "updatedAt": "2026-11-07T17:55:06.021Z",
   "cards": {
     "us-bank-cash-plus": {
       "stages": {
@@ -46,12 +46,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:38afa44d4bf06d517555177652a71919deab74b3ce240af697fb787f35c89bfe",
-          "finishedAt": "2026-11-07T10:13:37.558Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-cash-plus",
+              "sha256": "79bc1852439d0c038a053d6d08ea3a91bfb6a3e24d995827dbb8db6f3ff6f7cd"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e1585a69e0905ec4f2694971ae7a1a792f73799ef6a9fed6e41cd32819e91684",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-cash-plus",
+              "sha256": "3c562e4cf0ed7a8b332dd0a7f4f7018757d97ba19c1f3c9ac92d27cfc02e6922"
+            }
+          ],
+          "labelsHash": "sha256:74832be959f45daa201692e77148ab219009504fb1fa2c2e4b2dff678b24499b",
+          "anchorsHash": "sha256:0e4e765125afeab03362fcee2112c176d37fdf8f10cdd37fa3fa287a67794311",
+          "finishedAt": "2026-11-07T17:55:06.019Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -84,12 +104,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:7bcbfb14016c82e0817579e55bf740f2159d85dca3c72a08c492c1c523efef04",
-          "finishedAt": "2026-11-07T10:13:37.558Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-smartly",
+              "sha256": "8e24d94395faf75e00286b351e920f65aed96640b0460f744c0d0f0bca91cf46"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:f4a92b66af798899fd867e91f460b3ea4d53c6bf6fcddc50dcba79d87954b5d9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-smartly",
+              "sha256": "9c495d1751e37f05a26be7f6083034072b8417d135e713ca4950b1e6cd6b3060"
+            }
+          ],
+          "labelsHash": "sha256:4ec6cf664f054051b81caf9f5648442b4939e9a2506e86251ea5ee137dbc5688",
+          "anchorsHash": "sha256:68132a0d63f259922901dfb8382e847deb7f5acac16da843238f3bc383c997be",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -130,12 +170,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:303b47570db00682a9d3459c0841e65d21da34229cfab965802719adce8e3b75",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-go",
+              "sha256": "48e9595ca1abf47faa6dcda0f46e6fdfc094f3f22d6e798d65fb86b369de6bd3"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4db7261a644a477a870bbf8eed2c80c39305398c87473e03eecf29c29256db1d",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-go",
+              "sha256": "87d91ae0f31ac405eba9e17348a45f9e02e4ab3859a43036ea082bc5ee5dfc05"
+            }
+          ],
+          "labelsHash": "sha256:be2fbf8a69659f1e2c901aff06f5a22f769482496c305a350f225d65f5c40540",
+          "anchorsHash": "sha256:8f5a33573034dfb9b9140d0b69340181671df71d31b2a7948367b81ef37167c7",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -176,12 +236,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:c4c3750f74fc298da808c940aac91450f6a7be611064aa3b0fe423b64db9656c",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-connect",
+              "sha256": "7af9fd7a0553e297d73422daca649f93c75e945e95673d9e69e9abbcd6d1a9df"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7a6bfc3e571108728c648436c06cb76dee069439708d8f3b28c997cb3e33ec33",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-connect",
+              "sha256": "84c3cec8305318c94614046e6aee3c5ba7b12ea2d45aecf42b4941828f55a0aa"
+            }
+          ],
+          "labelsHash": "sha256:2b92287cf4b7c51bb0ca7310a5f44230c8b77b280f39bdecf47e87bb1a34735c",
+          "anchorsHash": "sha256:ead4823954c510c72e872ce41ad1cc085946f326e34688f1073d71919c7458e9",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -222,12 +302,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:0228e86bcee7090ab072b98c4355e5e4090ae369a8bcb423b8453ae281e76096",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-cash-plus-secured",
+              "sha256": "9f31a74420b31ca8b5b19d2173915f6c6f62ee32da1b1d9b4f01b252c3a8b2c7"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ca37a7f9f2f78ba9dcc09a03849f5471bd1f0afb4fc9a91938e07d7f868dda21",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-cash-plus-secured",
+              "sha256": "a127da6606549593c637d8c4d52159561ff00f47d8824bd33ae839c8d19a484c"
+            }
+          ],
+          "labelsHash": "sha256:79adf128a1de7750502f08ffa234a11d747593771301d82862520df7fb0e76f2",
+          "anchorsHash": "sha256:f24851d231dcd8fcd7f791ceb5466a8a4235ba71cb6c72aac76ec68f6744add9",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -268,12 +368,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:92f0076f09a216045673c162347b5e482cd88f4c7cc36c7d8a8e83335f312fef",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-go-secured",
+              "sha256": "16aca455c119df55c95fb39fae1527e1236f4dd78ff0f4a32df19b31ac8838ad"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:76d7196dc097ed1d42362b4592c179d3a1ff504f07bc6b0e3686366becee4b08",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-go-secured",
+              "sha256": "678aab738e9edd7549d9add4f6528b565bcc74ad1be7eacd3f117f81ae34e5e5"
+            }
+          ],
+          "labelsHash": "sha256:d06271443e352eca9dacf3894a055d1820c80877053ef9696d3459a6dc6bbc17",
+          "anchorsHash": "sha256:477b8c59a08abab11d8ef553c9328235f6abc9ccc7ef24b405941697be9ddb1c",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -306,12 +426,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:6f9770921e3925a3ad704d2f33dd2ce69a61b8218a9cf0a2cb52875e52080ff9",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-harley-davidson-visa-signature",
+              "sha256": "33cae75786813cbdafb13adb4416beb8f7fe4a22c170c58c53b56692995746e5"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6b429a40d3ffe4c09686c6a8bdffc671e42fb8988f78d75ca58f881f9e4908ba",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-harley-davidson-visa-signature",
+              "sha256": "fc33d2f5ff3c83c3b5577b3b4f70cc0d5555d534bbb9613a4f3ac99770db4691"
+            }
+          ],
+          "labelsHash": "sha256:25f15aa753fddc4638579fb1f6b93f3378b1c413dab83b64d6407523af559371",
+          "anchorsHash": "sha256:5a29ade6ef56c2bf3b82e6f2df2e99734a8415069adb44868d2d6ad15ab91a86",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -344,12 +484,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:6f10f65d1ef08ed0baf700a73eebd05827653eb3fee97744d7269984c7f7dbb3",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-harley-davidson-hog-elite",
+              "sha256": "4c46783b882efa86ade107e67d848078f69689167709eba9df67d1c3532a45bb"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:86aeae16049f15e5cfa677d51726ac095bc63b000e0f9f02424d3b17cebc482f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-harley-davidson-hog-elite",
+              "sha256": "61169568fbc90e795ead0584ea102a8427952f4e7db8e8e6e9bbadc20f7a8feb"
+            }
+          ],
+          "labelsHash": "sha256:a5305df4969659a9d09c371243ae4b9cd8cc851f2c6c6569f9b986cf69684526",
+          "anchorsHash": "sha256:9dd9804dfb34e4f25274a21ecd148845c07b98fe599c0b6653645b0752e31831",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -393,6 +553,16 @@
           ],
           "finishedAt": "2026-11-07T04:22:07.653Z",
           "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c611268a833fc61c59b1417b4f367ad33250c6f40718b31604e4304ee9bbcd10",
+          "labelsHash": "sha256:6e33cac12b72e8a742ae41fb2a255825b84168343e344893308ecd3b542ba25e",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1,
+          "undrafted": true
         }
       },
       "dropped": null,
@@ -441,12 +611,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:7d9f1ef0f607fd7fd87e773467a839bf1999830585a6a2b031361960e322e218",
-          "finishedAt": "2026-11-07T10:13:37.559Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-state-farm-premier-cash-rewards",
+              "sha256": "ee4c2c9f3b5d0694fc57ca1a4d50538e1e3e3b55b314fa63f1e619a0d78497c8"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:bcf11cbb162fb4d5b858c285f6ec729e734d2a97571e26bb30c9a5be5813d9fb",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-state-farm-premier-cash-rewards",
+              "sha256": "6f0f0dce752d17a8fd2e71ae505f4d6420fd71a006108164cd71132ef29d6da3"
+            }
+          ],
+          "labelsHash": "sha256:8b2ad2f7c9a47b12bf622549b1ae29c122bc1da1464c82b0311f1afac283e595",
+          "anchorsHash": "sha256:353f8364b11aea1dfb7df8de2f2d774b0bd3cd16fa8750f2e36cba3b7690296b",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -495,12 +685,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:9dcfd5802ffbb74ac6bde67c37a7c3245cb68be8ea5380f9b2a31ed8672c69f3",
-          "finishedAt": "2026-11-07T10:13:37.560Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-edward-jones-triple-rewards",
+              "sha256": "2ff6f961469aebe4e483c0370406b6210de1506774f7e2f9619dae8df657b233"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.996Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:34298d19df5da2060d254748d7cdbf56721eb96501fc73eefc196689972f4431",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-edward-jones-triple-rewards",
+              "sha256": "22b035ecab15d52c75ff66d6ea127c4100cdb878fb3555b3d0498af686cf015c"
+            }
+          ],
+          "labelsHash": "sha256:498d010734332f00f9dbd03ae73bfe871c33d91e3d8fa2eb2608584d6a93cc04",
+          "anchorsHash": "sha256:5d4599cb27790c90e6d1e71c1efd184fb0081ea7e36e1e6bc65dfb6965014823",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -541,12 +751,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:c62de605bf91b6781f6e282c17332f737ab7777505a1774c4123048a706cefe4",
-          "finishedAt": "2026-11-07T10:13:37.560Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:us-bank-elan-fidelity-rewards",
+              "sha256": "25b305a00d2ee58666ec51fb45a239a856387e5ebcd24091d495382f8b4e3839"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.996Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e85aa6da7b51c8ecb1ac8f43fe75b7763f27e746840005e0abbe20fa997741c0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-elan-fidelity-rewards",
+              "sha256": "b22b1029d57b9ad1d6f3d0a1b23809a227391ba68f3ef39a6347974618c71e6f"
+            }
+          ],
+          "labelsHash": "sha256:cf94bd8e2986a4ac3891e5904ef3cda6646c0a0d53820780db5bd2041be23f86",
+          "anchorsHash": "sha256:68b697b8b69a7201118227aaf5a1f3f9d2bc1d29a5342b2e6d7a26c1616e6780",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
         }
       },
       "dropped": null,
