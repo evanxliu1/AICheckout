@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/apply-expansion-verification.mjs",
+  "description": "Product hints of the verified cards with the verifiers’ adjudicated changes. verification: confirmed, fixed or added by a verifier (anchor quoted from anchorSourceId), or unreviewed.",
+  "cards": [
+    {
+      "cardId": "us-bank-cash-plus",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% choice categories (\"two categories you choose\" each quarter) from: \"Fast food\", \"Home utilities\", \"TV, internet & streaming services\", \"Department stores\", \"Cell phone providers\", \"Electronics…",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible net purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardholder must choose and activate categories each quarter (Rewards Center, mobile app, or phone); selection opens 45 days before the quarter; categories lock 5 days…",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "On your first $2,000 in combined eligible purchases each quarter in two categories you choose. 2,3",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-product"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "In one category you choose each quarter: gas and EV charging*, grocery stores* or restaurants. 3",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-smartly",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $10,000-$49,999 (\"Earn a total of 2.5%\", 25% bonus)",
+          "rate": "2.5% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "membership": "Requires U.S. Bank Smartly Savings account plus qualifying balances in Smartly Checking and/or Safe Debit accounts. Bonus excludes education/school, gift cards (incl. discount gift card…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Between $10,000 - $49,999.99, to earn a total of 2.5 Points per $1 of eligible Net Purchases",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $50,000-$99,999 (\"Earn a total of 3%\", 50% bonus)",
+          "rate": "3% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Between $50,000 - $99,999.99, to earn a total of 3 Points per $1 of eligible Net Purchases",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Smartly Earning Bonus, qualifying balance $100,000+ (\"Earn a total of 4%\", 100% bonus)",
+          "rate": "4% total",
+          "cap": "first $10,000 in eligible Net Purchases each billing cycle, then 2%",
+          "conditions": "Same relationship requirements as above.",
+          "membership": "Same relationship requirements as above.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "$100,000 or more to earn a total of 4 Points per $1 of eligible Net Purchases",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-smartly-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-altitude-connect",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-cash-plus-secured",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "5% on two categories chosen each quarter from 12 options, such as Fast food, Home utilities, Department stores, Cell phone and Electronic stores",
+          "rate": "5%",
+          "cap": "first $2,000 in combined eligible purchases each quarter across both 5% categories, then 1%",
+          "conditions": "Cardmember must enroll in categories each quarter, or all purchases earn no more than 1%.",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3",
+          "anchorSourceId": "us-bank-cash-plus-secured-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "cardholder-chosen-category",
+          "summary": "2% everyday choice category (\"one everyday category you choose each quarter\") from: \"Grocery stores and grocery delivery\", \"Restaurants\", \"Gas stations and EV charging stations\"",
+          "rate": "2%",
+          "cap": "none stated (FAQ: 'no limits on your 2% or 1% cash back earnings')",
+          "conditions": "Chosen quarterly with the 5% picks. Grocery excludes discount stores/supercenters and wholesale clubs (Walmart, Target, warehouse clubs).",
+          "activation": "required (see conditions)",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants3",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-cash-plus-secured-product"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-altitude-go-secured",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-harley-davidson-visa-signature",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "3X points at merchants classified as H-D (the other rule); gas stations also earn 3X under the gas rule",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "H-D purchases identified by merchant classification; gas by Visa category code.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "3X POINTS at H‑D & gas stations2",
+          "anchorSourceId": "us-bank-harley-davidson-visa-signature-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Points redeem for H-D Gift Cards: 10,000 points for a $100 H-D Gift Card. Gift-card value, so point value stays null.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "The 10,000 points can be redeemed for a $100 H-D Gift Card.",
+          "anchorSourceId": "us-bank-harley-davidson-visa-signature-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-hog-elite",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "5X points at merchants classified as H-D (the other rule); gas stations also earn 5X under the gas rule",
+          "rate": "5X",
+          "cap": "none stated",
+          "conditions": "H-D purchases identified by merchant classification; gas by Visa category code.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "membership": null,
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "5X POINTS at H‑D & gas stations2",
+          "anchorSourceId": "us-bank-harley-davidson-hog-elite-product",
+          "verification": "fixed"
+        },
+        {
+          "type": "merchant-specific",
+          "summary": "Points redeem for H-D Gift Cards: 10,000 points for a $100 H-D Gift Card. Gift-card value, so point value stays null.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "The 10,000 points can be redeemed for a $100 H-D Gift Card.",
+          "anchorSourceId": "us-bank-harley-davidson-hog-elite-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-harley-davidson-secured",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "merchant-specific",
+          "summary": "Points redeem at H-D: $25 at H-D for every 2,500 points. Gift-card value, so point value stays null.",
+          "merchants": [
+            "Harley-Davidson"
+          ],
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "$25 AT H-D for every 2,500 points earned",
+          "anchorSourceId": "us-bank-harley-davidson-secured-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-state-farm-premier-cash-rewards",
+      "issuer": "U.S. Bank",
+      "hints": []
+    },
+    {
+      "cardId": "us-bank-edward-jones-triple-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "automatic-top-category",
+          "summary": "Top three spend categories each month, automatically determined from 18 categories: \"Charity & Non-Profits\", \"Clothing & Department Stores\", \"Dining\", \"Drugstores & Personal Care\", \"Electric Vehicle…",
+          "rate": "3X",
+          "cap": "none stated",
+          "conditions": "Automatic, no enrollment; determined per monthly statement. Excludes purchases at Amazon and discount stores/supercenters such as Target and Walmart. Travel Center purchases do not additionally…",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Your top three spend categories will be determined based on the 18 categories listed below.",
+          "verification": "confirmed",
+          "anchorSourceId": "us-bank-edward-jones-triple-rewards-categories"
+        },
+        {
+          "type": "relationship-tier",
+          "summary": "Loyalty Points are worth up to $150 per 15,000 points; maximum value only when redeemed into an eligible Edward Jones account. Point value stays null.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "Maximum value applies to Loyalty Points® redeemed for a deposit into an eligible Edward Jones Account.",
+          "anchorSourceId": "us-bank-edward-jones-triple-rewards-product",
+          "verification": "added"
+        }
+      ]
+    },
+    {
+      "cardId": "us-bank-elan-fidelity-rewards",
+      "issuer": "U.S. Bank",
+      "hints": [
+        {
+          "type": "relationship-tier",
+          "summary": "2% value only when Points are deposited into an eligible Fidelity account; other redemptions (travel, merchandise, gift cards, statement credit) are worth less.",
+          "status": "anchored",
+          "anchorMethod": "verifier",
+          "anchor": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account.",
+          "anchorSourceId": "us-bank-elan-fidelity-rewards-product",
+          "verification": "added"
+        }
+      ]
+    }
+  ]
+}
