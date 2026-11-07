@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+  "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
   "batch": "u-s-bank-refresh-2026-11",
   "issuer": "U.S. Bank",
   "provenance": "agent-verified",
@@ -49,7 +49,43 @@
       "evals/curation/batches/discover-refresh-2026-11/verification/discover.json"
     ]
   },
-  "adjudicator": null,
+  "adjudicator": {
+    "agent": "card-adjudicator",
+    "model": "claude-fable-5-1",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/u-s-bank-refresh-2026-11/pipeline/packets/adjudicate.u-s-bank.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/verification/u-s-bank.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/verify/u-s-bank.md",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-sample-merchants.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-smartly-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-connect-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-connect-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-cash-plus-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-altitude-go-secured-rewards-terms.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-visa-signature-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-hog-elite-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-harley-davidson-secured-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-state-farm-premier-cash-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-edward-jones-triple-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-edward-jones-triple-rewards-categories.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-elan-fidelity-rewards-product.txt",
+      "evals/curation/batches/u-s-bank-refresh-2026-11/captures/us-bank-elan-fidelity-rewards-rewards-terms.txt",
+      "scripts/lib/expansion-verification.mjs",
+      "scripts/lib/expansion-quotes.mjs",
+      "tools/catalog-pipeline/src/label-lint.ts",
+      "tools/catalog-pipeline/src/gates.ts",
+      "apps/api/src/curation/v2/corpus.ts"
+    ]
+  },
   "cards": [
     {
       "cardId": "us-bank-cash-plus",
@@ -65,7 +101,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "TV, internet and streaming"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -76,7 +116,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Fast food"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -87,7 +131,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Cell phone"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -98,7 +146,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Department stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -109,7 +161,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Home utilities"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -120,7 +176,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Furniture stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -131,7 +191,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Electronic stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -142,7 +206,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Movie theaters"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -153,7 +221,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Sporting goods"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -164,7 +236,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Select clothing stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -175,7 +251,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Gyms/fitness centers"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -186,7 +266,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "Ground transportation"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "remove",
@@ -197,7 +281,11 @@
               "Gas stations and EV charging stations"
             ]
           },
-          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 16: the anchor names a category and states no ambiguity; replaced by the chosen-category issue."
+          }
         },
         {
           "op": "remove",
@@ -206,7 +294,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11 and 16: the issue carries no anchor stating a problem, so it is removed."
+          }
         },
         {
           "op": "remove",
@@ -215,7 +307,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11 and 16: the issue carries no anchor stating a problem, so it is removed."
+          }
         }
       ],
       "addedRules": [],
@@ -229,7 +325,11 @@
               "quote": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back."
             }
           ],
-          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention)."
+          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 6 and the U.S. Bank Cash+ convention: one ambiguous issue for the choose-two/choose-one mechanic, anchored on footnote 3 verbatim (19 words)."
+          }
         },
         {
           "code": "ambiguous",
@@ -239,7 +339,11 @@
               "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
             }
           ],
-          "note": "The 5% Fast food option covers only part of dining (general 19)."
+          "note": "The 5% Fast food option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         },
         {
           "code": "ambiguous",
@@ -249,7 +353,11 @@
               "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
             }
           ],
-          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19)."
+          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         },
         {
           "code": "ambiguous",
@@ -259,7 +367,11 @@
               "quote": "Video and DVD rentals (such as Redbox), online movie purchases and live theatrical performances do not qualify."
             }
           ],
-          "note": "The 5% Movie theaters option covers only part of entertainment (general 19)."
+          "note": "The 5% Movie theaters option covers only part of entertainment (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         }
       ],
       "productNoteChanges": [
@@ -270,7 +382,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "On your first $2,000 in combined eligible purchases each quarter in two categories you choose. 2,3"
           },
-          "note": "The 12 options, the $2,000 combined quarterly cap then 1% and the quarterly choice are on the product page and FAQ; the 45-day and 5-day windows are in the FAQ."
+          "note": "The 12 options, the $2,000 combined quarterly cap then 1% and the quarterly choice are on the product page and FAQ; the 45-day and 5-day windows are in the FAQ.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Hint matches the product page (12 options, $2,000 combined quarterly cap then 1%) and the FAQ capture (45-day window, five-day lock); anchor verbatim."
+          }
         },
         {
           "action": "confirm",
@@ -279,7 +395,11 @@
             "sourceId": "us-bank-cash-plus-product",
             "quote": "In one category you choose each quarter: gas and EV charging*, grocery stores* or restaurants. 3"
           },
-          "note": "Three 2% options chosen quarterly, no limit on 2% earnings; grocery and gas exclude discount stores/supercenters and wholesale clubs."
+          "note": "Three 2% options chosen quarterly, no limit on 2% earnings; grocery and gas exclude discount stores/supercenters and wholesale clubs.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Three 2% options chosen quarterly, no limit on 2% earnings and the discount/wholesale exclusions are all in the product page and footnote 3; anchor verbatim."
+          }
         }
       ]
     },
@@ -297,13 +417,21 @@
             "sourceId": "us-bank-smartly-product",
             "quote": "Earn unlimited 2% cash back on every purchase.1"
           },
-          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention)."
+          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 1 and the U.S. Bank Smartly convention: the headline states 2% cash back, so the card is cash-back at 200 bps although tracked as Points. Anchor verbatim."
+          }
         },
         {
           "op": "remove",
           "path": "reference.rewardCurrency.anchors.0",
           "current": "These rewards are earned as “Points”, and U.S. Bank will credit your U.S. Bank SmartlyTM Visa Signature® Card with 2 Points for every $1 spent",
-          "note": "This anchor says the rewards are tracked as points; it no longer supports the cash-back currency."
+          "note": "This anchor says the rewards are tracked as points; it no longer supports the cash-back currency.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The removed anchor describes the Points mechanics and no longer supports the cash-back currency; the fix anchor remains as the sole currency anchor."
+          }
         },
         {
           "op": "set",
@@ -314,7 +442,11 @@
             "sourceId": "us-bank-smartly-product",
             "quote": "Earn unlimited 2% cash back on every purchase.1"
           },
-          "note": "The issuer wording is the category, not the whole headline sentence."
+          "note": "The issuer wording is the category, not the whole headline sentence.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The wording is a verbatim span of the headline naming what earns; the headline sentence itself is already the rule anchor, so nothing is duplicated."
+          }
         },
         {
           "op": "remove",
@@ -325,7 +457,11 @@
               "Account must be open and in good standing (not past due or overlimit) on the closing date of the billing cycle to earn and redeem"
             ]
           },
-          "note": "Account good standing is a general account condition, not an earning ambiguity (general 11)."
+          "note": "Account good standing is a general account condition, not an earning ambiguity (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: account good standing is a general account condition and states no earning ambiguity."
+          }
         }
       ],
       "addedRules": [],
@@ -339,7 +475,11 @@
             "sourceId": "us-bank-smartly-product",
             "quote": "Between $10,000 - $49,999.99, to earn a total of 2.5 Points per $1 of eligible Net Purchases"
           },
-          "note": "Tier, total rate, $10,000 per billing cycle bonus cap and Smartly Savings plus qualifying balance requirement are all in footnote 1."
+          "note": "Tier, total rate, $10,000 per billing cycle bonus cap and Smartly Savings plus qualifying balance requirement are all in footnote 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 states the tier, the 2.5 Points total, the $10,000 per-cycle bonus cap and the Smartly Savings plus qualifying-balance requirement; anchor verbatim."
+          }
         },
         {
           "action": "confirm",
@@ -348,7 +488,11 @@
             "sourceId": "us-bank-smartly-product",
             "quote": "Between $50,000 - $99,999.99, to earn a total of 3 Points per $1 of eligible Net Purchases"
           },
-          "note": "Stated in footnote 1 with the same cap and requirements."
+          "note": "Stated in footnote 1 with the same cap and requirements.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 states the $50,000-$99,999.99 tier at 3 Points total with the same cap and requirements; anchor verbatim."
+          }
         },
         {
           "action": "confirm",
@@ -357,7 +501,11 @@
             "sourceId": "us-bank-smartly-product",
             "quote": "$100,000 or more to earn a total of 4 Points per $1 of eligible Net Purchases"
           },
-          "note": "Stated in footnote 1 with the same cap and requirements."
+          "note": "Stated in footnote 1 with the same cap and requirements.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 states the $100,000-or-more tier at 4 Points total with the same cap and requirements; anchor verbatim."
+          }
         }
       ]
     },
@@ -385,7 +533,11 @@
             "sourceId": "us-bank-altitude-connect-product",
             "quote": "You will earn 4 Points (1 base and 3 bonus Points) for every $1 spent on travel category purchases"
           },
-          "note": "The drafted wording was cut mid-sentence and is not verbatim; the category name is \"travel category purchases\"."
+          "note": "The drafted wording was cut mid-sentence and is not verbatim; the category name is \"travel category purchases\".",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The drafted wording was a truncated sentence; the category phrase is verbatim. The new anchor is in the product footnote, apart from the rules-page anchors, so no run forms."
+          }
         },
         {
           "op": "remove",
@@ -394,7 +546,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem (general 16)."
+          "note": "Anchorless missing issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11 and 16: the issue carries no anchor stating a problem, so it is removed."
+          }
         },
         {
           "op": "remove",
@@ -403,7 +559,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue with no stated problem (general 16)."
+          "note": "Anchorless missing issue with no stated problem (general 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11 and 16: the issue carries no anchor stating a problem, so it is removed."
+          }
         }
       ],
       "addedRules": [],
@@ -425,7 +585,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "TV, internet and streaming"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -436,7 +600,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Fast food"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -447,7 +615,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Cell phone"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -458,7 +630,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Department stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -469,7 +645,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Home utilities"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -480,7 +660,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Furniture stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -491,7 +675,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Electronic stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -502,7 +690,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Movie theaters"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -513,7 +705,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Sporting goods"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -524,7 +720,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Select clothing stores"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -535,7 +735,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Gyms/fitness centers"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "set",
@@ -546,7 +750,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "Ground transportation"
           },
-          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description."
+          "note": "U.S. Bank convention: the issuer wording is the 5% option name on the product page, not the sample-merchants description.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The option name on the product page is verbatim there; the U.S. Bank convention names the option, not the sample-merchants description. Rule already holds 4 anchors, so the quote changes no anchor set."
+          }
         },
         {
           "op": "remove",
@@ -557,7 +765,11 @@
               "earn an additional 4% cash back for every $1 in eligible Net Purchases spent on prepaid air, car and hotel reservations in the travel center"
             ]
           },
-          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: the Travel Center sentence names no missing value, the draft already has the 5% travel-portal rule."
+          }
         },
         {
           "op": "remove",
@@ -569,7 +781,11 @@
               "Find everything you need — from clothing, shoes and cosmetics to kitchen goods, housewares and home furnishings."
             ]
           },
-          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below."
+          "note": "The issue has no anchor that states a problem (general 11 and 16); replaced by the chosen-category and partial-category issues below.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: the two sample-merchant blurbs describe categories and state no missing value."
+          }
         }
       ],
       "addedRules": [],
@@ -583,7 +799,11 @@
               "quote": "Cardmember must enroll each quarter into categories of their choice, or all Net Purchases will earn no more than 1% cash back."
             }
           ],
-          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention)."
+          "note": "Only the two chosen 5% options and the one chosen 2% option earn their rates; unchosen options earn 1% (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 6 and the U.S. Bank Cash+ convention: one ambiguous issue for the choose-two/choose-one mechanic, anchored on footnote 3 verbatim (19 words)."
+          }
         },
         {
           "code": "ambiguous",
@@ -593,7 +813,11 @@
               "quote": "Full-service restaurants like Applebee's and Olive Garden® are in the Restaurants category."
             }
           ],
-          "note": "The 5% Fast food option covers only part of dining (general 19)."
+          "note": "The 5% Fast food option covers only part of dining (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         },
         {
           "code": "ambiguous",
@@ -603,7 +827,11 @@
               "quote": "Excludes most fast food restaurants like McDonald's®, Subway® or Domino's® — see the fast food category for these."
             }
           ],
-          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19)."
+          "note": "The 2% Restaurants option covers only part of dining: most fast food is excluded (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         },
         {
           "code": "ambiguous",
@@ -613,7 +841,11 @@
               "quote": "Video and DVD rentals (such as Redbox), online movie purchases and live theatrical performances do not qualify."
             }
           ],
-          "note": "The 5% Movie theaters option covers only part of entertainment (general 19)."
+          "note": "The 5% Movie theaters option covers only part of entertainment (general 19).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 19: the option covers only part of the shared category; the sample-merchants sentence states the carve-out verbatim and that page is a source of this card."
+          }
         }
       ],
       "productNoteChanges": [
@@ -632,7 +864,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "on your first $2,000 in combined eligible purchases each quarter in two categories you choose3"
           },
-          "note": "The drafted conditions (45-day selection window, 5-day lock) come from the Cash+ FAQ, which is not a capture of this card; the Secured captures state only quarterly enrollment."
+          "note": "The drafted conditions (45-day selection window, 5-day lock) come from the Cash+ FAQ, which is not a capture of this card; the Secured captures state only quarterly enrollment.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The 45-day and five-day windows come from the Cash+ FAQ, which is not a source of this card; the corrected hint keeps only what the Secured page states. Anchor verbatim, summary 23 words."
+          }
         },
         {
           "action": "confirm",
@@ -641,7 +877,11 @@
             "sourceId": "us-bank-cash-plus-secured-product",
             "quote": "on one everyday category you choose each quarter, like gas stations and EV charging stations*, grocery stores* or restaurants3"
           },
-          "note": "Three 2% options chosen quarterly; footnote 3 says there are no limits on 2% earnings and names the discount store and wholesale club exclusions."
+          "note": "Three 2% options chosen quarterly; footnote 3 says there are no limits on 2% earnings and names the discount store and wholesale club exclusions.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Three 2% options chosen quarterly; footnote 3 states no limits on 2% earnings and the discount/wholesale exclusions. Anchor verbatim."
+          }
         }
       ]
     },
@@ -659,7 +899,11 @@
             "sourceId": "us-bank-altitude-go-secured-rewards-terms",
             "quote": "2 Points (1 base and 1 bonus Point) for every $1 on gas station and EV charging station purchases."
           },
-          "note": "\"gas station purchases\" is not verbatim in the captures; the program rules name the combined category."
+          "note": "\"gas station purchases\" is not verbatim in the captures; the program rules name the combined category.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The program rules name the combined category verbatim; the anchor is the same sentence the rule already cites, so the anchor set is unchanged."
+          }
         }
       ],
       "addedRules": [],
@@ -681,13 +925,21 @@
             "sourceId": "us-bank-harley-davidson-visa-signature-product",
             "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
           },
-          "note": "The only stated value is an H-D Gift Card value, not cash; point value null with the value in a product note (general 3, U.S. Bank convention)."
+          "note": "The only stated value is an H-D Gift Card value, not cash; point value null with the value in a product note (general 3, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and the U.S. Bank point-values bullet: a $100 H-D Gift Card per 10,000 points is a gift-card value, so the point value is null."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.0",
           "current": "The 10,000 points can be redeemed for a $100 H-D Gift Card.",
-          "note": "The gift-card anchor supported the removed point value."
+          "note": "The gift-card anchor supported the removed point value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The gift-card sentence supported the removed value; with it gone the null point value carries no anchor, as the schema allows."
+          }
         },
         {
           "op": "remove",
@@ -699,7 +951,11 @@
               "DINING, BARS, HOTELS & OTHER LODGING 2X Points"
             ]
           },
-          "note": "The missing issue pointed at the dropped base rule, now added (general 11)."
+          "note": "The missing issue pointed at the dropped base rule, now added (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: the issue stood for the dropped 1X base, which the added rule restores."
+          }
         }
       ],
       "addedRules": [
@@ -720,7 +976,11 @@
               "quote": "1X POINT everywhere else Visa is accepted2"
             }
           ],
-          "note": "The 1X base rule was dropped by the drafting."
+          "note": "The 1X base rule was dropped by the drafting.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The page states 1X everywhere else Visa is accepted; wording and anchor verbatim, cap null because the capture states no limit (general 21)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -744,7 +1004,11 @@
             "sourceId": "us-bank-harley-davidson-visa-signature-product",
             "quote": "3X POINTS at H‑D & gas stations2"
           },
-          "note": "The hint was unanchored; the product page states the 3X rate at H-D and gas stations."
+          "note": "The hint was unanchored; the product page states the 3X rate at H-D and gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint was unanchored; the headline states 3X at H-D and gas stations and the summary matches the split into an other rule and a gas rule."
+          }
         },
         {
           "action": "add",
@@ -759,7 +1023,11 @@
             "sourceId": "us-bank-harley-davidson-visa-signature-product",
             "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
           },
-          "note": "Records the H-D redemption value removed from the point value (general 3 and 18)."
+          "note": "Records the H-D redemption value removed from the point value (general 3 and 18).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and 18 with the U.S. Bank point-values bullet: the H-D gift-card value is recorded in a note, not as a point value. Anchor verbatim in footnote 1."
+          }
         }
       ]
     },
@@ -777,7 +1045,11 @@
             "sourceId": "us-bank-harley-davidson-hog-elite-product",
             "quote": "5X POINTS at H‑D & gas stations2"
           },
-          "note": "U.S. Bank convention splits \"H-D & gas stations\" into a gas rule and an other rule for H-D merchants (added below)."
+          "note": "U.S. Bank convention splits \"H-D & gas stations\" into a gas rule and an other rule for H-D merchants (added below).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Harley-Davidson convention: the gas rule keeps the gas wording while H-D becomes its own other rule. Wording verbatim in the headline anchor; the short draft anchor overlaps it into a 7-word run only."
+          }
         },
         {
           "op": "set",
@@ -788,7 +1060,11 @@
             "sourceId": "us-bank-harley-davidson-hog-elite-product",
             "quote": "2X POINTS at restaurants, bars, hotels & other lodging2"
           },
-          "note": "U.S. Bank convention splits dining and bars from hotels and other lodging (lodging rule added below)."
+          "note": "U.S. Bank convention splits dining and bars from hotels and other lodging (lodging rule added below).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Harley-Davidson convention: dining is split from lodging. Wording and anchor verbatim; the short draft anchor overlaps into a 9-word run only."
+          }
         },
         {
           "op": "remove",
@@ -797,7 +1073,11 @@
             "code": "missing",
             "anchors": []
           },
-          "note": "Anchorless missing issue; the dropped base rule it stood for is added (general 11 and 16)."
+          "note": "Anchorless missing issue; the dropped base rule it stood for is added (general 11 and 16).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11 and 16: the issue carries no anchor stating a problem, so it is removed."
+          }
         }
       ],
       "addedRules": [
@@ -818,7 +1098,11 @@
               "quote": "H-D & GAS STATIONS 5X Points"
             }
           ],
-          "note": "Merchants classified as H-D earn 5X (single-merchant rule, general 4)."
+          "note": "Merchants classified as H-D earn 5X (single-merchant rule, general 4).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 4 and the U.S. Bank convention: merchants classified as H-D earn 5X as a single-merchant other rule; calculator anchor verbatim."
+          }
         },
         {
           "rule": {
@@ -841,7 +1125,11 @@
               "quote": "Lodging to include hotels, bed and breakfast establishments, resorts, cabins, cottages, hostels, short-term property rentals less than 30 days in length, and local inns."
             }
           ],
-          "note": "Hotels and other lodging earn 2X, split from dining per the U.S. Bank convention; lodging must be booked directly with the merchant."
+          "note": "Hotels and other lodging earn 2X, split from dining per the U.S. Bank convention; lodging must be booked directly with the merchant.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Lodging split from dining per the U.S. Bank convention at 2X; the headline and the footnote definition are far apart in the capture and 24 words at most."
+          }
         },
         {
           "rule": {
@@ -860,7 +1148,11 @@
               "quote": "1X POINT everywhere else Visa is accepted2"
             }
           ],
-          "note": "The 1X base rule was dropped by the drafting."
+          "note": "The 1X base rule was dropped by the drafting.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The page states 1X everywhere else Visa is accepted; wording and anchor verbatim, cap null (general 21)."
+          }
         }
       ],
       "addedExclusions": [],
@@ -884,7 +1176,11 @@
             "sourceId": "us-bank-harley-davidson-hog-elite-product",
             "quote": "5X POINTS at H‑D & gas stations2"
           },
-          "note": "The hint was unanchored; the product page states the 5X rate at H-D and gas stations."
+          "note": "The hint was unanchored; the product page states the 5X rate at H-D and gas stations.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The hint was unanchored; the headline states 5X at H-D and gas stations and the summary matches the split into an other rule and a gas rule."
+          }
         },
         {
           "action": "add",
@@ -899,7 +1195,11 @@
             "sourceId": "us-bank-harley-davidson-hog-elite-product",
             "quote": "The 10,000 points can be redeemed for a $100 H-D Gift Card."
           },
-          "note": "Records the H-D redemption value; point value stays null (general 3 and 18, U.S. Bank convention)."
+          "note": "Records the H-D redemption value; point value stays null (general 3 and 18, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and 18 with the U.S. Bank point-values bullet: the H-D gift-card value is recorded in a note, not as a point value. Anchor verbatim in footnote 1."
+          }
         }
       ]
     },
@@ -917,7 +1217,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "1X POINT everywhere Visa is accepted1"
           },
-          "note": "The card earns points (1X on every purchase)."
+          "note": "The card earns points (1X on every purchase).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only earning statement is 1X POINT on purchases, so the currency is points; anchor verbatim."
+          }
         },
         {
           "op": "set",
@@ -928,7 +1232,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "$25 AT H-D for every 2,500 points earned"
           },
-          "note": "The only stated value is $25 at H-D per 2,500 points, an H-D gift-card value, not cash; null under general 3 and the U.S. Bank convention."
+          "note": "The only stated value is $25 at H-D per 2,500 points, an H-D gift-card value, not cash; null under general 3 and the U.S. Bank convention.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and the U.S. Bank point-values bullet name this exact $25-per-2,500-points value as a gift-card value, so the point value stays null; the anchor records why."
+          }
         }
       ],
       "addedRules": [
@@ -949,7 +1257,11 @@
               "quote": "1X POINT everywhere Visa is accepted1"
             }
           ],
-          "note": "The only earning rule: 1X point on every eligible purchase. No category bonuses are stated for the secured card."
+          "note": "The only earning rule: 1X point on every eligible purchase. No category bonuses are stated for the secured card.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The only earning rule on the page: 1X everywhere Visa is accepted. Wording and anchor verbatim; cap null because no limit is stated (general 21)."
+          }
         }
       ],
       "addedExclusions": [
@@ -965,7 +1277,11 @@
               "quote": "credit insurance premiums; and transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items."
             }
           ],
-          "note": "Footnote 1 lists the transactions that are not Purchases and do not earn."
+          "note": "Footnote 1 lists the transactions that are not Purchases and do not earn.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 1 lists these non-Purchase transactions. Both anchors are 25 words, and four footnote words separate them, so they do not abut."
+          }
         }
       ],
       "addedIssues": [],
@@ -983,7 +1299,11 @@
             "sourceId": "us-bank-harley-davidson-secured-product",
             "quote": "$25 AT H-D for every 2,500 points earned"
           },
-          "note": "Records the H-D redemption value (general 3 and 18, U.S. Bank convention)."
+          "note": "Records the H-D redemption value (general 3 and 18, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and 18: the $25 at H-D per 2,500 points value goes in a note with the point value null; anchor verbatim."
+          }
         }
       ]
     },
@@ -1001,7 +1321,11 @@
             "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
             "quote": "earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement and 1%"
           },
-          "note": "The standing insurance rate is 3% on the first $4,000 each year, then 1%; the draft left the rate null."
+          "note": "The standing insurance rate is 3% on the first $4,000 each year, then 1%; the draft left the rate null.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 states 3% on the first $4,000 annually on insurance then 1%; the anchor is the sentence the rule already cites, so no anchor is added."
+          }
         },
         {
           "op": "set",
@@ -1014,13 +1338,21 @@
             "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
             "quote": "earn 3% cash back for every $1 of the first $4,000 spent annually on Purchases classified as insurance, starting with your January statement and 1%"
           },
-          "note": "The 3% insurance rate is standing, not limited-time; the agent-application \"up to 5%\" first-year offer is an ambiguous issue (U.S. Bank convention)."
+          "note": "The 3% insurance rate is standing, not limited-time; the agent-application \"up to 5%\" first-year offer is an ambiguous issue (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank State Farm convention: the 3% insurance rate is standing, not limited-time; the agent-application offer stays an ambiguous issue."
+          }
         },
         {
           "op": "remove",
           "path": "reference.rules.1.anchors.1",
           "current": "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year.",
-          "note": "The \"up to 5%\" agent offer does not state the standing 3% rule; it stays as the ambiguous issue."
+          "note": "The \"up to 5%\" agent offer does not state the standing 3% rule; it stays as the ambiguous issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The up-to-5% agent sentence does not state the 3% rule; it remains the anchor of the ambiguous issue."
+          }
         },
         {
           "op": "set",
@@ -1031,7 +1363,11 @@
             "sourceId": "us-bank-state-farm-premier-cash-rewards-product",
             "quote": "will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants, bars,"
           },
-          "note": "The drafted wording is not verbatim; the footnote lists restaurants, fast-food restaurants, bars, then grocery stores, then food delivery services."
+          "note": "The drafted wording is not verbatim; the footnote lists restaurants, fast-food restaurants, bars, then grocery stores, then food delivery services.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The drafted wording was not verbatim; the corrected span is contiguous in footnote 2 and the anchor is the sentence already cited."
+          }
         },
         {
           "op": "remove",
@@ -1043,7 +1379,11 @@
               "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year."
             ]
           },
-          "note": "The \"up to 5%\" agent offer is an ambiguous issue, not a conflict (U.S. Bank convention); issue 1 keeps it."
+          "note": "The \"up to 5%\" agent offer is an ambiguous issue, not a conflict (U.S. Bank convention); issue 1 keeps it.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank State Farm convention: the up-to-5% offer is ambiguous, not conflicting; issue 1 keeps it."
+          }
         },
         {
           "op": "remove",
@@ -1054,7 +1394,11 @@
               "By applying directly through a State Farm agent, earn up to 5% cash back on insurance premium payments for the first year."
             ]
           },
-          "note": "Duplicates the ambiguous agent-offer issue 1."
+          "note": "Duplicates the ambiguous agent-offer issue 1.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Duplicate of the ambiguous agent-offer issue (general 11)."
+          }
         },
         {
           "op": "remove",
@@ -1066,7 +1410,11 @@
               "You will earn 1% cash back for every $1 on all other eligible Purchases."
             ]
           },
-          "note": "The anchors restate the 2% and 1% rules and name no missing value (general 11)."
+          "note": "The anchors restate the 2% and 1% rules and name no missing value (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: the anchors restate the 2% and 1% rules and name nothing missing."
+          }
         },
         {
           "op": "remove",
@@ -1077,7 +1425,11 @@
               "You will earn 2% cash back for every $1 spent on Purchases at merchants classified as gas stations, electric vehicle charging stations, restaurants, fast-food restaurants,"
             ]
           },
-          "note": "The anchor restates the 2% rule and names no missing value (general 11)."
+          "note": "The anchor restates the 2% rule and names no missing value (general 11).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 11: the anchor restates the 2% rule and names nothing missing."
+          }
         }
       ],
       "addedRules": [],
@@ -1116,7 +1468,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1143,7 +1499,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1170,7 +1530,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1197,7 +1561,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1224,7 +1592,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1251,7 +1623,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1278,7 +1654,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1305,7 +1685,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1332,7 +1716,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1359,7 +1747,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1386,7 +1778,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1413,7 +1809,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1440,7 +1840,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1467,7 +1871,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1494,7 +1902,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1521,7 +1933,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1548,7 +1964,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1575,7 +1995,11 @@
               "quote": "Easy and automatic - you never need to choose or sign up to receive your rewards."
             }
           ],
-          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention)."
+          "note": "One of the 18 automatic top-three options at 3X total, activation none (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Edward Jones convention: one rule per option at 3X total, activation none. Rate anchor states 3 total per $1; option description and the automatic-earn sentence are verbatim and stand apart from each other."
+          }
         },
         {
           "rule": {
@@ -1594,7 +2018,11 @@
               "quote": "You will earn 5 Loyalty Points for every $1 spent in Eligible Net Purchases on prepaid reservations in the Travel Rewards Center"
             }
           ],
-          "note": "5X on prepaid Travel Rewards Center reservations (U.S. Bank convention, Travel Center rules)."
+          "note": "5X on prepaid Travel Rewards Center reservations (U.S. Bank convention, Travel Center rules).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank Travel Center convention: 5X on prepaid Travel Rewards Center reservations as travel-portal; anchor verbatim, 22 words."
+          }
         }
       ],
       "addedExclusions": [
@@ -1606,7 +2034,11 @@
               "quote": "transactions posting as Convenience Checks"
             }
           ],
-          "note": "Listed in footnote 2 as not a Purchase."
+          "note": "Listed in footnote 2 as not a Purchase.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 names Convenience Checks as not a Purchase; anchor verbatim."
+          }
         },
         {
           "text": "Advances (ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash, betting, lottery tickets), interest charges and fees, credit insurance premiums",
@@ -1616,7 +2048,11 @@
               "quote": "Advances (including ATM withdrawals, wire transfers, traveler's checks, money orders, foreign cash transactions, betting transactions, and lottery tickets); interest charges and fees; credit insurance premiums;"
             }
           ],
-          "note": "Listed in footnote 2 as not Purchases."
+          "note": "Listed in footnote 2 as not Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 lists Advances, interest and fees and credit insurance premiums as not Purchases; anchor verbatim and under 25 words."
+          }
         },
         {
           "text": "Transactions to fund certain prepaid card products, buy currency from the U.S. Mint, or buy cash convertible items",
@@ -1626,7 +2062,11 @@
               "quote": "transactions to (i) fund certain prepaid card products, (ii) buy currency from the U.S. Mint, or (iii) buy cash convertible items."
             }
           ],
-          "note": "Listed in footnote 2 as not Purchases."
+          "note": "Listed in footnote 2 as not Purchases.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Footnote 2 lists prepaid card funding, U.S. Mint currency and cash convertible items as not Purchases; anchor verbatim."
+          }
         }
       ],
       "addedIssues": [
@@ -1638,7 +2078,11 @@
               "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
             }
           ],
-          "note": "Only the top three categories of spend each month earn 3X; the other options earn the 1X base (general 6, U.S. Bank convention)."
+          "note": "Only the top three categories of spend each month earn 3X; the other options earn the 1X base (general 6, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 6 and the U.S. Bank Edward Jones convention: one ambiguous issue that only the top three categories earn 3X; anchor verbatim."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1649,7 +2093,11 @@
             "sourceId": "us-bank-edward-jones-triple-rewards-categories",
             "quote": "Your top three spend categories will be determined based on the 18 categories listed below."
           },
-          "note": "Automatic monthly top three of 18 categories, Amazon and discount stores excluded, Travel Center purchases do not also earn in Travel: all on the categories page."
+          "note": "Automatic monthly top three of 18 categories, Amazon and discount stores excluded, Travel Center purchases do not also earn in Travel: all on the categories page.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The categories page states the automatic monthly top three of 18, the Amazon and discount-store exclusion and the Travel Center carve-out; anchor verbatim."
+          }
         },
         {
           "action": "add",
@@ -1661,7 +2109,11 @@
             "sourceId": "us-bank-edward-jones-triple-rewards-product",
             "quote": "Maximum value applies to Loyalty Points® redeemed for a deposit into an eligible Edward Jones Account."
           },
-          "note": "Records the \"worth up to\" value, which is not a stated cash value (general 3 and 18, U.S. Bank convention)."
+          "note": "Records the \"worth up to\" value, which is not a stated cash value (general 3 and 18, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 3 and 18: the 15,000-points worth-up-to-$150 figure is on the product page and is not a cash value; the footnote 3 anchor states the deposit condition. Summary is 25 words."
+          }
         }
       ]
     },
@@ -1679,13 +2131,21 @@
             "sourceId": "us-bank-elan-fidelity-rewards-product",
             "quote": "Earn unlimited 2% cash back1 when deposited into an eligible, Fidelity account2"
           },
-          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention)."
+          "note": "The product page states a percentage back, so the card is cash-back at 200 bps though the program tracks points (general 1, U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 1 and the U.S. Bank Smartly-and-Fidelity convention: the page states 2% cash back, so the card is cash-back at 200 bps; anchor verbatim."
+          }
         },
         {
           "op": "remove",
           "path": "reference.rewardCurrency.anchors.0",
           "current": "Then earn Reward Points for every purchase you make with your card.",
-          "note": "This anchor says the card earns Reward Points; it no longer supports the cash-back currency."
+          "note": "This anchor says the card earns Reward Points; it no longer supports the cash-back currency.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "The Reward Points sentence no longer supports the cash-back currency; the fix anchor remains as the sole currency anchor."
+          }
         },
         {
           "op": "set",
@@ -1696,19 +2156,31 @@
             "sourceId": "us-bank-elan-fidelity-rewards-product",
             "quote": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account."
           },
-          "note": "A cash-back card has no point value (general 13, U.S. Bank convention); the Fidelity-deposit condition is an ambiguous issue and a product note."
+          "note": "A cash-back card has no point value (general 13, U.S. Bank convention); the Fidelity-deposit condition is an ambiguous issue and a product note.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 13: a cash-back card has no point value; the anchor is already the second point-value anchor, which the next fixes remove."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.0",
           "current": "You earn 2 Points for every $1 that you spend on eligible net purchases that you charge with your Fidelity® Rewards Visa Signature® Card.",
-          "note": "Supported the removed point value."
+          "note": "Supported the removed point value.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Supported the removed point value."
+          }
         },
         {
           "op": "remove",
           "path": "reference.pointValueHundredthsOfCent.anchors.1",
           "current": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account.",
-          "note": "Supported the removed point value; the sentence moves to the ambiguous issue."
+          "note": "Supported the removed point value; the sentence moves to the ambiguous issue.",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "Supported the removed point value; the same sentence anchors the added issue and the note."
+          }
         }
       ],
       "addedRules": [],
@@ -1722,7 +2194,11 @@
               "quote": "The 2% cash back rewards value applies only to Points redeemed for a deposit into an eligible Fidelity account."
             }
           ],
-          "note": "The 2% value holds only when points are deposited into an eligible Fidelity account; other redemptions are worth less (U.S. Bank convention)."
+          "note": "The 2% value holds only when points are deposited into an eligible Fidelity account; other redemptions are worth less (U.S. Bank convention).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "U.S. Bank convention: the 2% value holds only for deposits into an eligible Fidelity account; the program rules sentence is verbatim."
+          }
         }
       ],
       "productNoteChanges": [
@@ -1736,7 +2212,11 @@
             "sourceId": "us-bank-elan-fidelity-rewards-product",
             "quote": "The 2% cash back value applies only to Points redeemed for a deposit into an eligible Fidelity account."
           },
-          "note": "Records the Fidelity-deposit redemption condition (U.S. Bank convention, general 18)."
+          "note": "Records the Fidelity-deposit redemption condition (U.S. Bank convention, general 18).",
+          "adjudication": {
+            "decision": "accepted",
+            "reason": "General 18 and the U.S. Bank convention: the Fidelity-deposit condition is recorded in a note; anchor verbatim."
+          }
         }
       ]
     }
