@@ -1,0 +1,2602 @@
+{
+  "schemaVersion": 1,
+  "version": "barclays-refresh-2026-11.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch barclays-refresh-2026-11: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "barclays-mastercard-titanium",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "f5f8ff67b700acc6ba3a9d2855f94dabe0c1f45403dc9164e26d2d20b67e18f4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-mastercard-titanium-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-mastercard-titanium-pricing",
+              "quote": "or using a third-party payment account will not earn additional Points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption rates for statement credits and airfare set the point value only; they do not change what a purchase earns."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "barclays-mastercard-black",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "f9200a2f99cf2dbf5171a55f46b376db0e7920cbe58f57b15da681aa8f94baec",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-mastercard-black-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-mastercard-black-pricing",
+              "quote": "or using a third-party payment account will not earn additional Points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Redemption rates for statement credits and airfare set the point value only; they do not change what a purchase earns."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "barclays-mastercard-gold",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "3528e2f606543de38c24146c8249d862aa0283e9a72f47347c85b4988614295d",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-mastercard-gold-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-mastercard-gold-pricing",
+              "quote": "or using a third-party payment account will not earn additional Points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "6ac23571759e2401f438e085da366ceab86854f683668ed5d4443c4eb6653278",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases billed by JetBlue through its own channels; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "jetblue"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "Eligible JetBlue Purchases are items billed by JetBlue as merchant of record"
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases billed by JetBlue Vacations through its own channels; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "jetblue-vacations"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "Eligible JetBlue Vacations Purchases are items billed by JetBlue Vacations as merchant of record"
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms say large warehouse-type stores such as Target and Walmart generally do not code as grocery stores; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "large warehouse-type stores, such as Target® and Walmart® are generally not classified as grocery stores"
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Auto-enrollment in TrueBlue; activation is already none on every rule."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Avis and Budget rental points through TrueBlue Travel post in two parts; timing only, and car rentals are not at retail."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Points are not earned while the account is past due; an account-standing condition that does not change what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "category"
+          ],
+          "note": "The JetBlue definition is split into JetBlue and JetBlue Vacations brand scopes plus the TrueBlue Travel portal rule.",
+          "rules": [
+            0,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-jetblue-premier",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "20ff0807eb82189429428984f219772bd50d476d28bf3406b795872adbccdd34",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases billed by JetBlue through its own channels; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "jetblue"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "Eligible JetBlue Purchases are items billed by JetBlue as merchant of record"
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases billed by JetBlue Vacations through its own channels; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "jetblue-vacations"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "Eligible JetBlue Vacations Purchases are items billed by JetBlue Vacations as merchant of record"
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms say large warehouse-type stores such as Target and Walmart generally do not code as grocery stores; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "large warehouse-type stores, such as Target® and Walmart® are generally not classified as grocery stores"
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-jetblue-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional TrueBlue points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Auto-enrollment in TrueBlue; activation is already none on every rule."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Avis and Budget rental points through TrueBlue Travel post in two parts; timing only, and car rentals are not at retail."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "category"
+          ],
+          "note": "The JetBlue definition is split into JetBlue and JetBlue Vacations brand scopes plus the TrueBlue Travel portal rule.",
+          "rules": [
+            0,
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "cfc2c9290340eacab22015fadb6b744830debf7da964e44ef158dfe29f90b018",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Participating Hotels by Wyndham (and Trademark Collection resorts in the program); brand scope with the shared wyndham-hotels ID.",
+          "set": {
+            "brandIds": [
+              "wyndham-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "5X on Participating Hotels by Wyndham Purchases"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Wyndham Destinations covers the named vacation-club properties, their maintenance fees and timeshare loans; brand scope over the four clubs (O3, O5).",
+          "set": {
+            "brandIds": [
+              "club-wyndham",
+              "worldmark-by-wyndham",
+              "margaritaville-vacation-club",
+              "shell-vacations-club"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "participating Club Wyndham®, WorldMark® by Wyndham, Margaritaville Vacation Club® and Shell Vacations Club® properties"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms exclude Target and Walmart from the grocery rate; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "dining and grocery stores (excluding Target® and Walmart®)"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The 5X hotel rule is brand-scoped to Wyndham hotels.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-plus",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "94aad5f3de2fc10c0c56eff9fed92a4fad4afb8abfc7dbfddb7037b9304ffecc",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Participating Hotels by Wyndham (and Trademark Collection resorts in the program); brand scope with the shared wyndham-hotels ID.",
+          "set": {
+            "brandIds": [
+              "wyndham-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "6X on Participating Hotels by Wyndham Purchases"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Wyndham Destinations covers the named vacation-club properties, their maintenance fees and timeshare loans; brand scope over the four clubs (O3, O5).",
+          "set": {
+            "brandIds": [
+              "club-wyndham",
+              "worldmark-by-wyndham",
+              "margaritaville-vacation-club",
+              "shell-vacations-club"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "participating Club Wyndham®, WorldMark® by Wyndham, Margaritaville Vacation Club® and Shell Vacations Club® properties"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms exclude Target and Walmart from the grocery rate; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "dining and grocery stores (excluding Target® and Walmart®)"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare, car rental and tolls. Gas, EV charging and transit (rideshare, trains) are separate labelled rules (5, 6, 7) and stay."
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "gas",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "transit",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-plus-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Points are not earned while the account is past due; an account-standing condition that does not change what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The 6X hotel rule is brand-scoped to Wyndham hotels.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-premier",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "f316adfd67805f0f8a2c49a3f9081f6df75598585a094a9ab3f4879295b33cb3",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 800
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Participating Hotels by Wyndham (and Trademark Collection resorts in the program); brand scope with the shared wyndham-hotels ID.",
+          "set": {
+            "brandIds": [
+              "wyndham-hotels"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "8X on Participating Hotels by Wyndham Purchases"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The corpus \"Vacation Club\" rule is the Wyndham Destinations clause: the four named clubs, maintenance fees and timeshare loans; brand scope (O3, O5).",
+          "set": {
+            "brandIds": [
+              "club-wyndham",
+              "worldmark-by-wyndham",
+              "margaritaville-vacation-club",
+              "shell-vacations-club"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "participating Club Wyndham®, WorldMark® by Wyndham, Margaritaville Vacation Club® and Shell Vacations Club® properties"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms exclude Target and Walmart from the grocery rate; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "dining and grocery stores (excluding Target® and Walmart®)"
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare, car rental and tolls. Gas, EV charging and transit (rideshare, trains) are separate labelled rules (6, 7, 8) and stay."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "gas",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "transit",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-wyndham-rewards-earner-premier-pricing",
+              "quote": "or using a third-party payment account will not earn additional points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The 8X hotel rule is brand-scoped to Wyndham hotels.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-upromise-world-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "b06d13a046719b25a8f6c9cf3bb29ec6732f2db86ac111c78f146a56a8ff8abb",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": null
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "The 1.529% rate with a linked College Savings Plan is not a whole number of basis points (O6); the 1.25% unlinked rate stays as the base."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Records why the linked rate has no whole basis-point value; the rule is held out under O6."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Linked versus unlinked College Savings Plan: the linked 1.529% rule is held out, so the catalog carries the 1.25% rate for everyone, which understates linked accounts."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "The MyGiftCardsPlus gift-card benefit states a yearly limit but no earn rate, so nothing to model."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Round Up amounts count as purchases and earn the linked-plan rate, which is held out (O6); the catalog keeps the 1.25% base, so nothing more to model."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "MyGiftCardsPlus is a Upromise benefit with no stated rate; no catalog change."
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-lufthansa-miles-more-world-elite",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "18b567f88810f392b9b37d3efc2af37e38c035d885bcd564124b4395117ac6c8",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "The base carries a Miles & More enrollment the cardholder must do unless already a member; no capture says enrollment is automatic, so activation is unstated (O6, Barclays conventions).",
+          "set": {
+            "activation": "unstated"
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+              "quote": "you will need to enroll in the Program via miles-and-more.com"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Tickets billed by the nine named integrated partner airlines; brand scope (O3). Activation stays enroll-once on this bonus rule.",
+          "set": {
+            "brandIds": [
+              "lufthansa",
+              "swiss",
+              "austrian-airlines",
+              "brussels-airlines",
+              "eurowings",
+              "lot-polish-airlines",
+              "air-dolomiti",
+              "croatia-airlines",
+              "luxair"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+              "quote": "Miles & More integrated airline partners are: AirDolomiti, Austrian Airlines, Brussels Airlines, Croatia Airlines, Eurowings, LOT Polish Airlines, Lufthansa, Luxair and SWISS"
+            },
+            {
+              "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-lufthansa-miles-more-world-elite-pricing",
+              "quote": "or using a third-party payment account will not earn additional Miles."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The integrated partner list is the brand scope of the 2X ticket rule.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-emirates-skywards-rewards",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "a107b9659719a427b4c7494d9d520578ed5a4575f11c635b08021a99f0456ac2",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases on emirates.com or at Emirates sales offices; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "emirates"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-emirates-skywards-rewards-pricing",
+              "quote": "Emirates Spends are categorized as transactions made on emirates.com or at the Emirates Sales office."
+            },
+            {
+              "sourceId": "barclays-emirates-skywards-rewards-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-emirates-skywards-rewards-pricing",
+              "quote": "or using a third-party payment account will not earn additional Skywards Miles."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare, hotel and car rental (Travel Spends)."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Emirates Spends definition is the brand scope of the 3X rule.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-emirates-skywards-premium",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "70b2222c35d77f39684d3c5194b93fcc941e7968438c3a47c47d92e52da29cfb",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Purchases on emirates.com or at Emirates sales offices; brand scope (O3).",
+          "set": {
+            "brandIds": [
+              "emirates"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-emirates-skywards-premium-pricing",
+              "quote": "Emirates Spends are categorized as transactions made on emirates.com or at the Emirates Sales office."
+            },
+            {
+              "sourceId": "barclays-emirates-skywards-premium-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-emirates-skywards-premium-pricing",
+              "quote": "or using a third-party payment account will not earn additional Skywards Miles."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airfare, hotel and car rental (Travel Spends)."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Points are not earned while the account is past due; an account-standing condition that does not change what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Emirates Spends definition is the brand scope of the 3X rule.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-barnes-noble-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "606d666f373815d8dda6c9a4fef935d1587ce456b1ef71d62bd55497e18bed40",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The 5% rebate at the listed Barnes & Noble Stores and bn.com; brand scope (O3, O5). The wallet and third-party clauses cover the above categories, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "brandIds": [
+              "barnes-and-noble",
+              "paper-source",
+              "b-dalton",
+              "bookstop",
+              "bookstar",
+              "doubleday",
+              "ink-newstand",
+              "charlesbank"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "at any Barnes & Noble, Paper Source, B. Dalton, Bookstop, Bookstar, Doubleday, Ink Newstand and Charlesbank stores"
+            },
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional Points."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "Barnes & Noble Café purchases are excluded from the restaurant rate (O4); PayPal, Venmo and digital wallets earn only the base (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "barnes-and-noble"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "restaurant Net Purchases (excluding Barnes & Noble Café purchases)"
+            },
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-barnes-noble-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional Points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Points convert only to Barnes & Noble eGiftCards; the program gets barnes-and-noble as its redemption brand."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "The 5% rebate posts as a statement credit while other points become gift cards. The catalog keeps the 500 bps rule on the same program; no change to what a purchase earns."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Barnes & Noble Stores list and bn.com are the brand scope of the 5% rule.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Gift-card-only redemption is the program redemption brand."
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "e0c368dcd02ab622438f9159b885f6458993d274d21b16f432d4b4c30f93a39d",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 2500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Brand scope over the four Family of Brands. Named payment platforms (PayPal; Afterpay and Klarna as buy now, pay later) earn 5 points, third-party payment accounts do not qualify and digital wallets may miscode, so those paths are excluded.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            },
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "When your Account is used to make a Qualifying Purchase at the Gap Inc. Family of Brands"
+            },
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "a payment platform such as Afterpay, Klarna, PayPal or TikTok"
+            },
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "or using a third-party payment account will not qualify."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "outside the U.S.: Gap Inc. brand stores outside the U.S. and Puerto Rico earn 5 points (10 at World levels), the same as the base and the gated World rule."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 1500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing. Apparel and clothing stores outside the Gap Inc. brands (excluding wholesale clubs, Amazon, Target and Walmart)."
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing, and only at locations outside the U.S. and Puerto Rico."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Family of Brands purchases paid through a payment platform: PayPal maps to paypal, Afterpay and Klarna to bnpl; TikTok has no payment path. The rate equals the Mastercard-level base.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "requiredPaymentPaths": [
+              "paypal",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "on these platforms, you will earn 5 points for every dollar spent"
+            },
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "world-all-purchases",
+          "issuerWording": "All other eligible Net Purchases",
+          "rateBps": 1000,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "gap-encore-card-level",
+              "optionIds": [
+                "world-mastercard",
+                "world-elite-mastercard"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "World and World Elite accounts earn 10 points per dollar on other purchases (payment-platform purchases at the brands included); gated on the card level. The labelled 5-point base stays unconditional.",
+          "anchors": [
+            {
+              "sourceId": "barclays-gap-encore-mastercard-pricing",
+              "quote": "10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Product-page 5X/3X/1X versus the terms; labels follow the terms (Barclays conventions), so no catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The World and World Elite 10-point rate is an added rule gated on the card level.",
+          "rules": [
+            "world-all-purchases"
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points redeem only in the Encore Market or at the Gap Inc. brands; the program gets the four brands as redemption brands."
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Payment-platform purchases at the brands earn 5 points: the 25-point rule excludes paypal, venmo, bnpl and digital-wallet, and the platform rule requires paypal or bnpl.",
+          "rules": [
+            0,
+            5
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The 25-point Family of Brands rule is brand-scoped, with payment platforms excluded.",
+          "rules": [
+            0,
+            5
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points are store-only: the program lists the four brands as redemption brands."
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "1899a7fb85ecbaa6bf915b372cd09f75a9c63b4ae7978ac0dbcb5fe6e9f26b41",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 2500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Brand scope over the four Family of Brands. Named payment platforms (PayPal; Afterpay and Klarna as buy now, pay later) earn 5 points, third-party payment accounts do not qualify and digital wallets may miscode, so those paths are excluded.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            },
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "When your Account is used to make a Qualifying Purchase at the Gap Inc. Family of Brands"
+            },
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "a payment platform such as Afterpay, Klarna, PayPal or TikTok"
+            },
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "or using a third-party payment account will not qualify."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 1500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing. Apparel and clothing stores outside the Gap Inc. brands (excluding wholesale clubs, Amazon, Target and Walmart)."
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing, and only at locations outside the U.S. and Puerto Rico."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "outside the U.S.: Gap Inc. brand stores outside the U.S. and Puerto Rico earn 5 points (10 at World levels), the same as the base and the gated World rule."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Family of Brands purchases paid through a payment platform: PayPal maps to paypal, Afterpay and Klarna to bnpl; TikTok has no payment path. The rate equals the Mastercard-level base.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "requiredPaymentPaths": [
+              "paypal",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "on these platforms, you will earn 5 points for every dollar spent"
+            },
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "world-all-purchases",
+          "issuerWording": "All other eligible Net Purchases",
+          "rateBps": 1000,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "gap-encore-card-level",
+              "optionIds": [
+                "world-mastercard",
+                "world-elite-mastercard"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "World and World Elite accounts earn 10 points per dollar on other purchases (payment-platform purchases at the brands included); gated on the card level. The labelled 5-point base stays unconditional.",
+          "anchors": [
+            {
+              "sourceId": "barclays-old-navy-encore-mastercard-pricing",
+              "quote": "10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Payment-platform purchases at the brands earn 5 points: the 25-point rule excludes paypal, venmo, bnpl and digital-wallet, and the platform rule requires paypal or bnpl.",
+          "rules": [
+            1,
+            5
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Product-page 5X/3X/1X versus the terms; labels follow the terms (Barclays conventions), so no catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The World and World Elite 10-point rate is an added rule gated on the card level.",
+          "rules": [
+            "world-all-purchases"
+          ]
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points redeem only in the Encore Market or at the Gap Inc. brands; the program gets the four brands as redemption brands."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The 25-point Family of Brands rule is brand-scoped, with payment platforms excluded.",
+          "rules": [
+            1,
+            5
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points are store-only: the program lists the four brands as redemption brands."
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "b306cee7e774afe0899c92e699e219df311352e580accb5e57b74e64b97828b6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 2500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Brand scope over the four Family of Brands. Named payment platforms (PayPal; Afterpay and Klarna as buy now, pay later) earn 5 points, third-party payment accounts do not qualify and digital wallets may miscode, so those paths are excluded.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "bnpl",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            },
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "When your Account is used to make a Qualifying Purchase at the Gap Inc. Family of Brands"
+            },
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "a payment platform such as Afterpay, Klarna, PayPal or TikTok"
+            },
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "or using a third-party payment account will not qualify."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "outside the U.S.: Gap Inc. brand stores outside the U.S. and Puerto Rico earn 5 points (10 at World levels), the same as the base and the gated World rule."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 1500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing. Apparel and clothing stores outside the Gap Inc. brands (excluding wholesale clubs, Amazon, Target and Walmart)."
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: clothing, and only at locations outside the U.S. and Puerto Rico."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Family of Brands purchases paid through a payment platform: PayPal maps to paypal, Afterpay and Klarna to bnpl; TikTok has no payment path. The rate equals the Mastercard-level base.",
+          "set": {
+            "brandIds": [
+              "gap",
+              "old-navy",
+              "banana-republic",
+              "athleta"
+            ],
+            "requiredPaymentPaths": [
+              "paypal",
+              "bnpl"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "on these platforms, you will earn 5 points for every dollar spent"
+            },
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "means Gap, Old Navy, Banana Republic, and Athleta brands."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "world-all-purchases",
+          "issuerWording": "All other eligible Net Purchases",
+          "rateBps": 1000,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "all-purchases",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "none",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "gap-encore-card-level",
+              "optionIds": [
+                "world-mastercard",
+                "world-elite-mastercard"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "World and World Elite accounts earn 10 points per dollar on other purchases (payment-platform purchases at the brands included); gated on the card level. The labelled 5-point base stays unconditional.",
+          "anchors": [
+            {
+              "sourceId": "barclays-banana-republic-encore-mastercard-pricing",
+              "quote": "10 points for every dollar spent using your Account if your Account is at the World Mastercard or World Elite Mastercard level"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Product-page 5X/3X/1X versus the terms; labels follow the terms (Barclays conventions), so no catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Payment-platform purchases at the brands earn 5 points: the 25-point rule excludes paypal, venmo, bnpl and digital-wallet, and the platform rule requires paypal or bnpl.",
+          "rules": [
+            0,
+            4
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Encore membership is required to earn, and cardmembers are enrolled automatically when they apply; activation is already none on every rule."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "Earning 5 points by giving the Encore account details while paying another way is not card earn; the catalog models only purchases with the card."
+        },
+        {
+          "index": 4,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The World and World Elite 10-point rate is an added rule gated on the card level.",
+          "rules": [
+            "world-all-purchases"
+          ]
+        },
+        {
+          "index": 5,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points redeem only in the Encore Market or at the Gap Inc. brands; the program gets the four brands as redemption brands."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "The 25-point Family of Brands rule is brand-scoped, with payment platforms excluded.",
+          "rules": [
+            0,
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "program-redemption"
+          ],
+          "note": "Encore points are store-only: the program lists the four brands as redemption brands."
+        }
+      ]
+    },
+    {
+      "cardId": "barclays-aarp-essential-rewards-mastercard",
+      "issuer": "Barclays",
+      "corpusCaseSha256": "648c7b29e51b25f1d7885a8562b794fe2b72f1a0acc98623e101da9f821b8112",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Barclays terms say third-party payment accounts earn no additional rewards and mobile or digital wallets may not; PayPal, Venmo and digital-wallet payments get only the base rate (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional rewards."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "checkout-method"
+          ],
+          "note": "The terms exclude Target and Walmart from the drug store rate; they become brand exclusions (O4). Third-party accounts and digital wallets earn only the base rate (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "as identified by the merchant category code, excluding Target® and Walmart®"
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "if you use a mobile or digital wallet to pay for the purchase."
+            },
+            {
+              "sourceId": "barclays-aarp-essential-rewards-mastercard-pricing",
+              "quote": "or using a third-party payment account will not earn additional rewards."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: medical (dentists, doctors, hospitals, opticians and similar providers)."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    }
+  ]
+}
