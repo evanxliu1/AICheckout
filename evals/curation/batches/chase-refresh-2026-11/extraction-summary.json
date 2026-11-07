@@ -19,31 +19,49 @@
     ]
   },
   "counts": {
-    "timeout": 3,
-    "needs_review": 21
+    "needs_review": 24
   },
   "cards": [
     {
       "cardId": "chase-freedom-flex",
       "issuer": "Chase",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 14,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "entertainment",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "out-of-scope",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "reported_out-of-scope": 1,
+        "reported_missing": 1
+      },
       "documents": [
         "chase-rewards-category-faq",
         "chase-freedom-flex-product",
         "chase-freedom-flex-rewards-terms"
       ],
       "inputNotes": [],
-      "runs": 4,
+      "runs": 5,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 695081,
+      "durationMs": 280839,
       "inputTokenEstimate": 14710,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T05:10:57.953Z"
+      "inputTokens": 12373,
+      "outputTokens": 3527,
+      "runAt": "2026-11-07T17:46:14.496Z"
     },
     {
       "cardId": "chase-sapphire-preferred",
@@ -152,24 +170,40 @@
     {
       "cardId": "prime-visa",
       "issuer": "Chase",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "online-retail",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "out-of-scope",
+        "out-of-scope",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_out-of-scope": 2,
+        "reported_missing": 1
+      },
       "documents": [
         "prime-visa-product",
         "prime-visa-rewards-terms",
         "prime-visa-pricing"
       ],
       "inputNotes": [],
-      "runs": 4,
+      "runs": 5,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 695084,
+      "durationMs": 272432,
       "inputTokenEstimate": 14708,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T05:10:57.949Z"
+      "inputTokens": 12959,
+      "outputTokens": 2046,
+      "runAt": "2026-11-07T17:46:14.505Z"
     },
     {
       "cardId": "amazon-visa",
@@ -277,24 +311,39 @@
     {
       "cardId": "disney-premier-visa",
       "issuer": "Chase",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous",
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "reported_missing": 2,
+        "reported_ambiguous": 2
+      },
       "documents": [
         "disney-premier-visa-product",
         "disney-premier-visa-rewards-terms",
         "disney-premier-visa-pricing"
       ],
       "inputNotes": [],
-      "runs": 4,
+      "runs": 5,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 695077,
+      "durationMs": 236170,
       "inputTokenEstimate": 14277,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T05:10:57.944Z"
+      "inputTokens": 12462,
+      "outputTokens": 1171,
+      "runAt": "2026-11-07T17:46:14.503Z"
     },
     {
       "cardId": "disney-visa",
