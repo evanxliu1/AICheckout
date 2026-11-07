@@ -279,8 +279,9 @@ describe('Citi Double Cash on the bundled catalog: cash back (general rule 1)', 
     const card = row('Double Cash');
     // The 2026-11-07 renewal labels the base rule with the issuer's full sentence (`double-cash-base-v3`).
     expect(card.textContent).toContain(
-      '2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”.',
+      '2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”',
     );
+    expect(card.textContent).not.toContain('”.');
     expect(card.textContent).toContain('2% if the balance is paid (1% at purchase).');
     expect(card.textContent).not.toMatch(/points|Issuer-stated|ThankYou/);
   });
