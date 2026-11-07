@@ -1,8 +1,716 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:11:28.608Z",
-  "cards": {},
+  "updatedAt": "2026-11-06T20:28:11.617Z",
+  "cards": {
+    "citi-strata": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:dd70df7257b784ecc651f5a9ef8436fe835fb20b3f416d19ed14ee1fbbe3dcf7",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-product",
+              "sha256": "af49a6c44209b63230a3f381ef3100a77837663611b5b9ac873e4e0f59283ee0"
+            },
+            {
+              "ref": "source-input:citi-strata-product",
+              "sha256": "a17bde29dc404112bee2e284cc0f17cb8c70b83ae6562ac26ceb85d5da5d2549"
+            },
+            {
+              "ref": "manifest:citi-strata-rewards-terms",
+              "sha256": "71721343b51ef0acdea88059e91f1b8e38148281d417ce837d8e2a358cb27de6"
+            },
+            {
+              "ref": "source-input:citi-strata-rewards-terms",
+              "sha256": "abf5e8404b10a48433168e8a878a5e8787177bc2d9d42793edcee985f09021ca"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.591Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1d9883c01de82667e4f8fbd18b58352630219494ba78cae1915fa9b8bdde80f5",
+          "finishedAt": "2026-11-06T20:28:11.609Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-strata-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a889594cf1f790028463e021243e6e99e824db1ace203c6f3b12f9cd01d65777",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-premier-product",
+              "sha256": "3663adfaf71a384df81c2549fd3fe3a94a151ffa2f2cdd6c254264efe64e5ba5"
+            },
+            {
+              "ref": "source-input:citi-strata-premier-product",
+              "sha256": "90f0523735565b4232c0203345611b79394ef24f2f599d7ae716068cdc6e72e2"
+            },
+            {
+              "ref": "manifest:citi-strata-premier-rewards-terms",
+              "sha256": "ee9e5cb0edd436907a62650c3a7faac2d54a4c9c15e63b6584c6585bde7bb08a"
+            },
+            {
+              "ref": "source-input:citi-strata-premier-rewards-terms",
+              "sha256": "106b70c6ec311e87d54505a74cd80a640380439612966f25d8c09857e3c1e809"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.591Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:d08a60ff1b68f10da8a78f404bf30c28277060b5ad0532bb8e6d4e071799dd38",
+          "outputs": [
+            {
+              "ref": "trace:citi-strata-premier",
+              "sha256": "f070ac44ed161de79c9251f3aca0c152dd0b89afe21203bf810a0fa22fb30f5e"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.610Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-strata-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:4d476949866ea5cd6421c3341418604e91e4c665507b48dca20e3a2d004a6363",
+          "outputs": [
+            {
+              "ref": "manifest:citi-strata-elite-product",
+              "sha256": "5547cf463b4896d86d47825e7e09f1d3f4f22081ff900d5ff1b806185a444fe1"
+            },
+            {
+              "ref": "source-input:citi-strata-elite-product",
+              "sha256": "7c452b086518c29d0a3c2df1d2178cea58518797d123e8ba2b9a78904012df12"
+            },
+            {
+              "ref": "manifest:citi-strata-elite-rewards-terms",
+              "sha256": "fee0bc7d2eabac8f0d1a06212240a22a371def5843be51f9352ac65b5fb82750"
+            },
+            {
+              "ref": "source-input:citi-strata-elite-rewards-terms",
+              "sha256": "a5ae073b89a7c65b03c159c51417ec7bfde19a14ed4409c7796dcdf415a4976d"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9247ce1d87efe50da4fc2c179851b48c987e2133bf371f3377cd328c67144f80",
+          "outputs": [
+            {
+              "ref": "trace:citi-strata-elite",
+              "sha256": "8b85a2f6f8f09139cb806d7faf4e79197cc5c46bf8835fedaf894a6b5529481d"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.610Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-costco-anywhere-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2c24e4e355e46e7dcf9f259dcc97d34b5c9dd3bae838858bdf703a1f945d4bc5",
+          "outputs": [
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-product",
+              "sha256": "64f8688707d2d9dc33a3cd553b47677f9135539016ebf91f524149efd2ec150c"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-product",
+              "sha256": "3778b3a49f84863e6d61934d4bcadf8edd4533a04def2d545ed660e1721eeceb"
+            },
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-rewards-terms",
+              "sha256": "42ab87aaeab99ffd9cc8af82409a06644ba8353ccd8e47c27a2387abab73b755"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-rewards-terms",
+              "sha256": "e8e8b3092b0e7aa78315b293aa59e1696c7fbe7833e075903426a9197eabfc0e"
+            },
+            {
+              "ref": "manifest:citi-costco-anywhere-visa-categories",
+              "sha256": "ce420064e5b92a48de4b793bfb1c0babe86c4e24d1bcef0554f59bd98c2aa602"
+            },
+            {
+              "ref": "source-input:citi-costco-anywhere-visa-categories",
+              "sha256": "27192734314e85a72b839f233bb5ede941afdafc6b6bdcc2eb5e1e880c532f75"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-platinum-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c5ade066e285ebf2f3325d1d0084d6c2c2bba6e5a7a3ef94f9c19fa5aba11a8b",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-platinum-select-product",
+              "sha256": "94983de636aa875bb76161bbfaae45e8617ce4a94734c914097345ac3c96a5bc"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-platinum-select-product",
+              "sha256": "58aa59b618ac0651d7c83ef1c4e01079ecc2d528758699641c226f82e975525c"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-platinum-select-rewards-terms",
+              "sha256": "3a541e0c5f319473027f96b9de158158bc9f4d8178a5c764d75c163ee9527f02"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-platinum-select-rewards-terms",
+              "sha256": "8fd2d875644729a1a091ae9efe8487b9d6c66d0e5c6eed6714cac5cd4662a263"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6b45b877a5dbe91768b365eccf1b11a7306c9ffd630876fa2543e1b895c67028",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-platinum-select",
+              "sha256": "f9de6ebe4f7941e787f76e71e37b2b6c75f4ad0f341d5593d01d2e37bd891b4d"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.611Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-mileup": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:478d49a2e1e62e4ca18a0507b563dec57cd1d3fadd7646e9a9367a17480c9479",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-mileup-product",
+              "sha256": "2f0d6b70a5ca98b9de4aff0445cc2b50818fa71c8f70f9a1cce46403800cc307"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-mileup-product",
+              "sha256": "8ec79dc38e3c842a17adc0ad4c52a6819352e2ddbacd1e70a6223474cfddca6f"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-mileup-rewards-terms",
+              "sha256": "20437436669d5e7e660fa8ef8cd25ae6deb8a357cce14d14af03cc57211f0dec"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-mileup-rewards-terms",
+              "sha256": "8c26939beebdabfa11c849dee556b310c75a434aeb114f717c847d0364d487a8"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2333cbb59fce2364c422d4db493a1f930bddd8d33a6a1c7ce2059904f63e70c3",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-mileup",
+              "sha256": "dbd254b8f3657d1c3a24d310fcd4393d6a8f886eb5182a40b8dfb6bdccc0e97a"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.612Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-executive": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1542f3b9589696e8b9277f0335c3258da96b445fb24d3542e826cf3daf7b818c",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-executive-product",
+              "sha256": "02b3ca82a2675494317af294b34eda1bdb190a9fa4cbc82e5f800ed1402f9a05"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-executive-product",
+              "sha256": "8dfcfbd57819b3ac90380f3b2a8c649c19448e2df937b146ccab8cb037ec7177"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-executive-rewards-terms",
+              "sha256": "f6bfc51b6b6caeec3a3df0ec308b2bc1e42a74ef3fa7626980e1bfe5bc6632b6"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-executive-rewards-terms",
+              "sha256": "85239b68e8b3963c7fb0ef7b7dcd5b61e766fb374e021f7fb9301957e0c08a61"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:dde850e2ef4b7fa0e8d05bf94fc6ed08caeae046554bb5c79be1335b338fbc29",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-executive",
+              "sha256": "5f61f516b66ac16054e8bd1a7f4b760b128f85f6124bc1e5a81b28b1bdfd85cf"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.614Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-aadvantage-globe": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9459e45dd5ab89a387c4e33d554ce11bee104ae3e4098214e4a99659eefa6dc8",
+          "outputs": [
+            {
+              "ref": "manifest:citi-aadvantage-globe-product",
+              "sha256": "1a1f06200db94a0b5f7faaaf8557f3defb88d739e0afb6e0c77e40f0cf0e8af6"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-globe-product",
+              "sha256": "381bc9e055a86511363bbd6c409b9852c7d825ede02a5bbe7df663023e9f5e17"
+            },
+            {
+              "ref": "manifest:citi-aadvantage-globe-rewards-terms",
+              "sha256": "b6440d63addeeb812b93d06a62a47682a1cd547d556ba6faaeb6eea79a9377db"
+            },
+            {
+              "ref": "source-input:citi-aadvantage-globe-rewards-terms",
+              "sha256": "57eb31874a7a30da9165741f7733956b09ccc1f6a0aba70c6d399608712d2142"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:53b21e47fbda0716294a8afbe57bb2313cf3ec4cfe1c3d137b2c29e941eb1c19",
+          "outputs": [
+            {
+              "ref": "trace:citi-aadvantage-globe",
+              "sha256": "bd38eadfe10d65846015939e1e54d59fce71f7a3cc78bf2e5d06b709a67969e5"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.615Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-att-points-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b4e9b2432444eebcad679972380c1295a0d11447a554b9b0bed9d132a05b51d2",
+          "outputs": [
+            {
+              "ref": "manifest:citi-att-points-plus-product",
+              "sha256": "e621751738a1375438e08e6fab8c070161397622ca1803f9bdfaa1e1326a5db8"
+            },
+            {
+              "ref": "source-input:citi-att-points-plus-product",
+              "sha256": "098f726e66b6037a4369b00d0f546f79924481020030b807f7563ed97a14f7ef"
+            },
+            {
+              "ref": "manifest:citi-att-points-plus-rewards-terms",
+              "sha256": "94ff25ecdeb1a8e2fe14b770c6face1fc5a89a32a847c2a1290f4c1b4f8d358e"
+            },
+            {
+              "ref": "source-input:citi-att-points-plus-rewards-terms",
+              "sha256": "3b67669dec21e4320e8a82890ea79ee07458c7dfce2b24ba46c9a435805ce991"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8eefb0a078459ec9944a473f8d5a0b55b6038ea83b74da2a2144b842e9c6be51",
+          "outputs": [
+            {
+              "ref": "trace:citi-att-points-plus",
+              "sha256": "960aede50e98e79d51aa2cc30e4d38f4fe8629095e1de90275c7ace33e9f1ba2"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.615Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-wayfair-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bc0a43e56eb13a7e70bdeae3c2c68b55844999d73577f97d84f3b6a22623be54",
+          "outputs": [
+            {
+              "ref": "manifest:citi-wayfair-mastercard-product",
+              "sha256": "752a95d0e97ca2f3333c5ca7eca47394bdcdb40f2cff73b854e1f1672da7f662"
+            },
+            {
+              "ref": "source-input:citi-wayfair-mastercard-product",
+              "sha256": "44d4fcc2bb3afe325ed668bb7fc0051e1caecc2c7231927d064025dee213004c"
+            },
+            {
+              "ref": "manifest:citi-wayfair-mastercard-rewards-terms",
+              "sha256": "6852e03c5ccac9224f5408bb721d3c0d09fdfb0358f86790af9e9f83d5b5cb58"
+            },
+            {
+              "ref": "source-input:citi-wayfair-mastercard-rewards-terms",
+              "sha256": "ab06843c38fb39cd755611aa0d0b36981d63b4304adca97f36b31c7c5287bfae"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:a59dfc2dfab2e3bc531a260817cb536ed0a02e28f7b67b8d51e2e46b7e8fbf22",
+          "finishedAt": "2026-11-06T20:28:11.615Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-tsc-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1bde30a9162b9e8454392472d9d79e52801229cb0101c06b41a1658105a2e24b",
+          "outputs": [
+            {
+              "ref": "manifest:citi-tsc-visa-product",
+              "sha256": "4f66d831e7d5df9a90de4ddb0ced31ccb312aecf7fdfd366aff5405780a2a28a"
+            },
+            {
+              "ref": "source-input:citi-tsc-visa-product",
+              "sha256": "1822db0fba3ba1b934257e56429502041db1703f20452a06de4661675f7daf6c"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9820c3decc4536d48dc920f91fc213841804579a7f127a30bb84d875c48e98b2",
+          "finishedAt": "2026-11-06T20:28:11.616Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-dillards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e3f6da6c191d55029a2949eb8e31186ce90e17e26f7828b297abd8c4874aa833",
+          "outputs": [
+            {
+              "ref": "manifest:citi-dillards-mastercard-product",
+              "sha256": "c13969e89fd18b958eda5375f83c5f97a90f787236f7d159c886169a88119d0a"
+            },
+            {
+              "ref": "source-input:citi-dillards-mastercard-product",
+              "sha256": "f23403cfb5b4afee241199dd89c14f15df4379a75ce849f16a7b3eff3a710c5c"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5a2958e762bdb8bb75c263d1243297f44acc6df94c3ce353b205a450dd88f1c7",
+          "finishedAt": "2026-11-06T20:28:11.616Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-macys-amex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bbc942d1cfc4239cdf874121c81a3f6026c1b04f3f47618336fc781161a9f623",
+          "outputs": [
+            {
+              "ref": "manifest:citi-macys-amex-product",
+              "sha256": "3e75af740f415236cf81fca0b8ab17c56b4dc6922095c298ce24feb8c6dd4730"
+            },
+            {
+              "ref": "source-input:citi-macys-amex-product",
+              "sha256": "96b418674e1919bc142c6e8ccbcdcae576e05a5d8227034e7d9a5deb2d891555"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7afc463b1465cbaed96a32da0047043c2ad04a364570028ed00b470aed740d11",
+          "finishedAt": "2026-11-06T20:28:11.617Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-bloomingdales-amex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6d12d2e15509fc779c24042049505249ea0cdd0479c3c7d01fb2504558644fe1",
+          "outputs": [
+            {
+              "ref": "manifest:citi-bloomingdales-amex-product",
+              "sha256": "e5e8ba35f5f5c9d6511df540d703c8a175ff1a3d90e3e985aef8806941306064"
+            },
+            {
+              "ref": "source-input:citi-bloomingdales-amex-product",
+              "sha256": "1b17bfed2238aad25b3f61751821b2eb2c3eff35c42ea520abf05b9562757588"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0df9e33a07030f79cefbf827ccf7ba84f6d1de801586f418411ffad6c1ecdc11",
+          "finishedAt": "2026-11-06T20:28:11.617Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "citi-double-cash": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cd3eb3d4c15ac7c1ceb71610790ba0801594341c38c45bf66307d4f1e5f189b8",
+          "outputs": [
+            {
+              "ref": "manifest:citi-double-cash-product",
+              "sha256": "320ffcde38c9c1f64ba7c5024d1903ffb93342454911e58a04526b6a139304e7"
+            },
+            {
+              "ref": "source-input:citi-double-cash-product",
+              "sha256": "6b978911f83c2e665557758a5447d4e09796ac6c42b615a1a2e13ec2ca7a3c8a"
+            },
+            {
+              "ref": "manifest:citi-double-cash-additional-info",
+              "sha256": "c2ae8c1538f50945537899ba909016076fcd5d91ca061a30b60284355ee7cc51"
+            },
+            {
+              "ref": "source-input:citi-double-cash-additional-info",
+              "sha256": "fe1e39eede152feb18c1f4693911110801cb07cb19f1f44e224d71bab1454cd4"
+            },
+            {
+              "ref": "manifest:citi-double-cash-terms-pdf",
+              "sha256": "27c8a04f27c412c181da03f640476d33946baf3ffd1ea4447fe33cb89fd3c058"
+            },
+            {
+              "ref": "source-input:citi-double-cash-terms-pdf",
+              "sha256": "1be4f0616d3830b633915e8f4924e3504d6361a9de8f219ed2b43c4d705dc67e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:47:25.593Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:bd57b819fe1d398cb954d7d8cc3b611f4a5802f3c0347a4cd7b54dff8e4fef76",
+          "outputs": [
+            {
+              "ref": "trace:citi-double-cash",
+              "sha256": "46fdcdc9a8000a1f3b2ca15bd3562d6d7e19c8d6ddcec58dcb8c236de31b4594"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:28:11.617Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "citi": {
       "stages": {

@@ -1,8 +1,1229 @@
 {
   "schemaVersion": 1,
   "batch": "chase-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:11:28.256Z",
-  "cards": {},
+  "updatedAt": "2026-11-06T19:50:25.446Z",
+  "cards": {
+    "chase-freedom-flex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cb14d7e71adf0338a19334140fb777a3b7399846d9a73a120da66fa91e6b608a",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-flex-product",
+              "sha256": "3480eb1d2357566c3cf1592d34a8db9006fc0a55fb16471f93109645a561b2b9"
+            },
+            {
+              "ref": "source-input:chase-freedom-flex-product",
+              "sha256": "56f0693db4affeb4855abdd7ade7a2dec8855ed936fbd420e17993d9d63afb5d"
+            },
+            {
+              "ref": "manifest:chase-freedom-flex-rewards-terms",
+              "sha256": "308bf45d52e20d1a795610be3229741b53d2fd8b6e00456485f9ad056f17ba9b"
+            },
+            {
+              "ref": "source-input:chase-freedom-flex-rewards-terms",
+              "sha256": "971a20ac38ebb00ded742588e557c4a0caa523fcc039123d4e6cd6e02eade4aa"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-sapphire-preferred": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:69d0166970b8df208851cc350285686bd30d44f457c4a0787ff699a56228334a",
+          "outputs": [
+            {
+              "ref": "manifest:chase-sapphire-preferred-product",
+              "sha256": "f3f43d7dbc90f6ce181a21d792f2ee9fa16932a939526efa0aac98649090f342"
+            },
+            {
+              "ref": "source-input:chase-sapphire-preferred-product",
+              "sha256": "8dea0e756cb114837e4437723656813ac133feca13b38cecc3da3cb42efd2596"
+            },
+            {
+              "ref": "manifest:chase-sapphire-preferred-rewards-terms",
+              "sha256": "07fac2b9d98ac4ee3e7b65fc4c2106b6902929d2661bed60a3bb22ec9b0b4f05"
+            },
+            {
+              "ref": "source-input:chase-sapphire-preferred-rewards-terms",
+              "sha256": "22cfbdaff81257436c6b214563c34d81ff9feb478137544ee104feaf15e67350"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:40bdb3310df5e9a4dee849a594972dbdb75d470b9b225bca9654cd7e286d01de",
+          "outputs": [
+            {
+              "ref": "trace:chase-sapphire-preferred",
+              "sha256": "bfbf40b8d31fd96768853673cf6c379c475228947891789244da6b649519a9aa"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.413Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-sapphire-reserve": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f66e0ee9e1dd3956b202e097ec85b922ba194f3115b8f1935f1f393fc35bf1cc",
+          "outputs": [
+            {
+              "ref": "manifest:chase-sapphire-reserve-product",
+              "sha256": "5f353cdbe7ecbab8d315bbd6ec9f999993fe194719f19f5e9c9d7a5594ca4958"
+            },
+            {
+              "ref": "source-input:chase-sapphire-reserve-product",
+              "sha256": "3201c8245ed8ffe65b9d21ce98e3035316807c7d88e47cb8bc6c31f7135f7cb7"
+            },
+            {
+              "ref": "manifest:chase-sapphire-reserve-pricing",
+              "sha256": "73a5004498916dda84f1bb12d4bbcddcb48a91b9ccca33e8ae9926fb3df365c9"
+            },
+            {
+              "ref": "source-input:chase-sapphire-reserve-pricing",
+              "sha256": "eba59f721ba3102f7b48198519662f10f3fa239255de1318a1fbbdc7922795fd"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:09b02c706f1b355bab87d13e9356739f7f04ce810429c41d61267a030693018b",
+          "outputs": [
+            {
+              "ref": "trace:chase-sapphire-reserve",
+              "sha256": "bd45c65d4171aed01effa174ddee7eb45b4ae9f44d9ad5ea0955d02798f226be"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.415Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-freedom-rise": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9716f5ec26cf80462f638153d023717f1a167d57dd2e4e0ee574b06f727428e7",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-rise-product",
+              "sha256": "c78a3b762c1958871826c936c53c172ccb72544006a89cf855d0c08102d3d0c2"
+            },
+            {
+              "ref": "source-input:chase-freedom-rise-product",
+              "sha256": "79ca3b6e133216f05b56b1d350a2b743fa86e6494656a0cd260b270c9e2a1f72"
+            },
+            {
+              "ref": "manifest:chase-freedom-rise-pricing",
+              "sha256": "63dffbc6e482c0834045f004b912baf80d33c5e6b9e7cb9b05922f269c1db555"
+            },
+            {
+              "ref": "source-input:chase-freedom-rise-pricing",
+              "sha256": "83489e175eb2ef0d42b5055c461622cff857dbd6dcb8ea2941518db1cbf69f97"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:683d28384ddd17c2d711bcb2b98fd839ad62a2a848866395dbac495ba4762a66",
+          "outputs": [
+            {
+              "ref": "trace:chase-freedom-rise",
+              "sha256": "5c192f8532142c54ddce53e28a285f48e3465be542fa90ad88accf34ea1a7e4f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.416Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "prime-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:880f2d331ba91962e849d6ac1139e86499e596436c651c6189cf5a56fec32768",
+          "outputs": [
+            {
+              "ref": "manifest:prime-visa-product",
+              "sha256": "7437592e741ecd789a525fb6b7f1b01a2e435b13183fdf70d64a592f448ae4f7"
+            },
+            {
+              "ref": "source-input:prime-visa-product",
+              "sha256": "937a4c405f2b5e008016d26ef321a1b421a27e7c6ead967ba5c38b2a9e030bca"
+            },
+            {
+              "ref": "manifest:prime-visa-rewards-terms",
+              "sha256": "1ec91b4d7d1458c82ec48f2abbdc44ac277553e8ae70ac77ec01c8336adb8594"
+            },
+            {
+              "ref": "source-input:prime-visa-rewards-terms",
+              "sha256": "ee1be7c36e9fa07a9eacc6371104e6b998faa033a1e37f59b5797f7b21df5ca2"
+            },
+            {
+              "ref": "manifest:prime-visa-pricing",
+              "sha256": "d6e35271b674a7b529b87f29d90cce826f3210b96d16c1951125adbc78a930b1"
+            },
+            {
+              "ref": "source-input:prime-visa-pricing",
+              "sha256": "4cd4f2d6fc76b16ee6fc4b16829f56b6e5c675681ea0587c5e22f47b52c8e9b0"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "amazon-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:28b5c2b58e32ed565f96ac0a62225170114d0ae3f43f5916e6a1ad1ae965c463",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-visa-product",
+              "sha256": "5a06e43c7b51bd5027733c0d14e899d1a2ddf64629d3f9d948950e9e8fcbdd28"
+            },
+            {
+              "ref": "source-input:amazon-visa-product",
+              "sha256": "20fcdd4cf5335eb9508bcb22a20bc3c6ce3772667f844cdfa0065cc581cfb40e"
+            },
+            {
+              "ref": "manifest:amazon-visa-pricing",
+              "sha256": "d6e35271b674a7b529b87f29d90cce826f3210b96d16c1951125adbc78a930b1"
+            },
+            {
+              "ref": "source-input:amazon-visa-pricing",
+              "sha256": "110eefa5496ed6cef1f5cda14254a1b55aaf5c545bcc54f373527242dcb2df4c"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:390939692be91c76d9a8feec7510ec990fe75463038da3d9b48ce718439af9d8",
+          "outputs": [
+            {
+              "ref": "trace:amazon-visa",
+              "sha256": "7d6b7f6fa6af4193bf526159089466fc359930ac22699aa4486a3d3e2b7dca86"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.416Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "doordash-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:61c0842ed5c2a70665b95b29b9a2bdae7433e4a3eccd249adfd9aec695d41839",
+          "outputs": [
+            {
+              "ref": "manifest:doordash-rewards-mastercard-product",
+              "sha256": "a545388fe05768c2917e4286f544a489eb9c8e451f9217f2bb4ac4d1937b8467"
+            },
+            {
+              "ref": "source-input:doordash-rewards-mastercard-product",
+              "sha256": "d3d0999ca7ab846dd7c5e340bebad9fdfd610b281522ebd6c91ec2871a65fdf6"
+            },
+            {
+              "ref": "manifest:doordash-rewards-mastercard-pricing",
+              "sha256": "fd53305d3016453784e2e8e1f2deae378fef8335799291e7278db2b4f8fa6655"
+            },
+            {
+              "ref": "source-input:doordash-rewards-mastercard-pricing",
+              "sha256": "6d06dd277d60791237e1303b2707a151cfb7ed4f9fa54ac29bb5feb87d9a575f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9c15c617b7336da9f91aee55add968fec9541da8913a21301991f24ba4a8dbba",
+          "outputs": [
+            {
+              "ref": "trace:doordash-rewards-mastercard",
+              "sha256": "90033412eee6ff4421ab81d282fe73bdacb2cda8f238ee660c9c4e3c66b553fe"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.417Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-inspire-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:caf80491eb5609adfd117586d9de5f2c4f9346150bbdba036b50507f6d7a8093",
+          "outputs": [
+            {
+              "ref": "manifest:disney-inspire-visa-product",
+              "sha256": "dd0dd1d98849d3457a33a0890c3c743b981fd9b10813b9868f4995cd0e5f1ca4"
+            },
+            {
+              "ref": "source-input:disney-inspire-visa-product",
+              "sha256": "28cb2feb43e0a866eb15fb994960f265d05e3a9fb31602be3a7ec94dee041b5e"
+            },
+            {
+              "ref": "manifest:disney-inspire-visa-pricing",
+              "sha256": "5c3a4bae190c8b678f8bdc6658f428e819e43c69b264a2aa203668f491f1b156"
+            },
+            {
+              "ref": "source-input:disney-inspire-visa-pricing",
+              "sha256": "9bb6fa6a52ceabf9caec46ae2cd9109045d3fd485c7d514c4ecc6034fd8d15ab"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f0980346ce08fcf34363152c725e7755a447d7e9fb4c8ff6626900e83d1798de",
+          "outputs": [
+            {
+              "ref": "trace:disney-inspire-visa",
+              "sha256": "bbe4a58543d563fa69ec0adb41f651fbeb80fe6dcd2b86a74bcfb0fa48b7054b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.424Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-premier-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8af39c9ba02ad86c2cdb5e1892cc2decac81090aa8f82415100549e2527b4921",
+          "outputs": [
+            {
+              "ref": "manifest:disney-premier-visa-product",
+              "sha256": "1fd63cfdb865725e4cad6b6f8e58fa953afec3f04752191ae9642c9f218e2e71"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-product",
+              "sha256": "2b4904a041ac7fc4323d72e3b10226cb5ec5164b2167631f82309b128092612b"
+            },
+            {
+              "ref": "manifest:disney-premier-visa-rewards-terms",
+              "sha256": "05af7a9f8134a838150da8ad8e42088b5efcd5267bdcb0cdb7f3fcdcb4a9f7f6"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-rewards-terms",
+              "sha256": "bc8e9f598768d13a76d84d9d3ba4ba85e161e2d279537eb501642e768cd989ce"
+            },
+            {
+              "ref": "manifest:disney-premier-visa-pricing",
+              "sha256": "2779bd25b288c1dc99d801a23721a0834fef5d32ca9cac8340e68fe45e29c559"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-pricing",
+              "sha256": "0efd6f5f07688b4a75c2a732f6001715d3ad453b5dc20da692c63d65878bad21"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:41e675877b5c1466c90445c53cdc9ce40a04c9fcd5c0bc230a8584c8eb2534e7",
+          "outputs": [
+            {
+              "ref": "manifest:disney-visa-product",
+              "sha256": "8b87a14bcd1ce78c02c92fa01d23114c0749c2219f403278f70ba3e30706b7c9"
+            },
+            {
+              "ref": "source-input:disney-visa-product",
+              "sha256": "956342ff3dee49a9194749afc4fd7e265b141e52fa8df0e8b532223c99902e63"
+            },
+            {
+              "ref": "manifest:disney-visa-pricing",
+              "sha256": "886b2a475344dfbb839985086b22f2df72bbe3f6fbc7c4648c128da04422814a"
+            },
+            {
+              "ref": "source-input:disney-visa-pricing",
+              "sha256": "2b216e0c47794b98db42176f50d8d6cc4c1414b116c627d0670bb9e177c4d2d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:dbe85a692b350179787e9cea199a6de04b07502049fd8b57a57fc097b6548254",
+          "outputs": [
+            {
+              "ref": "trace:disney-visa",
+              "sha256": "473b622d216aea42ab0de974fc04b350b2d941972169bac8614e96460052f9b7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.428Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cd3fb0f310b8ecee2967acb88acd933fa7700cf467ab73f714d58e08fb0b210c",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-plus-product",
+              "sha256": "01451d5aa134d8936d237bf658ffdd819ce6f6ea28bee108e15acd6144c459c3"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-plus-product",
+              "sha256": "adddc9e4309987fb2d048863c2cf7d4d3dad6eac48a87c00db04ec5a0cc07556"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-plus-pricing",
+              "sha256": "eecafc4527dab5bd8b5657a3fef2ca8a9f97791f22093031ec7472d2316a46c9"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-plus-pricing",
+              "sha256": "972f2a16db56c37eb23870129b6a0e798951fca560e8eb81544297d2ac407d6e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:005e6c7fb0629e47e5fe05ddbe35e57fb0fc57e59c77864c79011a4be0415291",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-plus",
+              "sha256": "17b514e64882110a1dae1db512e2ed5619815bcbc67b167f4b3bf6c1f0414d6b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.437Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:13a5f56675bc3e8c21756526269b79e59f2e1a642ed31c8586470ad660893202",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-premier-product",
+              "sha256": "8a94b3933ccdff4bad80af691c86c9481158ad8f34ee10317651fb6b927f1b4c"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-premier-product",
+              "sha256": "8a28531ebe8b390ba994a5a5298d8d3111bb117e7bebe8525db3f7e7605f84c8"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-premier-pricing",
+              "sha256": "6dacacfbb4c307fd63ec9185cc489d34d82341d094692aab4a07130840319796"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-premier-pricing",
+              "sha256": "024f311fc0704e71b73985e5bd87b06a01674ce9e4e961add6e20a02da8aaa0e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:37a2f8a36538ed3b6613dad7588b3cc40cc578a3aede840d2a084942373f3ef6",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-premier",
+              "sha256": "633042477a72230f8fe8c4b810503538c5a7b09eadaa226f982d4cc1390d322a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.438Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-priority": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:65c8df7f8c13d636e30d6e205647a82e4f1c6f92a92f062e0da45d78a4921e53",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-priority-product",
+              "sha256": "39bb71cc0ad9f364e44969dc2725a3b38b80813ccbd8264a8c6504e0aec742b8"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-priority-product",
+              "sha256": "2e56c556216b5f3451ebb6664dcc7878a383bb14978ae9abf92ca607a44a89ed"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-priority-pricing",
+              "sha256": "9cabb0ea162083bf7c249beade682af39c1085e3d2a104d9970c765371ea9a67"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-priority-pricing",
+              "sha256": "662fc54cb44fec7eff049906f34ef5737d5154d4e525753f1725e825d1d87599"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8e988d686bdb0a5d300c2bbf9f140493452f26ff0d5a28445bca28f3799d4330",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-priority",
+              "sha256": "591e5966cad64dc6c27dfcc874fad2d6ad34a022eb9374493e7557da6ef63b1e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.439Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards-premier-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5de2dbfd38041b006bc625a39a07e2c4dc1bf77fb76734d0df0a6c42b0db553f",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-premier-select-product",
+              "sha256": "532d4e1ead5db53849c87b75448ed6e9734402ff4451442e9ba2c4e3e2cc5835"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-select-product",
+              "sha256": "d9c8721d333ad6d5ab3a52ac4eaf4f05cac72ff10960621bac7d089f03b99b9e"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-premier-select-pricing",
+              "sha256": "a92ce7fce46d04fe942e091e43021b3e6ef78eefaab37490f70a14ade5802573"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-select-pricing",
+              "sha256": "b280af65f286cdd6b26c8b5d667ede078c597b69b0ca120197ca62030c3f4733"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6c45357dbf65761d93440fab3567b9f735edfb925f1d65739c19472838102706",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards-premier-select",
+              "sha256": "562b13cfe12a73dccf36303cb12a9eaf17b71e6cbefb179ad9b48c8948b198fc"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.439Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:593112c9595111a61daf697cf32930e5929b86ce860d1cbccad84e65fc6511e2",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-premier-product",
+              "sha256": "ef7cd4745fbae9002dad33ff778a1314aaf4ac42887f953543b7d946613a0372"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-product",
+              "sha256": "157ea18e5149a8e7cff77eee4122afedc075b997ba15076be4c078a4bee96ea2"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-premier-pricing",
+              "sha256": "9feae768f270fc6f57579ace77129c96c8b1ee3b661fd02abf6a83df9f40ac04"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-pricing",
+              "sha256": "a9e6f0eb9ed8a59cd1ea183101bf9ad2a48b3eb97ea1e24091b8e80afc0e9c0b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0a6be6de64a42276a607cacedb5a47c3387e1eada73c272aac17da2d5761a672",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards-premier",
+              "sha256": "5f97208ee2d52ea45f263159158ed88c826e94796810de28bf0e115178bbeb61"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.440Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b790d7580193634561e1b070e9f129b6658054c7434de53bf5bce1e68fdf8770",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-product",
+              "sha256": "cea57f1d4524bb999d709f479176cce4303dc0477c30ddd5e3974f0f089fdf66"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-product",
+              "sha256": "bfcce86d33a60e22d70324c3a6b26f518eee6348b939d56d53a9c31ebc2f06cb"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-pricing",
+              "sha256": "8789d5af1c7f60e3ddcd1ffaadd33bb1dd5191dbaf9d3339a69853b02b5c4ea5"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-pricing",
+              "sha256": "b84242edeb29299f1fd462fe0f4197a4f255a2ae149e369769a890fc0de9dda4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:74b0581893de4bae568af1c442be3e002c7ca175265257e6119404e8166c29af",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards",
+              "sha256": "2aed0fb0dcb9bac55ac6ff3c4b56b3256368f507a8623ce7ef38f895568de43d"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.440Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "marriott-bonvoy-boundless": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:424dc1e77f67beb75b91a0a0ed360d693c3a5c541f8cd9d28a8cec8b72698dfc",
+          "outputs": [
+            {
+              "ref": "manifest:marriott-bonvoy-boundless-product",
+              "sha256": "5a37a35dfbe0c3f91e94455e2bd0b733c4d306026f1144a6eb3a123297c10a27"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-boundless-product",
+              "sha256": "81f334a0cde232f6aaeb5d03103ad009d1e27a048750f00aa8635d76a8a36ae2"
+            },
+            {
+              "ref": "manifest:marriott-bonvoy-boundless-pricing",
+              "sha256": "a569ab5fe8276da2281705ab1c6edcca2325101225117ce819fff6358d30f40c"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-boundless-pricing",
+              "sha256": "9ae124db60f6aa52cdac5ff67818135a0314a9a05edf8724645e2d7a425fe1dd"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c1e03f397a9fd1bba260ae0e887b9cd62141e29819f8b779c1eac3c909086f53",
+          "outputs": [
+            {
+              "ref": "trace:marriott-bonvoy-boundless",
+              "sha256": "685aee752f566b5f27cb77615a357e15f3984a74d2603c5d44aa7845c268090f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.441Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "marriott-bonvoy-bountiful": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b16af5f7542905355c8d982c53c043f4eb2e5c62ca81b809025486abd84b0023",
+          "outputs": [
+            {
+              "ref": "manifest:marriott-bonvoy-bountiful-product",
+              "sha256": "3936e99fbba5329664a4d127cabb90685dcf7445aa36bdcb13c72e56be1823f5"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-bountiful-product",
+              "sha256": "5ff23c3d31ea10f4b0f1fd65173d7ba378c6d7a180e87661e947ae636b067a9b"
+            },
+            {
+              "ref": "manifest:marriott-bonvoy-bountiful-pricing",
+              "sha256": "8b27088742429a5e780ae115a70f698e9156b34a1a59d5c85056e3670bdd65d9"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-bountiful-pricing",
+              "sha256": "1674e3da9662063ab86dc9dad1abe602e930b47d23b101a0621af7b4bafe47d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:77ee3d0338ee135d4d24620c2cff58dfd7ecdd2b614ddf535e7ce8fc3a464397",
+          "outputs": [
+            {
+              "ref": "trace:marriott-bonvoy-bountiful",
+              "sha256": "c4e1322b52e3d103f73e62e530f9f9b152741a25e4e17672db135ed402958cb9"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.442Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "world-of-hyatt": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a7d4387dc06d84701b9ff85d1a8138b3cc2e7ac412a30378f19bb6770771bb3d",
+          "outputs": [
+            {
+              "ref": "manifest:world-of-hyatt-product",
+              "sha256": "1de4cfd3699c87ed3785fee6def351e897de9d91d95b8bf8db678acec2504203"
+            },
+            {
+              "ref": "source-input:world-of-hyatt-product",
+              "sha256": "9178683ece4d0111d217ee2c3f82c6032b4767d1a7528a42c929789aeb54d0a0"
+            },
+            {
+              "ref": "manifest:world-of-hyatt-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:world-of-hyatt-pricing",
+              "sha256": "f867b48f34ddbd7f41aa374e6df52d6f42fa141df76136db1a153f28f828d5d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3ffa58bc701e07dc43e8a4b0e1d0811a700b4827babc95558fe16aca47446f87",
+          "outputs": [
+            {
+              "ref": "trace:world-of-hyatt",
+              "sha256": "fe291337ee119748777865f7dc1d6ee2cf953b33e483a90f22aa31495b1180f7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.442Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "air-canada-aeroplan": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3ec7d8c3bacdde6e6c75c26b1f8353eb527085036b0b3123e633d426c3081bd3",
+          "outputs": [
+            {
+              "ref": "manifest:air-canada-aeroplan-product",
+              "sha256": "93ec0310647229f917d9910408ad62fa41be18e92104436691b8e1a1c269ea66"
+            },
+            {
+              "ref": "source-input:air-canada-aeroplan-product",
+              "sha256": "c8d0bdb6d1fc8d995fe7fde6ae1b37d5b0de1119ca2b6ae1968233b87ad59152"
+            },
+            {
+              "ref": "manifest:air-canada-aeroplan-pricing",
+              "sha256": "fea310ab31a0487d126072bed70287c0155358431dae23eb2b00bd5463edd87d"
+            },
+            {
+              "ref": "source-input:air-canada-aeroplan-pricing",
+              "sha256": "1b688350466678fc04e67e73cfc91321f1ae445422d338b7fcab2389b623ad89"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1f77e7209363b34445816d767c53a58e3861e83785494ee703dc9ad707008a57",
+          "outputs": [
+            {
+              "ref": "trace:air-canada-aeroplan",
+              "sha256": "c8c6406085945e137f4add169aa0264619320596344386b3f1de457bf1bc3eeb"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.443Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "british-airways-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5d61ad506af69c38b98dca2c8ed7f3842a9153a7565553ad3ca240a92454a65d",
+          "outputs": [
+            {
+              "ref": "manifest:british-airways-visa-signature-product",
+              "sha256": "d66f4f4c345391e8f63bb055816011e36603399aed7cdc752f8caaa30450929d"
+            },
+            {
+              "ref": "source-input:british-airways-visa-signature-product",
+              "sha256": "ea083878f039827a3da78bbd34169882b8b1b7feafe71d0c0a19749e8651ed6d"
+            },
+            {
+              "ref": "manifest:british-airways-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:british-airways-visa-signature-pricing",
+              "sha256": "a786a8a09ff93e854d2e7e44da7634a141b357df966ba66d911d2961801ad07f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b05c71fd6f4cb58c5c620b0f6b8b6ce779328728a75719f991b766936994feb3",
+          "outputs": [
+            {
+              "ref": "trace:british-airways-visa-signature",
+              "sha256": "3ba63372037152fa38ecb5fd391ecbfd0ec8e70c8c75a0618a1eb3f02af679c2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.444Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "aer-lingus-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9862b01664f5af515ee23e7a2f9d019bd8087098656861614c752f4bccd0f881",
+          "outputs": [
+            {
+              "ref": "manifest:aer-lingus-visa-signature-product",
+              "sha256": "ad84117f4f6c83a5933835307407b7a3107a345a54a38ede23a67c7da02508cc"
+            },
+            {
+              "ref": "source-input:aer-lingus-visa-signature-product",
+              "sha256": "df6e77ed227ac1ee02c5d6650413ad3deaa22602e94383916a02a9c8d63192af"
+            },
+            {
+              "ref": "manifest:aer-lingus-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:aer-lingus-visa-signature-pricing",
+              "sha256": "fb254263782ac26755f73f2a2b7585de505f1f2d4d7a8ab9d01699d33b1ee77f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1494ebc97b012cb4928f9c618f94dada0a93a1642bf06ca3bba3124a27500256",
+          "outputs": [
+            {
+              "ref": "trace:aer-lingus-visa-signature",
+              "sha256": "d5096fa6cbf7986c8066479ab604015ce9d774ce6beb40e1263f247d7820f472"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.444Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "iberia-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1982b419cbc0383472284feb04b4567acd1a1ae4b1b7bf32c4fba10561bcda91",
+          "outputs": [
+            {
+              "ref": "manifest:iberia-visa-signature-product",
+              "sha256": "ff5c8f4f604869e9e3dbc332c153591b0c1755cbda67a617c26d5ada29e76525"
+            },
+            {
+              "ref": "source-input:iberia-visa-signature-product",
+              "sha256": "2bfb0b62c1aef6ce5db6ac8884405c0982a18a05d2a2dbc4050bb980d479d5e4"
+            },
+            {
+              "ref": "manifest:iberia-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:iberia-visa-signature-pricing",
+              "sha256": "1d11dcf4d56b07478e5b225308cecb0fa7f7d57dee942ed54d4905c5818abb4a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:720fa5b6da1748af02f0b318993c331e294a67df5a4d3bac33bd1dd6dbe6398b",
+          "outputs": [
+            {
+              "ref": "trace:iberia-visa-signature",
+              "sha256": "d2d7d2593fbe3125094bf3cbc7dfcefa1e8e4f88ca85663f0eae12589d8b8194"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.445Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-freedom-unlimited": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a694ec0d93d53d65f8c05a70158f13a3171ef7763263436e8e66d702c053d409",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-unlimited-product",
+              "sha256": "6d2703093462cc61717de1fe84ae0f877e7dd40d03b126642a51e474a93f5412"
+            },
+            {
+              "ref": "source-input:chase-freedom-unlimited-product",
+              "sha256": "c52f8f6c11d7bc131ae85bba577939ab93a0b0ff96f48fc2aa430d2633c0c490"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:d5d6b2c561d520961c8f01c9b94fde2ff01fc62e844755e28682b37b87234f3e",
+          "outputs": [
+            {
+              "ref": "trace:chase-freedom-unlimited",
+              "sha256": "3f5cca39347fd45ed248a0945023286d26bdb754a44ba316bf00639d44e4a31b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.446Z",
+          "attempts": 1
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "chase": {
       "stages": {

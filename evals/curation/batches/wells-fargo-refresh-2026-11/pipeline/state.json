@@ -1,8 +1,323 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:11:30.026Z",
-  "cards": {},
+  "updatedAt": "2026-11-06T22:15:13.939Z",
+  "cards": {
+    "wells-fargo-autograph": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a679a5134a2cec95c8f8a5b069b543e71894d180826f4002e2e8e63920fcc99a",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-product",
+              "sha256": "51b64b9dc5d8f1cc5408f3e5de92b4e6d6e51336e7d06c58fc8f093281dd705d"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-product",
+              "sha256": "ba12b0807006c6902f2662a40f129b8c2db709e51e7a8df6be853a2823c7ff31"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "3d795adc4811fa3f1dc0c997898a473dab59d16199dcd4627a6337f5c0fa1262"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-pricing",
+              "sha256": "1de59f87497cd2b77dce66d28a4dba041ac7611a74a9c580563141574b58f0c8"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-pricing",
+              "sha256": "9acba18ae0c4d510dbb69d86ff7796c9c6a36c201daab0ae25cb51cc3c0ab824"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.845Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c7623c9f656f0bae5147e4dda26052c0e24ed1d63d5f007337c8304a145575ff",
+          "finishedAt": "2026-11-06T22:15:13.938Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-autograph-journey": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c27b695ae222ae8beacd29b968d93f5ddc73962e66b042463039db0bf37072d7",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-product",
+              "sha256": "d2481443d48083b366ca9e7ce840bd9fb0fcacfb957e0ee9e061f5e39d96ad48"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-product",
+              "sha256": "a0b32cbc721c3472aeb97945a2f4df2bab0e0abec791421d3190dff5e0dd2f7f"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "3d795adc4811fa3f1dc0c997898a473dab59d16199dcd4627a6337f5c0fa1262"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-pricing",
+              "sha256": "40ba2e2c5a15ea78a05ed11ee30fe8d69520d600c2be7052edaffe5efe065c49"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-pricing",
+              "sha256": "671d2a8866054786baf1e547eca4d51ab0ac462a2bef76755d4d577da770fdfc"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.854Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2931d4551f181db414e6dd77681bd478ddd8f4e6d9bd3a3b2fd0fbb22b61a693",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-one-key": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:11c1acb5a514f707dc5d391fdae3a30228da59a85d31f9a32c9f8e381249e135",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-one-key-product",
+              "sha256": "688f5e6b9aefcec302f4ddd7bf664af61d677e1c201108bc85a91b4b572bf267"
+            },
+            {
+              "ref": "source-input:wells-fargo-one-key-product",
+              "sha256": "7b3a3931c276371c13b77e59f5f8ac78ab989fc10faacfe58e8c400bdfc41ba3"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.855Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2d8a342579c162f365ee39cbe590d6dcbf182ab16acd17aafb5ca6ae434ddc87",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-one-key-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f863a1f59dc52afbfe26eda4785905310492730593fe436ff72a843af832bb73",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-one-key-plus-product",
+              "sha256": "cdc01438289cd589267915b8d1ff1f4cfdd9cd65b086190cff9c794e50e55824"
+            },
+            {
+              "ref": "source-input:wells-fargo-one-key-plus-product",
+              "sha256": "9ae744b58e5bd71ff12f99769f490e22ccd24b663f786973300868d9ceb0ca77"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.856Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ec59600795af1ac559cf4b2907046ee4d643518c4dc6c74c3b5ab121b0fef2bf",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-choice-privileges": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f71c825b98a28efc5ffc2cb6cbdb083651434e7ecc84a8f3532245f6f1cc3ee6",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-product",
+              "sha256": "9371e3249b36d8500d0d2c12e5bfe81ba9742ea1005e620b67719eb569ce9935"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-product",
+              "sha256": "8eabdd5114d2293a973ff30b649ad77f40e4bab6552407814c6d1282be68cd86"
+            },
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-rewards-terms",
+              "sha256": "5f11998c74fdbe3403b011babbf56f739517f5f092db3f364ae8e72666016ee4"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-rewards-terms",
+              "sha256": "87b0c8cd8de38d9c3b8f3469cec19b4dcfa15a5ab3d0a1f3c6d8d535c085a936"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.856Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:95f4d344a27af42595cb09b404b3df0336312349f6a2edcb589f77c9071b0b66",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-choice-privileges-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:01e1bd1cb6cc937f7f3ca3d7184a76f4eabeb35485ce4de12dbb24f11de274da",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-select-product",
+              "sha256": "a9c62ed6393e688f57d4677824089f6b53f8c9e74d99c7c4b47a967023ed3cf1"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-select-product",
+              "sha256": "d046a54e8b21f15a5e9ce3e7cd67332c40c7c7100d8b2e6948302c4530f113d2"
+            },
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-select-rewards-terms",
+              "sha256": "b5fe0d39dc6c90e2219d999675efbdb4f2b810f251f27abb9ab71b90c9184198"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-select-rewards-terms",
+              "sha256": "431f61c0a41f08a0c0f6aec7f19ccfc50b7fbf4d534140c1f00af53a224455b2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.857Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4ad69a376402bb05f2a856ee82bc9b1b70a7a6d1c9349af6ebb90524a40b86df",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-active-cash": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bd45b5c06029920e5d6c39c1b9d34efdce81a5b22f86d799ca1b79e25b8ac73f",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-active-cash-product",
+              "sha256": "e5c6ae5236c0bb39792965e70b0673b01da5b07a1eaf21a22adda0a2543c3173"
+            },
+            {
+              "ref": "source-input:wells-fargo-active-cash-product",
+              "sha256": "b1d6eeb255a139036717aeffae1827a412960b88fe7bac0d07f1054b089c5da9"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.857Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:bac44419552d228c4e389abc852a3f989620782b5e15e1ad0209463ca764d935",
+          "finishedAt": "2026-11-06T22:15:13.939Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "wells-fargo": {
       "stages": {
