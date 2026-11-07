@@ -5,7 +5,7 @@
 
 <p align="center">
   A Chrome extension that tells you which card you already own earns the most at checkout.<br />
-  An LLM keeps its 178-card catalog current from issuer terms, and a person approves every release.
+  An LLM keeps its 177-card catalog current from issuer terms, and a person approves every release.
 </p>
 
 <p align="center">
@@ -40,7 +40,7 @@ Turning pages of issuer terms into structured reward rules is extraction, which 
 
 On the cart or checkout page of any U.S. https store, a badge shows the best card without a click, for example "Use Blue Cash Everyday · $3.00 back". When the cart amount can't be read with certainty, the badge ranks your cards by rate instead. One generic cart reader handles every store, with no per-site code. A merchant release names more than 600 U.S. stores with their bonus category, and the extension matches it on the device. The popup ranks every card you own for any purchase and names any condition it can't check.
 
-The 178-card catalog and the store list are bundled with the extension. Hosted builds refresh both from `/v1/catalog` and `/v1/merchants` at install and weekly. They send usage reports only after the shopper opts in ([event dictionary](docs/telemetry/events.md)); a store's domain is sent only when the shopper taps "Suggest this store" or "Report a problem".
+The 177-card catalog and the store list are bundled with the extension. Hosted builds refresh both from `/v1/catalog` and `/v1/merchants` at install and weekly. They send usage reports only after the shopper opts in ([event dictionary](docs/telemetry/events.md)); a store's domain is sent only when the shopper taps "Suggest this store" or "Report a problem".
 
 ### The curation pipeline
 
@@ -114,10 +114,10 @@ Then open `chrome://extensions`, turn on Developer mode, and load `extension/dis
 
 | | |
 | --- | --- |
-| **Working** | The extension at any https store on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points, and a merchant release of more than 600 named U.S. stores |
+| **Working** | The extension at any https store on a 177-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points, and a merchant release of more than 600 named U.S. stores |
 | **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 4, the 177-card catalog published 2026-11-07, is served until 2026-12-07 |
 | **Latest** | Catalog renewal: every source was re-checked on 2026-11-06, all ten issuers were refreshed (Bank of America from browser-pane captures), and the renewed 177-card catalog was published as release 4 on 2026-11-07 |
-| **Next** | The catalog renewal (release 4), then the Chrome Web Store release (Release A, version 2.1.0). Release docs and public pages are done. The store assets must be regenerated for the submitted package, and the submission is pending. The install link appears on the [site](https://ai-checkout-api.onrender.com/) once the listing exists. See the [roadmap](wiki/product/roadmap.md) |
+| **Next** | The Chrome Web Store release (Release A, version 2.1.0). Release docs and public pages are done, and the store assets are regenerated for the submission package. The submission is pending. The install link appears on the [site](https://ai-checkout-api.onrender.com/) once the listing exists. See the [roadmap](wiki/product/roadmap.md) |
 
 ## License
 

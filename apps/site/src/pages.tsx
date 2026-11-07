@@ -64,7 +64,7 @@ const SCREENSHOTS = [
   {
     src: '/media/1-wallet.png',
     alt: 'Presentation panel “Your cards. Your choice.” beside the actual popup card editor: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
-    caption: 'Search 178 cards and add the ones you already have. No card numbers or bank login.',
+    caption: 'Search 177 cards and add the ones you already have. No card numbers or bank login.',
   },
   {
     src: '/media/4-comparison.png',

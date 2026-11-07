@@ -56,7 +56,7 @@ Use these terms consistently. Quote extension interface text exactly as it appea
 - A dated document carries one "Last updated" line near the top. Update it on every substantive change to a policy.
 - Money: U.S. dollars with a dollar sign and two decimals ($3.00, $1,000.00). Ranges: $1.00–$3.00.
 - Percentages: numerals with a percent sign and no space (3%, 99.2%). Rates in prose: "3% back", "1.5% on all other purchases".
-- Use numerals for 10 and above and for any measurement, count of cards or stores, time or version (178 cards, 90 days, 15 minutes, version 2.1.0). Spell out one to nine in ordinary prose ("ten largest issuers" is a fixed phrase on the site).
+- Use numerals for 10 and above and for any measurement, count of cards or stores, time or version (177 cards, 90 days, 15 minutes, version 2.1.0). Spell out one to nine in ordinary prose ("ten largest issuers" is a fixed phrase on the site).
 - Version numbers: "version 2.1.0", never "v2.1.0" in prose.
 
 ## Headings and structure

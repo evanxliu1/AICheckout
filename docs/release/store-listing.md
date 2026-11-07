@@ -39,7 +39,7 @@ Pick your cards once. On the cart or checkout page of any U.S. online store, AI 
 
 Coverage:
 
-- 178 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo), both cash back and points. Add yours by searching for the card or bank name. No card numbers or bank login.
+- 177 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo), both cash back and points. Add yours by searching for the card or bank name. No card numbers or bank login.
 - More than 600 named U.S. stores with their bonus category (such as supermarkets, drugstores and home improvement), and a general profile for every other store, so category bonuses apply where they count.
 - Card terms come from the issuers' published terms. Each catalog release is checked against the issuers' pages by separate AI verifiers and approved by a person before it's published, and the extension refreshes the terms weekly. Points and miles are compared in cash at a published estimate unless the issuer states a value or you set your own.
 

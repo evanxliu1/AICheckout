@@ -21,7 +21,7 @@ const scenes = [
     name: 'wallet',
     kind: 'popup',
     title: 'Your cards. Your choice.',
-    copy: 'Search 178 cards by name or bank and add the ones you own. No card numbers or bank login.',
+    copy: 'Search 177 cards by name or bank and add the ones you own. No card numbers or bank login.',
     alt: 'Actual card editor in the popup: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
     note: POPUP_NOTE,
   },
