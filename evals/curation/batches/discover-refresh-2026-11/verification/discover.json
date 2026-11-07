@@ -1,0 +1,1249 @@
+{
+  "schemaVersion": 1,
+  "packetId": "f81706d3-8cf4-48bd-a1be-e760e400072a",
+  "batch": "discover-refresh-2026-11",
+  "issuer": "Discover",
+  "provenance": "agent-verified",
+  "verifier": {
+    "agent": "card-verifier",
+    "model": "claude-opus-5-5",
+    "date": "2026-11-07",
+    "filesRead": [
+      "evals/curation/batches/discover-refresh-2026-11/pipeline/packets/verify.discover.1.json",
+      "evals/curation/expansion/verification/README.md",
+      "evals/curation/expansion/verification/conventions/README.md",
+      "evals/curation/expansion/verification/conventions/general.md",
+      "evals/curation/expansion/verification/conventions/discover.md",
+      "evals/curation/batches/discover-refresh-2026-11/verify/discover.md",
+      "evals/curation/batches/discover-refresh-2026-11/corpus.draft.json",
+      "evals/curation/batches/discover-refresh-2026-11/product-notes.json",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-cash-back-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-cash-back-terms.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-cashback-calendar.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-miles-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-miles-terms.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-chrome-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-chrome-terms.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-student-cash-back-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-student-chrome-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-secured-cash-back-product.txt",
+      "evals/curation/batches/discover-refresh-2026-11/captures/discover-it-secured-cash-back-terms.txt",
+      "scripts/lib/expansion-verification.mjs",
+      "apps/api/src/curation/v2/corpus.ts",
+      "apps/api/src/curation/v2/validate.ts",
+      "evals/curation/batches/discover-refresh-2026-10/verification/discover.json",
+      "evals/curation/expansion/verification/discover.json"
+    ]
+  },
+  "adjudicator": null,
+  "cards": [
+    {
+      "cardId": "discover-it-cash-back",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.0.usMerchantsOnly",
+          "current": true,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "discover-it-cash-back-product",
+            "quote": "Plus, earn 1% cash back on all other purchases."
+          },
+          "note": "The U.S.-merchants sentence sits in the bonus-category text; the base rate carries usMerchantsOnly null on every Discover card (Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.0.anchors.2",
+          "current": "Purchases must be made with merchants in the U.S.",
+          "note": "This anchor supported the U.S.-only flag removed from the base rule."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.1",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Grocery Stores, Wholesale Clubs, and Select Streaming Services",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "streaming",
+            "issuerWording": "Grocery Stores, Wholesale Clubs, and Select Streaming Services",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "gas",
+            "issuerWording": "Gas Stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.5",
+          "current": {
+            "category": "ev-charging",
+            "issuerWording": "public electric vehicle charging stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.6",
+          "current": {
+            "category": "drugstores",
+            "issuerWording": "Drug Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.8",
+          "current": {
+            "category": "transit",
+            "issuerWording": "Transportation",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.9",
+          "current": {
+            "category": "other",
+            "issuerWording": "Home Improvement Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-06-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "6/30/26, on up to $1,500",
+              "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate.",
+              "Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q2); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The first anchor named the Q2 2026 Restaurants offer (April to June), not the Q4 rule this is; the Q4 calendar line states rate, cap, activation and end date."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.2",
+          "current": "6/30/26, on up to $1,500",
+          "corrected": "Applies to all categories: Purchases must be made with merchants in the U.S.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Applies to all categories: Purchases must be made with merchants in the U.S."
+          },
+          "note": "The anchor \"6/30/26, on up to $1,500\" is the Q2 end date; replaced with the U.S.-merchants sentence that supports usMerchantsOnly."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.7.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26 (or the date on which you activate 5%, whichever is later) through"
+            ]
+          },
+          "note": "Anchors are the plain Q2 and Q4 activation offers; no problem is stated (general 11, 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Transportation purchases include those made through merchants classified as airlines, and local commuter passenger transport (such as bus, rail and ferry services)."
+            ]
+          },
+          "note": "About Q3 Transportation, a past quarter whose rule is removed; moot (general 11)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "You will earn 5% cash back on Capital One Entertainment purchases.",
+              "You will earn 5% cash back on purchases (hotels, vacation rentals and rental cars only) made on Capital One Travel."
+            ]
+          },
+          "note": "Anchors are the plain 5% Capital One Entertainment and Travel sentences; no problem is stated (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-cash-back-product",
+              "quote": "Get an unlimited dollar-for-dollar match of all the cash back you earn at the end of your first year, automatically."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "rotating-quarterly",
+            "summary": "Rotating 5% quarterly categories, activated each quarter; Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment and Utilities.",
+            "rate": "5%",
+            "activation": "recurring",
+            "otherQuarters2026": "Q1 Jan-Mar: Grocery Stores, Wholesale Clubs, Select Streaming Services; Q2 Apr-Jun: Restaurants, Home Improvement Stores; Q3 Jul-Sep: Gas Stations (incl. public EV charging), Transportation, Drug Stores.",
+            "conditions": "Activate each quarter; 5% applies from the later of the quarter start or the activation date. U.S. merchants only. Some wallet and third-party payment transactions may not earn 5%.",
+            "cap": "up to $1,500 in purchases per quarter (up to $75 cash back), then 1%"
+          },
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate."
+          },
+          "note": "Categories, cap and activation are on the calendar capture; the terms give 1% over the quarterly maximum. Removed the research label \"(secondary)\" and listed the past 2026 quarters whose rules were removed."
+        },
+        {
+          "action": "drop",
+          "hintIndex": 1,
+          "note": "No capture mentions Capital One Offers or an up-to-15% merchant offer; unanchored and unsupported."
+        }
+      ]
+    },
+    {
+      "cardId": "discover-it-miles",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.pointValueHundredthsOfCent.value",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "discover-it-miles-terms",
+            "quote": "Rates for these other redemption options vary and can change in the sole discretion of Capital One."
+          },
+          "note": "The 100-miles-per-dollar figure is for travel redemptions only; cash and other redemption rates vary, so the point value is null (general 3, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.pointValueHundredthsOfCent.anchors.0",
+          "current": "Simply multiply the cost of your travel purchase by 100.",
+          "note": "This anchor is the travel-redemption calculation, which is not a cash value."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "You will earn 5 miles per dollar spent on Capital One Entertainment purchases.",
+              "You will earn 5 miles per dollar for purchases (hotels, vacation rentals and rental car only) made through Capital One Travel using this Rewards card"
+            ]
+          },
+          "note": "Anchors are the plain 5-miles portal sentences; no problem is stated (general 11, 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "missing",
+            "anchors": []
+          },
+          "note": "An issue with no anchor states no problem (general 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-miles-product",
+              "quote": "We’ll automatically match all the miles you’ve earned at the end of your first year."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "discover-it-chrome",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "You will earn 2% cash back on your first $1000 in combined purchases at gas stations (stand-alone) and restaurants each calendar quarter.",
+          "corrected": "and some public electric vehicle charging stations.",
+          "anchor": {
+            "sourceId": "discover-it-chrome-terms",
+            "quote": "and some public electric vehicle charging stations."
+          },
+          "note": "No anchor of the EV rule mentioned EV charging; the terms say only some public EV charging stations count as gas stations. Rate and cap stay stated by the product anchor at index 2."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "You will earn 5% cash back on Capital One Entertainment purchases.",
+              "You will earn 5% cash back on purchases (hotels, vacation rentals and rental cars only) made on Capital One Travel."
+            ]
+          },
+          "note": "Anchors are the plain 5% Capital One Entertainment and Travel sentences; no problem is stated (general 11, 16)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.3",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "To qualify for 2%, the purchase transaction date must be before or on the last day of the offer or promotion."
+            ]
+          },
+          "note": "The last-day-of-the-offer sentence is boilerplate, not a limited time or an ambiguity (general 10, Discover convention)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "Get an unlimited dollar-for-dollar match of all the cash back you earn at the end of your first year, automatically."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "discover-it-student-cash-back",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.rules.1",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Grocery Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Wholesale Clubs",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "streaming",
+            "issuerWording": "Select Streaming Services",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "dining",
+            "issuerWording": "Restaurants",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-06-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "6/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q2); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.5",
+          "current": {
+            "category": "other",
+            "issuerWording": "Home Improvement Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-06-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "6/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q2); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.6",
+          "current": {
+            "category": "gas",
+            "issuerWording": "Gas Stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.7",
+          "current": {
+            "category": "ev-charging",
+            "issuerWording": "Gas Stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.8",
+          "current": {
+            "category": "transit",
+            "issuerWording": "Transportation",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.9",
+          "current": {
+            "category": "drugstores",
+            "issuerWording": "Drug Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Plus, earn 1% cash back on all other purchases.",
+              "Applies to all categories: Purchases must be made with merchants in the U.S."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.cap.rateAfterCapBps",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate."
+          },
+          "note": "No capture for this card states the rate over the quarterly maximum (no terms capture; the calendar gives only the cap), so the after-cap rate stays null (Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.10.anchors.2",
+          "current": "Plus, earn 1% cash back on all other purchases.",
+          "note": "The base-rate sentence was the support for a 1% after-cap rate the captures do not state for this card."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.cap.rateAfterCapBps",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate."
+          },
+          "note": "No capture for this card states the rate over the quarterly maximum (no terms capture; the calendar gives only the cap), so the after-cap rate stays null (Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.11.anchors.2",
+          "current": "Plus, earn 1% cash back on all other purchases.",
+          "note": "The base-rate sentence was the support for a 1% after-cap rate the captures do not state for this card."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.cap.rateAfterCapBps",
+          "current": 100,
+          "corrected": null,
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate."
+          },
+          "note": "No capture for this card states the rate over the quarterly maximum (no terms capture; the calendar gives only the cap), so the after-cap rate stays null (Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.12.anchors.2",
+          "current": "Plus, earn 1% cash back on all other purchases.",
+          "note": "The base-rate sentence was the support for a 1% after-cap rate the captures do not state for this card."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.12.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "set",
+          "path": "reference.issues.0.anchors.0",
+          "current": "Plus, earn 1% cash back on all other purchases.",
+          "corrected": "up to the quarterly maximum when you activate. Plus, earn 1% cash back on all other purchases.",
+          "anchor": {
+            "sourceId": "discover-it-student-cash-back-product",
+            "quote": "up to the quarterly maximum when you activate. Plus, earn 1% cash back on all other purchases."
+          },
+          "note": "Kept the missing issue (no stated rate over the quarterly maximum) and widened the anchor so it shows the unstated maximum next to the base rate."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.1",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Other popular streaming services may be included."
+            ]
+          },
+          "note": "About Q1 Select Streaming Services, a past quarter whose rules are removed; moot (general 11)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-student-cash-back-product",
+              "quote": "Get an unlimited dollar-for-dollar match of all the cash back you earn at the end of your first year, automatically."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "rotating-quarterly",
+            "summary": "Rotating 5% quarterly categories, activated each quarter; Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment and Utilities.",
+            "rate": "5%",
+            "activation": "recurring",
+            "otherQuarters2026": "Q1 Jan-Mar: Grocery Stores, Wholesale Clubs, Select Streaming Services; Q2 Apr-Jun: Restaurants, Home Improvement Stores; Q3 Jul-Sep: Gas Stations (incl. public EV charging), Transportation, Drug Stores.",
+            "conditions": "Activate each quarter; 5% applies from the later of the quarter start or the activation date. U.S. merchants only. Some wallet and third-party payment transactions may not earn 5%.",
+            "cap": "up to $1,500 in purchases per quarter (up to $75 cash back); the after-cap rate is not stated for this card"
+          },
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "Q4 categories, cap, activation and end date are on the calendar capture; no capture of this card states the after-cap rate. Removed \"(secondary)\" and listed the past 2026 quarters."
+        }
+      ]
+    },
+    {
+      "cardId": "discover-it-student-chrome",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "set",
+          "path": "reference.rules.3.anchors.0",
+          "current": "You will earn 2% cash back on your first $1000 in combined purchases at gas stations (stand-alone) and restaurants each calendar quarter.",
+          "corrected": "and some public electric vehicle charging stations.",
+          "anchor": {
+            "sourceId": "discover-it-student-chrome-product",
+            "quote": "and some public electric vehicle charging stations."
+          },
+          "note": "No anchor of the EV rule mentioned EV charging; the footnote says only some public EV charging stations count as gas stations. Rate and cap stay stated by the anchor at index 2."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.2",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "To qualify for 2%, the purchase transaction date must be before or on the last day of the offer or promotion."
+            ]
+          },
+          "note": "The last-day-of-the-offer sentence is boilerplate, not a limited time or an ambiguity (general 10, Discover convention)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "Get an unlimited dollar-for-dollar match of all the cash back you earn at the end of your first year, automatically."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": []
+    },
+    {
+      "cardId": "discover-it-secured-cash-back",
+      "verdict": "fixed",
+      "reason": null,
+      "fixes": [
+        {
+          "op": "remove",
+          "path": "reference.rules.1",
+          "current": {
+            "category": "supermarkets",
+            "issuerWording": "Grocery Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.2",
+          "current": {
+            "category": "other",
+            "issuerWording": "Wholesale Clubs",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.3",
+          "current": {
+            "category": "streaming",
+            "issuerWording": "Select Streaming Services",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-03-31"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Grocery Stores, Wholesale Clubs, and Select Streaming Services from 1/1/26 (or the date on which you activate 5%,",
+              "is later) through 3/31/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q1); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.4",
+          "current": {
+            "category": "dining",
+            "issuerWording": "Restaurants",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-06-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "6/30/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q2); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.5",
+          "current": {
+            "category": "other",
+            "issuerWording": "Home Improvement Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-06-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Restaurants and Home Improvement Stores from 4/1/26 (or the date on which you activate 5%, whichever is later)",
+              "6/30/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q2); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.6",
+          "current": {
+            "category": "gas",
+            "issuerWording": "Gas Stations",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.7",
+          "current": {
+            "category": "transit",
+            "issuerWording": "Transportation",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "remove",
+          "path": "reference.rules.8",
+          "current": {
+            "category": "drugstores",
+            "issuerWording": "Drug Stores",
+            "rateBps": 500,
+            "paidOnPaymentBps": 0,
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "activation": "recurring",
+            "usMerchantsOnly": true,
+            "limitedTime": {
+              "endsOn": "2026-09-30"
+            },
+            "anchors": [
+              "Activate to earn 5% Cashback Bonus at Gas Stations, Transportation and Drug Stores from 7/1/26 (or the date on which you activate 5%, whichever is",
+              "through 9/30/26, on up to $1,500",
+              "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+              "5% category purchases over the quarterly maximum, and all other purchases, except as noted below, earn 1% cash back."
+            ]
+          },
+          "note": "Rule for a past 2026 quarter (Q3); only the quarter current on the capture date (Q4 2026, Oct 1 to Dec 31) is kept, and past quarters go in the rotating-quarterly product note (general 5, Discover convention)."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.9.anchors.1",
+          "current": "Earn 5% cash back on everyday purchases at different places you shop each quarter, up to the quarterly maximum when you activate.",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "No anchor of the Q4 Restaurants rule stated the $1,500 cap or the end date; the Q4 calendar line states rate, cap, activation and end date. The replaced product sentence gives no amount."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.10.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "set",
+          "path": "reference.rules.11.anchors.1",
+          "current": "on up to $1,500",
+          "corrected": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate.",
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities, now to December 31, 2026, on up to $1,500 in purchases when you activate."
+          },
+          "note": "The Q4 2026 calendar line states the 5% rate, the $1,500 cap, activation and the December 31, 2026 end date; the replaced anchor stated only part of the cap or an earlier quarter."
+        },
+        {
+          "op": "remove",
+          "path": "reference.issues.0",
+          "current": {
+            "code": "ambiguous",
+            "anchors": [
+              "Discover it Secured Cash Back Credit Card",
+              "How do I earn my rewards on purchases made on Capital One Entertainment?",
+              "How do I earn my rewards on purchases made on Capital One Travel?"
+            ]
+          },
+          "note": "Anchors are the card name and two terms headings; no problem is stated (general 11, 16)."
+        }
+      ],
+      "addedRules": [],
+      "addedExclusions": [],
+      "addedIssues": [
+        {
+          "code": "out-of-scope",
+          "anchors": [
+            {
+              "sourceId": "discover-it-secured-cash-back-product",
+              "quote": "Get an unlimited dollar-for-dollar match of all the cash back you earn at the end of your first year, automatically."
+            }
+          ],
+          "note": "Cashback Match / Discover Match doubles all rewards earned in the first 365 days for new cardmembers; it is a first-year match, not an earning rule (Discover convention)."
+        }
+      ],
+      "productNoteChanges": [
+        {
+          "action": "fix",
+          "hintIndex": 0,
+          "hint": {
+            "type": "rotating-quarterly",
+            "summary": "Rotating 5% quarterly categories, activated each quarter; Q4 2026 (Oct 1 to Dec 31): Restaurants, Entertainment and Utilities.",
+            "rate": "5%",
+            "activation": "recurring",
+            "otherQuarters2026": "Q1 Jan-Mar: Grocery Stores, Wholesale Clubs, Select Streaming Services; Q2 Apr-Jun: Restaurants, Home Improvement Stores; Q3 Jul-Sep: Gas Stations (incl. public EV charging), Transportation, Drug Stores.",
+            "conditions": "Activate each quarter; 5% applies from the later of the quarter start or the activation date. U.S. merchants only. Some wallet and third-party payment transactions may not earn 5%.",
+            "cap": "up to $1,500 in purchases per quarter (up to $75 cash back), then 1%"
+          },
+          "anchor": {
+            "sourceId": "discover-cashback-calendar",
+            "quote": "Earn 5% Cashback Bonus on up to $1,500 in different category purchases each quarter, when you activate."
+          },
+          "note": "The hint said the cap amount is not stated; the calendar capture gives $1,500 per quarter and the terms 1% over the maximum. Rewrote the summary and listed the past 2026 quarters."
+        }
+      ]
+    }
+  ]
+}
