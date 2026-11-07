@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-11-07
+* [The 19 Bank of America cards are held out of renewal 2026-11-07.renewal.2 because the issuer blocks the capture](./2026-11-07-bank-of-america-held-out-of-renewal.md) — renewal driver, under the runbook's step 3: every Bank of America page answered headless capture with HTTP 403 on 2026-11-06 and 2026-11-07 and the `request` hint returns no earn rates, so the seeded batch ships as a layer with an empty corpus and all 19 cards dropped with that reason; a later batch restores them; Evan can wait for the host instead.
+
 ## 2026-10-22
 * [Phase 15.6b: the shopper demo is a motion graphic (HTML/CSS composition, every frame a function of t, rendered with the repository's Playwright and ffmpeg), not a screen recording; the recording pipeline for the demo retired](./2026-10-22-motion-graphic-shopper-demo.md) — implementer, on Evan's request: no new dependency (Remotion rejected), each frame from a fresh copy of the DOM so renders are byte-identical, illustrative and not bound to the ZIP while the screenshots stay real captures.
 

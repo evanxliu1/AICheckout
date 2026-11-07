@@ -1,8 +1,750 @@
 {
   "schemaVersion": 1,
   "batch": "bank-of-america-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:16:42.163Z",
-  "cards": {},
+  "updatedAt": "2026-11-07T04:41:31.243Z",
+  "cards": {
+    "boa-customized-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9d671e37280a84a25acb5c499cbb017e65baaee29f4b07b50fbd80ff0cb3019e",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-product",
+              "sha256": "34f022f11d83e8295d3eff3474c83d51d31b9d7735f8218a00673fb341dd21b6"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-product",
+              "sha256": "75f105f2da3041ca92fb3c91daa1b7ed61c321e23b8953910eed798d041e3ac8"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-pricing",
+              "sha256": "7a2b5508aeeea5974cd0340ad3e34e0d44a3ea7aea5ca4d467f8e727e4f50182"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-pricing",
+              "sha256": "deb410ffbba98173cf8c52353e9aac70cd19e5d1dfb8861b797116786e6e93a1"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "a603b4c0467d6f55cd518b6431174210eb4b7fd882e5a65b65491e5626e50421"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.240Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 3
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b0467e65e78cbae4c2691e3bc76efde0a373703467c2d5bed229a645b44dbee7",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-product",
+              "sha256": "e9ec40c0257347132984784fb1d47c326fd78b9f955aa5b80ddea929cc1ab2ff"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-product",
+              "sha256": "7c132385da392c8fcdf84bb8133010e1ec93c6653248850bbd359724f74e91be"
+            },
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-pricing",
+              "sha256": "46f54702d4b47f76e77611e0c0aa9675906c0c4b029fca5e6c042b41e4726835"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-pricing",
+              "sha256": "eee78d142b8d3298d45dc18eba929666e0dbb6d4ec9a9e391fa4fc1217ecce85"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.240Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bdb2c1e3cae8f806338660b7fcfceabecc72a5b524cc19d9a4a5fc0c9fd7b4ae",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-product",
+              "sha256": "5f98d41d0a783ea78f1c19a0b837dc09272adc839c493d258107ab6b4fc5582b"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-product",
+              "sha256": "5b8a5841bca3494808ebb5dd3a4df1569e26dba9199a6de04c6bac9667ed4d23"
+            },
+            {
+              "ref": "manifest:boa-travel-rewards-pricing",
+              "sha256": "fdce8e64c25bbe053d30e76984880e650db49ee1c96e1944a2827ebffbb389cf"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-pricing",
+              "sha256": "e7ac3b274b36dbf6016620506360a45092979d8dfd44baa38b3f9e0d08b119b8"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.240Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-premium-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7af88bfb4ad5be1bf342c2933f180f004a38c6989487a7c8f2f70aba5e53984d",
+          "outputs": [
+            {
+              "ref": "manifest:boa-premium-rewards-product",
+              "sha256": "38d15d39c335b5217788b72534a3bfd15de21fec7fc26e8f578f1cdb43db90ef"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-product",
+              "sha256": "a97206e3ed41a35a4b37d61668485ead65f41624263d6a88d5d1df20fc5be509"
+            },
+            {
+              "ref": "manifest:boa-premium-rewards-pricing",
+              "sha256": "638b8616d2a8669b606a69e75bd368ffd991c498ee52d15e134316c7ad2e32de"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-pricing",
+              "sha256": "02fdc8a67da1c527dcd5a214ba4269c4c78d2bae9a2a0a95adfba6b33ec10eb9"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.240Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-premium-rewards-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8368ba2d1366edcc3166b8311fc17994944aa4581db76212cea2707fd91d3900",
+          "outputs": [
+            {
+              "ref": "manifest:boa-premium-rewards-elite-product",
+              "sha256": "a4e96122af896af61a6d8fae078db376fd604b3fcc864a676ee746928c9d3e6c"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-elite-product",
+              "sha256": "e9b003181e45b445d832f8579fe904979161ceaaf22ff75cca709743cc2a5604"
+            },
+            {
+              "ref": "manifest:boa-premium-rewards-elite-pricing",
+              "sha256": "100e763b4e8b433a0a6e8fe5416b2513762faa2ea12d766c08c53f12fb419fb4"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-elite-pricing",
+              "sha256": "9d936e3b68376e43fed4202cf66180ac1bee3d6da9c3186e24a27682cc88e4a5"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-customized-cash-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2e3d1cab6ef9fed82f5ea80a42ea360a994941ee7b50dbbc3e42850caaac17d1",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-students-product",
+              "sha256": "f3c67259e6fd44ecdedb8311a28013b8a66e1f3980eb1d263276a2e821a1bffe"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-students-product",
+              "sha256": "ef1eba8542b0008c52691301f219a2f115386a790049a107cd3ac25fe5748749"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-students-pricing",
+              "sha256": "37d152508130e70ebf102cc2b0916948f59125d21c1b030ece242bdd1ff978c4"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-students-pricing",
+              "sha256": "365533f45f93d088d0639a5e79828cc19e28cf495ba6f585e2ec8e24339e25ce"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "a603b4c0467d6f55cd518b6431174210eb4b7fd882e5a65b65491e5626e50421"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 3
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:98e95efd62b06e089e4ed50e862e6648b3f41c6a835d97f3678d0daf1a07b5e6",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-students-product",
+              "sha256": "252355d48047e81c7b36f30cfa97b0382043ffa456d0951ca995ea4c140b8bf8"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-students-product",
+              "sha256": "2c780ef41a4f2398c6716fbce4193cdfea32613203de6b421cf0b98506f99a7c"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c7e12e78b2405be60420b90c72d2d93e719d14b78490179ac15a7621eb1882e0",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-students-product",
+              "sha256": "456c0bf10959d46ecc2e4bbe8a237d8515e2fad294655ee37800f129eeae8b76"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-students-product",
+              "sha256": "2590b421e4c4b87b708554c4d4321ae71193c50a53cdcb0cca8a13015d984dad"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-customized-cash-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e4e8a8bfdfe4106ffc933034cbdbeca7e1af40d0f7eef295b902f91ebfcf9297",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-secured-product",
+              "sha256": "ad7f79bf4b692cb7f8e494be20b94f53bf18ff173979d789c1acdc4287eded07"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-secured-product",
+              "sha256": "e17a541bd76948a0c916af9a5b748cf1cacbda78164c34d3051855f9beaf4670"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-secured-pricing",
+              "sha256": "aa288e47b4a8e3b9d4d1d24694b52bf207ee819d2aa46276ce404af5dfd88c96"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-secured-pricing",
+              "sha256": "ad8283aa7458ec408a4c29804fb74cb10f184fab988c7b2cf9bde00208a327e3"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "a603b4c0467d6f55cd518b6431174210eb4b7fd882e5a65b65491e5626e50421"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 3
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2809f89355dabc3426299d28745e3f7e506ad8e5bb4b0192049851f901df4eab",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-secured-product",
+              "sha256": "ca9bee7b7d8afb10bbf6583a735a01ff9f3e88cb0d7f14b5e38083ddb71d2f1c"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-secured-product",
+              "sha256": "1d1e76d2927da6f801fc2f728b1de050e959cf2a4039c1c843f0633596e4ec93"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2455db178bb9348ebdf2fd0e0895e065b2fa98913450d23d37dd7fe3d83d4037",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-secured-product",
+              "sha256": "6e64b4ae07be7109606105487d976fd8e9cf76f97bae4e7a0133d2eca956b670"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-secured-product",
+              "sha256": "b3019b96b6a4cedf7e02fa1d2daf5e57e2a99e07ac4074ee792933078e456b60"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.241Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 1
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-susan-g-komen-customized-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a6a965df6e16b14b4bc3cc23a02dafa8d0857feb34aaf056b5594b84f7b4abd1",
+          "outputs": [
+            {
+              "ref": "manifest:boa-susan-g-komen-customized-cash-rewards-product",
+              "sha256": "8c0237f9259d8c0c4b6fab6f9c69d784cb7edbcb67a371584b1ae2915ed93045"
+            },
+            {
+              "ref": "source-input:boa-susan-g-komen-customized-cash-rewards-product",
+              "sha256": "ef320eba1ea46e7beb9792be19e215353e61b551f3250f781f650a802a910e28"
+            },
+            {
+              "ref": "manifest:boa-susan-g-komen-customized-cash-rewards-pricing",
+              "sha256": "db69198113fbb2dc48c50ada9d12f2269f0581a74315605830558807f9748b7b"
+            },
+            {
+              "ref": "source-input:boa-susan-g-komen-customized-cash-rewards-pricing",
+              "sha256": "115ada0ac47dcd56bccef13e0ff93893276829d3bc630850284b540a1e78c702"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "a603b4c0467d6f55cd518b6431174210eb4b7fd882e5a65b65491e5626e50421"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 3
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-atmos-rewards-ascent": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5ed1a7d3de2090f33159fc319236b62f837fa7b94f79de9164a6913d487f7987",
+          "outputs": [
+            {
+              "ref": "manifest:boa-atmos-rewards-ascent-product",
+              "sha256": "0d09a716671ea9df00c4e380ed9efa68bfdd4cf264603e2f78c8d382c03a4902"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-ascent-product",
+              "sha256": "a384cad916de507d5a51396fecc8646d172604890358681d78f9fe3bdc23cd90"
+            },
+            {
+              "ref": "manifest:boa-atmos-rewards-ascent-pricing",
+              "sha256": "bd8e6ca714502af81f0a875d1ca449edf8077ecbf9454c764188ad7f235470ab"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-ascent-pricing",
+              "sha256": "81ca23490ce5c7338f662cd003ad86a6851dac6833014cd54ec525ebf9ed2ff2"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-atmos-rewards-summit": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e310c69d9432f35870dd36b3a1f6b7901541b6eef64ba5f0da1641b127e665cb",
+          "outputs": [
+            {
+              "ref": "manifest:boa-atmos-rewards-summit-product",
+              "sha256": "79e5ba3d081a34399d6a35cdc296409d822ad44d6269e24a9c5e2c75b60bcb00"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-summit-product",
+              "sha256": "f1f10ceb4aa4d58fa7e63ba76b7d260ef8ebcb8cb4c83e44362a9990fb039582"
+            },
+            {
+              "ref": "manifest:boa-atmos-rewards-summit-pricing",
+              "sha256": "89e0a242425b24699271795150d3ea75c48baf0f8a1ac4a8197b2658fd3a170e"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-summit-pricing",
+              "sha256": "958c6e5deae9969f127b94ee35600e25b32b3142139fb436ff28a2a19a39805b"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-royal-one": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:aae0ac7488e050b71149478dc71d278077049b095a68b0f6185018eb6da8965c",
+          "outputs": [
+            {
+              "ref": "manifest:boa-royal-one-product",
+              "sha256": "5c5661f17d06acbe3c58637924dbd85493a12fad722a898be7fdc9fef886ac6f"
+            },
+            {
+              "ref": "source-input:boa-royal-one-product",
+              "sha256": "2eea239fb1bf4e79c41b1c099ed0e68922c61d18cff33bebc6a977f5ebdd99f5"
+            },
+            {
+              "ref": "manifest:boa-royal-one-pricing",
+              "sha256": "950ca5e1649de337616641a33b7bfa514b723a618584cd15a84f810f2e0760df"
+            },
+            {
+              "ref": "source-input:boa-royal-one-pricing",
+              "sha256": "8a942eca58c8720f9c300bc023599058126aaf14ea88569c6d7825f5ede13d18"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-royal-one-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:47cf3e25af53b496c80b8aba66a478ba0fedee83216c7f4971d056cd2ff11cc7",
+          "outputs": [
+            {
+              "ref": "manifest:boa-royal-one-plus-product",
+              "sha256": "de885f590226b96bea58bbc2814a762f8ecdc5cfa4d8c77ac293725cd5c0b0e3"
+            },
+            {
+              "ref": "source-input:boa-royal-one-plus-product",
+              "sha256": "03d3970d6537282f8887869e8bdbb614110ab45c0c7fc202008736a388cc44db"
+            },
+            {
+              "ref": "manifest:boa-royal-one-plus-pricing",
+              "sha256": "04fe8e444a81b2e9286cdd3a78d936fee2a2dccfaeaa136c3bc625901f817667"
+            },
+            {
+              "ref": "source-input:boa-royal-one-plus-pricing",
+              "sha256": "d9a70a42db770a637d1cbd55a7e8bebeaf00a00a288b75643b4f4eaa620c6f91"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-allways-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:44a37178840209bdab310462c2a1387fdd5981182b4b489579ef9a71c4ec4f87",
+          "outputs": [
+            {
+              "ref": "manifest:boa-allways-rewards-product",
+              "sha256": "93b068cbc935355b6cf0b4595115cc59f776802f677486039c4cf2b2a73eeb27"
+            },
+            {
+              "ref": "source-input:boa-allways-rewards-product",
+              "sha256": "a793f7d55fcb38507b50e72ad2a2f310823a7c58d7d6f9d909e0fbd155a4a69a"
+            },
+            {
+              "ref": "manifest:boa-allways-rewards-pricing",
+              "sha256": "49410718e003ba5a743caf0408dda64ff8b05456d15548b4db0c714ad5a59d7a"
+            },
+            {
+              "ref": "source-input:boa-allways-rewards-pricing",
+              "sha256": "f81253f96e7aa01027fa7e786cec8717224ffc057baa5c6cf1baa67f934feaa4"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.242Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-air-france-klm": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9a0a383a83915a10b3b089e5e3b3a23845b5c628585edce36e830f9cc41e80eb",
+          "outputs": [
+            {
+              "ref": "manifest:boa-air-france-klm-product",
+              "sha256": "61a0e202723a40ccb069e412998b9f32c48fd11577f658238178d7434c5d2ebe"
+            },
+            {
+              "ref": "source-input:boa-air-france-klm-product",
+              "sha256": "21759c929fcae75fc9e08e805f8d2e9db2b535eacb91248096e3e0d9cc8c7c29"
+            },
+            {
+              "ref": "manifest:boa-air-france-klm-pricing",
+              "sha256": "16693940a562cbb70e4ee71e6435cb877b2addd3432dc1bb2012bdd4746dae00"
+            },
+            {
+              "ref": "source-input:boa-air-france-klm-pricing",
+              "sha256": "5418be09bd66860ce21936ab2e1a163d18f33b6c1b9e426bd78c9e0597553603"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.243Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-norwegian-cruise-line-world-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "failed-gate",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9c5249650b2d7d88449b9dbc98386c837a30bf1110f184c10513655a9ee73e0a",
+          "outputs": [
+            {
+              "ref": "manifest:boa-norwegian-cruise-line-world-mastercard-product",
+              "sha256": "8c25465a6572e9f07e5989b23e60160206ca67c965e99b990239380b4a10e608"
+            },
+            {
+              "ref": "source-input:boa-norwegian-cruise-line-world-mastercard-product",
+              "sha256": "e1b620cf4b7bea089b3446e2d06afde5ab2d3ff89efbd2da55a0bfee0a7a55d9"
+            },
+            {
+              "ref": "manifest:boa-norwegian-cruise-line-world-mastercard-pricing",
+              "sha256": "6db587c42d8ffecfc02f08ddf160637b64bf938a2084bfa6dd6eb9f59320a671"
+            },
+            {
+              "ref": "source-input:boa-norwegian-cruise-line-world-mastercard-pricing",
+              "sha256": "42701343e327de13ad4d9c99867a1fa098ead7c9a246dfa7c2a0f1dd62b7fd32"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:41:31.243Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 2
+          },
+          "reason": "capture-flagged"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "bank-of-america": {
       "stages": {
