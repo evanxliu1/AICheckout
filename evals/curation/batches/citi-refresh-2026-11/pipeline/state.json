@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-11",
-  "updatedAt": "2026-11-07T07:19:51.203Z",
+  "updatedAt": "2026-11-07T17:55:10.923Z",
   "cards": {
     "citi-strata": {
       "stages": {
@@ -38,12 +38,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:1d9883c01de82667e4f8fbd18b58352630219494ba78cae1915fa9b8bdde80f5",
-          "finishedAt": "2026-11-07T07:19:51.202Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-strata",
+              "sha256": "abd8f47833950a8cdba8a7b6b21474d73178a8461733596b31426e8e5b75821c"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.836Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ffc0a70e79a58d75936ddbded55a30bd85185892e77c0464a5534ecdc73da473",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata",
+              "sha256": "c52116ae15017c84c78dad09a586570f0db848a834fac6867443f6dc4979848a"
+            }
+          ],
+          "labelsHash": "sha256:8cfdf55cde8cf236638f1e5b970dd3d573c86d7e5ec8aa474741dae7adfc9b5b",
+          "anchorsHash": "sha256:5c00c1159cbba7d64f1f29ea5492ed9002fb0dda74ef5cd953e1ddbd5bea3688",
+          "finishedAt": "2026-11-07T17:55:10.921Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -94,6 +114,21 @@
             }
           ],
           "finishedAt": "2026-11-06T20:28:11.610Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:311b8955d328a467ab78e7af869a210d3ae53359a6f808d1a5b31bc53e7776ec",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata-premier",
+              "sha256": "dc00fec475ac96610c46b421364efd0dceb36abdad34bc1865b3f5b5dcbb2da3"
+            }
+          ],
+          "labelsHash": "sha256:ce81fcaf6cf02831e3316eccec8e162d8a7078a668d7663c3ffedddbf507c1ea",
+          "anchorsHash": "sha256:f0cd1b1a688fc78466bf54a0c9cb71b81d4596af00376813dcdc3b0a2d321ced",
+          "finishedAt": "2026-11-07T17:55:10.922Z",
           "attempts": 1
         }
       },
@@ -146,6 +181,21 @@
           ],
           "finishedAt": "2026-11-06T20:28:11.610Z",
           "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:851242a8fe80d1c25856681892e567d5f5406e3c7a8c611bd1dceba2f0c51d4a",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-strata-elite",
+              "sha256": "da3db5307ded4de2db35a2bef1cf605b1d7f19d23e84d14c8b91c297eb6c1b06"
+            }
+          ],
+          "labelsHash": "sha256:cb3616ac8b78d137780b63a16bffed21d21d4eb948f921e703d49c0712af9022",
+          "anchorsHash": "sha256:f0ac277298d175c4450d75ace888ce6ef4a6f1a9055a4382c7684bf1578cee23",
+          "finishedAt": "2026-11-07T17:55:10.922Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -194,12 +244,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:d28bd5ecfb54175ffdefe7b071cf88a61c420655f496cdf7835c9f930516eed4",
-          "finishedAt": "2026-11-07T07:19:51.202Z",
-          "attempts": 3,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-costco-anywhere-visa",
+              "sha256": "08a9b4fd714f65f5db45fb9a39f16ebb26ebe3f0c3eb9022051ea4503e0196e1"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.836Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:cb3d7d88c2c8f9db885c9d6a4a6dce06d1bdba95550872051ad8aad37ba8d94c",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-costco-anywhere-visa",
+              "sha256": "f77e64e7258d8863f698188278569faa14186eb8ba237a31639313cf03985aeb"
+            }
+          ],
+          "labelsHash": "sha256:c6cf54aae7b0409b3eba13899beda6a35ace491bf4b86c528c0b9dbe9e16852d",
+          "anchorsHash": "sha256:92f51e8451ad72d967af48c6c1871a8bf2da0d10f9f33d0f645bb0b4acc55cd6",
+          "finishedAt": "2026-11-07T17:55:10.922Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -250,6 +320,21 @@
             }
           ],
           "finishedAt": "2026-11-06T20:28:11.611Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:cb8718f3a366b8f3d8e7844e0c5ffa5505bd47170f1653cf9ccf2e1e911e7794",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-platinum-select",
+              "sha256": "638246fcd2cc7fc29180bef19c98b059af1ff4b3cf73faff42e9dac2d7a97bbd"
+            }
+          ],
+          "labelsHash": "sha256:ce17bcbf45d21464144e21b28a73b8f7ecbc11af98ab1779326e7b693c045b0c",
+          "anchorsHash": "sha256:0bf0a2244574e47775a89ae53695386f998a34c7824b901f3033eac6fbf6b775",
+          "finishedAt": "2026-11-07T17:55:10.922Z",
           "attempts": 1
         }
       },
@@ -302,6 +387,21 @@
           ],
           "finishedAt": "2026-11-06T20:28:11.612Z",
           "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d9a5a941ba18eb17cc7a07c5e4050231f51227622a73c7a3db595f978a4a3b1e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-mileup",
+              "sha256": "3bf438a23a879153601f01c47cf1a0eb4f2b92e7792a636e8b102edb35340d92"
+            }
+          ],
+          "labelsHash": "sha256:fb2289821323363ca3c4d6b376df6eeb33b1c0b8816f383b9aa2254523a8faf4",
+          "anchorsHash": "sha256:2649766ae3da18379d9e0bac0defd9116720cdc4f27c50728e5bae64e76a1871",
+          "finishedAt": "2026-11-07T17:55:10.922Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -352,6 +452,21 @@
             }
           ],
           "finishedAt": "2026-11-06T20:28:11.614Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:5ccccacbb1baaa9655ded8cffe2123d6a163743415c303fe6d020b5d3675b98c",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-executive",
+              "sha256": "1b8ae98db5d5891c3454559a9559d26cb1026d8412237edcd8d9b61eadd68d8a"
+            }
+          ],
+          "labelsHash": "sha256:3ce4f2b3b28fdd9b1b88b1a22c9c1d865a2b1623a321b4dc268ef50c07aedb99",
+          "anchorsHash": "sha256:0fab8863db8555d7d85186bc5da58eacc7c73a1f5dcbdc8a7bada37ca3472333",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
           "attempts": 1
         }
       },
@@ -404,6 +519,21 @@
           ],
           "finishedAt": "2026-11-06T20:28:11.615Z",
           "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:9d7203109f1a561850ef5f8ef299365eb3c5e05116132d2fba0577ee24f0538f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-aadvantage-globe",
+              "sha256": "88e5abe8dbbf663ef645c4bfc84fd251fe97076ca66cfdcc04647a593fb6c1b1"
+            }
+          ],
+          "labelsHash": "sha256:5547cfce0d37e0b1d0c4f91227f66df4895db077b8590203b8a3239a9ba20903",
+          "anchorsHash": "sha256:b0fc50df04052dac65fde0902a4d66dfa57600f8b6d04c1b54113baf34b8514c",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -455,6 +585,16 @@
           ],
           "finishedAt": "2026-11-06T20:28:11.615Z",
           "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8b35341774e86fec50b882c26ed904e0cd5dfeead34a68ed821956daf9d0f94c",
+          "labelsHash": "sha256:2a9d33eaaf9c79e4ac41830506c3842efca9aa13d90094e588cc9b49799c2703",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1,
+          "undrafted": true
         }
       },
       "dropped": null,
@@ -495,12 +635,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:a59dfc2dfab2e3bc531a260817cb536ed0a02e28f7b67b8d51e2e46b7e8fbf22",
-          "finishedAt": "2026-11-07T07:19:51.202Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-wayfair-mastercard",
+              "sha256": "e9d6f02523876fa01a81e18c062c66cc0af1530f1fd3bc64b9f41817437bb373"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.836Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a60d106707b80811a3ba30c4494397bf482f176d6244a3f68354b4a87dfe3916",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-wayfair-mastercard",
+              "sha256": "834722d5a04c666f309e4887ad4dbb5002900a7038258cbfcafb2a80268220ff"
+            }
+          ],
+          "labelsHash": "sha256:6056bd3300d93273f4f7f4f666a6cf35bcef81b1e32695e43625832b907a8ed0",
+          "anchorsHash": "sha256:70707574c5e6c8cd7e32df0b3f88338b96847f702ba0b41bb37ef513f1b39d54",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -544,6 +704,21 @@
           ],
           "finishedAt": "2026-11-07T04:22:08.076Z",
           "attempts": 3
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1fa2633476fd215dfc75ade864f6e4b87a8f089d899dd18a11509706bdc39cd8",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-tsc-visa",
+              "sha256": "10348391dbd0be99d1e2ace5add1442362ff48da83c5e9eb0e3c7a7630f7d373"
+            }
+          ],
+          "labelsHash": "sha256:a711c2c2f2818374f7bbeb97dc5017e37ec9c4ad84449976c4155ae382d54625",
+          "anchorsHash": "sha256:453aa7b8394c1040a07a565998332139a811312257ef3ed50fa3186e9476f6c3",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -576,12 +751,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:5a2958e762bdb8bb75c263d1243297f44acc6df94c3ce353b205a450dd88f1c7",
-          "finishedAt": "2026-11-07T07:19:51.203Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-dillards-mastercard",
+              "sha256": "25319cc9da0920468ee6a0c37867f2bbf1d1f84f3aaa1b6d046af086e3dd586e"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.836Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:132c4039a9e65a65d1a42665cdbf2bf63a9ce908596b52ec7f31d56eb84129aa",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-dillards-mastercard",
+              "sha256": "8fcd74187c3d01e57d1ceb37f8a1a3edb1fec2817833176dcca77abe8e1767df"
+            }
+          ],
+          "labelsHash": "sha256:504693e6f3aa2faa2571a6d4ca10482f3221d6c5ae3207f8662d9dc1e401d5ba",
+          "anchorsHash": "sha256:3bd8ea946249be31ac6d39c770abd6f258c5d8705bd59e94086aaa8a5074d6cb",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -614,12 +809,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:7afc463b1465cbaed96a32da0047043c2ad04a364570028ed00b470aed740d11",
-          "finishedAt": "2026-11-07T07:19:51.203Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-macys-amex",
+              "sha256": "3f307ee846231427ed346bf86970497608a19d49d97134d0143f8343f96a9c18"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.837Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:09842ec7076c7c0d7b93cbc862926c1db66fcc6bee28c1a7779ee7f476a4b847",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-macys-amex",
+              "sha256": "e8a92748aeddee2f57b22e175e8f65fa324b78d12927b5b87420d4f915888a3d"
+            }
+          ],
+          "labelsHash": "sha256:d5149689fd9603ee1e207097092881df6467a9899fe4aba03895f42ad0c720f5",
+          "anchorsHash": "sha256:29b5990b5f6a6508683792045f78be3e4963d4e727bda11854d0dcc585e0d681",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -652,12 +867,27 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:0df9e33a07030f79cefbf827ccf7ba84f6d1de801586f418411ffad6c1ecdc11",
-          "finishedAt": "2026-11-07T07:19:51.203Z",
-          "attempts": 4,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:citi-bloomingdales-amex",
+              "sha256": "862e0b6381b98ae7764e970301251e6c44107efdc3d0badc1a16c69c39f78900"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:49:08.837Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:0e85eb119a7aeeca0074f7691e5a230057808a4cbf853d886738183f110cb5e5",
+          "labelsHash": "sha256:d0041bcfccbc94c01b47b249ac935932de153f7481ff34948be2704a28b2930f",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
+          "attempts": 1,
+          "undrafted": true
         }
       },
       "dropped": null,
@@ -716,6 +946,21 @@
             }
           ],
           "finishedAt": "2026-11-06T20:28:11.617Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b00e9f7748cca06b883154bcdfd9a43ab0daebb303a8bfce9b043ea4a521d0a4",
+          "outputs": [
+            {
+              "ref": "corpus-draft:citi-double-cash",
+              "sha256": "f09fcc961464854f291f1a94d5c6f8015df21e50075530a2c0be49b3be6f67ea"
+            }
+          ],
+          "labelsHash": "sha256:58a2c945dbd20579ed8c2eaa78beb693fa854dd8e5e602586139bfb00d2049e6",
+          "anchorsHash": "sha256:1307842cec8548ed911464f0879565c90891af1413ad6786ccd8f3899fcd8b32",
+          "finishedAt": "2026-11-07T17:55:10.923Z",
           "attempts": 1
         }
       },
