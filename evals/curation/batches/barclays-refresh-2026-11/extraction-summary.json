@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 17
+  },
+  "cards": [
+    {
+      "cardId": "barclays-mastercard-titanium",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "barclays-mastercard-titanium-product",
+        "barclays-mastercard-titanium-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 140461,
+      "inputTokenEstimate": 11967,
+      "inputTokens": 10429,
+      "outputTokens": 919,
+      "runAt": "2026-11-06T19:27:09.890Z"
+    },
+    {
+      "cardId": "barclays-mastercard-black",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "barclays-mastercard-black-product",
+        "barclays-mastercard-black-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 130313,
+      "inputTokenEstimate": 13201,
+      "inputTokens": 11154,
+      "outputTokens": 942,
+      "runAt": "2026-11-06T19:27:09.898Z"
+    },
+    {
+      "cardId": "barclays-mastercard-gold",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_missing": 2
+      },
+      "documents": [
+        "barclays-mastercard-gold-product",
+        "barclays-mastercard-gold-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 152916,
+      "inputTokenEstimate": 13652,
+      "inputTokens": 11437,
+      "outputTokens": 897,
+      "runAt": "2026-11-06T19:27:09.909Z"
+    },
+    {
+      "cardId": "barclays-jetblue-plus",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_missing": 1,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 2
+      },
+      "documents": [
+        "barclays-jetblue-plus-product",
+        "barclays-jetblue-plus-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 217821,
+      "inputTokenEstimate": 11286,
+      "inputTokens": 9967,
+      "outputTokens": 2095,
+      "runAt": "2026-11-06T19:27:09.901Z"
+    },
+    {
+      "cardId": "barclays-jetblue-premier",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "supermarkets",
+        "travel-portal"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_missing": 1,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "barclays-jetblue-premier-product",
+        "barclays-jetblue-premier-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 217606,
+      "inputTokenEstimate": 15090,
+      "inputTokens": 12200,
+      "outputTokens": 2060,
+      "runAt": "2026-11-06T19:27:09.903Z"
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 7,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 7,
+        "rate_not_in_evidence": 7,
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-wyndham-rewards-earner-product",
+        "barclays-wyndham-rewards-earner-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 206944,
+      "inputTokenEstimate": 11032,
+      "inputTokens": 9866,
+      "outputTokens": 2388,
+      "runAt": "2026-11-06T19:27:09.908Z"
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-plus",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 8,
+        "rate_not_in_evidence": 6,
+        "reported_missing": 2,
+        "reported_out-of-scope": 2
+      },
+      "documents": [
+        "barclays-wyndham-rewards-earner-plus-product",
+        "barclays-wyndham-rewards-earner-plus-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 301721,
+      "inputTokenEstimate": 12242,
+      "inputTokens": 10667,
+      "outputTokens": 2493,
+      "runAt": "2026-11-06T19:27:09.912Z"
+    },
+    {
+      "cardId": "barclays-wyndham-rewards-earner-premier",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets",
+        "transit"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 9,
+        "quote_not_found": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-wyndham-rewards-earner-premier-product",
+        "barclays-wyndham-rewards-earner-premier-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 315602,
+      "inputTokenEstimate": 16843,
+      "inputTokens": 13292,
+      "outputTokens": 2903,
+      "runAt": "2026-11-06T19:27:09.914Z"
+    },
+    {
+      "cardId": "barclays-upromise-world-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "out-of-scope",
+        "ambiguous",
+        "missing",
+        "out-of-scope",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 4,
+        "reported_ambiguous": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-upromise-world-mastercard-product",
+        "barclays-upromise-world-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 223300,
+      "inputTokenEstimate": 10802,
+      "inputTokens": 9730,
+      "outputTokens": 1679,
+      "runAt": "2026-11-06T19:29:20.220Z"
+    },
+    {
+      "cardId": "barclays-lufthansa-miles-more-world-elite",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-lufthansa-miles-more-world-elite-product",
+        "barclays-lufthansa-miles-more-world-elite-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 99333,
+      "inputTokenEstimate": 9715,
+      "inputTokens": 8982,
+      "outputTokens": 513,
+      "runAt": "2026-11-06T19:29:30.358Z"
+    },
+    {
+      "cardId": "barclays-emirates-skywards-rewards",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "rate_not_in_evidence": 2,
+        "reported_missing": 2
+      },
+      "documents": [
+        "barclays-emirates-skywards-rewards-product",
+        "barclays-emirates-skywards-rewards-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 242846,
+      "inputTokenEstimate": 8826,
+      "inputTokens": 8468,
+      "outputTokens": 1545,
+      "runAt": "2026-11-06T19:29:42.830Z"
+    },
+    {
+      "cardId": "barclays-emirates-skywards-premium",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "quote_not_found": 2,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "barclays-emirates-skywards-premium-product",
+        "barclays-emirates-skywards-premium-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 217919,
+      "inputTokenEstimate": 9388,
+      "inputTokens": 8817,
+      "outputTokens": 1487,
+      "runAt": "2026-11-06T19:30:36.857Z"
+    },
+    {
+      "cardId": "barclays-barnes-noble-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "out-of-scope",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_out-of-scope": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "barclays-barnes-noble-mastercard-product",
+        "barclays-barnes-noble-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 162487,
+      "inputTokenEstimate": 8908,
+      "inputTokens": 8555,
+      "outputTokens": 1280,
+      "runAt": "2026-11-06T19:30:47.518Z"
+    },
+    {
+      "cardId": "barclays-gap-encore-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "rate_not_in_evidence": 5,
+        "reported_missing": 1,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "barclays-gap-encore-mastercard-product",
+        "barclays-gap-encore-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 271699,
+      "inputTokenEstimate": 7665,
+      "inputTokens": 7760,
+      "outputTokens": 2395,
+      "runAt": "2026-11-06T19:30:47.729Z"
+    },
+    {
+      "cardId": "barclays-old-navy-encore-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "conflicting",
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "reported_conflicting": 1,
+        "reported_ambiguous": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-old-navy-encore-mastercard-product",
+        "barclays-old-navy-encore-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 382302,
+      "inputTokenEstimate": 7647,
+      "inputTokens": 7758,
+      "outputTokens": 2809,
+      "runAt": "2026-11-06T19:31:09.700Z"
+    },
+    {
+      "cardId": "barclays-banana-republic-encore-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "ambiguous",
+        "conflicting",
+        "ambiguous",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_ambiguous": 2,
+        "reported_conflicting": 1,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "barclays-banana-republic-encore-mastercard-product",
+        "barclays-banana-republic-encore-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 304069,
+      "inputTokenEstimate": 7806,
+      "inputTokens": 7846,
+      "outputTokens": 2836,
+      "runAt": "2026-11-06T19:32:11.644Z"
+    },
+    {
+      "cardId": "barclays-aarp-essential-rewards-mastercard",
+      "issuer": "Barclays",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "drugstores",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "barclays-aarp-essential-rewards-mastercard-product",
+        "barclays-aarp-essential-rewards-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 118542,
+      "inputTokenEstimate": 10405,
+      "inputTokens": 9515,
+      "outputTokens": 1329,
+      "runAt": "2026-11-06T19:32:25.530Z"
+    }
+  ]
+}

@@ -1,0 +1,868 @@
+{
+  "schemaVersion": 1,
+  "batch": "wells-fargo-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:49:02.054Z",
+  "cards": {
+    "wells-fargo-autograph": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a679a5134a2cec95c8f8a5b069b543e71894d180826f4002e2e8e63920fcc99a",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-product",
+              "sha256": "51b64b9dc5d8f1cc5408f3e5de92b4e6d6e51336e7d06c58fc8f093281dd705d"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-product",
+              "sha256": "ba12b0807006c6902f2662a40f129b8c2db709e51e7a8df6be853a2823c7ff31"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "3d795adc4811fa3f1dc0c997898a473dab59d16199dcd4627a6337f5c0fa1262"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-pricing",
+              "sha256": "1de59f87497cd2b77dce66d28a4dba041ac7611a74a9c580563141574b58f0c8"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-pricing",
+              "sha256": "9acba18ae0c4d510dbb69d86ff7796c9c6a36c201daab0ae25cb51cc3c0ab824"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.845Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c7623c9f656f0bae5147e4dda26052c0e24ed1d63d5f007337c8304a145575ff",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph",
+              "sha256": "9e5acc9bef45bc9b7a667bc54234f7fcf9986ea6dfbc66f3267d66bce59f240c"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.319Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2745848b70b61a3ecae6cb76af8802a96aafff9360f82bc2917087ae97d04b72",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph",
+              "sha256": "dadadfffbbc3fb968ad8e450c3ac40d1517ed0b8c3f9c36ea5dff11e5ce927b1"
+            }
+          ],
+          "labelsHash": "sha256:933d0efd6de830b44bf9df6b56d6b0c3c3cba8ed2eef9bd2f44670006eeb54ef",
+          "anchorsHash": "sha256:8a2d9591e24cf968898e7dfe0c91f09fca3d58cc6c855cc271a7c20314e4a52f",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:85cd91e7012fcd210b0cfb067a0381b88c6cf37da87c7a48606adb495a5c19fe",
+          "labelsHash": "sha256:933d0efd6de830b44bf9df6b56d6b0c3c3cba8ed2eef9bd2f44670006eeb54ef",
+          "anchorsHash": "sha256:8a2d9591e24cf968898e7dfe0c91f09fca3d58cc6c855cc271a7c20314e4a52f",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:71a752dbacb4fe2ab660d464f778d0d552cf70c9ed5f10075a450fe4ac9b14a7",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:017c381f59fd3e6f20cf0b5d2dd14848c7255b6b4b7469e652f2d7d731fcc20f",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-autograph",
+              "sha256": "18945f9ed53d664f096b3dfc1ea162c774abca449605a9b2d478ec4bbc944dde"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ab0775c95e27e63a241abc8ad284f96630d234732b545e1d8c7a679df2fff55c",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-autograph-journey": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c27b695ae222ae8beacd29b968d93f5ddc73962e66b042463039db0bf37072d7",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-product",
+              "sha256": "d2481443d48083b366ca9e7ce840bd9fb0fcacfb957e0ee9e061f5e39d96ad48"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-product",
+              "sha256": "a0b32cbc721c3472aeb97945a2f4df2bab0e0abec791421d3190dff5e0dd2f7f"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-rewards-terms",
+              "sha256": "3d795adc4811fa3f1dc0c997898a473dab59d16199dcd4627a6337f5c0fa1262"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-rewards-terms",
+              "sha256": "ad37f18b8b7fde499f94b04f3d36d0e1f4b0e94514f5ee8e24062383b23db802"
+            },
+            {
+              "ref": "manifest:wells-fargo-autograph-journey-pricing",
+              "sha256": "40ba2e2c5a15ea78a05ed11ee30fe8d69520d600c2be7052edaffe5efe065c49"
+            },
+            {
+              "ref": "source-input:wells-fargo-autograph-journey-pricing",
+              "sha256": "671d2a8866054786baf1e547eca4d51ab0ac462a2bef76755d4d577da770fdfc"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.854Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2931d4551f181db414e6dd77681bd478ddd8f4e6d9bd3a3b2fd0fbb22b61a693",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph-journey",
+              "sha256": "b6ff5f847f6ad68386460d5355e09403cb32bd6881a1776957b82c170fc38bc3"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:83266b2c1ab886a5771a33a521e90ccdfd26cb5f93fd8850858981ba8373e198",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph-journey",
+              "sha256": "7cefa0eddb9e0bd2ea5dd4b0eadff5a15dc15acce5718f3f4020a08c947052f1"
+            }
+          ],
+          "labelsHash": "sha256:6d7ebec4e22816706f9f69820270ee2c367599baed87ae88a62109be99912bd3",
+          "anchorsHash": "sha256:27cb5a74d712106fa3f3dccd1e4177ec317c3f26ef9efec6d9a4e57217c01741",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b37341e9300a5af4fe535e97d420967869f1faab4d840488abb27f7b423b40fb",
+          "labelsHash": "sha256:6d7ebec4e22816706f9f69820270ee2c367599baed87ae88a62109be99912bd3",
+          "anchorsHash": "sha256:27cb5a74d712106fa3f3dccd1e4177ec317c3f26ef9efec6d9a4e57217c01741",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:609e3ec1cc54a0e8ee01e66c0fefb86876e492c7e216def9c5dad293778e8c15",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:74688e51f928713be6d9a53555b8799c46751b727febb734412670a714f3ed41",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-autograph-journey",
+              "sha256": "a413ec5d028d327847a54cddf46a954fcda948a167e428995b92daca57900087"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:b630782f3da95c25485bf3cfa8db250b78ab2a7968362386837842292ff7101e",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-one-key": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:11c1acb5a514f707dc5d391fdae3a30228da59a85d31f9a32c9f8e381249e135",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-one-key-product",
+              "sha256": "688f5e6b9aefcec302f4ddd7bf664af61d677e1c201108bc85a91b4b572bf267"
+            },
+            {
+              "ref": "source-input:wells-fargo-one-key-product",
+              "sha256": "7b3a3931c276371c13b77e59f5f8ac78ab989fc10faacfe58e8c400bdfc41ba3"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.855Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2d8a342579c162f365ee39cbe590d6dcbf182ab16acd17aafb5ca6ae434ddc87",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-one-key",
+              "sha256": "d5ef78da7f8ad0e817b08a6a1c9c88e52b4b256e49c0309c2b55965e80764000"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:15:02.248Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b5cda6b8f5397be0b036b8ef9ed6d36f46cc454ac94b22c05bbd0828306da7f3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-one-key",
+              "sha256": "f9e48d9bdc5c31a327ed7a20a8dbee34aac3759b004a075bb2b0eb67223e186c"
+            }
+          ],
+          "labelsHash": "sha256:e74b7c9197759add1d2f6990daf661433f9a44a2ff5f5d8e7915116aea87cf32",
+          "anchorsHash": "sha256:fe42c9e27cc65342ffb2626d2d0a7403e3f445588f9f93363d94aaa34dc45fb0",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f3bb9c9a2c6b1fa8f8c79e536463a881e8bc538346a07a55ba4a5d902a47ffb8",
+          "labelsHash": "sha256:e74b7c9197759add1d2f6990daf661433f9a44a2ff5f5d8e7915116aea87cf32",
+          "anchorsHash": "sha256:fe42c9e27cc65342ffb2626d2d0a7403e3f445588f9f93363d94aaa34dc45fb0",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:ae3f7a5b9267e24b3830c65ccbb356619888950bebe919b5eb53ada31dc728b4",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:677044944080aac287d097fd9092cb6032927769ef692fbd63dd1716d6a61810",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-one-key",
+              "sha256": "bee8ab627458fa8fff6761d28ea8859cc51cf2e9d0ebcfb24d46ba9000d43307"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9b6dcc7d449e7d9e8bb1206afda3ed9fe8b2b8388a375ef952b91a6aa7dc83fe",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-one-key-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f863a1f59dc52afbfe26eda4785905310492730593fe436ff72a843af832bb73",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-one-key-plus-product",
+              "sha256": "cdc01438289cd589267915b8d1ff1f4cfdd9cd65b086190cff9c794e50e55824"
+            },
+            {
+              "ref": "source-input:wells-fargo-one-key-plus-product",
+              "sha256": "9ae744b58e5bd71ff12f99769f490e22ccd24b663f786973300868d9ceb0ca77"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.856Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ec59600795af1ac559cf4b2907046ee4d643518c4dc6c74c3b5ab121b0fef2bf",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-one-key-plus",
+              "sha256": "ab4b1703dfc5a51e0c18ac9f348883a32f58b5ad0217f8823fc1d2cbd8d70170"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:fff634091b4752b1fa9cab6b74878c9f50e1f6a107c49f920eb3fceca2302b1d",
+          "labelsHash": "sha256:425b7216a659e2f7f69f5cfb4d275f1518d5e2ea380f45f295d5472bc1462677",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:dd38860e9c2bfcbef585210de99da16a551a6d4a9a6fd8c91ccc2be3a4c7e752",
+          "labelsHash": "sha256:425b7216a659e2f7f69f5cfb4d275f1518d5e2ea380f45f295d5472bc1462677",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:48656418fc96fcf8724b4115246293cfb26de91b1e9b17a833779e4d6a093051",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        }
+      },
+      "dropped": "drop-card",
+      "heldOut": null
+    },
+    "wells-fargo-choice-privileges": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f71c825b98a28efc5ffc2cb6cbdb083651434e7ecc84a8f3532245f6f1cc3ee6",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-product",
+              "sha256": "9371e3249b36d8500d0d2c12e5bfe81ba9742ea1005e620b67719eb569ce9935"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-product",
+              "sha256": "8eabdd5114d2293a973ff30b649ad77f40e4bab6552407814c6d1282be68cd86"
+            },
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-rewards-terms",
+              "sha256": "5f11998c74fdbe3403b011babbf56f739517f5f092db3f364ae8e72666016ee4"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-rewards-terms",
+              "sha256": "87b0c8cd8de38d9c3b8f3469cec19b4dcfa15a5ab3d0a1f3c6d8d535c085a936"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.856Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:95f4d344a27af42595cb09b404b3df0336312349f6a2edcb589f77c9071b0b66",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-choice-privileges",
+              "sha256": "d98dc0b1e28ba8fdece3da0812baacbc3008bc0472e4f04679dcd15611c12bfc"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6fa800eb0a1457c7a5276118b76b61361000b4339d57c0cca2dff40633a1075f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-choice-privileges",
+              "sha256": "a8fb7c4ac50798a914aa5f6204099aede4ae2ac2a32f1fe7f042634851a3b013"
+            }
+          ],
+          "labelsHash": "sha256:cc495f2bd69bda0a9e8780531ed7574f71a293b49aec0ebd6cb24420860bbc7c",
+          "anchorsHash": "sha256:a9b54587735307133001eae88e73ddbaef74679658589fa1a979df0ba3e79d7f",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:51a2306ae74a6619fbc85c30aa265ba7701e8796572937f576d30093cb042f7c",
+          "labelsHash": "sha256:cc495f2bd69bda0a9e8780531ed7574f71a293b49aec0ebd6cb24420860bbc7c",
+          "anchorsHash": "sha256:a9b54587735307133001eae88e73ddbaef74679658589fa1a979df0ba3e79d7f",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:26cb69ad5dc86d1789262a325d17d0e41b8c7c883c733a4b53f75a5489dc0921",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:28b613219c00e87fa06ddf18594abc0759475b3b6543094a5c8bf2a680d8696a",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-choice-privileges",
+              "sha256": "12034f97d77a684c3a1f76cbc842ffdc1282599323c9fb6f3e11dc349757fe4a"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:402656a8e43e44705cb9b8e16057923aac2be80e81f9d409b03bb3de6d487df2",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-choice-privileges-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:01e1bd1cb6cc937f7f3ca3d7184a76f4eabeb35485ce4de12dbb24f11de274da",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-select-product",
+              "sha256": "a9c62ed6393e688f57d4677824089f6b53f8c9e74d99c7c4b47a967023ed3cf1"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-select-product",
+              "sha256": "d046a54e8b21f15a5e9ce3e7cd67332c40c7c7100d8b2e6948302c4530f113d2"
+            },
+            {
+              "ref": "manifest:wells-fargo-choice-privileges-select-rewards-terms",
+              "sha256": "b5fe0d39dc6c90e2219d999675efbdb4f2b810f251f27abb9ab71b90c9184198"
+            },
+            {
+              "ref": "source-input:wells-fargo-choice-privileges-select-rewards-terms",
+              "sha256": "431f61c0a41f08a0c0f6aec7f19ccfc50b7fbf4d534140c1f00af53a224455b2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.857Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4ad69a376402bb05f2a856ee82bc9b1b70a7a6d1c9349af6ebb90524a40b86df",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-choice-privileges-select",
+              "sha256": "49403722aab657e11fdcf04fd38c6f1b0eb6f54bc2c0d72b17c355d04b9d21e6"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:cfe7436fbd6665994de04f4a8db54f09769429975f9ded473ac4b72c2ab615a3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-choice-privileges-select",
+              "sha256": "df6719bb2e9bcdc752257f2fb50dad3fe02215c4b195d9d96ffa375494451279"
+            }
+          ],
+          "labelsHash": "sha256:3f6568353d059b3828a5028d4011e89edd1db3b21da3b1ac4f128da62e653872",
+          "anchorsHash": "sha256:252ec11d054b42ad3bb1297e9a7a693409555cd0f35e91460bf413149bc3a8ec",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:aef6ba46202a9de210587501ca142add01973a32a220ca0e284edf7619931f93",
+          "labelsHash": "sha256:3f6568353d059b3828a5028d4011e89edd1db3b21da3b1ac4f128da62e653872",
+          "anchorsHash": "sha256:252ec11d054b42ad3bb1297e9a7a693409555cd0f35e91460bf413149bc3a8ec",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6d5bca151ab9789130e4d691812cea3f76ee867e650efd7f96781a771121458f",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:951a4be4397a4a9ff9888f2a8d8289a65e0ac70d46ca8083b4328afa2c0f5e82",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-choice-privileges-select",
+              "sha256": "ee4c54ec88a6936c618cda5ce1c24c773ab72e8377d127cbd921575f48f5fe52"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:19fc3c19ca36addeed746c05016dca7d957cc357fdae3aa59e5eed6968797d46",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "wells-fargo-active-cash": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bd45b5c06029920e5d6c39c1b9d34efdce81a5b22f86d799ca1b79e25b8ac73f",
+          "outputs": [
+            {
+              "ref": "manifest:wells-fargo-active-cash-product",
+              "sha256": "e5c6ae5236c0bb39792965e70b0673b01da5b07a1eaf21a22adda0a2543c3173"
+            },
+            {
+              "ref": "source-input:wells-fargo-active-cash-product",
+              "sha256": "b1d6eeb255a139036717aeffae1827a412960b88fe7bac0d07f1054b089c5da9"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.857Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:bac44419552d228c4e389abc852a3f989620782b5e15e1ad0209463ca764d935",
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-active-cash",
+              "sha256": "fd94638435bd9f53d417ec033fac1305c3c6ef1105699947e1ffe1009d79a3eb"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:15:02.249Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8eb7aa0fe808f5f6279d3aee92da6ca21f8574f77e30ccdff5d50698006b4681",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-active-cash",
+              "sha256": "622dc07918c41072146fdd51f39051825358fef92b211b532e08d7bb93acf63c"
+            }
+          ],
+          "labelsHash": "sha256:8d38ecfed02990c66b0748bb20349ffacaafbc5b8942d59e04efbc494825d966",
+          "anchorsHash": "sha256:1879ae7eb973256689cc72311ffedbfd9610e71eeab60d3cbc2eeb0f00d693c6",
+          "finishedAt": "2026-11-07T17:55:09.416Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d58ed5d0bfc3d3f60a68e111d376a3285198bad273dd7ec74a5f7caa96dd6353",
+          "labelsHash": "sha256:8d38ecfed02990c66b0748bb20349ffacaafbc5b8942d59e04efbc494825d966",
+          "anchorsHash": "sha256:1879ae7eb973256689cc72311ffedbfd9610e71eeab60d3cbc2eeb0f00d693c6",
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8d19b07fa39f1fa5319706afb6a8d76debd346a0b85fc109ea798f657da6d48f",
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:026a23cd4670c80a94c899a6cd611b9b17136b0a10376326b7c35cd018acc77a",
+          "outputs": [
+            {
+              "ref": "corpus:wells-fargo-active-cash",
+              "sha256": "622dc07918c41072146fdd51f39051825358fef92b211b532e08d7bb93acf63c"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:25.522Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:418b43bc94cd8fd536ebba2b6aa56f420c96d6a13cbd2cd1a625d7eb8abd9a32",
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "wells-fargo": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:1571c0bc3a15d4f3defbc3d9b11943850b58dcb23c22bb77029bb85e2334561b",
+          "finishedAt": "2026-11-06T19:11:30.026Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:wells-fargo",
+              "sha256": "9476802f2cefd005dd945f77ee6ab96c1b3e010926340b9cde3d0865809e5e7e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:06:53.119Z",
+          "attempts": 1,
+          "packetId": "a603d5dd-9e44-41d7-8410-708f754dd53c",
+          "agentRun": "a7421bb24fcccce91",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:53.119Z",
+          "durationMs": 341961,
+          "tokens": 154131
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:wells-fargo",
+              "sha256": "db8df7b4bc2e3d9ffd65a3d5b1ce8a65a9a09e43c09a1f89bba0093692268e37"
+            },
+            {
+              "ref": "lint-acks:wells-fargo",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.795Z",
+          "attempts": 1,
+          "packetId": "3e77edc5-4230-404e-b9e1-177489d64d56",
+          "agentRun": "a80e1205e0dd8d4f5",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:24.795Z",
+          "durationMs": 535777,
+          "tokens": 236588
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:wells-fargo",
+              "sha256": "81766b1e7c2e9b04df92cffa4ec8b92bb63e5412dcfb88ca4bda39d4acb14ee0"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:48:18.664Z",
+          "attempts": 1,
+          "packetId": "783e35e1-1f37-4eb5-8e0f-4b3ec30f7501",
+          "agentRun": "a938e18d465892938",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.664Z",
+          "durationMs": 131827,
+          "tokens": 66904
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:c339b95836a1f01cbf99e50ddf364a6d68b527306aa3ca509b7d4017a50c1e49",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:49:02.054Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:e9c26800a798a78a8c82eb8596ebe129374a9ad522c1614c6c64e984d2f8ca8f",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "9949f775c9555ea91c4868c8af05b415b7a79117dde6777ff2ea3adf2d38933d"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:09.149Z",
+      "attempts": 1
+    }
+  }
+}

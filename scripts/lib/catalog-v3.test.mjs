@@ -25,10 +25,30 @@ const ledger = JSON.parse(await readFile(join(root, 'evals/curation/rule-id-ledg
 const committed = mergeLayers(loaded);
 // Rule IDs as the builder derives them, before ledger continuity renames changed rules.
 const built = buildCatalogV3(committed);
+/**
+ * merchants.json as release 2 had it: the 2026-11-06 renewal re-captured the two CheckMCC pages and moved their
+ * `checkedOn` from 2026-09-28 to 2026-11-06, a date after every historical build these tests rebuild.
+ */
+/** The program table as release 2 read it: the 2026-11-06 re-read changed only `readOn` and the version. */
+const releaseTwoProgramTable = (table) =>
+  JSON.parse(
+    JSON.stringify({ ...table, version: 'reward-programs.2026-10-02.2' }).replaceAll(
+      '"readOn":"2026-11-06"',
+      '"readOn":"2026-10-02"',
+    ),
+  );
+const releaseTwoMerchants = (merchants) => ({
+  ...merchants,
+  sources: merchants.sources.map((source) =>
+    source.id.startsWith('check-mcc-') ? { ...source, checkedOn: '2026-09-28' } : source,
+  ),
+});
 // The frozen base layer alone, as release 2 was built: no pipeline batch, no freshness record.
 const baseBuilt = buildCatalogV3(
   mergeLayers({
     ...loaded,
+    merchants: releaseTwoMerchants(loaded.merchants),
+    programTable: releaseTwoProgramTable(loaded.programTable),
     config: { ...loaded.config, version: '2026-10-02.expansion.1' },
     layers: loaded.layers.filter((layer) => layer.kind === 'base'),
     freshness: [],
@@ -39,9 +59,9 @@ test('the committed CATALOG_V3 is the build of the committed inputs', () => {
   const { catalog } = buildRelease({ ...committed, ledger });
   assert.deepEqual(CATALOG_V3, catalog);
   assert.equal(catalog.version, loaded.config.version);
-  assert.equal(catalog.version, '2026-10-05.renewal.1');
-  assert.equal(catalog.verifiedAt, '2026-10-05T00:00:00Z');
-  assert.equal(catalog.expiresAt, '2026-11-04T00:00:00Z');
+  assert.equal(catalog.version, '2026-11-07.renewal.2');
+  assert.equal(catalog.verifiedAt, '2026-11-07T00:00:00Z');
+  assert.equal(catalog.expiresAt, '2026-12-07T00:00:00Z');
   assert.ok(catalogV3Schema.safeParse(catalog).success);
   // Real cards a batch refreshed are checked by rule-ID continuity instead; the others still match release 1.
   assert.deepEqual(checkRealCards(catalog, CATALOG_V2, { replaced: committed.replacedReal }), []);
@@ -54,7 +74,8 @@ test('every corpus card is in the catalog except the two the overlay holds out',
   for (const corpus of committed.corpora)
     for (const item of corpus.cases)
       assert.equal(ids.has(item.cardId), !held.includes(item.cardId), item.cardId);
-  assert.equal(built.cards.length, 178);
+  // 178 less wells-fargo-one-key-plus, dropped at verification in the 2026-11-07 renewal (no product-page capture).
+  assert.equal(built.cards.length, 177);
 });
 
 test('the real cards keep release 1 names, rule IDs and rule semantics', () => {

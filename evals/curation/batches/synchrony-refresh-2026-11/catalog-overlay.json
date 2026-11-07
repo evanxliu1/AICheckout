@@ -1,0 +1,2516 @@
+{
+  "schemaVersion": 1,
+  "version": "synchrony-refresh-2026-11.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch synchrony-refresh-2026-11: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "020d8601c7655b0c7be38e92cca227f1d98c79cd445be2e68791e7ab33a639ec",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "818bec406b1d9fa51d8ff115fda044864bb9046b32518cfa39afc36322bc754b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": [
+          "amazon",
+          "whole-foods-market"
+        ],
+        "anchors": [
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+          }
+        ]
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon.com and select physical Amazon locations, only with an eligible Prime membership; a Store Card without Prime earns no percentage back.",
+          "set": {
+            "brandIds": [
+              "amazon"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including 1-Click orders and purchases made at select physical Amazon locations"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Participating Whole Foods Market stores (Amazon In-Store Code), with the same Prime condition.",
+          "set": {
+            "brandIds": [
+              "whole-foods-market"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime Store Card members can earn 5% back at Amazon.com and Whole Foods Market"
+            },
+            {
+              "sourceId": "synchrony-amazon-store-card-categories",
+              "quote": "including eligible purchases at participating Whole Foods Market physical stores"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The 5% needs an eligible Prime membership: both rate rules require the amazon-prime gate answered member.",
+          "rules": [
+            0,
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Occasional discretionary bonus points with no stated rate; nothing to model (O9)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon and Whole Foods rules are brand-scoped and gated on Prime; the financing alternative is a purchase-level choice, not modelled.",
+          "rules": [
+            0,
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "closed-loop"
+          ],
+          "note": "Closed loop at Amazon and Whole Foods Market. Amazon Pay merchants also accept the card but earn nothing, so they are not accepting brands."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "31f18e228667d5a8b8ad7e3f0a7bc19b915207ae9822306e98464fe3a20760c4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": [
+          "amazon",
+          "whole-foods-market"
+        ],
+        "anchors": [
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Store Card accounts and Secured Card accounts may be used for most purchases at Amazon.com and select physical Amazon stores"
+          },
+          {
+            "sourceId": "amazon-store-card-product",
+            "quote": "Participating Whole Foods Market stores will accept in-store payment with the Store Card and Secured Card through the Amazon In-Store Code"
+          }
+        ]
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon.com and physical Amazon locations, only with an eligible Prime membership.",
+          "set": {
+            "brandIds": [
+              "amazon"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "Prime rewards: 2% back on Amazon purchases with an eligible Prime membership6"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including 1-Click orders and purchases made at physical Amazon locations"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Participating Whole Foods Market stores (Amazon In-Store Code), with the same Prime condition.",
+          "set": {
+            "brandIds": [
+              "whole-foods-market"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including eligible purchases at participating Whole Foods Markets"
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "pre-2021-amazon",
+          "issuerWording": "the 5% back benefit may apply to purchases",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "amazon"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "amazon-prime",
+              "optionIds": [
+                "member"
+              ]
+            },
+            {
+              "gateId": "amazon-secured-card-opened",
+              "optionIds": [
+                "before-2021"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Secured accounts opened before 2021 keep 5% at Amazon with Prime; gated on the account-opening gate.",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
+            }
+          ]
+        },
+        {
+          "key": "pre-2021-whole-foods",
+          "issuerWording": "eligible purchases at participating Whole Foods Markets",
+          "rateBps": 500,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "whole-foods-market"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "amazon-prime",
+              "optionIds": [
+                "member"
+              ]
+            },
+            {
+              "gateId": "amazon-secured-card-opened",
+              "optionIds": [
+                "before-2021"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "The percentage-back benefit covers participating Whole Foods Markets, so pre-2021 accounts earn 5% there too.",
+          "anchors": [
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "For Secured Card accounts opened before January 1, 2021, the 5% back benefit may apply to purchases"
+            },
+            {
+              "sourceId": "amazon-store-card-product",
+              "quote": "including eligible purchases at participating Whole Foods Markets"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The Prime Secured Card needs an eligible Prime membership: every rate rule requires the amazon-prime gate answered member.",
+          "rules": [
+            0,
+            1,
+            "pre-2021-amazon",
+            "pre-2021-whole-foods"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The 2% vs 5% split by account-opening date is the amazon-secured-card-opened gate; pre-2021 accounts get added 5% rules.",
+          "rules": [
+            "pre-2021-amazon",
+            "pre-2021-whole-foods"
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Brand-scoped to Amazon and gated on Prime.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "closed-loop"
+          ],
+          "note": "Closed loop at Amazon and Whole Foods Market. Amazon Pay merchants accept the card but earn nothing, so they are not accepting brands."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "0decbc1ec61163c999b67222552790b544e1898ee5d8d52929e312928b0d5a29",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Paid when checking out through PayPal, so it covers all purchases with the paypal payment path required. The send-money half is peer-to-peer and not a retail purchase, so it is not represented.",
+          "set": {
+            "category": "all-purchases",
+            "requiredPaymentPaths": [
+              "paypal"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-paypal-cashback-mastercard-rewards-terms",
+              "quote": "3%: Each Eligible Purchase made by you through your PayPal account online"
+            },
+            {
+              "sourceId": "synchrony-paypal-cashback-mastercard-product",
+              "quote": "Earn 3% when you pay with PayPal and 1.5% everywhere else Mastercard is accepted."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The 3% is modelled as a PayPal checkout rule; sending money to PayPal users is peer-to-peer and earns nothing at retail.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Authorized users earn 1.5% even through PayPal; the catalog models the primary cardholder, whose PayPal rate applies."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The PayPal checkout rate is rule 0 with paypal required; the send-money part is peer-to-peer.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "316e2f9626a26c805fba30e6db0f7dfa4f5bf802d2e069b75ee5ce2e5bb34f53",
+      "heldOut": null,
+      "programId": "verizon-dollars",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Grocery purchases at Walmart, Target and similar big-box retailers may not qualify; Walmart and Target become brand exclusions (O4).",
+          "set": {
+            "excludedBrandIds": [
+              "target",
+              "walmart"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "grocery purchases at Walmart, Target or other \"big box\" retailers may not qualify as grocery purchases."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Verizon stores, Verizon online, phone orders and exclusive Verizon Authorized Retailers (devices and accessories).",
+          "set": {
+            "brandIds": [
+              "verizon"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-verizon-visa-card-rewards-terms",
+              "quote": "4% in Verizon Dollars for every Net New Purchase made at a Verizon operated store, Verizon online, over the phone with a Verizon representative"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 100
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: Verizon Wireless and Fios bill payments are telecom services; the rate equals the base anyway."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Verizon Dollars are redeemable only toward Verizon purchases or bills: the verizon-dollars store-credit program."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion"
+          ],
+          "note": "Walmart and Target are excluded from the grocery rule.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Verizon Shine 3% and bill-pay extra are Verizon program earnings, not paid by the card (general 2)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 4 brand-scoped to Verizon.",
+          "rules": [
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Bill payments are a telecom service; rule 5 is held out."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "5ddc790500be25712c63053de60e99c5514dc33f6a6d474d01abb8f70a274305",
+      "heldOut": null,
+      "programId": "sams-cash",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "Gas and EV charging share one $6,000 yearly cap.",
+          "set": {
+            "sharedCapId": "gas-ev"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "in Sam’s Cash in the gas and EV charging category on the first $6,000 in gas and EV charging station purchases per year, then 1%"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "Shares the gas cap.",
+          "set": {
+            "sharedCapId": "gas-ev"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "in Sam’s Cash in the gas and EV charging category on the first $6,000 in gas and EV charging station purchases per year, then 1%"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Sam's Club purchases at the Club member rate, equal to the base rate; left ungated as the floor (O17).",
+          "set": {
+            "brandIds": [
+              "sams-club"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Club members earn 1%."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Sam's Club purchases earn 3% for Plus members only: sams-club-membership gate.",
+          "set": {
+            "brandIds": [
+              "sams-club"
+            ],
+            "requires": [
+              {
+                "gateId": "sams-club-membership",
+                "optionIds": [
+                  "plus"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sams-club-mastercard-product",
+              "quote": "Plus members earn 3% back in Sam’s Cash on Sam’s Club purchases with a Sam’s Club Mastercard®."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "A yearly cap on Sam's Cash earned, not on spend (O12)."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Plus vs Club is the sams-club-membership gate; Club members earn the 1% rule.",
+          "rules": [
+            5,
+            3
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Sam's Cash is redeemable only at Sam's Club: the sams-cash store-credit program."
+        },
+        {
+          "index": 3,
+          "disposition": "noted",
+          "how": [],
+          "note": "A targeted, non-transferable gas and EV bonus offer for one recipient; not a standing card rate."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rule 5 at 3%, gated on Plus membership; rule 3 at 1% for Club members.",
+          "rules": [
+            5,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "c8d5455ec6fd7c91431794afeb56d523818a25daa3d687d39af745ab00d407ae",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: the CareCredit provider network is healthcare providers; pet stores and broad health and wellness merchants have no v3 category, and drug stores are rule 5."
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Third-party payment accounts do not earn Bonus Points, so paypal and venmo are excluded (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not qualify for Bonus Points."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Third-party payment accounts do not earn Bonus Points, so paypal and venmo are excluded (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not qualify for Bonus Points."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "The 2x is a Bonus Points offer through 2027; third-party payment accounts fall to the 1x base (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not qualify for Bonus Points."
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Third-party payment accounts do not earn Bonus Points, so paypal and venmo are excluded (O10).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-carecredit-rewards-mastercard-pricing",
+              "quote": "Purchases made through a third-party payment account or on an online marketplace (with multiple retailers) will not qualify for Bonus Points."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "In-network purchases of $200 or more with promotional financing earn nothing; the provider-network rule is held out, and the financing choice is purchase-level (O19)."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus rules exclude the paypal and venmo paths; online marketplaces have no payment path and stay unmodelled.",
+          "rules": [
+            1,
+            2,
+            3,
+            5
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Provider-network rate; rule 0 is held out as not at retail."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "7f2b9d229918ad1c8d1ffd6b5bf5714fe0aaa62ce457915977ca20ebc4ac859b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "checkout-method"
+          ],
+          "note": "Walmart stores, Walmart gas, app and Walmart.com; payments through wallets or third-party accounts that pass no MCC earn 1.5% (O10).",
+          "set": {
+            "brandIds": [
+              "walmart"
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "3% of each $1 spent on Purchases at Walmart with your CashRewards Card"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "a third-party payment account, mobile or wireless card reader, digital wallet or other similar technology that do not support the transmission of a MCC"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate",
+            "checkout-method"
+          ],
+          "note": "Walmart 5% needs a linked Walmart+ membership: walmart-plus gate; linking stays enroll-once. Wallet and third-party payments excluded (O10).",
+          "set": {
+            "brandIds": [
+              "walmart"
+            ],
+            "requires": [
+              {
+                "gateId": "walmart-plus",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-pricing",
+              "quote": "Your Walmart+ membership must be linked to your Account to earn 5% on Walmart Purchases."
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "a third-party payment account, mobile or wireless card reader, digital wallet or other similar technology that do not support the transmission of a MCC"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-exclusion",
+            "limited-time",
+            "gate",
+            "checkout-method"
+          ],
+          "note": "First-90-days 3% applies outside Walmart only; dates stay null and the account-age gate decides it (O20). Wallet and third-party payments excluded (O10).",
+          "set": {
+            "excludedBrandIds": [
+              "walmart"
+            ],
+            "requires": [
+              {
+                "gateId": "synchrony-onepay-cashrewards-card-first-90-days",
+                "optionIds": [
+                  "first-90-days"
+                ]
+              }
+            ],
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-product",
+              "quote": "earn 3% cash back on eligible purchases made outside of Walmart"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-product",
+              "quote": "for their first 90 days, beginning on the date of account opening"
+            },
+            {
+              "sourceId": "synchrony-onepay-cashrewards-card-rewards-terms",
+              "quote": "a third-party payment account, mobile or wireless card reader, digital wallet or other similar technology that do not support the transmission of a MCC"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate",
+            "limited-time"
+          ],
+          "note": "The Bonus Term is the application window; the 90-day rate runs from account opening, so it keeps null dates and the account-age gate.",
+          "rules": [
+            3
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "In-app limited-time offers state no rate; nothing to model."
+        },
+        {
+          "index": 2,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The Walmart+ condition is the walmart-plus gate.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 3,
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Payments through third-party accounts and wallets without an MCC earn 1.5%, so bonus rules exclude those paths.",
+          "rules": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rule 2, Walmart brand and walmart-plus gate.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 1, Walmart brand.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "2fbb92613c2a2d8b36af64ef23059778d053ca2cf62c17f1d8d73dd38bb11036",
+      "heldOut": null,
+      "programId": "walgreens-cash",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: cardholders are myWalgreens members by the time the account opens and earn automatically, so activation is none (O6).",
+          "set": {
+            "activation": "none"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "you will automatically earn Walgreens Cash rewards as long as"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "Product-level rate: 10% only on Walgreens-branded items, which the engine cannot see; the 5% Walgreens rule stands for a Walgreens purchase (O19)."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Walgreens and Duane Reade stores and walgreens.com.",
+          "set": {
+            "brandIds": [
+              "walgreens",
+              "duane-reade"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-product",
+              "quote": "Use your myWalgreens® Credit Card at Walgreens, Duane Reade or Walgreens.com to earn:"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Pharmacy purchases at Walgreens and Duane Reade stores or walgreens.com.",
+          "set": {
+            "brandIds": [
+              "walgreens",
+              "duane-reade"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "equal to 5% of every USD spent for Eligible Purchases of certain prescription drugs and immunizations"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: health and wellness merchants (co-pays, counseling, gyms) outside Walgreens."
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "wholesale-clubs",
+          "issuerWording": "wholesale clubs that sell a full range of goods (often in bulk)",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "wholesale-clubs",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "enroll-once",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "category"
+          ],
+          "note": "The 3% grocery definition names wholesale clubs, which v3 codes as their own category.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "Walgreens Cash rewards equal to 3% of every USD spent for Eligible Purchases when you use your myWalgreens Mastercard"
+            },
+            {
+              "sourceId": "synchrony-mywalgreens-mastercard-rewards-terms",
+              "quote": "wholesale clubs that sell a full range of goods (often in bulk) and services in warehouse style stores"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Boilerplate about possible thresholds and limits on promotional rewards; no stated rate or cap to model."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Walgreens Cash is used only through myWalgreens: the walgreens-cash store-credit program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The 10% Walgreens-brand rate is product-level; rule 1 is held out and the 5% rule applies at Walgreens."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rules 2 and 3, Walgreens and Duane Reade brands.",
+          "rules": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "f35cb58b1b574c4fc51ea36dcfeded3f2ccc65c33876fbc0b57e0aa54d73833f",
+      "heldOut": null,
+      "programId": "tjx-rewards-certificates",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The TJX family of stores named in the capture and their sites.",
+          "set": {
+            "brandIds": [
+              "tj-maxx",
+              "marshalls",
+              "homegoods",
+              "sierra",
+              "homesense"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+              "quote": "5% back in Rewards Points every time you shop our family of stores."
+            },
+            {
+              "sourceId": "synchrony-tjx-rewards-platinum-mastercard-partner",
+              "quote": "used at all U.S. and Puerto Rico-based TJX stores, inclusive of TJ Maxx, Marshalls, HomeGoods, Sierra, Homesense"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Rewards Certificates redeem only in the TJX family of stores: tjx-rewards-certificates program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to the five TJX brands.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "a954b8f9a57e3821040f44b9b5d431b2b877ffc3976b2ce37b130a3a930bae12",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": [
+          "newegg"
+        ],
+        "anchors": [
+          {
+            "sourceId": "synchrony-newegg-store-credit-card-categories",
+            "quote": "Union Pay Newegg Store Credit Card Newegg.com Gift Card"
+          }
+        ]
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Newegg only; a point-of-sale discount chosen instead of financing.",
+          "set": {
+            "brandIds": [
+              "newegg"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-newegg-store-credit-card-product",
+              "quote": "Get 4% off every day when you pay with your Newegg Store Credit Card."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Discount vs special financing is chosen per purchase, and promo-code stacking varies; the catalog assumes the discount option (O19)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to Newegg.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "closed-loop"
+          ],
+          "note": "A store-named card with no network and no base rate: closed loop at Newegg (Synchrony overlay convention)."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "0081b8525ce8f212631e5aaaf5cccf85f8f3be046d5bbd4e2fb432f78f571d6c",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "gate",
+            "limited-time"
+          ],
+          "note": "First-90-days 5% on gas and grocery: dateless limited time, gated on the account-age question (O20).",
+          "set": {
+            "requires": [
+              {
+                "gateId": "synchrony-jcpenney-mastercard-first-90-days",
+                "optionIds": [
+                  "first-90-days"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "for the first 90 days from account opening."
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "gate",
+            "limited-time"
+          ],
+          "note": "First-90-days 5% on gas and grocery: dateless limited time, gated on the account-age question (O20).",
+          "set": {
+            "requires": [
+              {
+                "gateId": "synchrony-jcpenney-mastercard-first-90-days",
+                "optionIds": [
+                  "first-90-days"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "for the first 90 days from account opening."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 750
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "JCPenney stores and jcp.com at the cardmember Insider/Elite rate; left ungated as the floor (O17).",
+          "set": {
+            "brandIds": [
+              "jcpenney"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "Earn 7.5% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "vip",
+          "issuerWording": "Earn 10% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card.",
+          "rateBps": 1000,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "jcpenney"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "jcpenney-rewards-tier",
+              "optionIds": [
+                "vip"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "VIP tier (after $1,000 at JCPenney in a calendar year) is a gate about current status.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcpenney-mastercard-product",
+              "quote": "Earn 10% back in CashPass Rewards on JCPenney purchases with a JCPenney Credit Card."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The 5% Member tier is for non-cardholders; 7.5% and 10% are the cardholder tiers via the jcpenney-rewards-tier gate.",
+          "rules": [
+            3,
+            "vip"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The points-per-dollar tiers mirror the 7.5% and 10% rates; the $1,000 threshold is the VIP gate option.",
+          "rules": [
+            "vip"
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Certificate conversion only; no capture says CashPass is spendable only at JCPenney, so the card stays plain cash back (O18)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rule 3 at 7.5% and the added VIP rule at 10%.",
+          "rules": [
+            3,
+            "vip"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "920c9a4b3480c610d09b739700c1aecdddf27f2652720bd192179bde1015a08b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 4000
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "AE and Aerie stores and sites.",
+          "set": {
+            "brandIds": [
+              "american-eagle",
+              "aerie"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-ae-real-rewards-visa-partner",
+              "quote": "You must use the same email address for both your loyalty and credit card accounts to earn points on AE and Aerie purchases."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "40 points per $1 at AE and Aerie, 5 elsewhere: rule 1 is brand-scoped.",
+          "rules": [
+            1
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 1 brand-scoped to American Eagle and Aerie.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "d03c474add56b9d5adf649e3f05326865b09acb02d0ca608fb239f17f18fcebc",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "At Home purchases at the under-$350 rate; left ungated as the floor (O17).",
+          "set": {
+            "brandIds": [
+              "at-home"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-at-home-mastercard-partner",
+              "quote": "Earn 6% Back in Rewards on At Home purchases when you spend less than $350 annually."
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "over-350",
+          "issuerWording": "Earn 7.5% Back in Rewards on At Home purchases when you spend $350 or more annually.",
+          "rateBps": 750,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "unstated"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "at-home"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "at-home-annual-spend",
+              "optionIds": [
+                "over-350"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "The spend threshold becomes a gate about the cardholder's current annual spend.",
+          "anchors": [
+            {
+              "sourceId": "synchrony-at-home-mastercard-partner",
+              "quote": "Earn 7.5% Back in Rewards on At Home purchases when you spend $350 or more annually."
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "The $350-or-more rate is the added rule gated on at-home-annual-spend.",
+          "rules": [
+            "over-350"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Certificate conversion only; no capture says where Rewards are spent, so the card stays plain cash back (O18)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 1 brand-scoped to At Home.",
+          "rules": [
+            1
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Added rule over-350.",
+          "rules": [
+            "over-350"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "e94ae78f058f1cef8dc87d11c2f46519fd1e2b01163dbd6852b3ff3ac5431fb6",
+      "heldOut": null,
+      "programId": "club-chicos-rewards",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 750
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The store, its outlets and its website.",
+          "set": {
+            "brandIds": [
+              "chicos"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "You can earn 7.5% back in points on qualifying purchases made using your Chico’s Mastercard or Chico’s Credit Card at Chico’s"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: enrollment in the store rewards program happens before or while applying, so every cardholder is enrolled by opening the account; activation none (O6).",
+          "set": {
+            "activation": "none"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "When applying for the Chico’s credit card, you will first need to be enrolled in the Club Chico’s rewards program"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Sister brands of the same family earn 1%, equal to the base rate.",
+          "set": {
+            "brandIds": [
+              "white-house-black-market",
+              "soma"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-chicos-mastercard-partner",
+              "quote": "The Chico’s Mastercard can be used at White House Black Market and Soma stores and the Primary Chico’s cardmember will earn 1% back in points"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Club Chico's certificates are Chico's store credit: club-chicos-rewards program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to the store.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "320d62a466a664f62dea251766a39f8982289a51a18a33fb908c52d3e5fdb56c",
+      "heldOut": null,
+      "programId": "soma-my-rewards",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 750
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The store, its outlets and its website.",
+          "set": {
+            "brandIds": [
+              "soma"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-soma-mastercard-partner",
+              "quote": "earn 7.5% back in points on qualifying purchases made using your Soma Mastercard or Soma Credit Card at Soma, Soma Outlets, and online at soma.com"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Sister brands of the same family earn 1%, equal to the base rate.",
+          "set": {
+            "brandIds": [
+              "chicos",
+              "white-house-black-market"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-soma-mastercard-partner",
+              "quote": "The Soma Mastercard can be used at Chico’s and White House Black Market stores and the Primary Soma cardmember will earn 1% back in points"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: enrollment in the store rewards program happens before or while applying, so every cardholder is enrolled by opening the account; activation none (O6).",
+          "set": {
+            "activation": "none"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-soma-mastercard-partner",
+              "quote": "When applying for the Soma credit card, you will first need to be enrolled in the Soma My Rewards program"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Soma My Rewards certificates are Soma store credit: soma-my-rewards program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to the store.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "1cb939472b6da2c7676ad35cb8204d7bda450614fcd18f2ac648a46cab7dcba2",
+      "heldOut": null,
+      "programId": "whbm-prestige-rewards",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 750
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The store, its outlets and its website.",
+          "set": {
+            "brandIds": [
+              "white-house-black-market"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "back on WHBM, WHBM Outlet and whbm.com purchases (7.5 points per $1 spent)"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: enrollment in the store rewards program happens before or while applying, so every cardholder is enrolled by opening the account; activation none (O6).",
+          "set": {
+            "activation": "none"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "When applying for the WHBM credit card, you will first need to be enrolled in the WHBM Prestige rewards program"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 100
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Sister brands of the same family earn 1%, equal to the base rate.",
+          "set": {
+            "brandIds": [
+              "chicos",
+              "soma"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-whbm-mastercard-partner",
+              "quote": "The WHBM Mastercard can be used at Chico’s and Soma stores and the Primary WHBM cardmember will earn 1% back in points"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "WHBM Prestige certificates are WHBM store credit: whbm-prestige-rewards program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to the store.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "acad8f025181ee4be808e4f8c18333bd63f7d84afcfa10fe87c7f448c1bb065d",
+      "heldOut": null,
+      "programId": "jcrew-rewards",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 750
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "J.Crew and J.Crew Factory at the GOLD rate.",
+          "set": {
+            "brandIds": [
+              "j-crew",
+              "j-crew-factory"
+            ],
+            "requires": [
+              {
+                "gateId": "jcrew-passport-tier",
+                "optionIds": [
+                  "gold"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "GOLD Access cardmembers earn 7.5% back in rewards."
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "all-purchases",
+            "rateBps": 125
+          },
+          "disposition": "modelled",
+          "how": [
+            "base-rule"
+          ],
+          "note": "Base rule: Passport enrollment is required but not stated to be automatic, so activation is unstated (O6).",
+          "set": {
+            "activation": "unstated"
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "1.25% on every other purchase where Mastercard is accepted."
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "J.Crew and J.Crew Factory at the NAVY rate.",
+          "set": {
+            "brandIds": [
+              "j-crew",
+              "j-crew-factory"
+            ],
+            "requires": [
+              {
+                "gateId": "jcrew-passport-tier",
+                "optionIds": [
+                  "navy"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-jcrew-mastercard-partner",
+              "quote": "Cardmembers with NAVY Access earn 5% back in rewards"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "GOLD and NAVY rates are gated on jcrew-passport-tier; cardholders not in Passport earn the base.",
+          "rules": [
+            0,
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "J.Crew Rewards are J.Crew store credit: jcrew-rewards program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Rules 0 and 4, one per tier.",
+          "rules": [
+            0,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "04e4fb8954579cf50cf110f844ef690e59388887686a309118e6d6943046e3a5",
+      "heldOut": null,
+      "programId": "harbor-freight-money",
+      "acceptance": {
+        "kind": "closed-loop",
+        "brandIds": [
+          "harbor-freight"
+        ],
+        "anchors": [
+          {
+            "sourceId": "synchrony-harbor-freight-credit-card-partner",
+            "quote": "the Harbor Freight Credit Card can be used to make purchases at HarborFreight.com"
+          }
+        ]
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Harbor Freight stores and HarborFreight.com.",
+          "set": {
+            "brandIds": [
+              "harbor-freight"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-harbor-freight-credit-card-partner",
+              "quote": "Earn unlimited rewards with 5% back in Harbor Freight Money2 every time you shop"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Harbor Freight Money certificates redeem in Harbor Freight stores: harbor-freight-money program."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to Harbor Freight.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "closed-loop"
+          ],
+          "note": "Store card with no card network named: closed loop at Harbor Freight, though the captures never say \"only\"."
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "ca16cd00dc23c3bac0e3ece8295631aa81edc5c80667e1ba2c6175e12c2ba9ca",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Cathay and HK Express purchases.",
+          "set": {
+            "brandIds": [
+              "cathay",
+              "hk-express"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-cathay-world-elite-mastercard-partner",
+              "quote": "Earn 3 Asia Miles per $1 spent on Cathay and HK Express purchases."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Status Points are airline status, not purchase earn."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to Cathay and HK Express.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "a2ba2e4c55a5d9ee1b642259619ff9a529ccb6decf25923477b70338fd70f29e",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Virgin Atlantic, Virgin Hotels and Virgin Voyages.",
+          "set": {
+            "brandIds": [
+              "virgin-atlantic",
+              "virgin-hotels",
+              "virgin-voyages"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-virgin-red-rewards-mastercard-partner",
+              "quote": "Earn 3 Virgin Points for every $1 you spend with Virgin Atlantic, Virgin Hotels and Virgin Voyages."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The captures do not list which streaming services count; the streaming rule stays as labelled."
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Tier Points are status credit, not purchase earn."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 0 brand-scoped to the three Virgin brands.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "issuer": "Synchrony",
+      "corpusCaseSha256": "fb812bb5f0047f01167d72c53ec168d4cf2d9a7a84ad9b6acee57ec56525c8b7",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Sun Country purchases at the card-paid 3x; the extra 2x for flying is paid by the airline program (general 2).",
+          "set": {
+            "brandIds": [
+              "sun-country-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "synchrony-sun-country-visa-signature-partner-2",
+              "quote": "3x when you buy with your card, and 2x when you fly"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The 2x for flying is airline earn; only the card's 3x is recorded (general 2)."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Rule 3 brand-scoped to Sun Country; only the card-paid 3x is recorded.",
+          "rules": [
+            3
+          ]
+        }
+      ]
+    }
+  ]
+}

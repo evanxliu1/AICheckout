@@ -1,0 +1,2552 @@
+{
+  "schemaVersion": 1,
+  "batch": "synchrony-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:22:25.051Z",
+  "cards": {
+    "synchrony-premier-world-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1efc7e2161b6520edce6e27794c891c2ecd6ef329d54ee148e8b46127f53b75a",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-premier-world-mastercard-product",
+              "sha256": "038a7ae26399311e5775c0ecc414970eacafa93340e98ddd4a8536bcb08ce10d"
+            },
+            {
+              "ref": "source-input:synchrony-premier-world-mastercard-product",
+              "sha256": "3c30e97c62169b43e0f5b86d3cda1fcc56988b9d38a69ec70d2a2aed44ad29c7"
+            },
+            {
+              "ref": "manifest:synchrony-premier-world-mastercard-rewards-terms",
+              "sha256": "5cf4abe99ed7a571e83afe063e4383101bfeeaf433cb8823c107ae231f61c6ba"
+            },
+            {
+              "ref": "source-input:synchrony-premier-world-mastercard-rewards-terms",
+              "sha256": "dbd6bb1d966db29e1e56f3eee281975cd57fe03a4a2b1e35f8b74e91474eef82"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.326Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:26a4ec290d6476efd9f8ba9cdd0bc5ac346e2684be7ca4cdd90e25d30f9363b9",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-premier-world-mastercard",
+              "sha256": "fbdbb7e3ac1a475522dc7133acdbefe5aaaeda670f4a3e71cec495ea4984ef37"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.593Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e1189440b64e07eca15a01be14565f1eaeda4c38e343239e5474ec4e14dafc66",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-premier-world-mastercard",
+              "sha256": "592d2064c50014d6429399c941662a2a6843ddd134c2de4e4994083f9e06998f"
+            }
+          ],
+          "labelsHash": "sha256:f75ad286b8d8f6bcf5da09d5ca00d6f7c8926660d9e71c10708b5020e7426e95",
+          "anchorsHash": "sha256:ef99704af422a1049fe89f692bc2a2686b18570422d9fec6871d4f091fce8bcf",
+          "finishedAt": "2026-11-07T18:06:03.915Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e64fcb56b3bd49e74b87add2f5190ca3466915f6951d632ec0024a4db7683c30",
+          "labelsHash": "sha256:f75ad286b8d8f6bcf5da09d5ca00d6f7c8926660d9e71c10708b5020e7426e95",
+          "anchorsHash": "sha256:ef99704af422a1049fe89f692bc2a2686b18570422d9fec6871d4f091fce8bcf",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f690a18fa2088e729780976da360b8441e758a0cdcb0748a1a9150a386d89254",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:737f7eaa869e82a875bea896aa638aaf141b20d8ab3e3fa6480f7a2dc391b8e5",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-premier-world-mastercard",
+              "sha256": "020d8601c7655b0c7be38e92cca227f1d98c79cd445be2e68791e7ab33a639ec"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:31f75ba6b7c1ffbdb31c42198b23bbdcc0ab05a2dc071d3737152bf5ab8cb969",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-amazon-store-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7552ba7713082ba58902d4e6c2f173d66496cbf3c8c90652a1b975c4ba21dfdb",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "1c594c132e0681654de57d40cfc27e008dc45088845b36ebc98ef47301411f7f"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-pricing",
+              "sha256": "9e5954495c7a2ed3e7dde045dc63aceb5da2c5dd297437a0a35191e5c7c87856"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-pricing",
+              "sha256": "9f3b3857ac1400b5d53d069b1c4769b93a8395a394dc061150dfa615ed710112"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-categories",
+              "sha256": "b49add4da8effb25b529b6a5cb8d312262be92896820f28af0bdd1ff2ef2126f"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-categories",
+              "sha256": "edda473b9707167d06c62b62c470a9ce6516296d364ccec5fb9a0a09c3118d74"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.326Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:786fd8f2052699c4dcd10eb63236b243af8d6eaf1f9d5c51859f7f64e96685bd",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-store-card",
+              "sha256": "2370b47114a2513d110616bedae7a92dbce4faf1a95ea86c4721e7a5c2e90e94"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.593Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:201d8f90a13c6b4c6f93aa57148a3e29bc42b22033699d5363a19bda5f7d5290",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-amazon-store-card",
+              "sha256": "a2a94a7a553bfb78c64fe8cd2eab025526b490fc4451e9c4c676f80bde393adf"
+            }
+          ],
+          "labelsHash": "sha256:9d7e990c3269c5d4a95255994aea69b1b37638e900f8506e7f33cef224e27b27",
+          "anchorsHash": "sha256:40aaf9a2516462471ac8a9072d052e7a281b47938b67232bee1dc4bbf3d681f9",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:25ab431f7d38cbb81d93788c12cf298c05b1614d289f9fbd719d73ca37573120",
+          "labelsHash": "sha256:9d7e990c3269c5d4a95255994aea69b1b37638e900f8506e7f33cef224e27b27",
+          "anchorsHash": "sha256:40aaf9a2516462471ac8a9072d052e7a281b47938b67232bee1dc4bbf3d681f9",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:3aeafaae2a9325255cd34ce84268452dafd1b1f65201849f683bafea69d8163d",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f2608c32ed6d9b21a2e3c2d6e9e584b27ca9f58b4209f362a6a86e7c85af1a5f",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-amazon-store-card",
+              "sha256": "818bec406b1d9fa51d8ff115fda044864bb9046b32518cfa39afc36322bc754b"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:89719151f5429ac5889d1199ece846f81c0466d45ea4ff6c1de6c1a81bd7fd46",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-amazon-secured-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:02ef1fb061f5ca02b66c60b58e06b13e7a9358a78d093b269873fa2e395bf308",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "1c594c132e0681654de57d40cfc27e008dc45088845b36ebc98ef47301411f7f"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1072f8ceeb5f6aaf24c2d00685fb84ab4ad3047f2617f97e09af11c2f599e28f",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-amazon-secured-card",
+              "sha256": "751b7cbd3e6f7d6f930f385f207d02b8f5b9fb9ed92fa55a774c9de4eb057351"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.594Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:9b075462df77e014efd11493edec3bad82bbc3880867acdd299bc10bb7fe643b",
+          "labelsHash": "sha256:b4c4ed51c7dc240ec21fd4c01df6478ff056ae2341e71145aa1e9d62b60b9ad5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:93b6170f84c08493a0a3dd829acfec88ccb9fab3bd403ac9e4c6f651b77dd4d7",
+          "labelsHash": "sha256:b4c4ed51c7dc240ec21fd4c01df6478ff056ae2341e71145aa1e9d62b60b9ad5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:913a91a46f07b457668113ba32c3202565b94ca5b903fbf44da2f98cb06700af",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:0eac0c004837103eb62ba0c39a845736df1c602da05eea1fd66cbf290f147e8d",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-amazon-secured-card",
+              "sha256": "31f18e228667d5a8b8ad7e3f0a7bc19b915207ae9822306e98464fe3a20760c4"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:30a625fc7eb992d29840d0925fa79f4936b5823144e445c947a24acb42c6cd5b",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-paypal-cashback-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cead00112b26b10ab6b856e14c91c3e3b2ff5665bfdee4378b7fc836ededc518",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "cc65e7f71da39af12fce3902fe4888cd28f2e2155db6c39cf4d791dca8159b52"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "2058e7a0f591b0bbb63722fbf724e707dbf754291f38dc65727391df9117f51d"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "26dd56649e2bced58dc148a12293ffa30afa679ef469be48345dafc1ea01a1f8"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "10c657711a7839300235a3d66ed3b440752d6f2f735a433065955f1fe8e3aadb"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "cd2558abd935628a1d0f590a5293d18c6fb2c4db6598d5dd1cd4b4718bbc9d8a"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "55f5bd87bfde3054bf963922745f830fb3d1be4caa97ee078360806dd46c2fe2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:97787fa190025ba729fc6fe665ec28cd4f52e723dfa2a38c5b151dc0372971da",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-paypal-cashback-mastercard",
+              "sha256": "f84bf47f36dc3370cd667ba5a1f356b35a4dbc90aa4390a0e54b88bfcc62d7e7"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.595Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7b119275fcf24124dcfab7db1822d2c12f779b62c119173f5239801f876c4045",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-paypal-cashback-mastercard",
+              "sha256": "cab2d6d9b8e7d0c32eeba57c0efa10f1619fc8bfc854b981e6f452fafb45eb1f"
+            }
+          ],
+          "labelsHash": "sha256:c6cbd78c9b672ab45f46a3c29d0fc7578a20105508959ed023cd179f1cd17db3",
+          "anchorsHash": "sha256:bc023bd6314a03de4c68363cffb3be74070aade1edfe2c8b2e56e44806047a62",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:8e6ca5195402a2f46751cff94ed90244291a116a6abdd54f3d3ccbff50993df5",
+          "labelsHash": "sha256:c6cbd78c9b672ab45f46a3c29d0fc7578a20105508959ed023cd179f1cd17db3",
+          "anchorsHash": "sha256:bc023bd6314a03de4c68363cffb3be74070aade1edfe2c8b2e56e44806047a62",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:07bd5cbb504b782eb4603991bc75af34c5ab7bb5174e5bf02d52747b1d529b88",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:aa29f1dbf87a7e89d1d78048db48ce8592c62fc84c5b0b68481da8b20462a36a",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-paypal-cashback-mastercard",
+              "sha256": "0decbc1ec61163c999b67222552790b544e1898ee5d8d52929e312928b0d5a29"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:5f5249ecbe039c89fc79ff362b0bd49336e56d63d8376ed0c6ece64d69b6b84e",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-verizon-visa-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:df709067afee25b32950564736c682c83147e975b1c4c8c4042db8b18d341a32",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-product",
+              "sha256": "ea1a4230a3dc7248890324eca2ceae4f71a50a69bebd6913159aa79b4f9729aa"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-product",
+              "sha256": "1234cea06da385ea5f9ea80770c9b7e3c2853e004d0268e0474c7c2f2e59a423"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "376fb749ae9ab51035a9c905cd4cbb7cf1a36ad9ede6d5daae2338fae44ac361"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "e937671b39184c980f3f9474ad0fb0dd41b03e26d066f33cab5509eac3713105"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-partner",
+              "sha256": "b8d3e1258e7a53191a134f7c08cf92d422c99fe9aaee9d2796dd2a389f9732ee"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-partner",
+              "sha256": "66392ed1f0eb70466e2f025efcbfcce7b66fe3b0c21c26364bf50251b37cc2d5"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:99648490a02f3408f6a302f6f04e8fc13195027d184c47572d1738ab84700e98",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-verizon-visa-card",
+              "sha256": "46ad898ba2920122e83dd9edb2f49cb24399989e30106e953a0d14a89df41e23"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.394Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:11c65cf80d24e8f67a938a16b837464d153866fa737deb2aee44f58a3fce71eb",
+          "labelsHash": "sha256:b62408a2632f728e4785d44b3b306c9ea82032756246bc650c54a221e9517e47",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:289f68ccfd34ac5d0d3b1386185c31de6bb6eb8ec11299ef5b28aebdee2ec10b",
+          "labelsHash": "sha256:b62408a2632f728e4785d44b3b306c9ea82032756246bc650c54a221e9517e47",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8a585eb07bb211bccbab8f713a7c7c6205edc1d8bb6e441afd2caf29acda3f3b",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:3dc5309db83175e1e0c1a8d8f4fdb2f4bc3dd4c04f32178e2e94a53fa7c23818",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-verizon-visa-card",
+              "sha256": "316e2f9626a26c805fba30e6db0f7dfa4f5bf802d2e069b75ee5ce2e5bb34f53"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:92fc64ead9e85cbbd0c5666506f204d23309c089fd0a93d6617614a081443d0f",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-sams-club-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6633426df6223fc853146fd4a61d50a2adb7c781b5e9accbce482b9e7725c852",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-product",
+              "sha256": "bb6692869c40c3a56306754472fbadf962977860b729a4fbf598ccf2bc1790c6"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-product",
+              "sha256": "f2a70dda3c0437462d933f88937f964dbf2e1e3bc123aca7f805d9daf973eef3"
+            },
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-partner",
+              "sha256": "1b4aee8662198e0d605392ceb3fc3c074ee789bc75eab1a92c5667db1844fa10"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-partner",
+              "sha256": "76ae4cef2101eefcf5699b2aaf41b6905c7ccb6fdc5be86bd0b44aa8c3209f99"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.328Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8e62092656e509b4b3e3e5fa678d184e56c59cf841be24d8cac144ab123f9fd7",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-sams-club-mastercard",
+              "sha256": "d375d30a5da07f7dcd4ce14b56072789122f3398f40fcbdbd4e8492c6fd7b709"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.409Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d13d4c0fb54fd22cfd40f744ef68fa6dae3a6574b6e31aae578a22cebece8dc3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-sams-club-mastercard",
+              "sha256": "fd53bf3fddf67e3795f49a7c3f98d6a38b6c8db7630d5499cd79e61c69a10b34"
+            }
+          ],
+          "labelsHash": "sha256:ff221ca429e4acd990ead8abc85f2dcabf141d496219463c00d9fd2f5c4ea893",
+          "anchorsHash": "sha256:ea909b56c686a8314cef546497c2e09d2b5102e272f1c2b4c49eb37f6e49e0dc",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:0328f9e21784014e7cab8980620d98b1108099d4b5ef75f90bbb081336606edb",
+          "labelsHash": "sha256:ff221ca429e4acd990ead8abc85f2dcabf141d496219463c00d9fd2f5c4ea893",
+          "anchorsHash": "sha256:ea909b56c686a8314cef546497c2e09d2b5102e272f1c2b4c49eb37f6e49e0dc",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:dddebab586c7c2702d9db407ccc52a55346d607ffe36e265c9ac0d8793885655",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:470f55b8f6cdd7044180002c8d932a9cfc2b7220da2bd3ca2b538e1bef426cc5",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-sams-club-mastercard",
+              "sha256": "5ddc790500be25712c63053de60e99c5514dc33f6a6d474d01abb8f70a274305"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9df5629795c116ada23616ca499bd6be4a43c8d0b44c08b59abfecc38509cbc4",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-carecredit-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8101c5d421915c11f920228192a96331b42504b541b9eb158def93a4c2c3b629",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-carecredit-rewards-mastercard-product",
+              "sha256": "95679fc757d6d4e836d2fa44d747572d8d34585b6f387739e0da056f6f04623c"
+            },
+            {
+              "ref": "source-input:synchrony-carecredit-rewards-mastercard-product",
+              "sha256": "4678461055e6cf2b26b14a195d4190b60a9551b6bd7747a1733f2f6841a6eec8"
+            },
+            {
+              "ref": "manifest:synchrony-carecredit-rewards-mastercard-pricing",
+              "sha256": "c7f3de8e05b07e5799cd43ae95283e03f639e9b135dea5f61d20256ca2606e4e"
+            },
+            {
+              "ref": "source-input:synchrony-carecredit-rewards-mastercard-pricing",
+              "sha256": "026cb96ae576727fe8c0240ae2dba52de25118327ef72c17b38a2fca126d7444"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.328Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5f5d4ab1e4cae4f788c0a83dd9e8fcec52cd8713ef21e84ec4befd62e8936394",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-carecredit-rewards-mastercard",
+              "sha256": "e9dd8c252e623d2796d81d1437691ae30a835f6664a38b4bf52d7d16c6553a7d"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.411Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4f66b0cfddacf1678dd96008cd00f1b3474bb3521dd23a007574418229591b82",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-carecredit-rewards-mastercard",
+              "sha256": "99194381e488e2b6bd28d02c80742cf54d0e6bc4dfa85f66477fcb9bb0501c29"
+            }
+          ],
+          "labelsHash": "sha256:85ca94470355cea383d220bab37ba0c74a45b967c49cda58fa59c0353490ba1c",
+          "anchorsHash": "sha256:8924de516cb337a465328a20f2d6c29d707261c6a2728c7ca8c275a82885b18e",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e5a3a6ef614c5dae687aae860cb1e92791c8b22976160a71f1a66e700f07c3f5",
+          "labelsHash": "sha256:85ca94470355cea383d220bab37ba0c74a45b967c49cda58fa59c0353490ba1c",
+          "anchorsHash": "sha256:8924de516cb337a465328a20f2d6c29d707261c6a2728c7ca8c275a82885b18e",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:bb96d07911fc41a668a3aec982c333eeeda7896f818e0c46352a36df24e671c3",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:64794f3e32b8f9f7287da502cc6e3e45990060df83ec358cd886f19185170c45",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-carecredit-rewards-mastercard",
+              "sha256": "c8d5455ec6fd7c91431794afeb56d523818a25daa3d687d39af745ab00d407ae"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3c6e298211ab8f3017728a59c28c5b5bdc174ad451cb757b8ae4ceb9a03191d0",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-onepay-cashrewards-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:25b6f0b4463219656383f651967996cf8c92920dc6177c353335f92eecbbd313",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-product",
+              "sha256": "e75dfd807b33ebebf5ee7b04d466e95cb9c47b17a0d49cddbdd638e5e8a9b2db"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-product",
+              "sha256": "87298cda772c12a2e0400d8dff49b1399d2a61693659e507fdd301ea79ba696a"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "e70fcddfbeab087d17b49ad8c7cb4e2c50d711a1769865f0564a82cf22327faa"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "2806d6f41e975562036c0f76bafadff9278092a2ab2b2c11c5b7af7f6b5a68e5"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "9b4058c8382c70bad841c642b57873629df41c91c33ebafe189337629dd95ff9"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "bb41860dbe067ce6ac85d81e420dc94cba39c0469f330053be5f5c3f66fac658"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.623Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:544579035faf6032cfeb0bb8937641f2d23678978c0100a67d06c9fc12154cf0",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-onepay-cashrewards-card",
+              "sha256": "6e4e15b17d8739f2150b537d1c0eb41509c5852c9c2e99221320de396d666cb5"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.414Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:eb1d057ddc8bf28c4787e2619260647c3a803d389be803e4a0c8e29460c6cff9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-onepay-cashrewards-card",
+              "sha256": "ba2c32a63527e99b04115e66f9b204fcf0fc784befe6ca075c280757a0ee33bf"
+            }
+          ],
+          "labelsHash": "sha256:6a4c50689b0f7b98f850bd3cb3c4a1d96ddab0acb2f48dc9240b7f4d5c48c953",
+          "anchorsHash": "sha256:65aca6ff715145c71343cad92554c976c25c410bdf4b2894830ea51b6f2b4d53",
+          "finishedAt": "2026-11-07T18:06:03.916Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:2c5640fa35f46cfb0e47d2680fd7407884aaf6a447ab39502e8818ebda950864",
+          "labelsHash": "sha256:6a4c50689b0f7b98f850bd3cb3c4a1d96ddab0acb2f48dc9240b7f4d5c48c953",
+          "anchorsHash": "sha256:65aca6ff715145c71343cad92554c976c25c410bdf4b2894830ea51b6f2b4d53",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:afd9a8265da543280691cfe868a2fe6bf06bec241d7fb9524622b97c2b15ab28",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:473ad28c5ef0b7d8f30d21ab7ac517990ac4e2e47f88fe5627e960acf8081d68",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-onepay-cashrewards-card",
+              "sha256": "7f2b9d229918ad1c8d1ffd6b5bf5714fe0aaa62ce457915977ca20ebc4ac859b"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2766e73ad8b1b59f6e85b08eec578c316caca2b578d3cd34d683420a64bd25e5",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-mywalgreens-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:ef0f64b3d17193a3ce9a3c77f0bd0ab9c7d857a8938e5beb10abcce9a992495b",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-product",
+              "sha256": "7aadf270a296b27ae2ade0be541e407965836c3a13e7f7e48eb10950ef176afd"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-product",
+              "sha256": "dbcd0dec052816957b06a331117c0b6daf8d98809140cc8eb4ca2998a2a1f3c1"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "35101342287d6fb582f5c27a5903c28f976a80fab470eea4831d64cb808b4eed"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "20b205120a9b8bc33786de62eaf32718e503a61386a8f0fbcc4ae254447c187f"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "07e53bc569ba03df35c57306eb9670f0c99243a399130c0741ea68a18cd4e6e7"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "6c52fe72c624818e3780799480aefb6524aa0e0220efb956a3765898b768ab98"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.624Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f47b635223c314918efd8d3a392368086fafe3e00e55f2a4fd0781d7f6bf08dc",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-mywalgreens-mastercard",
+              "sha256": "69785ce6e8a77f2e7a371e7bb03889a0c5960d071208a717207207239f1d06a2"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.420Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c2df059a2dd742e05d40ada7d32470ff40c649bea646d50bd360c9645e28f05e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-mywalgreens-mastercard",
+              "sha256": "d83e04380a6c3e9ccfbdfc6dbc153927fbf2ce13f2acbdc366e0fdcb200c66f4"
+            }
+          ],
+          "labelsHash": "sha256:a66cd70407836eff720b41f6e7a8b6a6076dc5eb60c0e5606af164965faf0dcd",
+          "anchorsHash": "sha256:151ee567774876fc19f0f2b2b74dc66912b90f630f5e2899e327513b2e065100",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:1c861230d792fe9ea4700f88a2a763e6105eb219d0ac65975ec0b5fe0065c4a0",
+          "labelsHash": "sha256:a66cd70407836eff720b41f6e7a8b6a6076dc5eb60c0e5606af164965faf0dcd",
+          "anchorsHash": "sha256:151ee567774876fc19f0f2b2b74dc66912b90f630f5e2899e327513b2e065100",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:2f7c1e8f3783c409df40e7494d6ed9a752acca30f18de6112ccb7f22596d547a",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f04fa1385e48a0148ee00e06502cd369fc0ab3505bc90382f7b6a59bd9128d14",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-mywalgreens-mastercard",
+              "sha256": "2fbb92613c2a2d8b36af64ef23059778d053ca2cf62c17f1d8d73dd38bb11036"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ca4c728fe2529aa37c8c5931411328796baba6987572a31ddd78c87a633a215a",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-tjx-rewards-platinum-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a6b53f2fa9e8e07905412a41c278502618cb633efc82d547acfeaf0369b6b428",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-tjx-rewards-platinum-mastercard-partner",
+              "sha256": "a0addbd71754bc6d36ea0973c55bbac59570f180f7a25abd262edb800000a014"
+            },
+            {
+              "ref": "source-input:synchrony-tjx-rewards-platinum-mastercard-partner",
+              "sha256": "4766524acc3841d74e5397d6100ed669fff43889fa9bdf9b5f6eb392c428fc6f"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.624Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ea1febd1ea879ab87d2464b4c44ded068168508946f9ea7cef6e646b0b461195",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-tjx-rewards-platinum-mastercard",
+              "sha256": "5e61f9b740e09e2ca62b92c76df53555ebbc25fde090bf1e2b3884e4123fa664"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:742fcabb6d8b57613e7a6da91383c6191cc81c393b1a98966d6fbdbcb201a99d",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-tjx-rewards-platinum-mastercard",
+              "sha256": "9c920eeefe059d73166bbd042073aa623ebb9807ec437c1feec530805959b75b"
+            }
+          ],
+          "labelsHash": "sha256:92d81400e3f177198bcb5945c7a1b82248a12b0d8287ec68bf4fa0367e1eefbc",
+          "anchorsHash": "sha256:2050dd6b66a0873ac3c8a6fbc7b3770d82c9d5f0e76dd87bf5b724d01df07655",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:6f08240caba509aee93469d174153dd3bc032084624bca692e8a57a764381fe2",
+          "labelsHash": "sha256:92d81400e3f177198bcb5945c7a1b82248a12b0d8287ec68bf4fa0367e1eefbc",
+          "anchorsHash": "sha256:2050dd6b66a0873ac3c8a6fbc7b3770d82c9d5f0e76dd87bf5b724d01df07655",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:ce79daaa82a620d2c2e9241f4ef93d197f5f032fad20e18605c7cd0b5dfcf0e9",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:c0533468d5d59b2b016a841708ce45a128595169724484f5ea130c8fcc20137a",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-tjx-rewards-platinum-mastercard",
+              "sha256": "f35cb58b1b574c4fc51ea36dcfeded3f2ccc65c33876fbc0b57e0aa54d73833f"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:f324ccdcf9f184e0e6ea2e0cc741a9811ce350026729beb601ca9dd382bc577a",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-newegg-store-credit-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:86f3caae9b4c1806c6874037ee9b2fd5d21f992886ab54c46f83da31df33706d",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-product",
+              "sha256": "4be15ab1dc90b3472b3e65033290d768a064552a1b2158f910e7abd1a2b769bc"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-product",
+              "sha256": "3b2ac1172e9f7a522929794252f26746f2e9d64b278dbfa5df06845cb842a35f"
+            },
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-categories",
+              "sha256": "3f03dcf307fd08c52612ef9c960d6463c76c1749306daf33b2cc02dbc91d401f"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-categories",
+              "sha256": "02207c59bf88c76a31c8b9004a04ee1a5cfea4fb804d53e7f6cf37f7863c8bc5"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:487f32a7b6f1d81e21205c925100dc9ca0ed8d1f18cd50eae5a5d9c04c1a5f63",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-newegg-store-credit-card",
+              "sha256": "cdef2616e0b68f3f81f1eb631859183598a228f24aaebf4b994bfc110a518ea3"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:492a9c8d1f73c1da4249d5b1628e9dbd4a299e28eab14d7eadacb4d982fc8cda",
+          "labelsHash": "sha256:e73c263df5a602bf4c9d3943417923166dcfc35949551dc7ff037d8abee49ce0",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:a931d0c53d71687d4b3536aada0e497fe7ddb50d57ca44eb3fa8b76080d80ce3",
+          "labelsHash": "sha256:e73c263df5a602bf4c9d3943417923166dcfc35949551dc7ff037d8abee49ce0",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5075b60b6abfab956c9b02859cf3ac9694b32c13b749177bd63b922d5ae40d96",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:5629f7b86ffda7a6ea430287728b3090068224bed3b7f5c3826bb5c68fd766b7",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-newegg-store-credit-card",
+              "sha256": "a954b8f9a57e3821040f44b9b5d431b2b877ffc3976b2ce37b130a3a930bae12"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.419Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:d7f243e1373c4d0bd3e0071e7b3924a68713bddb8870ce37d888a2a072654a85",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-jcpenney-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9c06512d40bf39c2ebb83c3f455fa76f12697019935d8774a7d5f2e98ea99cfc",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-jcpenney-mastercard-product",
+              "sha256": "c94e6258bd7885a64024a6b615f7a7cd4f03feefcb8deec1b787c6ecc008b8cf"
+            },
+            {
+              "ref": "source-input:synchrony-jcpenney-mastercard-product",
+              "sha256": "8edffe50549ea2c55cb315fcd2a0c24292f608e42ec3480ea72a6110bbbf0590"
+            },
+            {
+              "ref": "manifest:synchrony-jcpenney-mastercard-partner",
+              "sha256": "f94ff58865c706881006ae314dfe087b4d8ed77b074b30e0a7712abb62c15d46"
+            },
+            {
+              "ref": "source-input:synchrony-jcpenney-mastercard-partner",
+              "sha256": "1189eefd645f8fcaaa539ae2c574130cc5f468a88e773df75fb4dcce50450eb6"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1e441114d6b878111146d5bf0ac6a8c69d16942436537a872c5112f1b0f4a74a",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-jcpenney-mastercard",
+              "sha256": "ade66106eab030d0a1fd8de44c4497b1f334894e851e1b1ee1881922edc46af9"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.421Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:f68cfb568b29c1094cb57502a736be95e3d1e12a9bb4988b05c851d1848181ed",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-jcpenney-mastercard",
+              "sha256": "ab97eedf00a52cd66c3e1b04cdcfddf8206e53571c551cf0e7c6ec6c2425a33d"
+            }
+          ],
+          "labelsHash": "sha256:f4ce802eade6a8be89d456f6fc106b3dd930776057d918b1614ee0dbd20b90bb",
+          "anchorsHash": "sha256:5d2cad164d51fb6170e11a81a8478a16d8fd456da120e3dc22fa97f20e27a6e0",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:af4208836c73c3308a5676e5ea9db64f64c6b0558581b1402aef1dea40be2a7d",
+          "labelsHash": "sha256:f4ce802eade6a8be89d456f6fc106b3dd930776057d918b1614ee0dbd20b90bb",
+          "anchorsHash": "sha256:5d2cad164d51fb6170e11a81a8478a16d8fd456da120e3dc22fa97f20e27a6e0",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:06a0ca7f2f498339bc3edfebb0601ee383d69da51d21310ec719e23c566225db",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:05f3d5e3265f938e503c0bbd60343d03d0856ba843ff2fb4646426a57050eb6e",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-jcpenney-mastercard",
+              "sha256": "0081b8525ce8f212631e5aaaf5cccf85f8f3be046d5bbd4e2fb432f78f571d6c"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:70c19c67bb70d2e8f4d468b31b1037a4c72c386507728a4c711f861e78c4e1eb",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-ae-real-rewards-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c9755166d1283dd8b6a6cce56e1851177f99dc4f19198d1c49efee99091e3095",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-ae-real-rewards-visa-partner",
+              "sha256": "f66226218045c6f90ac60b0937995142ba4f1f6aa6437dc5fc72c2201de14ce7"
+            },
+            {
+              "ref": "source-input:synchrony-ae-real-rewards-visa-partner",
+              "sha256": "21dc7704c94324a029d37af06ea85af2662230c8a6dd8061a6216b65a9971a47"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:dd232a0f5d4b56211ec3db840ea6b1272999fe8485ac3a9696bc9fb4abd01363",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-ae-real-rewards-visa",
+              "sha256": "dd3a588c05a5be23b66ae83ad1b3ef9ad9f0b97043471cebef84281196d5c47a"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:375acafb6d6d09886fc17b8a563e79d383d518295de8580e4b0c19cc4c8131e3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-ae-real-rewards-visa",
+              "sha256": "bf18e59bcc0eb40041e1f1e9c076c9c1ce467cd375e78708e7c20812a19272dd"
+            }
+          ],
+          "labelsHash": "sha256:24240d8efb9bfab9de9f0a65e2a180bf3c813dfc846c9b0080cfa81b6be6cc0d",
+          "anchorsHash": "sha256:aa83f11db799915175927afd79b014270c93b155a32508c382387484ca516b79",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e5d1ee6e425041c511a487e235451220bfb317eded76a1aa0de8ba72ddd87ede",
+          "labelsHash": "sha256:24240d8efb9bfab9de9f0a65e2a180bf3c813dfc846c9b0080cfa81b6be6cc0d",
+          "anchorsHash": "sha256:aa83f11db799915175927afd79b014270c93b155a32508c382387484ca516b79",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f888ca33bae524df63d20d9714d32339f4d6d8a612f5c153970a5a1609d748a6",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:c1b45b42d51c372220501fdf7655f3ded15d91e3270d7dcb2858ebc20baa6786",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-ae-real-rewards-visa",
+              "sha256": "920c9a4b3480c610d09b739700c1aecdddf27f2652720bd192179bde1015a08b"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3f2b7c99feefa6dd50a21ebaa4df99ba8a28fd65d39ce704376bba6ac1ff4ab7",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-at-home-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9967e68d26f3436c42103c93d488bb6885fb69ce81a16e16ca7d0f88293ab82f",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-at-home-mastercard-partner",
+              "sha256": "a337d8dbe22496116fc4f3e75246e155f939136394141ac1bbd9977f9d3cef4a"
+            },
+            {
+              "ref": "source-input:synchrony-at-home-mastercard-partner",
+              "sha256": "a7c12f946999b3a17aaac77d32d0ee8d3d22ac2b2ea6f97bd4b5ca28c044b3b2"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:e42962d2842336596e856bc70e84229e45c410765ea39b562673d75ded7034d3",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-at-home-mastercard",
+              "sha256": "3474c72c9ff6e78fb526bb4d943421ada98b8054b8b6d8241a4c68d504265c93"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1e733ff7f34a3de79e448f6dafded627146a655f6122919dbd4752aab84a525f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-at-home-mastercard",
+              "sha256": "b9aa0b98d1ea7147c59d99771f6e508580cc3b7f50b2f1249b5120e2bf824bf6"
+            }
+          ],
+          "labelsHash": "sha256:8307d101f78545a2bec75fdf914401d49750b344825ac91a9867573943892932",
+          "anchorsHash": "sha256:802bcaf53bbd956c46f15e813309750ddc412ec67b0d1d651d151cdbc531246f",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f40d19555717accd43215849b90ad864012fd43a1af2875ec4b3869085217f40",
+          "labelsHash": "sha256:8307d101f78545a2bec75fdf914401d49750b344825ac91a9867573943892932",
+          "anchorsHash": "sha256:802bcaf53bbd956c46f15e813309750ddc412ec67b0d1d651d151cdbc531246f",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:25fa93b53e040922d2ac44456a8505833aa2b4f7629b9663a2a6063472e96fb6",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:44fd63a41787430e4e70c02ebb07a52b24c47d6ca87075e42c9d35e5de7831aa",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-at-home-mastercard",
+              "sha256": "d03c474add56b9d5adf649e3f05326865b09acb02d0ca608fb239f17f18fcebc"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:a13f5c8de2a772e17d5e47d453adb59b2beb3b1d4cb68b97e691eaeadbd7c23a",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-chicos-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cbd08ad9e59c3232bf46f66bb9056f7e6122c8f0867352c5230dd06570a50c75",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-chicos-mastercard-partner",
+              "sha256": "c509e998de82f4760ebf4ce477f8ce67246dd04eed3cea238bbe17fca23b2874"
+            },
+            {
+              "ref": "source-input:synchrony-chicos-mastercard-partner",
+              "sha256": "393dd3ed0c97ac6a88a23a3a67357630713446e1479193c7e85284c36fccde0e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:fc4d56d6895339fda41a355d3135cdac69ff6baae6a511b42263b23c4946a7d7",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-chicos-mastercard",
+              "sha256": "841503a097d335cc224d942d38c9be413ee6a2cd557d8f7e3d5349113a1427c5"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.597Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8d3a4b0e238196e75be7445a2295822a16db112d2c4e00b4a7fd3da75f6cf679",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-chicos-mastercard",
+              "sha256": "9b3e44998c21236aa1b25b125087003d51c3916390ae83b77db7bb2bfba85cd7"
+            }
+          ],
+          "labelsHash": "sha256:01809d5cf31c7d26b707c5c6712689f8bd4c186ee34229535082c6d3358f053b",
+          "anchorsHash": "sha256:0af4ea3ec59fecb74e5d7904077207e4282e9bd4b0cf17367895b4a7595dc2b9",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d3a722d4a2003489410bd4bb3ed4fecf6f38b8faf9961dbc9ee5f98a56ac73a9",
+          "labelsHash": "sha256:01809d5cf31c7d26b707c5c6712689f8bd4c186ee34229535082c6d3358f053b",
+          "anchorsHash": "sha256:0af4ea3ec59fecb74e5d7904077207e4282e9bd4b0cf17367895b4a7595dc2b9",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a7d8d836c7c17929f6e57ccd70d9f3501cd384c6d1409abab89b4362a30ac30a",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6353b8920f3b474dff17b36baae07d1ef28c5ee1a12a91740fd3822ad01e01be",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-chicos-mastercard",
+              "sha256": "e94ae78f058f1cef8dc87d11c2f46519fd1e2b01163dbd6852b3ff3ac5431fb6"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:60a032f16ea6959d98bd363eb86571d246ce85b165af16f973a7f3b1eb0afca4",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-soma-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:20d4d5a32c07bcdab3e0bbd726715cf336b9ae5dab6cd107353dc2b6d83410c5",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-soma-mastercard-partner",
+              "sha256": "13f02049151a7adced373bd14b79bf07becad128e4b1eebafcf9e83c4a820bb6"
+            },
+            {
+              "ref": "source-input:synchrony-soma-mastercard-partner",
+              "sha256": "1cbf135129fffa31c88b5d166444025328df489af621242a2e365f873af521d7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:726ee6932d2369f4d5ffbd1cebcb69e889a352fba5c71eedab27224e597c0707",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-soma-mastercard",
+              "sha256": "b24145762a647e54be6c755a0aa6187c4ab53b6402a63c2721c74c9aa9d863ac"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d051b6227c53405b652ecdbeff206c6bb9b7791221e7c5c7999ce600096d5e75",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-soma-mastercard",
+              "sha256": "9291731624efc094b0d443ba620dde58dd30085d7b47a49d50bd40786b74f66b"
+            }
+          ],
+          "labelsHash": "sha256:55064b946a89fd21298b042d33a221870011d8c513a47daf6a5758fac3818759",
+          "anchorsHash": "sha256:f477bbdb5f221abbe5952c2fca51d20e0d5e38fb5b5dde293f950c7a6be385de",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:7941d2d5b337f2943aa7adef59da93ad4d078abbd11d573efbca775295dd4e2c",
+          "labelsHash": "sha256:55064b946a89fd21298b042d33a221870011d8c513a47daf6a5758fac3818759",
+          "anchorsHash": "sha256:f477bbdb5f221abbe5952c2fca51d20e0d5e38fb5b5dde293f950c7a6be385de",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5d8d75e5daf1fbf7243119c28a7120b2f886450b88b7bcea80f0913bbf4ef4c7",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d47904f56a7a6e27eb28e2c15f9adbc156112253a683853da700659ebbb04ce1",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-soma-mastercard",
+              "sha256": "320d62a466a664f62dea251766a39f8982289a51a18a33fb908c52d3e5fdb56c"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:7471f72af9a6c5ce01d2126aa0ff20b17ccf239020c6069d48b6010e29da50e9",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-whbm-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2fdf64be16ae0fc208ed0599c4309b2300a394e81a8d35a03e3a41af692d7293",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-whbm-mastercard-partner",
+              "sha256": "4b43c5a0f52691973a6c45830daf51b01d10400e9dbc73ea8bfed3e05a1d57c8"
+            },
+            {
+              "ref": "source-input:synchrony-whbm-mastercard-partner",
+              "sha256": "bd13105b0890270dc148ae3d4243885c159232c8b848bb00494e50e95580a137"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:975b1319d7366dec005a281a5d62f0a36b6be31c3b8765b004be19048fb0c2ac",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-whbm-mastercard",
+              "sha256": "5852c231a3e70c3df9d6b57ed078669fccbf5bc78e97a00147c39dbdf5e176cc"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:55:06.422Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:84d8e19f167242c195a36696e550b149788cb9ae5e8aac1bae96c8865a7aeeb0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-whbm-mastercard",
+              "sha256": "806cb430f0d630dec5590a8c4f7c1988788055ab8290ea89b659e97a638effdf"
+            }
+          ],
+          "labelsHash": "sha256:abc862af4bf92967513055245a7e0e8012e887ef3d19a2e35f18037f02f6f55c",
+          "anchorsHash": "sha256:5f6d65574ff27356138be73b44338471de77f4fbb6706ce64472d705bff2e62a",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:c8ea3349aae88ef2e475a91b7a1defc3903b491eb7d2249068a6e2027afc7649",
+          "labelsHash": "sha256:abc862af4bf92967513055245a7e0e8012e887ef3d19a2e35f18037f02f6f55c",
+          "anchorsHash": "sha256:5f6d65574ff27356138be73b44338471de77f4fbb6706ce64472d705bff2e62a",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:3344511bf8a32a81bb07de019d7d21b6ad49c16df4cc8501c933008d7a068cb9",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d26508c5f22c1ea66cf8a7d404221669e97afbecd8d3fb3261dbe58b47d8eafb",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-whbm-mastercard",
+              "sha256": "1cb939472b6da2c7676ad35cb8204d7bda450614fcd18f2ac648a46cab7dcba2"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9837735e3eb97c4012bdee03823d63e8c4bb789c254862d32762603d6f4a5392",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-jcrew-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c623547ef617f69742e079e1109c3c9e822030ba20065f9a5b41654305b0fe8f",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-jcrew-mastercard-partner",
+              "sha256": "42b8b252c6cf9e78db065ef8ceb171fffb59decd1fd455893f5127bb2139ec55"
+            },
+            {
+              "ref": "source-input:synchrony-jcrew-mastercard-partner",
+              "sha256": "7436fa30d2b8e10ef3a0cfacc0442c27e503db0cdbd3669c8bc99d6b2d778845"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f03b79fdc8f43a3d7d3e3fbd89b7345c4706a46d335af196ea250028c96a1561",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-jcrew-mastercard",
+              "sha256": "a45625c7bf56545bdb23e80fde98517c9bb3f31026d4666b3eadf7606379771b"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:febe7958671090a8659078e141a7ed1842e7d2f081162414ad90ae0af35ffc49",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-jcrew-mastercard",
+              "sha256": "7d5711997a08b68b1e627a6422044d05d46fa4346b3f5ad6ec2a50bb2635e979"
+            }
+          ],
+          "labelsHash": "sha256:95e5b04db79a5fe30e2ad6b0373c754ad868eeb88d70a679b90fae3d79b30548",
+          "anchorsHash": "sha256:a876ecf82f1a2d69b4c2f7928c05b25579c2290ae074fb8730d641fe508c8256",
+          "finishedAt": "2026-11-07T18:06:03.917Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:6f0d52818907e5f7b2d31a6aca2bfe09540d5d8a39e9e7061795b86c264176ee",
+          "labelsHash": "sha256:95e5b04db79a5fe30e2ad6b0373c754ad868eeb88d70a679b90fae3d79b30548",
+          "anchorsHash": "sha256:a876ecf82f1a2d69b4c2f7928c05b25579c2290ae074fb8730d641fe508c8256",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:614805f7052d55f2d98e784e0f949609cfd0d1281736a8fecf7fad98d6aea272",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:12bba8bee69b627217a3a51a1dbc4e9f2bd5b874ec929861130ffa14a21a4811",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-jcrew-mastercard",
+              "sha256": "acad8f025181ee4be808e4f8c18333bd63f7d84afcfa10fe87c7f448c1bb065d"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:75197fe029d0f1a45bbe3092355e74d38db643963a31aa59d0ec76bf92acb655",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-harbor-freight-credit-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e6f27810479fda7700abd718e628c858dea19792b860b03b8acaaf6222847390",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-harbor-freight-credit-card-partner",
+              "sha256": "0f54ad752d5031205fa8a664edc4e26b9bed0d81d45549dd972d778bb53264d4"
+            },
+            {
+              "ref": "source-input:synchrony-harbor-freight-credit-card-partner",
+              "sha256": "ac582258318d41440e76e3ed82135635417babb0520e9ee191031fe095faf8c0"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9ee8106bc2c6e85970896309e3b16fc4c89b908e9e534e9820f10ea8f37b7572",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-harbor-freight-credit-card",
+              "sha256": "4a4790deeb2a4c24457da718b7db988f229e62acd76e780fda0b6fd32649d2e7"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e39f5d721f40aa58d13f0bd2ccd4ba4ab80d437e3a31fea17dbb4787d9e7dae9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-harbor-freight-credit-card",
+              "sha256": "46188cedfadfaee3562021a3a3a75d16ce615799cc2f6e12444dfd0df650710b"
+            }
+          ],
+          "labelsHash": "sha256:790fed6a83a30e54d401bbbb52f557c5ebc14ccdda410136e3280ced6fb0c34e",
+          "anchorsHash": "sha256:19189d74a6c45471e7dddab4d3c78798fb79216df6bbac4bf97f4a7f3c3f065d",
+          "finishedAt": "2026-11-07T18:06:03.920Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:4d1461be3017d750970871c0d29abaad8520dd3fc9756fc2ed9886b581098c6b",
+          "labelsHash": "sha256:790fed6a83a30e54d401bbbb52f557c5ebc14ccdda410136e3280ced6fb0c34e",
+          "anchorsHash": "sha256:19189d74a6c45471e7dddab4d3c78798fb79216df6bbac4bf97f4a7f3c3f065d",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5d24012a2c211afd815ecf9fce9f58848593e6fd24192104fc69a6dbe8cbdf9b",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:815b3ad3bc6b94bcf61c61f86232643813f1a2a97ff94f7000f28f965c3d6b87",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-harbor-freight-credit-card",
+              "sha256": "04e4fb8954579cf50cf110f844ef690e59388887686a309118e6d6943046e3a5"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:05d201ecf37212b4110075f9b6c8e6dcfea8fcee1beba3dadca27a32cb322c6a",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-cathay-world-elite-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6d2a932af8f3394828b7b051a886a3153aab5cb67164a6587101a4f5c7650ae2",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-cathay-world-elite-mastercard-partner",
+              "sha256": "122cfaf16a56939caea1770eaaa3ebdb6d28f4c42efb324e76db54e98bb73e4b"
+            },
+            {
+              "ref": "source-input:synchrony-cathay-world-elite-mastercard-partner",
+              "sha256": "89b71d317fe70e677a682225b87c17f792b7373f9212cdcbb29513bb9c2df698"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4834e1e2a1624d6c0d907526b2975af38ea84464ac7eb8cee6d946ea99f2ce36",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-cathay-world-elite-mastercard",
+              "sha256": "48f08b3c8eea15bb732a8cf283bc24ad80827363099512315fb3ab921100306f"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ba07cec0cdd5441bcf1147397ec2b30a06114b787d9a8801a9fa67ead4a189d8",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-cathay-world-elite-mastercard",
+              "sha256": "73c061ed876cf763733d510e67949bd3fbc5c9d1847951eeec7250cb473a7478"
+            }
+          ],
+          "labelsHash": "sha256:e134f9291b315a8ab3e98a66e0f59874c98d8ca44a2ebf139d6e8888dcda1218",
+          "anchorsHash": "sha256:02360ff900dafe2bf841f5d87b6420e30a6390d12483c6676c2d2afa54770ebc",
+          "finishedAt": "2026-11-07T18:06:03.920Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b89c158819600d83fd7474bf633a6e23fd5f33a227431b556818f74809b9e363",
+          "labelsHash": "sha256:e134f9291b315a8ab3e98a66e0f59874c98d8ca44a2ebf139d6e8888dcda1218",
+          "anchorsHash": "sha256:02360ff900dafe2bf841f5d87b6420e30a6390d12483c6676c2d2afa54770ebc",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:7e714cd980c7ac3e481922dde4f379431ed434413c0535afb6080a5d52fc1956",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f05f367d8373ceb5eca65e565140b35868eb2e666068551d03b2403e2a4227e6",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-cathay-world-elite-mastercard",
+              "sha256": "ca16cd00dc23c3bac0e3ece8295631aa81edc5c80667e1ba2c6175e12c2ba9ca"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:b7af5159af2d82f8fc1405327ea6055684bc2a348e780a2c875fb0060a02d619",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-virgin-red-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:0dc433fc7f304509ba89f5d9c35df9bcc706cb6e26b11c964ae92fc3cdc92dbe",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-virgin-red-rewards-mastercard-partner",
+              "sha256": "a106c191d25aef432e21cfd7df85148c20399b09ed7b43f66150d235413dd469"
+            },
+            {
+              "ref": "source-input:synchrony-virgin-red-rewards-mastercard-partner",
+              "sha256": "cae39115a79022e5931abcf8923516d2532cd2d34625a27e7500f02701bcd7ed"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6554e29d466dddc4842896b086143f172d9b25813dee844a2593e8c68c2ff2e2",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-virgin-red-rewards-mastercard",
+              "sha256": "a04aaa3d0543fb32d471cb8c11ccac695f2f603902a0d3a0bdb16465cab819db"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:845ade0195b0bc7cb3b49cf1120b7f28891b4325a85eb2fce9d233713618b78c",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-virgin-red-rewards-mastercard",
+              "sha256": "4c51823560ff500fcdb4f296921e28ac45dd167a8930076f08c49db52dbabef5"
+            }
+          ],
+          "labelsHash": "sha256:87d24be566b4ed918eb81ef5896da9c18306dbd2fae7cbc0e5d8b7e5fe6726dd",
+          "anchorsHash": "sha256:dddc97cffe4b88ca047ee3ba74a55d35b05f0c875fa9b4b8911d056c8e7bfbb7",
+          "finishedAt": "2026-11-07T18:06:03.920Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:7d68eb3ea20182705293113c6e6f373c63f1eb742f7fcd1d5c77290c325f8f19",
+          "labelsHash": "sha256:87d24be566b4ed918eb81ef5896da9c18306dbd2fae7cbc0e5d8b7e5fe6726dd",
+          "anchorsHash": "sha256:dddc97cffe4b88ca047ee3ba74a55d35b05f0c875fa9b4b8911d056c8e7bfbb7",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:3dc44660e1f94bd4d7887397176feff283a216681690ae319dccb66f19a7047a",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:40ca21de52b201e55b0f89da8ec68250d1a5c08b45b2eb9fb8daaccc7048c88c",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-virgin-red-rewards-mastercard",
+              "sha256": "a2ba2e4c55a5d9ee1b642259619ff9a529ccb6decf25923477b70338fd70f29e"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:8d40e98c116eb8e980a00fb6c98958a1e492b5870466861d3b88857d46a19041",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-sun-country-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b78865cbced60dcb9dea9daadde1ba1f69ba4573f957dae725d60cf727a766c1",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-sun-country-visa-signature-partner",
+              "sha256": "50ac8aff14a4bad98778a49c8a7cabcda42d90fc273b7b5d110563b36c054cd0"
+            },
+            {
+              "ref": "source-input:synchrony-sun-country-visa-signature-partner",
+              "sha256": "d6aeebc3fda92e08b640b11238afaa4f4398391c6e52ed65c3d6e70e7747895e"
+            },
+            {
+              "ref": "manifest:synchrony-sun-country-visa-signature-partner-2",
+              "sha256": "0e2d3d013c8c6f89e357a0de9764ebb2103b15d9a3b767ec51f618315fc9c563"
+            },
+            {
+              "ref": "source-input:synchrony-sun-country-visa-signature-partner-2",
+              "sha256": "bc7ae0edafba3a9bfd1d342683c3ea7680110f14ad537ef246574b3490826719"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5d3358639d55a9b8ae4ed498f511b0d6216b31e7dad23d84921f86335c0d7ba8",
+          "outputs": [
+            {
+              "ref": "trace:synchrony-sun-country-visa-signature",
+              "sha256": "c6ab04d199e2bfd154bc94b6e5a1fa97a48ab4b07d6815042871a794a380b110"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:22:22.598Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:29f368bf4dbdf0a7be0587afcc33e8d74a8acf0b63a145729ecc3848b29a23d5",
+          "outputs": [
+            {
+              "ref": "corpus-draft:synchrony-sun-country-visa-signature",
+              "sha256": "f551ade98c6ccccebdc37cd74c20446c4c12d8025b99fbc80549a3b26c60bbc9"
+            }
+          ],
+          "labelsHash": "sha256:d890f7c9725628a84330262e26c44ba89b6aaa70ebff22e2a8aa20e482de7312",
+          "anchorsHash": "sha256:62b1543f84f3c83f509b1ed3d2dd67dde2717764c6a30673d081063c98a2a5be",
+          "finishedAt": "2026-11-07T18:06:03.920Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:5e9de04303b179c0c4b2590e153a41cbb445fc06230f74d06e58a4c035fa086d",
+          "labelsHash": "sha256:d890f7c9725628a84330262e26c44ba89b6aaa70ebff22e2a8aa20e482de7312",
+          "anchorsHash": "sha256:62b1543f84f3c83f509b1ed3d2dd67dde2717764c6a30673d081063c98a2a5be",
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:8e03efce767033c18ca225ed04b9c1f084d19a07ac950234f1eb5176cce83e72",
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:9570e2eb354dcfb66be86524ff05be4e89caf0d9f23a4f6631270aac759da5b0",
+          "outputs": [
+            {
+              "ref": "corpus:synchrony-sun-country-visa-signature",
+              "sha256": "fb812bb5f0047f01167d72c53ec168d4cf2d9a7a84ad9b6acee57ec56525c8b7"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:14.420Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:f544dbc52a8889f2000f2f0124a168ca1aed1d3bc6ce25733471083083ef03fa",
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "synchrony": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:56ca01dfc9d96d0a6049a96cca1809377c7913fde875e68d6291fd221f55b9f7",
+          "finishedAt": "2026-11-06T19:11:29.321Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:synchrony",
+              "sha256": "c52c7b3b19cb2a6cd24c9ced6c82d3f46d0deddc1e8f94c4a440b72b4eefb3b2"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:22:23.767Z",
+          "attempts": 1,
+          "packetId": "5cea8339-40ce-4fd0-ad70-3af8088e4b8e",
+          "agentRun": "a37389a585d39ea21",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:22:23.767Z",
+          "durationMs": 882580,
+          "tokens": 295324
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:synchrony",
+              "sha256": "854528b477dd40e2959a0005f7313755873db5f114b67598eb9cf15fdfc8a6d0"
+            },
+            {
+              "ref": "lint-acks:synchrony",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:00:53.514Z",
+          "attempts": 1,
+          "packetId": "2a5dac3b-afb6-41cf-bd9a-c2901f3c4c3e",
+          "agentRun": "a753487b216dee0e3",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:00:53.514Z",
+          "durationMs": 445733,
+          "tokens": 183804
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:synchrony",
+              "sha256": "e44af5d3f549f51a63bfba6944a3bce506466613df9dd9b93d812237774f8a02"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:14:55.603Z",
+          "attempts": 1,
+          "packetId": "e9a46a6a-2587-4f77-8fe9-87cf21a64264",
+          "agentRun": "a3ae229ebb4122838",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:55.603Z",
+          "durationMs": 420239,
+          "tokens": 162270
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:cb90cf56e89fe76af4e764024b544f0135d98961ec9f296b5644143bebf0e33e",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:25.051Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:aa209376525776eb03c6c323f2fb5c7c56593240d8b78367f4bac59afe4cd432",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "5c6400c5b72026f2d522653cde7d0d35845ae3b5503bdcecce28f6905d3cf633"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:07.459Z",
+      "attempts": 1
+    }
+  }
+}

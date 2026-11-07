@@ -5,7 +5,7 @@ import { createStateService } from '../src/state/service';
 import { emptyState } from '../src/state/contracts';
 import Popup from '../src/popup/Popup';
 import type { AppState, CatalogCache } from '../src/state/contracts';
-import { CATALOG_V3, PILOT_CATALOG } from '../src/domain';
+import { CATALOG_V3, PILOT_CATALOG, redateCatalog } from '../src/domain';
 import WalletEditor from '../src/components/WalletEditor';
 import { READ_COPY } from '../src/checkout/read-copy';
 
@@ -377,9 +377,10 @@ describe('offline comparison popup', () => {
     expect(screen.queryByText(/Subtotal only; tax and shipping/)).toBeNull();
   });
   it('does not silently expand the scope of a newer downloaded catalog', async () => {
-    // Newer than the bundled catalog and valid, so it stays in effect (newest valid catalog wins).
+    // Newer than the bundled catalog and valid, so it stays in effect (newest valid catalog wins). Redated so its
+    // source dates stay within 30 days of verification whatever the bundled catalog's date.
     const catalog = {
-      ...PILOT_CATALOG,
+      ...redateCatalog(PILOT_CATALOG, new Date(Date.now()).toISOString().slice(0, 10)),
       version: 'newer-published',
       verifiedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
       expiresAt: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString(),

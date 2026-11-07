@@ -3,6 +3,8 @@
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
 ## 2026-11-07
+* [The renewal's remaining adjudications ran on Opus 5.5 instead of the pinned Fable 5.1 because of the Fable weekly limit](./2026-11-07-renewal-adjudicate-on-opus.md) — renewal driver, on Evan's 2026-11-07 directive: Synchrony and Bank of America adjudicated by `card-adjudicator` runs on Opus 5.5, each a different run from its verifier, with the model recorded as it ran; this renewal only.
+* [Bank of America in renewal 2026-11-07.renewal.2: held out, then restored from browser-pane captures](./2026-11-07-bank-of-america-held-out-of-renewal.md) — renewal driver: headless capture got HTTP 403 on all 35 pages, so the cards were first held out; the pages were then captured in the desktop browser pane through `pipeline capture-import`, adjudicated on Opus, and all 19 cards ship.
 * [A sample cart for reviewers at /sample-cart/ on the public site, titled "Your cart" so the cart reader recognizes it, with fixed amounts and inert controls](./2026-11-07-reviewer-sample-cart.md) — implementer, on Evan's approval (without the "Nothing here is for sale" wording): the path is not a cart word, so the title and h1 carry it; proved by a site unit test and an extension browser test on the built page.
 
 ## 2026-11-06

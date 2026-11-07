@@ -1,0 +1,1896 @@
+{
+  "schemaVersion": 1,
+  "batch": "bank-of-america-refresh-2026-11",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "bank-of-america-refresh-2026-11.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "bank-of-america.json"
+      ]
+    },
+    "totals": {
+      "cards": 19,
+      "inCorpus": 19,
+      "drafted": 19,
+      "undrafted": 0,
+      "confirmed": 2,
+      "fixed": 17,
+      "dropped": 0,
+      "draftRules": 84,
+      "rulesRemoved": 0,
+      "rulesAdded": 28,
+      "verifiedRules": 112,
+      "draftRulesUnchanged": 45,
+      "ruleFieldValues": 672,
+      "ruleFieldsChanged": 55,
+      "cardFieldValues": 38,
+      "cardFieldsChanged": 3,
+      "ruleFieldCorrectionRate": 0.0818,
+      "cardFieldCorrectionRate": 0.0789,
+      "draftRulesRemovedRate": 0,
+      "draftRulesUnchangedRate": 0.5357
+    },
+    "ruleFields": {
+      "category": {
+        "count": 2,
+        "total": 84,
+        "rate": 0.0238
+      },
+      "issuerWording": {
+        "count": 1,
+        "total": 84,
+        "rate": 0.0119
+      },
+      "rateBps": {
+        "count": 1,
+        "total": 84,
+        "rate": 0.0119
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 84,
+        "rate": 0
+      },
+      "cap": {
+        "count": 1,
+        "total": 84,
+        "rate": 0.0119
+      },
+      "activation": {
+        "count": 36,
+        "total": 84,
+        "rate": 0.4286
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 84,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 14,
+        "total": 84,
+        "rate": 0.1667
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 0,
+        "total": 19,
+        "rate": 0
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 3,
+        "total": 19,
+        "rate": 0.1579
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 0,
+      "issuesRemoved": 26,
+      "issuesAdded": 5
+    },
+    "undraftedRulesAdded": 0,
+    "findings": {
+      "accepted": 168,
+      "modified": 1,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Bank of America": {
+        "cards": 19,
+        "inCorpus": 19,
+        "drafted": 19,
+        "undrafted": 0,
+        "confirmed": 2,
+        "fixed": 17,
+        "dropped": 0,
+        "draftRules": 84,
+        "rulesRemoved": 0,
+        "rulesAdded": 28,
+        "verifiedRules": 112,
+        "draftRulesUnchanged": 45,
+        "ruleFieldValues": 672,
+        "ruleFieldsChanged": 55,
+        "cardFieldValues": 38,
+        "cardFieldsChanged": 3,
+        "ruleFieldCorrectionRate": 0.0818,
+        "cardFieldCorrectionRate": 0.0789,
+        "draftRulesRemovedRate": 0,
+        "draftRulesUnchangedRate": 0.5357
+      }
+    },
+    "cards": {
+      "confirmed": [
+        "boa-unlimited-cash-rewards-secured",
+        "boa-unlimited-cash-rewards-students"
+      ],
+      "dropped": [],
+      "undrafted": [],
+      "valuesUnchanged": [
+        "boa-norwegian-cruise-line-world-mastercard",
+        "boa-premium-rewards",
+        "boa-premium-rewards-elite",
+        "boa-royal-one",
+        "boa-royal-one-plus",
+        "boa-travel-rewards-secured",
+        "boa-unlimited-cash-rewards",
+        "boa-unlimited-cash-rewards-secured",
+        "boa-unlimited-cash-rewards-students"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "bank-of-america-refresh-2026-11.v1",
+      "hash": "15da602ffd1c7f6a028014cfceb0f40035e1433ba67ab6804fb40eb5a86919ae",
+      "cases": 19
+    },
+    "upperBound": true,
+    "files": 19,
+    "scored": 19,
+    "skipped": 0,
+    "all": {
+      "planned": 19,
+      "observed": 19,
+      "complete": true,
+      "overall": {
+        "runs": 19,
+        "ruleRecall": {
+          "correct": 82,
+          "total": 112,
+          "rate": 0.7321
+        },
+        "rulePrecision": {
+          "correct": 82,
+          "total": 84,
+          "rate": 0.9762
+        },
+        "fieldAccuracy": {
+          "correct": 539,
+          "total": 588,
+          "rate": 0.9167
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 539,
+          "total": 852,
+          "rate": 0.6326
+        },
+        "claimPrecision": {
+          "correct": 272,
+          "total": 298,
+          "rate": 0.9128
+        },
+        "evidenceValidity": {
+          "correct": 548,
+          "total": 550,
+          "rate": 0.9964
+        },
+        "issueRecall": {
+          "correct": 6,
+          "total": 11,
+          "rate": 0.5455
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 35,
+          "total": 38,
+          "rate": 0.9211
+        },
+        "unsupportedClaims": 26,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 7,
+            "rate": 0.2857
+          },
+          "out-of-scope": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 43,
+          "total": 43,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 17,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 149578,
+          "p95": 368519
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 47,
+            "total": 82,
+            "rate": 0.5732
+          },
+          "usMerchantsOnly": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 68,
+            "total": 82,
+            "rate": 0.8293
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 19,
+      "observed": 19,
+      "complete": true,
+      "overall": {
+        "runs": 19,
+        "ruleRecall": {
+          "correct": 82,
+          "total": 112,
+          "rate": 0.7321
+        },
+        "rulePrecision": {
+          "correct": 82,
+          "total": 84,
+          "rate": 0.9762
+        },
+        "fieldAccuracy": {
+          "correct": 539,
+          "total": 588,
+          "rate": 0.9167
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 539,
+          "total": 852,
+          "rate": 0.6326
+        },
+        "claimPrecision": {
+          "correct": 272,
+          "total": 298,
+          "rate": 0.9128
+        },
+        "evidenceValidity": {
+          "correct": 548,
+          "total": 550,
+          "rate": 0.9964
+        },
+        "issueRecall": {
+          "correct": 6,
+          "total": 11,
+          "rate": 0.5455
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 35,
+          "total": 38,
+          "rate": 0.9211
+        },
+        "unsupportedClaims": 26,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 7,
+            "rate": 0.2857
+          },
+          "out-of-scope": {
+            "correct": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 43,
+          "total": 43,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 17,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 149578,
+          "p95": 368519
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 32,
+            "total": 32,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 47,
+            "total": 82,
+            "rate": 0.5732
+          },
+          "usMerchantsOnly": {
+            "correct": 82,
+            "total": 82,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 68,
+            "total": 82,
+            "rate": 0.8293
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 0,
+      "observed": 0,
+      "complete": true,
+      "overall": {
+        "runs": 0,
+        "ruleRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "rulePrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "fieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "claimPrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "evidenceValidity": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "statuses": {},
+        "latencyMs": {
+          "p50": null,
+          "p95": null
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "paidOnPaymentBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capKind": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "usMerchantsOnly": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "limitedTime": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Bank of America": {
+        "runs": 19,
+        "ruleRecall": {
+          "correct": 82,
+          "total": 112,
+          "rate": 0.7321
+        },
+        "rulePrecision": {
+          "correct": 82,
+          "total": 84,
+          "rate": 0.9762
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 539,
+          "total": 852,
+          "rate": 0.6326
+        },
+        "cardFieldAccuracy": {
+          "correct": 35,
+          "total": 38,
+          "rate": 0.9211
+        },
+        "issueRecall": {
+          "correct": 6,
+          "total": 11,
+          "rate": 0.5455
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 19,
+      "cardsIdentical": 10,
+      "rules": {
+        "frozen": 112,
+        "batch": 112,
+        "matched": 112,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 112,
+          "total": 112,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 112,
+          "total": 112,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 111,
+          "total": 112,
+          "rate": 0.9911
+        },
+        "activation": {
+          "agree": 112,
+          "total": 112,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 112,
+          "total": 112,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 112,
+          "total": 112,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 671,
+        "total": 672,
+        "rate": 0.9985
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 19,
+          "total": 19,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 19,
+          "total": 19,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 33,
+        "batch": 43
+      },
+      "issues": {
+        "frozen": 10,
+        "batch": 11
+      }
+    },
+    "cards": [
+      {
+        "cardId": "boa-air-france-klm",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-allways-rewards",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-atmos-rewards-ascent",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 8,
+            "rate": 0.875
+          },
+          "activation": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 3,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "boa-atmos-rewards-summit",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 3
+        }
+      },
+      {
+        "cardId": "boa-customized-cash-rewards",
+        "rules": {
+          "frozen": 16,
+          "batch": 16,
+          "matched": 16
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-customized-cash-rewards-secured",
+        "rules": {
+          "frozen": 16,
+          "batch": 16,
+          "matched": 16
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 5
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-customized-cash-rewards-students",
+        "rules": {
+          "frozen": 16,
+          "batch": 16,
+          "matched": 16
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-norwegian-cruise-line-world-mastercard",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-premium-rewards",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-premium-rewards-elite",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-royal-one",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 5,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-royal-one-plus",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 5
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-susan-g-komen-customized-cash-rewards",
+        "rules": {
+          "frozen": 16,
+          "batch": 16,
+          "matched": 16
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 16,
+            "total": 16,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-travel-rewards",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "boa-travel-rewards-secured",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-travel-rewards-students",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-unlimited-cash-rewards",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 5,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-unlimited-cash-rewards-secured",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "boa-unlimited-cash-rewards-students",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 0,
+          "batch": 0
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:16:42.163Z",
+        "lastFinishedAt": "2026-11-06T19:16:42.163Z",
+        "models": []
+      },
+      "capture": {
+        "records": 19,
+        "done": 19,
+        "attempts": 76,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:18:58.641Z",
+        "lastFinishedAt": "2026-11-07T18:19:10.771Z",
+        "models": []
+      },
+      "extract": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:28:07.355Z",
+        "lastFinishedAt": "2026-11-07T18:28:07.363Z",
+        "models": []
+      },
+      "draft": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:28:24.868Z",
+        "lastFinishedAt": "2026-11-07T18:28:24.873Z",
+        "models": []
+      },
+      "verify": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:37:53.264Z",
+        "lastFinishedAt": "2026-11-07T18:37:53.264Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:01:04.202Z",
+        "lastFinishedAt": "2026-11-07T19:01:04.202Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "apply": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:09:16.146Z",
+        "lastFinishedAt": "2026-11-07T19:09:16.147Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 19,
+        "done": 19,
+        "attempts": 19,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:14:49.368Z",
+        "lastFinishedAt": "2026-11-07T19:14:49.368Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 1,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:16:29.212Z",
+        "lastFinishedAt": "2026-11-07T19:16:29.212Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "boa-customized-cash-rewards",
+          "runs": 1,
+          "modelMinutes": 5.5,
+          "inputTokens": 12472,
+          "outputTokens": 3780
+        },
+        {
+          "cardId": "boa-unlimited-cash-rewards",
+          "runs": 1,
+          "modelMinutes": 1.35,
+          "inputTokens": 9337,
+          "outputTokens": 729
+        },
+        {
+          "cardId": "boa-travel-rewards",
+          "runs": 1,
+          "modelMinutes": 1.55,
+          "inputTokens": 9690,
+          "outputTokens": 805
+        },
+        {
+          "cardId": "boa-premium-rewards",
+          "runs": 1,
+          "modelMinutes": 1.73,
+          "inputTokens": 9843,
+          "outputTokens": 919
+        },
+        {
+          "cardId": "boa-premium-rewards-elite",
+          "runs": 1,
+          "modelMinutes": 2.47,
+          "inputTokens": 11047,
+          "outputTokens": 1025
+        },
+        {
+          "cardId": "boa-customized-cash-rewards-students",
+          "runs": 1,
+          "modelMinutes": 5.23,
+          "inputTokens": 12488,
+          "outputTokens": 4067
+        },
+        {
+          "cardId": "boa-unlimited-cash-rewards-students",
+          "runs": 1,
+          "modelMinutes": 0.64,
+          "inputTokens": 5982,
+          "outputTokens": 239
+        },
+        {
+          "cardId": "boa-travel-rewards-students",
+          "runs": 1,
+          "modelMinutes": 1.51,
+          "inputTokens": 5941,
+          "outputTokens": 312
+        },
+        {
+          "cardId": "boa-customized-cash-rewards-secured",
+          "runs": 1,
+          "modelMinutes": 6.14,
+          "inputTokens": 12089,
+          "outputTokens": 3755
+        },
+        {
+          "cardId": "boa-unlimited-cash-rewards-secured",
+          "runs": 1,
+          "modelMinutes": 0.44,
+          "inputTokens": 5748,
+          "outputTokens": 229
+        },
+        {
+          "cardId": "boa-travel-rewards-secured",
+          "runs": 1,
+          "modelMinutes": 0.52,
+          "inputTokens": 5697,
+          "outputTokens": 296
+        },
+        {
+          "cardId": "boa-susan-g-komen-customized-cash-rewards",
+          "runs": 1,
+          "modelMinutes": 4.36,
+          "inputTokens": 12875,
+          "outputTokens": 4034
+        },
+        {
+          "cardId": "boa-atmos-rewards-ascent",
+          "runs": 1,
+          "modelMinutes": 4.79,
+          "inputTokens": 10572,
+          "outputTokens": 2638
+        },
+        {
+          "cardId": "boa-atmos-rewards-summit",
+          "runs": 1,
+          "modelMinutes": 3.75,
+          "inputTokens": 12040,
+          "outputTokens": 1561
+        },
+        {
+          "cardId": "boa-royal-one",
+          "runs": 1,
+          "modelMinutes": 2.76,
+          "inputTokens": 9136,
+          "outputTokens": 1268
+        },
+        {
+          "cardId": "boa-royal-one-plus",
+          "runs": 1,
+          "modelMinutes": 3.8,
+          "inputTokens": 9567,
+          "outputTokens": 2685
+        },
+        {
+          "cardId": "boa-allways-rewards",
+          "runs": 1,
+          "modelMinutes": 2.49,
+          "inputTokens": 9222,
+          "outputTokens": 1113
+        },
+        {
+          "cardId": "boa-air-france-klm",
+          "runs": 1,
+          "modelMinutes": 1.61,
+          "inputTokens": 9010,
+          "outputTokens": 1087
+        },
+        {
+          "cardId": "boa-norwegian-cruise-line-world-mastercard",
+          "runs": 1,
+          "modelMinutes": 2.84,
+          "inputTokens": 8970,
+          "outputTokens": 1026
+        }
+      ],
+      "totals": {
+        "cards": 19,
+        "modelMinutes": 53.48,
+        "inputTokens": 181726,
+        "outputTokens": 31568
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 18.38,
+      "tokens": 477585,
+      "perCard": {
+        "modelMinutes": 0.97,
+        "tokens": 25136.05
+      }
+    }
+  }
+}

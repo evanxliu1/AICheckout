@@ -1,0 +1,1462 @@
+{
+  "schemaVersion": 1,
+  "batch": "u-s-bank-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:22:26.143Z",
+  "cards": {
+    "us-bank-cash-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cdcb17206d1e7540040371b24119436216cff3ea964efceb531dbbdcbdfae1b9",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-cash-plus-product",
+              "sha256": "078471cec6cea2e27b2bdf031eadcd46017d39bd139e8689015d413dd2c19651"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-product",
+              "sha256": "39a29ab87c04eb7585834638e3d1b872a1059d85379a4d7a2f5efd5b30edf995"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-rewards-terms",
+              "sha256": "4e5229f08018ebaca9b1faf184dbf5897ff05b5664eb1dd21af9ee3c8b45ef35"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-rewards-terms",
+              "sha256": "38fcd2f145167dbaa2caf75f4768bc657d42b621d75fe27e3837562c3df7af8f"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-sample-merchants",
+              "sha256": "9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-sample-merchants",
+              "sha256": "648074907ebca4a8cd7d6ed0cc914d7b603ad9bd146b9b5c610baad4f3050731"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:38afa44d4bf06d517555177652a71919deab74b3ce240af697fb787f35c89bfe",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-cash-plus",
+              "sha256": "79bc1852439d0c038a053d6d08ea3a91bfb6a3e24d995827dbb8db6f3ff6f7cd"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e1585a69e0905ec4f2694971ae7a1a792f73799ef6a9fed6e41cd32819e91684",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-cash-plus",
+              "sha256": "3c562e4cf0ed7a8b332dd0a7f4f7018757d97ba19c1f3c9ac92d27cfc02e6922"
+            }
+          ],
+          "labelsHash": "sha256:74832be959f45daa201692e77148ab219009504fb1fa2c2e4b2dff678b24499b",
+          "anchorsHash": "sha256:0e4e765125afeab03362fcee2112c176d37fdf8f10cdd37fa3fa287a67794311",
+          "finishedAt": "2026-11-07T17:55:06.019Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f6e734fea2fc2d7438173fc3893412a316593578d737efaaf8eedc96eba43838",
+          "labelsHash": "sha256:74832be959f45daa201692e77148ab219009504fb1fa2c2e4b2dff678b24499b",
+          "anchorsHash": "sha256:0e4e765125afeab03362fcee2112c176d37fdf8f10cdd37fa3fa287a67794311",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:18504e114b0490a9960ec77ff478d52a3bd81a0e2253d39a3490d195b6e93a8b",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:386eb18b2743f01277469306b36bcbe9abc58cd8bae6f2bf9f7585a128bcf325",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-cash-plus",
+              "sha256": "7c423824053bb0f0fe899c392272b9b00abe5d8aa727445176a4f82d42a64c27"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.590Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:506b104c96f54aee9bd52612cae802ac663eaef257401253e413a3604fa47165",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-smartly": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:20774ce4c88d04fb0606d89259b7d549ec4f4768ade4a99fc0d18e0a10884ea6",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-smartly-product",
+              "sha256": "fcd3cb87e71833042a1af745911d4b21d89e949dcace0f245de8718e24298bcb"
+            },
+            {
+              "ref": "source-input:us-bank-smartly-product",
+              "sha256": "0f1845f59ba4cae8469232ceb43f8e15c7db9dba0e3b93353b7043ac2a9464da"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7bcbfb14016c82e0817579e55bf740f2159d85dca3c72a08c492c1c523efef04",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-smartly",
+              "sha256": "8e24d94395faf75e00286b351e920f65aed96640b0460f744c0d0f0bca91cf46"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:f4a92b66af798899fd867e91f460b3ea4d53c6bf6fcddc50dcba79d87954b5d9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-smartly",
+              "sha256": "9c495d1751e37f05a26be7f6083034072b8417d135e713ca4950b1e6cd6b3060"
+            }
+          ],
+          "labelsHash": "sha256:4ec6cf664f054051b81caf9f5648442b4939e9a2506e86251ea5ee137dbc5688",
+          "anchorsHash": "sha256:68132a0d63f259922901dfb8382e847deb7f5acac16da843238f3bc383c997be",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:26a911c3c578880ad21d247111299926cf6513d1f58f26cc871a810575a5c3cb",
+          "labelsHash": "sha256:4ec6cf664f054051b81caf9f5648442b4939e9a2506e86251ea5ee137dbc5688",
+          "anchorsHash": "sha256:68132a0d63f259922901dfb8382e847deb7f5acac16da843238f3bc383c997be",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:474265e5b965213e708ff6731430b7f96fb2314a37990f9fd616c96cd53ee5a4",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:153898923420b270542268ae0ee8ecd2e030977ac0f920d06e1aebb7df585dc1",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-smartly",
+              "sha256": "aa7aa293f7c1a1c8e20afdf3cd8b6a6b97a93780ae3bef3a4332683ef6c4c92e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.590Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:071cacb9ae7d53b17df994c764723f05167b9b67ba0e95212601089d9ea13cbd",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-go": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2370c62de276ffcf703e6807adf01f5de4778b3f2c64079bd41ce5f223081f3a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-go-product",
+              "sha256": "47c268706a2cea489d0a0ca50f7822a7417a16726075b2c9481e3d2f49221363"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-product",
+              "sha256": "60eaf85ae736a160ae1ddd29dcf32a90054633ba5f887173fbf75c94d308ab96"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-go-rewards-terms",
+              "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-rewards-terms",
+              "sha256": "7aaee612c70daa0ada979f132c5000479100bd877ef441eb402ea95d53d7d795"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:303b47570db00682a9d3459c0841e65d21da34229cfab965802719adce8e3b75",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-go",
+              "sha256": "48e9595ca1abf47faa6dcda0f46e6fdfc094f3f22d6e798d65fb86b369de6bd3"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 5
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4db7261a644a477a870bbf8eed2c80c39305398c87473e03eecf29c29256db1d",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-go",
+              "sha256": "87d91ae0f31ac405eba9e17348a45f9e02e4ab3859a43036ea082bc5ee5dfc05"
+            }
+          ],
+          "labelsHash": "sha256:be2fbf8a69659f1e2c901aff06f5a22f769482496c305a350f225d65f5c40540",
+          "anchorsHash": "sha256:8f5a33573034dfb9b9140d0b69340181671df71d31b2a7948367b81ef37167c7",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:007ce6a0bb9b0493adc574a18bbf81ed1ee3a3a2e2e6b014eeeeb61436cd3abf",
+          "labelsHash": "sha256:be2fbf8a69659f1e2c901aff06f5a22f769482496c305a350f225d65f5c40540",
+          "anchorsHash": "sha256:8f5a33573034dfb9b9140d0b69340181671df71d31b2a7948367b81ef37167c7",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:e33dce193b465c7c83106fbb7a84ba15141d2ff312b6944f5b3c6bd47fb24906",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e90396bd5e8ff6df3688b3c407585571a018c98a3aac6a01bb64b18612a3e369",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-altitude-go",
+              "sha256": "87d91ae0f31ac405eba9e17348a45f9e02e4ab3859a43036ea082bc5ee5dfc05"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.590Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:b67e48689e763a72b3cb7355b96cc0e5b11f5575cab9d541c7d60d3ede3d08bf",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-connect": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f49c108ed1f65514e87c76a4b35a0feaad8ee1ded1b28840e5e0f767bf692f59",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-connect-product",
+              "sha256": "33d25b989d53040a953f50aeba44bd8c173dcd77ff5b5a94d65441add6683938"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-connect-product",
+              "sha256": "07e26bd5a5328476f9550ec9f02979d011e9386e5925b3c68b2a2f9ed969f5dd"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-connect-rewards-terms",
+              "sha256": "4dc126f8d18c8a1aad7fc703a32fd671aef17bef5ca9d632e6777afb37e8d702"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-connect-rewards-terms",
+              "sha256": "bb53f8d89dd867edec11a9438213ceffaf120ac3045e8d0409326d30cb4f65a9"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.847Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c4c3750f74fc298da808c940aac91450f6a7be611064aa3b0fe423b64db9656c",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-connect",
+              "sha256": "7af9fd7a0553e297d73422daca649f93c75e945e95673d9e69e9abbcd6d1a9df"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.994Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7a6bfc3e571108728c648436c06cb76dee069439708d8f3b28c997cb3e33ec33",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-connect",
+              "sha256": "84c3cec8305318c94614046e6aee3c5ba7b12ea2d45aecf42b4941828f55a0aa"
+            }
+          ],
+          "labelsHash": "sha256:2b92287cf4b7c51bb0ca7310a5f44230c8b77b280f39bdecf47e87bb1a34735c",
+          "anchorsHash": "sha256:ead4823954c510c72e872ce41ad1cc085946f326e34688f1073d71919c7458e9",
+          "finishedAt": "2026-11-07T17:55:06.020Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:4f418c3ef8daeca6cc324a08babbf7e3075dcf5e169ff389751828e427d34bf5",
+          "labelsHash": "sha256:2b92287cf4b7c51bb0ca7310a5f44230c8b77b280f39bdecf47e87bb1a34735c",
+          "anchorsHash": "sha256:ead4823954c510c72e872ce41ad1cc085946f326e34688f1073d71919c7458e9",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:d54e7bc7e5929243b75276c72797ba79aebc739c9d58d7b7591cfdbe6a65e277",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:10a2bbf96b01144ec637974f394ca77af84138ab0ba2e1a4100f8e86393c2316",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-altitude-connect",
+              "sha256": "a7676b1be17b03672b0bd55876c29b637e05ac2cc51e7c420b8f44c6ca11dc2a"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.590Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:5d426ee48ea3b297d1428c227a84682082f069ffd37fcdf81836766fdc0100b9",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-cash-plus-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6f30bd15fdd46f731442f24cb25acd46120331d210b215185c0926fa4975c48b",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-cash-plus-secured-product",
+              "sha256": "85c07357c5ba2f29c96467765a8575799261bc46862448ab2edb984aa5f26022"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-secured-product",
+              "sha256": "8577223c19d362d1fb8aef90a0fad120d179d19de4467278555d9efcffb927b1"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-sample-merchants",
+              "sha256": "9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-sample-merchants",
+              "sha256": "648074907ebca4a8cd7d6ed0cc914d7b603ad9bd146b9b5c610baad4f3050731"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.848Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0228e86bcee7090ab072b98c4355e5e4090ae369a8bcb423b8453ae281e76096",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-cash-plus-secured",
+              "sha256": "9f31a74420b31ca8b5b19d2173915f6c6f62ee32da1b1d9b4f01b252c3a8b2c7"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ca37a7f9f2f78ba9dcc09a03849f5471bd1f0afb4fc9a91938e07d7f868dda21",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-cash-plus-secured",
+              "sha256": "a127da6606549593c637d8c4d52159561ff00f47d8824bd33ae839c8d19a484c"
+            }
+          ],
+          "labelsHash": "sha256:79adf128a1de7750502f08ffa234a11d747593771301d82862520df7fb0e76f2",
+          "anchorsHash": "sha256:f24851d231dcd8fcd7f791ceb5466a8a4235ba71cb6c72aac76ec68f6744add9",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:841aeb0272290484cd8358bb171427ee57319b9b906de55e4144ef4b981b5216",
+          "labelsHash": "sha256:79adf128a1de7750502f08ffa234a11d747593771301d82862520df7fb0e76f2",
+          "anchorsHash": "sha256:f24851d231dcd8fcd7f791ceb5466a8a4235ba71cb6c72aac76ec68f6744add9",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:548cfcd7b5e9575b530c431779377bcf9e1d152ef67fa7da1a57295f18c8b5a2",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:b7ddde773ef917f1622dbe7908939bb2730b3f7dfbd060ca8d6307e0337ced7a",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-cash-plus-secured",
+              "sha256": "f7563156a4b29ed2683e22ca2141459917e24f28d8f37f23be5217d3662d8d2d"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:63453b051e4da1b3bacc5e3a01412b62915fa74a8d6ffaf895d02b61f8c3a05b",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-go-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3b772705e9a85680efa6dc6f39133f038eecbaa3085aaceed52c4ecc04ef9ac2",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-go-secured-product",
+              "sha256": "e4a502be38b1ec01428e875e14a6cada1a374b5727788c52c061c2c2a4f8279a"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-secured-product",
+              "sha256": "958b5a5b96becbf19d919fc7f1301f5c892ae2320212c5c9effb746f4168dd67"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-go-secured-rewards-terms",
+              "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-secured-rewards-terms",
+              "sha256": "ab7d95f358d7f5cff408b3044c7483cf51f8fb4ae78ecd9c586b84ad016b0b3c"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.848Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:92f0076f09a216045673c162347b5e482cd88f4c7cc36c7d8a8e83335f312fef",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-altitude-go-secured",
+              "sha256": "16aca455c119df55c95fb39fae1527e1236f4dd78ff0f4a32df19b31ac8838ad"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:76d7196dc097ed1d42362b4592c179d3a1ff504f07bc6b0e3686366becee4b08",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-altitude-go-secured",
+              "sha256": "678aab738e9edd7549d9add4f6528b565bcc74ad1be7eacd3f117f81ae34e5e5"
+            }
+          ],
+          "labelsHash": "sha256:d06271443e352eca9dacf3894a055d1820c80877053ef9696d3459a6dc6bbc17",
+          "anchorsHash": "sha256:477b8c59a08abab11d8ef553c9328235f6abc9ccc7ef24b405941697be9ddb1c",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f0efe4840bbe5c2e1a8eefede81528fe30f6a1f7a53c974cbd910da6653474db",
+          "labelsHash": "sha256:d06271443e352eca9dacf3894a055d1820c80877053ef9696d3459a6dc6bbc17",
+          "anchorsHash": "sha256:477b8c59a08abab11d8ef553c9328235f6abc9ccc7ef24b405941697be9ddb1c",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:952b07eaa2543a95857f99d77d95db9e28e7bb8edd37507cbfdf1da03cb0479a",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:3a6717a3811ad133f85cc80f7c1d8a906ad876e946d5c3309cca103436cd07d3",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-altitude-go-secured",
+              "sha256": "f88909bdf306c4605c528c221fe99924db94326283f152764742257d4df418a9"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:5618502547dc92c838e95445283c60d95ce30063f14517f62b4c623ac63de826",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3b4a97e0f5b09ffc169b051a4aed1afd79e24543bf2efecfebd406f4d98ad717",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-visa-signature-product",
+              "sha256": "d27a88d8f8da72bd0dfc87a7f3a49cd1b2fe97244c8227c69359c151def073da"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-visa-signature-product",
+              "sha256": "f5077c963ef6e7e696692f30c6e14cf7b4a6ea67b3bf0e42d140ea3556cae077"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6f9770921e3925a3ad704d2f33dd2ce69a61b8218a9cf0a2cb52875e52080ff9",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-harley-davidson-visa-signature",
+              "sha256": "33cae75786813cbdafb13adb4416beb8f7fe4a22c170c58c53b56692995746e5"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6b429a40d3ffe4c09686c6a8bdffc671e42fb8988f78d75ca58f881f9e4908ba",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-harley-davidson-visa-signature",
+              "sha256": "fc33d2f5ff3c83c3b5577b3b4f70cc0d5555d534bbb9613a4f3ac99770db4691"
+            }
+          ],
+          "labelsHash": "sha256:25f15aa753fddc4638579fb1f6b93f3378b1c413dab83b64d6407523af559371",
+          "anchorsHash": "sha256:5a29ade6ef56c2bf3b82e6f2df2e99734a8415069adb44868d2d6ad15ab91a86",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:5aa948020756561ed484a8fbdf25c3320465b7cf7334fe507e142976e8cd11e3",
+          "labelsHash": "sha256:25f15aa753fddc4638579fb1f6b93f3378b1c413dab83b64d6407523af559371",
+          "anchorsHash": "sha256:5a29ade6ef56c2bf3b82e6f2df2e99734a8415069adb44868d2d6ad15ab91a86",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:adf9f29241e901a9a11644b8cff568abae607ba3d4a57b49c847d3c114b767fd",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:2ce1971506513b636843602f63f1d99233d901764c4d80da8f88e764dd5525fb",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-harley-davidson-visa-signature",
+              "sha256": "c94b8ff65118dc7f63c70d24005644794074a557d5c62ec0369f10c1a63695e7"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2d37cb7df0afab699ce3956f7637a6d70988b34c49bd4ad5592030cdf9f97f40",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-hog-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:49a8e796a6c010cfaf03001cc0717bc9076d6ec2d663cb5280731bc89a02a17a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-hog-elite-product",
+              "sha256": "a39ee43cd6d025e7f93bb1002840376a445e564845c7e6727ab6a2fc8a02ce48"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-hog-elite-product",
+              "sha256": "22756bbc4c147b41a09d421ffe20e463710ff571e46bff8c252badc1768d6542"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6f10f65d1ef08ed0baf700a73eebd05827653eb3fee97744d7269984c7f7dbb3",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-harley-davidson-hog-elite",
+              "sha256": "4c46783b882efa86ade107e67d848078f69689167709eba9df67d1c3532a45bb"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:86aeae16049f15e5cfa677d51726ac095bc63b000e0f9f02424d3b17cebc482f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-harley-davidson-hog-elite",
+              "sha256": "61169568fbc90e795ead0584ea102a8427952f4e7db8e8e6e9bbadc20f7a8feb"
+            }
+          ],
+          "labelsHash": "sha256:a5305df4969659a9d09c371243ae4b9cd8cc851f2c6c6569f9b986cf69684526",
+          "anchorsHash": "sha256:9dd9804dfb34e4f25274a21ecd148845c07b98fe599c0b6653645b0752e31831",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:8d37ec01b4da61f690b880201fd05972cce2872fdecb59cfcc92f9045daf6ed4",
+          "labelsHash": "sha256:a5305df4969659a9d09c371243ae4b9cd8cc851f2c6c6569f9b986cf69684526",
+          "anchorsHash": "sha256:9dd9804dfb34e4f25274a21ecd148845c07b98fe599c0b6653645b0752e31831",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5ed28618d3c9cb64791ceb799c2c61c49c93c42bd93ea8bfe20b507f88de702c",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:16a89f84acf4a12c0674cff791e11d35e459e6dcf10b651db6d95ac17449c4d6",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-harley-davidson-hog-elite",
+              "sha256": "cfc4d94ca0df31c914357c4da7b8908b4655d1486aaf020d88672aa661d2c98d"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:171f9bec8f26c383c2f15aa957f108bc1b1bc942ef0e31951e6e9b78cbf74684",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7389188446a7de5f4c46f00648b592280280d49f09bedbd6a307e1b28171773f",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-secured-product",
+              "sha256": "65cbbb3cb4959dcaaaab161bac3a2566f5a7405a48c1c759bb3c5e80bffc5197"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-secured-product",
+              "sha256": "3e25313ec92b133d12075cd1746a2c547742f54cdca4ee2db4d9e81ba90b993c"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:01a4bb6c457c9160e4c5b856e4b5f301a483c831506b27a264b650f7f69d2594",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-harley-davidson-secured",
+              "sha256": "8b9822264a970854849af0160ae86e2b772777eb671f3fdd530852d6b56b34e2"
+            }
+          ],
+          "finishedAt": "2026-11-07T04:22:07.653Z",
+          "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c611268a833fc61c59b1417b4f367ad33250c6f40718b31604e4304ee9bbcd10",
+          "labelsHash": "sha256:6e33cac12b72e8a742ae41fb2a255825b84168343e344893308ecd3b542ba25e",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:be49b75044644b420aea306ffde5a02f550ae6b8168cf2fa10e0b64511fbff6a",
+          "labelsHash": "sha256:6e33cac12b72e8a742ae41fb2a255825b84168343e344893308ecd3b542ba25e",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:63be53abeb1b45a8a0abe20d13276ee4c0a4834bb7d6c1d1c79421e2454989e2",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e06d6d2911774d3c9f0ac962a8178fdf5fca45e5f172650cf002161be57c791a",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-harley-davidson-secured",
+              "sha256": "04fca064d800c868863e5670a275d2fa45d7f353b4e27bef4a291bd59cc4f329"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:bd3b11f61201a9ac993544e329fbcce280281020db4e7cec3a82ab73422e725c",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-state-farm-premier-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:170403672703e3082317866dadfcdca08e0ff3228eddd0694382ee572e70f415",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-state-farm-premier-cash-rewards-product",
+              "sha256": "dd0871354f762d8aebbdb34eda1871dcdaf1283248fd6e0e525205e04377abed"
+            },
+            {
+              "ref": "source-input:us-bank-state-farm-premier-cash-rewards-product",
+              "sha256": "ad88c32ad0fd79fa7e8a7efd9ca5c761846bfd21731174f5eb254d17b9ece858"
+            },
+            {
+              "ref": "manifest:state-farm-credit-cards",
+              "sha256": "34cd28a8dc570eaf4bbda03de919368fb7a1ba3e570e35f15527def21c499604"
+            },
+            {
+              "ref": "source-input:state-farm-credit-cards",
+              "sha256": "d16fcd0b0bdbf35fecd75778dc9e2bb558747cb3dfdc539ca86607ffc71e5887"
+            },
+            {
+              "ref": "manifest:us-bank-state-farm-premier-cash-rewards-pricing",
+              "sha256": "1394ed145a205fb401c85146716d8526494c228dda140b83bab889213ba30e94"
+            },
+            {
+              "ref": "source-input:us-bank-state-farm-premier-cash-rewards-pricing",
+              "sha256": "bf57c12449dc8ed1edd33e019ab805643431812d7a605b5e93ff1662a29269bb"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7d9f1ef0f607fd7fd87e773467a839bf1999830585a6a2b031361960e322e218",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-state-farm-premier-cash-rewards",
+              "sha256": "ee4c2c9f3b5d0694fc57ca1a4d50538e1e3e3b55b314fa63f1e619a0d78497c8"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.995Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:bcf11cbb162fb4d5b858c285f6ec729e734d2a97571e26bb30c9a5be5813d9fb",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-state-farm-premier-cash-rewards",
+              "sha256": "6f0f0dce752d17a8fd2e71ae505f4d6420fd71a006108164cd71132ef29d6da3"
+            }
+          ],
+          "labelsHash": "sha256:8b2ad2f7c9a47b12bf622549b1ae29c122bc1da1464c82b0311f1afac283e595",
+          "anchorsHash": "sha256:353f8364b11aea1dfb7df8de2f2d774b0bd3cd16fa8750f2e36cba3b7690296b",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f43bfab7af5be0acd5375cb5ba725f8995010706aff4bb0f352564ad14eeacac",
+          "labelsHash": "sha256:8b2ad2f7c9a47b12bf622549b1ae29c122bc1da1464c82b0311f1afac283e595",
+          "anchorsHash": "sha256:353f8364b11aea1dfb7df8de2f2d774b0bd3cd16fa8750f2e36cba3b7690296b",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:c323f0a01ba5d17386affac5c2ccc01dfdd4bd8be204cdb933604bd11ab2d4f7",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a82be00e4f15c8e1a7abb39c6fb5ce100e62e7288d5fb44f30a5e7b6aa4e8487",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-state-farm-premier-cash-rewards",
+              "sha256": "5649065e9716adfc4fef089ed0a94fb64dd07f9d1c0dc5742a481d764c752ad8"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.591Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:933f9e31d843b42c78dacc5c715d046923d52f0611d38f566e4e6672faa8ebc3",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-edward-jones-triple-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bb9193f87586bbe7c8ece70308a17dc1519c2c64fbaf0feda3cbd509174cb24a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-product",
+              "sha256": "edf47582085a7dd8f5ea0e54ff91e57450ffe81162b67c09933bf54604902551"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-product",
+              "sha256": "91e92989a91b63a77b7e716ca1bb5cf9f56b204f8cc04c99b6d495cd0ef18de7"
+            },
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-pricing",
+              "sha256": "c5873f91b5f04580d713c22bfc2a034f4fcaa56949608d210dbb8ceeda0f7ab0"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-pricing",
+              "sha256": "68c260c308cf8d0c5767b08fc28482da1ab9da55bfedfa0eeae4bcb9a5b83744"
+            },
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-categories",
+              "sha256": "de507e75ebdf67084a67ef0c00582178c5f2b93781711eadd8ce57da8875e95a"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-categories",
+              "sha256": "c66033d408b2fda5d68bff1d36f378f0e2a767ca465aae8d281b3fe68c273ef6"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.850Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9dcfd5802ffbb74ac6bde67c37a7c3245cb68be8ea5380f9b2a31ed8672c69f3",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-edward-jones-triple-rewards",
+              "sha256": "2ff6f961469aebe4e483c0370406b6210de1506774f7e2f9619dae8df657b233"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.996Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:34298d19df5da2060d254748d7cdbf56721eb96501fc73eefc196689972f4431",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-edward-jones-triple-rewards",
+              "sha256": "22b035ecab15d52c75ff66d6ea127c4100cdb878fb3555b3d0498af686cf015c"
+            }
+          ],
+          "labelsHash": "sha256:498d010734332f00f9dbd03ae73bfe871c33d91e3d8fa2eb2608584d6a93cc04",
+          "anchorsHash": "sha256:5d4599cb27790c90e6d1e71c1efd184fb0081ea7e36e1e6bc65dfb6965014823",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:a576f74c5350281980e064d1ab0ec7e08b294416826ff0323ff36b8f06e9b30a",
+          "labelsHash": "sha256:498d010734332f00f9dbd03ae73bfe871c33d91e3d8fa2eb2608584d6a93cc04",
+          "anchorsHash": "sha256:5d4599cb27790c90e6d1e71c1efd184fb0081ea7e36e1e6bc65dfb6965014823",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:62b8381dfba106181132c56ba52c08ebab20c0adca186543ce66deeca7de4ef6",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6226ddb762f01752b819585fd77a7589f22cf6c88828f69688986e9095e18319",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-edward-jones-triple-rewards",
+              "sha256": "96150a58788c2b85498f5132e2cf615928c824b19256f468a8f8e640590840e0"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.592Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:883b8e066c99fe631c92c16bd78896b95a933b104b8af11d87e32afda9be18c6",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-elan-fidelity-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:dd1c6759d38d1736e3c51f37837318abdf8f939ddc2b82ac0660b7a43b048fb4",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-elan-fidelity-rewards-product",
+              "sha256": "bd6a34b93aaa5e6bae887218891986af59a7b0f05aa52c40ba7db7ae5b607b36"
+            },
+            {
+              "ref": "source-input:us-bank-elan-fidelity-rewards-product",
+              "sha256": "6fa5ddaa50cdfdd1e4aa16cfec0d080c15555f6295650eebc137a8df5915138b"
+            },
+            {
+              "ref": "manifest:us-bank-elan-fidelity-rewards-rewards-terms",
+              "sha256": "fa4507ed5466803468f6b3b66dd6e24ff1f05f214ef5c64a9e86e889f6d425b2"
+            },
+            {
+              "ref": "source-input:us-bank-elan-fidelity-rewards-rewards-terms",
+              "sha256": "001e8a35c5f5c0cd28fad3f3614d4bd55ecd529549048864d6b72b898f566102"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.850Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c62de605bf91b6781f6e282c17332f737ab7777505a1774c4123048a706cefe4",
+          "outputs": [
+            {
+              "ref": "trace:us-bank-elan-fidelity-rewards",
+              "sha256": "25b305a00d2ee58666ec51fb45a239a856387e5ebcd24091d495382f8b4e3839"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:46:13.996Z",
+          "attempts": 4
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e85aa6da7b51c8ecb1ac8f43fe75b7763f27e746840005e0abbe20fa997741c0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:us-bank-elan-fidelity-rewards",
+              "sha256": "b22b1029d57b9ad1d6f3d0a1b23809a227391ba68f3ef39a6347974618c71e6f"
+            }
+          ],
+          "labelsHash": "sha256:cf94bd8e2986a4ac3891e5904ef3cda6646c0a0d53820780db5bd2041be23f86",
+          "anchorsHash": "sha256:68b697b8b69a7201118227aaf5a1f3f9d2bc1d29a5342b2e6d7a26c1616e6780",
+          "finishedAt": "2026-11-07T17:55:06.021Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:dae72a11318654f9324ed5c32da3200aee930e4dd7696dff32577d79ebc2bbb8",
+          "labelsHash": "sha256:cf94bd8e2986a4ac3891e5904ef3cda6646c0a0d53820780db5bd2041be23f86",
+          "anchorsHash": "sha256:68b697b8b69a7201118227aaf5a1f3f9d2bc1d29a5342b2e6d7a26c1616e6780",
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:2049fe30dcd3b2d497afdd1511d9554fd4c684e48a59c78e827d9315467d82a8",
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:86ee25d8b6cfcc380713b99f4ae3e455a7b2e349919d55ddc4028473a7b26e3a",
+          "outputs": [
+            {
+              "ref": "corpus:us-bank-elan-fidelity-rewards",
+              "sha256": "e7a6c035d841f025a1e0509e0ef1e1e9f4515272984e4029a064767725134951"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:22.592Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:56e08698110802bcb82992cefcaa6f87d68167bdc9584ed1374b1fb481ca8bca",
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "u-s-bank": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:1b6af77f99cec968a9ec05c3eb17fb93c400662d5f23f7ca698b36903d1c8679",
+          "finishedAt": "2026-11-06T19:11:29.690Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:u-s-bank",
+              "sha256": "fdc914f3696e8623816a96fbd8b48e86bdb95d514bfa14067312f2cd41c41408"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:06:48.052Z",
+          "attempts": 1,
+          "packetId": "ad58ae38-06f2-4bcc-a7ac-53142d355504",
+          "agentRun": "a22148ea4c7d05f87",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:48.052Z",
+          "durationMs": 521943,
+          "tokens": 226913
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:u-s-bank",
+              "sha256": "9774b5d6686ee25bc9184c4031321e52af029710eb0f065cab40a8dffae885c8"
+            },
+            {
+              "ref": "lint-acks:u-s-bank",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:21.592Z",
+          "attempts": 1,
+          "packetId": "34f760a6-e924-45da-9f16-e510eb1338c4",
+          "agentRun": "ad25844eb058e99ad",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:21.592Z",
+          "durationMs": 670490,
+          "tokens": 219901
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:u-s-bank",
+              "sha256": "6150db89be32af9b0e9d8ed94a94980486b80b2ceb7f3c63307ff9ca7cd49fe4"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:48:18.221Z",
+          "attempts": 1,
+          "packetId": "d66c3752-be52-45c2-9243-257654f6bce1",
+          "agentRun": "a9818839dc426692b",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:18.221Z",
+          "durationMs": 339935,
+          "tokens": 146461
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:7b09949268707e8c8dee953ba7505bff92e98d5deec33af6f02eb6e2930ec9f3",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:26.143Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:2f27309ecf70203159ae0ff6799abd41819f4366b2963820b2e99a8f9fa95f56",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "1e80d64d7956452ce1ca95adeb72d88948c19e9e119861133f7840a7533780ea"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:08.280Z",
+      "attempts": 1
+    }
+  }
+}

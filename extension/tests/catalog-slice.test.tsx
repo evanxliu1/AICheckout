@@ -17,7 +17,7 @@ afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
 });
-const now = Date.parse('2026-10-15T15:00:00Z');
+const now = Date.parse('2026-11-15T15:00:00Z');
 function memory(initial: Record<string, unknown> = {}): StateStorage {
   let data = structuredClone(initial);
   return {
@@ -70,8 +70,9 @@ describe('page responses carry a catalog slice and a card index', () => {
       shortName: 'Double Cash',
       issuer: 'Citi',
     });
-    // The bundled catalog is about 800 KB; a response with two cards is a small fraction of it.
-    expect(bytes(CATALOG_V3)).toBeGreaterThan(600_000);
+    // The bundled catalog is about 600 KB (598,441 bytes since the 2026-11-07 renewal); a response with two cards
+    // is a small fraction of it.
+    expect(bytes(CATALOG_V3)).toBeGreaterThan(590_000);
     expect(bytes(read)).toBeLessThan(80_000);
     expect(bytes(read.cardIndex)).toBeLessThan(30_000);
   });

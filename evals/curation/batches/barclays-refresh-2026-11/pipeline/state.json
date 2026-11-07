@@ -1,0 +1,2056 @@
+{
+  "schemaVersion": 1,
+  "batch": "barclays-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:22:19.418Z",
+  "cards": {
+    "barclays-mastercard-titanium": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:ced5df7b1d42bb44a3e9dd30f1e230c0f6a7052f19138128794ff4a72c28f71d",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-mastercard-titanium-product",
+              "sha256": "c3075dc95c724ab7d68886ebc9d186697a06b3199b2929fa1de11c4cf14eb53c"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-titanium-product",
+              "sha256": "1bfe10bbd022ac8b7eb5726099af314e864f803771f775c378d7bcc6d1f71436"
+            },
+            {
+              "ref": "manifest:barclays-mastercard-titanium-pricing",
+              "sha256": "f7975e4f3a3792e1a966a6f697620829eb49e1498969af236b219a309164a357"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-titanium-pricing",
+              "sha256": "dbdd8822999f37c47b6089a9922895417a0fefdb45a3fa5582f1fa3c7329dc7a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.482Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c3742c032d7dd11c4db367261d5e4d325a18eb2535e2528d8d4ec2d0f6efa4f6",
+          "outputs": [
+            {
+              "ref": "trace:barclays-mastercard-titanium",
+              "sha256": "188812b782658347afe2988f050923d9fe5d30821f780903a8774cf75063e256"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.181Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:0911c202df458e7ee055a03d8a23f6f43319dcd5a5d6786ba8eea06428e9352f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-mastercard-titanium",
+              "sha256": "f45c90756af7e60f8c0893daf9804205862e44e99309a6447ddc246abcd64a35"
+            }
+          ],
+          "labelsHash": "sha256:5533a625efc228c13960c7640096a1e3d3ffae88dce503dbb2aee2b1ba75da6c",
+          "anchorsHash": "sha256:eef408176a306ef0acedc005a5997647fe402dfaceeb0d1cab4a397c72e8d76f",
+          "finishedAt": "2026-11-06T19:45:17.301Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:3732b8d90066182fb95f7381aa7cd20619c8137eb4ae4b20740bd1fc9cfa3beb",
+          "labelsHash": "sha256:5533a625efc228c13960c7640096a1e3d3ffae88dce503dbb2aee2b1ba75da6c",
+          "anchorsHash": "sha256:eef408176a306ef0acedc005a5997647fe402dfaceeb0d1cab4a397c72e8d76f",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:28a20f4b0e3ada8215c29d9adaf86bcbe5e489037f97048e2dc0f69871bf8d1b",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:ee8cf6cf47ec76d2d7f95670e2191791c11c061c9cc2e015971a1cf11ee12644",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-mastercard-titanium",
+              "sha256": "f5f8ff67b700acc6ba3a9d2855f94dabe0c1f45403dc9164e26d2d20b67e18f4"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:4e718556f9dde99c499ceeb81e5f855be92364302fb50b82b060773883ea6ac5",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-mastercard-black": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1474a2584467f9991493641e559b85138443c8158d3c39da43cd72be11438d66",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-mastercard-black-product",
+              "sha256": "858eb7ad00306d2e3ada6e549e8a586586c79cde4970b1494b36a7b0704e3821"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-black-product",
+              "sha256": "715ba12a51fefc615d2fc8334620524fc9889f2c88780750ef5fe1ec9a457102"
+            },
+            {
+              "ref": "manifest:barclays-mastercard-black-pricing",
+              "sha256": "071937faaacaa3ebc7aff3775de328b7970383d12468ec6537af44cc83afd5e8"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-black-pricing",
+              "sha256": "b7e65737044dcfa758ccccf3b7300ea3410906af74bcb3bac87c411ef87eb9f4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:26715c99f4d143faf9800ec573d9442251da36bf1fdb5d8fecd709ff3e69fee9",
+          "outputs": [
+            {
+              "ref": "trace:barclays-mastercard-black",
+              "sha256": "d66d761f583210729c99d05d5d697c5e576bf8dab3d807dc057f90e60df198a9"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.186Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8a44bc4fa948066e879fd87aff03fa7c1d6ebabc8c4af54e0520671b5774a914",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-mastercard-black",
+              "sha256": "42fb9757d482357e260bfdebf0c5cb73874b67dd7c397d8d57597dec773f96c1"
+            }
+          ],
+          "labelsHash": "sha256:151de0ac8e686c6d54f8982376079d12d3ccf577797141d470939e6a873fe6ce",
+          "anchorsHash": "sha256:0f1d140435545881715c3c3070f426aa2cae767f7794036d81f16a3ad61c5198",
+          "finishedAt": "2026-11-06T19:45:17.302Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:cb8f1bebbd42146422ae2da9d508bd16bc1db66945b3cb51900f7ac0760d9420",
+          "labelsHash": "sha256:151de0ac8e686c6d54f8982376079d12d3ccf577797141d470939e6a873fe6ce",
+          "anchorsHash": "sha256:0f1d140435545881715c3c3070f426aa2cae767f7794036d81f16a3ad61c5198",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:17fdd3ed412784e99977fba0e1d4ec44b655c05b147b69e1388589ce8bfb2af4",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:cec487314b419c0324090c7fae99a138d48f04f71632dd614665501e0dfa2c53",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-mastercard-black",
+              "sha256": "f9200a2f99cf2dbf5171a55f46b376db0e7920cbe58f57b15da681aa8f94baec"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:14ff98b953e14e16fbee7023d9839fa5d8da9e3875e8daf3d9c87e57eafff00e",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-mastercard-gold": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:25422a56f19b18b28521a50d9e3ffa271342c8e94cfc516351ffa8b1f21feb51",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-mastercard-gold-product",
+              "sha256": "12214d666dfdc6ab2c304ec87ad050ac9be0c970ee1945bcd5b5905b75fcceb7"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-gold-product",
+              "sha256": "5d0d5ed9f996cfa2bb6ee1407620a9b1c57b05ebc675a48257daa747f82793c4"
+            },
+            {
+              "ref": "manifest:barclays-mastercard-gold-pricing",
+              "sha256": "21def46b87a44fd27f64931a0022ebf9edeef1f3af22e8cf297acfbab2d91e48"
+            },
+            {
+              "ref": "source-input:barclays-mastercard-gold-pricing",
+              "sha256": "dc281e213ac046ffd16e8990cf0587a82137b51d080b7cdfe8b9f8d76a12fefb"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:21102931f71f031ace1361b4041483c27a9ea5093e6ef231dec5404dbcda703d",
+          "outputs": [
+            {
+              "ref": "trace:barclays-mastercard-gold",
+              "sha256": "9075c5b41243a631e06f91a5eaf5c49bfcdb49a9394a3b773f3912cfebbe5293"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.188Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a044044185bb52839ecec12c62ca87925bf8fbfde137978692cd76e1af72e957",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-mastercard-gold",
+              "sha256": "9018a2e087f4603e19c0b9883a8e9777ea94fb7a4890faff0b55cb151a5a3de4"
+            }
+          ],
+          "labelsHash": "sha256:370758f4ac8b71b2e830ced50e1cb2e51d6381316db0b7ecc376dd3a1526e33a",
+          "anchorsHash": "sha256:1c741f1808ca52fe692bc17eca1aa560a9d565d41d654fc9b07077e67cbfc961",
+          "finishedAt": "2026-11-06T19:45:17.302Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:4ea8b02d372dcd1804cb9f4938b7a36566ce4299d762e9cf8e0e54b709cd823c",
+          "labelsHash": "sha256:370758f4ac8b71b2e830ced50e1cb2e51d6381316db0b7ecc376dd3a1526e33a",
+          "anchorsHash": "sha256:1c741f1808ca52fe692bc17eca1aa560a9d565d41d654fc9b07077e67cbfc961",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:1f985310330aeeddfe8c834737da3f0ae79fbc62a8432511f484689ff83731bf",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:4c1dc2868b6476351bc7cb683cf1d8c79073dadd7f050ebf3af9962bf1fae91a",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-mastercard-gold",
+              "sha256": "3528e2f606543de38c24146c8249d862aa0283e9a72f47347c85b4988614295d"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3c66ef9e2c44a0743143d24088ce8340bd2595851e1fb511d3467badd6e58ca0",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-jetblue-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7d546a6f5cc5d78a4b87fb70d26f86fde04df7b6aae7104dbb5b3216bda7d8f6",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-jetblue-plus-product",
+              "sha256": "81351a0ce88750158165161306ab2a7d6bebca1b4c621c3d5bf62f95a4aecaf4"
+            },
+            {
+              "ref": "source-input:barclays-jetblue-plus-product",
+              "sha256": "39a923e574436420f14a6905edd050ff7c124fcbbed270d1a121d57018a1be94"
+            },
+            {
+              "ref": "manifest:barclays-jetblue-plus-pricing",
+              "sha256": "598d3c0bd06b6a3841e701fe45bdd63529a8e00d0628e698a19665c60d6431da"
+            },
+            {
+              "ref": "source-input:barclays-jetblue-plus-pricing",
+              "sha256": "dfc212558555b63c94601e15d6cadd89a37eed2c2732c87b788331c74948e937"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:ff568789d822750a8e1bb1b33be62bc139f480ed6f265083b2881d303ae18c1b",
+          "outputs": [
+            {
+              "ref": "trace:barclays-jetblue-plus",
+              "sha256": "f3c4ae00165cb6415f6583b5fa46ec779b9dccde781b81830556537f0cdc95ed"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.189Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d1932405c6506563361914453a54dbb3b96abb5447867595bfc5bb0520da9d07",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-jetblue-plus",
+              "sha256": "51b442b2ef738ff856771d96ca853d2207cd4a15c7f6d4ff9df5245ae1932f98"
+            }
+          ],
+          "labelsHash": "sha256:915c4b4482a1e58ce9d4672fbfa4a492e52d6ec2186db7f3d93ae0ca827e4c05",
+          "anchorsHash": "sha256:190a611d0f2caafe7da8db3497231f5d45c6380c0bb2633e14f1043949909385",
+          "finishedAt": "2026-11-06T19:45:17.302Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:fd29f76142de96e11b28c8b9b6170879bc46c64bebd907b6ed305b6ab4787112",
+          "labelsHash": "sha256:915c4b4482a1e58ce9d4672fbfa4a492e52d6ec2186db7f3d93ae0ca827e4c05",
+          "anchorsHash": "sha256:190a611d0f2caafe7da8db3497231f5d45c6380c0bb2633e14f1043949909385",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:18b209a19ff1973b5b5480b492396b54e835c50f3571bae5e30c794af909458b",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f880340482fbf25eb00d08ea7897933f7e8cae6365481421cd9d1c82bc0c5521",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-jetblue-plus",
+              "sha256": "6ac23571759e2401f438e085da366ceab86854f683668ed5d4443c4eb6653278"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:d13744507c348eafab1305a239337a1636daed573984898593d85369063b7f00",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-jetblue-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:d2cb5ef124bb9a086c3428fbc7e2162a9862b9fef3b1a43506cbb61fe32353ed",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-jetblue-premier-product",
+              "sha256": "af8e1332444d56d9b4dc2a209bb5e3008ac98437045a22f408e2dddcfbe65528"
+            },
+            {
+              "ref": "source-input:barclays-jetblue-premier-product",
+              "sha256": "3e3cabf76a38aa4b75cf636d40bc57be7f393ddd0f4bfc1f32048933c8bf5f1e"
+            },
+            {
+              "ref": "manifest:barclays-jetblue-premier-pricing",
+              "sha256": "6e0d4bfea9d015068e65bb0c7441cf3ebdca0082636b10ef82fdcc5c1d534ce0"
+            },
+            {
+              "ref": "source-input:barclays-jetblue-premier-pricing",
+              "sha256": "fa36efcf302e919346cc2dd2d4dc1b6d9ce1961e7c230ec43b28f8a4d6740bc1"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:183bdb86b27f769d427781569bda402d15c4bf65daab0f255b6b8585ac2f38eb",
+          "outputs": [
+            {
+              "ref": "trace:barclays-jetblue-premier",
+              "sha256": "dd9390ba833d20e53bc18b79206a6a23cb3071e7fa746da0c512146302fb945a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.189Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6618b1f91621eb114f58e4d24671aa5a27113159f7cd6a7d38597a4c159b4038",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-jetblue-premier",
+              "sha256": "59e0dd50783d2611219f27f277f2ca73e609b578fec668e41a167e3b94de1975"
+            }
+          ],
+          "labelsHash": "sha256:13e4bafbf634ca2e96a822bcbdd7004c29dfb380bd95334f1d6ce8be21e45e46",
+          "anchorsHash": "sha256:9a1795ed0047546e9e3b6f66af9925055c3f4c2d3971c9b05c280a6cbba9e035",
+          "finishedAt": "2026-11-06T19:45:17.302Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:916b854cb0b28274ee93fbf6bd9ad2aaf4b9bd01a4bc838de2c03be864227219",
+          "labelsHash": "sha256:13e4bafbf634ca2e96a822bcbdd7004c29dfb380bd95334f1d6ce8be21e45e46",
+          "anchorsHash": "sha256:9a1795ed0047546e9e3b6f66af9925055c3f4c2d3971c9b05c280a6cbba9e035",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:019bcc9a48817da77dd5c0b78011ad98719991941b3599669fc4ff7fe759f8ae",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e7ba856732b2a77ce861e30fe280f4bafb9f3467c53954d1a65060c19b7e1f11",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-jetblue-premier",
+              "sha256": "20ff0807eb82189429428984f219772bd50d476d28bf3406b795872adbccdd34"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:182ac1e92ed006eb5d4e62183b7b0754877603f710c0c7c661dfe99525d2bcb0",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-wyndham-rewards-earner": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:db0d8a7907c6cb2d04bb4f1bc84aa1f88df141dc56e12dddc7c93da16ad6804b",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-product",
+              "sha256": "3cdd197a74a65045d5dfa4297d512e2ea32c93130fb17608ee610f0377596d7b"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-product",
+              "sha256": "cfb3ef9c65e4326176908c537da6204091b1808220ef8204fc1be6ecd3009e63"
+            },
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-pricing",
+              "sha256": "6671cccfee5716482b5e7b94270622717f3a04ad1b511134de630c16e7f29dc9"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-pricing",
+              "sha256": "49d99d63f4f395fe082efe71dd621ce3a6b6f497c6aa96374e64ef7b13aeaaa6"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f09e67f491245b340094ced76359b063e29392cb6cb769ea3151dc5051d18192",
+          "outputs": [
+            {
+              "ref": "trace:barclays-wyndham-rewards-earner",
+              "sha256": "87257d5798df94d1727efb1d3a804281f4d32e140258d183183b98fbd7f82adb"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.190Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:e703f1f59608bc443cd45c510af70d53be578a7c137eb9500241c36468555a16",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-wyndham-rewards-earner",
+              "sha256": "52845d2b395f3135e896993467e0989b71389ee34eb0c55ef14354e8564c3301"
+            }
+          ],
+          "labelsHash": "sha256:f226b9f60c20441125fe5e22e0032fa214f99dfa7bb46a00d2dc13aa66b5493b",
+          "anchorsHash": "sha256:0660153c789b5ba073dbe68d83f1615a0dccc391e02658ec5f7f18b990cdee71",
+          "finishedAt": "2026-11-06T19:45:17.302Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:0828255d501ff7021cfc1bc41ff5b9bf4f151076a0b34227020f50622630531d",
+          "labelsHash": "sha256:f226b9f60c20441125fe5e22e0032fa214f99dfa7bb46a00d2dc13aa66b5493b",
+          "anchorsHash": "sha256:0660153c789b5ba073dbe68d83f1615a0dccc391e02658ec5f7f18b990cdee71",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:65fbf20625b3ba40add0349c5e9795f74d28bf4728f249b0b957aacbef360e45",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:72f4098aa55b2fd3ae2881f0467c3250015e38d46ca48a2fde26c9923e640219",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-wyndham-rewards-earner",
+              "sha256": "cfc2c9290340eacab22015fadb6b744830debf7da964e44ef158dfe29f90b018"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:787b04609fc53a700f2ac43ddb0c781b5ed9a4133247823b9137a8ff0b9236da",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-wyndham-rewards-earner-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:34329dd75d20e0f3ce84b373620dcb2d17a2272f3278df1bed0eefaae602f544",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-plus-product",
+              "sha256": "cbfaa1bdc58490c31b7a8e60a7b17bf489226c38be895e86707b0ff6a3d236e2"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-plus-product",
+              "sha256": "d2d95d3479475881eb2f65d65105d573855dc489e02ee1d9b60fa5d3bd88934e"
+            },
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-plus-pricing",
+              "sha256": "38000a6cfa6372adf04d79ff58e365d8807a430273ce0a6084b502ba17c1e089"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-plus-pricing",
+              "sha256": "66c1dd577707b19583b3e00c082051b716bddd081b7926c86556767493f1a899"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.483Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5876a0ce1720fbb4cfd4859ba016b40ea35f23afab4a5fc1a33bb41ccc3572d3",
+          "outputs": [
+            {
+              "ref": "trace:barclays-wyndham-rewards-earner-plus",
+              "sha256": "c97dc507c3af0b89e9fe5867981893d8c1399c8cbc13d7dfd50875dd6e76b73b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.191Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:4b799f8f072305addfc80052fcba9cec07d7c585d7a88406ed38cf4e3e5f5590",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-wyndham-rewards-earner-plus",
+              "sha256": "9f5251501fab8dbe89f33b6d87cc3d7c7293543e82f5f0fc10a1ef3cdd456d84"
+            }
+          ],
+          "labelsHash": "sha256:1b97700880508229415ed7cf5e37d68ba8515b9717703b07329d80156c4ec274",
+          "anchorsHash": "sha256:893cde532130d24431e894fb3766b3996ed74d5bcad14b5ffbba1393c1d426e3",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ef49aacecd4864e53bb29e2106f3042d9467e13f301c672823432126c59a83c0",
+          "labelsHash": "sha256:1b97700880508229415ed7cf5e37d68ba8515b9717703b07329d80156c4ec274",
+          "anchorsHash": "sha256:893cde532130d24431e894fb3766b3996ed74d5bcad14b5ffbba1393c1d426e3",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f2b3fbe85856da3d61539f4dd048e4ae5e450d439ffcb0b23b060d7cbed8cb72",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:47dd22ed384d96dadd24495ed18843b08b2e5c429f9c149ec62f021bbf336dea",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-wyndham-rewards-earner-plus",
+              "sha256": "94aad5f3de2fc10c0c56eff9fed92a4fad4afb8abfc7dbfddb7037b9304ffecc"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:f532328a587311d25350c03e7de35385b5e25242f492e9f204fc45f3c74433bb",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-wyndham-rewards-earner-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:81112b96f654021c58b1c45a08b2853ab2cb9f0e93f06c64642eb1cba01aff79",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-premier-product",
+              "sha256": "d1ff030c61cc2e00d134efdd8153bf7ce9bae97a1785f757aa4d2723bb581978"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-premier-product",
+              "sha256": "c39ddc499b15c8028c327268eb63db59a8866115611092bb7ed7ee57bff70d93"
+            },
+            {
+              "ref": "manifest:barclays-wyndham-rewards-earner-premier-pricing",
+              "sha256": "ee5084ee0011d8836d6bbb5978cac67f23022a2f91e150b0ca40f02af573ae8e"
+            },
+            {
+              "ref": "source-input:barclays-wyndham-rewards-earner-premier-pricing",
+              "sha256": "f8c246ce9b4b9b05d03648fa1d2620c8ad097e247344e2a94b80621f0852bdaf"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:81774ecf9315f6d75a0677d3acc7fdbf80790cf89dbad5efe626c1822e4753d9",
+          "outputs": [
+            {
+              "ref": "trace:barclays-wyndham-rewards-earner-premier",
+              "sha256": "0f9b38cb739744f699e5c23ea25f6c2972e3e188af0dd9747d9102251db64888"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.192Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:fe7085befabe6cb921c157040b740cc24cb9b5e68abca555c13bc38fcf6e0364",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-wyndham-rewards-earner-premier",
+              "sha256": "c551111305bb4cff843ba84350cd7af638a145dcda74cd096153e502be0cc9e1"
+            }
+          ],
+          "labelsHash": "sha256:d82afd1fe9beb47abed024cd562fea95202d1809896cf38e857545ca0542c0fb",
+          "anchorsHash": "sha256:dd167f575226588aab5d18f6d35caeae54f2ad82f6e09dc7b75c0aa0e508ae5d",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b1db52fc0c1bdda3327286f39f7d695a7f5fda9a886da48d103e543582dc322c",
+          "labelsHash": "sha256:d82afd1fe9beb47abed024cd562fea95202d1809896cf38e857545ca0542c0fb",
+          "anchorsHash": "sha256:dd167f575226588aab5d18f6d35caeae54f2ad82f6e09dc7b75c0aa0e508ae5d",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:0683e949e7955ef934209e9576fc689036c0a6ea1a80353c8ca9534ad82e0479",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d5db015f2d4ebcd37c04d4bf697c77c9be3217678a402d0631a5aa66e6e5cb44",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-wyndham-rewards-earner-premier",
+              "sha256": "f316adfd67805f0f8a2c49a3f9081f6df75598585a094a9ab3f4879295b33cb3"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:c48096e779e4c9b76df802d12135eb18b4c4a5264a024a3cdc525a1740ae17a0",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-upromise-world-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:efdec68b6a4cd31e9af607727b32d1740df51c3e2b6071eebfc89ddaa84a1ee9",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-upromise-world-mastercard-product",
+              "sha256": "eafaed2f6072294ed14960e93614ca2d73e5a5033c0f9cbe05b0aa7bdd47c16d"
+            },
+            {
+              "ref": "source-input:barclays-upromise-world-mastercard-product",
+              "sha256": "3b455410696fe8acbc3c765213caed2615d2bb7501faaf610ca933183390f6d8"
+            },
+            {
+              "ref": "manifest:barclays-upromise-world-mastercard-pricing",
+              "sha256": "7cef9819bec011b6678c72ee28d7144903470316c15f381e9db517527add8dc1"
+            },
+            {
+              "ref": "source-input:barclays-upromise-world-mastercard-pricing",
+              "sha256": "50754fab95eea3e648e38d7b230ac34a20574740975eb3e8d3a910c51cf2ee83"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:543cecbc8ea8f29273d1374d77a3ae85dad13713e3869dc693dac11c4afcbead",
+          "outputs": [
+            {
+              "ref": "trace:barclays-upromise-world-mastercard",
+              "sha256": "6a8b9621e153c0c995504cb7cf3684de959cf375c1083acb8247e554af07e1c3"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.196Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:38436b741b34953fdff41dec6e1841614c236af81604cc246b7194af0fe53840",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-upromise-world-mastercard",
+              "sha256": "679f0493af41be1f354bc5d4752e6c6c41dc81c6d5454536152960b0ddb2291a"
+            }
+          ],
+          "labelsHash": "sha256:18f77f1f3440cfdf343d561d565fef9f565710a07937888d18879ca77585560d",
+          "anchorsHash": "sha256:f370c46c49d5b4b3d41ac4f4ca9a4c0beaa12b1deb416d6dd393e157c8059aa7",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:26b033c4d88fd102ab7343b1ab3e2ff2a1c7b80a83744baabd00ee0424fb28d8",
+          "labelsHash": "sha256:18f77f1f3440cfdf343d561d565fef9f565710a07937888d18879ca77585560d",
+          "anchorsHash": "sha256:f370c46c49d5b4b3d41ac4f4ca9a4c0beaa12b1deb416d6dd393e157c8059aa7",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:3f11b4f7748b6da6d24588b103b4c2e2a9326ab7e6f667a2eee94e69f316ae08",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:8b687c7b304468c08dcef6e51bbe56e78b9a4e64448a5fee6ab242a8579419c9",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-upromise-world-mastercard",
+              "sha256": "b06d13a046719b25a8f6c9cf3bb29ec6732f2db86ac111c78f146a56a8ff8abb"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:49740133341946b106312213743f01adace095bccc58e75b9999ae6cd4d61a42",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-lufthansa-miles-more-world-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:71097e913fba53a0d0547b49f2dc40d4ee2ca1299b14c3cfa2d250d9663d9c8e",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-lufthansa-miles-more-world-elite-product",
+              "sha256": "76932bc9c1c32ce55868ef4cbf52806f3faf018111a9ad8df5396bce0d454072"
+            },
+            {
+              "ref": "source-input:barclays-lufthansa-miles-more-world-elite-product",
+              "sha256": "06dd8c9d9fd247b3cc334554b19dcc184ff9eb8b2a9ee4af55996aa717c01166"
+            },
+            {
+              "ref": "manifest:barclays-lufthansa-miles-more-world-elite-pricing",
+              "sha256": "02d8d8e0b822afbecce3de6ff806faf9565a283fd31085880e9c3f01e2aa3fc4"
+            },
+            {
+              "ref": "source-input:barclays-lufthansa-miles-more-world-elite-pricing",
+              "sha256": "e94c047006eaa90e258b187dc7c7c8a917048e42c8f6eee8f290c8cef7e40e6f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6095fbdd2768521b1ea72170efd7f42734c99c6e41b4add1b311f2c2f0dd1974",
+          "outputs": [
+            {
+              "ref": "trace:barclays-lufthansa-miles-more-world-elite",
+              "sha256": "a9b0c27acbb4d6e368ad3eb3224f3f9cbbe34aedf91a212082034becfaf2445b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.197Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:73997b2d2e77bbacdcce062541f0cab3ee4fa10fa6f7041bd30e9ac7230f618a",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-lufthansa-miles-more-world-elite",
+              "sha256": "dbe82a0cd0f56a007ef5e17cb36e120ce861c5c105d8c16f4d5c907798601ab6"
+            }
+          ],
+          "labelsHash": "sha256:b8546bee079c70049e4d4bbedb53e4da4440610ff9cab79cd044c9c83589e8ac",
+          "anchorsHash": "sha256:5bdd6257b2058b69d1c7ef18ffe852b81ac5aa0697a901c50732ce0a77500283",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:dba30c710b57d1e40ee2bf6f68a4b448753e1c501a4e4711f2525956aa562be6",
+          "labelsHash": "sha256:b8546bee079c70049e4d4bbedb53e4da4440610ff9cab79cd044c9c83589e8ac",
+          "anchorsHash": "sha256:5bdd6257b2058b69d1c7ef18ffe852b81ac5aa0697a901c50732ce0a77500283",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:443bcac3f669c19bdde8a41a897a451bf91f5e00ae1e39354a190aa4c110a86d",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:0521fa098c17130fef3bd89bddd6270e538bf43a0180758bb2bee35efbe2cc45",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-lufthansa-miles-more-world-elite",
+              "sha256": "18b567f88810f392b9b37d3efc2af37e38c035d885bcd564124b4395117ac6c8"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:7192df710c2f8ff0850cb25f89c65ebc37ea4bb3f9ef6ddcaf8e35b24117492a",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-emirates-skywards-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:4896feb0a1d38b9c34143fe998ed5d3bed1410969ee6835f3d5c9bdae803af71",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-emirates-skywards-rewards-product",
+              "sha256": "f64ff2c19f256e3387cbe5de11eb9a0308d8e2ed9d750e4f5ee7cf56ec604c21"
+            },
+            {
+              "ref": "source-input:barclays-emirates-skywards-rewards-product",
+              "sha256": "abf38dc4887736b9ce29a463ec4b5f3364c4d5a16fe4e939fc0ee6c6b54b80e0"
+            },
+            {
+              "ref": "manifest:barclays-emirates-skywards-rewards-pricing",
+              "sha256": "c7484efa141e5bee5421cef9128fae4c377cc1b463ad72404ae99da469d4702a"
+            },
+            {
+              "ref": "source-input:barclays-emirates-skywards-rewards-pricing",
+              "sha256": "cf688cad181b6c9c83cd71aba60355a93f32066e58ded20b24c571c4bac67226"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:edceeaf270164657c5746a71645583a3067526b98f3505388511b8310db89c1d",
+          "outputs": [
+            {
+              "ref": "trace:barclays-emirates-skywards-rewards",
+              "sha256": "f7ee49d9e9874c724a0cb15b04d29d88a61d0e7aa575d74580ca18e5682e4ceb"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.198Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7872910e5f36d7d57319fe02c4452b9b8c13bd47cb37e1f59e0640ad8f267f30",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-emirates-skywards-rewards",
+              "sha256": "181ad35efcd4fd7282d7ab3d1357d7ff2f47bb61c330a306c1f6f63ed67b94ea"
+            }
+          ],
+          "labelsHash": "sha256:a064daa729f1f2c66d6b03a31c79f3112c3869de1ebb87c0f04a64dde94106e9",
+          "anchorsHash": "sha256:ed73ec41386f31d4d6c6f20d1c75a48370b270afe7ddae6c7b8324e90f74de42",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:1f786da4a1c094cb2579f76235c56d0282be0dcb2090fa624aaf1489ff0b5c85",
+          "labelsHash": "sha256:a064daa729f1f2c66d6b03a31c79f3112c3869de1ebb87c0f04a64dde94106e9",
+          "anchorsHash": "sha256:ed73ec41386f31d4d6c6f20d1c75a48370b270afe7ddae6c7b8324e90f74de42",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a0f302492aec07cfe87dd1777a40ccb9faef277b43f76ea97dad20c70eb06360",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:ec005d437313240fe51dac3e619a386bca2236e888bf44c7b0f9c73b54de04f5",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-emirates-skywards-rewards",
+              "sha256": "a107b9659719a427b4c7494d9d520578ed5a4575f11c635b08021a99f0456ac2"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:e7c20acf44de8bcbb7d48386c454b67bd0a9193ed93604fa4173e697c3bb9916",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-emirates-skywards-premium": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9bbb6426939e089fe57188ee8b8f2798da857fc62202823a16850839fbb5ed37",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-emirates-skywards-premium-product",
+              "sha256": "56b6b54219f928cb080988f3a0351c7e62bddc78ed4a502f9c40d677c92dd06b"
+            },
+            {
+              "ref": "source-input:barclays-emirates-skywards-premium-product",
+              "sha256": "eceef6476d2d82172f7e8165310aa969f62b4dc1143fc63a4ef18c96db7a964a"
+            },
+            {
+              "ref": "manifest:barclays-emirates-skywards-premium-pricing",
+              "sha256": "fb8d752387818284f7b437de30e4c5c9789996e3b407ab652b2c3c6ba8d3ec0a"
+            },
+            {
+              "ref": "source-input:barclays-emirates-skywards-premium-pricing",
+              "sha256": "c1c379dc2c2c32d51bf9039b34e63a8ab28443d3b38dc2913e54a8668ab5bf53"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c16d546a9ab9219c0b8fbef6b5e6613760e9c9ebcddeb04451f8b71004c1e512",
+          "outputs": [
+            {
+              "ref": "trace:barclays-emirates-skywards-premium",
+              "sha256": "aa8ca5ad62eea96f4beaa21d09c1473bc03d1e2f8e589636de4cf8f3260ee52e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.199Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2d4cd2f151955913d2340cdaca21320d7dea501b98f088da62398c565b146322",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-emirates-skywards-premium",
+              "sha256": "487ece635de3fda99211dc39342dca89e0cc20f6b823e90ee5d7b04709ba0063"
+            }
+          ],
+          "labelsHash": "sha256:6ffeb8467d49315554e5d854f80609fa7a85c388b1bae3c9dbd7d9bf2347dea8",
+          "anchorsHash": "sha256:889d112644f63d331e7de9675d33fda64b8daabbd03b7dd636a2b364e7ee83dc",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:db82007bf035efc9b2152a19392e0200e2d52a2d13dbb0504f29051f863f86b3",
+          "labelsHash": "sha256:6ffeb8467d49315554e5d854f80609fa7a85c388b1bae3c9dbd7d9bf2347dea8",
+          "anchorsHash": "sha256:889d112644f63d331e7de9675d33fda64b8daabbd03b7dd636a2b364e7ee83dc",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:154b653d527c3dba4a70787739183e0b04cbe9330ed584a30630c188a6bff4e3",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:f690d58035fcba71dd8670c6836e2029b2112dd2fef1f36aa120874cc85caf66",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-emirates-skywards-premium",
+              "sha256": "70b2222c35d77f39684d3c5194b93fcc941e7968438c3a47c47d92e52da29cfb"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2ece9a031c74e73fa9b6b4b31f3bb3f1122551a612c94a26909e6da3a6c6711f",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-barnes-noble-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3db794925b223a1dd1ad857aa34d91e15168d041ea05fe7724aa8a68772ee961",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-barnes-noble-mastercard-product",
+              "sha256": "602810f9c9df57367c220b7949143e79656d4e89cbe5494bf75254826680ed1b"
+            },
+            {
+              "ref": "source-input:barclays-barnes-noble-mastercard-product",
+              "sha256": "d76c1f0a7f496c48072aa13b60e0c8f16b43c9125d9a73aec33e2be121186f1e"
+            },
+            {
+              "ref": "manifest:barclays-barnes-noble-mastercard-pricing",
+              "sha256": "e7fcc71d858272e801241108a1f07d3a2ee4083506f9d154e21271c734f691ac"
+            },
+            {
+              "ref": "source-input:barclays-barnes-noble-mastercard-pricing",
+              "sha256": "ec63403fcf82576c513eff2db64041d0180461d104287edce92695dc0301c710"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.484Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4645a2d5586e2553a0d7da74f91ab93e25cc4b3b9dc4635adda66b7e988bb2ff",
+          "outputs": [
+            {
+              "ref": "trace:barclays-barnes-noble-mastercard",
+              "sha256": "4f83bc2b21dce37362827e17c72bc231aa4ededc20cd6ae8ab48cf4e90374963"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.199Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ad4b88a274fd9fbdb782e4cfa79845c21fb320b956d75c9cb7cecb504f9aebeb",
+          "labelsHash": "sha256:96b7f2cb7fb8f7e60a84762e97f3b22ae55e6d22857564bb9fa27257b34530a5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:6034b2be072a61cd8bca9cb5994ecbc42b4a781185958e9b424ddb59b0dee510",
+          "labelsHash": "sha256:96b7f2cb7fb8f7e60a84762e97f3b22ae55e6d22857564bb9fa27257b34530a5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:c7a58ce255655f700bf042eb17b108347e9f61f6f757bb717126f9fba4983ddf",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:93a0292e107d910d91017461a7e6735c21673dbebf3816604d3c35a56798b120",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-barnes-noble-mastercard",
+              "sha256": "606d666f373815d8dda6c9a4fef935d1587ce456b1ef71d62bd55497e18bed40"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.087Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:45fbaf853793cb9c85c8fb069a8db94b4a87494295679de8cabd9a4a5010207d",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-gap-encore-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:07a38fc956e6c5c09a31c0e395f2bd5c9b81159c42cec049e9c95a6a6abf0c1b",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-gap-encore-mastercard-product",
+              "sha256": "ef9cbeef61e050988ab14848acaeebe5fd5eac921928d4fee9790566b05c0ae4"
+            },
+            {
+              "ref": "source-input:barclays-gap-encore-mastercard-product",
+              "sha256": "91e94c75fc051a328bf1ee5d2ed12ec875122bfbf247a4e638a8bf7f012f1c56"
+            },
+            {
+              "ref": "manifest:barclays-gap-encore-mastercard-pricing",
+              "sha256": "85cae2927432d281214ea33dff25e4182e02df6d1cb3a1578aa870e1182a4d01"
+            },
+            {
+              "ref": "source-input:barclays-gap-encore-mastercard-pricing",
+              "sha256": "1801d7cbd658f283200bcf59f24607217520cf25b11d9f9717a4a55aad97bbb0"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.485Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9f32f6884af29a1edd95cf2aa56844af4a6b8855ede15c57ebe9ed53de294ee6",
+          "outputs": [
+            {
+              "ref": "trace:barclays-gap-encore-mastercard",
+              "sha256": "e6dae975229fd093644eb2922a84a5023e075b649c0d50b1dd799e50637ea9b2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.200Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:70219eb235b80dcef225bd991db93ea58f580acf2cdd24ef7437b5b075e38ac0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-gap-encore-mastercard",
+              "sha256": "1da1c2b652b6e31b744abd326fa494e05f4bd49b6c0e151477e5f33852ae9910"
+            }
+          ],
+          "labelsHash": "sha256:cba13c01e97d7a81d1e3b3e85ce983ef8cb1206e6131e2d3836c58e9dfe3ee9a",
+          "anchorsHash": "sha256:272b167a5ef973691b3047ef227d6ef6e2540d271701838705b96303d500cbb2",
+          "finishedAt": "2026-11-06T19:45:17.303Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:62702966cf237fcd8f2ed793d60a13a876754fa20752bf5fb42a08ef2972dd11",
+          "labelsHash": "sha256:cba13c01e97d7a81d1e3b3e85ce983ef8cb1206e6131e2d3836c58e9dfe3ee9a",
+          "anchorsHash": "sha256:272b167a5ef973691b3047ef227d6ef6e2540d271701838705b96303d500cbb2",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a5382ce9fec5374cba90aa5d3e1531b9fc3afefeda8833beee6e1b60b35467e8",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:4dab9832cf548891567964edf974bb065050cd03141e9a8bb8425a7d15d77c5e",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-gap-encore-mastercard",
+              "sha256": "e0c368dcd02ab622438f9159b885f6458993d274d21b16f432d4b4c30f93a39d"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.088Z",
+          "attempts": 2,
+          "metrics": {
+            "lintRateRaised": 3,
+            "lintRateAcked": 3
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0dc30fa8437a3ec5801dad70196d82493150d3d7113e9329931e66251c2007b3",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-old-navy-encore-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:90468d537a27b5a44c7e8d683cf84451980f38ecc7d5af86f61ca685f1fd0990",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-old-navy-encore-mastercard-product",
+              "sha256": "98665c433ae95ef3087661ba56018bb589efbd66fa619f6c26456c26225db8b9"
+            },
+            {
+              "ref": "source-input:barclays-old-navy-encore-mastercard-product",
+              "sha256": "0a15996ef8643c9e57485fe2467a7edc05bc1ac26bbc6b51ba8336b3cc04674e"
+            },
+            {
+              "ref": "manifest:barclays-old-navy-encore-mastercard-pricing",
+              "sha256": "85cae2927432d281214ea33dff25e4182e02df6d1cb3a1578aa870e1182a4d01"
+            },
+            {
+              "ref": "source-input:barclays-old-navy-encore-mastercard-pricing",
+              "sha256": "36de459828ae21b26a383887bb17f8240e5faa8a1134278b92eb6da69bfc7ab0"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.485Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f9dda3ee8e385a56943bc6705d9cb2615623470d11c23a4bbbdb6b452aa092a7",
+          "outputs": [
+            {
+              "ref": "trace:barclays-old-navy-encore-mastercard",
+              "sha256": "27f9bc538954becea7c44304e046ce40e8a6f50ffa46af502ed3081d47c6da3e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.201Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c53259e5f4c47aa0b8a8719b5d47f80a7d8fdb6c488718066c67a7a27c91f988",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-old-navy-encore-mastercard",
+              "sha256": "b62dcfe81fe5837c1c63907e6db15e75b703f65cf1e0c82ad19442928140992e"
+            }
+          ],
+          "labelsHash": "sha256:2eab858078fae8df868c0a871434459db9e8a6934d71f8f2f3b9869463540867",
+          "anchorsHash": "sha256:1e605c25e8434ed8379cd077ff7bd8fb655794f2d0fe2dfe4f5b8cfe07dc8d2f",
+          "finishedAt": "2026-11-06T19:45:17.304Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:758b1f7fd2ea8b07f121b3aa5f7fe4b0ce0fe12551650b42ac712084a8e10a38",
+          "labelsHash": "sha256:2eab858078fae8df868c0a871434459db9e8a6934d71f8f2f3b9869463540867",
+          "anchorsHash": "sha256:1e605c25e8434ed8379cd077ff7bd8fb655794f2d0fe2dfe4f5b8cfe07dc8d2f",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:58b23eece576ad90272ff28d0a563e440a38ff19c28c22284c18da9ce591f794",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6040abaf0c7967d029fe58c5e7318ba7d1ae3018058ea89e8dad93caab18c22a",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-old-navy-encore-mastercard",
+              "sha256": "1899a7fb85ecbaa6bf915b372cd09f75a9c63b4ae7978ac0dbcb5fe6e9f26b41"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.088Z",
+          "attempts": 2,
+          "metrics": {
+            "lintRateRaised": 3,
+            "lintRateAcked": 3
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:cfa1901d339050d106ad85e9aa0a9d1028aca03bb2053bd57a942b258855790a",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-banana-republic-encore-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2c1eacc8329aad826fb8e9da39f53bc0669a9a0825bac43111421ef9eeb69861",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-banana-republic-encore-mastercard-product",
+              "sha256": "f568eb9a57b78ea7c147ed6f881aeb54daf1fd6ce6f1a02cd175cb1941e44d00"
+            },
+            {
+              "ref": "source-input:barclays-banana-republic-encore-mastercard-product",
+              "sha256": "2cdc99564cf9858246c64aa7e331defccf21067bd9f548865d290023cf29a264"
+            },
+            {
+              "ref": "manifest:barclays-banana-republic-encore-mastercard-pricing",
+              "sha256": "85cae2927432d281214ea33dff25e4182e02df6d1cb3a1578aa870e1182a4d01"
+            },
+            {
+              "ref": "source-input:barclays-banana-republic-encore-mastercard-pricing",
+              "sha256": "07317bab5f2921d191a8b0f817ae7b8b119892409eb4868abe58236dddce8c6a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.485Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1c368bed8f55667ecaf65477ce5b661a45001bfd639252ce46432c0b9354ff06",
+          "outputs": [
+            {
+              "ref": "trace:barclays-banana-republic-encore-mastercard",
+              "sha256": "fd8ef9948d8d613e90332f07bcd0be03d02b29d0d6402b6f4a63f21931e1e8ed"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.202Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c21262ce69f4acfd4a297f5359aa65b1ac1c774fdfd339c409610f7ce51aee8f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-banana-republic-encore-mastercard",
+              "sha256": "baf481b9eb64e84bb6c86c083437569477337922f647b46fccb706bba5be993e"
+            }
+          ],
+          "labelsHash": "sha256:c9790ef3bc22d53701d0dcf61f0638b1014c4191c2f2d6ac442ff4b5db4e7589",
+          "anchorsHash": "sha256:de154ea3f60c9993d671e129110c95f17d9ca74f4a7846c1c63717852d94ac01",
+          "finishedAt": "2026-11-06T19:45:17.305Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:2b4b71ad4a1a95085888a4929f47a0a380747e137d404fd44763b7a6953558ef",
+          "labelsHash": "sha256:c9790ef3bc22d53701d0dcf61f0638b1014c4191c2f2d6ac442ff4b5db4e7589",
+          "anchorsHash": "sha256:de154ea3f60c9993d671e129110c95f17d9ca74f4a7846c1c63717852d94ac01",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a673b61a6f3c2f066c5df41999fa82d6f0ebeff850a365c4c0afb16296f034a8",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:4375f4666dbfc4535eee7e5c75ff9ebe35b7ce09207e1aa9b44670de2870492a",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-banana-republic-encore-mastercard",
+              "sha256": "b306cee7e774afe0899c92e699e219df311352e580accb5e57b74e64b97828b6"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.088Z",
+          "attempts": 2,
+          "metrics": {
+            "lintRateRaised": 2,
+            "lintRateAcked": 2
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:a27ffa83aa53f172fcf7131102caf6624679db0ca15a14fdc8e804c3c47a8660",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "barclays-aarp-essential-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:268e5a7e884c42d90e7d7fef1a5df9d2338fd0e49ebc6a3772ba8f2e194d3b2b",
+          "outputs": [
+            {
+              "ref": "manifest:barclays-aarp-essential-rewards-mastercard-product",
+              "sha256": "40151c71f4a915a444b7ac8d9819ffbef54dadc1b6b355937af087d022fefa68"
+            },
+            {
+              "ref": "source-input:barclays-aarp-essential-rewards-mastercard-product",
+              "sha256": "060c712c05e59f2ca7469b3440ba4a7aa92749577aa15a5298e709187e45727c"
+            },
+            {
+              "ref": "manifest:barclays-aarp-essential-rewards-mastercard-pricing",
+              "sha256": "4c327c92c2e4d3f157e3fa984efd84438cc1dc76667034e8c4bf8c444988b811"
+            },
+            {
+              "ref": "source-input:barclays-aarp-essential-rewards-mastercard-pricing",
+              "sha256": "6c7407d68de007b4a9d6422429220b1f94947cbdb01d33b7dae6d17773bfd83f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:27:03.485Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:87cc2130246b36a3743f94de110c4308f8d161ee5d4080da94007ab15173758f",
+          "outputs": [
+            {
+              "ref": "trace:barclays-aarp-essential-rewards-mastercard",
+              "sha256": "f80f385a78d343ef128f022fcfde2bdfb9049a148b1ae8fef912135ad9876ec8"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:37:32.202Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c1f1aed211d2d0ef924b6c895a45513b1662f619be6e89eac0b332e0670ade6b",
+          "outputs": [
+            {
+              "ref": "corpus-draft:barclays-aarp-essential-rewards-mastercard",
+              "sha256": "8a48903241adedcdb680549012ce6e55f4ec4a7ace651157c292784ba7fe0881"
+            }
+          ],
+          "labelsHash": "sha256:4befc448444f9e558e5f1d98748df01ea5981904836e8c9b9a87807ebfd5b95a",
+          "anchorsHash": "sha256:d3489b540b9ef95e6d7bd86efc99a540b511d452073e3ca341073acdac4bffb4",
+          "finishedAt": "2026-11-06T19:45:17.306Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:0ebb8e838a469e975d122edea03ff82b31c90f9b416fe3abdca8ff097ef8e553",
+          "labelsHash": "sha256:4befc448444f9e558e5f1d98748df01ea5981904836e8c9b9a87807ebfd5b95a",
+          "anchorsHash": "sha256:d3489b540b9ef95e6d7bd86efc99a540b511d452073e3ca341073acdac4bffb4",
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:b3370cd93aad10bc5a8110917113b650e9bd026101001d0c082c80520945bd46",
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:078ffa645a003d20a3171dcae04752251657842f54472ae464a33477ef8ddf5a",
+          "outputs": [
+            {
+              "ref": "corpus:barclays-aarp-essential-rewards-mastercard",
+              "sha256": "648c7b29e51b25f1d7885a8562b794fe2b72f1a0acc98623e101da9f821b8112"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:59:58.088Z",
+          "attempts": 2
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:bbb943220ad3a1e898a8e5db0de9831db2583d51a709d9a910ba299e8f34c02f",
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "barclays": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:db7994d555b14785d8c8e1eafd776deeac31524411b598a72441d69683f1b930",
+          "finishedAt": "2026-11-06T19:11:27.615Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:barclays",
+              "sha256": "7b55be634aae344cba3b1e827a18934409f56d057fc1505e789c7f4150723d90"
+            }
+          ],
+          "finishedAt": "2026-11-06T20:39:36.962Z",
+          "attempts": 1,
+          "packetId": "0ab0ef1a-5dfd-46bd-ae0d-6281c7242c57",
+          "agentRun": "a4bdc0ed7202332fb",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-06T20:39:36.962Z",
+          "durationMs": 3185794,
+          "tokens": 178868
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:barclays",
+              "sha256": "616d4515673325e2bd2bdcdb97a268186177f2bf141f238933d10ee0906d0081"
+            },
+            {
+              "ref": "lint-acks:barclays",
+              "sha256": "79d0f78d2385db2b976a1958fe6c8666cf9b083c7ba3820b3cd44aed9a1e50e9"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:44:35.188Z",
+          "attempts": 1,
+          "packetId": "42d6776f-3c9c-4b14-9a82-050a1a40f7d5",
+          "agentRun": "a54fbc6aa6ca660c2",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T01:44:35.188Z",
+          "durationMs": 15425814,
+          "tokens": 393434
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:barclays",
+              "sha256": "d4d2f4fca87650ed62267e8d15b40d86aa95adf811c0634c7bfef582d755e83f"
+            }
+          ],
+          "finishedAt": "2026-11-07T02:51:57.985Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 2,
+            "lintRateAcked": 2
+          },
+          "packetId": "19be9231-832f-4aee-84f7-aeed2e0a5eb2",
+          "agentRun": "a6e41e146d4718898",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T02:51:57.985Z",
+          "durationMs": 716290,
+          "tokens": 93007
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:a460a308e10e488ea3b25756de472a6e483457be60d5f47d4d8c7127fca8da77",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:19.418Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:8c1a18dd8a7689cf5ff286ca0973bb06a8bdbb2bb0ba6e4581e631b0d455b51c",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "c52dc6b7df7d6059f2f23a6ccb2bf32c8a419b3e6fc379abbf6df9041aaa501c"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:03.037Z",
+      "attempts": 1
+    }
+  }
+}

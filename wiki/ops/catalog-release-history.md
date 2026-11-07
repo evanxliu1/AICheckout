@@ -100,6 +100,32 @@ Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): *
 
 `2026-10-05.renewal.1` was added to `publishedVersions` in `evals/curation/catalog-batches.json` in the PR that recorded release 3 (branch `wiki-audit-2026-10-05`). The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 
+## Renewal `2026-11-07.renewal.2` (prepared 2026-11-07)
+
+**Built, not published.** Release 3 expired on 2026-11-04T00:00Z; `GET /v1/catalog` answers 503 until this renewal is published. Prepared on branch `catalog-renewal-2026-11` by the renewal driver (Fable 5.1 until its weekly limit on 2026-11-07, then Opus 5.5) with the pipeline subagents; all labels agent-verified, not human-verified. **Version `2026-11-07.renewal.2`, verified 2026-11-07T00:00Z, expires 2026-12-07T00:00Z; 177 cards, 804 rules, 327 sources, 71 programs, 140 brands, 23 gates, 3 merchants; 598,441 bytes** ([build report](../../evals/curation/expansion/catalog-build-report.md)).
+
+| Step | State |
+| --- | --- |
+| NerdWallet estimates | Re-read 2026-11-06 (page updated 2026-10-13), independently checked by a subagent: all 24 values unchanged; `reward-programs.2026-11-06.1` (`6a22dd8e`) |
+| Freshness `2026-11-06` | 328 sources: 119 unchanged, 172 changed, 36 flagged (the 35 Bank of America pages, access denied to headless Chromium; the Synchrony PayPal product page, which the batch capture later rendered), 1 unreachable (Citi AT&T product page, likewise captured later); record `465c5aaa` |
+| Merchant MCC pages | Both CheckMCC pages changed; re-captured by hand 2026-11-06, each still states 5732; `checkedOn` 2026-11-06 (`3ad03abd`) |
+| Batches | Ten seeded `<issuer>-refresh-2026-11` batches, all through overlay, build and eval: American Express 13 cards, Bank of America 19, Barclays 17, Capital One 11, Chase 24, Citi 15, Discover 6, Synchrony 22, U.S. Bank 12, Wells Fargo 6 of 7. Extraction gpt-5.6-luna `xhigh` through Codex (it hung on every call from 2026-11-07T04:00Z for some hours, then finished). **Dropped:** `wells-fargo-one-key-plus` at verification (its only capture was the Wells Fargo card list page, not the product page), so the catalog has 177 cards, not 178; a later batch with a product-page source restores it |
+| Bank of America | All 35 pages were **captured in the Claude desktop app's browser pane** and imported with the new `pipeline capture-import --method browser-pane` (headless Chromium got HTTP 403; branch `boa-browser-capture`, merged 2026-11-07); the build report lists them. The [held-out decision](../decisions/2026-11-07-bank-of-america-held-out-of-renewal.md) was amended: the 19 cards ship and the held-out entries were removed from the build config |
+| Models | Synchrony and Bank of America were adjudicated by `card-adjudicator` on **Opus 5.5 instead of the pinned Fable 5.1** (Fable weekly limit until 2026-11-11T22:00Z; Evan's 2026-11-07 directive), each a different run from its verifier ([decision](../decisions/2026-11-07-renewal-adjudicate-on-opus.md)). The other eight on Fable 5.1 |
+| Quote limit | The quote check over the built catalog found six cards whose exclusions, listed together, repeat more than 25 capture words; one exclusion each left out of the catalog with `exclusionOmissions` (general rule 22): Old Navy Encore, Venture X, Strata Elite, Discover it Chrome, Autograph Journey, Active Cash (the corpus keeps them) |
+| Eval (trace re-score, upper bound) | End-to-end field accuracy per batch: Amex 90.6% (12 of 13 traces; `amex-platinum` gained its pricing page at verification, so its trace is left out as `resourced`), Bank of America 63.3%, Barclays 77.3%, Capital One 98.5%, Chase 70.9%, Citi 94.5%, Discover 97.3%, Synchrony 77.2%, U.S. Bank 79.9%, Wells Fargo 84.3%; per-batch `pipeline/eval.json` |
+| Pipeline fixes on the branch | Overlay gate dates sources from the freshness records (`bc2b972a`) and its `freshness` default typed so `typecheck` passes; the eval's manifest schema accepts browser-pane rows; the trace re-score leaves out re-sourced traces; harness timeout bounds 1,800 s / 2,700 s (`559b0688`) |
+| Gates (2026-11-07) | `catalog:v3:check`, `eval:v2 -- --check`, quote check over every capture folder (below), lint, format, typecheck, `npm test`, `npm run build`, the extension and catalog browser suites pass; `release:bundles:check` reports the bundled `2026-11-07.renewal.2` and, with `--hosted`, the hosted catalog 503 until publish |
+| Remaining | PR, independent review, merge, Render deploy of `main`, `pipeline handoff`, offline dry run, Evan's `publish 2026-11-07.renewal.2`, then `publishedVersions` |
+
+Quote check, from the main checkout (the 2026-11 batch folders first, then the 2026-10 ones, then expansion, real and merchant; with that order it is clean):
+
+```
+node scripts/check-expansion-quotes.mjs $(for f in evals/curation/batches/*-2026-11/captures evals/curation/batches/*-2026-10/captures evals/curation/expansion/captures evals/curation/real/captures evals/curation/real/merchant-captures; do printf -- '--captures %s ' "$f"; done)
+```
+
+Capture folders for the publish, all in the main checkout: the 14 of release 3 plus `evals/curation/batches/<issuer>-refresh-2026-11/captures` for the ten refreshed issuers; `pipeline handoff` lists them.
+
 ## Merchant release 1 (published 2026-10-12)
 
 | Field | Value |

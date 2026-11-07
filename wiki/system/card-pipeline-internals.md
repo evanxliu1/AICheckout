@@ -108,7 +108,7 @@ A stage is `done` only when its gate passes. Gates are deterministic; their erro
 | verify | Findings parse; every quote verbatim in the named capture and ≤ 25 words; `current` values match the draft; `filesRead` names the card's captures; provenance `agent-verified`; output carries the packet ID |
 | adjudicate | Every finding and `drop-card` verdict decided; adjudicator run ≠ verifier run; `apply --check` passes; **label-evidence lint** on the cases apply will write (acks counted apart) |
 | apply | Corpus parses; quote check on all written files; **label-evidence lint** |
-| overlay | `checkOverlay` coverage; quote check; **label-evidence lint** |
+| overlay | `checkOverlay` coverage on the build's layers with the batch as the newest, sources dated as the builder dates them (freshness records and the merchant manifest, since 2026-11-07); its draft catalog's source-age window covers the issuer's own cards' pages only, the build checks every cited source (a renewal refreshes issuers one batch at a time); quote check; **label-evidence lint** |
 | build | Multi-batch builder rules (below); Zod; size ≤ 75% of the byte limit |
 | eval | Every number reproduces from saved traces or committed files; `eval:v2 --check` unchanged |
 

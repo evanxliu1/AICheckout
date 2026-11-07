@@ -33,6 +33,10 @@ const manifestSourceSchema = z.strictObject({
   capturedOn: z.iso.date(),
   sha256: z.string().regex(/^[a-f0-9]{64}$/),
   length: z.number().int().positive(),
+  // A page read in the desktop browser pane and brought in with `pipeline capture-import` (2026-11-07).
+  method: z.literal('browser-pane').optional(),
+  capturedBy: z.string().min(1).max(120).optional(),
+  capturedAt: z.iso.datetime().optional(),
 });
 const manifestOf = (maxSources: number) =>
   z.strictObject({

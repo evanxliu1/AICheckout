@@ -1,0 +1,1478 @@
+{
+  "schemaVersion": 1,
+  "batch": "u-s-bank-refresh-2026-11",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "u-s-bank-refresh-2026-11.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "u-s-bank.json"
+      ]
+    },
+    "totals": {
+      "cards": 12,
+      "inCorpus": 12,
+      "drafted": 11,
+      "undrafted": 1,
+      "confirmed": 1,
+      "fixed": 11,
+      "dropped": 0,
+      "draftRules": 72,
+      "rulesRemoved": 0,
+      "rulesAdded": 24,
+      "verifiedRules": 96,
+      "draftRulesUnchanged": 41,
+      "ruleFieldValues": 576,
+      "ruleFieldsChanged": 32,
+      "cardFieldValues": 22,
+      "cardFieldsChanged": 4,
+      "ruleFieldCorrectionRate": 0.0556,
+      "cardFieldCorrectionRate": 0.1818,
+      "draftRulesRemovedRate": 0,
+      "draftRulesUnchangedRate": 0.5694
+    },
+    "ruleFields": {
+      "category": {
+        "count": 0,
+        "total": 72,
+        "rate": 0
+      },
+      "issuerWording": {
+        "count": 30,
+        "total": 72,
+        "rate": 0.4167
+      },
+      "rateBps": {
+        "count": 1,
+        "total": 72,
+        "rate": 0.0139
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 72,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 72,
+        "rate": 0
+      },
+      "activation": {
+        "count": 0,
+        "total": 72,
+        "rate": 0
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 72,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 1,
+        "total": 72,
+        "rate": 0.0139
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 2,
+        "total": 11,
+        "rate": 0.1818
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 2,
+        "total": 11,
+        "rate": 0.1818
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 4,
+      "issuesRemoved": 14,
+      "issuesAdded": 10
+    },
+    "undraftedRulesAdded": 1,
+    "findings": {
+      "accepted": 111,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "U.S. Bank": {
+        "cards": 12,
+        "inCorpus": 12,
+        "drafted": 11,
+        "undrafted": 1,
+        "confirmed": 1,
+        "fixed": 11,
+        "dropped": 0,
+        "draftRules": 72,
+        "rulesRemoved": 0,
+        "rulesAdded": 24,
+        "verifiedRules": 96,
+        "draftRulesUnchanged": 41,
+        "ruleFieldValues": 576,
+        "ruleFieldsChanged": 32,
+        "cardFieldValues": 22,
+        "cardFieldsChanged": 4,
+        "ruleFieldCorrectionRate": 0.0556,
+        "cardFieldCorrectionRate": 0.1818,
+        "draftRulesRemovedRate": 0,
+        "draftRulesUnchangedRate": 0.5694
+      }
+    },
+    "cards": {
+      "confirmed": [
+        "us-bank-altitude-go"
+      ],
+      "dropped": [],
+      "undrafted": [
+        {
+          "cardId": "us-bank-harley-davidson-secured",
+          "issuer": "U.S. Bank",
+          "rules": 1
+        }
+      ],
+      "valuesUnchanged": [
+        "us-bank-altitude-go"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "u-s-bank-refresh-2026-11.v1",
+      "hash": "16dfd8c954ab9f7f7d1e097618e9903d74a640f64a09523a9e193be7e39a28a1",
+      "cases": 12
+    },
+    "upperBound": true,
+    "files": 12,
+    "scored": 12,
+    "skipped": 0,
+    "all": {
+      "planned": 12,
+      "observed": 12,
+      "complete": true,
+      "overall": {
+        "runs": 12,
+        "ruleRecall": {
+          "correct": 75,
+          "total": 96,
+          "rate": 0.7813
+        },
+        "rulePrecision": {
+          "correct": 75,
+          "total": 76,
+          "rate": 0.9868
+        },
+        "fieldAccuracy": {
+          "correct": 530,
+          "total": 537,
+          "rate": 0.987
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 530,
+          "total": 663,
+          "rate": 0.7994
+        },
+        "claimPrecision": {
+          "correct": 245,
+          "total": 253,
+          "rate": 0.9684
+        },
+        "evidenceValidity": {
+          "correct": 491,
+          "total": 495,
+          "rate": 0.9919
+        },
+        "issueRecall": {
+          "correct": 9,
+          "total": 19,
+          "rate": 0.4737
+        },
+        "falseClean": 1,
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 24,
+          "rate": 0.7917
+        },
+        "unsupportedClaims": 8,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 4,
+            "total": 14,
+            "rate": 0.2857
+          },
+          "missing": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 42,
+          "total": 42,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 11,
+          "evidence_valid": 1
+        },
+        "latencyMs": {
+          "p50": 187953,
+          "p95": 386087
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 71,
+            "total": 75,
+            "rate": 0.9467
+          },
+          "paidOnPaymentBps": {
+            "correct": 74,
+            "total": 75,
+            "rate": 0.9867
+          },
+          "capKind": {
+            "correct": 75,
+            "total": 75,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 74,
+            "total": 75,
+            "rate": 0.9867
+          },
+          "usMerchantsOnly": {
+            "correct": 75,
+            "total": 75,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 74,
+            "total": 75,
+            "rate": 0.9867
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 11,
+      "observed": 11,
+      "complete": true,
+      "overall": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 74,
+          "total": 95,
+          "rate": 0.7789
+        },
+        "rulePrecision": {
+          "correct": 74,
+          "total": 74,
+          "rate": 1
+        },
+        "fieldAccuracy": {
+          "correct": 525,
+          "total": 531,
+          "rate": 0.9887
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 525,
+          "total": 657,
+          "rate": 0.7991
+        },
+        "claimPrecision": {
+          "correct": 243,
+          "total": 250,
+          "rate": 0.972
+        },
+        "evidenceValidity": {
+          "correct": 474,
+          "total": 478,
+          "rate": 0.9916
+        },
+        "issueRecall": {
+          "correct": 9,
+          "total": 19,
+          "rate": 0.4737
+        },
+        "falseClean": 1,
+        "cardFieldAccuracy": {
+          "correct": 17,
+          "total": 22,
+          "rate": 0.7727
+        },
+        "unsupportedClaims": 7,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 4,
+            "total": 14,
+            "rate": 0.2857
+          },
+          "missing": {
+            "correct": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "out-of-scope": {
+            "correct": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "exclusionRecall": {
+          "correct": 41,
+          "total": 41,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 10,
+          "evidence_valid": 1
+        },
+        "latencyMs": {
+          "p50": 220604,
+          "p95": 386087
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 71,
+            "total": 74,
+            "rate": 0.9595
+          },
+          "paidOnPaymentBps": {
+            "correct": 73,
+            "total": 74,
+            "rate": 0.9865
+          },
+          "capKind": {
+            "correct": 74,
+            "total": 74,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capPeriod": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "capRateAfterCapBps": {
+            "correct": 29,
+            "total": 29,
+            "rate": 1
+          },
+          "activation": {
+            "correct": 73,
+            "total": 74,
+            "rate": 0.9865
+          },
+          "usMerchantsOnly": {
+            "correct": 74,
+            "total": 74,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 73,
+            "total": 74,
+            "rate": 0.9865
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 1,
+      "observed": 1,
+      "complete": true,
+      "overall": {
+        "runs": 1,
+        "ruleRecall": {
+          "correct": 1,
+          "total": 1,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 1,
+          "total": 2,
+          "rate": 0.5
+        },
+        "fieldAccuracy": {
+          "correct": 5,
+          "total": 6,
+          "rate": 0.8333
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 5,
+          "total": 6,
+          "rate": 0.8333
+        },
+        "claimPrecision": {
+          "correct": 2,
+          "total": 3,
+          "rate": 0.6667
+        },
+        "evidenceValidity": {
+          "correct": 17,
+          "total": 17,
+          "rate": 1
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 2,
+          "total": 2,
+          "rate": 1
+        },
+        "unsupportedClaims": 1,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 1,
+          "total": 1,
+          "rate": 1
+        },
+        "statuses": {
+          "needs_review": 1
+        },
+        "latencyMs": {
+          "p50": 123188,
+          "p95": 123188
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 1,
+            "rate": 0
+          },
+          "paidOnPaymentBps": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 1,
+            "total": 1,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "U.S. Bank": {
+        "runs": 12,
+        "ruleRecall": {
+          "correct": 75,
+          "total": 96,
+          "rate": 0.7813
+        },
+        "rulePrecision": {
+          "correct": 75,
+          "total": 76,
+          "rate": 0.9868
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 530,
+          "total": 663,
+          "rate": 0.7994
+        },
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 24,
+          "rate": 0.7917
+        },
+        "issueRecall": {
+          "correct": 9,
+          "total": 19,
+          "rate": 0.4737
+        },
+        "falseClean": 1
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 12,
+      "cardsIdentical": 4,
+      "rules": {
+        "frozen": 96,
+        "batch": 96,
+        "matched": 96,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 96,
+          "total": 96,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 576,
+        "total": 576,
+        "rate": 1
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 12,
+          "total": 12,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 11,
+          "total": 12,
+          "rate": 0.9167
+        }
+      },
+      "exclusions": {
+        "frozen": 53,
+        "batch": 42
+      },
+      "issues": {
+        "frozen": 21,
+        "batch": 19
+      }
+    },
+    "cards": [
+      {
+        "cardId": "us-bank-altitude-connect",
+        "rules": {
+          "frozen": 8,
+          "batch": 8,
+          "matched": 8
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 8,
+            "total": 8,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": false
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "us-bank-altitude-go",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-altitude-go-secured",
+        "rules": {
+          "frozen": 6,
+          "batch": 6,
+          "matched": 6
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 6,
+            "total": 6,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-cash-plus",
+        "rules": {
+          "frozen": 18,
+          "batch": 18,
+          "matched": 18
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 6,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "us-bank-cash-plus-secured",
+        "rules": {
+          "frozen": 18,
+          "batch": 18,
+          "matched": 18
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 18,
+            "total": 18,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 8
+        },
+        "issues": {
+          "frozen": 3,
+          "batch": 4
+        }
+      },
+      {
+        "cardId": "us-bank-edward-jones-triple-rewards",
+        "rules": {
+          "frozen": 20,
+          "batch": 20,
+          "matched": 20
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 20,
+            "total": 20,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 8,
+          "batch": 4
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-elan-fidelity-rewards",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-harley-davidson-hog-elite",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-harley-davidson-secured",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "us-bank-harley-davidson-visa-signature",
+        "rules": {
+          "frozen": 5,
+          "batch": 5,
+          "matched": 5
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 5,
+            "total": 5,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 6,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "us-bank-smartly",
+        "rules": {
+          "frozen": 1,
+          "batch": 1,
+          "matched": 1
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 1,
+            "total": 1,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 8,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "us-bank-state-farm-premier-cash-rewards",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 8,
+          "batch": 6
+        },
+        "issues": {
+          "frozen": 2,
+          "batch": 1
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:11:29.690Z",
+        "lastFinishedAt": "2026-11-06T19:11:29.690Z",
+        "models": []
+      },
+      "capture": {
+        "records": 12,
+        "done": 12,
+        "attempts": 21,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:52:40.425Z",
+        "lastFinishedAt": "2026-11-07T01:15:25.850Z",
+        "models": []
+      },
+      "extract": {
+        "records": 12,
+        "done": 12,
+        "attempts": 49,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T04:22:07.653Z",
+        "lastFinishedAt": "2026-11-07T17:46:13.996Z",
+        "models": []
+      },
+      "draft": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T17:55:06.019Z",
+        "lastFinishedAt": "2026-11-07T17:55:06.021Z",
+        "models": []
+      },
+      "verify": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:06:48.052Z",
+        "lastFinishedAt": "2026-11-07T18:06:48.052Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:37:21.592Z",
+        "lastFinishedAt": "2026-11-07T18:37:21.592Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:37:22.590Z",
+        "lastFinishedAt": "2026-11-07T18:37:22.592Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 12,
+        "done": 12,
+        "attempts": 12,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T18:48:18.221Z",
+        "lastFinishedAt": "2026-11-07T18:48:18.221Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:16:45.315Z",
+        "lastFinishedAt": "2026-11-07T19:16:45.315Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "us-bank-cash-plus",
+          "runs": 11,
+          "modelMinutes": 6.28,
+          "inputTokens": 12800,
+          "outputTokens": 5392
+        },
+        {
+          "cardId": "us-bank-smartly",
+          "runs": 11,
+          "modelMinutes": 3.68,
+          "inputTokens": 7010,
+          "outputTokens": 1295
+        },
+        {
+          "cardId": "us-bank-altitude-go",
+          "runs": 11,
+          "modelMinutes": 2.59,
+          "inputTokens": 11318,
+          "outputTokens": 1837
+        },
+        {
+          "cardId": "us-bank-altitude-connect",
+          "runs": 9,
+          "modelMinutes": 4.61,
+          "inputTokens": 11935,
+          "outputTokens": 2653
+        },
+        {
+          "cardId": "us-bank-cash-plus-secured",
+          "runs": 9,
+          "modelMinutes": 6.43,
+          "inputTokens": 8502,
+          "outputTokens": 5340
+        },
+        {
+          "cardId": "us-bank-altitude-go-secured",
+          "runs": 9,
+          "modelMinutes": 2.95,
+          "inputTokens": 10413,
+          "outputTokens": 1619
+        },
+        {
+          "cardId": "us-bank-harley-davidson-visa-signature",
+          "runs": 9,
+          "modelMinutes": 3.78,
+          "inputTokens": 6586,
+          "outputTokens": 975
+        },
+        {
+          "cardId": "us-bank-harley-davidson-hog-elite",
+          "runs": 9,
+          "modelMinutes": 3.09,
+          "inputTokens": 7144,
+          "outputTokens": 761
+        },
+        {
+          "cardId": "us-bank-harley-davidson-secured",
+          "runs": 3,
+          "modelMinutes": 2.05,
+          "inputTokens": 5450,
+          "outputTokens": 724
+        },
+        {
+          "cardId": "us-bank-state-farm-premier-cash-rewards",
+          "runs": 7,
+          "modelMinutes": 3.13,
+          "inputTokens": 8194,
+          "outputTokens": 2117
+        },
+        {
+          "cardId": "us-bank-edward-jones-triple-rewards",
+          "runs": 7,
+          "modelMinutes": 3.74,
+          "inputTokens": 7836,
+          "outputTokens": 438
+        },
+        {
+          "cardId": "us-bank-elan-fidelity-rewards",
+          "runs": 7,
+          "modelMinutes": 2.63,
+          "inputTokens": 7362,
+          "outputTokens": 560
+        }
+      ],
+      "totals": {
+        "cards": 12,
+        "modelMinutes": 44.96,
+        "inputTokens": 104550,
+        "outputTokens": 23711
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 25.54,
+      "tokens": 593275,
+      "perCard": {
+        "modelMinutes": 2.13,
+        "tokens": 49439.58
+      }
+    }
+  }
+}

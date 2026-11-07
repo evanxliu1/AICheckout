@@ -678,10 +678,25 @@ export function checkOverlay(inputs, { issuers = null } = {}) {
     const used = new Set(draft.cards.map((card) => card.programId));
     draft.programs = draft.programs.filter((program) => used.has(program.id));
   }
+  // A fragment's check owns the source window of its own cards' pages only; the build checks every cited source
+  // (a renewal refreshes issuers one batch at a time, so other issuers' and programs' pages may still be older).
+  const ownSources = new Set(
+    scoped.flatMap((corpus) =>
+      corpus.cases.filter((item) => inScope(item.issuer)).flatMap((item) => item.sourceIds),
+    ),
+  );
   const parsed = catalogV3Schema.safeParse(draft);
   if (!parsed.success)
     for (const issue of parsed.error.issues) {
       const [list, index, ...rest] = issue.path;
+      if (
+        issuers !== null &&
+        list === 'sources' &&
+        typeof index === 'number' &&
+        rest.join('.') === 'checkedOn' &&
+        !ownSources.has(draft.sources[index].id)
+      )
+        continue;
       const owner = list === 'cards' && typeof index === 'number' ? `card ${draft.cards[index].id} ` : '';
       problems.push(
         `draft catalog ${owner}${owner ? rest.join('.') : issue.path.join('.')}: ${issue.message}`,

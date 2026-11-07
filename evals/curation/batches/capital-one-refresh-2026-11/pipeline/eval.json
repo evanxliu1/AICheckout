@@ -1,0 +1,1286 @@
+{
+  "schemaVersion": 1,
+  "batch": "capital-one-refresh-2026-11",
+  "generatedBy": "npm run pipeline -- eval",
+  "annotationStatus": "agent-verified",
+  "pipeline": {
+    "schemaVersion": 1,
+    "inputs": {
+      "draft": "expansion.draft.1",
+      "corpus": "capital-one-refresh-2026-11.v1",
+      "annotationStatus": "agent-verified",
+      "verificationFiles": [
+        "capital-one.json"
+      ]
+    },
+    "totals": {
+      "cards": 11,
+      "inCorpus": 11,
+      "drafted": 11,
+      "undrafted": 0,
+      "confirmed": 2,
+      "fixed": 9,
+      "dropped": 0,
+      "draftRules": 49,
+      "rulesRemoved": 4,
+      "rulesAdded": 0,
+      "verifiedRules": 45,
+      "draftRulesUnchanged": 39,
+      "ruleFieldValues": 360,
+      "ruleFieldsChanged": 7,
+      "cardFieldValues": 22,
+      "cardFieldsChanged": 3,
+      "ruleFieldCorrectionRate": 0.0194,
+      "cardFieldCorrectionRate": 0.1364,
+      "draftRulesRemovedRate": 0.0816,
+      "draftRulesUnchangedRate": 0.7959
+    },
+    "ruleFields": {
+      "category": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      },
+      "issuerWording": {
+        "count": 2,
+        "total": 45,
+        "rate": 0.0444
+      },
+      "rateBps": {
+        "count": 5,
+        "total": 45,
+        "rate": 0.1111
+      },
+      "paidOnPaymentBps": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      },
+      "cap": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      },
+      "activation": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      },
+      "usMerchantsOnly": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      },
+      "limitedTime": {
+        "count": 0,
+        "total": 45,
+        "rate": 0
+      }
+    },
+    "cardFields": {
+      "rewardCurrency": {
+        "count": 0,
+        "total": 11,
+        "rate": 0
+      },
+      "pointValueHundredthsOfCent": {
+        "count": 3,
+        "total": 11,
+        "rate": 0.2727
+      }
+    },
+    "items": {
+      "exclusionsRemoved": 0,
+      "exclusionsAdded": 1,
+      "issuesRemoved": 19,
+      "issuesAdded": 5
+    },
+    "undraftedRulesAdded": 0,
+    "findings": {
+      "accepted": 43,
+      "modified": 0,
+      "rejected": 0
+    },
+    "byIssuer": {
+      "Capital One": {
+        "cards": 11,
+        "inCorpus": 11,
+        "drafted": 11,
+        "undrafted": 0,
+        "confirmed": 2,
+        "fixed": 9,
+        "dropped": 0,
+        "draftRules": 49,
+        "rulesRemoved": 4,
+        "rulesAdded": 0,
+        "verifiedRules": 45,
+        "draftRulesUnchanged": 39,
+        "ruleFieldValues": 360,
+        "ruleFieldsChanged": 7,
+        "cardFieldValues": 22,
+        "cardFieldsChanged": 3,
+        "ruleFieldCorrectionRate": 0.0194,
+        "cardFieldCorrectionRate": 0.1364,
+        "draftRulesRemovedRate": 0.0816,
+        "draftRulesUnchangedRate": 0.7959
+      }
+    },
+    "cards": {
+      "confirmed": [
+        "capital-one-quicksilver",
+        "capital-one-quicksilver-student"
+      ],
+      "dropped": [],
+      "undrafted": [],
+      "valuesUnchanged": [
+        "capital-one-quicksilver",
+        "capital-one-quicksilver-student",
+        "capital-one-savor",
+        "capital-one-savor-student",
+        "capital-one-savorone"
+      ]
+    },
+    "definitions": "scripts/expansion-pipeline-metrics.mjs"
+  },
+  "traces": {
+    "status": "scored",
+    "scorerVersion": "v2-scorer.2",
+    "corpus": {
+      "version": "capital-one-refresh-2026-11.v1",
+      "hash": "a15c116e61e2eebbe697c5b91b42f75a6d40798b3bb90a97cf9742cb2055df81",
+      "cases": 11
+    },
+    "upperBound": true,
+    "files": 11,
+    "scored": 11,
+    "skipped": 0,
+    "all": {
+      "planned": 11,
+      "observed": 11,
+      "complete": true,
+      "overall": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 45,
+          "total": 45,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 45,
+          "total": 49,
+          "rate": 0.9184
+        },
+        "fieldAccuracy": {
+          "correct": 266,
+          "total": 270,
+          "rate": 0.9852
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 266,
+          "total": 270,
+          "rate": 0.9852
+        },
+        "claimPrecision": {
+          "correct": 141,
+          "total": 157,
+          "rate": 0.8981
+        },
+        "evidenceValidity": {
+          "correct": 273,
+          "total": 277,
+          "rate": 0.9856
+        },
+        "issueRecall": {
+          "correct": 2,
+          "total": 7,
+          "rate": 0.2857
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 22,
+          "rate": 0.8636
+        },
+        "unsupportedClaims": 16,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 7,
+            "rate": 0.2857
+          }
+        },
+        "exclusionRecall": {
+          "correct": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "statuses": {
+          "needs_review": 9,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 147636,
+          "p95": 257608
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 41,
+            "total": 45,
+            "rate": 0.9111
+          },
+          "paidOnPaymentBps": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "drafted": {
+      "planned": 11,
+      "observed": 11,
+      "complete": true,
+      "overall": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 45,
+          "total": 45,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 45,
+          "total": 49,
+          "rate": 0.9184
+        },
+        "fieldAccuracy": {
+          "correct": 266,
+          "total": 270,
+          "rate": 0.9852
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 266,
+          "total": 270,
+          "rate": 0.9852
+        },
+        "claimPrecision": {
+          "correct": 141,
+          "total": 157,
+          "rate": 0.8981
+        },
+        "evidenceValidity": {
+          "correct": 273,
+          "total": 277,
+          "rate": 0.9856
+        },
+        "issueRecall": {
+          "correct": 2,
+          "total": 7,
+          "rate": 0.2857
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 22,
+          "rate": 0.8636
+        },
+        "unsupportedClaims": 16,
+        "issueRecallByCode": {
+          "ambiguous": {
+            "correct": 2,
+            "total": 7,
+            "rate": 0.2857
+          }
+        },
+        "exclusionRecall": {
+          "correct": 15,
+          "total": 16,
+          "rate": 0.9375
+        },
+        "statuses": {
+          "needs_review": 9,
+          "evidence_valid": 2
+        },
+        "latencyMs": {
+          "p50": 147636,
+          "p95": 257608
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 41,
+            "total": 45,
+            "rate": 0.9111
+          },
+          "paidOnPaymentBps": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "capKind": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          },
+          "limitedTime": {
+            "correct": 45,
+            "total": 45,
+            "rate": 1
+          }
+        }
+      }
+    },
+    "undrafted": {
+      "planned": 0,
+      "observed": 0,
+      "complete": true,
+      "overall": {
+        "runs": 0,
+        "ruleRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "rulePrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "fieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "claimPrecision": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "evidenceValidity": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "issueRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "falseClean": 0,
+        "cardFieldAccuracy": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "unsupportedClaims": 0,
+        "issueRecallByCode": {},
+        "exclusionRecall": {
+          "correct": 0,
+          "total": 0,
+          "rate": null
+        },
+        "statuses": {},
+        "latencyMs": {
+          "p50": null,
+          "p95": null
+        },
+        "perField": {
+          "rateBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "paidOnPaymentBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capKind": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capAmountCents": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capPeriod": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "capRateAfterCapBps": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "activation": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "usMerchantsOnly": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          },
+          "limitedTime": {
+            "correct": 0,
+            "total": 0,
+            "rate": null
+          }
+        }
+      }
+    },
+    "byIssuer": {
+      "Capital One": {
+        "runs": 11,
+        "ruleRecall": {
+          "correct": 45,
+          "total": 45,
+          "rate": 1
+        },
+        "rulePrecision": {
+          "correct": 45,
+          "total": 49,
+          "rate": 0.9184
+        },
+        "endToEndFieldAccuracy": {
+          "correct": 266,
+          "total": 270,
+          "rate": 0.9852
+        },
+        "cardFieldAccuracy": {
+          "correct": 19,
+          "total": 22,
+          "rate": 0.8636
+        },
+        "issueRecall": {
+          "correct": 2,
+          "total": 7,
+          "rate": 0.2857
+        },
+        "falseClean": 0
+      }
+    }
+  },
+  "crossModel": {
+    "status": "not-run"
+  },
+  "agreement": {
+    "frozen": "expansion.v1",
+    "measure": "agreement-not-accuracy",
+    "note": "Agreement between two agent-verified label sets (this batch and the frozen expansion.v1) on the same cards; neither is human-verified, so this is not accuracy.",
+    "matching": "same category, then closest issuer wording and an equal rate (v2 scorer matchRules)",
+    "overall": {
+      "cards": 9,
+      "cardsIdentical": 4,
+      "rules": {
+        "frozen": 35,
+        "batch": 35,
+        "matched": 35,
+        "onlyFrozen": 0,
+        "onlyBatch": 0
+      },
+      "ruleFields": {
+        "rateBps": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        },
+        "paidOnPaymentBps": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        },
+        "cap": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        },
+        "activation": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        },
+        "usMerchantsOnly": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        },
+        "limitedTime": {
+          "agree": 35,
+          "total": 35,
+          "rate": 1
+        }
+      },
+      "allRuleFields": {
+        "agree": 210,
+        "total": 210,
+        "rate": 1
+      },
+      "cardFields": {
+        "rewardCurrency": {
+          "agree": 9,
+          "total": 9,
+          "rate": 1
+        },
+        "pointValueHundredthsOfCent": {
+          "agree": 9,
+          "total": 9,
+          "rate": 1
+        }
+      },
+      "exclusions": {
+        "frozen": 11,
+        "batch": 14
+      },
+      "issues": {
+        "frozen": 2,
+        "batch": 5
+      }
+    },
+    "cards": [
+      {
+        "cardId": "capital-one-quicksilver-secured",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "capital-one-quicksilver-student",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "capital-one-quicksilverone",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "capital-one-savor-student",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "capital-one-savorone",
+        "rules": {
+          "frozen": 7,
+          "batch": 7,
+          "matched": 7
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 7,
+            "total": 7,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "capital-one-t-mobile-visa",
+        "rules": {
+          "frozen": 2,
+          "batch": 2,
+          "matched": 2
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 2,
+            "total": 2,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 2
+        }
+      },
+      {
+        "cardId": "capital-one-venture",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 2
+        },
+        "issues": {
+          "frozen": 1,
+          "batch": 0
+        }
+      },
+      {
+        "cardId": "capital-one-venture-x",
+        "rules": {
+          "frozen": 4,
+          "batch": 4,
+          "matched": 4
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 4,
+            "total": 4,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 3,
+          "batch": 3
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 1
+        }
+      },
+      {
+        "cardId": "capital-one-ventureone",
+        "rules": {
+          "frozen": 3,
+          "batch": 3,
+          "matched": 3
+        },
+        "onlyFrozen": [],
+        "onlyBatch": [],
+        "ruleFields": {
+          "rateBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "paidOnPaymentBps": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "cap": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "activation": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "usMerchantsOnly": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          },
+          "limitedTime": {
+            "agree": 3,
+            "total": 3,
+            "rate": 1
+          }
+        },
+        "cardFields": {
+          "rewardCurrency": true,
+          "pointValueHundredthsOfCent": true
+        },
+        "exclusions": {
+          "frozen": 1,
+          "batch": 1
+        },
+        "issues": {
+          "frozen": 0,
+          "batch": 0
+        }
+      }
+    ]
+  },
+  "timings": {
+    "startedAt": null,
+    "unavailable": [
+      "startedAt: state records finishedAt and acceptedAt only"
+    ],
+    "stages": {
+      "research": {
+        "records": 1,
+        "done": 1,
+        "attempts": 0,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:11:27.928Z",
+        "lastFinishedAt": "2026-11-06T19:11:27.928Z",
+        "models": []
+      },
+      "capture": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:19:44.310Z",
+        "lastFinishedAt": "2026-11-06T19:19:44.336Z",
+        "models": []
+      },
+      "extract": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:42:24.203Z",
+        "lastFinishedAt": "2026-11-06T19:42:24.205Z",
+        "models": []
+      },
+      "draft": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T19:45:19.005Z",
+        "lastFinishedAt": "2026-11-06T19:45:19.007Z",
+        "models": []
+      },
+      "verify": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-06T20:39:39.695Z",
+        "lastFinishedAt": "2026-11-06T20:39:39.695Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "adjudicate": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T00:38:12.460Z",
+        "lastFinishedAt": "2026-11-07T00:38:12.460Z",
+        "models": [
+          "claude-fable-5-1"
+        ]
+      },
+      "apply": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T00:38:13.826Z",
+        "lastFinishedAt": "2026-11-07T00:38:13.826Z",
+        "models": []
+      },
+      "overlay": {
+        "records": 11,
+        "done": 11,
+        "attempts": 11,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T02:51:56.330Z",
+        "lastFinishedAt": "2026-11-07T02:51:56.330Z",
+        "models": [
+          "claude-opus-5-5"
+        ]
+      },
+      "build": {
+        "records": 1,
+        "done": 1,
+        "attempts": 2,
+        "paused": 0,
+        "firstFinishedAt": "2026-11-07T19:16:39.361Z",
+        "lastFinishedAt": "2026-11-07T19:16:39.361Z",
+        "models": []
+      }
+    },
+    "extract": {
+      "cards": [
+        {
+          "cardId": "capital-one-venture-x",
+          "runs": 1,
+          "modelMinutes": 3.05,
+          "inputTokens": 10655,
+          "outputTokens": 1392
+        },
+        {
+          "cardId": "capital-one-venture",
+          "runs": 1,
+          "modelMinutes": 1.97,
+          "inputTokens": 10440,
+          "outputTokens": 975
+        },
+        {
+          "cardId": "capital-one-ventureone",
+          "runs": 1,
+          "modelMinutes": 2.49,
+          "inputTokens": 8918,
+          "outputTokens": 976
+        },
+        {
+          "cardId": "capital-one-quicksilverone",
+          "runs": 1,
+          "modelMinutes": 2.47,
+          "inputTokens": 7483,
+          "outputTokens": 1105
+        },
+        {
+          "cardId": "capital-one-quicksilver-student",
+          "runs": 1,
+          "modelMinutes": 2.14,
+          "inputTokens": 8240,
+          "outputTokens": 871
+        },
+        {
+          "cardId": "capital-one-quicksilver-secured",
+          "runs": 1,
+          "modelMinutes": 2.3,
+          "inputTokens": 7500,
+          "outputTokens": 1142
+        },
+        {
+          "cardId": "capital-one-savorone",
+          "runs": 1,
+          "modelMinutes": 2.36,
+          "inputTokens": 9119,
+          "outputTokens": 2516
+        },
+        {
+          "cardId": "capital-one-savor-student",
+          "runs": 1,
+          "modelMinutes": 3.43,
+          "inputTokens": 9493,
+          "outputTokens": 2807
+        },
+        {
+          "cardId": "capital-one-t-mobile-visa",
+          "runs": 1,
+          "modelMinutes": 2.46,
+          "inputTokens": 7590,
+          "outputTokens": 1327
+        },
+        {
+          "cardId": "capital-one-quicksilver",
+          "runs": 1,
+          "modelMinutes": 1.69,
+          "inputTokens": 9197,
+          "outputTokens": 851
+        },
+        {
+          "cardId": "capital-one-savor",
+          "runs": 1,
+          "modelMinutes": 4.29,
+          "inputTokens": 9736,
+          "outputTokens": 2444
+        }
+      ],
+      "totals": {
+        "cards": 11,
+        "modelMinutes": 28.65,
+        "inputTokens": 98371,
+        "outputTokens": 16406
+      }
+    },
+    "agentStages": {
+      "modelMinutes": 187.3,
+      "tokens": 343431,
+      "perCard": {
+        "modelMinutes": 17.03,
+        "tokens": 31221
+      }
+    }
+  }
+}

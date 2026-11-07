@@ -1,0 +1,2605 @@
+{
+  "schemaVersion": 1,
+  "version": "chase-refresh-2026-11.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch chase-refresh-2026-11: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "chase-freedom-flex",
+      "issuer": "Chase",
+      "corpusCaseSha256": "a35e741023d16b3f66a91bdd587a2f84e931880daded9034a46f8487b3763ffa",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "brand-exclusion",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Oct-Dec 2026 grocery quarter: starts 2026-10-01, Walmart and Target excluded by brand, and the $1,500 quarterly cap is shared with the other two Q4 categories.",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "excludedBrandIds": [
+              "walmart",
+              "target"
+            ],
+            "sharedCapId": "q4-2026",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "OCT-DEC 2026 CURRENT QUARTER Grocery Stores (excluding Walmart® and Target®)*"
+            },
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases."
+            },
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Oct-Dec 2026 dining quarter: starts 2026-10-01 and shares the $1,500 combined quarterly cap.",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "q4-2026",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Dining American Red Cross®*"
+            },
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Activate starting September 15, 2026"
+            },
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases."
+            },
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Single-merchant quarterly category scoped to the American Red Cross brand (donations, not retail, but brand-scoped per O3 so a merchant profile can match it); starts 2026-10-01 and shares the combined cap.",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "brandIds": [
+              "american-red-cross"
+            ],
+            "sharedCapId": "q4-2026",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Dining American Red Cross®*"
+            },
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Activate starting September 15, 2026"
+            },
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Activate each quarter to earn 5% cash back on up to $1,500 in combined purchases."
+            },
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft promotion scoped to the Lyft brand; the corpus already carries the 2027-09-30 end date.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-freedom-flex-product",
+              "quote": "Earn 2% total cash back on Lyft rides with your Freedom Flex card through September 30, 2027."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "The $1,500 quarterly cap is combined across the current quarter's categories, so the three Q4 2026 rules share one cap ID.",
+          "rules": [
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "brand-exclusion"
+          ],
+          "note": "Q4 2026 rules get startsOn and one shared cap ID. Jan-Mar 2027 (grocery, streaming) is omitted as in the 2026-10 renewal: the capture gives no end date, and this catalog expires before 2027-01-01.",
+          "rules": [
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft rule scoped to the Lyft brand with its 2027-09-30 end date.",
+          "rules": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "chase-sapphire-preferred",
+      "issuer": "Chase",
+      "corpusCaseSha256": "b062b8a0783bf1cdef5a3179465c40c5b176769809b7eb87941182632cc61af7",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: vacation home rentals are lodging; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        },
+        {
+          "index": 6,
+          "was": {
+            "category": "streaming",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "no v3 category: online grocery (pickup and delivery ordered online, excluding Target, Walmart and wholesale clubs). In-store grocery does not earn it, so supermarkets would overstate."
+        },
+        {
+          "index": 8,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: all other travel (airfare, hotels, car rental and similar); no v3 category covers it, so the rule earns nothing at a retail checkout."
+        },
+        {
+          "index": 9,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft promotion scoped to the Lyft brand; end date already in the corpus.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-sapphire-preferred-product",
+              "quote": "Earn 5x on Lyft rides through 9/30/27.*"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "Peloton promotion applies only to purchases over $150; a minimum purchase amount is not expressible in v3, and brand scope alone would overstate smaller Peloton purchases."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Peloton rule this issue is about is held out: its over-$150 minimum purchase is not expressible in v3."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Peloton rule is held out: its over-$150 minimum purchase is not expressible in v3."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft brand scope with the 2027-09-30 end date.",
+          "rules": [
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "chase-sapphire-reserve",
+      "issuer": "Chase",
+      "corpusCaseSha256": "ce7077801e4ba6d529c7abf6029eb5c6fdf823ab1afc7ae2a9bcb177f8a9aa24",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft promotion scoped to the Lyft brand; end date already in the corpus.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-sapphire-reserve-product",
+              "quote": "Plus, earn 5x total points on Lyft rides through 9/30/2027.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "Peloton promotion applies only to purchases over $150; a minimum purchase amount is not expressible in v3, and brand scope alone would overstate smaller Peloton purchases."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: flights booked directly with airlines; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Peloton rule this issue is about is held out: its over-$150 minimum purchase is not expressible in v3."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "The Peloton rule is held out: its over-$150 minimum purchase is not expressible in v3."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft brand scope with the 2027-09-30 end date.",
+          "rules": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-rise",
+      "issuer": "Chase",
+      "corpusCaseSha256": "7d7cef31b0e8d3c979198859c7185e8ada60070f19fe86812fde4bed00c4e912",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    },
+    {
+      "cardId": "prime-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "b9250007e82ec1102c9c486fadad45fc38bedf19efb7264cff4ef58721a92bae",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Scoped to Amazon and Audible; the 5% needs an eligible Prime membership, otherwise the card earns 3% (added rule).",
+          "set": {
+            "brandIds": [
+              "amazon",
+              "audible"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-product",
+              "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel℠ purchases with an eligible Prime membership.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Scoped to Whole Foods Market; 5% only with an eligible Prime membership, otherwise 3% (added rule).",
+          "set": {
+            "brandIds": [
+              "whole-foods-market"
+            ],
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-product",
+              "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel℠ purchases with an eligible Prime membership.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "travel-portal",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "gate"
+          ],
+          "note": "Chase Travel 5% only with an eligible Prime membership; without it the terms pay 3% (added rule).",
+          "set": {
+            "requires": [
+              {
+                "gateId": "amazon-prime",
+                "optionIds": [
+                  "member"
+                ]
+              }
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-product",
+              "quote": "Earn unlimited 5% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase Travel℠ purchases with an eligible Prime membership.*"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party payment"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "mobile digital wallets, or similar technology will not"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party payment"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "mobile digital wallets, or similar technology will not"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "was": {
+            "category": "transit",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party payment"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "mobile digital wallets, or similar technology will not"
+            }
+          ]
+        }
+      ],
+      "addedRules": [
+        {
+          "key": "no-prime-amazon",
+          "issuerWording": "purchases made at Amazon.com",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "other",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "amazon",
+            "audible"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "amazon-prime",
+              "optionIds": [
+                "not-member"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Terms fallback: a Prime Visa account without an eligible Prime membership earns 3% at Amazon and the participating Amazon sites (Audible).",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "(c) In all other cases, your card account will earn 3% back"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "“3-2-1 % back rewards” are earned without an eligible"
+            }
+          ]
+        },
+        {
+          "key": "no-prime-whole-foods",
+          "issuerWording": "any Whole Foods Market",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": true,
+          "category": "other",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [
+            "whole-foods-market"
+          ],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "amazon-prime",
+              "optionIds": [
+                "not-member"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Terms fallback: 3% at Whole Foods Market when the account has no eligible Prime membership; U.S. locations only, as in the 5% rule.",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "(c) In all other cases, your card account will earn 3% back"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "“3-2-1 % back rewards” are earned without an eligible"
+            }
+          ]
+        },
+        {
+          "key": "no-prime-chase-travel",
+          "issuerWording": "purchases made through Chase Travel",
+          "rateBps": 300,
+          "paidOnPaymentBps": 0,
+          "usMerchantsOnly": false,
+          "category": "travel-portal",
+          "cap": {
+            "kind": "none"
+          },
+          "activation": "unstated",
+          "limitedTime": null,
+          "brandIds": [],
+          "excludedBrandIds": [],
+          "sharedCapId": null,
+          "choice": null,
+          "requires": [
+            {
+              "gateId": "amazon-prime",
+              "optionIds": [
+                "not-member"
+              ]
+            }
+          ],
+          "requiredPaymentPaths": [],
+          "excludedPaymentPaths": [],
+          "how": [
+            "gate"
+          ],
+          "note": "Terms fallback: 3% on Chase Travel purchases when the account has no eligible Prime membership.",
+          "anchors": [
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "(c) In all other cases, your card account will earn 3% back"
+            },
+            {
+              "sourceId": "prime-visa-rewards-terms",
+              "quote": "“3-2-1 % back rewards” are earned without an eligible"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "gate",
+            "brand-scope"
+          ],
+          "note": "The 3% no-Prime fallback is modelled with the amazon-prime gate: 5% rules require member, 3% duplicates require not-member.",
+          "rules": [
+            0,
+            1,
+            2,
+            "no-prime-amazon",
+            "no-prime-whole-foods",
+            "no-prime-chase-travel"
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Rotating 10%-or-more Amazon item offers are limited-time offers with no stated category or rate floor; not modelled."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "gate"
+          ],
+          "note": "Amazon, Audible and Whole Foods rules are brand-scoped and gated on Prime membership, with 3% fallbacks.",
+          "rules": [
+            0,
+            1,
+            "no-prime-amazon",
+            "no-prime-whole-foods"
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "amazon-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "4991e54606b8155f647b4ae55c014491d7e737b504017c2983345bcce4a3be7f",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Amazon and Audible brands.",
+          "set": {
+            "brandIds": [
+              "amazon",
+              "audible"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-visa-product",
+              "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase TravelSM purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Whole Foods Market brand.",
+          "set": {
+            "brandIds": [
+              "whole-foods-market"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "amazon-visa-product",
+              "quote": "Earn unlimited 3% back at Amazon.com, Audible.com, Whole Foods Market, and on Chase TravelSM purchases.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Amazon, Audible and Whole Foods rules are brand-scoped.",
+          "rules": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "doordash-rewards-mastercard",
+      "issuer": "Chase",
+      "corpusCaseSha256": "e043a152e7b49a75c7c7198ffbfb23ab44e4ce7e8ef0be5a72a0de81c19ec28b",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the DoorDash and Caviar brands, whatever the order contains.",
+          "set": {
+            "brandIds": [
+              "doordash",
+              "caviar"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "doordash-rewards-mastercard-product",
+              "quote": "Earn 4% Cash back on DoorDash and Caviar orders."
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "DoorDash and Caviar brand scope; the corpus already records no cap.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "disney-inspire-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "bef53cc9b507a083569a9cc2dff598e6d6ac6bd1ef785de79e762bc8ed763030",
+      "heldOut": null,
+      "programId": "disney-rewards-dollars",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney+, Hulu and ESPN brands (direct purchases on their sites).",
+          "set": {
+            "brandIds": [
+              "disney-plus",
+              "hulu",
+              "espn"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-inspire-visa-product",
+              "quote": "Earn 10% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney brand; \"most\" locations means a few Disney merchants may not earn it.",
+          "set": {
+            "brandIds": [
+              "disney"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-inspire-visa-product",
+              "quote": "Earn 3% on card purchases at gas stations and most other U.S. Disney locations.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Rewards move to the Disney Rewards Dollars store-credit program (Disney brands). The dollars can also be credited toward airline tickets charged to the card; the program cannot express that, so the catalog takes the conservative Disney-only reading."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Disney-locations part is the Disney brand-scoped rule; \"most\" means a few Disney merchants may not earn it. Gas stays a shared category rule.",
+          "rules": [
+            2
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Disney+, Hulu and ESPN brand scope.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Disney brand scope.",
+          "rules": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "disney-premier-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "024eb60e6b41c53497a26480bc1f84318e4881f77f687b05a1a6b9ba363e8c49",
+      "heldOut": null,
+      "programId": "disney-rewards-dollars",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney+, Hulu and ESPN brands (direct purchases on their sites).",
+          "set": {
+            "brandIds": [
+              "disney-plus",
+              "hulu",
+              "espn"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 5% on card purchases made directly at DisneyPlus.com, Hulu.com or Stream.ESPN.com.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. The terms say purchases through third-party payment accounts or digital wallets may not qualify in a rewards category, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "Purchases submitted through third-party"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "payment accounts, mobile or wireless card"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "readers, online or mobile digital wallets, or"
+            },
+            {
+              "sourceId": "disney-premier-visa-rewards-terms",
+              "quote": "similar technology will not qualify in a"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Disney brand; \"most\" locations means a few Disney merchants may not earn it.",
+          "set": {
+            "brandIds": [
+              "disney"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "disney-premier-visa-product",
+              "quote": "Earn 2% on card purchases at gas stations and most Disney U.S. locations.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "The Disney-locations part is the Disney brand-scoped rule; \"most\" means a few Disney merchants may not earn it. Gas stays a shared category rule.",
+          "rules": [
+            4
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Rewards move to the Disney Rewards Dollars store-credit program (Disney brands). The dollars can also be credited toward airline tickets charged to the card; the program cannot express that, so the catalog takes the conservative Disney-only reading."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Disney+, Hulu and ESPN brand scope.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "disney-visa",
+      "issuer": "Chase",
+      "corpusCaseSha256": "c8757696381ac1b01deeec4b9c11a0b0f48cbd8f279888cde9efae5bd936811e",
+      "heldOut": null,
+      "programId": "disney-rewards-dollars",
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "store-credit-program"
+          ],
+          "note": "Rewards move to the Disney Rewards Dollars store-credit program redeemable with Disney brands."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "southwest-rapid-rewards-plus",
+      "issuer": "Chase",
+      "corpusCaseSha256": "706d3625ad64bd5a13cc33abfd92b2118576fc6884bf5003fc78993c3a64f6f4",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 1X applies after the cap (O12); the $5,000 cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 500000,
+              "period": "cardmember-year",
+              "rateAfterCapBps": 100
+            },
+            "sharedCapId": "gas-grocery"
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2 points for each dollar spent at gas stations and grocery stores on the first $5,000 in combined purchases per anniversary year.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 1X applies after the cap (O12); the $5,000 cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 500000,
+              "period": "cardmember-year",
+              "rateAfterCapBps": 100
+            },
+            "sharedCapId": "gas-grocery"
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2 points for each dollar spent at gas stations and grocery stores on the first $5,000 in combined purchases per anniversary year.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Southwest Airlines brand.",
+          "set": {
+            "brandIds": [
+              "southwest-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2 points for each dollar spent on Southwest Airlines purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft app promotion scoped to the Lyft brand; end date already in the corpus.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-plus-product",
+              "quote": "Earn 2X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Southwest Airlines brand scope.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft brand scope with the 2027-12-31 end date.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-premier",
+      "issuer": "Chase",
+      "corpusCaseSha256": "6058c87a98ef75a036fb2480cf0ece0883d2f9d609f3f14ee1d25e6c68dba4b5",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 200
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 1X applies after the cap (O12); the $8,000 cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 800000,
+              "period": "cardmember-year",
+              "rateAfterCapBps": 100
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 2 points for each dollar spent at grocery stores and restaurants on the first $8,000 in combined purchases per anniversary year.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 1X applies after the cap (O12); the $8,000 cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 800000,
+              "period": "cardmember-year",
+              "rateAfterCapBps": 100
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 2 points for each dollar spent at grocery stores and restaurants on the first $8,000 in combined purchases per anniversary year.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Southwest Airlines brand.",
+          "set": {
+            "brandIds": [
+              "southwest-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 3 points for each dollar spent on Southwest Airlines purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft app promotion scoped to the Lyft brand; end date already in the corpus.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-premier-product",
+              "quote": "Earn 3X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Southwest Airlines brand scope.",
+          "rules": [
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft brand scope with the 2027-12-31 end date.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "southwest-rapid-rewards-priority",
+      "issuer": "Chase",
+      "corpusCaseSha256": "b4ccffe12a50bc4f31111845544276e3b19c4453d660a3ac8e2083b0558a54fb",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Southwest Airlines brand.",
+          "set": {
+            "brandIds": [
+              "southwest-airlines"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-priority-product",
+              "quote": "Plus, earn 4X points on Southwest Airlines® purchases and 2X points at gas stations and restaurants.*"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Lyft app promotion scoped to the Lyft brand; end date already in the corpus.",
+          "set": {
+            "brandIds": [
+              "lyft"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "southwest-rapid-rewards-priority-product",
+              "quote": "Earn 5X total points on qualifying Lyft products and services purchased through the Lyft mobile application through 12/31/2027.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Southwest Airlines brand scope.",
+          "rules": [
+            0
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope",
+            "limited-time"
+          ],
+          "note": "Lyft brand scope with the 2027-12-31 end date.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "ihg-one-rewards-premier-select",
+      "issuer": "Chase",
+      "corpusCaseSha256": "bbdc5ec580450a128ce761025c9b003828b973deff6c222065e979cc435c2ff6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "category"
+          ],
+          "note": "Travel rule that names rideshare; only the transit part can reach a v3 category, so it is recategorized to transit (airfare and hotels are not at retail, O16).",
+          "set": {
+            "category": "transit"
+          },
+          "anchors": [
+            {
+              "sourceId": "ihg-one-rewards-premier-select-product",
+              "quote": "Earn 6X points on dining and all other travel, including rideshare.*"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 1200
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the IHG Hotels & Resorts brand at the card-only rate (general 2).",
+          "set": {
+            "brandIds": [
+              "ihg-hotels"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "ihg-one-rewards-premier-select-product",
+              "quote": "That's 12X points with this card.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "category"
+          ],
+          "note": "The travel rule is kept only as transit (rideshare and local transit); airfare, hotels and other travel are not represented.",
+          "rules": [
+            1
+          ]
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "IHG brand scope at the card rate; member and status points excluded.",
+          "rules": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "ihg-one-rewards-premier",
+      "issuer": "Chase",
+      "corpusCaseSha256": "0d22585a80a79e42ee2b585f139ee26e50824caad2d989412e6c896824d6aab0",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 1000
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the IHG Hotels & Resorts brand at the card-only rate (general 2).",
+          "set": {
+            "brandIds": [
+              "ihg-hotels"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "ihg-one-rewards-premier-product",
+              "quote": "That's 10X points with this card.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: flights booked directly with airlines; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: car rental agencies; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "IHG brand scope at the card rate; member and status points excluded.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "ihg-one-rewards",
+      "issuer": "Chase",
+      "corpusCaseSha256": "77f511ba33b1b68aa1d1697fae81cf0dc8b4a3ebc8ee271757fd22581af433b6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the IHG Hotels & Resorts brand at the card-only rate (general 2).",
+          "set": {
+            "brandIds": [
+              "ihg-hotels"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "ihg-one-rewards-product",
+              "quote": "That's 5X points with this card.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "IHG brand scope at the card rate; member and status points excluded.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-boundless",
+      "issuer": "Chase",
+      "corpusCaseSha256": "04fea8836a0a9f95bfe7ff0f189fb9cd1f335ed10deaf47527a6998ebc554395",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 300
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $6,000 cap (O12); the cap is combined, so the three rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 600000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-gas-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-boundless-product",
+              "quote": "Earn 3X points for every $1 on the first $6,000 spent in combined purchases annually on grocery stores, gas stations, and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "gas",
+            "rateBps": 300
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $6,000 cap (O12); the cap is combined, so the three rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 600000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-gas-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-boundless-product",
+              "quote": "Earn 3X points for every $1 on the first $6,000 spent in combined purchases annually on grocery stores, gas stations, and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $6,000 cap (O12); the cap is combined, so the three rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 600000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-gas-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-boundless-product",
+              "quote": "Earn 3X points for every $1 on the first $6,000 spent in combined purchases annually on grocery stores, gas stations, and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Marriott brand (participating Marriott Bonvoy hotels) at the card rate.",
+          "set": {
+            "brandIds": [
+              "marriott"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-boundless-product",
+              "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Boundless® credit card.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Marriott brand scope at 6X; member and status points excluded.",
+          "rules": [
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "marriott-bonvoy-bountiful",
+      "issuer": "Chase",
+      "corpusCaseSha256": "44c551dafbbebac181d016247b97ceeb38f721987bf2b368cd6b7ae29555d9cc",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "supermarkets",
+            "rateBps": 400
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $15,000 cap (O12); the cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 400
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No after-cap rate is stated, so the base 2X applies after the $15,000 cap (O12); the cap is combined, so both rules share one cap ID.",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 1500000,
+              "period": "year-unspecified",
+              "rateAfterCapBps": 200
+            },
+            "sharedCapId": "grocery-dining"
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 4X points for every $1 on the first $15,000 in combined purchases annually on grocery stores and dining.*"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 600
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Marriott brand (participating Marriott Bonvoy hotels) at the card rate.",
+          "set": {
+            "brandIds": [
+              "marriott"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "marriott-bonvoy-bountiful-product",
+              "quote": "Earn 6X points for every $1 spent at over 7,000 hotels participating in Marriott Bonvoy® with the Marriott Bonvoy Bountiful® Credit Card.*"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Marriott brand scope at 6X; member and Gold Elite points excluded.",
+          "rules": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "world-of-hyatt",
+      "issuer": "Chase",
+      "corpusCaseSha256": "5d14417f505e383c94da4d5d8e62445ceaf722a73b380c33f522b25d783d97ce",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 400
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Hyatt brand at the card bonus rate (general 2).",
+          "set": {
+            "brandIds": [
+              "hyatt"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "world-of-hyatt-product",
+              "quote": "4 Bonus Points per $1 spent on qualifying purchases at Hyatt Hotels.*"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: airline tickets bought directly from airlines; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        },
+        {
+          "index": 4,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: fitness club and gym memberships; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Hyatt brand scope at 4X; Hyatt member base points excluded.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "air-canada-aeroplan",
+      "issuer": "Chase",
+      "corpusCaseSha256": "ab0ed09463f58660ba072e132378dbd72d56fddff19d9b850dc22fea6c1fe068",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the Air Canada brand at the card rate (general 2).",
+          "set": {
+            "brandIds": [
+              "air-canada"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "air-canada-aeroplan-product",
+              "quote": "including 3X points on Air Canada purchases with your card"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: travel purchases; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Air Canada brand scope at 3X; the extra airline earn for 25K members is excluded.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "british-airways-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "6f7cd86b9b96fecd90b05869377ad8cdf5ee6700dea39a3d4f59bc411a6999f6",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "british-airways-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on British Airways, Aer Lingus, and Iberia flight purchases."
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "aer-lingus-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "bc8218d6553a671a35215569a54ec4e2c8cede48316a18b27702e2f330005273",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "aer-lingus-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent with Aer Lingus, British Airways, and Iberia flight purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "iberia-visa-signature",
+      "issuer": "Chase",
+      "corpusCaseSha256": "dd3def8e8ec27979fe431e12e725caf72ff3240ad95e71143ba75857d53174ff",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 0,
+          "was": {
+            "category": "other",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Scoped to the British Airways, Aer Lingus and Iberia brands (flight purchases).",
+          "set": {
+            "brandIds": [
+              "british-airways",
+              "aer-lingus",
+              "iberia"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "iberia-visa-signature-product",
+              "quote": "Earn 3 Avios for every $1 spent on Iberia, British Airways, and Aer Lingus flight purchases.*"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "was": {
+            "category": "other",
+            "rateBps": 200
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: hotel stays booked directly with hotels; no v3 category covers it, so the rule earns nothing at a retail checkout."
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "brand-scope"
+          ],
+          "note": "Brand scope on the three Avios airlines.",
+          "rules": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "chase-freedom-unlimited",
+      "issuer": "Chase",
+      "corpusCaseSha256": "045bff68a78655b5c7a2f4d0874ef3fc139a20b51bea530b70f54e28010c1936",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "drugstores",
+            "rateBps": 300
+          },
+          "disposition": "modelled",
+          "how": [
+            "checkout-method"
+          ],
+          "note": "Bonus category rule. Category rewards may not apply when paid through third-party payment accounts or digital wallets, so PayPal, Venmo and digital wallets are excluded (O10, conservative).",
+          "set": {
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "chase-rewards-category-faq",
+              "quote": "Purchases submitted through third-party payment accounts, mobile or wireless card readers, online or mobile digital wallets, or similar technology will not qualify in"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [],
+      "hints": []
+    }
+  ]
+}

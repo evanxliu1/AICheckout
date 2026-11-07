@@ -391,6 +391,8 @@ export async function runEval(env: Env, batchId: string, options: EvalOptions = 
         files: (luna.traces as Record<string, unknown>).files,
         scored: (luna.traces as Record<string, unknown>).scored,
         skipped: ((luna.traces as Record<string, unknown>).skipped as unknown[]).length,
+        resourced: (((luna.traces as Record<string, unknown>).resourced as unknown[] | undefined) ?? [])
+          .length,
         ...subsets(luna),
       };
       if (options.crossModelRun)

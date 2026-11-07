@@ -109,10 +109,13 @@ export async function scoreExpansion({ dir, captures, traces, run }) {
       disclosure: DISCLOSURE,
       configuration: fromTraces.bundle.configuration,
       traces: {
-        files: fromTraces.bundle.observations.length + fromTraces.skipped.length,
+        files:
+          fromTraces.bundle.observations.length + fromTraces.skipped.length + fromTraces.resourced.length,
         scored: fromTraces.bundle.observations.length,
         skipped: fromTraces.skipped,
         skippedReason: 'card dropped by verification (not in corpus.json)',
+        resourced: fromTraces.resourced,
+        resourcedReason: 'verification changed the case sources after extraction (the trace never saw them)',
       },
       ...luna,
     },

@@ -45,7 +45,7 @@ Live extraction evals call models only through vendor CLIs signed in to Evan's s
 | Curation defaults | [`apps/api/src/curation/curation-model.ts`](../../apps/api/src/curation/curation-model.ts) `CURATION_DEFAULTS`: gpt-5.6-luna, `xhigh`, `guided.2`, `keyword-window.1`, visible output tokens, 600 s / 900 s. Used by `eval:v2 --provider codex` with no `--model` (or `--model gpt-5.6-luna`) and by `scripts/extract-cards.mjs` (Codex only; `--provider claude` there needs `--model` and `--effort`); each flag overrides its part. A live `eval:v2` run prints the resolved configuration and deadlines before its first call |
 | Committed results | `npm run eval:summarize` → `docs/evals/results.json`, `results.svg`, `results-heldout.svg` (metrics only); a `--split all` run becomes one row per split |
 | Usage-limit exit | Status 3 (`EXIT_RATE_LIMITED`); partial results saved |
-| Codex limits | `CODEX_LIMITS`: 240 s per attempt, 480 s total, 64k input / 8192 output tokens; the curation model gets 600 s / 900 s (new and resumed runs) |
+| Codex limits | `CODEX_LIMITS`: 240 s per attempt, 480 s total, 64k input / 8192 output tokens; the curation model gets 600 s / 900 s (new and resumed runs). The schema bound is 1,800 s / 2,700 s since 2026-11-07: when `xhigh` answers slower than 600 s (the 2026-11 renewal saw 700 s and more on about 30 cards), run `scripts/extract-cards.mjs --dir <batch> --only <ids> --attempt-timeout-ms 1500000 --total-timeout-ms 1800000`, then `pipeline run extract` records the finished traces |
 | Binary overrides | `AICHECKOUT_CODEX_BIN`, `AICHECKOUT_CLAUDE_BIN` (default `codex`, `claude` on `PATH`) |
 | Real-corpus captures | `evals/curation/real/captures/` is gitignored and machine-local (copyrighted issuer text) |
 

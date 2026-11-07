@@ -1,0 +1,2865 @@
+{
+  "schemaVersion": 1,
+  "batch": "chase-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:22:21.723Z",
+  "cards": {
+    "chase-freedom-flex": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cb14d7e71adf0338a19334140fb777a3b7399846d9a73a120da66fa91e6b608a",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-flex-product",
+              "sha256": "3480eb1d2357566c3cf1592d34a8db9006fc0a55fb16471f93109645a561b2b9"
+            },
+            {
+              "ref": "source-input:chase-freedom-flex-product",
+              "sha256": "56f0693db4affeb4855abdd7ade7a2dec8855ed936fbd420e17993d9d63afb5d"
+            },
+            {
+              "ref": "manifest:chase-freedom-flex-rewards-terms",
+              "sha256": "308bf45d52e20d1a795610be3229741b53d2fd8b6e00456485f9ad056f17ba9b"
+            },
+            {
+              "ref": "source-input:chase-freedom-flex-rewards-terms",
+              "sha256": "971a20ac38ebb00ded742588e557c4a0caa523fcc039123d4e6cd6e02eade4aa"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:32:42.764Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:082d289708c59b85f74c9e24681160cd2ffb0d350bbacfe4e9fd1794ce9ade5f",
+          "outputs": [
+            {
+              "ref": "trace:chase-freedom-flex",
+              "sha256": "bfe7c614f1eef7263669bc651b8f6b4f1ee3f294bb6e9e85af1b75d49ff47819"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:50:55.425Z",
+          "attempts": 3
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:fa0c363b717141458563ab643638378cd74bc9b53144b1d9c1e64c5155ce5f29",
+          "outputs": [
+            {
+              "ref": "corpus-draft:chase-freedom-flex",
+              "sha256": "1a0f860540a0a57bec78d3cb41cf729f3c8bde7f28a17dc9851120951604dd87"
+            }
+          ],
+          "labelsHash": "sha256:4d64dee35f465e0ce628106f3af9a1acddbfaf6e1aeb3449d9fbe4dc8b323046",
+          "anchorsHash": "sha256:54c0e1d96c54ac97a67228049e9c78703dae463392b4ec897ee441b467e54342",
+          "finishedAt": "2026-11-07T17:55:07.813Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e1eda976a38bbfd622936dcab7c08e40f451230513a36dcc1ee7efc6cb5ae913",
+          "labelsHash": "sha256:4d64dee35f465e0ce628106f3af9a1acddbfaf6e1aeb3449d9fbe4dc8b323046",
+          "anchorsHash": "sha256:54c0e1d96c54ac97a67228049e9c78703dae463392b4ec897ee441b467e54342",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:7f2797e399002c9f1d347d76667dd407dd9b7051d9ec99aeffbe407d75b77e99",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:35d22d2460fb9723a18a18bbb72421385b13fd3ccb2dafd1edb47641774f1bbc",
+          "outputs": [
+            {
+              "ref": "corpus:chase-freedom-flex",
+              "sha256": "a35e741023d16b3f66a91bdd587a2f84e931880daded9034a46f8487b3763ffa"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.255Z",
+          "attempts": 1,
+          "metrics": {
+            "lintEndDateRaised": 3,
+            "lintEndDateAcked": 3
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ae5d48ba8b4019b3b577408bc67eb115688cd24cc36283f9c0382ec735d1f325",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-sapphire-preferred": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:69d0166970b8df208851cc350285686bd30d44f457c4a0787ff699a56228334a",
+          "outputs": [
+            {
+              "ref": "manifest:chase-sapphire-preferred-product",
+              "sha256": "f3f43d7dbc90f6ce181a21d792f2ee9fa16932a939526efa0aac98649090f342"
+            },
+            {
+              "ref": "source-input:chase-sapphire-preferred-product",
+              "sha256": "8dea0e756cb114837e4437723656813ac133feca13b38cecc3da3cb42efd2596"
+            },
+            {
+              "ref": "manifest:chase-sapphire-preferred-rewards-terms",
+              "sha256": "07fac2b9d98ac4ee3e7b65fc4c2106b6902929d2661bed60a3bb22ec9b0b4f05"
+            },
+            {
+              "ref": "source-input:chase-sapphire-preferred-rewards-terms",
+              "sha256": "22cfbdaff81257436c6b214563c34d81ff9feb478137544ee104feaf15e67350"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:40bdb3310df5e9a4dee849a594972dbdb75d470b9b225bca9654cd7e286d01de",
+          "outputs": [
+            {
+              "ref": "trace:chase-sapphire-preferred",
+              "sha256": "bfbf40b8d31fd96768853673cf6c379c475228947891789244da6b649519a9aa"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.413Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:99b17d92b55a8a99d694521646ba599f9ab0ef59c6e2aef271eef0938d5f59e2",
+          "outputs": [
+            {
+              "ref": "corpus-draft:chase-sapphire-preferred",
+              "sha256": "a2035d4b5e4e60b5ae64eddb488e4026f95517cc9d33ba5257a05d33f26e845b"
+            }
+          ],
+          "labelsHash": "sha256:f3d5acd0fe5848bb6dc9ab71403929de637233c62a2a9d26f896a5e6d9a7b086",
+          "anchorsHash": "sha256:ca2ac7f4204487bd814423e3a711e8d8cde191f921cb8eb6880ae9c425019925",
+          "finishedAt": "2026-11-07T17:55:07.813Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:960e82ab0cbdb4764cade8b9e259117f7a72462a8b188dde78515673ead73239",
+          "labelsHash": "sha256:f3d5acd0fe5848bb6dc9ab71403929de637233c62a2a9d26f896a5e6d9a7b086",
+          "anchorsHash": "sha256:ca2ac7f4204487bd814423e3a711e8d8cde191f921cb8eb6880ae9c425019925",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6ab729d488908bd9d99f1dcd88cd634eee54fe43c4f56e0e8308ab55f1ea440a",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d6dd116ff5c7ad4ef0f1a04dadf9e8596f75cf9722c57dac3909b5a54bbc562f",
+          "outputs": [
+            {
+              "ref": "corpus:chase-sapphire-preferred",
+              "sha256": "b062b8a0783bf1cdef5a3179465c40c5b176769809b7eb87941182632cc61af7"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ab10580d755330402d15fe809542c58639d55572dbfb76600a531f1efa9bc0d9",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-sapphire-reserve": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f66e0ee9e1dd3956b202e097ec85b922ba194f3115b8f1935f1f393fc35bf1cc",
+          "outputs": [
+            {
+              "ref": "manifest:chase-sapphire-reserve-product",
+              "sha256": "5f353cdbe7ecbab8d315bbd6ec9f999993fe194719f19f5e9c9d7a5594ca4958"
+            },
+            {
+              "ref": "source-input:chase-sapphire-reserve-product",
+              "sha256": "3201c8245ed8ffe65b9d21ce98e3035316807c7d88e47cb8bc6c31f7135f7cb7"
+            },
+            {
+              "ref": "manifest:chase-sapphire-reserve-pricing",
+              "sha256": "73a5004498916dda84f1bb12d4bbcddcb48a91b9ccca33e8ae9926fb3df365c9"
+            },
+            {
+              "ref": "source-input:chase-sapphire-reserve-pricing",
+              "sha256": "eba59f721ba3102f7b48198519662f10f3fa239255de1318a1fbbdc7922795fd"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:09b02c706f1b355bab87d13e9356739f7f04ce810429c41d61267a030693018b",
+          "outputs": [
+            {
+              "ref": "trace:chase-sapphire-reserve",
+              "sha256": "bd45c65d4171aed01effa174ddee7eb45b4ae9f44d9ad5ea0955d02798f226be"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.415Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:f3659525c2ef8b0d8a6e3be1a5e44e8c9565360d4e280b85ea51872d28968229",
+          "outputs": [
+            {
+              "ref": "corpus-draft:chase-sapphire-reserve",
+              "sha256": "123fbb54c3d1698cb15e819d2ce028418f67ca8d70fd0054205bbb467064e9be"
+            }
+          ],
+          "labelsHash": "sha256:4fdaedc529279f7fdee928be0909748a736e22e01d2e3a166b813f65bae547ef",
+          "anchorsHash": "sha256:15e0cbd453bd6af6a27a38f51656b896c7e6d37b3ee3cc63cc845784c9270998",
+          "finishedAt": "2026-11-07T17:55:07.813Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e8c40a79dbea8fd9b81b973c9271ca9439721a2a978965379d5f4983785f5d3b",
+          "labelsHash": "sha256:4fdaedc529279f7fdee928be0909748a736e22e01d2e3a166b813f65bae547ef",
+          "anchorsHash": "sha256:15e0cbd453bd6af6a27a38f51656b896c7e6d37b3ee3cc63cc845784c9270998",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:fe7c8489c21c2a8a4f7056f956698c2952f50559147db6ec9cd290e2f9ab53cf",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:58b9042acb0687407c25db4440ccd8f7fabdaa077bf43fc41eaa6669b5e68490",
+          "outputs": [
+            {
+              "ref": "corpus:chase-sapphire-reserve",
+              "sha256": "ce7077801e4ba6d529c7abf6029eb5c6fdf823ab1afc7ae2a9bcb177f8a9aa24"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2dc3413c0b800a773a2f3742d1db7137df5868a29ee3f490dce50b83e2c7efc7",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-freedom-rise": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9716f5ec26cf80462f638153d023717f1a167d57dd2e4e0ee574b06f727428e7",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-rise-product",
+              "sha256": "c78a3b762c1958871826c936c53c172ccb72544006a89cf855d0c08102d3d0c2"
+            },
+            {
+              "ref": "source-input:chase-freedom-rise-product",
+              "sha256": "79ca3b6e133216f05b56b1d350a2b743fa86e6494656a0cd260b270c9e2a1f72"
+            },
+            {
+              "ref": "manifest:chase-freedom-rise-pricing",
+              "sha256": "63dffbc6e482c0834045f004b912baf80d33c5e6b9e7cb9b05922f269c1db555"
+            },
+            {
+              "ref": "source-input:chase-freedom-rise-pricing",
+              "sha256": "83489e175eb2ef0d42b5055c461622cff857dbd6dcb8ea2941518db1cbf69f97"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:683d28384ddd17c2d711bcb2b98fd839ad62a2a848866395dbac495ba4762a66",
+          "outputs": [
+            {
+              "ref": "trace:chase-freedom-rise",
+              "sha256": "5c192f8532142c54ddce53e28a285f48e3465be542fa90ad88accf34ea1a7e4f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.416Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:232bb3a0f74a2c7637ee34145c82683dc6ceb8a0c0492261f03609c31d555e09",
+          "outputs": [
+            {
+              "ref": "corpus-draft:chase-freedom-rise",
+              "sha256": "250efce7f69b480036b39051e7597706211f143c0b33960a0ec5fefe1d344e5b"
+            }
+          ],
+          "labelsHash": "sha256:ed9c0ba564e58a177b237c650e29477c5e606f4246eaa2922253b85d4f4aa9dd",
+          "anchorsHash": "sha256:eddcc8b41ab962b8b5a86ac839ec2045156119ae2363a78c05a14fb6768cb6e0",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d6ccd3b042fbd47cddfb7a7539f05f3b2c67ee5b09cb3919f77c7b87bcaad2ff",
+          "labelsHash": "sha256:ed9c0ba564e58a177b237c650e29477c5e606f4246eaa2922253b85d4f4aa9dd",
+          "anchorsHash": "sha256:eddcc8b41ab962b8b5a86ac839ec2045156119ae2363a78c05a14fb6768cb6e0",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5322e73071a76d82959780b78c53453bef05cd1e39655b78bce7e6e96e15f3e1",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:6009d1b85818cc93d18025087c7f3f271b5be57fbca773c7e8f18a3bd498b8be",
+          "outputs": [
+            {
+              "ref": "corpus:chase-freedom-rise",
+              "sha256": "7d7cef31b0e8d3c979198859c7185e8ada60070f19fe86812fde4bed00c4e912"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:cc81ca65ae69d185396055e6794dc6c6094ec142d2ec64b6e53bf100311c4ad9",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "prime-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:880f2d331ba91962e849d6ac1139e86499e596436c651c6189cf5a56fec32768",
+          "outputs": [
+            {
+              "ref": "manifest:prime-visa-product",
+              "sha256": "7437592e741ecd789a525fb6b7f1b01a2e435b13183fdf70d64a592f448ae4f7"
+            },
+            {
+              "ref": "source-input:prime-visa-product",
+              "sha256": "937a4c405f2b5e008016d26ef321a1b421a27e7c6ead967ba5c38b2a9e030bca"
+            },
+            {
+              "ref": "manifest:prime-visa-rewards-terms",
+              "sha256": "1ec91b4d7d1458c82ec48f2abbdc44ac277553e8ae70ac77ec01c8336adb8594"
+            },
+            {
+              "ref": "source-input:prime-visa-rewards-terms",
+              "sha256": "ee1be7c36e9fa07a9eacc6371104e6b998faa033a1e37f59b5797f7b21df5ca2"
+            },
+            {
+              "ref": "manifest:prime-visa-pricing",
+              "sha256": "d6e35271b674a7b529b87f29d90cce826f3210b96d16c1951125adbc78a930b1"
+            },
+            {
+              "ref": "source-input:prime-visa-pricing",
+              "sha256": "4cd4f2d6fc76b16ee6fc4b16829f56b6e5c675681ea0587c5e22f47b52c8e9b0"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:32:43.613Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4a9c5cfc6b72e7f0c912b9047750a5a0288a7ae47b33365da6fbf3758c8a7f9b",
+          "outputs": [
+            {
+              "ref": "trace:prime-visa",
+              "sha256": "97ade8b5e8a5f69eb3eeae2cd8259a6d2e0c19bf8593effc1b5262a2afd20bb6"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:50:55.425Z",
+          "attempts": 3
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:5042e73cedc09b3a9c793f0011e44c7a0095ea7593e2f55b86338f6417362b66",
+          "outputs": [
+            {
+              "ref": "corpus-draft:prime-visa",
+              "sha256": "1026d98cdfd51a2fae9734691ca07547664194f0f2435d3e6c24254c6149cd7d"
+            }
+          ],
+          "labelsHash": "sha256:173d7665717ce50f928073f2dac9d36c78f6a1b7c4e0cf47d047d22e03f7507c",
+          "anchorsHash": "sha256:83f79449b31769c651417fcaccdc3c3d727992170e9ee424e43e60b4a4fcd90a",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:06885eaea14f76f74d51b348c065abd5e0696b44f7f83c54883f3e99a35af55b",
+          "labelsHash": "sha256:173d7665717ce50f928073f2dac9d36c78f6a1b7c4e0cf47d047d22e03f7507c",
+          "anchorsHash": "sha256:83f79449b31769c651417fcaccdc3c3d727992170e9ee424e43e60b4a4fcd90a",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:3c54c0f178d61f85e9718ae522dea4be93bb5a646d28031cd32e459bf11fd0d8",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d32673d27a1e07e5d8944f4af58026b24ba7ad95c93cedc0128417ad1dab8a0d",
+          "outputs": [
+            {
+              "ref": "corpus:prime-visa",
+              "sha256": "b9250007e82ec1102c9c486fadad45fc38bedf19efb7264cff4ef58721a92bae"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:29d7cc91c356f310a6929e26229c431e779321ef61fcfe1e3e6e1034a92900c4",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "amazon-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:28b5c2b58e32ed565f96ac0a62225170114d0ae3f43f5916e6a1ad1ae965c463",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-visa-product",
+              "sha256": "5a06e43c7b51bd5027733c0d14e899d1a2ddf64629d3f9d948950e9e8fcbdd28"
+            },
+            {
+              "ref": "source-input:amazon-visa-product",
+              "sha256": "20fcdd4cf5335eb9508bcb22a20bc3c6ce3772667f844cdfa0065cc581cfb40e"
+            },
+            {
+              "ref": "manifest:amazon-visa-pricing",
+              "sha256": "d6e35271b674a7b529b87f29d90cce826f3210b96d16c1951125adbc78a930b1"
+            },
+            {
+              "ref": "source-input:amazon-visa-pricing",
+              "sha256": "110eefa5496ed6cef1f5cda14254a1b55aaf5c545bcc54f373527242dcb2df4c"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:390939692be91c76d9a8feec7510ec990fe75463038da3d9b48ce718439af9d8",
+          "outputs": [
+            {
+              "ref": "trace:amazon-visa",
+              "sha256": "7d6b7f6fa6af4193bf526159089466fc359930ac22699aa4486a3d3e2b7dca86"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.416Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c76c423fe480b5bd52a3c0f54cf890fab51fd709fb34fae0775ae604fe3a06c4",
+          "outputs": [
+            {
+              "ref": "corpus-draft:amazon-visa",
+              "sha256": "138020969a864fbc46b64e4c10f1987d5fc3458380fe817c0936e775aafd5ac7"
+            }
+          ],
+          "labelsHash": "sha256:bd659ec0af8fb63e5771569cd79376aded28e073a131429104ab489677688495",
+          "anchorsHash": "sha256:c345a42ac24dfe4e41a082f3120f2ba608394aec126d03999ff07260547dd86c",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:2135f7ed4ed432db7bbaea05878bfb9db14fc8d32ba6a477dd0bab91e9fb7733",
+          "labelsHash": "sha256:bd659ec0af8fb63e5771569cd79376aded28e073a131429104ab489677688495",
+          "anchorsHash": "sha256:c345a42ac24dfe4e41a082f3120f2ba608394aec126d03999ff07260547dd86c",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6f246d9e7803963ba9930ffb4c7811d0fa0f8054d2e0325a8093f2f3e5144634",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:5f398df3033dac02ff18cde6cd5588585e6c325208bb59675bc448d0c5448b3a",
+          "outputs": [
+            {
+              "ref": "corpus:amazon-visa",
+              "sha256": "4991e54606b8155f647b4ae55c014491d7e737b504017c2983345bcce4a3be7f"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:e356e947131be09ccfe6b348244c1a0c7c20ff566f214a709a94e9624a99f246",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "doordash-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:61c0842ed5c2a70665b95b29b9a2bdae7433e4a3eccd249adfd9aec695d41839",
+          "outputs": [
+            {
+              "ref": "manifest:doordash-rewards-mastercard-product",
+              "sha256": "a545388fe05768c2917e4286f544a489eb9c8e451f9217f2bb4ac4d1937b8467"
+            },
+            {
+              "ref": "source-input:doordash-rewards-mastercard-product",
+              "sha256": "d3d0999ca7ab846dd7c5e340bebad9fdfd610b281522ebd6c91ec2871a65fdf6"
+            },
+            {
+              "ref": "manifest:doordash-rewards-mastercard-pricing",
+              "sha256": "fd53305d3016453784e2e8e1f2deae378fef8335799291e7278db2b4f8fa6655"
+            },
+            {
+              "ref": "source-input:doordash-rewards-mastercard-pricing",
+              "sha256": "6d06dd277d60791237e1303b2707a151cfb7ed4f9fa54ac29bb5feb87d9a575f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9c15c617b7336da9f91aee55add968fec9541da8913a21301991f24ba4a8dbba",
+          "outputs": [
+            {
+              "ref": "trace:doordash-rewards-mastercard",
+              "sha256": "90033412eee6ff4421ab81d282fe73bdacb2cda8f238ee660c9c4e3c66b553fe"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.417Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:a6c92184613a5cd75cf1f3c2723b837dd5fe2c48c711c4343e601081f48d8b51",
+          "labelsHash": "sha256:06d29364bb8e92f91bc807e736d392132ac5d47422c01326e04047c970f9f202",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f2d8e45f3a29882081e8c1f2e952bd825c14ed84cd227ac3b7bc8d05b2deb7fe",
+          "labelsHash": "sha256:06d29364bb8e92f91bc807e736d392132ac5d47422c01326e04047c970f9f202",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:54676a267cd2c8ff192de61d7d30b3293f1b4d139b575babafb2a1b5483ee0e7",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:9fb4bd3adcf55aeee891d8b01049127edeff607cbdbeaebfde18a54f4ded6849",
+          "outputs": [
+            {
+              "ref": "corpus:doordash-rewards-mastercard",
+              "sha256": "e043a152e7b49a75c7c7198ffbfb23ab44e4ce7e8ef0be5a72a0de81c19ec28b"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0ec0b79cd02b13434d5387a9e8674a2d8c940d3ecbf8d52bff09ac032c0cd7cc",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-inspire-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:caf80491eb5609adfd117586d9de5f2c4f9346150bbdba036b50507f6d7a8093",
+          "outputs": [
+            {
+              "ref": "manifest:disney-inspire-visa-product",
+              "sha256": "dd0dd1d98849d3457a33a0890c3c743b981fd9b10813b9868f4995cd0e5f1ca4"
+            },
+            {
+              "ref": "source-input:disney-inspire-visa-product",
+              "sha256": "28cb2feb43e0a866eb15fb994960f265d05e3a9fb31602be3a7ec94dee041b5e"
+            },
+            {
+              "ref": "manifest:disney-inspire-visa-pricing",
+              "sha256": "5c3a4bae190c8b678f8bdc6658f428e819e43c69b264a2aa203668f491f1b156"
+            },
+            {
+              "ref": "source-input:disney-inspire-visa-pricing",
+              "sha256": "9bb6fa6a52ceabf9caec46ae2cd9109045d3fd485c7d514c4ecc6034fd8d15ab"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f0980346ce08fcf34363152c725e7755a447d7e9fb4c8ff6626900e83d1798de",
+          "outputs": [
+            {
+              "ref": "trace:disney-inspire-visa",
+              "sha256": "bbe4a58543d563fa69ec0adb41f651fbeb80fe6dcd2b86a74bcfb0fa48b7054b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.424Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ce836ce2895775705a0c6e21151d44d9d812b4f20369df8524c75fe26fae9165",
+          "labelsHash": "sha256:f1e348da7191bbe0a9bed11a1c2d179e4aa24e2cd117234237269d0b253d2f82",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:1532154976d088d43a902408bbc354063562a194920bdf35097e7797020d91bd",
+          "labelsHash": "sha256:f1e348da7191bbe0a9bed11a1c2d179e4aa24e2cd117234237269d0b253d2f82",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:b8d53f6faebac5e3ab2795ad9b9c5110ec4a56a28a854344c61d63e63c61f688",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:0bf450ac68162d770d57b7055694476b7574cac47d1fdad88252fc0b794653bd",
+          "outputs": [
+            {
+              "ref": "corpus:disney-inspire-visa",
+              "sha256": "bef53cc9b507a083569a9cc2dff598e6d6ac6bd1ef785de79e762bc8ed763030"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ea8e3c38f7a8f68c39c4f40ba144718ca4c465709c07f2fc8932f8a901cf6c6e",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-premier-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8af39c9ba02ad86c2cdb5e1892cc2decac81090aa8f82415100549e2527b4921",
+          "outputs": [
+            {
+              "ref": "manifest:disney-premier-visa-product",
+              "sha256": "1fd63cfdb865725e4cad6b6f8e58fa953afec3f04752191ae9642c9f218e2e71"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-product",
+              "sha256": "2b4904a041ac7fc4323d72e3b10226cb5ec5164b2167631f82309b128092612b"
+            },
+            {
+              "ref": "manifest:disney-premier-visa-rewards-terms",
+              "sha256": "05af7a9f8134a838150da8ad8e42088b5efcd5267bdcb0cdb7f3fcdcb4a9f7f6"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-rewards-terms",
+              "sha256": "bc8e9f598768d13a76d84d9d3ba4ba85e161e2d279537eb501642e768cd989ce"
+            },
+            {
+              "ref": "manifest:disney-premier-visa-pricing",
+              "sha256": "2779bd25b288c1dc99d801a23721a0834fef5d32ca9cac8340e68fe45e29c559"
+            },
+            {
+              "ref": "source-input:disney-premier-visa-pricing",
+              "sha256": "0efd6f5f07688b4a75c2a732f6001715d3ad453b5dc20da692c63d65878bad21"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:32:44.907Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b7f9ca85341fd86e3e48a458099acc09ca8c9c3fe8631f0146e7c899042b3fa9",
+          "outputs": [
+            {
+              "ref": "trace:disney-premier-visa",
+              "sha256": "b5cec6c9a42ee34bfbe3ca68588d1ded92abb7a9dfd8c007a80c814efc22c561"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:50:55.426Z",
+          "attempts": 3
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:686bbc7f81bbe1c3560b9bbdf06516ace630eca7051a65da06ce2e71b010ec25",
+          "outputs": [
+            {
+              "ref": "corpus-draft:disney-premier-visa",
+              "sha256": "c2a04850433ebe48628ddda72f9c78b0cad4b87294c46b7b2ee7ed7ab44caccc"
+            }
+          ],
+          "labelsHash": "sha256:d69d0780b59eee269b2042de0da8e0d744d765f1083f7e2944409df0b34f16fa",
+          "anchorsHash": "sha256:517b96cd686505b6d1916e5e2329938e90d171f43ef8259c90ce8921b2a741ab",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:c54fd62fc99fd9f021992763f4c1fe08f5697a224820ecec06c69b8806fd6188",
+          "labelsHash": "sha256:d69d0780b59eee269b2042de0da8e0d744d765f1083f7e2944409df0b34f16fa",
+          "anchorsHash": "sha256:517b96cd686505b6d1916e5e2329938e90d171f43ef8259c90ce8921b2a741ab",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:e97dc4a55e609b2abe67e04e954992adf9fe722af8421771fb19ff8d0aca37e0",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:57ab2635eb36d94bee55b979a80c7c29ad28c942b6733b362de0bb1be5795185",
+          "outputs": [
+            {
+              "ref": "corpus:disney-premier-visa",
+              "sha256": "024eb60e6b41c53497a26480bc1f84318e4881f77f687b05a1a6b9ba363e8c49"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:1a17c16a42707e8beecf3915dac0d5df2d4b37b9854173e7cb5f6f0b541ab2c5",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "disney-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:41e675877b5c1466c90445c53cdc9ce40a04c9fcd5c0bc230a8584c8eb2534e7",
+          "outputs": [
+            {
+              "ref": "manifest:disney-visa-product",
+              "sha256": "8b87a14bcd1ce78c02c92fa01d23114c0749c2219f403278f70ba3e30706b7c9"
+            },
+            {
+              "ref": "source-input:disney-visa-product",
+              "sha256": "956342ff3dee49a9194749afc4fd7e265b141e52fa8df0e8b532223c99902e63"
+            },
+            {
+              "ref": "manifest:disney-visa-pricing",
+              "sha256": "886b2a475344dfbb839985086b22f2df72bbe3f6fbc7c4648c128da04422814a"
+            },
+            {
+              "ref": "source-input:disney-visa-pricing",
+              "sha256": "2b216e0c47794b98db42176f50d8d6cc4c1414b116c627d0670bb9e177c4d2d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:dbe85a692b350179787e9cea199a6de04b07502049fd8b57a57fc097b6548254",
+          "outputs": [
+            {
+              "ref": "trace:disney-visa",
+              "sha256": "473b622d216aea42ab0de974fc04b350b2d941972169bac8614e96460052f9b7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.428Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:28c95ed69ef1f428a71368b61ef7554b3782d923469f337acdf00cfe39a12742",
+          "labelsHash": "sha256:7352469e33f1c4054004629095be67d55df8cf80c708719ac9d94bdd67954447",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:286db9dd921add80a68637ea6842ea36436ffb81f4ce060435e0d73629e04387",
+          "labelsHash": "sha256:7352469e33f1c4054004629095be67d55df8cf80c708719ac9d94bdd67954447",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:7e04b40ab35a79f3a28eb9ec02ee0ab4e5f831ede9ed87c1cffa9221dc2b12db",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:2ac1c0f3006ebb0220bd20687cb880ee510ebe635a1ff8c734d07db9289b55e4",
+          "outputs": [
+            {
+              "ref": "corpus:disney-visa",
+              "sha256": "c8757696381ac1b01deeec4b9c11a0b0f48cbd8f279888cde9efae5bd936811e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9e0a609cd98dd84fbf10fdaf7ca7dc35cc575285e305501dc0d0c7762b82381b",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cd3fb0f310b8ecee2967acb88acd933fa7700cf467ab73f714d58e08fb0b210c",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-plus-product",
+              "sha256": "01451d5aa134d8936d237bf658ffdd819ce6f6ea28bee108e15acd6144c459c3"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-plus-product",
+              "sha256": "adddc9e4309987fb2d048863c2cf7d4d3dad6eac48a87c00db04ec5a0cc07556"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-plus-pricing",
+              "sha256": "eecafc4527dab5bd8b5657a3fef2ca8a9f97791f22093031ec7472d2316a46c9"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-plus-pricing",
+              "sha256": "972f2a16db56c37eb23870129b6a0e798951fca560e8eb81544297d2ac407d6e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:005e6c7fb0629e47e5fe05ddbe35e57fb0fc57e59c77864c79011a4be0415291",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-plus",
+              "sha256": "17b514e64882110a1dae1db512e2ed5619815bcbc67b167f4b3bf6c1f0414d6b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.437Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:dd45e4438b4e0a7490a02bb16d811ed8b557d86f61d6eeaf06074a24b18c2345",
+          "outputs": [
+            {
+              "ref": "corpus-draft:southwest-rapid-rewards-plus",
+              "sha256": "411a30b3e836b70c13dc2a92d1dec437a3e745b46268728453af6f0803cd9f1a"
+            }
+          ],
+          "labelsHash": "sha256:0acfcf7574c090d6099e7b2e79e61e868a45f197bb541a60e38fc0499e3799b9",
+          "anchorsHash": "sha256:1a81deb6eecd080a9ce8b60398a62746e8c501988b1b6672e44aa94f34ef21c6",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:46196d294d03072057940c28d4be29dde931d9b39c18b33c28e959c889f41b69",
+          "labelsHash": "sha256:0acfcf7574c090d6099e7b2e79e61e868a45f197bb541a60e38fc0499e3799b9",
+          "anchorsHash": "sha256:1a81deb6eecd080a9ce8b60398a62746e8c501988b1b6672e44aa94f34ef21c6",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a7b513b9f2ab5f47090ba18450dfea1fc8d0046fee3f2aa93c57f941f3856f16",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:342b5debb9e09496bb8ba4fb849b18198d48648ee4f0d89627e78c2ae831f57b",
+          "outputs": [
+            {
+              "ref": "corpus:southwest-rapid-rewards-plus",
+              "sha256": "706d3625ad64bd5a13cc33abfd92b2118576fc6884bf5003fc78993c3a64f6f4"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0d97056c80cfa011576a2a9447c5a15158fbd34558a8f360da691419d7830155",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:13a5f56675bc3e8c21756526269b79e59f2e1a642ed31c8586470ad660893202",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-premier-product",
+              "sha256": "8a94b3933ccdff4bad80af691c86c9481158ad8f34ee10317651fb6b927f1b4c"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-premier-product",
+              "sha256": "8a28531ebe8b390ba994a5a5298d8d3111bb117e7bebe8525db3f7e7605f84c8"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-premier-pricing",
+              "sha256": "6dacacfbb4c307fd63ec9185cc489d34d82341d094692aab4a07130840319796"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-premier-pricing",
+              "sha256": "024f311fc0704e71b73985e5bd87b06a01674ce9e4e961add6e20a02da8aaa0e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:37a2f8a36538ed3b6613dad7588b3cc40cc578a3aede840d2a084942373f3ef6",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-premier",
+              "sha256": "633042477a72230f8fe8c4b810503538c5a7b09eadaa226f982d4cc1390d322a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.438Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:99eda054ea71b82365ee3c85c357455f17ea6149035ff5957597abc883536c46",
+          "outputs": [
+            {
+              "ref": "corpus-draft:southwest-rapid-rewards-premier",
+              "sha256": "547338ad52e2cc113a264aa2fcea3c05dbc24a55b301fd0a304c4d490accfb5e"
+            }
+          ],
+          "labelsHash": "sha256:dfa8c8717e246f8223e19b7fb595a842305d049f765e24c0e29a8636474b6113",
+          "anchorsHash": "sha256:2fdfbd25b25e13067a5df259691f5c491503dff72ca02998f65990a68dc32028",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ef3e2955708cbc1df9cb4683185072d949fd8664b3dabb943ec7139f6748afc2",
+          "labelsHash": "sha256:dfa8c8717e246f8223e19b7fb595a842305d049f765e24c0e29a8636474b6113",
+          "anchorsHash": "sha256:2fdfbd25b25e13067a5df259691f5c491503dff72ca02998f65990a68dc32028",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:a30c4fceed4fe25f9df4157f9857fdb4d84921a425edc631468ebf95b240b300",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:9ccce42473c6762d4a486d4327e0b4f0bddcb692d28707d15d96de707b324f64",
+          "outputs": [
+            {
+              "ref": "corpus:southwest-rapid-rewards-premier",
+              "sha256": "6058c87a98ef75a036fb2480cf0ece0883d2f9d609f3f14ee1d25e6c68dba4b5"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:62d9c293bc7fa5f45183dd66c729067dd53636d7a6c7119a2b0f4582901e391b",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "southwest-rapid-rewards-priority": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:65c8df7f8c13d636e30d6e205647a82e4f1c6f92a92f062e0da45d78a4921e53",
+          "outputs": [
+            {
+              "ref": "manifest:southwest-rapid-rewards-priority-product",
+              "sha256": "39bb71cc0ad9f364e44969dc2725a3b38b80813ccbd8264a8c6504e0aec742b8"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-priority-product",
+              "sha256": "2e56c556216b5f3451ebb6664dcc7878a383bb14978ae9abf92ca607a44a89ed"
+            },
+            {
+              "ref": "manifest:southwest-rapid-rewards-priority-pricing",
+              "sha256": "9cabb0ea162083bf7c249beade682af39c1085e3d2a104d9970c765371ea9a67"
+            },
+            {
+              "ref": "source-input:southwest-rapid-rewards-priority-pricing",
+              "sha256": "662fc54cb44fec7eff049906f34ef5737d5154d4e525753f1725e825d1d87599"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8e988d686bdb0a5d300c2bbf9f140493452f26ff0d5a28445bca28f3799d4330",
+          "outputs": [
+            {
+              "ref": "trace:southwest-rapid-rewards-priority",
+              "sha256": "591e5966cad64dc6c27dfcc874fad2d6ad34a022eb9374493e7557da6ef63b1e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.439Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:3fcb8eaf171c0d381390ba8943cd64d009119373c991dc2c73c07e67b5760b48",
+          "outputs": [
+            {
+              "ref": "corpus-draft:southwest-rapid-rewards-priority",
+              "sha256": "d05266fce9545a8b98e6c015c33fbbfdae8692e27b10907860817d4accd032b3"
+            }
+          ],
+          "labelsHash": "sha256:164ebe44dee7d3f4d147980eeb8febacfdd4ae7d4e6ba753d877df52ece341b3",
+          "anchorsHash": "sha256:cfac7c01f68f1d52f076eba700a89a94bdfb08ec176869793cf3526870230f09",
+          "finishedAt": "2026-11-07T17:55:07.814Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:85c52fc119598a38a99c08ee3ca7a59a8451e0943b88c6043bc45d0ee231a8c9",
+          "labelsHash": "sha256:164ebe44dee7d3f4d147980eeb8febacfdd4ae7d4e6ba753d877df52ece341b3",
+          "anchorsHash": "sha256:cfac7c01f68f1d52f076eba700a89a94bdfb08ec176869793cf3526870230f09",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:63b7d8f8b3258a42e960acfd20f821d3fe7cd391e03ab9c1c514f69ebd6e80fe",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:23a25ce021e2bad57a918933257e10abaf03b964d23ff20cb2ab7ef1542efbc8",
+          "outputs": [
+            {
+              "ref": "corpus:southwest-rapid-rewards-priority",
+              "sha256": "b4ccffe12a50bc4f31111845544276e3b19c4453d660a3ac8e2083b0558a54fb"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:6c5cd6bb267f2cd49ae310ad1653bb44404da1451f709bd6da282f23419e7338",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards-premier-select": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5de2dbfd38041b006bc625a39a07e2c4dc1bf77fb76734d0df0a6c42b0db553f",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-premier-select-product",
+              "sha256": "532d4e1ead5db53849c87b75448ed6e9734402ff4451442e9ba2c4e3e2cc5835"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-select-product",
+              "sha256": "d9c8721d333ad6d5ab3a52ac4eaf4f05cac72ff10960621bac7d089f03b99b9e"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-premier-select-pricing",
+              "sha256": "a92ce7fce46d04fe942e091e43021b3e6ef78eefaab37490f70a14ade5802573"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-select-pricing",
+              "sha256": "b280af65f286cdd6b26c8b5d667ede078c597b69b0ca120197ca62030c3f4733"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6c45357dbf65761d93440fab3567b9f735edfb925f1d65739c19472838102706",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards-premier-select",
+              "sha256": "562b13cfe12a73dccf36303cb12a9eaf17b71e6cbefb179ad9b48c8948b198fc"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.439Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:bbf1637c64349ed755bd1bfb24fdbbecd193a9137a6845d470156c308ae27938",
+          "outputs": [
+            {
+              "ref": "corpus-draft:ihg-one-rewards-premier-select",
+              "sha256": "19019478f43db05c6d05d9ddbb19a375a4f9ea9a4d93e6bc7621f53fac698195"
+            }
+          ],
+          "labelsHash": "sha256:e9e1843c0c8fc7aae1a91358253c5108034e1914eb068c1bdb82bd1a74535b7e",
+          "anchorsHash": "sha256:d4fe28856c060f536c789f8aedff467ec6e3c7c809fa49a2165410bf1dd395ce",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:bdaf015edc13c005226aad54fdc7535e8baa583ffeb1b35673819a3f73aebca7",
+          "labelsHash": "sha256:e9e1843c0c8fc7aae1a91358253c5108034e1914eb068c1bdb82bd1a74535b7e",
+          "anchorsHash": "sha256:d4fe28856c060f536c789f8aedff467ec6e3c7c809fa49a2165410bf1dd395ce",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:de3ac98a7a7c3f37512c8b8ba2d63fe310b0c80803a7a597dcdba2cd416f97fa",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:451add42b6a96d3389a15486d4379e32bfc548c5a9f18186cb42a8058be6b3ed",
+          "outputs": [
+            {
+              "ref": "corpus:ihg-one-rewards-premier-select",
+              "sha256": "bbdc5ec580450a128ce761025c9b003828b973deff6c222065e979cc435c2ff6"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:2b99a8f796ec9a507b4c7b854cc8cd2eda5c0810ea1f499214d623729b6a0c78",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards-premier": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:593112c9595111a61daf697cf32930e5929b86ce860d1cbccad84e65fc6511e2",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-premier-product",
+              "sha256": "ef7cd4745fbae9002dad33ff778a1314aaf4ac42887f953543b7d946613a0372"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-product",
+              "sha256": "157ea18e5149a8e7cff77eee4122afedc075b997ba15076be4c078a4bee96ea2"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-premier-pricing",
+              "sha256": "9feae768f270fc6f57579ace77129c96c8b1ee3b661fd02abf6a83df9f40ac04"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-premier-pricing",
+              "sha256": "a9e6f0eb9ed8a59cd1ea183101bf9ad2a48b3eb97ea1e24091b8e80afc0e9c0b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0a6be6de64a42276a607cacedb5a47c3387e1eada73c272aac17da2d5761a672",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards-premier",
+              "sha256": "5f97208ee2d52ea45f263159158ed88c826e94796810de28bf0e115178bbeb61"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.440Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1c845569a8bbdd9ebf039c432f44aa02a69877e201150ce3de543daba72d73e8",
+          "outputs": [
+            {
+              "ref": "corpus-draft:ihg-one-rewards-premier",
+              "sha256": "c088a802b05896ebbefb52e8e40ffb5703548c953a2c0a1dbc0076378a6f1ba9"
+            }
+          ],
+          "labelsHash": "sha256:97eaab74b435b58330e9ccd410ceecf7edf7da18aea06ae3fb58616e26851b96",
+          "anchorsHash": "sha256:c8e07d8c5c6283fd7b8fbd5a977a170a99984a097f853dbdb3f43049f201ba0f",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:4ba000a4dfd013fd76988deb17826b846b4f38981fdc6273fd0a59c3e787ed80",
+          "labelsHash": "sha256:97eaab74b435b58330e9ccd410ceecf7edf7da18aea06ae3fb58616e26851b96",
+          "anchorsHash": "sha256:c8e07d8c5c6283fd7b8fbd5a977a170a99984a097f853dbdb3f43049f201ba0f",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f84f0fc148d1c62b351d91682cc3ad6d78eda29eb1da9d2f8fc6b4b86e7bdb7c",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d1cf86d82a42ab98f894d9990ad232205d445b9c7b4886cd5f7bc1ea830eec19",
+          "outputs": [
+            {
+              "ref": "corpus:ihg-one-rewards-premier",
+              "sha256": "0d22585a80a79e42ee2b585f139ee26e50824caad2d989412e6c896824d6aab0"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:a1449248f025d634bb4413d4d473d70c3756c325016ded7a109efc91cf4771fb",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "ihg-one-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b790d7580193634561e1b070e9f129b6658054c7434de53bf5bce1e68fdf8770",
+          "outputs": [
+            {
+              "ref": "manifest:ihg-one-rewards-product",
+              "sha256": "cea57f1d4524bb999d709f479176cce4303dc0477c30ddd5e3974f0f089fdf66"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-product",
+              "sha256": "bfcce86d33a60e22d70324c3a6b26f518eee6348b939d56d53a9c31ebc2f06cb"
+            },
+            {
+              "ref": "manifest:ihg-one-rewards-pricing",
+              "sha256": "8789d5af1c7f60e3ddcd1ffaadd33bb1dd5191dbaf9d3339a69853b02b5c4ea5"
+            },
+            {
+              "ref": "source-input:ihg-one-rewards-pricing",
+              "sha256": "b84242edeb29299f1fd462fe0f4197a4f255a2ae149e369769a890fc0de9dda4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:74b0581893de4bae568af1c442be3e002c7ca175265257e6119404e8166c29af",
+          "outputs": [
+            {
+              "ref": "trace:ihg-one-rewards",
+              "sha256": "2aed0fb0dcb9bac55ac6ff3c4b56b3256368f507a8623ce7ef38f895568de43d"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.440Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:cab8d5dce3ed28ecdbb5b33995e8fa01ba1d28067fa1d0c90db3f342ecf389e0",
+          "outputs": [
+            {
+              "ref": "corpus-draft:ihg-one-rewards",
+              "sha256": "fc55bbbe6e1b1271ea907600f834886c018925dd7299a4d479900099db91cac3"
+            }
+          ],
+          "labelsHash": "sha256:5b0e5243c7fbed24ea613a91cb898eab97bee979247f41d8b3e83ca1ed20e086",
+          "anchorsHash": "sha256:dae8f8b3bf2c1762bcbd5e7c315c67d7e4ec8f0ca7e2d7d917010bbbcd3a2ae4",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:795d1b39cac24147a66f37f50897c3fca4df7a357681785b8e4100da05f34943",
+          "labelsHash": "sha256:5b0e5243c7fbed24ea613a91cb898eab97bee979247f41d8b3e83ca1ed20e086",
+          "anchorsHash": "sha256:dae8f8b3bf2c1762bcbd5e7c315c67d7e4ec8f0ca7e2d7d917010bbbcd3a2ae4",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:486f5c0b7589404c9a8088cc01af300e4f1b6ff774ada45b8b21b0470f63d086",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:4643932b8cb4af2a587dd5c39e4f02279123e984cdc692263918108f7b42ce7e",
+          "outputs": [
+            {
+              "ref": "corpus:ihg-one-rewards",
+              "sha256": "77f511ba33b1b68aa1d1697fae81cf0dc8b4a3ebc8ee271757fd22581af433b6"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:48d0ff454e2a882828ee97da9889eddffa2d51c5b5530d5e45fb294d8c0a0627",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "marriott-bonvoy-boundless": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:424dc1e77f67beb75b91a0a0ed360d693c3a5c541f8cd9d28a8cec8b72698dfc",
+          "outputs": [
+            {
+              "ref": "manifest:marriott-bonvoy-boundless-product",
+              "sha256": "5a37a35dfbe0c3f91e94455e2bd0b733c4d306026f1144a6eb3a123297c10a27"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-boundless-product",
+              "sha256": "81f334a0cde232f6aaeb5d03103ad009d1e27a048750f00aa8635d76a8a36ae2"
+            },
+            {
+              "ref": "manifest:marriott-bonvoy-boundless-pricing",
+              "sha256": "a569ab5fe8276da2281705ab1c6edcca2325101225117ce819fff6358d30f40c"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-boundless-pricing",
+              "sha256": "9ae124db60f6aa52cdac5ff67818135a0314a9a05edf8724645e2d7a425fe1dd"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:c1e03f397a9fd1bba260ae0e887b9cd62141e29819f8b779c1eac3c909086f53",
+          "outputs": [
+            {
+              "ref": "trace:marriott-bonvoy-boundless",
+              "sha256": "685aee752f566b5f27cb77615a357e15f3984a74d2603c5d44aa7845c268090f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.441Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:37bc1ecdb02ac197ea5e7868b244c46842f5ac809a675975ffe55ff62f54f12b",
+          "outputs": [
+            {
+              "ref": "corpus-draft:marriott-bonvoy-boundless",
+              "sha256": "0e52adff6c526bf7124e306f430763d408bcc7a8086d0afeedf8a76e4c595545"
+            }
+          ],
+          "labelsHash": "sha256:c895c01e0ec1f2ecb51a058a9e9c8ab98e632b2594420fe19ab481e89150ad07",
+          "anchorsHash": "sha256:77265671ac8083cb1a350bb7e2865b27274a3eea987e3c6f144e447ebd9581fd",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:2d3953deb61942b571a1917a2fe25e7e601ba672baf0125cf82c4ec87af8086c",
+          "labelsHash": "sha256:c895c01e0ec1f2ecb51a058a9e9c8ab98e632b2594420fe19ab481e89150ad07",
+          "anchorsHash": "sha256:77265671ac8083cb1a350bb7e2865b27274a3eea987e3c6f144e447ebd9581fd",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:432c117f708a7517a431064706bcc7430e449f54be5a8a348043f02a7c11ebb3",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:cc31347cf51fe2bd6da9e77acaf6c8624cddb615cb94e450d80bbc2869dd47a8",
+          "outputs": [
+            {
+              "ref": "corpus:marriott-bonvoy-boundless",
+              "sha256": "04fea8836a0a9f95bfe7ff0f189fb9cd1f335ed10deaf47527a6998ebc554395"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:08501d4faf709d18dbb84349261693ad880b0b7b7af5e309cb87a61550a72f78",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "marriott-bonvoy-bountiful": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b16af5f7542905355c8d982c53c043f4eb2e5c62ca81b809025486abd84b0023",
+          "outputs": [
+            {
+              "ref": "manifest:marriott-bonvoy-bountiful-product",
+              "sha256": "3936e99fbba5329664a4d127cabb90685dcf7445aa36bdcb13c72e56be1823f5"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-bountiful-product",
+              "sha256": "5ff23c3d31ea10f4b0f1fd65173d7ba378c6d7a180e87661e947ae636b067a9b"
+            },
+            {
+              "ref": "manifest:marriott-bonvoy-bountiful-pricing",
+              "sha256": "8b27088742429a5e780ae115a70f698e9156b34a1a59d5c85056e3670bdd65d9"
+            },
+            {
+              "ref": "source-input:marriott-bonvoy-bountiful-pricing",
+              "sha256": "1674e3da9662063ab86dc9dad1abe602e930b47d23b101a0621af7b4bafe47d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.192Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:77ee3d0338ee135d4d24620c2cff58dfd7ecdd2b614ddf535e7ce8fc3a464397",
+          "outputs": [
+            {
+              "ref": "trace:marriott-bonvoy-bountiful",
+              "sha256": "c4e1322b52e3d103f73e62e530f9f9b152741a25e4e17672db135ed402958cb9"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.442Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:db31730c2b14c737cfdbb1b7c6645acddc792f136007162012fe75fdbc3dfd5e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:marriott-bonvoy-bountiful",
+              "sha256": "c400eafcfa4d601e950995d81e2e37ea3b9f79c22e748892dffcb0d05fa13622"
+            }
+          ],
+          "labelsHash": "sha256:9b53d0634b3a23bfc2e50e92e6e76c90658d6e1dc425184e8ce97bf9d5a61cf2",
+          "anchorsHash": "sha256:eaf135eeb36830e02b38773dce29f3906ffc92d90cad6c2f07230232393f117d",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:63fee289cc5bff6b5437a4fcd21544b05f9e74c5c231bb356340ed6a0a0bdb07",
+          "labelsHash": "sha256:9b53d0634b3a23bfc2e50e92e6e76c90658d6e1dc425184e8ce97bf9d5a61cf2",
+          "anchorsHash": "sha256:eaf135eeb36830e02b38773dce29f3906ffc92d90cad6c2f07230232393f117d",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5341780c405c5ab89725d7ca74b2c9bcd704a680090da822861fc47fccbcbc1e",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:06754da19d8333a454f7e5d277d4386cced7cfe689a26973898363ea31aea260",
+          "outputs": [
+            {
+              "ref": "corpus:marriott-bonvoy-bountiful",
+              "sha256": "44c551dafbbebac181d016247b97ceeb38f721987bf2b368cd6b7ae29555d9cc"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:61e1e381f1236ecc67812352af1601ef9e6d564d540d1c7a92c7b35fa52ea0a4",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "world-of-hyatt": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a7d4387dc06d84701b9ff85d1a8138b3cc2e7ac412a30378f19bb6770771bb3d",
+          "outputs": [
+            {
+              "ref": "manifest:world-of-hyatt-product",
+              "sha256": "1de4cfd3699c87ed3785fee6def351e897de9d91d95b8bf8db678acec2504203"
+            },
+            {
+              "ref": "source-input:world-of-hyatt-product",
+              "sha256": "9178683ece4d0111d217ee2c3f82c6032b4767d1a7528a42c929789aeb54d0a0"
+            },
+            {
+              "ref": "manifest:world-of-hyatt-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:world-of-hyatt-pricing",
+              "sha256": "f867b48f34ddbd7f41aa374e6df52d6f42fa141df76136db1a153f28f828d5d4"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3ffa58bc701e07dc43e8a4b0e1d0811a700b4827babc95558fe16aca47446f87",
+          "outputs": [
+            {
+              "ref": "trace:world-of-hyatt",
+              "sha256": "fe291337ee119748777865f7dc1d6ee2cf953b33e483a90f22aa31495b1180f7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.442Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7d93e7b851ef341f7ba3dfdfbc57d13d41552bf90279f488c721b87c7cc744e8",
+          "outputs": [
+            {
+              "ref": "corpus-draft:world-of-hyatt",
+              "sha256": "e228fe2ff547af7fd8fedee852af3263e538c137097e9f4b2bae1f47a5b1a05c"
+            }
+          ],
+          "labelsHash": "sha256:b770ea4dd8c7341f5b6d249cf0a516a3d153d7f475b243ec5dc360482850351c",
+          "anchorsHash": "sha256:dfcf2186769a9886e8a52f24b1e484707b5384329af75251858c4a6a7bbcaaa8",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:c841df3a90ec1e71888900668125ec597e880f763190f49b8f1657878b908290",
+          "labelsHash": "sha256:b770ea4dd8c7341f5b6d249cf0a516a3d153d7f475b243ec5dc360482850351c",
+          "anchorsHash": "sha256:dfcf2186769a9886e8a52f24b1e484707b5384329af75251858c4a6a7bbcaaa8",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:fdbe2fa00e41676b7c1725e9f9ef5ea2d9b3d6c243ac00017b1d6cd9b193f631",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:9967ee772b5ec734767c1e927ae32f8295dbf482f868cdfb222bdab55cefb4b8",
+          "outputs": [
+            {
+              "ref": "corpus:world-of-hyatt",
+              "sha256": "5d14417f505e383c94da4d5d8e62445ceaf722a73b380c33f522b25d783d97ce"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:93f7514ec770477d3dc5e2e0f45d040ece90b715399683dbcb8bf92762cba713",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "air-canada-aeroplan": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3ec7d8c3bacdde6e6c75c26b1f8353eb527085036b0b3123e633d426c3081bd3",
+          "outputs": [
+            {
+              "ref": "manifest:air-canada-aeroplan-product",
+              "sha256": "93ec0310647229f917d9910408ad62fa41be18e92104436691b8e1a1c269ea66"
+            },
+            {
+              "ref": "source-input:air-canada-aeroplan-product",
+              "sha256": "c8d0bdb6d1fc8d995fe7fde6ae1b37d5b0de1119ca2b6ae1968233b87ad59152"
+            },
+            {
+              "ref": "manifest:air-canada-aeroplan-pricing",
+              "sha256": "fea310ab31a0487d126072bed70287c0155358431dae23eb2b00bd5463edd87d"
+            },
+            {
+              "ref": "source-input:air-canada-aeroplan-pricing",
+              "sha256": "1b688350466678fc04e67e73cfc91321f1ae445422d338b7fcab2389b623ad89"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1f77e7209363b34445816d767c53a58e3861e83785494ee703dc9ad707008a57",
+          "outputs": [
+            {
+              "ref": "trace:air-canada-aeroplan",
+              "sha256": "c8c6406085945e137f4add169aa0264619320596344386b3f1de457bf1bc3eeb"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.443Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2aa5238513e3b7129e69cfd9cc79012c3168b03a00b11a3e41a63c4e5d428fdd",
+          "labelsHash": "sha256:e04f679a634876df1bc8088df281a2f0377122fa655d8561a96e68b198663e05",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ebb0d1406f4f9f21f2855939e16de1d8aa02d50b49102ef3bd876db0a6e059ef",
+          "labelsHash": "sha256:e04f679a634876df1bc8088df281a2f0377122fa655d8561a96e68b198663e05",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:fd3b555edbe3339658fb1069cad4f9e78c45ad90c496df3c010d6240c6b9ee75",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e3e8ba59b10655948e554fc1b02a0f084b07dcd22a06451d3cf273106d9a1d22",
+          "outputs": [
+            {
+              "ref": "corpus:air-canada-aeroplan",
+              "sha256": "ab0ed09463f58660ba072e132378dbd72d56fddff19d9b850dc22fea6c1fe068"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:7f150f0e4487aa10a90bd2cf0749b8862c3135a430c64a5883c4f9f023c52921",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "british-airways-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5d61ad506af69c38b98dca2c8ed7f3842a9153a7565553ad3ca240a92454a65d",
+          "outputs": [
+            {
+              "ref": "manifest:british-airways-visa-signature-product",
+              "sha256": "d66f4f4c345391e8f63bb055816011e36603399aed7cdc752f8caaa30450929d"
+            },
+            {
+              "ref": "source-input:british-airways-visa-signature-product",
+              "sha256": "ea083878f039827a3da78bbd34169882b8b1b7feafe71d0c0a19749e8651ed6d"
+            },
+            {
+              "ref": "manifest:british-airways-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:british-airways-visa-signature-pricing",
+              "sha256": "a786a8a09ff93e854d2e7e44da7634a141b357df966ba66d911d2961801ad07f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:b05c71fd6f4cb58c5c620b0f6b8b6ce779328728a75719f991b766936994feb3",
+          "outputs": [
+            {
+              "ref": "trace:british-airways-visa-signature",
+              "sha256": "3ba63372037152fa38ecb5fd391ecbfd0ec8e70c8c75a0618a1eb3f02af679c2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.444Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:9a84536634d8de613d19aeb428df1445d4869ac7957f727cd1b2e12c577031c9",
+          "labelsHash": "sha256:3490595cf44bebdc09b593a4868b0be84e0938dc05647f062d3d6530d8788ee5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d5b3781182008ed740fbb10f0d2665caaf50e08fb8be7934706923ea5131c732",
+          "labelsHash": "sha256:3490595cf44bebdc09b593a4868b0be84e0938dc05647f062d3d6530d8788ee5",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:9e539684719ba4ab169ab68c3a3308ea4b2156af123dbd77c85fc4c3d564eeb3",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:7458407ffa25e59d751ebb3c0a6026c10a33dd21fddcacd68b83ae58b9c25869",
+          "outputs": [
+            {
+              "ref": "corpus:british-airways-visa-signature",
+              "sha256": "6f7cd86b9b96fecd90b05869377ad8cdf5ee6700dea39a3d4f59bc411a6999f6"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:c92dfae314e1e12cf7b9e5a147dff277282b7c3df49b694641fea5ad84cac62e",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "aer-lingus-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9862b01664f5af515ee23e7a2f9d019bd8087098656861614c752f4bccd0f881",
+          "outputs": [
+            {
+              "ref": "manifest:aer-lingus-visa-signature-product",
+              "sha256": "ad84117f4f6c83a5933835307407b7a3107a345a54a38ede23a67c7da02508cc"
+            },
+            {
+              "ref": "source-input:aer-lingus-visa-signature-product",
+              "sha256": "df6e77ed227ac1ee02c5d6650413ad3deaa22602e94383916a02a9c8d63192af"
+            },
+            {
+              "ref": "manifest:aer-lingus-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:aer-lingus-visa-signature-pricing",
+              "sha256": "fb254263782ac26755f73f2a2b7585de505f1f2d4d7a8ab9d01699d33b1ee77f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1494ebc97b012cb4928f9c618f94dada0a93a1642bf06ca3bba3124a27500256",
+          "outputs": [
+            {
+              "ref": "trace:aer-lingus-visa-signature",
+              "sha256": "d5096fa6cbf7986c8066479ab604015ce9d774ce6beb40e1263f247d7820f472"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.444Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:86b26b8113d674d60e0d2cfe2fe1b325397176424ea50f5b929603543ad62fb9",
+          "labelsHash": "sha256:9cc2c0470f4fbdeea9c49cb52150c1a18e9327f4b7ef674b4471ecd425523b3e",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:96a84d76b6c63e72c113b4aaff3378eb8a9887b26e868875c9628ea1bdba940c",
+          "labelsHash": "sha256:9cc2c0470f4fbdeea9c49cb52150c1a18e9327f4b7ef674b4471ecd425523b3e",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:2a85a07a1e4c64d5b90402003d95bbca686fe4104a7529f84ba3fe08548c9f44",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:31c1e77bdc2f3645270705cf1915b288580a4538b25bf020c9e629fe51203105",
+          "outputs": [
+            {
+              "ref": "corpus:aer-lingus-visa-signature",
+              "sha256": "bc8218d6553a671a35215569a54ec4e2c8cede48316a18b27702e2f330005273"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:950b4f5ec0c75d96edf2f19f3829c8d5f799d240862e0d4f3596eb39d1cfc0b8",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "iberia-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1982b419cbc0383472284feb04b4567acd1a1ae4b1b7bf32c4fba10561bcda91",
+          "outputs": [
+            {
+              "ref": "manifest:iberia-visa-signature-product",
+              "sha256": "ff5c8f4f604869e9e3dbc332c153591b0c1755cbda67a617c26d5ada29e76525"
+            },
+            {
+              "ref": "source-input:iberia-visa-signature-product",
+              "sha256": "2bfb0b62c1aef6ce5db6ac8884405c0982a18a05d2a2dbc4050bb980d479d5e4"
+            },
+            {
+              "ref": "manifest:iberia-visa-signature-pricing",
+              "sha256": "06e18dae6c6dd26382596c57cfa1bcf871248331128628e63104c0c40e205d8a"
+            },
+            {
+              "ref": "source-input:iberia-visa-signature-pricing",
+              "sha256": "1d11dcf4d56b07478e5b225308cecb0fa7f7d57dee942ed54d4905c5818abb4a"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:720fa5b6da1748af02f0b318993c331e294a67df5a4d3bac33bd1dd6dbe6398b",
+          "outputs": [
+            {
+              "ref": "trace:iberia-visa-signature",
+              "sha256": "d2d7d2593fbe3125094bf3cbc7dfcefa1e8e4f88ca85663f0eae12589d8b8194"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.445Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6bbf3154cae11813ab029d28d9ec59ef53c47cdef79e5e8a2c3c562a97ed2e9b",
+          "labelsHash": "sha256:736b0f73ee8edd2d38f2e91ba993acbe80f01f077b510e8c5466d313eaad13e9",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1,
+          "undrafted": true
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d54f0c0b1cc2d6f6c0df1aec6a2486d39cf5608adb8b160fcdc5da4f003bd2a2",
+          "labelsHash": "sha256:736b0f73ee8edd2d38f2e91ba993acbe80f01f077b510e8c5466d313eaad13e9",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6f87d707ad449698d0c8f273e0201d815904a51e2a14b853fb0f97ee8aae68a2",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d2c883ba819f77bb3c298a41fc4093df4fecd1673c303243ef605638b0f7a4e9",
+          "outputs": [
+            {
+              "ref": "corpus:iberia-visa-signature",
+              "sha256": "dd3def8e8ec27979fe431e12e725caf72ff3240ad95e71143ba75857d53174ff"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:7846428a05dd09bd398759083aa46db37295927d9497485ed1d2b1549c7ac815",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "chase-freedom-unlimited": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a694ec0d93d53d65f8c05a70158f13a3171ef7763263436e8e66d702c053d409",
+          "outputs": [
+            {
+              "ref": "manifest:chase-freedom-unlimited-product",
+              "sha256": "6d2703093462cc61717de1fe84ae0f877e7dd40d03b126642a51e474a93f5412"
+            },
+            {
+              "ref": "source-input:chase-freedom-unlimited-product",
+              "sha256": "c52f8f6c11d7bc131ae85bba577939ab93a0b0ff96f48fc2aa430d2633c0c490"
+            },
+            {
+              "ref": "manifest:chase-rewards-category-faq",
+              "sha256": "06631c65107e269790f28fb3656496de7a24e3d7432106b9dee8341c53d271a2"
+            },
+            {
+              "ref": "source-input:chase-rewards-category-faq",
+              "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:43:55.193Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:d5d6b2c561d520961c8f01c9b94fde2ff01fc62e844755e28682b37b87234f3e",
+          "outputs": [
+            {
+              "ref": "trace:chase-freedom-unlimited",
+              "sha256": "3f5cca39347fd45ed248a0945023286d26bdb754a44ba316bf00639d44e4a31b"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:50:25.446Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:12e81e1afe9474219f520213378a73dbb17a41d8e79829ae5afd701587ac6905",
+          "outputs": [
+            {
+              "ref": "corpus-draft:chase-freedom-unlimited",
+              "sha256": "4048f35b2ac430d00a9ea587c2605cf2e7f78bdb2a21c4af25ed31ecec0a72c5"
+            }
+          ],
+          "labelsHash": "sha256:70e4112e7b21407b8df1ac76f2bfecf13b5d32f1c9dfbef484fc8efefb0e36b6",
+          "anchorsHash": "sha256:20406ce636bdb3dfabbd8d0f89c20a9aac8e841e64f2a1a10a1e0a30705be8e7",
+          "finishedAt": "2026-11-07T17:55:07.815Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:776f692f59a07fbd92dd76f24e1cab776b6e8217e704c437a7206f25bf6e1bb0",
+          "labelsHash": "sha256:70e4112e7b21407b8df1ac76f2bfecf13b5d32f1c9dfbef484fc8efefb0e36b6",
+          "anchorsHash": "sha256:20406ce636bdb3dfabbd8d0f89c20a9aac8e841e64f2a1a10a1e0a30705be8e7",
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:fc2b536c14713c53b62a002a210c3d752392b1d058e6d532ead8ff1b88a54ad7",
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a0dddcc154e6a3352ea7d742f1787a0ee1bbada5defc78cbc083ba6baefffd45",
+          "outputs": [
+            {
+              "ref": "corpus:chase-freedom-unlimited",
+              "sha256": "045bff68a78655b5c7a2f4d0874ef3fc139a20b51bea530b70f54e28010c1936"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:24.256Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:6066fa201849837df3f8897a8f46d809fcab2e99cf4fcbcc83c50eed860f1bef",
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "chase": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:8ae2ab978259b98df846caad5439909e62cc96d4e866f2791e63a7416d46d109",
+          "finishedAt": "2026-11-06T19:11:28.256Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:chase",
+              "sha256": "4d30bdae3b4d113b2a95cf6b81e07129a34215b16bbde8ecc15b9b6ff596f6b3"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:06:49.981Z",
+          "attempts": 1,
+          "packetId": "21ca045a-c510-4d0b-8965-96b52108210d",
+          "agentRun": "a43183e4ee30691b4",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:06:49.981Z",
+          "durationMs": 614629,
+          "tokens": 270831
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:chase",
+              "sha256": "2b6bea267f8e159da28f696d05ea6dbf635fce4962180d665ebdcc2c06fa9006"
+            },
+            {
+              "ref": "lint-acks:chase",
+              "sha256": "3610316cfbc67c715c8771577ae3a32ea0eeabed8f55a88075bdfb1850b0d909"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:23.309Z",
+          "attempts": 1,
+          "packetId": "1b5c13f8-edfd-4b41-95a9-8d678bab3763",
+          "agentRun": "aefbd78ebb7557930",
+          "model": "claude-fable-5-1",
+          "acceptedAt": "2026-11-07T18:37:23.309Z",
+          "durationMs": 850627,
+          "tokens": 278321
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:chase",
+              "sha256": "7ccd9d4dcefbbf017e98f3529decd6386513ac811e67ff60a32b8a399784e1a3"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:48:17.693Z",
+          "attempts": 1,
+          "metrics": {
+            "lintEndDateRaised": 3,
+            "lintEndDateAcked": 3
+          },
+          "packetId": "5b78743e-1165-4cf4-a9a0-9e0c63697473",
+          "agentRun": "a95a246e24a49ecc2",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:48:17.693Z",
+          "durationMs": 343070,
+          "tokens": 143635
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:647501fdc68fd9aa684e4a421e69e182b14da601b88bafc34762b3f45c329ac4",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:21.723Z",
+      "attempts": 3,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:74a01a7abf0b92b8cf6200fd4621b0860fd53c74f48144fb2e9e2072cf5e1e11",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "fd013fc202647d1a96c3a030833033b68e1085deee9521e3245ea4d0dc58fe15"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:17:04.821Z",
+      "attempts": 1
+    }
+  },
+  "resolvedFlags": {
+    "chase-freedom-flex-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "308bf45d52e20d1a795610be3229741b53d2fd8b6e00456485f9ad056f17ba9b",
+      "resolvedAt": "2026-11-07T01:32:42.764Z"
+    },
+    "prime-visa-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "1ec91b4d7d1458c82ec48f2abbdc44ac277553e8ae70ac77ec01c8336adb8594",
+      "resolvedAt": "2026-11-07T01:32:43.613Z"
+    },
+    "disney-premier-visa-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "05af7a9f8134a838150da8ad8e42088b5efcd5267bdcb0cdb7f3fcdcb4a9f7f6",
+      "resolvedAt": "2026-11-07T01:32:44.907Z"
+    }
+  }
+}

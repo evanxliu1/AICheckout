@@ -43,4 +43,4 @@ Pages read 2026-10-02; counts are programs of this catalog with a value on the p
 - The estimates age: the table's `readOn` must be within 30 days of the catalog release, so the table is re-read with each release.
 
 ## Status
-Accepted 2026-10-02 by the M3 agent under decision 2 of the Stage 2 plan; agent-verified (see the review entry in the [log](../log.md)). Evan can choose another publisher.
+Accepted 2026-10-02 by the M3 agent under decision 2 of the Stage 2 plan; agent-verified (see the review entry in the [log](../log.md)). Evan can choose another publisher. Re-read 2026-11-06 for the second renewal (page updated 2026-10-13): all 24 values unchanged, `readOn` moved to 2026-11-06 ([valuation page](../system/reward-program-valuation.md)).

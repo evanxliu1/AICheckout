@@ -25,7 +25,6 @@
 // `--manifest`, `--report` and `--renderer` are relative to `--dir` unless absolute (scripts/lib/capture-paths.mjs).
 // Defaults change nothing for the existing corpus.
 import { execFile } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { createRequire } from 'node:module';
@@ -35,6 +34,7 @@ import { parseArgs, promisify } from 'node:util';
 import { chromium } from '@playwright/test';
 import { CHANGED_CAPTURE_KEPT, keepExistingCapture } from './lib/capture-guard.mjs';
 import { capturePaths } from './lib/capture-paths.mjs';
+import { captureFlags, captureSha256, normalizeCaptureText } from './lib/capture-text.mjs';
 import { revealStaticHtml } from './lib/static-html.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -60,19 +60,6 @@ const { sources } = JSON.parse(await readFile(paths.sources, 'utf8'));
 const captures = paths.captures;
 const only = values.only ? new Set(values.only.split(',')) : null;
 const today = new Date().toISOString().slice(0, 10);
-const BOT_WALL =
-  /access denied|captcha|unusual (traffic|activity)|are you a robot|request (was )?blocked|verify you are human|enable javascript to/i;
-
-/** Line endings to \n, trailing spaces dropped, runs of blank lines collapsed. Words are left exactly as rendered. */
-const normalize = (text) =>
-  text
-    .replace(/\r\n?/g, '\n')
-    .split('\n')
-    .map((line) => line.replace(/[ \t]+$/, ''))
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim() + '\n';
-
 async function pdfText(context, url) {
   const response = await context.request.get(url, { timeout: 60_000 });
   if (!response.ok()) throw new Error(`HTTP ${response.status()}`);
@@ -213,11 +200,9 @@ try {
               flags.push('pdf download');
               return { text: await pdfText(context, source.url), status: 200 };
             });
-      const text = normalize(result.text);
-      if (result.status >= 400) flags.push(`HTTP ${result.status}`);
-      if (text.length < 2000) flags.push('short');
-      if (BOT_WALL.test(text.slice(0, 3000))) flags.push('bot-wall?');
-      const sha256 = createHash('sha256').update(text, 'utf8').digest('hex');
+      const text = normalizeCaptureText(result.text);
+      flags.push(...captureFlags(text, result.status));
+      const sha256 = captureSha256(text);
       const old = byId.get(source.id);
       if (old && old.sha256 !== sha256) flags.push('CHANGED since last capture');
       const existingBody = await readFile(join(captures, `${source.id}.txt`), 'utf8').catch(() => null);

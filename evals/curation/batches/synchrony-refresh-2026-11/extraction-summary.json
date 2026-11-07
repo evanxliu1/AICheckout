@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "evidence_valid": 2,
+    "needs_review": 20
+  },
+  "cards": [
+    {
+      "cardId": "synchrony-premier-world-mastercard",
+      "issuer": "Synchrony",
+      "status": "evidence_valid",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {},
+      "documents": [
+        "synchrony-premier-world-mastercard-product",
+        "synchrony-premier-world-mastercard-rewards-terms"
+      ],
+      "inputNotes": [],
+      "runs": 4,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 75608,
+      "inputTokenEstimate": 5694,
+      "inputTokens": 6598,
+      "outputTokens": 462,
+      "runAt": "2026-11-07T01:43:44.714Z"
+    },
+    {
+      "cardId": "synchrony-amazon-store-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "online-retail",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "reported_missing": 2,
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "amazon-store-card-product",
+        "synchrony-amazon-store-card-pricing",
+        "synchrony-amazon-store-card-categories"
+      ],
+      "inputNotes": [],
+      "runs": 4,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 383907,
+      "inputTokenEstimate": 11621,
+      "inputTokens": 24251,
+      "outputTokens": 1303,
+      "runAt": "2026-11-07T01:43:44.789Z"
+    },
+    {
+      "cardId": "synchrony-amazon-secured-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "online-retail",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_ambiguous": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "amazon-store-card-product"
+      ],
+      "inputNotes": [],
+      "runs": 4,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 220062,
+      "inputTokenEstimate": 9240,
+      "inputTokens": 8721,
+      "outputTokens": 1036,
+      "runAt": "2026-11-07T01:43:44.631Z"
+    },
+    {
+      "cardId": "synchrony-paypal-cashback-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "online-retail"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 3,
+        "reported_ambiguous": 1,
+        "reported_missing": 2,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-paypal-cashback-mastercard-product",
+        "synchrony-paypal-cashback-mastercard-rewards-terms",
+        "synchrony-paypal-cashback-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 4,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 220991,
+      "inputTokenEstimate": 14805,
+      "inputTokens": 12461,
+      "outputTokens": 1036,
+      "runAt": "2026-11-07T01:43:44.796Z"
+    },
+    {
+      "cardId": "synchrony-verizon-visa-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 7,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "rate_not_in_evidence": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-verizon-visa-card-product",
+        "synchrony-verizon-visa-card-rewards-terms",
+        "synchrony-verizon-visa-card-partner"
+      ],
+      "inputNotes": [],
+      "runs": 9,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 224526,
+      "inputTokenEstimate": 10128,
+      "inputTokens": 9436,
+      "outputTokens": 1983,
+      "runAt": "2026-11-07T17:49:09.353Z"
+    },
+    {
+      "cardId": "synchrony-sams-club-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other"
+      ],
+      "issues": [
+        "out-of-scope",
+        "ambiguous"
+      ],
+      "findings": {
+        "quote_not_found": 2,
+        "reported_out-of-scope": 1,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "synchrony-sams-club-mastercard-product",
+        "synchrony-sams-club-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 9,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 282123,
+      "inputTokenEstimate": 6433,
+      "inputTokens": 7383,
+      "outputTokens": 2722,
+      "runAt": "2026-11-07T17:49:09.339Z"
+    },
+    {
+      "cardId": "synchrony-carecredit-rewards-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "synchrony-carecredit-rewards-mastercard-product",
+        "synchrony-carecredit-rewards-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 9,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 289745,
+      "inputTokenEstimate": 10347,
+      "inputTokens": 9551,
+      "outputTokens": 1307,
+      "runAt": "2026-11-07T17:49:09.336Z"
+    },
+    {
+      "cardId": "synchrony-onepay-cashrewards-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-onepay-cashrewards-card-product",
+        "synchrony-onepay-cashrewards-card-rewards-terms",
+        "synchrony-onepay-cashrewards-card-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 7,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 355269,
+      "inputTokenEstimate": 16386,
+      "inputTokens": 13627,
+      "outputTokens": 1967,
+      "runAt": "2026-11-07T17:49:09.350Z"
+    },
+    {
+      "cardId": "synchrony-mywalgreens-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "drugstores",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "conflicting",
+        "conflicting",
+        "out-of-scope"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_conflicting": 2,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-mywalgreens-mastercard-product",
+        "synchrony-mywalgreens-mastercard-rewards-terms",
+        "synchrony-mywalgreens-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 7,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 356973,
+      "inputTokenEstimate": 10812,
+      "inputTokens": 9532,
+      "outputTokens": 2848,
+      "runAt": "2026-11-07T17:49:09.354Z"
+    },
+    {
+      "cardId": "synchrony-tjx-rewards-platinum-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 2
+      },
+      "documents": [
+        "synchrony-tjx-rewards-platinum-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 2,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 100231,
+      "inputTokenEstimate": 3965,
+      "inputTokens": 5533,
+      "outputTokens": 1017,
+      "runAt": "2026-11-07T01:57:38.335Z"
+    },
+    {
+      "cardId": "synchrony-newegg-store-credit-card",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 0,
+      "categories": [],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-newegg-store-credit-card-product",
+        "synchrony-newegg-store-credit-card-categories"
+      ],
+      "inputNotes": [],
+      "runs": 2,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 20114,
+      "inputTokenEstimate": 4731,
+      "inputTokens": 6087,
+      "outputTokens": 118,
+      "runAt": "2026-11-07T01:57:38.338Z"
+    },
+    {
+      "cardId": "synchrony-jcpenney-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-jcpenney-mastercard-product",
+        "synchrony-jcpenney-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 7,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 210497,
+      "inputTokenEstimate": 4457,
+      "inputTokens": 5938,
+      "outputTokens": 1160,
+      "runAt": "2026-11-07T17:49:09.341Z"
+    },
+    {
+      "cardId": "synchrony-ae-real-rewards-visa",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_ambiguous": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "synchrony-ae-real-rewards-visa-partner"
+      ],
+      "inputNotes": [],
+      "runs": 2,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 136161,
+      "inputTokenEstimate": 3645,
+      "inputTokens": 5274,
+      "outputTokens": 726,
+      "runAt": "2026-11-07T02:04:10.441Z"
+    },
+    {
+      "cardId": "synchrony-at-home-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "out-of-scope",
+        "ambiguous",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1,
+        "reported_ambiguous": 1,
+        "reported_missing": 2
+      },
+      "documents": [
+        "synchrony-at-home-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 126454,
+      "inputTokenEstimate": 3706,
+      "inputTokens": 5327,
+      "outputTokens": 636,
+      "runAt": "2026-11-07T01:53:44.735Z"
+    },
+    {
+      "cardId": "synchrony-chicos-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "reported_missing": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "synchrony-chicos-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 268072,
+      "inputTokenEstimate": 4255,
+      "inputTokens": 5687,
+      "outputTokens": 834,
+      "runAt": "2026-11-07T01:53:44.756Z"
+    },
+    {
+      "cardId": "synchrony-soma-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "reported_missing": 1
+      },
+      "documents": [
+        "synchrony-soma-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 286588,
+      "inputTokenEstimate": 4153,
+      "inputTokens": 17379,
+      "outputTokens": 874,
+      "runAt": "2026-11-07T01:53:44.792Z"
+    },
+    {
+      "cardId": "synchrony-whbm-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "synchrony-whbm-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 9,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 73905,
+      "inputTokenEstimate": 4179,
+      "inputTokens": 5673,
+      "outputTokens": 858,
+      "runAt": "2026-11-07T17:49:09.330Z"
+    },
+    {
+      "cardId": "synchrony-jcrew-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope",
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1,
+        "reported_missing": 3
+      },
+      "documents": [
+        "synchrony-jcrew-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 176132,
+      "inputTokenEstimate": 3749,
+      "inputTokens": 5398,
+      "outputTokens": 1012,
+      "runAt": "2026-11-07T01:57:58.456Z"
+    },
+    {
+      "cardId": "synchrony-harbor-freight-credit-card",
+      "issuer": "Synchrony",
+      "status": "evidence_valid",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {},
+      "documents": [
+        "synchrony-harbor-freight-credit-card-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 70650,
+      "inputTokenEstimate": 3460,
+      "inputTokens": 5152,
+      "outputTokens": 394,
+      "runAt": "2026-11-07T01:58:12.832Z"
+    },
+    {
+      "cardId": "synchrony-cathay-world-elite-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 1,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-cathay-world-elite-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 59486,
+      "inputTokenEstimate": 3562,
+      "inputTokens": 5254,
+      "outputTokens": 624,
+      "runAt": "2026-11-07T01:58:31.383Z"
+    },
+    {
+      "cardId": "synchrony-virgin-red-rewards-mastercard",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "other",
+        "streaming",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing",
+        "missing",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 6,
+        "reported_ambiguous": 1,
+        "reported_missing": 2,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-virgin-red-rewards-mastercard-partner"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 96805,
+      "inputTokenEstimate": 3617,
+      "inputTokens": 5287,
+      "outputTokens": 1158,
+      "runAt": "2026-11-07T01:59:18.569Z"
+    },
+    {
+      "cardId": "synchrony-sun-country-visa-signature",
+      "issuer": "Synchrony",
+      "status": "needs_review",
+      "rules": 4,
+      "categories": [
+        "all-purchases",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 4,
+        "quote_not_found": 3,
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "synchrony-sun-country-visa-signature-partner",
+        "synchrony-sun-country-visa-signature-partner-2"
+      ],
+      "inputNotes": [],
+      "runs": 3,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 92498,
+      "inputTokenEstimate": 4278,
+      "inputTokens": 5782,
+      "outputTokens": 785,
+      "runAt": "2026-11-07T01:59:23.487Z"
+    }
+  ]
+}

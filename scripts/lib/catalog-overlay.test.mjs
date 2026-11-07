@@ -40,11 +40,26 @@ test('the corpus inputs are byte-identical to the agent-verified files the overl
     );
 });
 
+/** The date windows (source age, estimate read date): the frozen expansion.v1 draft is dated 2026-10-02 while the
+ * program table's estimates and the merchant MCC pages are re-read with every renewal, so only the shipping build
+ * (catalog-v3.test.mjs) can satisfy them; this file checks the overlay's structure and coverage. */
+const dateWindow = (problem) =>
+  /Source date must be within 30 days before verification|published estimate must be read within 30 days/.test(
+    problem,
+  );
+
 test('the committed overlay covers every card, other rule, issue and hint and builds a valid catalog v3', () => {
-  assert.deepEqual(checkOverlay(committed), []);
+  assert.deepEqual(
+    checkOverlay(committed).filter((problem) => !dateWindow(problem)),
+    [],
+  );
   assert.equal(committed.overlay.cards.length, committed.corpora[0].cases.length);
   const catalog = draft();
-  assert.equal(catalogV3Schema.safeParse(catalog).success, true);
+  const parsed = catalogV3Schema.safeParse(catalog);
+  assert.deepEqual(
+    parsed.success ? [] : parsed.error.issues.filter((issue) => !dateWindow(issue.message)),
+    [],
+  );
   assert.equal(
     catalog.cards.length,
     180 - overlayStats(committed.overlay, committed.merchants).heldOutCards.length,
@@ -166,6 +181,20 @@ test('the draft catalog check catches an invariant the overlay breaks', () => {
       ),
     ),
   );
+});
+
+test('a per-issuer check owns the source window of its own cards only; the build checks every source', () => {
+  // A renewal refreshes issuers one batch at a time, so another issuer's page may still be older than the window
+  // while this issuer's fragment is checked (2026-11-06); the build then checks every cited source.
+  const stale = (problems) => problems.filter((p) => /^draft catalog sources\.\d+\.checkedOn/.test(p)).length;
+  const before = stale(checkOverlay(committed));
+  const state = copy();
+  const source = state.manifests[0].sources.find((item) => item.id === 'amex-gold-product');
+  source.capturedOn = '2026-01-01';
+  delete source.checkedOn;
+  assert.equal(stale(checkOverlay(state)), before + 1);
+  assert.equal(stale(checkOverlay(state, { issuers: ['American Express'] })), 1);
+  assert.equal(stale(checkOverlay(state, { issuers: ['Chase'] })), 0);
 });
 
 test('every anchor is listed for the verbatim check', () => {

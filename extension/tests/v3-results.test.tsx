@@ -30,18 +30,22 @@ const purchase = (extra: Partial<Purchase> = {}): Purchase => ({
   onlineRetail: 'eligible',
   ...extra,
 });
+// Since the 2026-11-07 renewal the bundled catalog is valid from 2026-11-07, after the fixture expires
+// (2026-11-01): comparisons on it run on 2026-11-15.
+const bundledOn = '2026-11-15';
 function compare(
   cards: string[],
   extra: Partial<Purchase> = {},
   wallet: Partial<Wallet> = {},
   catalog: CatalogV3 = CATALOG_V3_FIXTURE,
 ) {
-  const p = purchase(extra);
+  const onBundled = catalog === BUNDLED_V3;
+  const p = purchase(onBundled ? { purchasedOn: bundledOn, ...extra } : extra);
   const result = compareRewards(
     catalog,
     { defaultCardId: null, cards: cards.map((cardId) => ({ cardId, usage: [] })), ...wallet },
     p,
-    at,
+    onBundled ? Date.parse(`${bundledOn}T15:00:00Z`) : at,
   );
   return { result, p };
 }
@@ -273,7 +277,10 @@ describe('Citi Double Cash on the bundled catalog: cash back (general rule 1)', 
     expect(rateText(200, real, e)).toBe('2%');
     expect(pillReward(e, real)).toBe('$2.00 back');
     const card = row('Double Cash');
-    expect(card.textContent).toContain('2% on “every purchase”.');
+    // The 2026-11-07 renewal labels the base rule with the issuer's full sentence (`double-cash-base-v3`).
+    expect(card.textContent).toContain(
+      '2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”.',
+    );
     expect(card.textContent).toContain('2% if the balance is paid (1% at purchase).');
     expect(card.textContent).not.toMatch(/points|Issuer-stated|ThankYou/);
   });

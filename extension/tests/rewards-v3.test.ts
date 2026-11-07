@@ -931,7 +931,9 @@ describe('catalog v3 engine: another U.S. online store', () => {
         .map((r) => `${c.id}/${r.id} excludes ${r.excludedBrandIds.join(',')}`),
     );
     expect(rules).toEqual([
-      'synchrony-onepay-cashrewards-card/onepay-cashrewards-all-first-90-days-v2 excludes walmart',
+      // Since the 2026-11-07 renewal: Wayfair's 2% online rule excludes its own family of sites.
+      'citi-wayfair-mastercard/wayfair-online-v2 excludes wayfair,joss-and-main,allmodern,birch-lane,perigold',
+      'synchrony-onepay-cashrewards-card/onepay-cashrewards-all-first-90-days-v3 excludes walmart',
     ]);
   });
   it('is a covered merchant for v3 catalogs only', () => {
@@ -1343,6 +1345,11 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     CATALOG_V3,
   );
   const prime = { gates: [{ gateId: 'amazon-prime', optionId: 'member' }] };
+  // Since the 2026-11-07 renewal the bundled catalog (valid 2026-11-07 to 2026-12-07) and the synthetic fixture
+  // (valid to 2026-11-01) share no day: comparisons on the bundled catalog run on 2026-11-15.
+  const bundledOn = '2026-11-15';
+  const bundledNow = atDay(bundledOn);
+  const bundled = (extra: Partial<Purchase> = {}) => purchase({ purchasedOn: bundledOn, ...extra });
   function at(
     merchant: MerchantProfileV3,
     cards: WalletCard[],
@@ -1350,11 +1357,12 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     catalog: CatalogV3 = CATALOG_V3,
     extra: Partial<Purchase> = {},
   ) {
+    const onBundled = catalog === CATALOG_V3;
     return compareRewards(
       catalog,
       { cards, defaultCardId: null, ...wallet },
-      purchase({ merchantId: merchant.id, ...extra }),
-      now,
+      (onBundled ? bundled : purchase)({ merchantId: merchant.id, ...extra }),
+      onBundled ? bundledNow : now,
       { merchant },
     );
   }
@@ -1406,6 +1414,8 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     const activated = shared(
       'freedom-flex-supermarkets-2026-10-v2',
       'freedom-flex-american-red-cross-2026-10-v2',
+      0,
+      bundledOn,
     );
     for (const store of [walmart, target])
       expect(
@@ -1423,22 +1433,22 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       gates: [{ gateId: 'synchrony-onepay-cashrewards-card-first-90-days', optionId: 'first-90-days' }],
     };
     const estimate = first(walmart, [owned('synchrony-onepay-cashrewards-card')], wallet);
-    expect(statusOf(estimate, 'onepay-cashrewards-walmart-v2')).toBe('applied');
-    expect(statusOf(estimate, 'onepay-cashrewards-all-first-90-days-v2')).toBe('not-at-merchant');
+    expect(statusOf(estimate, 'onepay-cashrewards-walmart-v3')).toBe('applied');
+    expect(statusOf(estimate, 'onepay-cashrewards-all-first-90-days-v3')).toBe('not-at-merchant');
     // The known wrong answer at a generic store (decision 2026-10-05-generic-store-profile) is fixed here.
     const generic = first(GENERIC_MERCHANT_PROFILE, [owned('synchrony-onepay-cashrewards-card')], wallet);
-    expect(statusOf(generic, 'onepay-cashrewards-all-first-90-days-v2')).toBe('applied');
+    expect(statusOf(generic, 'onepay-cashrewards-all-first-90-days-v3')).toBe('applied');
   });
   it('a corroborated supermarket profile applies supermarket rules', () => {
     const bce = first(kroger, [owned('amex-blue-cash-everyday')]);
-    expect(statusOf(bce, 'bce-supermarkets-v2')).not.toBe('not-at-merchant');
-    expect(statusOf(first(walmart, [owned('amex-blue-cash-everyday')]), 'bce-supermarkets-v2')).toBe(
+    expect(statusOf(bce, 'bce-supermarkets-v3')).not.toBe('not-at-merchant');
+    expect(statusOf(first(walmart, [owned('amex-blue-cash-everyday')]), 'bce-supermarkets-v3')).toBe(
       'not-at-merchant',
     );
   });
   it('a warehouse club profile applies wholesale-club and Costco rules', () => {
     const citi = first(costco, [owned('citi-costco-anywhere-visa')]);
-    expect(statusOf(citi, 'costco-anywhere-costco')).toBe('applied');
+    expect(statusOf(citi, 'costco-anywhere-costco-v2')).toBe('applied');
     expect(
       statusOf(first(costco, [owned('boa-customized-cash-rewards')]), 'customized-cash-rewards-club'),
     ).not.toBe('not-at-merchant');
@@ -1455,7 +1465,7 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     expect(cents(bce)).toEqual([100, 100]);
     const blue = first(delta, [owned('amex-delta-skymiles-blue')]);
     // Delta's rule applies through the brand; its unstated cap keeps it a range.
-    expect(statusOf(blue, 'delta-skymiles-blue-delta-v2')).toBe('may-apply');
+    expect(statusOf(blue, 'delta-skymiles-blue-delta-v3')).toBe('may-apply');
     expect(blue.uncertainties).toContain('cap-unstated');
   });
   it('a disabled record is not passed: the generic profile answers', () => {
@@ -1464,17 +1474,17 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
     const generic = compareRewards(
       CATALOG_V3,
       { cards: [owned('synchrony-onepay-cashrewards-card')], defaultCardId: null },
-      purchase({ merchantId: GENERIC_MERCHANT_ID }),
-      now,
+      bundled({ merchantId: GENERIC_MERCHANT_ID }),
+      bundledNow,
     ) as Comparison;
-    expect(statusOf(generic.estimates[0], 'onepay-cashrewards-walmart-v2')).toBe('not-at-merchant');
+    expect(statusOf(generic.estimates[0], 'onepay-cashrewards-walmart-v3')).toBe('not-at-merchant');
   });
   it('replaces only the profile with the purchase merchant id; other callers are unchanged', () => {
     const withoutOption = compareRewards(
       CATALOG_V3,
       { cards: [owned('prime-visa')], defaultCardId: null },
-      purchase({ merchantId: 'amazon-us' }),
-      now,
+      bundled({ merchantId: 'amazon-us' }),
+      bundledNow,
     );
     expect(at(amazon, [owned('prime-visa')])).toEqual(withoutOption);
     // A profile for another id does not make that id available, nor change this one.
@@ -1482,8 +1492,8 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       compareRewards(
         CATALOG_V3,
         { cards: [owned('prime-visa')], defaultCardId: null },
-        purchase({ merchantId: 'walmart-us' }),
-        now,
+        bundled({ merchantId: 'walmart-us' }),
+        bundledNow,
         { merchant: kroger },
       ),
     ).toEqual({ status: 'unavailable', reason: 'unsupported-merchant' });
@@ -1491,8 +1501,8 @@ describe('catalog v3 engine: a merchant release profile (Phase 14.1)', () => {
       compareRewards(
         CATALOG_V3,
         { cards: [owned('prime-visa')], defaultCardId: null },
-        purchase({ merchantId: 'amazon-us' }),
-        now,
+        bundled({ merchantId: 'amazon-us' }),
+        bundledNow,
         { merchant: kroger },
       ),
     ).toEqual(withoutOption);

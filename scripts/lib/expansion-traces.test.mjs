@@ -67,6 +67,16 @@ test('scores saved traces on all, drafted and undrafted cards', () => {
   assert.equal(result.byIssuer['Example Bank'].runs, 8);
 });
 
+test('leaves out a trace whose case sources verification changed after extraction', () => {
+  const changed = structuredClone(files);
+  changed[0].trace.documents.push({ id: 'source-removed-at-verification', contentHash: '0'.repeat(64) });
+  const { bundle, resourced, missing } = bundleFromTraces(loaded, changed);
+  assert.deepEqual(resourced, [changed[0].cardId]);
+  assert.deepEqual(missing, []);
+  assert.equal(bundle.observations.length, files.length - 1);
+  assert.equal(scoreSubsets(loaded, bundle, new Set()).all.observed, files.length - 1);
+});
+
 test('rejects traces collected on other text, mixed configurations and duplicates', () => {
   const tampered = structuredClone(files);
   tampered[0].trace.documents[0].contentHash = '0'.repeat(64);

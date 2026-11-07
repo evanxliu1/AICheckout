@@ -26,7 +26,7 @@ export const ISSUERS: [string, number][] = [
   ['Discover', 6],
   ['Synchrony', 23],
   ['U.S. Bank', 16],
-  ['Wells Fargo', 7],
+  ['Wells Fargo', 6],
 ];
 export const CARD_COUNT = ISSUERS.reduce((total, [, count]) => total + count, 0);
 const EXPANSION_MD = `${REPO}/blob/main/docs/evals/expansion.md`;

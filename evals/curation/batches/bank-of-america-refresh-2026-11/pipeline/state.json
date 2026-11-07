@@ -1,0 +1,2281 @@
+{
+  "schemaVersion": 1,
+  "batch": "bank-of-america-refresh-2026-11",
+  "updatedAt": "2026-11-07T19:22:27.257Z",
+  "cards": {
+    "boa-customized-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9d671e37280a84a25acb5c499cbb017e65baaee29f4b07b50fbd80ff0cb3019e",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-product",
+              "sha256": "9ddc4ef94b9a726452c1e621997e89f36822130bcd97395d7ae8d6346440ae48"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-product",
+              "sha256": "75f105f2da3041ca92fb3c91daa1b7ed61c321e23b8953910eed798d041e3ac8"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-pricing",
+              "sha256": "35b8e6b4ba0535b7adecc9a5c730bcd678223bd083adc003ee24acb3213350d8"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-pricing",
+              "sha256": "deb410ffbba98173cf8c52353e9aac70cd19e5d1dfb8861b797116786e6e93a1"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "0b2ee2e589893f9aa21ce045785baf35fcfc77d48a5078b63577fc755d903009"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:18:58.641Z",
+          "attempts": 5,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5954ba15dc840a0902fdb33a65b229862ce667f507b8092e2749b334a1a84e3f",
+          "outputs": [
+            {
+              "ref": "trace:boa-customized-cash-rewards",
+              "sha256": "d351f2b43cdb0350329380b24047754c5c8c55ffb2d825eaa00e3cf9e3be41ef"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.355Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:dbaf28eb98e6835223c9de0ef15bf88324c6cb51a996cfa2ae291b3ba38921f9",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-customized-cash-rewards",
+              "sha256": "d74f3fb4cca70d8a647f3964379b949ed25ea4e95cc74102d8100dd60615ba6a"
+            }
+          ],
+          "labelsHash": "sha256:c7d9e906ff0d2cd029e5ea8094d382d1566762de1ac60a7f85a90b1da769652c",
+          "anchorsHash": "sha256:9cae000b5f2ad7a921bac30dadb7cfcaa225d525721fda6c2511258a58a80cc6",
+          "finishedAt": "2026-11-07T18:28:24.868Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:9c2863da2e52a5e91958b5a6b42c694d59f778bb597b59f25e4479484de4ac32",
+          "labelsHash": "sha256:c7d9e906ff0d2cd029e5ea8094d382d1566762de1ac60a7f85a90b1da769652c",
+          "anchorsHash": "sha256:9cae000b5f2ad7a921bac30dadb7cfcaa225d525721fda6c2511258a58a80cc6",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:2333dedeb5c171e121ae241fcebbaf98fd22ce8cf688eff3acdc2bbce20b7674",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:10082166313fba094df62138beaf99c56011f43f21f6a5d25af569c6c3fbf74d",
+          "outputs": [
+            {
+              "ref": "corpus:boa-customized-cash-rewards",
+              "sha256": "d3bbf7201b7293de0a05b4fceffc8aa90222c49eeaced134d59908065245893d"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:4da3ce8b9f487319b851ed2905cc5198e7266f2afc3119a45cffdac69fc52947",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b0467e65e78cbae4c2691e3bc76efde0a373703467c2d5bed229a645b44dbee7",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-product",
+              "sha256": "644da0902eff3520d9595e94716558e1f25d6a914d42b46b1ff40f227369fe29"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-product",
+              "sha256": "7c132385da392c8fcdf84bb8133010e1ec93c6653248850bbd359724f74e91be"
+            },
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-pricing",
+              "sha256": "e8492dc7139096d6c2fee86810a784995581fa65dbfe8cb6a569761ad10cf03f"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-pricing",
+              "sha256": "eee78d142b8d3298d45dc18eba929666e0dbb6d4ec9a9e391fa4fc1217ecce85"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:18:59.367Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f1a1012d1cab50948af9edecff186f88313ec2a679438528e039b6e066d104b9",
+          "outputs": [
+            {
+              "ref": "trace:boa-unlimited-cash-rewards",
+              "sha256": "7d1e8ec518b449e869c8a55d0195c09bd8e884275a07ee72566a252f8edfdae6"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.356Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c9a38f051a6d9b3bc3ed2c5bd4b8432cf2bf10a42f70722571ad110cd1d53f36",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-unlimited-cash-rewards",
+              "sha256": "ba1ca79f38bc7d3b923340afc5b9e3d13b54c65df947922d261deaddf6c7668f"
+            }
+          ],
+          "labelsHash": "sha256:379fdfd0361c909f0a3d0e4aec8bd0197baaaf2961e67abc58b8c91968389efa",
+          "anchorsHash": "sha256:e3481940db42124831bbfeaa05d2d5e38fdc8800b892766bace27c6bddb7c707",
+          "finishedAt": "2026-11-07T18:28:24.868Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:c2ab59eaea94ccfecee42d9d7746f8d4545592371fe636bff36305e841f6a6c0",
+          "labelsHash": "sha256:379fdfd0361c909f0a3d0e4aec8bd0197baaaf2961e67abc58b8c91968389efa",
+          "anchorsHash": "sha256:e3481940db42124831bbfeaa05d2d5e38fdc8800b892766bace27c6bddb7c707",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6c7adff8bb253bbdb6231027ce24268734a75e365e6faa015eac7716c44696bf",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:e63aafcba307d5207f09cf67f783553f44931d30b3fc621959dcab0912d73234",
+          "outputs": [
+            {
+              "ref": "corpus:boa-unlimited-cash-rewards",
+              "sha256": "74f0cb1851f0308a60da345da969780c66ffe2578d51af1b54fe6d0e6794385f"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:a74c30ea516e28e48830a86b1fa8c40fae0c7163987eed481fdb0ab108006126",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bdb2c1e3cae8f806338660b7fcfceabecc72a5b524cc19d9a4a5fc0c9fd7b4ae",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-product",
+              "sha256": "f3ca1c850f009f8574a47c86f23cd2e453e77ea40fd5bd0ca1e3dd4a17dffc94"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-product",
+              "sha256": "5b8a5841bca3494808ebb5dd3a4df1569e26dba9199a6de04c6bac9667ed4d23"
+            },
+            {
+              "ref": "manifest:boa-travel-rewards-pricing",
+              "sha256": "b35eb39d0276af80e6db7777c23b317925dd787d1a86efe79c513a3927e48649"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-pricing",
+              "sha256": "e7ac3b274b36dbf6016620506360a45092979d8dfd44baa38b3f9e0d08b119b8"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:00.118Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2c3486d89ba649e85e619905d4dc48fda802dc254d54f0fabfa6be6f4e6a5cf2",
+          "outputs": [
+            {
+              "ref": "trace:boa-travel-rewards",
+              "sha256": "691efb78ab1206b46e2749e1b9775826c5e7f4911064c2d950706a13b28952a7"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.357Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:eea651c64910345029363f4fd9773aa4ce19d25c22180d01f2df21e105c963ec",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-travel-rewards",
+              "sha256": "a44f64ea103fe9c33c1db8086bdb5915d031f26464b56b6e3a05ccce883b1651"
+            }
+          ],
+          "labelsHash": "sha256:69283b34d13992891c32fa85f5d675e9647cf76ac02060fe27e69206779510ad",
+          "anchorsHash": "sha256:3b7c41984059cf004c78a338cca31ce7407a3f1ba323487a5bd274e2a1333186",
+          "finishedAt": "2026-11-07T18:28:24.868Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:22e753b6fda05d0bde596cba31fb7619e06b2cdc768de8b53357a3e78733cc2b",
+          "labelsHash": "sha256:69283b34d13992891c32fa85f5d675e9647cf76ac02060fe27e69206779510ad",
+          "anchorsHash": "sha256:3b7c41984059cf004c78a338cca31ce7407a3f1ba323487a5bd274e2a1333186",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:538a57c9ef9313cfd9b403950174e041065c30cf6f8747d38b0c6a3258fdb2f5",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:1c4b158c10efba4f92109bb76a5defbeceae1e4a02692cc891b597e3d0dbfee0",
+          "outputs": [
+            {
+              "ref": "corpus:boa-travel-rewards",
+              "sha256": "1def96b60e15951be5bdf017aa5aff219529be1e337e30079f682506f23bac85"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0d8d684d5a82a630b2591093ac026812e3999e0f601873b654e323ca92cd3d20",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-premium-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7af88bfb4ad5be1bf342c2933f180f004a38c6989487a7c8f2f70aba5e53984d",
+          "outputs": [
+            {
+              "ref": "manifest:boa-premium-rewards-product",
+              "sha256": "88250995e6474999e0f29138be40afe19f8040948147ce153d8715a18c39d4d3"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-product",
+              "sha256": "a97206e3ed41a35a4b37d61668485ead65f41624263d6a88d5d1df20fc5be509"
+            },
+            {
+              "ref": "manifest:boa-premium-rewards-pricing",
+              "sha256": "14856ba463fe613743e49976d62b4efa8589891435c237bbb44e1b135123b0c6"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-pricing",
+              "sha256": "02fdc8a67da1c527dcd5a214ba4269c4c78d2bae9a2a0a95adfba6b33ec10eb9"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:00.900Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7edb9e63b794d1862c30e327b6ba71332182a353ec3728c217583403c8284230",
+          "outputs": [
+            {
+              "ref": "trace:boa-premium-rewards",
+              "sha256": "1c91fc390c79f7ed7b1b97e49f2582dd9315e7b8b241dc34d9e2c6f6c3b3bafa"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.357Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ea426cfcd5c99f7f4c97a8054ae73ee9577d7871b0f0b9618fef8c8b12a3be35",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-premium-rewards",
+              "sha256": "8805879ee083b316f16588213b227a606039fc58700c34dd0f1351119f43670b"
+            }
+          ],
+          "labelsHash": "sha256:95e04f0aae9e0ff730c872622e79ef49842c55046a6474311fc448535b4d92f8",
+          "anchorsHash": "sha256:1c4b9b19ccd9451375115dfad67f7bcaa0a8d165c702360169c117b2b3eaee8b",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:f4284718450480737c3179196b0c52676a7e3cb93fdbc3033f5c5506d61e2006",
+          "labelsHash": "sha256:95e04f0aae9e0ff730c872622e79ef49842c55046a6474311fc448535b4d92f8",
+          "anchorsHash": "sha256:1c4b9b19ccd9451375115dfad67f7bcaa0a8d165c702360169c117b2b3eaee8b",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:5b51ff77bc7b7e351981fd5551b9b28a66cc0e102f13484b62b7317b614977df",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:0fa2eabfcc93aded4c4ec96d184c378008ecdd87779094d3102dba11113b6654",
+          "outputs": [
+            {
+              "ref": "corpus:boa-premium-rewards",
+              "sha256": "71825da5053699564d75243460ba7201ac94b153f3d8a8db3a5a1fb1730952ab"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:8800b6e3c04ff15a7326308b19f83258a57338d66f6566874e90968bb0445851",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-premium-rewards-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8368ba2d1366edcc3166b8311fc17994944aa4581db76212cea2707fd91d3900",
+          "outputs": [
+            {
+              "ref": "manifest:boa-premium-rewards-elite-product",
+              "sha256": "d3334c64f3346baa893c1edb7d13852dc7302dc30a36008076099738f8764549"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-elite-product",
+              "sha256": "e9b003181e45b445d832f8579fe904979161ceaaf22ff75cca709743cc2a5604"
+            },
+            {
+              "ref": "manifest:boa-premium-rewards-elite-pricing",
+              "sha256": "3c1029a6c770bb65a17ef59c82164d9589de1e98af11142d3b9ca13a2cab7430"
+            },
+            {
+              "ref": "source-input:boa-premium-rewards-elite-pricing",
+              "sha256": "9d936e3b68376e43fed4202cf66180ac1bee3d6da9c3186e24a27682cc88e4a5"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:01.654Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:955de657c509a41d8641d14c6bd35a1627bb94abe71c449d12a1a1b83ffe4f70",
+          "outputs": [
+            {
+              "ref": "trace:boa-premium-rewards-elite",
+              "sha256": "6a9bf671600051861ea95c43296d41f76bd9b4909589437c4440099e5bcca322"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.358Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:c698dcdb8cc4078f8ab0ad92cd3ac617a51fec0aede3df22fac2ccc7016f1f33",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-premium-rewards-elite",
+              "sha256": "78e0f2a66bef970c86762b6138c9b16eadc7b35c9b2fc2d60ff0d82dd197fe91"
+            }
+          ],
+          "labelsHash": "sha256:25a2d52b69acd32cdf5649ce197866adf681eeba069e475544132cc295108cc0",
+          "anchorsHash": "sha256:6baff2bb0e6ee383ce494021640a2419302e96d9df279c91f8c647ebcb3a6ee1",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:3b965ed552b48b1f6400eda8ee1c75aeac2fd7008ff56d02578b27e0f33a02e8",
+          "labelsHash": "sha256:25a2d52b69acd32cdf5649ce197866adf681eeba069e475544132cc295108cc0",
+          "anchorsHash": "sha256:6baff2bb0e6ee383ce494021640a2419302e96d9df279c91f8c647ebcb3a6ee1",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:d85a38aca9d6fc8b7b8e982a80925988296e7014a9d6333eab9763d26fcf95a2",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:cd7da20ddcb06f36ca513058b484d00ed62994630ab8b9758e54cca9ee948d63",
+          "outputs": [
+            {
+              "ref": "corpus:boa-premium-rewards-elite",
+              "sha256": "f6d8cad20913def7255392d5da3b2ece5981000291f2ebb994da36f9361c2d59"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:75a107df77c6dba8a206c3c94a21f084b8af3d9e6e887c58b2c71c20de826218",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-customized-cash-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2e3d1cab6ef9fed82f5ea80a42ea360a994941ee7b50dbbc3e42850caaac17d1",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-students-product",
+              "sha256": "5eba1f9fbfd86a8de3bb5242ad1d2a855c24cbbc552d2e388fd3f866e012aa70"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-students-product",
+              "sha256": "ef1eba8542b0008c52691301f219a2f115386a790049a107cd3ac25fe5748749"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-students-pricing",
+              "sha256": "8e755f614e21a2523904b3afbe10de7cb424f6eb22dd53e42bd56ae6a5dd56eb"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-students-pricing",
+              "sha256": "365533f45f93d088d0639a5e79828cc19e28cf495ba6f585e2ec8e24339e25ce"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "0b2ee2e589893f9aa21ce045785baf35fcfc77d48a5078b63577fc755d903009"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:02.425Z",
+          "attempts": 5,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2fed49b309f34785437c4590ee5f5e330952cc01196c13fda37c0bd77ba6b39b",
+          "outputs": [
+            {
+              "ref": "trace:boa-customized-cash-rewards-students",
+              "sha256": "35075547c1e0a6704cae3da6ec95b283e82beb051bead61e716d7524a3de1c2e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.358Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:652b20d27389d39485b37d46593e8dada8f52dcfd9adb12b9b5e99b78e844087",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-customized-cash-rewards-students",
+              "sha256": "dfed0cb1b4b2400e0a7a3c99cdbffd1c3363520ca19e42acb3ee48347d82137c"
+            }
+          ],
+          "labelsHash": "sha256:977709982792fe3c2fa6d5687234b737e6413190cb111cf18708328d5c1c84ac",
+          "anchorsHash": "sha256:179df16d28c4a2d73fc7a1f70606994f694bd0c83c9ce9d61e78366cd5e8f597",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:8e26e294b8f21c61084354a1adb7cb8fb8439de298bbf8eeae6192ff5fd2e71d",
+          "labelsHash": "sha256:977709982792fe3c2fa6d5687234b737e6413190cb111cf18708328d5c1c84ac",
+          "anchorsHash": "sha256:179df16d28c4a2d73fc7a1f70606994f694bd0c83c9ce9d61e78366cd5e8f597",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:92518e0818d14fde83255f9afbe4846107c0e441a853d2952cc98f1c6c5362a4",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:06b67eee02b1d45ee44019a9fc955c2185e3d247d5619b9aa3b28307a501d8a4",
+          "outputs": [
+            {
+              "ref": "corpus:boa-customized-cash-rewards-students",
+              "sha256": "c4b01ab437e93ac2d3a0d6ffcd21e210dd03903217799f76846ed2eda03f426a"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:a81921edb20f05dbd058638c97dda1ab4a25cebfb294c737cc140c72f6e9f3ed",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:98e95efd62b06e089e4ed50e862e6648b3f41c6a835d97f3678d0daf1a07b5e6",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-students-product",
+              "sha256": "676be722c19be15eaf7f417399087984139c48192019f7a2c722084a67610076"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-students-product",
+              "sha256": "2c780ef41a4f2398c6716fbce4193cdfea32613203de6b421cf0b98506f99a7c"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:02.804Z",
+          "attempts": 3,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8e439f3b37fb80bb73202d89e0073db668fef636950499ec22135dc006bba422",
+          "outputs": [
+            {
+              "ref": "trace:boa-unlimited-cash-rewards-students",
+              "sha256": "b60bd03d69915866249899841b7d0fc548a4ea99bd3c09f5b8382902ec3692f6"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.359Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:bcaa3931b8ea628430938fdf489d5b468f8b56e2772e54fce577cf7104b92628",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-unlimited-cash-rewards-students",
+              "sha256": "9055b3c6d6fa83838f5e3e7717e05c9fb2a350978cc41382f7a3a8b88bd7295a"
+            }
+          ],
+          "labelsHash": "sha256:eddea0754b379192d81f96a919a742cffb9b179e01a73eae8a75d7a9eac6f8e7",
+          "anchorsHash": "sha256:0de29e16eb6798f47c244092ed4e582641a7a1b820146f7313670440b4a04406",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:e3d471a7764200b78cb86c42937ca740509e5c1a14c88aaf3e55363d5251aa8c",
+          "labelsHash": "sha256:eddea0754b379192d81f96a919a742cffb9b179e01a73eae8a75d7a9eac6f8e7",
+          "anchorsHash": "sha256:0de29e16eb6798f47c244092ed4e582641a7a1b820146f7313670440b4a04406",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:801a6111fe218b9416ce613623718ef1facf50f798b9716e4a44364c52d5311f",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:b719c80129bf28e89f24f53e99ea8cd735c5f8c58b152927031016cabec2a4f9",
+          "outputs": [
+            {
+              "ref": "corpus:boa-unlimited-cash-rewards-students",
+              "sha256": "9055b3c6d6fa83838f5e3e7717e05c9fb2a350978cc41382f7a3a8b88bd7295a"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:38b9cb02fa326fd4b88898fc269ad12674530c2ce6f78ed1053c052650aec518",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards-students": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c7e12e78b2405be60420b90c72d2d93e719d14b78490179ac15a7621eb1882e0",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-students-product",
+              "sha256": "abc698510516bede748fe29efc7afeeb27a205380c8126bdc8dec88f039e0c31"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-students-product",
+              "sha256": "2590b421e4c4b87b708554c4d4321ae71193c50a53cdcb0cca8a13015d984dad"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:03.184Z",
+          "attempts": 3,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:2124aa053c886cec7484b2b614bf29c748181f2539209d3e558b1ac1f61ea70f",
+          "outputs": [
+            {
+              "ref": "trace:boa-travel-rewards-students",
+              "sha256": "15f626edfe24f8b399542a467ec6b6965c6022c609fdf167d5aa71b9c28d109d"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.359Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:ba434fe7878ce7d290b4a6184caa50151e7c3d479c1f1cf9888eee7827ab8b8a",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-travel-rewards-students",
+              "sha256": "a1bf24bd22eecf3ae0fdaa39138b7a520cd3f46cab67a5f39c3c02198a5ad3f7"
+            }
+          ],
+          "labelsHash": "sha256:cff34d68e2cb9dfc4a4f2f38ed549262dd2aabe2c051bb37a1155bd9623bb16e",
+          "anchorsHash": "sha256:81aef3e0cc97f4ff5a744267c65c0650ebecd6da99a373ea8d93659e4156085f",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:6affe68405cd5497c23c5cf342d8a552b657c738e549f99be817bb1578bdeae4",
+          "labelsHash": "sha256:cff34d68e2cb9dfc4a4f2f38ed549262dd2aabe2c051bb37a1155bd9623bb16e",
+          "anchorsHash": "sha256:81aef3e0cc97f4ff5a744267c65c0650ebecd6da99a373ea8d93659e4156085f",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:fc324fb9f00dbbd9c60bd3d69925292b80a802218c0b06a488a478f12f6a4575",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d4ebd14a52fe9f661b812c2f1aeaff600ab830acc265c59569f30077fb9eb944",
+          "outputs": [
+            {
+              "ref": "corpus:boa-travel-rewards-students",
+              "sha256": "a56f60b0d485516ebda6505f5d2572dd684c653224ae10ba6c9ec58cb629419c"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.146Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9bfa34c2e902f7df2626ac4d15215b8aed000008d79d8fe957f417cd6521b466",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-customized-cash-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e4e8a8bfdfe4106ffc933034cbdbeca7e1af40d0f7eef295b902f91ebfcf9297",
+          "outputs": [
+            {
+              "ref": "manifest:boa-customized-cash-rewards-secured-product",
+              "sha256": "4dee717b3c1f6ab8669e838738d42f2d10ebcf0afe66d5d90dbb1e2c7e363a1f"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-secured-product",
+              "sha256": "e17a541bd76948a0c916af9a5b748cf1cacbda78164c34d3051855f9beaf4670"
+            },
+            {
+              "ref": "manifest:boa-customized-cash-rewards-secured-pricing",
+              "sha256": "da506bea648de3163e71d33a4e1029861dd54c77e1b64c3dbfde975863f1a14e"
+            },
+            {
+              "ref": "source-input:boa-customized-cash-rewards-secured-pricing",
+              "sha256": "ad8283aa7458ec408a4c29804fb74cb10f184fab988c7b2cf9bde00208a327e3"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "0b2ee2e589893f9aa21ce045785baf35fcfc77d48a5078b63577fc755d903009"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:03.934Z",
+          "attempts": 5,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6334da5cc3c9e63a0efa576e935faf4b4e86c2ea990b885d55419fda6f471ff3",
+          "outputs": [
+            {
+              "ref": "trace:boa-customized-cash-rewards-secured",
+              "sha256": "05e436919d0b1940f2e61fe7cc4922d9b5ed34fe33197d29b4fc33c94a05bcf1"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.360Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:7367a71395aa9ae510b1eb3bd532151eac081d23223cba62beb36ab6a7b07f02",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-customized-cash-rewards-secured",
+              "sha256": "3c2547456d576b3a97cbe629d5e08fa54e75897b0d2f5ecd53a5ef0a9663f1ba"
+            }
+          ],
+          "labelsHash": "sha256:d47a725d8822449f2883ac6a1d492067e112f8792ad113e227b9fcee7b942ab8",
+          "anchorsHash": "sha256:6a705cdea7854436e44ff93eac13ca6a20e3446dc3b3e9926248676b669927ec",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:a956c888b64baa1cc9082fe298ccb5cdecb1fbef287d8ac498bdd056c1fb56aa",
+          "labelsHash": "sha256:d47a725d8822449f2883ac6a1d492067e112f8792ad113e227b9fcee7b942ab8",
+          "anchorsHash": "sha256:6a705cdea7854436e44ff93eac13ca6a20e3446dc3b3e9926248676b669927ec",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:6af2fc33b03771d40875c78d4b92b820ee1d631a5bcfc04f7d64dd6c40b91de3",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:24ef5e42aeb1d0f125e6bc2333d5c82c27a58a713500b556744a7032af81e71e",
+          "outputs": [
+            {
+              "ref": "corpus:boa-customized-cash-rewards-secured",
+              "sha256": "066df5be6ec92bfc3cc7358ad094630e0827801ef50592415e95a92502e3db63"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:39b84fa7d986a7ee281299a20b7c7a3eb8052f9a933533b05856ccd934c7d7e7",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-unlimited-cash-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2809f89355dabc3426299d28745e3f7e506ad8e5bb4b0192049851f901df4eab",
+          "outputs": [
+            {
+              "ref": "manifest:boa-unlimited-cash-rewards-secured-product",
+              "sha256": "823e596bcd018bacc24e9b6f58f630664843b08aa6937cdd2f760a7771fc01e1"
+            },
+            {
+              "ref": "source-input:boa-unlimited-cash-rewards-secured-product",
+              "sha256": "1d1e76d2927da6f801fc2f728b1de050e959cf2a4039c1c843f0633596e4ec93"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:04.304Z",
+          "attempts": 3,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0cfb4226a3f3e60d6f5c3d211009d715455c1ac1d81c1463f93b2df1961151dd",
+          "outputs": [
+            {
+              "ref": "trace:boa-unlimited-cash-rewards-secured",
+              "sha256": "d465023840ddf8c3d30d4b737b0bca99bed010e592ec91e0d1ca3cf91db143a0"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.360Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:86f901099a02ffb1bc505edb9f41d96e0b48444ede02f4384828ae66d3e41eab",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-unlimited-cash-rewards-secured",
+              "sha256": "6c04a05945c5eb3b38b431bd17f8b7c927272421553b3d02f8892e791e660222"
+            }
+          ],
+          "labelsHash": "sha256:549ae71c3ae14e8f8dd3412b8032f8b651405a719bcee6679f589a354b4a35f0",
+          "anchorsHash": "sha256:0de29e16eb6798f47c244092ed4e582641a7a1b820146f7313670440b4a04406",
+          "finishedAt": "2026-11-07T18:28:24.869Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b044ae3d6b2d434ff5d81fd3c4d1512439a8a1efc8ec7ffe54cfae7e819ed677",
+          "labelsHash": "sha256:549ae71c3ae14e8f8dd3412b8032f8b651405a719bcee6679f589a354b4a35f0",
+          "anchorsHash": "sha256:0de29e16eb6798f47c244092ed4e582641a7a1b820146f7313670440b4a04406",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:87f05dedcf8ca47d0dd82b9f75d934e510f5513a558500ffed6d0c2440819c07",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:81b80eb77d37aa309bdc2b3b8cf901350a29e134a0393e78b6d168184de933de",
+          "outputs": [
+            {
+              "ref": "corpus:boa-unlimited-cash-rewards-secured",
+              "sha256": "6c04a05945c5eb3b38b431bd17f8b7c927272421553b3d02f8892e791e660222"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:0e3ca96449f101ade969a2299dc113e5708539a4ba5c93e9308632ce5064af03",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-travel-rewards-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2455db178bb9348ebdf2fd0e0895e065b2fa98913450d23d37dd7fe3d83d4037",
+          "outputs": [
+            {
+              "ref": "manifest:boa-travel-rewards-secured-product",
+              "sha256": "d027d34f8f99878e06a3512af93d27ac7cfa04aeb9db246d48ba231b5d0097a9"
+            },
+            {
+              "ref": "source-input:boa-travel-rewards-secured-product",
+              "sha256": "b3019b96b6a4cedf7e02fa1d2daf5e57e2a99e07ac4074ee792933078e456b60"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:04.681Z",
+          "attempts": 3,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:94a1088a2a064893cbbf413f14f5ab762571b2c8572625f826cacf11aaaa1850",
+          "outputs": [
+            {
+              "ref": "trace:boa-travel-rewards-secured",
+              "sha256": "b4b48930cc80c217d83c1182df10596a33ed9c350ccba5e4b8ca66d8a1feca4e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.360Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:3b729ba0be9f15af800e996d1ed4c0a6634a15295cebf9a24ef147a6a16f928e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-travel-rewards-secured",
+              "sha256": "85d734208622c3a06a74c5561abcfb615e23462cb662c2edb468d98c1a6c7345"
+            }
+          ],
+          "labelsHash": "sha256:d5a4de84408084b3f5adb8ef08175a5e1af180291f75c4af76bb144e4cc3c77e",
+          "anchorsHash": "sha256:9a1dd118438ff243949652a83821054ad8f1ff1e3cbb249909d1f8907eee5553",
+          "finishedAt": "2026-11-07T18:28:24.870Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:132edddbd98b9dd5544e1fe89962b91dde4096e474ff872b6ae45313a36e51bd",
+          "labelsHash": "sha256:d5a4de84408084b3f5adb8ef08175a5e1af180291f75c4af76bb144e4cc3c77e",
+          "anchorsHash": "sha256:9a1dd118438ff243949652a83821054ad8f1ff1e3cbb249909d1f8907eee5553",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:1c3463d9204c2fd10aed71f359e604d0d2b80d6b6afbcc9237631c9fbf96ffc6",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:d494f01546c65169a733e227c9b15dce3f5ca69cf8e58a157401fd1e21abcc10",
+          "outputs": [
+            {
+              "ref": "corpus:boa-travel-rewards-secured",
+              "sha256": "e62f8840016c8b16f75d0751d5380bb4317f69bfe7dccb965f8573acb60fe59a"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ef0d6e5f2d88bbc423004d3d789ebafaccf465e1068f1e32c7cb18efb1bb0152",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-susan-g-komen-customized-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a6a965df6e16b14b4bc3cc23a02dafa8d0857feb34aaf056b5594b84f7b4abd1",
+          "outputs": [
+            {
+              "ref": "manifest:boa-susan-g-komen-customized-cash-rewards-product",
+              "sha256": "2ef431066b03a7dc66e6177d745c6c1e62f8a31c7052a15dbf790c2ce3d65bf8"
+            },
+            {
+              "ref": "source-input:boa-susan-g-komen-customized-cash-rewards-product",
+              "sha256": "ef320eba1ea46e7beb9792be19e215353e61b551f3250f781f650a802a910e28"
+            },
+            {
+              "ref": "manifest:boa-susan-g-komen-customized-cash-rewards-pricing",
+              "sha256": "5c1c6d9af3a2cfd0533d22173f1065f1b56b7e0dc808538f148b59b26cd88e7b"
+            },
+            {
+              "ref": "source-input:boa-susan-g-komen-customized-cash-rewards-pricing",
+              "sha256": "115ada0ac47dcd56bccef13e0ff93893276829d3bc630850284b540a1e78c702"
+            },
+            {
+              "ref": "manifest:boa-cash-back-category-choices",
+              "sha256": "0b2ee2e589893f9aa21ce045785baf35fcfc77d48a5078b63577fc755d903009"
+            },
+            {
+              "ref": "source-input:boa-cash-back-category-choices",
+              "sha256": "4241d4a49ef46fefe2a9079c6bac658ce1d7e68dbfadcb486e0a1b869bcb5984"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:05.442Z",
+          "attempts": 5,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:055ab092fc10238c20d3b9d343305a5f46b07c20b8ed561d49594c03af161d50",
+          "outputs": [
+            {
+              "ref": "trace:boa-susan-g-komen-customized-cash-rewards",
+              "sha256": "0de7e597975c48834cf5c55aab424c8f81d799c2ebe6a1495ed4ab916906c7e8"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.361Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:d2558f098d838fc2804533fd934b343fc8d740711f63c145c11def63af52663e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-susan-g-komen-customized-cash-rewards",
+              "sha256": "1fd9146fd42e81564102faf31b57966a346a66f39cf328aed74f782d44b84861"
+            }
+          ],
+          "labelsHash": "sha256:97e28955e5401bef3a9e77911f76d9231d25bcb76c1ba2af55dac6c3c98843cb",
+          "anchorsHash": "sha256:c8b8bacd5428e561d7baf51db2678831c04907516a173fdc3afb77f354e0f28d",
+          "finishedAt": "2026-11-07T18:28:24.870Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:b1e913094087e31c01abb9f904c2e688e423280afea6e0169800884510df3528",
+          "labelsHash": "sha256:97e28955e5401bef3a9e77911f76d9231d25bcb76c1ba2af55dac6c3c98843cb",
+          "anchorsHash": "sha256:c8b8bacd5428e561d7baf51db2678831c04907516a173fdc3afb77f354e0f28d",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:50cbcf783f65cc82ac17d0ec14c48d2c0d89402713a6e330bdb14a17ffc21f63",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:500f7591df5c33a6e034dff6a36b5b7f998aae5fb2b1a4a5a7b948fe610830c2",
+          "outputs": [
+            {
+              "ref": "corpus:boa-susan-g-komen-customized-cash-rewards",
+              "sha256": "2f5945c0628a8ebd7cee3fe8b0a0b8ce25ab210f204e31fd1568fefaa9ebe99e"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:1f70dbe1ac78ac825f2d1b727178235a258b99210988ced354f63ff5b71ad92d",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-atmos-rewards-ascent": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:5ed1a7d3de2090f33159fc319236b62f837fa7b94f79de9164a6913d487f7987",
+          "outputs": [
+            {
+              "ref": "manifest:boa-atmos-rewards-ascent-product",
+              "sha256": "d53c6773184d65e73e923d358065a50f8beba1fbde98aff8c7deeb7779aceb65"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-ascent-product",
+              "sha256": "a384cad916de507d5a51396fecc8646d172604890358681d78f9fe3bdc23cd90"
+            },
+            {
+              "ref": "manifest:boa-atmos-rewards-ascent-pricing",
+              "sha256": "b6f011c821725961e57a6f799497a3510d6256b05859f5d4d4d8ad93aa7b1ac6"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-ascent-pricing",
+              "sha256": "81ca23490ce5c7338f662cd003ad86a6851dac6833014cd54ec525ebf9ed2ff2"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:06.197Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6e9035291e979eb7fd3645d4ae41d319cf718556e85cb13765677fac09e44572",
+          "outputs": [
+            {
+              "ref": "trace:boa-atmos-rewards-ascent",
+              "sha256": "feda2fe01714717a04c7d10367efe4b563caf07aad2ea50fcf3ae84a56efc3ec"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.361Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2c3fcdc5a73ac42042e9e893596cef46327510837de06d841a08f6c55d7fb5d6",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-atmos-rewards-ascent",
+              "sha256": "9dfee0b9e18b71fca360f7651a59b2198e030890a25063eba099e3ee77fac255"
+            }
+          ],
+          "labelsHash": "sha256:9bad26ad8d6efcfc556966966e9087b19da05bcc59de00591e646207b85eb88f",
+          "anchorsHash": "sha256:1d86b075dae904442841ec1fadb191cf595ed847447606804e8f1c1c3277c7c8",
+          "finishedAt": "2026-11-07T18:28:24.872Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:fa7f5a37bb6ea8cf14ba17b347d39c715da9f6fb2529a84694190970d721248f",
+          "labelsHash": "sha256:9bad26ad8d6efcfc556966966e9087b19da05bcc59de00591e646207b85eb88f",
+          "anchorsHash": "sha256:1d86b075dae904442841ec1fadb191cf595ed847447606804e8f1c1c3277c7c8",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:9d48ddd00394860af5794f4ff2e3b2ea680402e1d549942314f9f17b5ac78817",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:ee48e77d22f3f96c8d8926d63cdac3ca434a2b54aa94a54e037716af06fad47d",
+          "outputs": [
+            {
+              "ref": "corpus:boa-atmos-rewards-ascent",
+              "sha256": "8d78777bd529fa6439ae5b83d6ff7b0e760fc3a434be5e30130c352cf153cb28"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 1,
+            "lintRateAcked": 1
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:3ab56dcbeae2d5b611878da9ba7d21f9200576d2d833c23ea19768950caf0de1",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-atmos-rewards-summit": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e310c69d9432f35870dd36b3a1f6b7901541b6eef64ba5f0da1641b127e665cb",
+          "outputs": [
+            {
+              "ref": "manifest:boa-atmos-rewards-summit-product",
+              "sha256": "b090ba09e5c4c3938acf3ec9569574273cb5cf1cdebbf97423c64110a1a6a6c4"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-summit-product",
+              "sha256": "f1f10ceb4aa4d58fa7e63ba76b7d260ef8ebcb8cb4c83e44362a9990fb039582"
+            },
+            {
+              "ref": "manifest:boa-atmos-rewards-summit-pricing",
+              "sha256": "b4d399778ba7ef3ea149c6d64450be87416e5506fe32d09a55069c1f3118f4cd"
+            },
+            {
+              "ref": "source-input:boa-atmos-rewards-summit-pricing",
+              "sha256": "958c6e5deae9969f127b94ee35600e25b32b3142139fb436ff28a2a19a39805b"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:07.011Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:3bd6c4ece137eb5c4c17deef25c556e006357bf890685447a274d9232af863a5",
+          "outputs": [
+            {
+              "ref": "trace:boa-atmos-rewards-summit",
+              "sha256": "ca3232f081cf7177e60a6ee981f3a472b3066eeccfbab30505b7701097c0d739"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.361Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:806f7d6750153483f7ba09f3db288add0b7d85bd3832adbc633a45acbcb4b935",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-atmos-rewards-summit",
+              "sha256": "68f2cf614dc3ab81e553b5abbe2166bd92a60a20c4065d44bbfa65df487691c8"
+            }
+          ],
+          "labelsHash": "sha256:2a3f53d844102f29e6480721175d5e22b1ba83f395af10147dcac590a94717e4",
+          "anchorsHash": "sha256:29eeece74403e5b6997b0e70d849c1044b6203a4d89cfe44a7d9ab636dc890fc",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:6b1b9d292f69c4f026e6a14e30e45a40afcc312c2faafbd7805da451d6aee78e",
+          "labelsHash": "sha256:2a3f53d844102f29e6480721175d5e22b1ba83f395af10147dcac590a94717e4",
+          "anchorsHash": "sha256:29eeece74403e5b6997b0e70d849c1044b6203a4d89cfe44a7d9ab636dc890fc",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:b4544f461ca6eac91bd615bfe7b1d1b5063937aed45cde717f1278d388d94111",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:c49739207942dd0ddf370f6c91a4866be0b7af1dd9316566d848dde9b6b68cb0",
+          "outputs": [
+            {
+              "ref": "corpus:boa-atmos-rewards-summit",
+              "sha256": "e370815eab4d25706e04759093282206c520dabd0fb9c990ea1812fdb9c0259d"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1,
+          "metrics": {
+            "lintRateRaised": 1,
+            "lintRateAcked": 1
+          }
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:ea602fa1e2d384d512f1f24a577c5e7e32bc6db0eb3a54343a5df8e2dcfabb83",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-royal-one": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:aae0ac7488e050b71149478dc71d278077049b095a68b0f6185018eb6da8965c",
+          "outputs": [
+            {
+              "ref": "manifest:boa-royal-one-product",
+              "sha256": "9976ca95dac04da95604035d45f02e5c0b88de68812445c977468facfe1ff60c"
+            },
+            {
+              "ref": "source-input:boa-royal-one-product",
+              "sha256": "2eea239fb1bf4e79c41b1c099ed0e68922c61d18cff33bebc6a977f5ebdd99f5"
+            },
+            {
+              "ref": "manifest:boa-royal-one-pricing",
+              "sha256": "edd9e38a2fd319e10faa06d818819e55d7d9092081d457988c5e3f4b07c3f7bb"
+            },
+            {
+              "ref": "source-input:boa-royal-one-pricing",
+              "sha256": "8a942eca58c8720f9c300bc023599058126aaf14ea88569c6d7825f5ede13d18"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:07.780Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1672cfdbc54dd66ae3a92ae9ae4fd0eebcb3f6018ba9169162c830533d5147aa",
+          "outputs": [
+            {
+              "ref": "trace:boa-royal-one",
+              "sha256": "ebfdf8c6c2b4c4adfc3a8fc01e2745e74d7874727da777c0e9e1747d1ac89df1"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.362Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:1fe5635da8589ee1eaab0b6480d50c635d9604d690c2720ede737801906563bd",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-royal-one",
+              "sha256": "0eaedda44c78064163e9d418a20f57a52347423dbb040f90663f7fc0ad5bb3bf"
+            }
+          ],
+          "labelsHash": "sha256:933ecc2a4b5a831aaf86e382544ddcfc95cec68c86187825e07430f2f5e685f1",
+          "anchorsHash": "sha256:f239e3ed61f17baa5e7e4432a73a28a2d4151a6180aa9b4ca9a5ee22b28cb0d6",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:83f6b7c7e43e52580ff48427a75618ea6de2403a238b786ef38f927db38006bf",
+          "labelsHash": "sha256:933ecc2a4b5a831aaf86e382544ddcfc95cec68c86187825e07430f2f5e685f1",
+          "anchorsHash": "sha256:f239e3ed61f17baa5e7e4432a73a28a2d4151a6180aa9b4ca9a5ee22b28cb0d6",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:94d068349cfb699ee1f0ec3c11505ecbcebd8b349836712a7e8454241e812556",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:a24a28555dfbc6e9dd10311a630f0be258508c8ddaba5340ea9798287727fd7f",
+          "outputs": [
+            {
+              "ref": "corpus:boa-royal-one",
+              "sha256": "41d04918093d57a6036adcbb79b55936a3fd575b0909c96ea30abe099826ca30"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:23d8da02a9f5ea4e6b0bd4df96d5cc4474b6e0f2c5dff0b80b5e5d32b164b7cd",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-royal-one-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:47cf3e25af53b496c80b8aba66a478ba0fedee83216c7f4971d056cd2ff11cc7",
+          "outputs": [
+            {
+              "ref": "manifest:boa-royal-one-plus-product",
+              "sha256": "2ebd411642ce1bb3d9b9d62d242042cf60118ed827f2de636a759d7fdf536b0f"
+            },
+            {
+              "ref": "source-input:boa-royal-one-plus-product",
+              "sha256": "03d3970d6537282f8887869e8bdbb614110ab45c0c7fc202008736a388cc44db"
+            },
+            {
+              "ref": "manifest:boa-royal-one-plus-pricing",
+              "sha256": "fac1e404914367b722df86cd8f9fc2016582b51180ca25397821e79baddbb592"
+            },
+            {
+              "ref": "source-input:boa-royal-one-plus-pricing",
+              "sha256": "d9a70a42db770a637d1cbd55a7e8bebeaf00a00a288b75643b4f4eaa620c6f91"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:08.533Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:0f0a30d96180cf221cdb695bc20b96afcd5165a56719ae8be25fec4ee5546320",
+          "outputs": [
+            {
+              "ref": "trace:boa-royal-one-plus",
+              "sha256": "2ce88e85bb59bb5a43714151676b0bfb0149efd2570124224a554a327f94e42e"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.362Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b470dc83313629e94d3c04321f9ac97ab490db016852ca42fe6b62e3b24f3d0e",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-royal-one-plus",
+              "sha256": "e735ec33ec608820f52e0304b9a22c6acc5d82da73de2aec26445927c795023d"
+            }
+          ],
+          "labelsHash": "sha256:ffecaf753bca1ad54b9b8ca49fd0aa4626d6890a60e9f4f52d8bd99c5922fac1",
+          "anchorsHash": "sha256:2db949ef8aba57bd5131817a797cc1220add4b3121947c5dcb9e7bdd3962369c",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d2073bd0ec7cae92b85cf1bf6f90b95d08e1974aeb9b604b2c203e48698705fa",
+          "labelsHash": "sha256:ffecaf753bca1ad54b9b8ca49fd0aa4626d6890a60e9f4f52d8bd99c5922fac1",
+          "anchorsHash": "sha256:2db949ef8aba57bd5131817a797cc1220add4b3121947c5dcb9e7bdd3962369c",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:256253f84aa465885f2f2317b03048e29fab0e6bd5e2c6a52dfd421befe6e9d7",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:66aef21affbb5945e3a78d51372297ac76f2d894beb32a73b48a5c43951e29f4",
+          "outputs": [
+            {
+              "ref": "corpus:boa-royal-one-plus",
+              "sha256": "610eab24063eca6d759d419d149c91785ebd2c597fd7aa7a2cd3ea6ffa2f38d5"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:abeec53ddb7ecf99a77b63264a66a4765aae00df1c80de71497644f40c50b6ba",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-allways-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:44a37178840209bdab310462c2a1387fdd5981182b4b489579ef9a71c4ec4f87",
+          "outputs": [
+            {
+              "ref": "manifest:boa-allways-rewards-product",
+              "sha256": "e1b635174a7a0faf2130fc4adc6957e6b5f19fa54b2f6cc339a14b5c8f83299a"
+            },
+            {
+              "ref": "source-input:boa-allways-rewards-product",
+              "sha256": "a793f7d55fcb38507b50e72ad2a2f310823a7c58d7d6f9d909e0fbd155a4a69a"
+            },
+            {
+              "ref": "manifest:boa-allways-rewards-pricing",
+              "sha256": "102c6a86fd263b2c6352e1b142a11cb8ac26bfaa5e899cde03c5a4466c3a6699"
+            },
+            {
+              "ref": "source-input:boa-allways-rewards-pricing",
+              "sha256": "f81253f96e7aa01027fa7e786cec8717224ffc057baa5c6cf1baa67f934feaa4"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:09.298Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:e45434ed6d25535811006bcae22a47952d9813aed0ddb1e7b32256fde52deccb",
+          "outputs": [
+            {
+              "ref": "trace:boa-allways-rewards",
+              "sha256": "8f0454dc41c9a2b1438de6cbb1e990e1316704b28104dfbbf84e3048773eaeb9"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.363Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:68ead05eda657a0509ee44ed232361a8bea6fc6728b5a112a6c5cf6f10fd8d7d",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-allways-rewards",
+              "sha256": "b06e1217ee8c2aa0fb0c3ffed5ddcd76a3fb9d2c358b5dee3bb708feefbb20fd"
+            }
+          ],
+          "labelsHash": "sha256:2c4bb3cc509c2fb9de17dcab828c9d8c9551a73a876e2c976c6df80fa71c629b",
+          "anchorsHash": "sha256:4fb5bf11f5ffa018b34ad4679d726fefd37b20c212298a4719960a889a0eed31",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:d3abb40a0d161e3671d5edb1a3dfa784078fefc9764607a1837763839688956f",
+          "labelsHash": "sha256:2c4bb3cc509c2fb9de17dcab828c9d8c9551a73a876e2c976c6df80fa71c629b",
+          "anchorsHash": "sha256:4fb5bf11f5ffa018b34ad4679d726fefd37b20c212298a4719960a889a0eed31",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:d1c88aaf8e10b362d011a302b851cf13882d156f96d5aeb6c0a5840e8d45bc78",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:7a5b4d004632ec2959a0fa56efac1f25f50dd01e90f2d891b0fa92bfc091c292",
+          "outputs": [
+            {
+              "ref": "corpus:boa-allways-rewards",
+              "sha256": "7026c17bdd731414b5e89b1c2939eab13c4b5ddc9141f608be76499bf39c039c"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:9124d39d39e3a1d4a37549a07d461ea663966a13d49f492bcf7b509a7a9103b7",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-air-france-klm": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9a0a383a83915a10b3b089e5e3b3a23845b5c628585edce36e830f9cc41e80eb",
+          "outputs": [
+            {
+              "ref": "manifest:boa-air-france-klm-product",
+              "sha256": "b30430f8c80551e480cac4aab53a521b952a448e854817df49da16dfbfef8e8e"
+            },
+            {
+              "ref": "source-input:boa-air-france-klm-product",
+              "sha256": "21759c929fcae75fc9e08e805f8d2e9db2b535eacb91248096e3e0d9cc8c7c29"
+            },
+            {
+              "ref": "manifest:boa-air-france-klm-pricing",
+              "sha256": "5d9066716cf275594ea45f1b499822f95f1996f9ec4841e17056d52fbeb3bef1"
+            },
+            {
+              "ref": "source-input:boa-air-france-klm-pricing",
+              "sha256": "5418be09bd66860ce21936ab2e1a163d18f33b6c1b9e426bd78c9e0597553603"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:10.032Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:d036f809ccc655c559adfab9485ad72d89baf9637be017d523dd4a8a26d23fe5",
+          "outputs": [
+            {
+              "ref": "trace:boa-air-france-klm",
+              "sha256": "55a0a72a0ee5e5bb1609cbcd8c329d0670a3ad63074cf6b5fef4a2b11074113a"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.363Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:5c522f09794561d1c6b17ac958fd444cf8542ba6bc396428928b28d7a4f32677",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-air-france-klm",
+              "sha256": "cc15fe318498c28e2917a24764685e3615a200a442134b1561d4f22d985bfc53"
+            }
+          ],
+          "labelsHash": "sha256:9e570f0d812c413831e575b5ee3695818b6a872efe20a61d7f943eab9bafcb1d",
+          "anchorsHash": "sha256:d6c8541e438af72074a75873444dbe1109d1bf5c69b1d89fc976ebe20c0c6bcc",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:ff433d1d3a49d7f7a03f7be439a6fed7315edae08dae457e9b9349670250c5dc",
+          "labelsHash": "sha256:9e570f0d812c413831e575b5ee3695818b6a872efe20a61d7f943eab9bafcb1d",
+          "anchorsHash": "sha256:d6c8541e438af72074a75873444dbe1109d1bf5c69b1d89fc976ebe20c0c6bcc",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:f97a31b7bebd01f9e8d6cc91c97b356784e1c1bf3e83e0a3e7318df8d16d067d",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:35b0eddd006127161f6b0ffe9cecf5019655c425ba31c290dae3dadb81a4a58c",
+          "outputs": [
+            {
+              "ref": "corpus:boa-air-france-klm",
+              "sha256": "cea4fe82ae8a2e93fda796ec8e2352d2d0a2c8515397081edb094731e25bcdb5"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:131f8f75c30a670bb1a8a2e4b76c4fccf4f84124913e1143f742ba200d58922c",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "boa-norwegian-cruise-line-world-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9c5249650b2d7d88449b9dbc98386c837a30bf1110f184c10513655a9ee73e0a",
+          "outputs": [
+            {
+              "ref": "manifest:boa-norwegian-cruise-line-world-mastercard-product",
+              "sha256": "ac7b3cc9835a15d76a7098c3e2dc02b733dc885e5acf6070d04749e898caae15"
+            },
+            {
+              "ref": "source-input:boa-norwegian-cruise-line-world-mastercard-product",
+              "sha256": "e1b620cf4b7bea089b3446e2d06afde5ab2d3ff89efbd2da55a0bfee0a7a55d9"
+            },
+            {
+              "ref": "manifest:boa-norwegian-cruise-line-world-mastercard-pricing",
+              "sha256": "47d82579bb7710c5f8e03a64d7cfe416e2119e5d301579e697ca9a5f697dcd6e"
+            },
+            {
+              "ref": "source-input:boa-norwegian-cruise-line-world-mastercard-pricing",
+              "sha256": "42701343e327de13ad4d9c99867a1fa098ead7c9a246dfa7c2a0f1dd62b7fd32"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:19:10.771Z",
+          "attempts": 4,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "done",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:53ae68776d848c72bb9b7834f0de11d989eaa75aabb984388c6878fffd91d609",
+          "outputs": [
+            {
+              "ref": "trace:boa-norwegian-cruise-line-world-mastercard",
+              "sha256": "01c3e79df2982c356e1caa042a01de77856a18184b07caf44d3f9c8817411707"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:28:07.363Z",
+          "attempts": 1
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:474e9020d02f1c7a48ebed4a074a42106ddd31e3e73283b59efb789739cd74b4",
+          "outputs": [
+            {
+              "ref": "corpus-draft:boa-norwegian-cruise-line-world-mastercard",
+              "sha256": "3de98d9dcb31f4cbf08ea6d9534d7c60736aaa7b56bfb0544c7381d458920cde"
+            }
+          ],
+          "labelsHash": "sha256:fd1c2f861dd120c173114f39961bd55162a40194b118aa2e3aba1369cf54d134",
+          "anchorsHash": "sha256:c643e100f748cf19735a77a4b6c2f0d8db436b5a8e93b769da91a1bc9294abab",
+          "finishedAt": "2026-11-07T18:28:24.873Z",
+          "attempts": 1
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "inputHash": "sha256:30abc161e561537cb35e0c8bc019a5c11272a5e857c7f456ae264de4cdd957e0",
+          "labelsHash": "sha256:fd1c2f861dd120c173114f39961bd55162a40194b118aa2e3aba1369cf54d134",
+          "anchorsHash": "sha256:c643e100f748cf19735a77a4b6c2f0d8db436b5a8e93b769da91a1bc9294abab",
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z"
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "inputHash": "sha256:dd89dbdc46706fb322d1e381e4604f217f9f5e1a498cea13f8880255204b4c2f",
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z"
+        },
+        "apply": {
+          "status": "done",
+          "stageVersion": "apply.1",
+          "inputHash": "sha256:c6dd16c1ab84c649ff70a5309ae6a69cdd1a4050b24831b410c76d10107663ee",
+          "outputs": [
+            {
+              "ref": "corpus:boa-norwegian-cruise-line-world-mastercard",
+              "sha256": "cd5845e0d99f25983b28524b6b94a0daaba204cb5610d2e532e948ebf176e83f"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:09:16.147Z",
+          "attempts": 1
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "inputHash": "sha256:e1489f173b7fc51e141fef48a36e69fee0c266e895b261e98779fb7740bc97be",
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
+  "issuers": {
+    "bank-of-america": {
+      "stages": {
+        "research": {
+          "status": "done",
+          "stageVersion": "research.1",
+          "inputHash": "sha256:78137caea94d1947dab8906e6bb404103b99c7a563d685432cf5ad1058b3da88",
+          "finishedAt": "2026-11-06T19:16:42.163Z",
+          "provenance": "seeded"
+        },
+        "verify": {
+          "status": "done",
+          "stageVersion": "verify.1",
+          "outputs": [
+            {
+              "ref": "verify:bank-of-america",
+              "sha256": "57bfd8dc5600bec3952608b4b6dfbb6e29ecf4d7322ec82761d04c2da433b6ed"
+            }
+          ],
+          "finishedAt": "2026-11-07T18:37:53.264Z",
+          "attempts": 1,
+          "packetId": "70bcf204-95f8-43f7-8288-2f5065330f4f",
+          "agentRun": "ae84d2f10c107c0ea",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T18:37:53.264Z",
+          "durationMs": 542832,
+          "tokens": 195477
+        },
+        "adjudicate": {
+          "status": "done",
+          "stageVersion": "adjudicate.1",
+          "outputs": [
+            {
+              "ref": "adjudicate:bank-of-america",
+              "sha256": "da66bb9683f9ccaef3eb9e31dd7798e47c06ab36eddace36e63b14b659ee5dbe"
+            },
+            {
+              "ref": "lint-acks:bank-of-america",
+              "sha256": "400d61aab8ebb84c8403f8b2cba8f2a9ffe8b93d1cf4a80b627c608ecbf5dd1e"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:01:04.202Z",
+          "attempts": 1,
+          "packetId": "28288aac-eedb-4c8e-bdf0-c5c1b1ecd6ef",
+          "agentRun": "af3d52bd14b6dab15",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:01:04.202Z",
+          "durationMs": 254934,
+          "tokens": 141970
+        },
+        "overlay": {
+          "status": "done",
+          "stageVersion": "overlay.1",
+          "outputs": [
+            {
+              "ref": "fragment:bank-of-america",
+              "sha256": "366d301d85204627ad2da3fc88d1ef0e6933937053f4ca3ae1f153b89eb35e4f"
+            }
+          ],
+          "finishedAt": "2026-11-07T19:14:49.368Z",
+          "attempts": 1,
+          "packetId": "81f61d23-678c-4714-a585-5230262321c6",
+          "agentRun": "ad533f5250061a858",
+          "model": "claude-opus-5-5",
+          "acceptedAt": "2026-11-07T19:14:49.368Z",
+          "durationMs": 304883,
+          "tokens": 140138
+        }
+      }
+    }
+  },
+  "batchStages": {
+    "build": {
+      "status": "done",
+      "stageVersion": "build.1",
+      "inputHash": "sha256:1d6e2597cc4f107a7b201e4adcc388d9fbdafcdbac3cf1434229af6fb3a28294",
+      "outputs": [
+        {
+          "ref": "file:packages/rewards-core/src/catalog-v3.ts",
+          "sha256": "ad93f09d5e382aee80b32f2e6712b4f87756f6d224480da96c7ef9058f5b1050"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:27.257Z",
+      "attempts": 2,
+      "catalogVersion": "2026-11-07.renewal.2"
+    },
+    "eval": {
+      "status": "done",
+      "stageVersion": "eval.1",
+      "inputHash": "sha256:94182f122491e7c2a27f2c4f98ada7af5c1c6993ea474bc9b9bb911978a19b46",
+      "outputs": [
+        {
+          "ref": "file:pipeline/eval.json",
+          "sha256": "4d8d87f4175485f48568e4dbe04bd367b8d57b920610135234ed6aaa803d2579"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:18:13.949Z",
+      "attempts": 4
+    }
+  }
+}

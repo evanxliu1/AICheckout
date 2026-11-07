@@ -10,14 +10,15 @@ const DAY_MS = 86_400_000;
 /** The UTC date `offset` days after the bundled catalog v3 was verified. */
 const dayAfterBundle = (offset: number) =>
   new Date(Date.parse(CATALOG_V3.verifiedAt) + offset * DAY_MS).toISOString().slice(0, 10);
-// 15:00 UTC the day after the bundled catalog v3 was verified, before release 1 expires (2026-10-29).
+// 15:00 UTC the day after the bundled catalog v3 was verified. Since the 2026-11-07 renewal that is after release 1
+// expired (2026-10-29), so a cached release 1 gives way to the bundled catalog as the only valid one.
 const now = Date.parse(`${dayAfterBundle(1)}T15:00:00Z`);
-/** Release-1 rule IDs the 2026-10-05 renewal reissued because their terms changed (build report,
- * "Rule-ID continuity"): recorded spend on them does not carry over. */
+/** Release-1 rule IDs the bundled catalog reissued because their terms changed (build reports, "Rule-ID
+ * continuity"): recorded spend on them does not carry over. The 2026-10-05 renewal reissued these and
+ * `quicksilver-entertainment-portal`; the 2026-11-07 renewal returned that one to its release-1 ID and terms. */
 const REISSUED_RELEASE_1_RULES = [
   'double-cash-base',
   'double-cash-travel-portal',
-  'quicksilver-entertainment-portal',
   'savor-supermarkets',
   'savor-dining',
   'savor-entertainment',
@@ -144,11 +145,7 @@ describe('pilot state migration (schema 1 → 3)', () => {
     const release = {
       sequence: 3,
       version: 'published.3',
-      catalog: {
-        ...structuredClone(PILOT_CATALOG),
-        version: 'published.3',
-        verifiedAt: `${dayAfterBundle(1)}T00:00:00Z`,
-      },
+      catalog: { ...redateCatalog(PILOT_CATALOG, dayAfterBundle(1)), version: 'published.3' },
       catalog_hash: '3'.repeat(64),
       published_at: `${dayAfterBundle(1)}T12:00:00Z`,
     };
