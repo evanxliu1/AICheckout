@@ -1,0 +1,706 @@
+{
+  "schemaVersion": 1,
+  "version": "discover-refresh-2026-11.overlay.1",
+  "annotationStatus": "agent-verified",
+  "description": "Catalog overlay of pipeline batch discover-refresh-2026-11: one entry per corpus card, merged from the overlay/<issuer>.json fragments by pipeline accept overlay.",
+  "programs": [],
+  "programDetails": [],
+  "gates": [],
+  "cards": [
+    {
+      "cardId": "discover-it-cash-back",
+      "issuer": "Discover",
+      "corpusCaseSha256": "02caf9bb4b9742cd864ed7a4a4473d13b5839feafa99d8ebe574d8b868c2ae47",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Q4 2026 rotating category: starts 2026-10-01 next to the labelled end date (O11); one $1,500 quarterly cap shared across the quarter's categories (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-it-cash-back-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Q4 2026 rotating category: starts 2026-10-01 next to the labelled end date (O11); one $1,500 quarterly cap shared across the quarter's categories (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-it-cash-back-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: utilities (electricity, gas, water, internet and phone service); Q4 2026 rotating category with no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap"
+          ],
+          "note": "Q4 2026 categories are rotating rules with a start date and a shared quarterly cap; Utilities is held out (not at retail). Earlier 2026 quarters are past; Q1 2027 was not captured, so it is not added (O11).",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "discover-it-miles",
+      "issuer": "Discover",
+      "corpusCaseSha256": "9da194825ae0ca5260e9b155f855152385a5f5188d02221d7a94633cce106162",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Discover Match is a one-time first-year match of all miles for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "discover-it-chrome",
+      "issuer": "Discover",
+      "corpusCaseSha256": "3d93e95776c96349cadda444b9b9fc9bb01e1a342b43e66fa1f3f5c17f726051",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "EV charging counts as a gas station purchase, so it draws on the same combined $1,000 quarterly cap as gas and restaurants (O12). Hedged wallet wording in the same paragraph excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "Gas station purchases include those made at merchants classified as places that sell automotive gasoline"
+            },
+            {
+              "sourceId": "discover-it-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-chrome-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Only some public EV charging stations code as gas stations; the labelled EV rule keeps the gas rate and shares the gas cap, with no further catalog change."
+        },
+        {
+          "index": 1,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "The combined $1,000 quarterly cap across gas stations and restaurants is modelled as one shared cap ID on the gas, restaurant and EV charging rules (O12).",
+          "rules": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "discover-it-student-cash-back",
+      "issuer": "Discover",
+      "corpusCaseSha256": "9c1b29bd8414eafa8ded670ce933508e37d8547de0a68a794978fb4309a376ba",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No captured terms state the after-cap rate: base 1% after the $1,500 cap (O12). Also Q4 2026 start date and the shared quarterly cap. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 500
+          },
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "No captured terms state the after-cap rate: base 1% after the $1,500 cap (O12). Also Q4 2026 start date and the shared quarterly cap. Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "cap": {
+              "kind": "spend",
+              "amountCents": 150000,
+              "period": "quarter",
+              "rateAfterCapBps": 100
+            },
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: utilities (electricity, gas, water, internet and phone service); Q4 2026 rotating category with no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "field-unstated",
+          "how": [],
+          "note": "The product page names the quarterly maximum and the 1% rate but not the after-cap rate; the rotating rules carry the base 1% after the cap.",
+          "rules": [
+            1,
+            2
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap"
+          ],
+          "note": "Q4 2026 categories are rotating rules with a start date and a shared quarterly cap; Utilities is held out (not at retail). Earlier 2026 quarters are past; Q1 2027 was not captured, so it is not added (O11).",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "cardId": "discover-it-student-chrome",
+      "issuer": "Discover",
+      "corpusCaseSha256": "5ad0cb9a56dbec8a4f7d8057bb67be980b43f291154011852d356da15177ee02",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "gas",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "dining",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "The $1,000 quarterly cap is combined across gas stations and restaurants: one shared cap ID (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "ev-charging",
+            "rateBps": 200
+          },
+          "disposition": "modelled",
+          "how": [
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "EV charging counts as a gas station purchase, so it draws on the same combined $1,000 quarterly cap as gas and restaurants (O12). Hedged wallet wording in the same paragraph excludes the named paths (O10).",
+          "set": {
+            "sharedCapId": "gas-restaurants-2-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "Gas station purchases include those made at merchants classified as places that sell automotive gasoline"
+            },
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "on up to $1,000 in combined purchases each quarter, automatically"
+            },
+            {
+              "sourceId": "discover-it-student-chrome-product",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "shared-cap"
+          ],
+          "note": "The combined $1,000 quarterly cap across gas stations and restaurants is modelled as one shared cap ID on the gas, restaurant and EV charging rules (O12).",
+          "rules": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "index": 1,
+          "disposition": "noted",
+          "how": [],
+          "note": "Only some public EV charging stations code as gas stations; the labelled EV rule keeps the gas rate and shares the gas cap, with no further catalog change."
+        },
+        {
+          "index": 2,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": []
+    },
+    {
+      "cardId": "discover-it-secured-cash-back",
+      "issuer": "Discover",
+      "corpusCaseSha256": "9b6f49bf04540b8094aa99b8e847b8e3c92586a8ab565dba60964c7339a136b7",
+      "heldOut": null,
+      "programId": null,
+      "acceptance": {
+        "kind": "open-loop"
+      },
+      "choices": [],
+      "rules": [
+        {
+          "index": 1,
+          "was": {
+            "category": "dining",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Q4 2026 rotating category: starts 2026-10-01 next to the labelled end date (O11); one $1,500 quarterly cap shared across the quarter's categories (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-it-secured-cash-back-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "was": {
+            "category": "entertainment",
+            "rateBps": 500
+          },
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap",
+            "checkout-method"
+          ],
+          "note": "Q4 2026 rotating category: starts 2026-10-01 next to the labelled end date (O11); one $1,500 quarterly cap shared across the quarter's categories (O12). Hedged wallet wording also excludes the named paths (O10).",
+          "set": {
+            "limitedTime": {
+              "startsOn": "2026-10-01",
+              "endsOn": "2026-12-31"
+            },
+            "sharedCapId": "rotating-5-percent",
+            "excludedPaymentPaths": [
+              "paypal",
+              "venmo",
+              "digital-wallet"
+            ]
+          },
+          "anchors": [
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "Activate to earn 5% Cashback Bonus at Restaurants, Entertainment and Utilities from 10/1/26"
+            },
+            {
+              "sourceId": "discover-cashback-calendar",
+              "quote": "on up to $1,500 in different category purchases each quarter"
+            },
+            {
+              "sourceId": "discover-it-secured-cash-back-terms",
+              "quote": "Certain third-party payment accounts and digital wallet transactions may not earn"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "was": {
+            "category": "other",
+            "rateBps": 500
+          },
+          "disposition": "rule-held-out",
+          "how": [],
+          "note": "not at retail: utilities (electricity, gas, water, internet and phone service); Q4 2026 rotating category with no v3 category."
+        }
+      ],
+      "addedRules": [],
+      "issues": [
+        {
+          "index": 0,
+          "disposition": "noted",
+          "how": [],
+          "note": "Cashback Match is a one-time first-year match of all rewards for new cardmembers, not a rate; no catalog change."
+        }
+      ],
+      "hints": [
+        {
+          "index": 0,
+          "disposition": "modelled",
+          "how": [
+            "rotating",
+            "shared-cap"
+          ],
+          "note": "Q4 2026 categories are rotating rules with a start date and a shared quarterly cap; Utilities is held out (not at retail). Earlier 2026 quarters are past; Q1 2027 was not captured, so it is not added (O11).",
+          "rules": [
+            1,
+            2
+          ]
+        }
+      ]
+    }
+  ]
+}
