@@ -57,6 +57,16 @@ export async function harness(): Promise<Harness> {
   // The build config with this batch as its only layer, and the frozen program table and merchants it names.
   for (const name of ['reward-programs.json', 'merchants.json'])
     await cp(join(REPO, 'evals/curation/expansion', name), join(root, 'evals/curation/expansion', name));
+  // The table's published estimates are re-read with every renewal; this world is dated 2026-10-04, so its copy
+  // reads them on that day (an estimate must be read within 30 days before verification and before expiry).
+  const programTablePath = join(root, 'evals/curation/expansion/reward-programs.json');
+  await writeFile(
+    programTablePath,
+    (await readFile(programTablePath, 'utf8')).replace(
+      /"readOn": "\d{4}-\d{2}-\d{2}"/g,
+      '"readOn": "2026-10-04"',
+    ),
+  );
   await writeFile(
     join(root, 'evals/curation/catalog-batches.json'),
     json({

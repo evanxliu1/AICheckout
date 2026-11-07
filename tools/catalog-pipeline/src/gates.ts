@@ -42,6 +42,7 @@ import {
   sha256Json,
 } from '../../../scripts/lib/catalog-batches.mjs';
 import { catalogDates } from '../../../scripts/lib/catalog-v3.mjs';
+import { MERCHANT_MANIFEST, loadFreshnessRecords } from '../../../scripts/lib/freshness.mjs';
 
 /** Replaces every quoted span ("…", “…”) with an ellipsis, so an error can name a field but not its text. */
 export const redact = (message: string): string =>
@@ -560,11 +561,15 @@ async function overlayCoverage(
         Object.entries(dropped).filter(([cardId]) => batch.cards.some((card) => card.id === cardId)),
       ),
     });
+    // Dated as the builder dates them (loadCatalogBatches): the freshness records move an unchanged source's date
+    // forward, so a renewal's gate does not fail on other cards' pages that a record found unchanged.
     const inputs = mergeLayers({
       config,
       layers,
       programTable: JSON.parse(await readFile(join(root, config.programTable), 'utf8')),
       merchants: JSON.parse(await readFile(join(root, config.merchants), 'utf8')),
+      merchantManifest: await readJsonOrNull(join(root, MERCHANT_MANIFEST)),
+      freshness: await loadFreshnessRecords(root),
     });
     const merchantSourceIds = new Set(
       (inputs.merchants.sources as { id: string }[]).map((source) => source.id),
