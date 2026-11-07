@@ -1,8 +1,917 @@
 {
   "schemaVersion": 1,
   "batch": "synchrony-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:11:29.321Z",
-  "cards": {},
+  "updatedAt": "2026-11-07T00:59:26.625Z",
+  "cards": {
+    "synchrony-premier-world-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:1efc7e2161b6520edce6e27794c891c2ecd6ef329d54ee148e8b46127f53b75a",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-premier-world-mastercard-product",
+              "sha256": "038a7ae26399311e5775c0ecc414970eacafa93340e98ddd4a8536bcb08ce10d"
+            },
+            {
+              "ref": "source-input:synchrony-premier-world-mastercard-product",
+              "sha256": "3c30e97c62169b43e0f5b86d3cda1fcc56988b9d38a69ec70d2a2aed44ad29c7"
+            },
+            {
+              "ref": "manifest:synchrony-premier-world-mastercard-rewards-terms",
+              "sha256": "5cf4abe99ed7a571e83afe063e4383101bfeeaf433cb8823c107ae231f61c6ba"
+            },
+            {
+              "ref": "source-input:synchrony-premier-world-mastercard-rewards-terms",
+              "sha256": "dbd6bb1d966db29e1e56f3eee281975cd57fe03a4a2b1e35f8b74e91474eef82"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.326Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:26a4ec290d6476efd9f8ba9cdd0bc5ac346e2684be7ca4cdd90e25d30f9363b9",
+          "finishedAt": "2026-11-06T21:51:24.058Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-amazon-store-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7552ba7713082ba58902d4e6c2f173d66496cbf3c8c90652a1b975c4ba21dfdb",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "1c594c132e0681654de57d40cfc27e008dc45088845b36ebc98ef47301411f7f"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-pricing",
+              "sha256": "9e5954495c7a2ed3e7dde045dc63aceb5da2c5dd297437a0a35191e5c7c87856"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-pricing",
+              "sha256": "9f3b3857ac1400b5d53d069b1c4769b93a8395a394dc061150dfa615ed710112"
+            },
+            {
+              "ref": "manifest:synchrony-amazon-store-card-categories",
+              "sha256": "b49add4da8effb25b529b6a5cb8d312262be92896820f28af0bdd1ff2ef2126f"
+            },
+            {
+              "ref": "source-input:synchrony-amazon-store-card-categories",
+              "sha256": "edda473b9707167d06c62b62c470a9ce6516296d364ccec5fb9a0a09c3118d74"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.326Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:786fd8f2052699c4dcd10eb63236b243af8d6eaf1f9d5c51859f7f64e96685bd",
+          "finishedAt": "2026-11-06T21:51:24.058Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-amazon-secured-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:02ef1fb061f5ca02b66c60b58e06b13e7a9358a78d093b269873fa2e395bf308",
+          "outputs": [
+            {
+              "ref": "manifest:amazon-store-card-product",
+              "sha256": "1c594c132e0681654de57d40cfc27e008dc45088845b36ebc98ef47301411f7f"
+            },
+            {
+              "ref": "source-input:amazon-store-card-product",
+              "sha256": "7932a6c782319f7a83a19ee7583dcd46dba39a7a442a15ba7d322f4dca6b4727"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:1072f8ceeb5f6aaf24c2d00685fb84ab4ad3047f2617f97e09af11c2f599e28f",
+          "finishedAt": "2026-11-06T21:51:24.058Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-paypal-cashback-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cead00112b26b10ab6b856e14c91c3e3b2ff5665bfdee4378b7fc836ededc518",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "cc65e7f71da39af12fce3902fe4888cd28f2e2155db6c39cf4d791dca8159b52"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-product",
+              "sha256": "2058e7a0f591b0bbb63722fbf724e707dbf754291f38dc65727391df9117f51d"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "26dd56649e2bced58dc148a12293ffa30afa679ef469be48345dafc1ea01a1f8"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-rewards-terms",
+              "sha256": "10c657711a7839300235a3d66ed3b440752d6f2f735a433065955f1fe8e3aadb"
+            },
+            {
+              "ref": "manifest:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "cd2558abd935628a1d0f590a5293d18c6fb2c4db6598d5dd1cd4b4718bbc9d8a"
+            },
+            {
+              "ref": "source-input:synchrony-paypal-cashback-mastercard-pricing",
+              "sha256": "55f5bd87bfde3054bf963922745f830fb3d1be4caa97ee078360806dd46c2fe2"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:97787fa190025ba729fc6fe665ec28cd4f52e723dfa2a38c5b151dc0372971da",
+          "finishedAt": "2026-11-06T21:51:24.058Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-verizon-visa-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:df709067afee25b32950564736c682c83147e975b1c4c8c4042db8b18d341a32",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-product",
+              "sha256": "ea1a4230a3dc7248890324eca2ceae4f71a50a69bebd6913159aa79b4f9729aa"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-product",
+              "sha256": "1234cea06da385ea5f9ea80770c9b7e3c2853e004d0268e0474c7c2f2e59a423"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "376fb749ae9ab51035a9c905cd4cbb7cf1a36ad9ede6d5daae2338fae44ac361"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-rewards-terms",
+              "sha256": "e937671b39184c980f3f9474ad0fb0dd41b03e26d066f33cab5509eac3713105"
+            },
+            {
+              "ref": "manifest:synchrony-verizon-visa-card-partner",
+              "sha256": "b8d3e1258e7a53191a134f7c08cf92d422c99fe9aaee9d2796dd2a389f9732ee"
+            },
+            {
+              "ref": "source-input:synchrony-verizon-visa-card-partner",
+              "sha256": "66392ed1f0eb70466e2f025efcbfcce7b66fe3b0c21c26364bf50251b37cc2d5"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.327Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:99648490a02f3408f6a302f6f04e8fc13195027d184c47572d1738ab84700e98",
+          "finishedAt": "2026-11-06T21:51:24.058Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-sams-club-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6633426df6223fc853146fd4a61d50a2adb7c781b5e9accbce482b9e7725c852",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-product",
+              "sha256": "bb6692869c40c3a56306754472fbadf962977860b729a4fbf598ccf2bc1790c6"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-product",
+              "sha256": "f2a70dda3c0437462d933f88937f964dbf2e1e3bc123aca7f805d9daf973eef3"
+            },
+            {
+              "ref": "manifest:synchrony-sams-club-mastercard-partner",
+              "sha256": "1b4aee8662198e0d605392ceb3fc3c074ee789bc75eab1a92c5667db1844fa10"
+            },
+            {
+              "ref": "source-input:synchrony-sams-club-mastercard-partner",
+              "sha256": "76ae4cef2101eefcf5699b2aaf41b6905c7ccb6fdc5be86bd0b44aa8c3209f99"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.328Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:8e62092656e509b4b3e3e5fa678d184e56c59cf841be24d8cac144ab123f9fd7",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-carecredit-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:8101c5d421915c11f920228192a96331b42504b541b9eb158def93a4c2c3b629",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-carecredit-rewards-mastercard-product",
+              "sha256": "95679fc757d6d4e836d2fa44d747572d8d34585b6f387739e0da056f6f04623c"
+            },
+            {
+              "ref": "source-input:synchrony-carecredit-rewards-mastercard-product",
+              "sha256": "4678461055e6cf2b26b14a195d4190b60a9551b6bd7747a1733f2f6841a6eec8"
+            },
+            {
+              "ref": "manifest:synchrony-carecredit-rewards-mastercard-pricing",
+              "sha256": "c7f3de8e05b07e5799cd43ae95283e03f639e9b135dea5f61d20256ca2606e4e"
+            },
+            {
+              "ref": "source-input:synchrony-carecredit-rewards-mastercard-pricing",
+              "sha256": "026cb96ae576727fe8c0240ae2dba52de25118327ef72c17b38a2fca126d7444"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.328Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5f5d4ab1e4cae4f788c0a83dd9e8fcec52cd8713ef21e84ec4befd62e8936394",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-onepay-cashrewards-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:25b6f0b4463219656383f651967996cf8c92920dc6177c353335f92eecbbd313",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-product",
+              "sha256": "e75dfd807b33ebebf5ee7b04d466e95cb9c47b17a0d49cddbdd638e5e8a9b2db"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-product",
+              "sha256": "87298cda772c12a2e0400d8dff49b1399d2a61693659e507fdd301ea79ba696a"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "e70fcddfbeab087d17b49ad8c7cb4e2c50d711a1769865f0564a82cf22327faa"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-rewards-terms",
+              "sha256": "2806d6f41e975562036c0f76bafadff9278092a2ab2b2c11c5b7af7f6b5a68e5"
+            },
+            {
+              "ref": "manifest:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "9b4058c8382c70bad841c642b57873629df41c91c33ebafe189337629dd95ff9"
+            },
+            {
+              "ref": "source-input:synchrony-onepay-cashrewards-card-pricing",
+              "sha256": "bb41860dbe067ce6ac85d81e420dc94cba39c0469f330053be5f5c3f66fac658"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.623Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-mywalgreens-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:ef0f64b3d17193a3ce9a3c77f0bd0ab9c7d857a8938e5beb10abcce9a992495b",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-product",
+              "sha256": "7aadf270a296b27ae2ade0be541e407965836c3a13e7f7e48eb10950ef176afd"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-product",
+              "sha256": "dbcd0dec052816957b06a331117c0b6daf8d98809140cc8eb4ca2998a2a1f3c1"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "35101342287d6fb582f5c27a5903c28f976a80fab470eea4831d64cb808b4eed"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-rewards-terms",
+              "sha256": "20b205120a9b8bc33786de62eaf32718e503a61386a8f0fbcc4ae254447c187f"
+            },
+            {
+              "ref": "manifest:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "07e53bc569ba03df35c57306eb9670f0c99243a399130c0741ea68a18cd4e6e7"
+            },
+            {
+              "ref": "source-input:synchrony-mywalgreens-mastercard-partner",
+              "sha256": "6c52fe72c624818e3780799480aefb6524aa0e0220efb956a3765898b768ab98"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.624Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-tjx-rewards-platinum-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:a6b53f2fa9e8e07905412a41c278502618cb633efc82d547acfeaf0369b6b428",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-tjx-rewards-platinum-mastercard-partner",
+              "sha256": "a0addbd71754bc6d36ea0973c55bbac59570f180f7a25abd262edb800000a014"
+            },
+            {
+              "ref": "source-input:synchrony-tjx-rewards-platinum-mastercard-partner",
+              "sha256": "4766524acc3841d74e5397d6100ed669fff43889fa9bdf9b5f6eb392c428fc6f"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.624Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-newegg-store-credit-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:86f3caae9b4c1806c6874037ee9b2fd5d21f992886ab54c46f83da31df33706d",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-product",
+              "sha256": "4be15ab1dc90b3472b3e65033290d768a064552a1b2158f910e7abd1a2b769bc"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-product",
+              "sha256": "3b2ac1172e9f7a522929794252f26746f2e9d64b278dbfa5df06845cb842a35f"
+            },
+            {
+              "ref": "manifest:synchrony-newegg-store-credit-card-categories",
+              "sha256": "3f03dcf307fd08c52612ef9c960d6463c76c1749306daf33b2cc02dbc91d401f"
+            },
+            {
+              "ref": "source-input:synchrony-newegg-store-credit-card-categories",
+              "sha256": "02207c59bf88c76a31c8b9004a04ee1a5cfea4fb804d53e7f6cf37f7863c8bc5"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-jcpenney-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9c06512d40bf39c2ebb83c3f455fa76f12697019935d8774a7d5f2e98ea99cfc",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-jcpenney-mastercard-product",
+              "sha256": "c94e6258bd7885a64024a6b615f7a7cd4f03feefcb8deec1b787c6ecc008b8cf"
+            },
+            {
+              "ref": "source-input:synchrony-jcpenney-mastercard-product",
+              "sha256": "8edffe50549ea2c55cb315fcd2a0c24292f608e42ec3480ea72a6110bbbf0590"
+            },
+            {
+              "ref": "manifest:synchrony-jcpenney-mastercard-partner",
+              "sha256": "f94ff58865c706881006ae314dfe087b4d8ed77b074b30e0a7712abb62c15d46"
+            },
+            {
+              "ref": "source-input:synchrony-jcpenney-mastercard-partner",
+              "sha256": "1189eefd645f8fcaaa539ae2c574130cc5f468a88e773df75fb4dcce50450eb6"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-ae-real-rewards-visa": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c9755166d1283dd8b6a6cce56e1851177f99dc4f19198d1c49efee99091e3095",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-ae-real-rewards-visa-partner",
+              "sha256": "f66226218045c6f90ac60b0937995142ba4f1f6aa6437dc5fc72c2201de14ce7"
+            },
+            {
+              "ref": "source-input:synchrony-ae-real-rewards-visa-partner",
+              "sha256": "21dc7704c94324a029d37af06ea85af2662230c8a6dd8061a6216b65a9971a47"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-at-home-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:9967e68d26f3436c42103c93d488bb6885fb69ce81a16e16ca7d0f88293ab82f",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-at-home-mastercard-partner",
+              "sha256": "a337d8dbe22496116fc4f3e75246e155f939136394141ac1bbd9977f9d3cef4a"
+            },
+            {
+              "ref": "source-input:synchrony-at-home-mastercard-partner",
+              "sha256": "a7c12f946999b3a17aaac77d32d0ee8d3d22ac2b2ea6f97bd4b5ca28c044b3b2"
+            }
+          ],
+          "finishedAt": "2026-11-07T00:59:26.625Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-chicos-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cbd08ad9e59c3232bf46f66bb9056f7e6122c8f0867352c5230dd06570a50c75",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-chicos-mastercard-partner",
+              "sha256": "c509e998de82f4760ebf4ce477f8ce67246dd04eed3cea238bbe17fca23b2874"
+            },
+            {
+              "ref": "source-input:synchrony-chicos-mastercard-partner",
+              "sha256": "393dd3ed0c97ac6a88a23a3a67357630713446e1479193c7e85284c36fccde0e"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:fc4d56d6895339fda41a355d3135cdac69ff6baae6a511b42263b23c4946a7d7",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-soma-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:20d4d5a32c07bcdab3e0bbd726715cf336b9ae5dab6cd107353dc2b6d83410c5",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-soma-mastercard-partner",
+              "sha256": "13f02049151a7adced373bd14b79bf07becad128e4b1eebafcf9e83c4a820bb6"
+            },
+            {
+              "ref": "source-input:synchrony-soma-mastercard-partner",
+              "sha256": "1cbf135129fffa31c88b5d166444025328df489af621242a2e365f873af521d7"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:726ee6932d2369f4d5ffbd1cebcb69e889a352fba5c71eedab27224e597c0707",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-whbm-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2fdf64be16ae0fc208ed0599c4309b2300a394e81a8d35a03e3a41af692d7293",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-whbm-mastercard-partner",
+              "sha256": "4b43c5a0f52691973a6c45830daf51b01d10400e9dbc73ea8bfed3e05a1d57c8"
+            },
+            {
+              "ref": "source-input:synchrony-whbm-mastercard-partner",
+              "sha256": "bd13105b0890270dc148ae3d4243885c159232c8b848bb00494e50e95580a137"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.329Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:975b1319d7366dec005a281a5d62f0a36b6be31c3b8765b004be19048fb0c2ac",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-jcrew-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:c623547ef617f69742e079e1109c3c9e822030ba20065f9a5b41654305b0fe8f",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-jcrew-mastercard-partner",
+              "sha256": "42b8b252c6cf9e78db065ef8ceb171fffb59decd1fd455893f5127bb2139ec55"
+            },
+            {
+              "ref": "source-input:synchrony-jcrew-mastercard-partner",
+              "sha256": "7436fa30d2b8e10ef3a0cfacc0442c27e503db0cdbd3669c8bc99d6b2d778845"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:f03b79fdc8f43a3d7d3e3fbd89b7345c4706a46d335af196ea250028c96a1561",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-harbor-freight-credit-card": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:e6f27810479fda7700abd718e628c858dea19792b860b03b8acaaf6222847390",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-harbor-freight-credit-card-partner",
+              "sha256": "0f54ad752d5031205fa8a664edc4e26b9bed0d81d45549dd972d778bb53264d4"
+            },
+            {
+              "ref": "source-input:synchrony-harbor-freight-credit-card-partner",
+              "sha256": "ac582258318d41440e76e3ed82135635417babb0520e9ee191031fe095faf8c0"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:9ee8106bc2c6e85970896309e3b16fc4c89b908e9e534e9820f10ea8f37b7572",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-cathay-world-elite-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6d2a932af8f3394828b7b051a886a3153aab5cb67164a6587101a4f5c7650ae2",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-cathay-world-elite-mastercard-partner",
+              "sha256": "122cfaf16a56939caea1770eaaa3ebdb6d28f4c42efb324e76db54e98bb73e4b"
+            },
+            {
+              "ref": "source-input:synchrony-cathay-world-elite-mastercard-partner",
+              "sha256": "89b71d317fe70e677a682225b87c17f792b7373f9212cdcbb29513bb9c2df698"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:4834e1e2a1624d6c0d907526b2975af38ea84464ac7eb8cee6d946ea99f2ce36",
+          "finishedAt": "2026-11-06T21:51:24.059Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-virgin-red-rewards-mastercard": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:0dc433fc7f304509ba89f5d9c35df9bcc706cb6e26b11c964ae92fc3cdc92dbe",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-virgin-red-rewards-mastercard-partner",
+              "sha256": "a106c191d25aef432e21cfd7df85148c20399b09ed7b43f66150d235413dd469"
+            },
+            {
+              "ref": "source-input:synchrony-virgin-red-rewards-mastercard-partner",
+              "sha256": "cae39115a79022e5931abcf8923516d2532cd2d34625a27e7500f02701bcd7ed"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:6554e29d466dddc4842896b086143f172d9b25813dee844a2593e8c68c2ff2e2",
+          "finishedAt": "2026-11-06T21:51:24.060Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "synchrony-sun-country-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:b78865cbced60dcb9dea9daadde1ba1f69ba4573f957dae725d60cf727a766c1",
+          "outputs": [
+            {
+              "ref": "manifest:synchrony-sun-country-visa-signature-partner",
+              "sha256": "50ac8aff14a4bad98778a49c8a7cabcda42d90fc273b7b5d110563b36c054cd0"
+            },
+            {
+              "ref": "source-input:synchrony-sun-country-visa-signature-partner",
+              "sha256": "d6aeebc3fda92e08b640b11238afaa4f4398391c6e52ed65c3d6e70e7747895e"
+            },
+            {
+              "ref": "manifest:synchrony-sun-country-visa-signature-partner-2",
+              "sha256": "0e2d3d013c8c6f89e357a0de9764ebb2103b15d9a3b767ec51f618315fc9c563"
+            },
+            {
+              "ref": "source-input:synchrony-sun-country-visa-signature-partner-2",
+              "sha256": "bc7ae0edafba3a9bfd1d342683c3ea7680110f14ad537ef246574b3490826719"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:54:24.330Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:5d3358639d55a9b8ae4ed498f511b0d6216b31e7dad23d84921f86335c0d7ba8",
+          "finishedAt": "2026-11-06T21:51:24.060Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "synchrony": {
       "stages": {

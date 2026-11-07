@@ -1,8 +1,481 @@
 {
   "schemaVersion": 1,
   "batch": "u-s-bank-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:11:29.690Z",
-  "cards": {},
+  "updatedAt": "2026-11-07T01:15:25.850Z",
+  "cards": {
+    "us-bank-cash-plus": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:cdcb17206d1e7540040371b24119436216cff3ea964efceb531dbbdcbdfae1b9",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-cash-plus-product",
+              "sha256": "078471cec6cea2e27b2bdf031eadcd46017d39bd139e8689015d413dd2c19651"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-product",
+              "sha256": "39a29ab87c04eb7585834638e3d1b872a1059d85379a4d7a2f5efd5b30edf995"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-rewards-terms",
+              "sha256": "4e5229f08018ebaca9b1faf184dbf5897ff05b5664eb1dd21af9ee3c8b45ef35"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-rewards-terms",
+              "sha256": "38fcd2f145167dbaa2caf75f4768bc657d42b621d75fe27e3837562c3df7af8f"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-sample-merchants",
+              "sha256": "9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-sample-merchants",
+              "sha256": "648074907ebca4a8cd7d6ed0cc914d7b603ad9bd146b9b5c610baad4f3050731"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:38afa44d4bf06d517555177652a71919deab74b3ce240af697fb787f35c89bfe",
+          "finishedAt": "2026-11-06T21:12:45.557Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-smartly": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:20774ce4c88d04fb0606d89259b7d549ec4f4768ade4a99fc0d18e0a10884ea6",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-smartly-product",
+              "sha256": "fcd3cb87e71833042a1af745911d4b21d89e949dcace0f245de8718e24298bcb"
+            },
+            {
+              "ref": "source-input:us-bank-smartly-product",
+              "sha256": "0f1845f59ba4cae8469232ceb43f8e15c7db9dba0e3b93353b7043ac2a9464da"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:7bcbfb14016c82e0817579e55bf740f2159d85dca3c72a08c492c1c523efef04",
+          "finishedAt": "2026-11-06T21:12:45.557Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-go": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:2370c62de276ffcf703e6807adf01f5de4778b3f2c64079bd41ce5f223081f3a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-go-product",
+              "sha256": "47c268706a2cea489d0a0ca50f7822a7417a16726075b2c9481e3d2f49221363"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-product",
+              "sha256": "60eaf85ae736a160ae1ddd29dcf32a90054633ba5f887173fbf75c94d308ab96"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-go-rewards-terms",
+              "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-rewards-terms",
+              "sha256": "7aaee612c70daa0ada979f132c5000479100bd877ef441eb402ea95d53d7d795"
+            }
+          ],
+          "finishedAt": "2026-11-06T19:52:40.425Z",
+          "attempts": 1,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        },
+        "extract": {
+          "status": "failed-gate",
+          "stageVersion": "extract.1",
+          "inputHash": "sha256:303b47570db00682a9d3459c0841e65d21da34229cfab965802719adce8e3b75",
+          "finishedAt": "2026-11-06T21:12:45.558Z",
+          "attempts": 1,
+          "reason": "extract-failed"
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-connect": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:f49c108ed1f65514e87c76a4b35a0feaad8ee1ded1b28840e5e0f767bf692f59",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-connect-product",
+              "sha256": "33d25b989d53040a953f50aeba44bd8c173dcd77ff5b5a94d65441add6683938"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-connect-product",
+              "sha256": "07e26bd5a5328476f9550ec9f02979d011e9386e5925b3c68b2a2f9ed969f5dd"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-connect-rewards-terms",
+              "sha256": "4dc126f8d18c8a1aad7fc703a32fd671aef17bef5ca9d632e6777afb37e8d702"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-connect-rewards-terms",
+              "sha256": "bb53f8d89dd867edec11a9438213ceffaf120ac3045e8d0409326d30cb4f65a9"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.847Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-cash-plus-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:6f30bd15fdd46f731442f24cb25acd46120331d210b215185c0926fa4975c48b",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-cash-plus-secured-product",
+              "sha256": "85c07357c5ba2f29c96467765a8575799261bc46862448ab2edb984aa5f26022"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-secured-product",
+              "sha256": "8577223c19d362d1fb8aef90a0fad120d179d19de4467278555d9efcffb927b1"
+            },
+            {
+              "ref": "manifest:us-bank-cash-plus-sample-merchants",
+              "sha256": "9637bb85a0cd633a511d18ad20a1ef94fe7b8263a3dbd13355ba2fe74404c998"
+            },
+            {
+              "ref": "source-input:us-bank-cash-plus-sample-merchants",
+              "sha256": "648074907ebca4a8cd7d6ed0cc914d7b603ad9bd146b9b5c610baad4f3050731"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.848Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-altitude-go-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3b772705e9a85680efa6dc6f39133f038eecbaa3085aaceed52c4ecc04ef9ac2",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-altitude-go-secured-product",
+              "sha256": "e4a502be38b1ec01428e875e14a6cada1a374b5727788c52c061c2c2a4f8279a"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-secured-product",
+              "sha256": "958b5a5b96becbf19d919fc7f1301f5c892ae2320212c5c9effb746f4168dd67"
+            },
+            {
+              "ref": "manifest:us-bank-altitude-go-secured-rewards-terms",
+              "sha256": "d4145b33f0cef7c18bd4067373dbb50baafa3693a7138bdfa0c767c671241cc7"
+            },
+            {
+              "ref": "source-input:us-bank-altitude-go-secured-rewards-terms",
+              "sha256": "ab7d95f358d7f5cff408b3044c7483cf51f8fb4ae78ecd9c586b84ad016b0b3c"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.848Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-visa-signature": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:3b4a97e0f5b09ffc169b051a4aed1afd79e24543bf2efecfebd406f4d98ad717",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-visa-signature-product",
+              "sha256": "d27a88d8f8da72bd0dfc87a7f3a49cd1b2fe97244c8227c69359c151def073da"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-visa-signature-product",
+              "sha256": "f5077c963ef6e7e696692f30c6e14cf7b4a6ea67b3bf0e42d140ea3556cae077"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-hog-elite": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:49a8e796a6c010cfaf03001cc0717bc9076d6ec2d663cb5280731bc89a02a17a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-hog-elite-product",
+              "sha256": "a39ee43cd6d025e7f93bb1002840376a445e564845c7e6727ab6a2fc8a02ce48"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-hog-elite-product",
+              "sha256": "22756bbc4c147b41a09d421ffe20e463710ff571e46bff8c252badc1768d6542"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-harley-davidson-secured": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:7389188446a7de5f4c46f00648b592280280d49f09bedbd6a307e1b28171773f",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-harley-davidson-secured-product",
+              "sha256": "65cbbb3cb4959dcaaaab161bac3a2566f5a7405a48c1c759bb3c5e80bffc5197"
+            },
+            {
+              "ref": "source-input:us-bank-harley-davidson-secured-product",
+              "sha256": "3e25313ec92b133d12075cd1746a2c547742f54cdca4ee2db4d9e81ba90b993c"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 1,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-state-farm-premier-cash-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:170403672703e3082317866dadfcdca08e0ff3228eddd0694382ee572e70f415",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-state-farm-premier-cash-rewards-product",
+              "sha256": "dd0871354f762d8aebbdb34eda1871dcdaf1283248fd6e0e525205e04377abed"
+            },
+            {
+              "ref": "source-input:us-bank-state-farm-premier-cash-rewards-product",
+              "sha256": "ad88c32ad0fd79fa7e8a7efd9ca5c761846bfd21731174f5eb254d17b9ece858"
+            },
+            {
+              "ref": "manifest:state-farm-credit-cards",
+              "sha256": "34cd28a8dc570eaf4bbda03de919368fb7a1ba3e570e35f15527def21c499604"
+            },
+            {
+              "ref": "source-input:state-farm-credit-cards",
+              "sha256": "d16fcd0b0bdbf35fecd75778dc9e2bb558747cb3dfdc539ca86607ffc71e5887"
+            },
+            {
+              "ref": "manifest:us-bank-state-farm-premier-cash-rewards-pricing",
+              "sha256": "1394ed145a205fb401c85146716d8526494c228dda140b83bab889213ba30e94"
+            },
+            {
+              "ref": "source-input:us-bank-state-farm-premier-cash-rewards-pricing",
+              "sha256": "bf57c12449dc8ed1edd33e019ab805643431812d7a605b5e93ff1662a29269bb"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.849Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-edward-jones-triple-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:bb9193f87586bbe7c8ece70308a17dc1519c2c64fbaf0feda3cbd509174cb24a",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-product",
+              "sha256": "edf47582085a7dd8f5ea0e54ff91e57450ffe81162b67c09933bf54604902551"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-product",
+              "sha256": "91e92989a91b63a77b7e716ca1bb5cf9f56b204f8cc04c99b6d495cd0ef18de7"
+            },
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-pricing",
+              "sha256": "c5873f91b5f04580d713c22bfc2a034f4fcaa56949608d210dbb8ceeda0f7ab0"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-pricing",
+              "sha256": "68c260c308cf8d0c5767b08fc28482da1ab9da55bfedfa0eeae4bcb9a5b83744"
+            },
+            {
+              "ref": "manifest:us-bank-edward-jones-triple-rewards-categories",
+              "sha256": "de507e75ebdf67084a67ef0c00582178c5f2b93781711eadd8ce57da8875e95a"
+            },
+            {
+              "ref": "source-input:us-bank-edward-jones-triple-rewards-categories",
+              "sha256": "c66033d408b2fda5d68bff1d36f378f0e2a767ca465aae8d281b3fe68c273ef6"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.850Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 3,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    },
+    "us-bank-elan-fidelity-rewards": {
+      "stages": {
+        "freshness": {
+          "status": "pending"
+        },
+        "capture": {
+          "status": "done",
+          "stageVersion": "capture.1",
+          "inputHash": "sha256:dd1c6759d38d1736e3c51f37837318abdf8f939ddc2b82ac0660b7a43b048fb4",
+          "outputs": [
+            {
+              "ref": "manifest:us-bank-elan-fidelity-rewards-product",
+              "sha256": "bd6a34b93aaa5e6bae887218891986af59a7b0f05aa52c40ba7db7ae5b607b36"
+            },
+            {
+              "ref": "source-input:us-bank-elan-fidelity-rewards-product",
+              "sha256": "6fa5ddaa50cdfdd1e4aa16cfec0d080c15555f6295650eebc137a8df5915138b"
+            },
+            {
+              "ref": "manifest:us-bank-elan-fidelity-rewards-rewards-terms",
+              "sha256": "fa4507ed5466803468f6b3b66dd6e24ff1f05f214ef5c64a9e86e889f6d425b2"
+            },
+            {
+              "ref": "source-input:us-bank-elan-fidelity-rewards-rewards-terms",
+              "sha256": "001e8a35c5f5c0cd28fad3f3614d4bd55ecd529549048864d6b72b898f566102"
+            }
+          ],
+          "finishedAt": "2026-11-07T01:15:25.850Z",
+          "attempts": 2,
+          "metrics": {
+            "sources": 2,
+            "flags": 0
+          }
+        }
+      },
+      "dropped": null,
+      "heldOut": null
+    }
+  },
   "issuers": {
     "u-s-bank": {
       "stages": {
