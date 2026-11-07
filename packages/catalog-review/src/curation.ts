@@ -85,8 +85,10 @@ export const replySchema = z.strictObject({
 export const limitsSchema = z.strictObject({
   budgetMicrousd: z.number().int().min(0).max(1_000_000_000).default(0),
   maxAttempts: z.number().int().min(1).max(2).default(2),
-  attemptTimeoutMs: z.number().int().min(1).max(600_000).default(10_000),
-  totalTimeoutMs: z.number().int().min(1).max(900_000).default(15_000),
+  // Bounds raised 2026-11-07 (renewal 2): gpt-5.6-luna xhigh answered after 700 s and more on about 30 cards that
+  // had taken one to seven minutes in October; the defaults and CURATION_DEFAULTS (600 s / 900 s) are unchanged.
+  attemptTimeoutMs: z.number().int().min(1).max(1_800_000).default(10_000),
+  totalTimeoutMs: z.number().int().min(1).max(2_700_000).default(15_000),
   maxInputTokens: z.number().int().min(512).max(64_000).default(48_000),
   maxOutputTokens: z.number().int().min(128).max(8192).default(4096),
 });

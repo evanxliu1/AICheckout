@@ -122,6 +122,9 @@ Every request: timeout, `redirect: 'error'`, `cache: 'no-store'`, bounded bodies
 - `batch.json` is strict and has no field for Evan's answers, so the skill puts them in `--summary` at `init`.
 - A session must start after the skill and agent files it uses are merged (it loads them at start-up).
 - `run capture` runs sequentially (2.5 s between pages) rather than in parallel per host; the apply and capture scripts print their own output (which may quote captures) to the terminal.
+- **No hold-out command** (found 2026-11-07): a card whose pages cannot be captured at all (every Bank of America page answered HTTP 403) has no CLI path out of the catalog. `run build` refuses a batch with no active card, `drop-source` refuses to leave a card without a source, and `heldOut` in `state.json` has no setter. The renewal wrote the batch's empty `corpus.json`, `catalog-overlay.json` and `product-notes.verified.json` and its `dropped` entries in the build config by hand ([decision](../decisions/2026-11-07-bank-of-america-held-out-of-renewal.md)); a `hold-out` command that does the same, and lets `run build` register such a batch, is the follow-up.
+- **A seeded batch cannot take a capture hint** (found 2026-11-07): `capture-hints.json` is one of the four seed files the seeded research hashes, so the skill's "add a capture hint and re-run capture" makes research stale and `next` asks for a new batch; nor can the hint be given at `init`. Hints for a seeded card can only come from its current layer's `capture-hints.json`, which is frozen. A `--hints` option on `init --refresh-from-freshness` (hashed with the seed) is the follow-up.
+- **Extraction timeouts are capped** at 600 s per attempt and 900 s in total (`limitsSchema`); on 2026-11-07 Codex xhigh ran past the attempt limit on about 30 cards that took one to seven minutes in October, and the only remedy was `run extract` again until each finished within the limit.
 
 ## Related
 

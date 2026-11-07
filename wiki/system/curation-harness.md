@@ -73,7 +73,7 @@ Default limits (`limitsSchema`, overridable per run within the bounds):
 | --- | --- | --- |
 | `budgetMicrousd` | 0 | ≤ 1e9 |
 | `maxAttempts` | 2 | 1–2 |
-| `attemptTimeoutMs` / `totalTimeoutMs` | 10,000 / 15,000 | ≤ 600,000 / ≤ 900,000 (raised for local high-effort runs on the expansion branch, `0ebb98c`) |
+| `attemptTimeoutMs` / `totalTimeoutMs` | 10,000 / 15,000 | ≤ 1,800,000 / ≤ 2,700,000 (raised to 600,000 / 900,000 for local high-effort runs on the expansion branch, `0ebb98c`; raised again on 2026-11-07 when gpt-5.6-luna `xhigh` answered after 700 s and more on about 30 renewal cards that had taken one to seven minutes in October; `CURATION_DEFAULTS` stays 600,000 / 900,000, and the renewal passed 1,500,000 / 1,800,000 to `scripts/extract-cards.mjs` for those cards) |
 | `maxInputTokens` (estimate) | 48,000 | 512–64,000 |
 | `maxOutputTokens` | 4,096 | 128–8,192 |
 | Returned text | 65,536 bytes | fixed |
