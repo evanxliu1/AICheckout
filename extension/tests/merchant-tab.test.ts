@@ -48,7 +48,7 @@ describe('storeForTab', () => {
       host: 'closed-store.example',
     });
   });
-  it('recognises a payment processor, where nothing is read', () => {
+  it('recognizes a payment processor, where nothing is read', () => {
     expect(storeForTab('https://www.paypal.com/checkoutnow?token=x', fixture)).toEqual({
       kind: 'processor',
       id: 'paypal',

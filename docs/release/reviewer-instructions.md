@@ -1,17 +1,30 @@
 # Reviewer and tester instructions
 
-For Chrome Web Store reviewers and for the pre-submission tester pass of AI Checkout **2.1.0** (the hosted build). Shopper features need no login, payment, bank connection, API key or administrator access; never give anyone production reviewer credentials to review the shopper extension. The short version goes into the dashboard's test-instructions field; the rest is the manual script.
+For Chrome Web Store reviewers and for the pre-submission tester pass of AI Checkout **2.1.0** (the hosted build). Shopper features need no login, payment, bank connection, API key or administrator access; never give anyone production reviewer credentials to review the shopper extension. The block below goes into the dashboard's **Test instructions** tab; the rest of this page is the manual test script.
 
-## Short version (for the dashboard)
+## Test instructions (for the dashboard)
 
-No account or login is needed. 1) Install; a setup tab opens. Under "Add a card", type "Quicksilver" and pick Capital One Quicksilver, then "Blue Cash Everyday" and pick American Express Blue Cash Everyday; enter 0 in Blue Cash Everyday's online retail spend field; Save cards. 2) The next screen asks whether to share usage reports: choose Share or Not now (both work; nothing is sent before Share). 3) Open the cart page of any U.S. online store (add one item without buying) or any https page whose address contains "cart" and shows an order summary. A badge appears bottom-right: "Use Blue Cash Everyday · $X back" when the total was read, or the cards ranked by rate when it wasn't. Click it for every card's estimate, the issuer rule and conditions, "Dismiss for this tab" and "Not on this site". 4) Click the toolbar icon on that page: the popup shows the same comparison; "Report a problem" and "Suggest this store" send only the store's domain and a fixed reason, on your tap. 5) Settings in the popup: "Sharing usage data" toggle and "Delete my data"; "Delete saved data → Delete all local data" clears everything. The extension makes requests only to https://ai-checkout-api.onrender.com (card terms, store list, and usage reports after Share). Privacy policy: https://ai-checkout-api.onrender.com/privacy/
+Paste the text inside the block as is.
+
+```text
+No account, login, payment or credentials are needed. After installation, the extension downloads the current card terms; the first download can take up to a minute while the free-tier service starts.
+
+1. Install. A setup tab opens. Under "Add a card", type "Quicksilver" and pick Capital One Quicksilver, then type "Blue Cash Everyday" and pick American Express Blue Cash Everyday. Enter 0 in Blue Cash Everyday's online retail spend field, then choose "Save cards".
+2. The next screen asks whether to share usage reports. Choose "Share" or "Not now"; the extension works the same either way, and no usage reports are sent before "Share".
+3. Open the sample cart at https://ai-checkout-api.onrender.com/sample-cart/ (two sample items, a $100.00 total). A badge appears in the bottom-right corner with the saved card that earns the most on this cart and its estimate, for example "Use Blue Cash Everyday · $3.00 back"; the card and amount follow the current card terms. If the badge says "Checking for updated terms…", wait a moment; if it says "Pick your cards to see your best card", no cards were saved: click it and repeat step 1. Click the badge to see every card's estimate, the issuer's rule and conditions, "Dismiss for this tab" and "Not on this site". Real stores work the same way: open the cart page of any U.S. online store (add one item without buying). There the badge shows "Use Blue Cash Everyday · $X back" when the total was read, or the cards ranked by rate when it wasn't.
+4. On the same page, click the toolbar icon. The popup shows the same comparison. "Report a problem" and "Suggest this store" send the store's domain and a fixed reason, only when you tap them.
+5. In the popup's Settings: the "Sharing usage data" toggle and "Delete my data". "Delete saved data", then "Delete all local data", clears everything.
+
+The extension sends requests only to https://ai-checkout-api.onrender.com: card terms and the store list, usage reports after "Share", and the two taps in step 4.
+Privacy policy: https://ai-checkout-api.onrender.com/privacy/
+```
 
 ## Preconditions
 
 - Record the extension version, the ZIP's SHA-256 (from `docs/verification/release-package.md`), the catalog and store-list versions, Chrome version, OS and date. Use the exact upload artifact in normal Chrome for release evidence; a fresh profile, or **Delete all local data** first.
 - The ZIP bundles a catalog that expires 30 days after its verification date. On first run the extension fetches the current terms at once; expect "Checking for updated terms…" for a few seconds (longer if the service is cold), then a result. A failed first fetch shows the expired copy with **Check for updated terms**. Do not change the computer's date.
-- Use a real store's cart only without signing in, paying or placing an order; remove the temporary item afterwards. Any https page whose address or title names the cart and shows an order summary (Subtotal, Shipping, Tax, Total rows) works as a synthetic cart.
-- The dollar figures below hold under the catalog in effect when this was written (`2026-10-05.renewal.1`); the popup shows each card's rule in the issuer's words, which is the figure to check against.
+- The sample cart at `https://ai-checkout-api.onrender.com/sample-cart/` is a page on the project's site with fixed amounts (Subtotal $92.59, Estimated tax $7.41, Total $100.00); its quantity and **Remove** controls change nothing, so use a real store for step 2.2. Use a real store's cart only without signing in, paying or placing an order; remove the temporary item afterwards. Any https page whose address or title names the cart and shows an order summary (Subtotal, Shipping, Tax, Total rows) works as a synthetic cart.
+- The dollar figures below assume the current published catalog's rules for these two cards (3% at U.S. online retail with a cap for Blue Cash Everyday, 1.5% for Quicksilver). If the catalog changes them, the popup shows each card's rule in the issuer's words; check the figures against that.
 
 ## 1. Setup and consent
 
@@ -22,7 +35,7 @@ No account or login is needed. 1) Install; a setup tab opens. Under "Add a card"
 
 ## 2. The badge at a cart
 
-1. Open a cart page with one item. A badge appears bottom-right: **Use Blue Cash Everyday · $X back** (3% of the amount, when the store counts as online retail and the amount was read), or **Use Blue Cash Everyday · 3% back** (the rates view) when the amount was not read. Click it: the panel lists both cards with the rule in the issuer's words and conditions, a payment-method selector, an amount field, **Dismiss for this tab** and **Not on this site**. At a store the list does not name, the panel also offers **Store not recognised? Suggest it**; the header says "at Another U.S. online store" or the matched store's name.
+1. Open the sample cart, then a store's cart page with one item. A badge appears bottom-right (at the sample cart's $100.00 total, **Use Blue Cash Everyday · $3.00 back** under the rules above): **Use Blue Cash Everyday · $X back** (3% of the amount, when the store counts as online retail and the amount was read), or **Use Blue Cash Everyday · 3% back** (the rates view) when the amount was not read. Click it: the panel lists both cards with the rule in the issuer's words and conditions, a payment-method selector, an amount field, **Dismiss for this tab** and **Not on this site**. At a store the list does not name, the panel also offers **Store not recognized? Suggest it**; the header says "at Another U.S. online store" or the matched store's name.
 2. Change the quantity. The amount updates without a reload.
 3. In the rates view, type an amount in the panel; dollar estimates appear. Nothing asks for an amount.
 4. **Dismiss for this tab**: the badge hides until the tab closes (reload: still hidden). **Not on this site**: the host appears under Settings → Cart badge in the popup, where it can be switched back on; the badge switch turns it off everywhere.

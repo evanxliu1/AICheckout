@@ -5,8 +5,8 @@ description: What runs on the Render web service and hosted Supabase, how deploy
 status: stable
 tags: [ops, hosting, render, supabase]
 generated:
-  by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:12:00Z
+  by: claude-code/claude-fable-5-1
+  at: 2026-11-06T19:50:00Z
 sources:
   - resource: ../../render.yaml
     title: Render Blueprint
@@ -42,7 +42,7 @@ One Render web service, `ai-checkout-api`, runs a single Node process that serve
 
 ## Environment variables (names only)
 
-Set in [`render.yaml`](../../render.yaml); the two `sync: false` entries are entered in the Render dashboard, never committed.
+Set in [`render.yaml`](../../render.yaml); the three `sync: false` entries are entered in the Render dashboard, never committed.
 
 | Name | Where set | Meaning |
 | --- | --- | --- |
@@ -53,6 +53,9 @@ Set in [`render.yaml`](../../render.yaml); the two `sync: false` entries are ent
 | `SITE_DIST_DIR` | Blueprint | Built public site, served at `/` |
 | `CURATION_ADAPTER` | Blueprint | `disabled` on Render; LLM curation never runs hosted |
 | `CURATION_ALLOW_METERED` | Blueprint | `false`; no paid model calls |
+| `TELEMETRY_INGEST` | Blueprint | `on`; `off` is the kill switch (410, clients pause) |
+| `TELEMETRY_PROXY_HOPS` | Blueprint | `1`; trusted `X-Forwarded-For` entries for the telemetry bucket (to be confirmed at 15.7, see Gotchas) |
+| `EXTENSION_IDS` | Dashboard | Chrome extension ids whose `Origin` telemetry accepts; unset until the 15.7 draft upload |
 | `SUPABASE_URL` | Dashboard | Hosted Supabase project URL |
 | `SUPABASE_PUBLISHABLE_KEY` | Dashboard | Public (publishable) Supabase key |
 
@@ -70,6 +73,7 @@ Detailed procedures (deploy verification, recovery, store publishing) live outsi
 ## Gotchas
 
 - Free-tier sleep: the first request after idle is slow; health checks and Playwright runs against the hosted API must allow for it.
+- Cloudflare fronts the service (`server: cloudflare`, `cf-ray` and `x-render-origin-server: Render` on every response, observed 2026-11-06). Cloudflare appends the connecting address to `X-Forwarded-For`, and public reports (not Render's documentation) show Render's proxy appending Cloudflare's edge address after it, so the `render.yaml` value `TELEMETRY_PROXY_HOPS=1` most likely keys the telemetry bucket ([API](../system/api.md)) on a Cloudflare address rather than the client. The 15.7 plan sets `2` and tests from two networks at `2`, where the result is conclusive ([plan, step 13](../product/phase-15-release-a.md#92-runbook)); a count one too low shares buckets among clients, one too high lets a forged entry pick the bucket, and the test's forged entries catch the second. `EXTENSION_IDS` is entered in the dashboard by Evan with **Save and deploy** (a save without deploy leaves the running process without it) and verified from outside by the response body as well as the code, since Cloudflare's own blocks are HTML 403s (step 12 of the same plan).
 - In the built-in browser pane, `computer` `type` did not register in Render/Supabase dashboard inputs; `form_input` worked (2026-09-28). Agents should not be driving those dashboards anyway.
 - Do not put `OPENAI_API_KEY` or any service-role key on Render; curation stays `disabled` there ([decision](../decisions/2026-09-28-subscription-cli-providers-local-only.md)).
 

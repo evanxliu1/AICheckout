@@ -1,5 +1,7 @@
 # Packaged extension lifecycle verification
 
+> **Status (2026-11-06):** this is a dated verification record for version 2.0.0 (2026-09-26), kept as written. It is not a description of the current extension: version 2.1.0 adds the badge at any https store, host permissions, the `alarms` permission, catalog and store-list refreshes and optional usage reporting. For current behavior, see the [extension README](../../extension/README.md); the 2.1.0 package is recorded in [release-package.md](release-package.md) at submission (milestone 15.7).
+
 The September 26 protected-input build reruns these lifecycle flows successfully. The session-only unlock key survives normal worker shutdown; a full browser restart requires the local passphrase before restoring saved inputs. See [protection evidence](local-protection.md). Earlier checkpoint details below remain historical observations.
 
 Observed locally on September 26, 2026 with Playwright 1.63.0 and its bundled Chromium 153. Tests load the normal built Manifest V3 extension in isolated profiles. The cart is the sanitized observed Best Buy summary fixture; these checks do not add live retailer or issuer-eligibility evidence.

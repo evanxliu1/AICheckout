@@ -55,7 +55,7 @@ export const badgeRequestSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('badge:open'), nonce, target: z.enum(['popup', 'onboarding']) }),
   /** Phase 15.3: the panel was opened (usage reporting only; the view is unchanged). */
   z.strictObject({ type: z.literal('badge:expanded'), nonce }),
-  /** Phase 15.3: "Store not recognised? Suggest it" at a generic store; the worker sends the tab's registrable
+  /** Phase 15.3: "Store not recognized? Suggest it" at a generic store; the worker sends the tab's registrable
    * domain, with the random id only while sharing is on. */
   z.strictObject({ type: z.literal('badge:suggest-store'), nonce }),
 ]);
@@ -147,7 +147,7 @@ export type BadgeView =
       result: Comparison;
       catalog: Catalog;
       wallet: Wallet;
-      /** Phase 15.3: "Store not recognised? Suggest it" was already tapped in this tab. */
+      /** Phase 15.3: "Store not recognized? Suggest it" was already tapped in this tab. */
       suggested: boolean;
     }
   | { kind: 'unavailable'; merchantId: string; result: UnavailableComparison }

@@ -394,7 +394,7 @@ export function createBadgeService({
         // A tap: the registrable domain of the tab's host (the only thing about the site that leaves the
         // device, and only now), at a generic store, whether the shopper shares or not.
         if (entry.merchantId !== GENERIC_MERCHANT_ID)
-          return { ok: false, error: 'This store is already recognised.' };
+          return { ok: false, error: 'This store is already recognized.' };
         const domain = registrableDomain(entry.host);
         const sent =
           !!domain &&

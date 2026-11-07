@@ -39,7 +39,7 @@ const WHEN = {
     'Per release checked by the weekly alarm (`weekly`, with its retry) and for the card catalog on "Check for updated terms" (`manual`).',
   error: 'Per caught request failure in the worker, at most 20 a day.',
   store_suggested:
-    'On the shopper’s tap on "Suggest this store" (popup) or "Store not recognised? Suggest it" (badge panel), at a store the merchant release does not name. Sent whether sharing is on or not; `install_id` is null when it is off.',
+    'On the shopper’s tap on "Suggest this store" (popup) or "Store not recognized? Suggest it" (badge panel), at a store the merchant release does not name. Sent whether sharing is on or not; `install_id` is null when it is off.',
   problem_reported:
     'On the shopper’s tap on "Send report" under "Report a problem" in the popup, with one of the fixed reasons; there is no free text. `view` and `withheld_reason` describe the badge in that tab (`withheld_reason` is always `withheld` in the rates view). Sent whether sharing is on or not; `install_id` is null when it is off.',
 };

@@ -15,7 +15,8 @@ it('renders every page with one h1, a title, a description and the current page 
       expect(page.body).toContain(`href="${page.path}" aria-current="page"`);
       expect(page.body.match(/aria-current="page"/g)).toHaveLength(1);
     } else {
-      // Credits and the uninstall page are reached from the footer or from Chrome, not the navigation.
+      // Credits, the uninstall page and the sample cart are reached from the footer, Chrome or the test
+      // instructions, not the navigation.
       expect(OTHER_PAGES.some((entry) => entry.id === page.id)).toBe(true);
       expect(page.body).not.toContain('aria-current="page"');
     }
@@ -80,7 +81,7 @@ it('describes the badge at any store and the retired three-store flow nowhere', 
 it('states the privacy policy: what the badge reads, the requests, and usage reports under a random identifier', () => {
   const privacy = body('privacy');
   for (const text of [
-    'Last updated 2026-10-20',
+    'Last updated 2026-11-06',
     'Operator: Evan Liu',
     'access to every https website',
     'address and title for a cart or checkout word',

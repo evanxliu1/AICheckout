@@ -33,15 +33,15 @@ const wide: Layout = (() => {
       { id: 'terms', x: x(0), y: top, w, label: ['Issuer terms', '(captured pages)'] },
       { id: 'llm', x: x(1), y: top, w, label: ['LLM extraction', 'harness'], tone: 'model' },
       { id: 'checks', x: x(2), y: top, w, label: ['Schema and', 'citation checks'] },
-      { id: 'review', x: x(3), y: top, w, label: ['Human review', 'of every change'], tone: 'human' },
+      { id: 'review', x: x(3), y: top, w, label: ['Agent checks,', 'human approval'], tone: 'human' },
       { id: 'publish', x: x(4), y: top, w, label: ['Explicit', 'publication'], tone: 'human' },
       { id: 'db', x: x(4), y: middle, w, label: ['PostgreSQL:', 'immutable releases'], tone: 'store' },
-      { id: 'api', x: x(2), y: middle, w, label: ['GET /v1/catalog', '(public, read-only)'] },
+      { id: 'api', x: x(2), y: middle, w, label: ['Public API:', 'catalog, store list'] },
       { id: 'catalog', x: x(0), y: bottom, w, label: ['Cached or', 'bundled catalog'], tone: 'store' },
       { id: 'engine', x: x(1), y: bottom, w, label: ['Deterministic', 'rewards engine'] },
       { id: 'worker', x: x(2), y: bottom, w, label: ['Service worker'] },
-      { id: 'popup', x: x(3), y: bottom, w, label: ['Popup: your cards', 'and the purchase'] },
-      { id: 'reader', x: x(4), y: bottom, w, label: ['Cart reader', '(runs on click)'] },
+      { id: 'popup', x: x(3), y: bottom, w, label: ['Badge and popup:', 'your cards'] },
+      { id: 'reader', x: x(4), y: bottom, w, label: ['Cart reader', '(cart pages)'] },
     ],
     edges: [
       ...[0, 1, 2, 3].map((i): Edge => ({
@@ -68,7 +68,7 @@ const wide: Layout = (() => {
           [x(0) + w / 2, middle + H / 2],
           [x(0) + w / 2, bottom],
         ],
-        label: { x: x(0) + w / 2 + 8, y: middle + H / 2 - 10, text: 'on request, hosted builds' },
+        label: { x: x(0) + w / 2 + 8, y: middle + H / 2 - 10, text: 'install, weekly, on request' },
       },
       {
         points: [
@@ -107,15 +107,21 @@ const tall: Layout = (() => {
     { id: 'terms', x, y: y(0), w, label: ['Issuer terms', '(captured pages)'] },
     { id: 'llm', x, y: y(1), w, label: ['LLM extraction harness'], tone: 'model' },
     { id: 'checks', x, y: y(2), w, label: ['Schema and citation checks'] },
-    { id: 'review', x, y: y(3), w, label: ['Human review', 'of every change'], tone: 'human' },
+    { id: 'review', x, y: y(3), w, label: ['Agent verification,', 'human approval'], tone: 'human' },
     { id: 'publish', x, y: y(4), w, label: ['Explicit publication'], tone: 'human' },
     { id: 'db', x, y: y(5) + 16, w, label: ['PostgreSQL:', 'immutable releases'], tone: 'store' },
-    { id: 'api', x, y: y(6) + 16, w, label: ['GET /v1/catalog', '(on request, hosted builds)'] },
+    {
+      id: 'api',
+      x,
+      y: y(6) + 16,
+      w,
+      label: ['Public API: catalog, store list', '(install, weekly, on request)'],
+    },
     { id: 'catalog', x, y: y(7) + 64, w, label: ['Cached or bundled catalog'], tone: 'store' },
     { id: 'engine', x, y: y(8) + 64, w, label: ['Deterministic rewards engine'] },
     { id: 'worker', x, y: y(9) + 64, w, label: ['Service worker'] },
-    { id: 'popup', x, y: y(10) + 64, w, label: ['Popup: your cards', 'and the purchase'] },
-    { id: 'reader', x, y: y(11) + 64, w, label: ['Cart reader (runs on click)'] },
+    { id: 'popup', x, y: y(10) + 64, w, label: ['Badge and popup:', 'your cards'] },
+    { id: 'reader', x, y: y(11) + 64, w, label: ['Cart reader (cart pages)'] },
   ];
   const mid = x + w / 2;
   const down = (a: Box, b: Box): Edge => ({
@@ -246,10 +252,11 @@ export function SystemsDiagram() {
       <Figure layout={wide} className="diagram--wide" titleId="diagram-wide-title" />
       <Figure layout={tall} className="diagram--tall" titleId="diagram-tall-title" />
       <figcaption className="muted small">
-        Blue: the language model. Green: human decisions. Gray: stored releases. The arrow from the API to the
-        extension is the only network request the extension can make: one catalog GET when you choose Check
-        for updated terms, in builds configured with the hosted catalog. The default build makes none and uses
-        the catalog bundled with it.
+        Blue: the language model. Green: steps a person approves. Gray: stored releases. The Chrome Web Store
+        build downloads the catalog and the store list at install, weekly and when you choose Check for
+        updated terms, and otherwise uses the copies it has. Optional usage reports go to the same service and
+        aren’t shown. A build from source without a catalog endpoint makes no requests and uses the catalog
+        bundled with it.
       </figcaption>
     </figure>
   );
