@@ -71,6 +71,7 @@ for (const source of sources) {
   rows.push({ source, entry, flags, attempts: attempts.get(source.id) ?? 0, hint: hints[source.id] });
 }
 
+const paneRows = sources.map((s) => manifest.get(s.id)).filter((entry) => entry?.method === 'browser-pane');
 const issuers = [...new Set(sources.map((s) => s.issuer))];
 const lines = [
   '# Capture report: catalog expansion',
@@ -79,6 +80,12 @@ const lines = [
   '',
   'Captures ran with `scripts/capture-issuer-pages.mjs` in headless Chromium, one sequential run per issuer (2.5 s between pages on the same host), with the per-source hints in `capture-hints.json`. Nothing was signed in to, applied for, activated, or submitted.',
   '',
+  ...(paneRows.length
+    ? [
+        `${paneRows.length} of ${sources.length} sources were instead read in the Claude desktop app's browser pane and brought in with \`pipeline capture-import --method browser-pane\` (same normalization and flags as the script; manifest \`method\`, \`capturedBy\`, \`capturedAt\`): ${paneRows.map((entry) => `\`${entry.id}\``).join(', ')}.`,
+        '',
+      ]
+    : []),
   '## Summary',
   '',
   '| Issuer | Sources | Captured | Failed | Flagged |',

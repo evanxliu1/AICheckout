@@ -15,6 +15,8 @@
 //   npm run pipeline -- accept <research|verify|adjudicate|overlay> --issuer <slug> --agent-run <id> [--model <id>]
 //                           [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
 //   npm run pipeline -- resolve capture-flagged --source <id> --reason <code> [--batch B]
+//   npm run pipeline -- capture-import --source <id> --file <text file> --method browser-pane --by <agent>
+//                           [--status N] [--batch B]
 //   npm run pipeline -- lint-labels [--batch B | --dir evals/curation/expansion] [--json]
 //   npm run pipeline -- eval [--batch B] [--cross-model-run DIR]
 //   npm run pipeline -- handoff [--batch B]
@@ -54,6 +56,7 @@ import { runStage } from './run.ts';
 import type { Env } from './run.ts';
 import { accept } from './accept.ts';
 import { resolveCaptureFlag } from './capture.ts';
+import { CAPTURE_METHODS, captureImport } from './capture-import.ts';
 import { dropSource } from './drop-source.ts';
 import { lintLabels } from './lint-command.ts';
 import { claim, openPacketStatus } from './packets.ts';
@@ -86,6 +89,7 @@ const USAGE = `Usage: npm run pipeline -- <command>
   claim <${ISSUER_STAGES.join('|')}> --issuer <slug> [--batch B] [--release]
   accept <${ISSUER_STAGES.join('|')}> --issuer <slug> --agent-run <id> [--model <id>] [--duration-ms N] [--tokens N] [--batch B] [--dry-run]
   resolve capture-flagged --source <id> --reason <${CAPTURE_FLAG_REASONS.join('|')}> [--batch B]
+  capture-import --source <id> --file <text file> --method <${CAPTURE_METHODS.join('|')}> --by <agent> [--status N] [--batch B]
   drop-source --source <id> --reason <${DROP_SOURCE_REASONS.join('|')}> [--batch B]
   lint-labels [--batch B | --dir <corpus dir>] [--json]
   eval [--batch B] [--cross-model-run DIR]
@@ -298,6 +302,10 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         'instruction-at': { type: 'string' },
         offline: { type: 'boolean', default: false },
         check: { type: 'boolean', default: false },
+        file: { type: 'string' },
+        method: { type: 'string' },
+        by: { type: 'string' },
+        status: { type: 'string' },
       },
     });
     const api = () => apiOrigin(values.api ?? env.env.AI_CHECKOUT_API ?? DEFAULT_API);
@@ -460,6 +468,18 @@ export async function main(argv: string[], env: Env = defaultEnv()): Promise<num
         if (positionals[0] !== 'capture-flagged' || !values.source || !values.reason)
           throw new UsageError('resolve capture-flagged --source <id> --reason <code>.');
         return await resolveCaptureFlag(env, await oneBatch(env, values.batch), values.source, values.reason);
+      case 'capture-import':
+        if (positionals.length || !values.source || !values.file || !values.method || !values.by)
+          throw new UsageError(
+            'capture-import --source <id> --file <text file> --method <method> --by <agent>.',
+          );
+        return await captureImport(env, await oneBatch(env, values.batch), {
+          source: values.source,
+          file: values.file,
+          method: values.method,
+          by: values.by,
+          ...(values.status === undefined ? {} : { status: Number(values.status) }),
+        });
       case 'drop-source':
         if (positionals.length || !values.source || !values.reason)
           throw new UsageError('drop-source --source <id> --reason <code>.');

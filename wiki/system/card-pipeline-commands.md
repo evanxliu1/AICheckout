@@ -6,7 +6,7 @@ status: stable
 tags: [system, catalog, curation, expansion, pipeline, cli]
 generated:
   by: claude-code/claude-opus-5-5
-  at: 2026-10-23T18:12:00Z
+  at: 2026-11-07T18:45:00Z
 sources:
   - resource: ../../tools/catalog-pipeline/README.md
     title: Pipeline workspace entry point
@@ -62,6 +62,7 @@ No `running` status, no locks; the queue is never written.
 | Command | Behaviour |
 | --- | --- |
 | `rebase-anchors [--batch B]` | The mechanical anchor rebase of invalidation rule 3: re-points the findings' `current` on anchor paths to the new draft and records the new anchors hash on verify; a path the new draft lacks is reported (exit 1) |
+| `capture-import --source <id> --file <text file> --method browser-pane --by <agent> [--status N] [--batch B]` | Brings in a page read in the Claude desktop app's browser pane, for a host that answers headless Chromium with a bot wall (Bank of America, 2026-11-07). The file is the page's raw `document.body.innerText` after the capture script's steps (scroll through, open `<details>`, expand visible collapsed buttons except Apply, Log in, prequalify and submit controls), read with the pane's JavaScript tool in chunks. The import applies the capture stage's own normalization and flags (`scripts/lib/capture-text.mjs`, shared with `capture-issuer-pages.mjs`: `HTTP <n>` from `--status`, `short`, `bot-wall?`), writes `captures/<id>.txt`, a manifest row like the script's plus `method: browser-pane`, `capturedBy` and `capturedAt`, and a run-report row `parts/report.pipeline-<time>-import-<id>.json`; then re-evaluates the capture record of every card citing the source. It refuses to replace a capture that passed the gate with other text (`changed-capture-kept`); replacing one that failed (the bot-wall page) carries no `CHANGED since last capture` flag. Exit 1 when flagged. `capture-report.md` and the catalog build report list the browser-pane sources; a later headless capture of the source writes a row without `method` |
 | `drop-source --source <id> --reason bot-wall\|error-page\|out-of-scope\|duplicate [--batch B]` | Removes the source from `sources.json`, `manifest.json` and the cards' `sourceIds` (refuses to leave a card without one), moves its capture to `captures-dropped/` (gitignored), records `droppedSources.<id> = { reason, droppedAt }` in `state.json` and refuses frozen layers (a base layer, or a batch in the build config of a published version); the affected captures turn stale, so `capture-flagged` goes away and capture re-runs |
 
 ## Agent stages

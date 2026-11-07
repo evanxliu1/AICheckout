@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: The 19 Bank of America cards are held out of renewal 2026-11-07.renewal.2 because the issuer blocks the capture
-description: Every Bank of America page answered the pipeline's headless Chromium capture with HTTP 403 (bot wall) on 2026-11-06 and 2026-11-07, in three freshness re-checks and two batch captures; the request hint returns static HTML without the earn rates; so the seeded batch bank-of-america-refresh-2026-11 ships as a layer with an empty corpus and all 19 cards dropped with that reason, and a later batch restores them when the host answers.
+description: Every Bank of America page answered the pipeline's headless Chromium capture with HTTP 403 (bot wall) on 2026-11-06 and 2026-11-07, in three freshness re-checks and two batch captures; the request hint returns static HTML without the earn rates; so the seeded batch bank-of-america-refresh-2026-11 ships as a layer with an empty corpus and all 19 cards dropped with that reason, and a later batch restores them when the host answers. Amended 2026-11-07: the pages were captured in the desktop browser pane through `pipeline capture-import` (same normalization and gates) and the batch is through verify; adjudicate waits on the pinned model's limit.
 status: accepted
 tags: [decision, catalog, pipeline, phase-15, renewal]
 generated:
@@ -28,7 +28,7 @@ The hosted catalog `2026-10-05.renewal.1` expired on 2026-11-04T00:00Z. The rene
 | --- | --- |
 | Wait for the host to answer again before renewing | Every install has shown expired terms since 2026-11-04; the block has held for ten hours and may be an address-level block of this machine |
 | Capture through the `request` hint | The static HTML carries no earn rates; labels from it would be wrong or empty |
-| Read the pages in the desktop browser and write captures by hand | Captures are the capture script's renderings, hashed into the manifests; a hand-made capture bypasses the stage and its gates |
+| Read the pages in the desktop browser and write captures by hand | Captures are the capture script's renderings, hashed into the manifests; a hand-made capture bypasses the stage and its gates. **Superseded by the amendment below**: `pipeline capture-import` runs the same normalization and gates |
 | Keep the cards with their October labels | The schema forbids a source older than the 30-day window; a dated-forward source would be a false record |
 | **Hold the 19 cards out of this renewal with the reason, and restore them with a later batch** | Chosen: the runbook's step 3 for unreachable sources; 159 cards ship now; owned Bank of America cards stay visible as unavailable in the extension until a release restores them |
 
@@ -44,3 +44,12 @@ The hosted catalog `2026-10-05.renewal.1` expired on 2026-11-04T00:00Z. The rene
 
 ## Status
 Accepted 2026-11-07 by the renewal driver (claude-code/claude-fable-5-1) under the runbook's step 3; Evan can instead wait for the host and re-run the batch before publishing.
+
+## Amendment (2026-11-07): captured in the desktop browser pane
+
+Evan asked on 2026-11-07 to restore the 19 cards from captures made in the Claude desktop app's built-in browser pane, which rendered `bankofamerica.com` normally (no challenge) where headless Chromium got HTTP 403. The objection above to a hand-made capture no longer holds, because the import is not hand-made: `pipeline capture-import --method browser-pane` (on `boa-browser-capture`) takes the page's `document.body.innerText` after the capture script's own steps (scroll, open `<details>`, expand visible collapsed buttons; Apply, Log in, prequalify and submit controls and anything in a form are skipped, a safety filter the script does not have), applies the capture stage's normalization and flags from the shared `scripts/lib/capture-text.mjs`, and writes the capture, a manifest row with `method: browser-pane`, `capturedBy` and `capturedAt`, and a run-report row, so the capture gate, `capture-report.md` and the build report treat and name these sources as browser-pane captures ([command](../system/card-pipeline-commands.md#cli-stages)).
+
+- **Captured 2026-11-07:** all 35 sources, one page at a time with a few seconds between pages, one pane tab per run (the coordinator's own and four sequential capture subagents', each closed after); every page HTTP 200, no challenge, 7,684 to 34,589 characters, 0 flagged. The text reached disk through the transcripts (JavaScript tool results in chunks of 30,000 characters, joined and checked against the SHA-256 the page computed). Captures stay gitignored and were copied into the main checkout's batch folder.
+- **Loop:** extract (gpt-5.6-luna xhigh through Codex: 17 `needs_review`, 2 `evidence_valid`), draft and verify (card-verifier, Opus 5.5: 17 fixed, 2 confirmed, 0 drop-card) are accepted. **Adjudicate is blocked**: the pinned adjudicator model `claude-fable-5-1` hit its weekly limit (resets 2026-11-11T22:00Z) and its run ended before writing; the packet was released. Running the adjudicator on Opus 5.5 instead is the alternative the [pipeline models decision](2026-10-04-pipeline-agent-models.md) rejected, so it is Evan's call: wait for 2026-11-11, or allow an Opus 5.5 adjudicator run for this batch. Until adjudicate, apply and overlay are accepted, the build config keeps the 19 cards in `dropped`.
+- **Terms seen to have changed since October** (for the adjudicator and overlay author, from the captures): Customized Cash Rewards cards earn 6% in the choice category in the first year (3% plus a 3% first-year bonus, within the shared $2,500 quarterly cap), then 3%; product pages and terms name the BofA Rewards program (a rewards bonus for members); the Atmos Rewards product pages advertise larger welcome offers than the cited terms pages (campaign IDs in `sources.json`).
+
