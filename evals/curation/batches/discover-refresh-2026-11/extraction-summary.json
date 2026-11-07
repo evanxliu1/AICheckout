@@ -19,8 +19,7 @@
     ]
   },
   "counts": {
-    "needs_review": 4,
-    "timeout": 2
+    "needs_review": 6
   },
   "cards": [
     {
@@ -99,23 +98,38 @@
     {
       "cardId": "discover-it-chrome",
       "issuer": "Discover",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 6,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "entertainment-portal",
+        "ev-charging",
+        "gas",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous",
+        "ambiguous",
+        "out-of-scope",
+        "ambiguous"
+      ],
+      "findings": {
+        "reported_ambiguous": 3,
+        "reported_out-of-scope": 1
+      },
       "documents": [
         "discover-it-chrome-product",
         "discover-it-chrome-terms"
       ],
       "inputNotes": [],
-      "runs": 12,
+      "runs": 13,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 705004,
+      "durationMs": 295593,
       "inputTokenEstimate": 12005,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T11:59:00.887Z"
+      "inputTokens": 10487,
+      "outputTokens": 2338,
+      "runAt": "2026-11-07T17:32:44.181Z"
     },
     {
       "cardId": "discover-it-student-cash-back",
@@ -190,24 +204,41 @@
     {
       "cardId": "discover-it-secured-cash-back",
       "issuer": "Discover",
-      "status": "timeout",
-      "rules": null,
-      "categories": null,
-      "issues": null,
-      "findings": {},
+      "status": "needs_review",
+      "rules": 14,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "entertainment",
+        "entertainment-portal",
+        "gas",
+        "other",
+        "streaming",
+        "supermarkets",
+        "transit",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_ambiguous": 1
+      },
       "documents": [
         "discover-it-secured-cash-back-product",
         "discover-it-secured-cash-back-terms",
         "discover-cashback-calendar"
       ],
       "inputNotes": [],
-      "runs": 12,
+      "runs": 13,
       "cliVersion": "codex-cli 0.158.0",
-      "durationMs": 704979,
+      "durationMs": 371749,
       "inputTokenEstimate": 13226,
-      "inputTokens": 0,
-      "outputTokens": 0,
-      "runAt": "2026-11-07T11:59:00.914Z"
+      "inputTokens": 11343,
+      "outputTokens": 6913,
+      "runAt": "2026-11-07T17:32:44.189Z"
     }
   ]
 }
