@@ -100,6 +100,21 @@ Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): *
 
 `2026-10-05.renewal.1` was added to `publishedVersions` in `evals/curation/catalog-batches.json` in the PR that recorded release 3 (branch `wiki-audit-2026-10-05`). The next renewal is due before 2026-11-04 (the NerdWallet estimates read 2026-10-02 must be re-read for any catalog verified after 2026-11-01).
 
+## Renewal `2026-11-07.renewal.2` (in preparation, 2026-11-06 to 2026-11-07)
+
+Release 3 expired on 2026-11-04T00:00Z; `GET /v1/catalog` answers 503 until this renewal is published. Prepared on branch `catalog-renewal-2026-11` by the renewal driver (Fable 5.1) with the pipeline subagents; **not yet built** when this was written (2026-11-07T17:00Z). The version will be `2026-11-<dd>.renewal.2` with `dd` the newest capture date (2026-11-07 unless pages are captured again later); expiry 30 days after.
+
+| Step | State |
+| --- | --- |
+| NerdWallet estimates | Re-read 2026-11-06 (page updated 2026-10-13), independently checked by a subagent: all 24 values unchanged; `reward-programs.2026-11-06.1` (`6a22dd8e`) |
+| Freshness `2026-11-06` | 328 sources: 119 unchanged, 172 changed, 36 flagged (the 35 Bank of America pages, access denied to headless Chromium in three re-checks; the Synchrony PayPal product page, which the batch capture later rendered), 1 unreachable (Citi AT&T product page, likewise captured later). 127 cards of nine issuers changed; record `465c5aaa` |
+| Merchant MCC pages | Both CheckMCC pages changed; re-captured by hand 2026-11-06, each still states 5732; `checkedOn` 2026-11-06 (`3ad03abd`) |
+| Batches | Ten seeded `<issuer>-refresh-2026-11` batches. **Through overlay (awaiting build):** American Express 13 cards, Barclays 17, Capital One 11. **Captured and drafted in part:** Chase 21 of 24 cards extracted, Citi 9 of 15, Discover 4 of 6, Synchrony 15 of 22, U.S. Bank 1 of 12, Wells Fargo 2 of 7: every gpt-5.6-luna `xhigh` run started after 2026-11-07T04:00Z hung past the attempt limit (600 s, and 1,500 s after the bound was raised) with no answer, on cards that took one to seven minutes in October; the other 34 cards wait for `run extract` to finish them. **Held out:** Bank of America, 19 cards, every page HTTP 403 ([decision](../decisions/2026-11-07-bank-of-america-held-out-of-renewal.md)); the catalog ships with 159 cards unless the host answers before the build |
+| Pipeline fixes on the branch | The overlay gate dates sources from the freshness records and checks the source window of the issuer's own cards only (`bc2b972a`); harness timeout bounds 1,800 s / 2,700 s (`559b0688`); the test world re-dates its program table |
+| Remaining | `run extract` for the 34 cards, then draft, verify, adjudicate, apply and overlay for the six issuers; `run build --batch <each> --version <version>` (the first builds register the layers and fail on the others' dates until every layer is registered; re-run each to record); eval; tests moved to 159 cards and the golden ladders without Customized Cash Rewards; `catalog:v3:check`, the quote check over every capture folder, lint, format, typecheck, `npm test`, build, the browser suites; wiki; PR; merge and deploy; `pipeline handoff`; dry run; Evan's `publish <version>` |
+
+Capture folders for the publish, all in the main checkout: the 14 of release 3 plus `evals/curation/batches/<issuer>-refresh-2026-11/captures` for the nine refreshed issuers (the Bank of America folder holds only access-denied pages and is cited by nothing).
+
 ## Merchant release 1 (published 2026-10-12)
 
 | Field | Value |
