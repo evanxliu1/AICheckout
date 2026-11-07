@@ -49,6 +49,22 @@ async function padManifest(path: string, count: number) {
 }
 
 describe('expansion corpus layout', () => {
+  it('reads a manifest row imported from the browser pane, and still refuses unknown keys', async () => {
+    const path = join(corpus, 'manifest.json');
+    const manifest = JSON.parse(await readFile(path, 'utf8'));
+    Object.assign(manifest.sources[0], {
+      method: 'browser-pane',
+      capturedBy: 'claude-code/claude-opus-5-5',
+      capturedAt: '2026-11-07T18:18:57.925Z',
+    });
+    await writeFile(path, JSON.stringify(manifest));
+    const loaded = await loadCorpusV2(corpus, { layout: 'expansion', captures });
+    expect(loaded.cases.length).toBeGreaterThan(0);
+    manifest.sources[0].method = 'hand-copied';
+    await writeFile(path, JSON.stringify(manifest));
+    await expect(loadCorpusV2(corpus, { layout: 'expansion', captures })).rejects.toThrow();
+  });
+
   it('reads corpus.json and a captures folder elsewhere, and makes every case held-out', async () => {
     expect(await detectLayout(corpus)).toBe('expansion');
     expect(await detectLayout(FIXTURE)).toBe('v2');

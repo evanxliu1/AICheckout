@@ -229,7 +229,7 @@ export function mergeLayers({
   programTable,
   merchants: listedMerchants,
   merchantManifest = null,
-  freshness = [],
+  freshness = /** @type {unknown[]} */ ([]),
 }) {
   const merchants = freshMerchants(listedMerchants, merchantManifest, freshness);
   const problems = [];

@@ -11,7 +11,9 @@ const PROVIDER_IDS = { codex: 'codex-cli', claude: 'claude-cli' };
 
 /**
  * One bundle from per-card trace files (`{ cardId, configuration, cliVersion, trace }`). Every file must share
- * one configuration. Traces for cards not in the corpus (dropped by verification) are returned as `skipped`.
+ * one configuration. Traces for cards not in the corpus (dropped by verification) are returned as `skipped`; traces
+ * of a case whose source list verification changed (a source added or removed after extraction, so the trace never
+ * saw the case's documents) are returned as `resourced` and not scored. Same sources with other text still fail.
  */
 export function bundleFromTraces(loaded, files) {
   if (!files.length) throw new Error('No extraction traces.');
@@ -45,8 +47,16 @@ export function bundleFromTraces(loaded, files) {
     repeat: 1,
   };
   // Trace files are named by card ID, which is the case ID in the expansion corpus.
+  const sourceIds = (documents) => canonicalJson(documents.map((document) => document.id).sort());
+  const resourced = loaded.cases
+    .filter(({ item, input }) => {
+      const documents = byCard.get(item.id)?.trace.documents;
+      return documents && sourceIds(documents) !== sourceIds(input.documents);
+    })
+    .map(({ item }) => item.id)
+    .sort();
   const observations = loaded.cases
-    .filter(({ item }) => byCard.has(item.id))
+    .filter(({ item }) => byCard.has(item.id) && !resourced.includes(item.id))
     .map(({ item }) => {
       const { trace } = byCard.get(item.id);
       if (trace.extraction && trace.extraction.cardId !== item.cardId)
@@ -67,6 +77,7 @@ export function bundleFromTraces(loaded, files) {
       observations,
     },
     skipped: [...byCard.keys()].filter((id) => !caseIds.has(id)).sort(),
+    resourced,
     missing: [...caseIds].filter((id) => !byCard.has(id)).sort(),
     sourceConfiguration: config,
   };
