@@ -1469,8 +1469,9 @@ function SampleCart(): Rendered {
         <PageIntro eyebrow="Sample cart for testing AI Checkout" title="Your cart">
           <p>
             Use this page to try AI Checkout without visiting a store. With the extension installed and your
-            cards saved, the badge appears in the bottom-right corner and shows the card that earns the most
-            on this cart. The items and amounts are fixed: the quantity and Remove controls don’t change them.
+            cards saved, the badge appears in the bottom-right corner and shows which of your cards earns the
+            most on this cart. Without saved cards, the badge asks you to pick them. The items and amounts are
+            fixed: the quantity and Remove controls don’t change them.
           </p>
           <p>
             Real stores work the same way. Open the cart page of any U.S. online store to see the badge there.

@@ -1,8 +1,10 @@
 // The public site's sample cart (`/sample-cart/`, linked from the Chrome Web Store test instructions) at
 // the reviewer's path: the built site page, served by the built API under its production headers (CSP
-// included), is answered at https://ai-checkout-api.onrender.com/sample-cart/ through context.route, so the
-// hosted service is never contacted. With the two cards of the test instructions saved, the badge must
-// recognize the page as a cart and read its $100.00 total. Run `npm run build` (API and site) first.
+// included), is answered at https://ai-checkout-api.onrender.com/sample-cart/ through context.route. The
+// hosted service is never contacted: the default and CI builds set no VITE_CATALOG_API_URL, so the worker
+// fetches nothing (its fetches would not pass through context.route). Before any card is saved, the badge
+// asks for cards; with the two cards of the test instructions saved, it must recognize the page as a cart
+// and read its $100.00 total. Run `npm run build` (API and site) first.
 import { chromium, expect, test } from '@playwright/test';
 import { fork, type ChildProcess } from 'node:child_process';
 import { existsSync } from 'node:fs';
@@ -71,6 +73,21 @@ test('the site’s sample cart shows the badge with a $3.00 estimate on its $100
       )
       .toBe(true);
     const onboarding = context.pages().find((p) => p.url().endsWith('/src/onboarding/index.html'))!;
+
+    // A reviewer who skipped setup: the sample cart is still a cart, and the badge asks for cards.
+    const early = await context.newPage();
+    await early.goto(SAMPLE_CART);
+    await expect
+      .poll(() => early.frames().some((f) => f.url().includes(BADGE)), { timeout: 10_000 })
+      .toBe(true);
+    await expect(
+      early
+        .frames()
+        .find((f) => f.url().includes(BADGE))!
+        .getByRole('button', { name: /Pick your cards to see your best card/ }),
+    ).toBeVisible();
+    await early.close();
+
     await addCard(onboarding, 'Capital One Quicksilver');
     await addCard(onboarding, 'American Express Blue Cash Everyday');
     await onboarding.getByLabel(/Blue Cash Everyday online retail spend/).fill('0');
