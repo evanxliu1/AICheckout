@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { AlertInline, Badge, Card, Link, Table, type TableColumn } from '@ai-checkout/ui';
+import { AlertInline, Badge, Button, Card, Link, Table, type TableColumn } from '@ai-checkout/ui';
 import { Layout, PageIntro, REPO, type PageId } from './Layout';
 import { ResultsChart, rowLabel } from './Chart';
 import { SystemsDiagram } from './Diagram';
@@ -32,7 +32,7 @@ export const CARD_COUNT = ISSUERS.reduce((total, [, count]) => total + count, 0)
 const EXPANSION_MD = `${REPO}/blob/main/docs/evals/expansion.md`;
 const RESULTS_MD = `${REPO}/blob/main/docs/evals/results.md`;
 
-export type Rendered = { title: string; description: string; body: ReactNode };
+export type Rendered = { title: string; description: string; body: ReactNode; noindex?: boolean };
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
@@ -1444,6 +1444,90 @@ function Uninstalled(): Rendered {
   };
 }
 
+/** Lines of the sample cart: the fictional cart of the release screenshots
+ * (extension/tests/fixtures/sample-cart.html). */
+const SAMPLE_ITEMS: [string, number][] = [
+  ['Sample item', 1],
+  ['Another sample item', 2],
+];
+
+/**
+ * A static cart for Chrome Web Store reviewers and testers (linked from the test instructions, not the
+ * navigation). The cart reader must recognize it and read a certain $100.00: the title and h1 carry the
+ * cart word (the path segment "sample-cart" does not count as one), the order summary has subtotal, tax
+ * and total rows, and each line has a quantity and a remove control. No prose on the page names an amount
+ * or a total, so the summary is the only place the reader finds one.
+ */
+function SampleCart(): Rendered {
+  return {
+    title: 'Your cart · Sample cart for testing AI Checkout',
+    description:
+      'A sample cart with fixed amounts for testing the AI Checkout badge without visiting a store.',
+    noindex: true,
+    body: (
+      <>
+        <PageIntro eyebrow="Sample cart for testing AI Checkout" title="Your cart">
+          <p>
+            Use this page to try AI Checkout without visiting a store. With the extension installed and your
+            cards saved, the badge appears in the bottom-right corner and shows the card that earns the most
+            on this cart. The items and amounts are fixed: the quantity and Remove controls don’t change them.
+          </p>
+          <p>
+            Real stores work the same way. Open the cart page of any U.S. online store to see the badge there.
+          </p>
+        </PageIntro>
+        <div className="sample-cart">
+          <Card as="section" hasBorder className="sample-cart__box" aria-labelledby="sample-items">
+            <h2 id="sample-items">2 items</h2>
+            <ul className="sample-cart__items">
+              {SAMPLE_ITEMS.map(([name, quantity], index) => (
+                <li key={name} className="sample-cart__item">
+                  <div className="sample-cart__thumb" aria-hidden="true" />
+                  <p className="sample-cart__name">{name}</p>
+                  <div className="sample-cart__controls">
+                    <label className="ac-form-label" htmlFor={`sample-quantity-${index + 1}`}>
+                      Quantity
+                    </label>
+                    <input
+                      id={`sample-quantity-${index + 1}`}
+                      className="ac-form-text-input sample-cart__quantity"
+                      type="number"
+                      value={quantity}
+                      readOnly
+                    />
+                    <Button color="secondary" size="small" disabled aria-label={`Remove ${name}`}>
+                      Remove
+                    </Button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Card>
+          <Card as="section" hasBorder className="sample-cart__box" aria-labelledby="sample-summary">
+            <h2 id="sample-summary">Order summary</h2>
+            <table className="sample-cart__summary">
+              <tbody>
+                <tr>
+                  <th scope="row">Subtotal</th>
+                  <td>$92.59</td>
+                </tr>
+                <tr>
+                  <th scope="row">Estimated tax</th>
+                  <td>$7.41</td>
+                </tr>
+                <tr className="sample-cart__total">
+                  <th scope="row">Total</th>
+                  <td>$100.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </Card>
+        </div>
+      </>
+    ),
+  };
+}
+
 const RENDERERS: Record<PageId, () => Rendered> = {
   home: Home,
   results: Results,
@@ -1452,6 +1536,7 @@ const RENDERERS: Record<PageId, () => Rendered> = {
   support: Support,
   credits: Credits,
   uninstalled: Uninstalled,
+  'sample-cart': SampleCart,
 };
 
 export function page(id: PageId): Rendered {

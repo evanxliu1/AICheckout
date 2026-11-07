@@ -68,7 +68,8 @@ for (const entry of ALL_PAGES) {
       await page.goto(`${origin}${entry.path}`, { waitUntil: 'networkidle' });
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       const nav = page.getByRole('navigation', { name: 'Site' });
-      // The credits and uninstalled pages are reached from the footer or from Chrome, not the navigation.
+      // The credits, uninstalled and sample cart pages are reached from the footer, Chrome or the test
+      // instructions, not the navigation.
       if (PAGES.includes(entry))
         await expect(nav.getByRole('link', { name: entry.label })).toHaveAttribute('aria-current', 'page');
       else await expect(nav.locator('[aria-current="page"]')).toHaveCount(0);

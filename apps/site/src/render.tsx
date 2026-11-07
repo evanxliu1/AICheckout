@@ -8,9 +8,11 @@ const escape = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export function renderPage(id: PageId) {
-  const { title, description, body } = page(id);
+  const { title, description, body, noindex } = page(id);
   return {
-    head: `<title>${escape(title)}</title><meta name="description" content="${escape(description)}" />`,
+    head: `<title>${escape(title)}</title><meta name="description" content="${escape(description)}" />${
+      noindex ? '<meta name="robots" content="noindex" />' : ''
+    }`,
     body: renderToStaticMarkup(body),
   };
 }

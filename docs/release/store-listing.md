@@ -119,7 +119,7 @@ The tab has no pricing field. AI Checkout is free and has no in-app purchases.
 
 ## Test instructions tab
 
-Paste the block in [reviewer-instructions.md](reviewer-instructions.md#test-instructions-for-the-dashboard). No account, login, payment or credentials are needed.
+Paste the block in [reviewer-instructions.md](reviewer-instructions.md#test-instructions-for-the-dashboard). No account, login, payment or credentials are needed. The block sends the reviewer to the sample cart on the project's site (`https://ai-checkout-api.onrender.com/sample-cart/`), a page with a $100.00 total that the badge reads, and says real stores work the same way.
 
 ## Assets
 

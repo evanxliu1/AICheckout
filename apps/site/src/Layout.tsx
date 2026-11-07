@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import { Icon, Link } from '@ai-checkout/ui';
 
 export const REPO = 'https://github.com/evanxliu1/AICheckout';
-export type PageId = 'home' | 'results' | 'architecture' | 'privacy' | 'support' | 'credits' | 'uninstalled';
+export type PageId =
+  'home' | 'results' | 'architecture' | 'privacy' | 'support' | 'credits' | 'uninstalled' | 'sample-cart';
 export type PageEntry = { id: PageId; path: string; label: string };
 /** Pages in the site navigation. */
 export const PAGES: PageEntry[] = [
@@ -12,10 +13,12 @@ export const PAGES: PageEntry[] = [
   { id: 'privacy', path: '/privacy/', label: 'Privacy' },
   { id: 'support', path: '/support/', label: 'Support' },
 ];
-/** Pages reached from the footer (credits) or from Chrome after an uninstall; not in the navigation. */
+/** Pages reached from the footer (credits), from Chrome after an uninstall, or from the Chrome Web Store
+ * test instructions (the sample cart); not in the navigation. */
 export const OTHER_PAGES: PageEntry[] = [
   { id: 'credits', path: '/credits/', label: 'Credits' },
   { id: 'uninstalled', path: '/uninstalled/', label: 'Uninstalled' },
+  { id: 'sample-cart', path: '/sample-cart/', label: 'Sample cart' },
 ];
 export const ALL_PAGES: PageEntry[] = [...PAGES, ...OTHER_PAGES];
 
