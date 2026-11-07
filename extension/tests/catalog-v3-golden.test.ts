@@ -2,15 +2,15 @@ import { describe, expect, it } from 'vitest';
 import { CATALOG_V2, CATALOG_V3, catalogV3Schema, compareRewards } from '../src/domain';
 import type { CardEstimate, Comparison, Purchase, RuleUsage, Wallet, WalletCard } from '../src/domain';
 
-/* Golden ranking ladders on the real 178-card catalog v3 (Stage 2 M5). Every expectation was computed by hand
+/* Golden ranking ladders on the real 177-card catalog v3 (Stage 2 M5). Every expectation was computed by hand
  * from the catalog rules and the engine v3 semantics (rules do not stack; an uncertain rule gives a range from
  * the base; an unstated cap is uncertain; an unanswered gate guarantees its worst answer's best rule; unvalued
  * programs rank after valued cards) and reviewed against the issuer captures by an independent subagent
- * (agent-verified). A $100 purchase on 2026-10-15, paid by card unless stated. A ladder row is
+ * (agent-verified). A $100 purchase on 2026-11-15, paid by card unless stated. A ladder row is
  * `cardId min..max` in cents, or `cardId Nu..Mu` in units for a card whose program has no value. */
 
-const now = Date.parse('2026-10-15T12:00:00Z');
-const today = '2026-10-15';
+const now = Date.parse('2026-11-15T12:00:00Z');
+const today = '2026-11-15';
 const MERCHANTS = ['amazon-us', 'best-buy-us', 'newegg-us'] as const;
 type MerchantId = (typeof MERCHANTS)[number];
 
@@ -82,39 +82,42 @@ const bceUsed = owned('amex-blue-cash-everyday', {
 describe('catalog v3 build', () => {
   it('is the release catalog and parses', () => {
     expect(catalogV3Schema.parse(CATALOG_V3)).toEqual(CATALOG_V3);
-    expect(CATALOG_V3.version).toBe('2026-10-05.renewal.1');
-    expect(CATALOG_V3.cards).toHaveLength(178);
+    expect(CATALOG_V3.version).toBe('2026-11-07.renewal.2');
+    expect(CATALOG_V3.cards).toHaveLength(177);
     expect(CATALOG_V3.merchants.map((m) => m.id)).toEqual(['best-buy-us', 'newegg-us', 'amazon-us']);
   });
 });
 
-/* Release 1 (catalog v2) with the changes the 2026-10-05 renewal made to the real cards a batch refreshed, as the
- * build report lists them ("Real cards refreshed by a batch", "Rule-ID continuity"): reissued rule IDs and new
- * excluded payment paths. Any other difference from release 1 fails the comparison below. */
-const RENEWAL_RULE_IDS: Record<string, string> = Object.fromEntries(
-  [
-    'double-cash-base',
-    'double-cash-travel-portal',
-    'quicksilver-entertainment-portal',
+/* Release 1 (catalog v2) with the changes the 2026-10-05 and 2026-11-07 renewals made to the real cards a batch
+ * refreshed, as the build reports list them ("Real cards refreshed by a batch", "Rule-ID continuity"): reissued
+ * rule IDs and new excluded payment paths. Any other difference from release 1 fails the comparison below. The
+ * 2026-10-05 renewal issued `-v2` IDs; the 2026-11-07 renewal issued `-v3` for eight of them and returned
+ * `quicksilver-entertainment-portal-v2` to its release-1 ID (its terms match release 1's again). */
+const RENEWAL_RULE_IDS: Record<string, string> = Object.fromEntries([
+  ...[
     'savor-supermarkets',
     'savor-dining',
     'savor-entertainment',
     'savor-streaming',
     'freedom-unlimited-base',
-    'freedom-unlimited-travel-portal',
-    'freedom-unlimited-dining',
-    'freedom-unlimited-drugstores',
     'bce-base',
-    'bce-supermarkets',
     'bce-online-retail',
-    'bce-gas',
     'bcp-base',
     'bcp-supermarkets',
     'bcp-streaming',
-    'bcp-transit',
     'bcp-gas',
   ].map((id) => [id, `${id}-v2`]),
-);
+  ...[
+    'double-cash-base',
+    'double-cash-travel-portal',
+    'freedom-unlimited-travel-portal',
+    'freedom-unlimited-dining',
+    'freedom-unlimited-drugstores',
+    'bce-supermarkets',
+    'bce-gas',
+    'bcp-transit',
+  ].map((id) => [id, `${id}-v3`]),
+]);
 const WALLETS = ['digital-wallet', 'paypal', 'venmo'];
 const RENEWAL_EXCLUDED_PATHS: Record<string, string[]> = {
   'savor-dining': WALLETS,
@@ -132,6 +135,9 @@ const RENEWAL_EXCLUDED_PATHS: Record<string, string[]> = {
   'bcp-transit': WALLETS,
 };
 const RELEASE_1_RENEWED = structuredClone(CATALOG_V2);
+// Release 1 expired 2026-10-29; the renewed copy carries the bundled catalog's validity window.
+RELEASE_1_RENEWED.verifiedAt = CATALOG_V3.verifiedAt;
+RELEASE_1_RENEWED.expiresAt = CATALOG_V3.expiresAt;
 for (const card of RELEASE_1_RENEWED.cards)
   for (const rule of card.rules) {
     const paths = RENEWAL_EXCLUDED_PATHS[rule.id];
@@ -173,7 +179,7 @@ describe('real cards: catalog v3 gives release 1 (catalog v2) results with the r
             onlineRetail: 'eligible',
             ...extra,
           },
-          Date.parse('2026-10-15T12:00:00Z'),
+          Date.parse('2026-11-15T12:00:00Z'),
         ) as Comparison;
         const v3 = compare(wallet(cards), merchantId, extra) as Comparison;
         expect(v3.estimates.map(keep)).toEqual(v2.estimates.map(keep));

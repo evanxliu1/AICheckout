@@ -23,9 +23,29 @@ import { MERCHANT_LAYER, freshDates, freshnessCounts, freshnessRecordSchema } fr
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const committed = await loadCatalogBatches(root);
 const RELEASE_2 = '2026-10-02.expansion.1';
+/**
+ * merchants.json as release 2 had it: the 2026-11-06 renewal re-captured the two CheckMCC pages and moved their
+ * `checkedOn` from 2026-09-28 to 2026-11-06, a date after every historical build these tests rebuild.
+ */
+/** The program table as release 2 read it: the 2026-11-06 re-read changed only `readOn` and the version. */
+const releaseTwoProgramTable = (table) =>
+  JSON.parse(
+    JSON.stringify({ ...table, version: 'reward-programs.2026-10-02.2' }).replaceAll(
+      '"readOn":"2026-11-06"',
+      '"readOn":"2026-10-02"',
+    ),
+  );
+const releaseTwoMerchants = (merchants) => ({
+  ...merchants,
+  sources: merchants.sources.map((source) =>
+    source.id.startsWith('check-mcc-') ? { ...source, checkedOn: '2026-09-28' } : source,
+  ),
+});
 /** The frozen base layer alone, as release 2 was built: no pipeline batch, no freshness record. */
 const base = {
   ...committed,
+  merchants: releaseTwoMerchants(committed.merchants),
+  programTable: releaseTwoProgramTable(committed.programTable),
   config: {
     ...committed.config,
     version: RELEASE_2,

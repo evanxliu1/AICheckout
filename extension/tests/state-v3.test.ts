@@ -490,12 +490,14 @@ describe('release 1 (v2) to the bundled catalog v3', () => {
     defaultCardId: null,
     cards: CATALOG_V2.cards.map((card) => ({ cardId: card.id, usage: card.rules.map((r) => usage(r.id)) })),
   });
-  /** Release-1 rule IDs the 2026-10-05 renewal kept (same terms); it reissued the others with new IDs
-   * because their terms changed (build report, "Rule-ID continuity"). */
+  /** Release-1 rule IDs the bundled catalog keeps (same terms); the renewals reissued the others with new IDs
+   * because their terms changed (build reports, "Rule-ID continuity"). The 2026-11-07 renewal returned
+   * `quicksilver-entertainment-portal`, reissued by the 2026-10-05 renewal, to its release-1 ID and terms. */
   const KEPT_RELEASE_1_RULES = [
     'active-cash-base',
     'quicksilver-base',
     'quicksilver-travel-portal',
+    'quicksilver-entertainment-portal',
     'savor-base',
     'savor-entertainment-portal',
     'savor-travel-portal',

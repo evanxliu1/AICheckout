@@ -15,7 +15,7 @@ import {
   type ResultRow,
 } from './results';
 
-/** Cards per issuer in the bundled catalog v3 (2026-10-02.expansion.1); tests/pages.test.tsx checks it. */
+/** Cards per issuer in the bundled catalog v3 (2026-11-07.renewal.2); tests/pages.test.tsx checks it. */
 export const ISSUERS: [string, number][] = [
   ['American Express', 13],
   ['Bank of America', 19],
@@ -26,7 +26,7 @@ export const ISSUERS: [string, number][] = [
   ['Discover', 6],
   ['Synchrony', 23],
   ['U.S. Bank', 16],
-  ['Wells Fargo', 7],
+  ['Wells Fargo', 6],
 ];
 export const CARD_COUNT = ISSUERS.reduce((total, [, count]) => total + count, 0);
 const EXPANSION_MD = `${REPO}/blob/main/docs/evals/expansion.md`;
