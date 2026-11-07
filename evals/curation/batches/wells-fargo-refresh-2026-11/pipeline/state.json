@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "wells-fargo-refresh-2026-11",
-  "updatedAt": "2026-11-07T16:52:17.317Z",
+  "updatedAt": "2026-11-07T17:55:09.416Z",
   "cards": {
     "wells-fargo-autograph": {
       "stages": {
@@ -46,12 +46,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:c7623c9f656f0bae5147e4dda26052c0e24ed1d63d5f007337c8304a145575ff",
-          "finishedAt": "2026-11-07T16:52:17.316Z",
-          "attempts": 5,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph",
+              "sha256": "9e5acc9bef45bc9b7a667bc54234f7fcf9986ea6dfbc66f3267d66bce59f240c"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.319Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:2745848b70b61a3ecae6cb76af8802a96aafff9360f82bc2917087ae97d04b72",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph",
+              "sha256": "dadadfffbbc3fb968ad8e450c3ac40d1517ed0b8c3f9c36ea5dff11e5ce927b1"
+            }
+          ],
+          "labelsHash": "sha256:933d0efd6de830b44bf9df6b56d6b0c3c3cba8ed2eef9bd2f44670006eeb54ef",
+          "anchorsHash": "sha256:8a2d9591e24cf968898e7dfe0c91f09fca3d58cc6c855cc271a7c20314e4a52f",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -100,12 +120,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:2931d4551f181db414e6dd77681bd478ddd8f4e6d9bd3a3b2fd0fbb22b61a693",
-          "finishedAt": "2026-11-07T16:52:17.317Z",
-          "attempts": 5,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-autograph-journey",
+              "sha256": "b6ff5f847f6ad68386460d5355e09403cb32bd6881a1776957b82c170fc38bc3"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:83266b2c1ab886a5771a33a521e90ccdfd26cb5f93fd8850858981ba8373e198",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-autograph-journey",
+              "sha256": "7cefa0eddb9e0bd2ea5dd4b0eadff5a15dc15acce5718f3f4020a08c947052f1"
+            }
+          ],
+          "labelsHash": "sha256:6d7ebec4e22816706f9f69820270ee2c367599baed87ae88a62109be99912bd3",
+          "anchorsHash": "sha256:27cb5a74d712106fa3f3dccd1e4177ec317c3f26ef9efec6d9a4e57217c01741",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -149,6 +189,21 @@
           ],
           "finishedAt": "2026-11-07T02:15:02.248Z",
           "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:b5cda6b8f5397be0b036b8ef9ed6d36f46cc454ac94b22c05bbd0828306da7f3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-one-key",
+              "sha256": "f9e48d9bdc5c31a327ed7a20a8dbee34aac3759b004a075bb2b0eb67223e186c"
+            }
+          ],
+          "labelsHash": "sha256:e74b7c9197759add1d2f6990daf661433f9a44a2ff5f5d8e7915116aea87cf32",
+          "anchorsHash": "sha256:fe42c9e27cc65342ffb2626d2d0a7403e3f445588f9f93363d94aaa34dc45fb0",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -181,12 +236,27 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:ec59600795af1ac559cf4b2907046ee4d643518c4dc6c74c3b5ab121b0fef2bf",
-          "finishedAt": "2026-11-07T16:52:17.317Z",
-          "attempts": 5,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-one-key-plus",
+              "sha256": "ab4b1703dfc5a51e0c18ac9f348883a32f58b5ad0217f8823fc1d2cbd8d70170"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:fff634091b4752b1fa9cab6b74878c9f50e1f6a107c49f920eb3fceca2302b1d",
+          "labelsHash": "sha256:425b7216a659e2f7f69f5cfb4d275f1518d5e2ea380f45f295d5472bc1462677",
+          "anchorsHash": "sha256:94db8445f43d9530f95ec1ce99019e02ddc7c9c93349f98b0a501771a02dfcc7",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1,
+          "undrafted": true
         }
       },
       "dropped": null,
@@ -227,12 +297,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:95f4d344a27af42595cb09b404b3df0336312349f6a2edcb589f77c9071b0b66",
-          "finishedAt": "2026-11-07T16:52:17.317Z",
-          "attempts": 5,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-choice-privileges",
+              "sha256": "d98dc0b1e28ba8fdece3da0812baacbc3008bc0472e4f04679dcd15611c12bfc"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:6fa800eb0a1457c7a5276118b76b61361000b4339d57c0cca2dff40633a1075f",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-choice-privileges",
+              "sha256": "a8fb7c4ac50798a914aa5f6204099aede4ae2ac2a32f1fe7f042634851a3b013"
+            }
+          ],
+          "labelsHash": "sha256:cc495f2bd69bda0a9e8780531ed7574f71a293b49aec0ebd6cb24420860bbc7c",
+          "anchorsHash": "sha256:a9b54587735307133001eae88e73ddbaef74679658589fa1a979df0ba3e79d7f",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -273,12 +363,32 @@
           }
         },
         "extract": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "extract.1",
           "inputHash": "sha256:4ad69a376402bb05f2a856ee82bc9b1b70a7a6d1c9349af6ebb90524a40b86df",
-          "finishedAt": "2026-11-07T16:52:17.317Z",
-          "attempts": 5,
-          "reason": "extract-failed"
+          "outputs": [
+            {
+              "ref": "trace:wells-fargo-choice-privileges-select",
+              "sha256": "49403722aab657e11fdcf04fd38c6f1b0eb6f54bc2c0d72b17c355d04b9d21e6"
+            }
+          ],
+          "finishedAt": "2026-11-07T17:44:33.320Z",
+          "attempts": 6
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:cfe7436fbd6665994de04f4a8db54f09769429975f9ded473ac4b72c2ab615a3",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-choice-privileges-select",
+              "sha256": "df6719bb2e9bcdc752257f2fb50dad3fe02215c4b195d9d96ffa375494451279"
+            }
+          ],
+          "labelsHash": "sha256:3f6568353d059b3828a5028d4011e89edd1db3b21da3b1ac4f128da62e653872",
+          "anchorsHash": "sha256:252ec11d054b42ad3bb1297e9a7a693409555cd0f35e91460bf413149bc3a8ec",
+          "finishedAt": "2026-11-07T17:55:09.415Z",
+          "attempts": 1
         }
       },
       "dropped": null,
@@ -322,6 +432,21 @@
           ],
           "finishedAt": "2026-11-07T02:15:02.249Z",
           "attempts": 2
+        },
+        "draft": {
+          "status": "done",
+          "stageVersion": "draft.1",
+          "inputHash": "sha256:8eb7aa0fe808f5f6279d3aee92da6ca21f8574f77e30ccdff5d50698006b4681",
+          "outputs": [
+            {
+              "ref": "corpus-draft:wells-fargo-active-cash",
+              "sha256": "622dc07918c41072146fdd51f39051825358fef92b211b532e08d7bb93acf63c"
+            }
+          ],
+          "labelsHash": "sha256:8d38ecfed02990c66b0748bb20349ffacaafbc5b8942d59e04efbc494825d966",
+          "anchorsHash": "sha256:1879ae7eb973256689cc72311ffedbfd9610e71eeab60d3cbc2eeb0f00d693c6",
+          "finishedAt": "2026-11-07T17:55:09.416Z",
+          "attempts": 1
         }
       },
       "dropped": null,
