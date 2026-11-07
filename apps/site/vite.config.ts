@@ -16,6 +16,7 @@ const PAGES = {
   'support/index.html': 'support',
   'credits/index.html': 'credits',
   'uninstalled/index.html': 'uninstalled',
+  'sample-cart/index.html': 'sample-cart',
 } as const;
 /** Published path → source file in the repository. */
 export const COPIED: Record<string, string> = {

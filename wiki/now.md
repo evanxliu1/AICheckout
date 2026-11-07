@@ -4,13 +4,13 @@ title: Now
 description: Current state, active work, open questions and next steps. Rewritten at the end of every session.
 status: stable
 generated:
-  by: claude-code/claude-fable-5-1
-  at: 2026-11-06T19:50:00Z
+  by: claude-code/claude-opus-5-5
+  at: 2026-11-07T10:30:00Z
 ---
 
 # Now
 
-As of 2026-11-06 (15.7 planning on `phase15-7-plan`; `main` at `5527ef5c`).
+As of 2026-11-07 (sample cart on `site-sample-cart`, cut from `main` `866aa854`; the 15.7 plan merged in PR #108).
 
 ## Current state
 
@@ -26,12 +26,13 @@ As of 2026-11-06 (15.7 planning on `phase15-7-plan`; `main` at `5527ef5c`).
 
 - **15.R catalog renewal** (main checkout, other session): freshness, refresh batches, `run build --version 2026-11-<dd>.renewal.2`, merge, deploy, `pipeline handoff`, Evan types `publish <version>`; then `publishedVersions` in the next PR. Re-read the NerdWallet estimates for a catalog verified after 2026-11-01.
 - **Docs rewrite merged** (PR #107, 2026-11-06): `docs/release`, the READMEs and the site rewritten to the [house style](../docs/release/style-guide.md), with the 15.7 planner items folded in; the live site updates on the Render deploy of `main`.
+- **Reviewer sample cart** (R8, Evan approved 2026-11-07 without "Nothing here is for sale") on `site-sample-cart`, pushed without a PR: `/sample-cart/` on the site, read by the badge as $100.00 (Blue Cash Everyday $3.00 with the reviewer's cards), proved by `apps/site/tests/sample-cart.test.ts` and `extension/e2e/sample-cart.spec.ts`; the Test instructions block opens it first and names the expected badge by behavior, not a fixed amount ([decision](decisions/2026-11-07-reviewer-sample-cart.md)). Reviewed 2026-11-07 by an independent Opus reviewer (agent-verified). Live once the coordinator merges and Render deploys; check `https://ai-checkout-api.onrender.com/sample-cart/` answers 200 before Submit.
 - **15.7 submission** ([runbook](product/phase-15-release-a.md#92-runbook)): after 15.R merges, build and package, `release:bundles:check --hosted`, `test:package:browser`, `release:media`, the Opus pre-submission review, the release record (docs agent), then Evan's dashboard steps ([field by field](product/phase-15-release-a.md#93-evans-dashboard-steps-field-by-field)): register, upload as a draft, tell the coordinator the id, set `EXTENSION_IDS` on Render (Save and deploy), the proxy-hop test, Submit with deferred publishing. The `phase15-7-plan` branch is pushed without a PR; the coordinator merges it when convenient (wiki, two scripts, one test).
 
 ## Open questions and next steps
 
-1. **Evan, for 15.7 (a silent go adopts each recommendation):** stay at `2.1.0`; no YouTube video at the first submission; deferred publishing; a `/sample-cart/` page on the site for reviewers; the two-network proxy-hop test needs one request from a second network (his phone hotspot) in the same minute. Before Submit: read the privacy policy ([`docs/release/privacy-policy.md`](../docs/release/privacy-policy.md), the site's `/privacy/`).
-2. **Coordinator, before the final `main` revision:** `publishedVersions` for the renewal; `docs-official-tone` merged; both workflows green; the four public pages answer 200.
+1. **Evan, for 15.7 (a silent go adopts each recommendation):** stay at `2.1.0`; no YouTube video at the first submission; deferred publishing; the two-network proxy-hop test needs one request from a second network (his phone hotspot) in the same minute. Before Submit: read the privacy policy ([`docs/release/privacy-policy.md`](../docs/release/privacy-policy.md), the site's `/privacy/`).
+2. **Coordinator, before the final `main` revision:** `publishedVersions` for the renewal; `docs-official-tone` merged; both workflows green; the four public pages and `/sample-cart/` answer 200.
 3. **15.3, not blocking Release A:** `recommendation_shown.amount_kind` has no `typed` (a Zod change, a new migration replacing `telemetry.event_schema()` and parity cases in one change). While a 410 pause runs, automatic events still queue (≤ 200) and go out after the week. Follow-up from 15.7, only if the step 13 test finds a shared bucket: read `CF-Connecting-IP` for the telemetry bucket instead of counting `X-Forwarded-For` hops. Possible later cleanup: `TELEMETRY_ENABLED`'s `import.meta.env?.` keeps the `/v1/events` code in a telemetry-off build (false at run time, not removed).
 4. Phase 15 risk to watch: Chrome's 2026 "strictly necessary" single-purpose rule against collecting owned cards and amounts; the telemetry-off build is the fallback ([plan 9.7](product/phase-15-release-a.md#97-rejection-and-rollback), [decision](decisions/2026-10-19-release-a-telemetry-design.md)). Review time is "a few days, up to a few weeks"; the renewed catalog's 30-day window is spent in part by it, so schedule the next freshness run early.
 5. Open for the coordinator from 15.6: a capped category covered only by the merchant release (Blue Cash Preferred and Everyday at supermarkets) has no spend input, and whether Amex counts a supermarket's website order as both "U.S. supermarkets" and "U.S. online retail" (the engine allows both).

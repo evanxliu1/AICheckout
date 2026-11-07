@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-11-07
+* [A sample cart for reviewers at /sample-cart/ on the public site, titled "Your cart" so the cart reader recognizes it, with fixed amounts and inert controls](./2026-11-07-reviewer-sample-cart.md) — implementer, on Evan's approval (without the "Nothing here is for sale" wording): the path is not a cart word, so the title and h1 carry it; proved by a site unit test and an extension browser test on the built page.
+
 ## 2026-11-06
 * [Phase 15.7: submission choices (version stays 2.1.0, no listing video at first submission, deferred publishing, the ZIP's bundled releases checked against the API, EXTENSION_IDS and the proxy-hop count settled by Evan's dashboard step and an outside test, the telemetry-off build as the rejection fallback)](./2026-11-06-release-a-submission-choices.md) — planner, recommendations Evan can overrule: the ZIP is built only after the 15.R renewal merges (the build has no catalog switch); the end card reads "Now on the Chrome Web Store" after approval; `EXTENSION_IDS` is Evan's dashboard step verified from outside; `TELEMETRY_PROXY_HOPS` is settled by a two-network test.
 * [A house style for the public docs and site, following Google and Microsoft, with no serial comma to match the extension's interface text](./2026-11-06-public-docs-house-style.md) — editor, on Evan's request: `docs/release/style-guide.md`; the privacy policy restructured like mainstream product notices.

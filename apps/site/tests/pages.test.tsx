@@ -15,7 +15,8 @@ it('renders every page with one h1, a title, a description and the current page 
       expect(page.body).toContain(`href="${page.path}" aria-current="page"`);
       expect(page.body.match(/aria-current="page"/g)).toHaveLength(1);
     } else {
-      // Credits and the uninstall page are reached from the footer or from Chrome, not the navigation.
+      // Credits, the uninstall page and the sample cart are reached from the footer, Chrome or the test
+      // instructions, not the navigation.
       expect(OTHER_PAGES.some((entry) => entry.id === page.id)).toBe(true);
       expect(page.body).not.toContain('aria-current="page"');
     }
