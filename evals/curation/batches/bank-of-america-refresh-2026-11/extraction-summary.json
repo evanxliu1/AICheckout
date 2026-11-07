@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/extract-cards.mjs",
+  "configuration": {
+    "provider": "codex",
+    "model": "gpt-5.6-luna",
+    "effort": "xhigh",
+    "prompt": "guided.2",
+    "selection": "keyword-window.1",
+    "outputTokens": "visible",
+    "limits": {
+      "attemptTimeoutMs": 600000,
+      "totalTimeoutMs": 900000,
+      "maxInputTokens": 64000,
+      "maxOutputTokens": 8192
+    },
+    "cliVersions": [
+      "codex-cli 0.158.0"
+    ]
+  },
+  "counts": {
+    "needs_review": 17,
+    "evidence_valid": 2
+  },
+  "cards": [
+    {
+      "cardId": "boa-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "ev-charging",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "boa-customized-cash-rewards-product",
+        "boa-customized-cash-rewards-pricing",
+        "boa-cash-back-category-choices"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 330117,
+      "inputTokenEstimate": 15162,
+      "inputTokens": 12472,
+      "outputTokens": 3780,
+      "runAt": "2026-11-07T18:19:46.993Z"
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "ambiguous"
+      ],
+      "findings": {
+        "reported_missing": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "boa-unlimited-cash-rewards-product",
+        "boa-unlimited-cash-rewards-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 81160,
+      "inputTokenEstimate": 10208,
+      "inputTokens": 9337,
+      "outputTokens": 729,
+      "runAt": "2026-11-07T18:19:46.981Z"
+    },
+    {
+      "cardId": "boa-travel-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 2,
+      "categories": [
+        "all-purchases",
+        "travel-portal"
+      ],
+      "issues": [
+        "ambiguous"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "boa-travel-rewards-product",
+        "boa-travel-rewards-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 93287,
+      "inputTokenEstimate": 10772,
+      "inputTokens": 9690,
+      "outputTokens": 805,
+      "runAt": "2026-11-07T18:19:46.983Z"
+    },
+    {
+      "cardId": "boa-premium-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "missing_evidence": 1,
+        "reported_ambiguous": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-premium-rewards-product",
+        "boa-premium-rewards-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 103759,
+      "inputTokenEstimate": 11225,
+      "inputTokens": 9843,
+      "outputTokens": 919,
+      "runAt": "2026-11-07T18:19:46.984Z"
+    },
+    {
+      "cardId": "boa-premium-rewards-elite",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 2
+      },
+      "documents": [
+        "boa-premium-rewards-elite-product",
+        "boa-premium-rewards-elite-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 148385,
+      "inputTokenEstimate": 13186,
+      "inputTokens": 11047,
+      "outputTokens": 1025,
+      "runAt": "2026-11-07T18:19:46.986Z"
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-students",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "ev-charging",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "quote_not_found": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-customized-cash-rewards-students-product",
+        "boa-customized-cash-rewards-students-pricing",
+        "boa-cash-back-category-choices"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 313952,
+      "inputTokenEstimate": 15204,
+      "inputTokens": 12488,
+      "outputTokens": 4067,
+      "runAt": "2026-11-07T18:19:46.996Z"
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-students",
+      "issuer": "Bank of America",
+      "status": "evidence_valid",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {},
+      "documents": [
+        "boa-unlimited-cash-rewards-students-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 38174,
+      "inputTokenEstimate": 4787,
+      "inputTokens": 5982,
+      "outputTokens": 239,
+      "runAt": "2026-11-07T18:19:46.967Z"
+    },
+    {
+      "cardId": "boa-travel-rewards-students",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {
+        "rate_not_in_evidence": 1
+      },
+      "documents": [
+        "boa-travel-rewards-students-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 90488,
+      "inputTokenEstimate": 4744,
+      "inputTokens": 5941,
+      "outputTokens": 312,
+      "runAt": "2026-11-07T18:19:46.959Z"
+    },
+    {
+      "cardId": "boa-customized-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "ev-charging",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "ambiguous",
+        "missing"
+      ],
+      "findings": {
+        "reported_ambiguous": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-customized-cash-rewards-secured-product",
+        "boa-customized-cash-rewards-secured-pricing",
+        "boa-cash-back-category-choices"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 368519,
+      "inputTokenEstimate": 14651,
+      "inputTokens": 12089,
+      "outputTokens": 3755,
+      "runAt": "2026-11-07T18:20:25.148Z"
+    },
+    {
+      "cardId": "boa-unlimited-cash-rewards-secured",
+      "issuer": "Bank of America",
+      "status": "evidence_valid",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [],
+      "findings": {},
+      "documents": [
+        "boa-unlimited-cash-rewards-secured-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 26364,
+      "inputTokenEstimate": 4467,
+      "inputTokens": 5748,
+      "outputTokens": 229,
+      "runAt": "2026-11-07T18:21:08.144Z"
+    },
+    {
+      "cardId": "boa-travel-rewards-secured",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 1,
+      "categories": [
+        "all-purchases"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-travel-rewards-secured-product"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 31478,
+      "inputTokenEstimate": 4411,
+      "inputTokens": 5697,
+      "outputTokens": 296,
+      "runAt": "2026-11-07T18:21:17.454Z"
+    },
+    {
+      "cardId": "boa-susan-g-komen-customized-cash-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 9,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "drugstores",
+        "ev-charging",
+        "gas",
+        "online-retail",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "out-of-scope"
+      ],
+      "findings": {
+        "reported_out-of-scope": 1
+      },
+      "documents": [
+        "boa-susan-g-komen-customized-cash-rewards-product",
+        "boa-susan-g-komen-customized-cash-rewards-pricing",
+        "boa-cash-back-category-choices"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 261627,
+      "inputTokenEstimate": 15706,
+      "inputTokens": 12875,
+      "outputTokens": 4034,
+      "runAt": "2026-11-07T18:21:20.289Z"
+    },
+    {
+      "cardId": "boa-atmos-rewards-ascent",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "streaming",
+        "transit"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 8,
+        "reported_missing": 1,
+        "reported_out-of-scope": 2
+      },
+      "documents": [
+        "boa-atmos-rewards-ascent-product",
+        "boa-atmos-rewards-ascent-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 287146,
+      "inputTokenEstimate": 12511,
+      "inputTokens": 10572,
+      "outputTokens": 2638,
+      "runAt": "2026-11-07T18:21:30.751Z"
+    },
+    {
+      "cardId": "boa-atmos-rewards-summit",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "out-of-scope",
+        "ambiguous",
+        "out-of-scope"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "reported_missing": 1,
+        "reported_out-of-scope": 2,
+        "reported_ambiguous": 1
+      },
+      "documents": [
+        "boa-atmos-rewards-summit-product",
+        "boa-atmos-rewards-summit-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 224850,
+      "inputTokenEstimate": 14933,
+      "inputTokens": 12040,
+      "outputTokens": 1561,
+      "runAt": "2026-11-07T18:21:34.512Z"
+    },
+    {
+      "cardId": "boa-royal-one",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 5,
+      "categories": [
+        "all-purchases",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 5,
+        "reported_missing": 3
+      },
+      "documents": [
+        "boa-royal-one-product",
+        "boa-royal-one-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 165495,
+      "inputTokenEstimate": 9996,
+      "inputTokens": 9136,
+      "outputTokens": 1268,
+      "runAt": "2026-11-07T18:21:48.946Z"
+    },
+    {
+      "cardId": "boa-royal-one-plus",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 8,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "ev-charging",
+        "gas",
+        "other",
+        "supermarkets"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 8,
+        "reported_missing": 3
+      },
+      "documents": [
+        "boa-royal-one-plus-product",
+        "boa-royal-one-plus-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 227851,
+      "inputTokenEstimate": 10673,
+      "inputTokens": 9567,
+      "outputTokens": 2685,
+      "runAt": "2026-11-07T18:22:15.378Z"
+    },
+    {
+      "cardId": "boa-allways-rewards",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-allways-rewards-product",
+        "boa-allways-rewards-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 149578,
+      "inputTokenEstimate": 10130,
+      "inputTokens": 9222,
+      "outputTokens": 1113,
+      "runAt": "2026-11-07T18:24:34.455Z"
+    },
+    {
+      "cardId": "boa-air-france-klm",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "dining",
+        "other"
+      ],
+      "issues": [
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "quote_not_found": 1,
+        "reported_missing": 1
+      },
+      "documents": [
+        "boa-air-france-klm-product",
+        "boa-air-france-klm-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 96533,
+      "inputTokenEstimate": 9762,
+      "inputTokens": 9010,
+      "outputTokens": 1087,
+      "runAt": "2026-11-07T18:25:00.957Z"
+    },
+    {
+      "cardId": "boa-norwegian-cruise-line-world-mastercard",
+      "issuer": "Bank of America",
+      "status": "needs_review",
+      "rules": 3,
+      "categories": [
+        "all-purchases",
+        "other"
+      ],
+      "issues": [
+        "missing",
+        "missing",
+        "missing"
+      ],
+      "findings": {
+        "rate_not_in_evidence": 3,
+        "reported_missing": 3
+      },
+      "documents": [
+        "boa-norwegian-cruise-line-world-mastercard-product",
+        "boa-norwegian-cruise-line-world-mastercard-pricing"
+      ],
+      "inputNotes": [],
+      "runs": 1,
+      "cliVersion": "codex-cli 0.158.0",
+      "durationMs": 170145,
+      "inputTokenEstimate": 9690,
+      "inputTokens": 8970,
+      "outputTokens": 1026,
+      "runAt": "2026-11-07T18:25:17.118Z"
+    }
+  ]
+}
