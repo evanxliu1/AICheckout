@@ -1,7 +1,7 @@
 ---
 type: Runbook
 title: Catalog release history
-description: Dated records of the hosted catalog releases published with the catalog release runbook — release 3 (2026-10-05.renewal.1, agent publish, 2026-10-05), release 2 (2026-10-02.expansion.1, review app, 2026-10-03), the facts of 2026-10-02.expansion.1 and how the 2026-10-05.renewal.1 renewal was prepared.
+description: Dated records of the hosted catalog releases published with the catalog release runbook — release 4 (2026-11-07.renewal.2, agent publish, 2026-11-07), release 3 (2026-10-05.renewal.1, agent publish, 2026-10-05), release 2 (2026-10-02.expansion.1, review app, 2026-10-03), the facts of 2026-10-02.expansion.1 and how the 2026-10-05.renewal.1 renewal was prepared.
 status: stable
 tags: [ops, catalog, release, history]
 generated:
@@ -21,6 +21,17 @@ sources:
 # Catalog release history
 
 One dated section per hosted catalog release, newest first, written by the coordinator after publishing (step 3 of [coordinator, after publishing](catalog-release.md#coordinator-after-publishing)). The procedure is the [catalog release](catalog-release.md) runbook. Release 1 (`2026-09-29.real.1`, 7 cards, sequence 1, published 2026-10-02T02:29Z) followed [`docs/release/publish-runbook.md`](../../docs/release/publish-runbook.md).
+
+## Release 4 (published 2026-11-07)
+
+| Item | Value |
+| --- | --- |
+| Release | sequence 4, `2026-11-07.renewal.2`, schema 3, 177 cards, 327 sources, verified 2026-11-07T00:00Z, expires **2026-12-07T00:00:00Z** |
+| Published | 2026-11-07, [agent publish](catalog-release.md#agent-publish-cli): Evan typed "publish 2026-11-07.renewal.2" in chat (instruction time 2026-11-07T20:54:36Z); the coordinating session ran `pipeline publish --confirm` from the main checkout at `aad81b9` (merge of PR #111, deployed by Render) with the 17 capture folders the handoff lists, `evals/curation/real/merchant-captures` in place of the handoff's `freshness/2026-10-05.json` entry for the two merchant sources |
+| Draft | `28d66803-1d39-446a-97d9-53112c8fdc9c`, created on head 3; 327 captures uploaded (one 13 s rate-limit wait); published at revision 2 |
+| Review note | states the catalog is agent-verified, not human-verified, the canonical hash `87d9da1bf87d838378066c3ac1cd7d48eba4b49c1cd46585be9cd43ea1955ee7`, that all 327 captures match, and "published by the coding agent on Evan's chat instruction of 2026-11-07T20:54:36Z" |
+| Served release | checked after publishing: `/v1/catalog` serves sequence 4, `2026-11-07.renewal.2`; the 503 that began when release 3 expired (2026-11-04T00:00Z) ended |
+| Next deadline | the next renewal must be published before **2026-12-07T00:00Z**; schedule its freshness run by 2026-11-30. Freedom Flex and Discover Q4 rules end 2026-12-31 |
 
 ## Release 3 (published 2026-10-05)
 
@@ -102,7 +113,7 @@ Offline dry run on branch `phase9-m5-agent-publish` (2026-10-05, `--offline`): *
 
 ## Renewal `2026-11-07.renewal.2` (prepared 2026-11-07)
 
-**Built, not published.** Release 3 expired on 2026-11-04T00:00Z; `GET /v1/catalog` answers 503 until this renewal is published. Prepared on branch `catalog-renewal-2026-11` by the renewal driver (Fable 5.1 until its weekly limit on 2026-11-07, then Opus 5.5) with the pipeline subagents; all labels agent-verified, not human-verified. **Version `2026-11-07.renewal.2`, verified 2026-11-07T00:00Z, expires 2026-12-07T00:00Z; 177 cards, 804 rules, 327 sources, 71 programs, 140 brands, 23 gates, 3 merchants; 598,441 bytes** ([build report](../../evals/curation/expansion/catalog-build-report.md)).
+**Published as [release 4](#release-4-published-2026-11-07).** Release 3 expired on 2026-11-04T00:00Z; `GET /v1/catalog` answered 503 until this renewal was published. Prepared on branch `catalog-renewal-2026-11` by the renewal driver (Fable 5.1 until its weekly limit on 2026-11-07, then Opus 5.5) with the pipeline subagents; all labels agent-verified, not human-verified. **Version `2026-11-07.renewal.2`, verified 2026-11-07T00:00Z, expires 2026-12-07T00:00Z; 177 cards, 804 rules, 327 sources, 71 programs, 140 brands, 23 gates, 3 merchants; 598,441 bytes** ([build report](../../evals/curation/expansion/catalog-build-report.md)).
 
 | Step | State |
 | --- | --- |

@@ -115,8 +115,8 @@ Then open `chrome://extensions`, turn on Developer mode, and load `extension/dis
 | | |
 | --- | --- |
 | **Working** | The extension at any https store on a 178-card catalog from the top 10 U.S. issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank, Wells Fargo), cash back and points, and a merchant release of more than 600 named U.S. stores |
-| **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 3, the 178-card catalog published 2026-10-05, expired on 2026-11-04; until the renewal (release 4) is published, `/v1/catalog` returns `503 catalog_unavailable` |
-| **Latest** | Catalog freshness: every source was hash-checked on 2026-10-05, 107 cards were re-verified, and the renewed 178-card catalog was published as release 3 on 2026-10-05 ([freshness results](docs/evals/freshness-2026-10.md)) |
+| **Live** | [Site](https://ai-checkout-api.onrender.com/), [results](https://ai-checkout-api.onrender.com/results/), [review app](https://ai-checkout-api.onrender.com/review/) (reviewers only) and the [catalog API](https://ai-checkout-api.onrender.com/v1/catalog) on Render and Supabase. Release 4, the 177-card catalog published 2026-11-07, is served until 2026-12-07 |
+| **Latest** | Catalog renewal: every source was re-checked on 2026-11-06, all ten issuers were refreshed (Bank of America from browser-pane captures), and the renewed 177-card catalog was published as release 4 on 2026-11-07 |
 | **Next** | The catalog renewal (release 4), then the Chrome Web Store release (Release A, version 2.1.0). Release docs and public pages are done. The store assets must be regenerated for the submitted package, and the submission is pending. The install link appears on the [site](https://ai-checkout-api.onrender.com/) once the listing exists. See the [roadmap](wiki/product/roadmap.md) |
 
 ## License
