@@ -24,7 +24,7 @@ sources:
     title: Authored merchant records
   - resource: ../../docs/research/cashback-card-terms-2026.md
     title: Research report, section on electronics retailers (checked 2026-09-28)
-stale_after: 2026-11-04T00:00:00Z
+stale_after: 2026-12-07T00:00:00Z
 ---
 
 # Merchants
@@ -39,7 +39,7 @@ A merchant profile says what the engine may assume about a retailer: whether it 
 | `newegg-us` | yes | yes | yes | electronics | 5732 | low | CheckMCC community lookup, undated (checked 2026-09-28) |
 | `amazon-us` | yes | yes | yes | general-merchandise | null | low | none collected |
 
-Both CheckMCC pages were re-checked unchanged (same SHA-256) by `pipeline freshness` on 2026-10-05, which dates them 2026-10-05 in catalog v3 `2026-10-05.renewal.1` ([freshness record](../../evals/curation/freshness/2026-10-05.json)). MCC 5732 is the network code for electronics stores. The research report found no evidence for the alternatives 5734, 5999 or 5311, and no data that separates online coding from in-store coding.
+The 2026-11-06 freshness check found both CheckMCC pages changed; they were re-captured by hand on 2026-11-06 (new manifest entries in `real/merchant-manifest.json`), each still states MCC 5732, and `merchants.json` dates them 2026-11-06 in catalog v3 `2026-11-07.renewal.2` ([freshness record](../../evals/curation/freshness/2026-11-06.json)). MCC 5732 is the network code for electronics stores. The research report found no evidence for the alternatives 5734, 5999 or 5311, and no data that separates online coding from in-store coding.
 
 ## Caveats (recorded in profile `notes`)
 
@@ -71,7 +71,7 @@ The engine, not the catalog, supplies one more profile: `GENERIC_MERCHANT_PROFIL
 
 - `compareV3` adds it to the catalog's merchants unless the catalog has a profile with that id (`merchantProfilesV3`), so every v3 release, bundled or hosted, supports it with no schema, SQL or migration change. v1 and v2 catalogs still answer `unsupported-merchant`. `catalogMerchantIds` lists it for v3 catalogs.
 - What applies there: `all-purchases` and `online-retail` rules. MCC-group rules do not (no reward category is `general-merchandise`), brand-scoped rules do not, and closed-loop cards are not accepted.
-- **Known limit.** It has no brands, so a rule's `excludedBrandIds` cannot fire at a generic store. A guard test in `extension/tests/rewards-v3.test.ts` lists every bundled rule that can apply there and has exclusions; in `2026-10-05.renewal.1` there is one, the Synchrony OnePay CashRewards first-90-days 3%, which excludes Walmart. walmart.com itself is a release record with brand `walmart`, so there the exclusion fires and the Walmart rate applies (`rewards-v3.test.ts`).
+- **Known limit.** It has no brands, so a rule's `excludedBrandIds` cannot fire at a generic store. A guard test in `extension/tests/rewards-v3.test.ts` lists every bundled rule that can apply there and has exclusions; in `2026-11-07.renewal.2` there are two: the Synchrony OnePay CashRewards first-90-days 3%, which excludes Walmart, and the Citi Wayfair Mastercard 2% online rule, which excludes the five Wayfair brands (the 7% brand rule applies there). walmart.com and wayfair.com are matched to brands only through release records, where the exclusion fires and the brand rate applies (`rewards-v3.test.ts`).
 - The amount comes from the generic cart reader ([`packages/cart-reader`](../../packages/cart-reader/)); the shopper is never asked to type one: when the reader is not certain, the badge and popup show the best card by rate (the rates view), and an optional amount field remains ([decision](../decisions/2026-10-09-never-ask-for-an-amount.md)). Online-retail eligibility starts at "Eligible", which the shopper can change.
 - **Brand websites:** at a matched store, brand rules apply regardless of its category, and the store gets a bonus category only on `issuer`, `mcc`, `corroborated` or `definition` evidence, otherwise the general rate, never a range ([decision](../decisions/2026-10-10-merchant-database-evidence.md), [definition basis](../decisions/2026-10-11-definition-evidence-basis.md), [mcc basis](../decisions/2026-10-11-mcc-evidence-basis.md), [Phase 14 plan](../product/phase-14-merchant-database.md)).
 - **Generic reader only:** no store configs anywhere; when the generic reader is not certain of an amount it withholds and the recommendation shows rates only ([decision](../decisions/2026-10-06-reader-shows-only-certain-amounts.md), [adapters retired](../decisions/2026-10-19-retire-legacy-adapters.md)).

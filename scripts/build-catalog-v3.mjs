@@ -123,7 +123,7 @@ or \`packages/rewards-core/src/catalog-v3.ts\` is stale. Do not edit by hand.
 
 - **Version** \`${catalog.version}\`, verified ${catalog.verifiedAt}, expires ${catalog.expiresAt} (30 days, the
   contract maximum). Source dates per layer are under "Batches and dates" below; published estimates were read
-  2026-10-02 (inside the window from 30 days before verification to expiry).
+  ${inputs.rewardPrograms.primaryPublisher.readOn} (inside the window from 30 days before verification to expiry).
 - **Inputs** \`expansion/corpus.json\` (${inputs.corpora[0].version}, ${corpusIds.size} cards), \`real/corpus.v2.json\`
   (${inputs.corpora[1].version}, 7 cards), \`reward-programs.json\` (${inputs.rewardPrograms.version}),
   \`merchants.json\`, \`catalog-overlay.json\` (${overlay.version}). All labels and overlay decisions are

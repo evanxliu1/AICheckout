@@ -5,7 +5,7 @@ or `packages/rewards-core/src/catalog-v3.ts` is stale. Do not edit by hand.
 
 - **Version** `2026-11-07.renewal.2`, verified 2026-11-07T00:00:00Z, expires 2026-12-07T00:00:00Z (30 days, the
   contract maximum). Source dates per layer are under "Batches and dates" below; published estimates were read
-  2026-10-02 (inside the window from 30 days before verification to expiry).
+  2026-11-06 (inside the window from 30 days before verification to expiry).
 - **Inputs** `expansion/corpus.json` (expansion.v1, 179 cards), `real/corpus.v2.json`
   (real.v2.2, 7 cards), `reward-programs.json` (reward-programs.2026-11-06.1),
   `merchants.json`, `catalog-overlay.json` (expansion.overlay.1). All labels and overlay decisions are
