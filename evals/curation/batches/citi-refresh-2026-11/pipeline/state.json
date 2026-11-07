@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "citi-refresh-2026-11",
-  "updatedAt": "2026-11-06T20:28:11.617Z",
+  "updatedAt": "2026-11-07T01:32:45.697Z",
   "cards": {
     "citi-strata": {
       "stages": {
@@ -157,7 +157,7 @@
           "status": "pending"
         },
         "capture": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "capture.1",
           "inputHash": "sha256:2c24e4e355e46e7dcf9f259dcc97d34b5c9dd3bae838858bdf703a1f945d4bc5",
           "outputs": [
@@ -186,13 +186,12 @@
               "sha256": "27192734314e85a72b839f233bb5ede941afdafc6b6bdcc2eb5e1e880c532f75"
             }
           ],
-          "finishedAt": "2026-11-06T19:47:25.592Z",
+          "finishedAt": "2026-11-07T01:32:45.697Z",
           "attempts": 1,
           "metrics": {
             "sources": 3,
-            "flags": 1
-          },
-          "reason": "capture-flagged"
+            "flags": 0
+          }
         }
       },
       "dropped": null,
@@ -730,6 +729,13 @@
     },
     "eval": {
       "status": "pending"
+    }
+  },
+  "resolvedFlags": {
+    "citi-costco-anywhere-visa-categories": {
+      "reason": "expected-short-page",
+      "sha256": "ce420064e5b92a48de4b793bfb1c0babe86c4e24d1bcef0554f59bd98c2aa602",
+      "resolvedAt": "2026-11-07T01:32:45.697Z"
     }
   }
 }

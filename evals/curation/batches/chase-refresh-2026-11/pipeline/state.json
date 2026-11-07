@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "batch": "chase-refresh-2026-11",
-  "updatedAt": "2026-11-06T19:50:25.446Z",
+  "updatedAt": "2026-11-07T01:32:44.907Z",
   "cards": {
     "chase-freedom-flex": {
       "stages": {
@@ -9,7 +9,7 @@
           "status": "pending"
         },
         "capture": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "capture.1",
           "inputHash": "sha256:cb14d7e71adf0338a19334140fb777a3b7399846d9a73a120da66fa91e6b608a",
           "outputs": [
@@ -38,13 +38,12 @@
               "sha256": "87d77ea6e2b918ca591ef8b7f505d99db3bcc5d92b8e33ae3c69ea3f0a508d7f"
             }
           ],
-          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "finishedAt": "2026-11-07T01:32:42.764Z",
           "attempts": 1,
           "metrics": {
             "sources": 3,
-            "flags": 1
-          },
-          "reason": "capture-flagged"
+            "flags": 0
+          }
         }
       },
       "dropped": null,
@@ -217,7 +216,7 @@
           "status": "pending"
         },
         "capture": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "capture.1",
           "inputHash": "sha256:880f2d331ba91962e849d6ac1139e86499e596436c651c6189cf5a56fec32768",
           "outputs": [
@@ -246,13 +245,12 @@
               "sha256": "4cd4f2d6fc76b16ee6fc4b16829f56b6e5c675681ea0587c5e22f47b52c8e9b0"
             }
           ],
-          "finishedAt": "2026-11-06T19:43:55.190Z",
+          "finishedAt": "2026-11-07T01:32:43.613Z",
           "attempts": 1,
           "metrics": {
             "sources": 3,
-            "flags": 1
-          },
-          "reason": "capture-flagged"
+            "flags": 0
+          }
         }
       },
       "dropped": null,
@@ -417,7 +415,7 @@
           "status": "pending"
         },
         "capture": {
-          "status": "failed-gate",
+          "status": "done",
           "stageVersion": "capture.1",
           "inputHash": "sha256:8af39c9ba02ad86c2cdb5e1892cc2decac81090aa8f82415100549e2527b4921",
           "outputs": [
@@ -446,13 +444,12 @@
               "sha256": "0efd6f5f07688b4a75c2a732f6001715d3ad453b5dc20da692c63d65878bad21"
             }
           ],
-          "finishedAt": "2026-11-06T19:43:55.191Z",
+          "finishedAt": "2026-11-07T01:32:44.907Z",
           "attempts": 1,
           "metrics": {
             "sources": 3,
-            "flags": 1
-          },
-          "reason": "capture-flagged"
+            "flags": 0
+          }
         }
       },
       "dropped": null,
@@ -1243,6 +1240,23 @@
     },
     "eval": {
       "status": "pending"
+    }
+  },
+  "resolvedFlags": {
+    "chase-freedom-flex-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "308bf45d52e20d1a795610be3229741b53d2fd8b6e00456485f9ad056f17ba9b",
+      "resolvedAt": "2026-11-07T01:32:42.764Z"
+    },
+    "prime-visa-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "1ec91b4d7d1458c82ec48f2abbdc44ac277553e8ae70ac77ec01c8336adb8594",
+      "resolvedAt": "2026-11-07T01:32:43.613Z"
+    },
+    "disney-premier-visa-rewards-terms": {
+      "reason": "false-positive-flag",
+      "sha256": "05af7a9f8134a838150da8ad8e42088b5efcd5267bdcb0cdb7f3fcdcb4a9f7f6",
+      "resolvedAt": "2026-11-07T01:32:44.907Z"
     }
   }
 }
