@@ -51,9 +51,9 @@ function Section({ id, title, children }: { id: string; title: string; children:
 const SCREENSHOTS = [
   {
     src: '/media/2-badge.png',
-    alt: 'Presentation panel “Your best card, on your cart.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page with a $100.00 total: based on a $100.00 cart estimated total at Sample Kitchen (a fictional store), treated as a restaurant (its own pages; fits Chase’s restaurant definition); an amount field reading 100.00, the payment method “Card entered at checkout”, then Freedom Unlimited $3.00 (3%): 3% on “dining at restaurants, including takeout and eligible delivery services”; otherwise 1.5% on “all other purchases”, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”, with the remaining cards below the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “Your best card, on your cart.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page with a $100.00 total: based on a $100.00 cart estimated total at Sample Kitchen (a fictional store), treated as a restaurant (its own pages; fits Chase’s restaurant definition); an amount field reading 100.00, the payment method “Card entered at checkout”, the note “Double Cash is first because its guaranteed estimate is the highest. Another card could earn more if its conditions below are met.”, then Double Cash $2.00: 2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”; Quicksilver $1.50: 1.5% on “all other purchases”, “Rules that don’t apply here (2)”; and Freedom Unlimited, $1.50–$3.00, at the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
     caption:
-      'The badge on a cart, expanded: the best card, the rule in the issuer’s words, and why the store’s category applies.',
+      'The badge on a cart, expanded: the card with the highest guaranteed estimate, the rule in the issuer’s words, and why the store’s category applies.',
   },
   {
     src: '/media/3-rates.png',

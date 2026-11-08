@@ -110,9 +110,19 @@ try {
   if (!fontsLoaded) throw new Error('Repository fonts did not load');
   const motion = await page.evaluate(() => window.MOTION);
   const frames = Math.round(motion.duration * motion.fps);
+  // On this machine (2026-11-07) an occasional screenshot never returned, after fonts loaded, whether or not
+  // ffmpeg was running, under low or high load and with either headless channel. A frame is a pure function of
+  // t, so a stalled capture is retried after rendering the same t again; the bytes cannot change.
   const frameAt = async (t) => {
-    await page.evaluate((time) => window.renderFrame(time), t);
-    return page.screenshot({ type: 'png' });
+    for (let attempt = 1; ; attempt++) {
+      await page.evaluate((time) => window.renderFrame(time), t);
+      try {
+        return await page.screenshot({ type: 'png', timeout: 15_000 });
+      } catch (error) {
+        if (error?.name !== 'TimeoutError' || attempt === 4) throw error;
+        console.log(`screenshot at ${t.toFixed(3)} s stalled; retry ${attempt}`);
+      }
+    }
   };
   const frameIndex = (seconds) => Math.round(seconds * motion.fps);
 
