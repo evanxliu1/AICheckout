@@ -25,8 +25,9 @@ const SAMPLE_CARDS = [
 ];
 /** A fictional store, never a real retailer: a restaurant (online ordering) on the `definition` basis, so the
  * badge panel carries the evidence line, on a reserved `.example` host. Like every bundled dining record it sells
- * no physical goods, so online-retail rules do not apply and the card whose rule the evidence line names wins
- * outright: Freedom Unlimited's uncapped 3% on dining (review of 2026-10-20: a supermarket record let Blue Cash
+ * no physical goods, so online-retail rules do not apply. Under release 4 Freedom Unlimited's 3% on dining has
+ * no stated spend limit, so it shows as $1.50–$3.00 below Double Cash's guaranteed $2.00 (until 2026-11-07 its
+ * cap was read as none and it led with $3.00; review of 2026-10-20: a supermarket record let Blue Cash
  * Everyday's online-retail rule win under a supermarket evidence line, because its supermarket cap has no spend
  * input). It exists only in the test release below; the page is the neutral sample cart. */
 const NAMED_STORE = { id: 'sample-kitchen-us', host: 'www.sample-kitchen.example', name: 'Sample Kitchen' };
@@ -228,7 +229,7 @@ test('capture the real release UI', async ({ browserName }, testInfo) => {
     // 2. The badge's amount view at a store the release names, expanded, with the evidence line.
     const named = await context.newPage();
     await named.goto(`https://${NAMED_STORE.host}/cart`);
-    let badge = await expandBadge(named, /Use Freedom Unlimited · \$3\.00 back on this cart/);
+    let badge = await expandBadge(named, /Use Double Cash · \$2\.00 back on this cart/);
     await expect(
       badge.getByText(`Based on $100.00 cart estimated total at ${NAMED_STORE.name}.`, { exact: false }),
     ).toBeVisible();
@@ -237,11 +238,19 @@ test('capture the real release UI', async ({ browserName }, testInfo) => {
         exact: false,
       }),
     ).toBeVisible();
+    // Release 4 states no spend limit for Freedom Unlimited's dining bonus, so its 3% is a range and the
+    // guaranteed 2% of Double Cash leads (2026-11-07).
+    await expect(
+      badge.getByText('Double Cash is first because its guaranteed estimate is the highest.', {
+        exact: false,
+      }),
+    ).toBeVisible();
+    await expect(badge.getByText('$1.50–$3.00', { exact: true })).toBeVisible();
     await expect(
       badge.getByText('3% on “dining at restaurants, including takeout and eligible delivery services”', {
         exact: false,
       }),
-    ).toBeVisible();
+    ).toBeAttached();
     await capture('badge', named, await badge.locator('body').innerText());
     // Only the store's id and host reached the extension: no path, no page text.
     const session = JSON.stringify(await worker.evaluate(() => chrome.storage.session.get(null)));

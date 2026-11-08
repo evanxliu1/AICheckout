@@ -1,42 +1,57 @@
 # Extension package verification
 
-The record of the AI Checkout package uploaded to the Chrome Web Store. Values in double square brackets are filled at submission (milestone 15.7) from the coordinator's build of the exact upload ZIP; `node scripts/check-release-docs.mjs --release` refuses this file while any of them is left. An intended action is never recorded as done.
+The record of the AI Checkout package built for the Chrome Web Store. It holds only what was done; a step that hasn't happened yet is marked **pending** and names the step that fills it.
 
 ## Version 2.1.0 (Release A)
+
+Built and tested on 2026-11-07. This is the package prepared for upload, not a record of submission or approval; the [release record](../release/README.md#release-record) says when it was submitted.
 
 ### Artifact
 
 | Field | Value |
 | --- | --- |
 | File | `extension/artifacts/ai-checkout-2.1.0.zip` |
-| Size | [[ZIP_BYTES]] bytes, [[ZIP_FILE_COUNT]] files |
-| SHA-256 | `[[ZIP_HASH]]` |
-| Inventory | `extension/artifacts/ai-checkout-2.1.0.inventory.json` |
-| Source revision | `[[SOURCE_REVISION]]` on `main` |
-| Build | `npm run build:hosted --workspace=ai-checkout-extension`, then `npm run package --workspace=ai-checkout-extension` |
-| Reproduced | A second `build:hosted` at the same revision gave SHA-256 `[[REPRODUCED_HASH]]` |
+| Size | 373,684 bytes, 29 files |
+| SHA-256 | `bd9f5ad11cf84940861c710b7c6b756eb2c5b0dcec09b5184b0627048d87f6cd` |
+| Inventory | `extension/artifacts/ai-checkout-2.1.0.inventory.json` (its `sha256` matches the ZIP) |
+| Source revision | Built at `db465df1476536a4964f0ade14ec61b032ff54a3` on `main`, in a fresh worktree with no `extension/.env*` file except `.env.example`. Final `main` revision: pending (set when the media and docs commits have merged) |
+| Build | `npm ci`, then `npm run build:hosted --workspace=ai-checkout-extension` and `npm run package --workspace=ai-checkout-extension` |
+| Reproduced | `test:package:browser` repackaged the same `dist` to the same SHA-256. The `build:hosted` and `package` steps of `npm run release:media` rebuilt it at `537fa552`, which changes only docs, READMEs, `apps/site` and `extension/scripts` since the build revision, and gave the same SHA-256. A rebuild at the final `main` revision is pending |
 
 ### Bundled data
 
+From `npm run release:bundles:check -- --hosted --json` on 2026-11-07 at 22:03 UTC, which read both headers from `assets/merchants-CGFdd2bm.js` in the ZIP and reported no problems:
+
 | Field | Value |
 | --- | --- |
-| Card catalog | `[[CATALOG_VERSION]]`, verified `[[CATALOG_VERIFIED_AT]]`, expires `[[CATALOG_EXPIRES_AT]]` |
-| Store list (merchant release) | `[[MERCHANTS_VERSION]]` |
-| Compared with hosted | `/v1/catalog` served `[[HOSTED_CATALOG_VERSION]]` and `/v1/merchants` served `[[HOSTED_MERCHANTS_VERSION]]` on [[BUNDLES_CHECKED_ON]] |
+| Card catalog | `2026-11-07.renewal.2` (177 cards), verified `2026-11-07T00:00:00Z`, expires `2026-12-07T00:00:00Z` (29 whole days left on 2026-11-07) |
+| Store list (merchant release) | `2026-10-11.mcc.3`, verified `2026-10-11T00:00:00Z` |
+| Compared with hosted | `/v1/catalog` served `2026-11-07.renewal.2` (sequence 4) and `/v1/merchants` served `2026-10-11.mcc.3` (sequence 1) on 2026-11-07; both equal the repository's `CATALOG_V3` and `MERCHANTS_V1` |
 
 ### Manifest
 
-From the inventory, checked on [[MANIFEST_CHECKED_ON]]:
+From the inventory and the ZIP's `manifest.json`, checked on 2026-11-07:
 
 - `permissions`: `activeTab`, `alarms`, `scripting`, `storage`
 - `host_permissions`: `https://*/*` and `https://ai-checkout-api.onrender.com/*`
 - `catalogOrigin`: `https://ai-checkout-api.onrender.com`
+- One content script and one web-accessible resource (`src/badge/index.html`); no `optional_permissions`
 
 These must match the [permission justifications](../release/store-listing.md#permission-justifications-dashboard-copy).
 
 ### ZIP browser test
 
-`npm run test:package:browser --workspace=ai-checkout-extension` on [[ZIP_TEST_DATE]], Chromium [[CHROMIUM_VERSION]] (from `zip-verification.json`). The test verifies the archive and every extracted file against the inventory, installs the extracted ZIP in a fresh profile, picks the sample cards, reads a fixture cart from the popup and compares (or, after the bundled catalog's expiry, shows the expiry notice), checks the granted permissions and origins, and confirms that **Delete all local data** leaves local and session storage empty. Result: [[ZIP_TEST_RESULT]].
+`npm run test:package:browser --workspace=ai-checkout-extension` on 2026-11-07, Chromium 153.0.8010.12 (from `zip-verification.json`). The test verifies the archive and every extracted file against the inventory, installs the extracted ZIP in a fresh profile, picks the sample cards, reads a sanitized fixture cart from the popup and compares (Blue Cash Everyday $0.81 and Quicksilver $0.40 while the bundled catalog is valid), checks the granted permissions and origins, and confirms that **Delete all local data** leaves local and session storage empty. Result: passed (1 test), with the same SHA-256 as above.
+
+### After the draft upload
+
+These lines are filled in a docs-only commit after Evan's dashboard steps; none of them changes the ZIP.
+
+| Field | Value |
+| --- | --- |
+| Extension ID and `EXTENSION_IDS` on Render | Pending: Evan sets it after the draft upload, then the `Origin` filter is checked from outside |
+| `TELEMETRY_PROXY_HOPS` test | Pending: the two-network test runs after `EXTENSION_IDS` is set |
+| Submission | Pending: recorded in the [release record](../release/README.md#release-record) when Evan submits |
 
 ## Packaging checks
 

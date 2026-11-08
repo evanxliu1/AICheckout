@@ -39,7 +39,7 @@ Pick your cards once. On the cart or checkout page of any U.S. online store, AI 
 
 Coverage:
 
-- 178 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo), both cash back and points. Add yours by searching for the card or bank name. No card numbers or bank login.
+- 177 U.S. personal credit cards from the ten largest issuers (American Express, Bank of America, Barclays, Capital One, Chase, Citi, Discover, Synchrony, U.S. Bank and Wells Fargo), both cash back and points. Add yours by searching for the card or bank name. No card numbers or bank login.
 - More than 600 named U.S. stores with their bonus category (such as supermarkets, drugstores and home improvement), and a general profile for every other store, so category bonuses apply where they count.
 - Card terms come from the issuers' published terms. Each catalog release is checked against the issuers' pages by separate AI verifiers and approved by a person before it's published, and the extension refreshes the terms weekly. Points and miles are compared in cash at a published estimate unless the issuer states a value or you set your own.
 
@@ -123,6 +123,6 @@ Paste the block in [reviewer-instructions.md](reviewer-instructions.md#test-inst
 
 ## Assets
 
-The store icon, the five 1280×800 screenshots and the 440×280 promo tile were regenerated on 2026-10-20 (milestone 15.6) against a 2.1.0 hosted-build ZIP and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. The ZIP that bundles the catalog renewal (15.R) needs the media regenerated and re-bound before upload. No marquee image and, at the first submission, no YouTube video.
+The store icon, the five 1280×800 screenshots and the 440×280 promo tile were regenerated on 2026-11-07 against the 2.1.0 upload ZIP (catalog `2026-11-07.renewal.2`) and recorded with their hashes in [assets/README.md](assets/README.md): card search, the badge's amount view at a store the release names with its evidence line and the card with the highest guaranteed estimate, the rates view, the popup comparison with the rule in the issuer's words, and the consent screen. No marquee image and, at the first submission, no YouTube video.
 
 References checked 2026-10-20: [privacy fields](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy), [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq), [Limited Use](https://developer.chrome.com/docs/webstore/program-policies/limited-use), [images](https://developer.chrome.com/docs/webstore/images). Recheck the dashboard's wording at submission.

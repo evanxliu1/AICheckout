@@ -51,7 +51,7 @@ Deleting clears your cards, options, settings, purchase inputs, the downloaded t
 
 ## Known limitations
 
-- 178 cards from ten U.S. issuers, and U.S. stores and U.S. dollars only. Other cards, benefits and countries aren't covered.
+- 177 cards from ten U.S. issuers, and U.S. stores and U.S. dollars only. Other cards, benefits and countries aren't covered.
 - Estimates follow the issuers' terms. How a purchase actually posts (its merchant category, or payment through PayPal or buy-now-pay-later) can change the reward, so the extension can't guarantee one.
 - The cart reader shows an amount only when it's certain of it. On some carts, that means you see the rates view and type the amount.
 - The Chrome Web Store listing isn't published yet.

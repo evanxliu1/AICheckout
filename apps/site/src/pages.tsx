@@ -44,31 +44,29 @@ function Section({ id, title, children }: { id: string; title: string; children:
 }
 
 // Copied from the Web Store screenshots in docs/release/assets (vite.config.ts COPIED); regenerated
-// on 2026-10-20 (milestone 15.6) for extension 2.1.0: the badge at any store, the rates view, card search and
+// on 2026-11-07 (milestone 15.7) for extension 2.1.0: the badge at any store, the rates view, card search and
 // the popup comparison. The alt text describes the images as they are cropped; keep it in step with them.
-// The rates screenshot still shows the earlier spelling "Store not recognised?"; switch its alt text to
-// "recognized" when 15.7 regenerates the media.
 const SCREENSHOTS = [
   {
     src: '/media/2-badge.png',
-    alt: 'Presentation panel “Your best card, on your cart.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page with a $100.00 total: based on a $100.00 cart estimated total at Sample Kitchen (a fictional store), treated as a restaurant (its own pages; fits Chase’s restaurant definition); an amount field reading 100.00, the payment method “Card entered at checkout”, then Freedom Unlimited $3.00 (3%): 3% on “dining at restaurants, including takeout and eligible delivery services”; otherwise 1.5% on “all other purchases”, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”, with the remaining cards below the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “Your best card, on your cart.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page with a $100.00 total: based on a $100.00 cart estimated total at Sample Kitchen (a fictional store), treated as a restaurant (its own pages; fits Chase’s restaurant definition); an amount field reading 100.00, the payment method “Card entered at checkout”, the note “Double Cash is first because its guaranteed estimate is the highest. Another card could earn more if its conditions below are met.”, then Double Cash $2.00: 2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”; Quicksilver $1.50: 1.5% on “all other purchases”, “Rules that don’t apply here (2)”; and Freedom Unlimited, $1.50–$3.00, at the panel’s scroll edge above the Dismiss for this tab and Not on this site buttons.',
     caption:
-      'The badge on a cart, expanded: the best card, the rule in the issuer’s words, and why the store’s category applies.',
+      'The badge on a cart, expanded: the card with the highest guaranteed estimate, the rule in the issuer’s words, and why the store’s category applies.',
   },
   {
     src: '/media/3-rates.png',
-    alt: 'Presentation panel “No guess when the amount isn’t certain.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page whose order summary applies a −$25.00 gift card (total $75.00): the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “No guess when the amount isn’t certain.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page whose order summary applies a −$25.00 gift card (total $75.00): the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognized? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
     caption:
       'When the amount isn’t certain (a gift card is applied here), your cards are ranked by rate, not guessed.',
   },
   {
     src: '/media/1-wallet.png',
     alt: 'Presentation panel “Your cards. Your choice.” beside the actual popup card editor: the search field reads “Savor” with three matches listed under Capital One (Savor, Savor Rewards for Students, SavorOne Rewards), above “Cards you own (4)”: Citi Double Cash, Capital One Quicksilver, Chase Freedom Unlimited and American Express Blue Cash Everyday, each with a Remove link.',
-    caption: 'Search 178 cards and add the ones you already have. No card numbers or bank login.',
+    caption: 'Search 177 cards and add the ones you already have. No card numbers or bank login.',
   },
   {
     src: '/media/4-comparison.png',
-    alt: 'Presentation panel “The rule in the issuer’s words.” beside the actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
+    alt: 'Presentation panel “The rule in the issuer’s words.” beside the actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
     caption:
       'The popup compares any amount at any store, with each rule quoted from the issuer and its conditions.',
   },
