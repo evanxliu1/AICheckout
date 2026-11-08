@@ -38,7 +38,7 @@ const scenes = [
     kind: 'window',
     title: 'No guess when the amount isn’t certain.',
     copy: 'A gift card is applied here, so the cart amount isn’t read. The badge ranks your cards by rate instead.',
-    alt: 'Actual badge panel “Best card for this cart” beside a neutral sample cart page (“Your cart”, “Sample cart · 2 items”, two sample items, an order summary: subtotal $92.59, estimated tax $7.41, gift card −$25.00, total $75.00): “The cart amount wasn’t read on this page. Each card’s rate doesn’t depend on it, so the best card is the same at any amount, unless a condition below applies. A spend cap on one of these cards could change the order at your cart’s amount.” Then the cards by rate: Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line “A tap sends only this store’s domain (for example example.com) so it can be added”, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Actual badge panel “Best card for this cart” beside a neutral sample cart page (“Your cart”, “Sample cart · 2 items”, two sample items, an order summary: subtotal $92.59, estimated tax $7.41, gift card −$25.00, total $75.00): “The cart amount wasn’t read on this page. Each card’s rate doesn’t depend on it, so the best card is the same at any amount, unless a condition below applies. A spend cap on one of these cards could change the order at your cart’s amount.” Then the cards by rate: Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line “A tap sends only this store’s domain (for example example.com) so it can be added”, a “Store not recognized? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
     note: WINDOW_NOTE,
   },
   {
@@ -46,7 +46,7 @@ const scenes = [
     kind: 'popup',
     title: 'The rule in the issuer’s words.',
     copy: 'Compare any amount at any store. Each estimate quotes the issuer’s rule and shows its conditions.',
-    alt: 'Actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, with the conditions U.S. merchants only and up to $6,000.00 per year then 1%, “Activation is not mentioned on the issuer’s pages” and “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
+    alt: 'Actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, with the conditions U.S. merchants only and up to $6,000.00 per year then 1%, “Activation is not mentioned on the issuer’s pages” and “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
     note: POPUP_NOTE,
   },
   {

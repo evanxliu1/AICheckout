@@ -44,10 +44,8 @@ function Section({ id, title, children }: { id: string; title: string; children:
 }
 
 // Copied from the Web Store screenshots in docs/release/assets (vite.config.ts COPIED); regenerated
-// on 2026-10-20 (milestone 15.6) for extension 2.1.0: the badge at any store, the rates view, card search and
+// on 2026-11-07 (milestone 15.7) for extension 2.1.0: the badge at any store, the rates view, card search and
 // the popup comparison. The alt text describes the images as they are cropped; keep it in step with them.
-// The rates screenshot still shows the earlier spelling "Store not recognised?"; switch its alt text to
-// "recognized" when 15.7 regenerates the media.
 const SCREENSHOTS = [
   {
     src: '/media/2-badge.png',
@@ -57,7 +55,7 @@ const SCREENSHOTS = [
   },
   {
     src: '/media/3-rates.png',
-    alt: 'Presentation panel “No guess when the amount isn’t certain.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page whose order summary applies a −$25.00 gift card (total $75.00): the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognised? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
+    alt: 'Presentation panel “No guess when the amount isn’t certain.” beside the actual badge panel “Best card for this cart” next to a neutral sample cart page whose order summary applies a −$25.00 gift card (total $75.00): the cart amount wasn’t read on this page, each card’s rate doesn’t depend on it, a spend cap could change the order at the cart’s amount; the cards by rate, Blue Cash Everyday 3% back, Double Cash 2% back, Quicksilver 1.5% back, Freedom Unlimited 1.5% back; an optional amount field, the payment method, the line that a tap sends only this store’s domain, a “Store not recognized? Suggest it” link, and the Dismiss for this tab and Not on this site buttons.',
     caption:
       'When the amount isn’t certain (a gift card is applied here), your cards are ranked by rate, not guessed.',
   },
@@ -68,7 +66,7 @@ const SCREENSHOTS = [
   },
   {
     src: '/media/4-comparison.png',
-    alt: 'Presentation panel “The rule in the issuer’s words.” beside the actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “every purchase”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
+    alt: 'Presentation panel “The rule in the issuer’s words.” beside the actual popup result “Use Blue Cash Everyday. Saved estimate for a $100.00 Another U.S. online store purchase.” Blue Cash Everyday $3.00 (3%): 3% on “U.S. online retail purchases”; otherwise 1% on “all other eligible purchases”, U.S. merchants only, up to $6,000.00 per year then 1%, activation not mentioned on the issuer’s pages, “Rules that don’t apply here (2)”; below it Double Cash, $1.00 less, $2.00: 2% on “Earn unlimited 1% cash back when you buy, plus an additional 1% as you pay, on every purchase.”, 2% if the balance is paid (1% at purchase), “Rules that don’t apply here (1)”.',
     caption:
       'The popup compares any amount at any store, with each rule quoted from the issuer and its conditions.',
   },
