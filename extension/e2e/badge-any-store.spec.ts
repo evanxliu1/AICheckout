@@ -4,6 +4,9 @@
 // navigation into and out of a cart, the badge toggle and the per-site switch, and axe on the badge.
 // Phase 14.2: a store named from the bundled merchant release, and no badge on a payment processor's
 // page. Phase 15.1: the former adapter stores are ordinary release stores (the toggle covers them too).
+// 2026-11-13: a checkout whose total is redrawn one character per element (an animated total) shows the
+// amount view, the same total with another currency's code before the "$" shows no badge, and a checkout
+// whose order summary is folded behind its control shows the amount view from the control's total.
 import AxeBuilder from '@axe-core/playwright';
 import { chromium, expect, test, type BrowserContext, type Frame, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -42,7 +45,37 @@ const SPA = page(
   });
 </script>`,
 );
+/** A checkout whose total is drawn one character per element once the page's script runs (an animated total):
+ * the page arrives with "$100.00" as plain text, then the script redraws the total as `total`, each character
+ * in its own span, beside the old amount fading out. `code` is the currency code written before the symbol. */
+const splitTotalCheckout = (code: string, total: string) =>
+  page(
+    'Checkout',
+    `<style>.amount{display:grid;overflow:hidden}.layer{grid-area:1/1}.char{position:relative;transition:opacity .1s}.old .char{opacity:0;top:1em}</style>
+<main><h1>Checkout</h1><section class="summary">${row('Subtotal', '$100.00')}${row('Shipping', 'Enter shipping address')}
+<div><div><strong>Total</strong></div><div><div><abbr>${code}</abbr><strong><span class="amount" id="total">$100.00</span></strong></div></div></div>
+<button type="button">Pay now</button></section></main>
+<script>
+  const layer = (text, old) => '<span class="layer' + (old ? ' old" aria-hidden="true' : '') + '">' +
+    [...text].map((c) => '<span class="char">' + c + '</span>').join('') + '</span>';
+  setTimeout(() => {
+    document.getElementById('total').innerHTML = layer('$100.00', true) + layer(${JSON.stringify(total)}, false);
+  }, 300);
+</script>`,
+  );
+/** A checkout as a narrow window shows it: the order summary folded behind its control, which keeps only the
+ * total, labelled for screen readers alone. */
+const COLLAPSED_CHECKOUT = page(
+  'Checkout',
+  `<style>.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}</style>
+<aside><button type="button" aria-expanded="false" aria-controls="details"><span>Order summary</span>
+<span><span class="sr">Total price</span><span><strong>$200.00</strong></span></span></button></aside>
+<main><h1 class="sr">Checkout</h1><form><label>Email <input type="email"></label><button type="button">Pay now</button></form></main>`,
+);
 const fixtures: Record<string, string> = {
+  'https://shop.example.com/checkouts/c/usd': splitTotalCheckout('USD', '$200.00'),
+  'https://shop.example.com/checkouts/c/cad': splitTotalCheckout('CAD', '$200.00'),
+  'https://shop.example.com/checkouts/c/collapsed': COLLAPSED_CHECKOUT,
   'https://shop.example.com/cart': page('Your cart', cartBody(USD_ROWS)),
   'https://shop.example.com/cart?view=uncertain': page(
     'Your cart',
@@ -333,6 +366,42 @@ test('no cards at a generic store: the pill opens onboarding, the dismiss beside
     await expect.poll(() => hasBadge(other)).toBe(false);
     await other.reload();
     await expectNoBadge(other);
+  } finally {
+    await context.close();
+  }
+});
+
+test('checkout totals: one character per element, another currency’s code before the symbol, a collapsed order summary', async ({
+  browserName,
+}, testInfo) => {
+  expect(browserName).toBe('chromium');
+  const { context, id } = await launch(testInfo);
+  try {
+    await onboard(context, id);
+    // The page arrives with $100.00 and redraws its total as $200.00, a span per character, beside the old
+    // amount fading out: the badge follows the redrawn total (Blue Cash Everyday 3%), never the rates view.
+    const checkout = await context.newPage();
+    await checkout.goto('https://shop.example.com/checkouts/c/usd');
+    const badge = await badgeFrame(checkout);
+    const pill = badge.getByRole('button', { name: /Use Blue Cash Everyday · \$6\.00 back on this cart/ });
+    await expect(pill).toBeVisible();
+    await pill.click();
+    await expect(
+      badge.getByText('Based on $200.00 cart estimated total at Another U.S. online store.'),
+    ).toBeVisible();
+
+    // The same total with "CAD" before the "$" is a Canadian-dollar amount: no dollar estimate is shown.
+    const canadian = await context.newPage();
+    await canadian.goto('https://shop.example.com/checkouts/c/cad');
+    await expectNoBadge(canadian);
+
+    // The order summary folded behind its control (a narrow window): the control's one amount is the total.
+    const collapsed = await context.newPage();
+    await collapsed.goto('https://shop.example.com/checkouts/c/collapsed');
+    const collapsedBadge = await badgeFrame(collapsed);
+    await expect(
+      collapsedBadge.getByRole('button', { name: /Use Blue Cash Everyday · \$6\.00 back on this cart/ }),
+    ).toBeVisible();
   } finally {
     await context.close();
   }
