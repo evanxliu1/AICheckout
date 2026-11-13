@@ -2,6 +2,9 @@
 
 Dated records of choices, one per file, in the format **Context**, **Options considered**, **Decision**, **Consequences**, **Status** (template in [how to document](../guides/how-to-document.md#templates)). A record is never edited after acceptance except its status line; a change of mind is a new record that supersedes the old one. Standing instructions are summarised in [user directives](../product/user-directives.md).
 
+## 2026-11-13
+* [The generic reader reads an amount drawn one character per element, takes a currency code written before the symbol, and reads a collapsed order summary's control](./2026-11-13-reader-split-amounts-and-collapsed-summary.md) — implementer, on Evan's instruction after he found Shopify checkouts whose total was not read: three narrow generic rules, no change on any development page-state, no held-out measurement.
+
 ## 2026-11-07
 * [The renewal's remaining adjudications ran on Opus 5.5 instead of the pinned Fable 5.1 because of the Fable weekly limit](./2026-11-07-renewal-adjudicate-on-opus.md) — renewal driver, on Evan's 2026-11-07 directive: Synchrony and Bank of America adjudicated by `card-adjudicator` runs on Opus 5.5, each a different run from its verifier, with the model recorded as it ran; this renewal only.
 * [Bank of America in renewal 2026-11-07.renewal.2: held out, then restored from browser-pane captures](./2026-11-07-bank-of-america-held-out-of-renewal.md) — renewal driver: headless capture got HTTP 403 on all 35 pages, so the cards were first held out; the pages were then captured in the desktop browser pane through `pipeline capture-import`, adjudicated on Opus, and all 19 cards ship.

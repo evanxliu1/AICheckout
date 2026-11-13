@@ -1,6 +1,7 @@
 // Amount grammar: locale number formats (decimal comma or dot; dot, comma, space or apostrophe grouping; Indian
 // grouping; ",-" and ":-" zero decimals; non-Latin digits) with a currency marker before or after (ISO code,
-// country-named dollar, symbol or local abbreviation). Nothing here names a store.
+// country-named dollar, symbol or local abbreviation), or a code and then a symbol before ("USD $84.00"). Nothing
+// here names a store.
 
 /** Markers that decide the currency on their own (protocol rule (a) codes and prefixes, rule (c) symbols). */
 export const DECIDING_MARKERS: Record<string, string> = {
@@ -68,8 +69,11 @@ const SYM_MARKS = marks
   .join('|');
 const MARK = `(?<![\\p{L}])(?:${WORD_MARKS})(?![\\p{L}])|(?:${SYM_MARKS})|(?<![A-Za-z])[A-Z]{3}(?![A-Za-z])`;
 const RUN = String.raw`\d(?:[\d.,' ]*\d)?(?:[.,:][-–—])?`;
+// A code written before the amount's symbol ("USD $84.00", "CAD$92.00", as checkout totals often are): three capitals
+// and then a symbol marker. The caller's `isCode` decides whether they are a currency.
+const LEAD = `(?<lead>(?<![A-Za-z])[A-Z]{3}\\s?)(?=${SYM_MARKS})`;
 const AMOUNT_RE = new RegExp(
-  `(?<neg1>[-−–]\\s?)?(?<pre>${MARK})?\\s?(?<neg2>[-−–]\\s?)?(?<![\\d.,])(?<run>${RUN})(?!\\d|[.,]\\d|\\s?%)(?:\\s?(?<post>${MARK})(?!\\s?\\d))?`,
+  `(?<neg1>[-−–]\\s?)?(?:${LEAD})?(?<pre>${MARK})?\\s?(?<neg2>[-−–]\\s?)?(?<![\\d.,])(?<run>${RUN})(?!\\d|[.,]\\d|\\s?%)(?:\\s?(?<post>${MARK})(?!\\s?\\d))?`,
   'gu',
 );
 const CODE_RE = /^[A-Z]{3}$/;
@@ -164,15 +168,27 @@ export function findAmounts(text: string, isCode: (c: string) => boolean): Amoun
   const out: Amount[] = [];
   for (const m of text.matchAll(AMOUNT_RE)) {
     const g = m.groups!;
+    // Three capitals before the symbol are part of the amount only when they are a currency code ("USD $84.00") that
+    // the symbol does not contradict ("CAD US$92.00" keeps "CAD" as a word); any other word there ("NOW $5.00")
+    // stays in the label.
+    const lead = g.lead?.trim();
+    const symbol = g.pre ? DECIDING_MARKERS[g.pre] : undefined;
+    const leadCode = lead && isCode(lead) && (!symbol || symbol === lead) ? lead : null;
+    const skipped = lead && !leadCode ? g.lead!.length : 0;
+    // A minus sign is the amount's when it touches it ("-$5.00", "-USD $5.00"); before a word, or set off from a
+    // code by a space ("Total – USD $92.00"), it is punctuation.
+    const signed = Boolean(g.neg1) && (!lead || (leadCode !== null && !/\s$/.test(g.neg1!)));
     // Mojibake: a digit and one or two letters right before the run ("18Â 499,00", a non-breaking space decoded as
     // Latin-1) mean the separator was mangled, so the number is unreadable (the amount still counts as present).
     const broken = /\d\p{L}{1,2} ?$/u.test(
-      text.slice(0, m.index! + (g.neg1?.length ?? 0) + (g.pre?.length ?? 0)).replace(/[\s-−–]+$/, ''),
+      text
+        .slice(0, m.index! + (g.neg1?.length ?? 0) + (g.lead?.length ?? 0) + (g.pre?.length ?? 0))
+        .replace(/[\s-−–]+$/, ''),
     );
     // A run with a leading zero ("06229" in an item number) is a code, not a price.
     if (/^0\d/.test(g.run!)) continue;
     const parsed = broken ? null : parseRun(g.run!);
-    let code: string | null = null;
+    let code: string | null = leadCode;
     let marker: string | null = null;
     let markerText: string | null = null;
     for (const mk of [g.pre, g.post]) {
@@ -188,11 +204,11 @@ export function findAmounts(text: string, isCode: (c: string) => boolean): Amoun
     if (!code && !marker && !(parsed && (parsed.frac.length === 2 || /[.,:][-–—]$/.test(g.run!)))) continue;
     out.push({
       number: parsed,
-      negative: Boolean(g.neg1 || g.neg2),
+      negative: signed || Boolean(g.neg2),
       code,
       marker,
       markerText,
-      start: m.index!,
+      start: m.index! + (signed ? 0 : (g.neg1?.length ?? 0)) + skipped,
       end: m.index! + m[0].length,
     });
   }

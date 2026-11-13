@@ -8,6 +8,11 @@
 // 1. Every text node that looks like an amount climbs to its row: the nearest small ancestor whose text carries a
 //    summary label (total, subtotal, amount due, in many languages), or a labelled previous sibling of an ancestor
 //    (dt/dd, th/td, label/value pairs).
+//    An amount drawn one character per element (an animated total: "$", "8", "4", ".", "0", "0", each in its own
+//    span) is one text: it climbs once, from the element that holds the characters, and reads as one word.
+//    A collapsed order summary is a row too: the control that opens it ("Order summary ⌄ $84.00", aria-expanded
+//    or a <summary>) names the summary and shows one amount, the order's total, often with no label the shopper
+//    sees (`summaryToggle`).
 // 2. A row counts when it is visible to the shopper (display, visibility, opacity below one half, clipping, not slid
 //    out of view by a transform, on the page or inside a scrolling panel), its visible text has exactly one distinct
 //    non-negative amount, and its label
@@ -50,6 +55,7 @@ import {
   PREP_RE,
   SHIP_RE,
   SUBTOTAL_RE,
+  SUMMARY_NAME_RE,
   TAX_RE,
   TOTAL_RE,
   classifyLabel,
@@ -109,6 +115,8 @@ export type Ctx = {
   visible: Map<Element, string>;
   /** Open shadow roots of the page, nested ones included (filled by `analyze`). */
   shadowRoots: ShadowRoot[];
+  /** Whether an element's text is split one character per child element (`isCharRun`), cached. */
+  runs: Map<Element, boolean>;
 };
 
 /** Page-wide currency evidence, read lazily once: structured data (rule (b)) and currencies named in the text. */
@@ -170,6 +178,7 @@ export function analyze(
     blocks: new Map(),
     visible: new Map(),
     shadowRoots: [],
+    runs: new Map(),
   };
   // A body that clips or scrolls its own overflow bounds what the shopper can reach sideways: its overflow applies to
   // the viewport (the body's own box may be narrower or offset, as on a right-to-left page), so the bound is the
@@ -341,11 +350,10 @@ export function analyze(
 /** Finds the rows of a tree: each amount-like text node climbs to its nearest small labelled ancestor or pair. */
 function collectRows(root: Node, ctx: Ctx): void {
   const walker = ctx.doc.createTreeWalker(root, 4 /* SHOW_TEXT */);
+  const runs = new Set<Element>();
   for (let n = walker.nextNode(); n; n = walker.nextNode()) {
     // Digits of any script (Arabic-Indic, Devanagari, full-width) are normalized before the amount gate.
     if (!/\p{Nd}/u.test((n as Text).data)) continue;
-    const data = normalizeText((n as Text).data);
-    if (!CANDIDATE_RE.test(data)) continue;
     const parent = n.parentNode as Element | null;
     if (
       !parent ||
@@ -355,6 +363,17 @@ function collectRows(root: Node, ctx: Ctx): void {
     )
       continue;
     let el: Element | null = parent;
+    let data = normalizeText((n as Text).data);
+    // An amount split one character per element climbs once, from the element that holds the characters, as its
+    // whole text: a lone "8" is a fragment whose label may sit further up than a fragment climbs.
+    const run = parentOf(parent);
+    if (run && isCharRun(run, ctx)) {
+      if (runs.has(run)) continue;
+      runs.add(run);
+      data = normalizeText(run.textContent ?? '');
+      el = run;
+    }
+    if (!CANDIDATE_RE.test(data)) continue;
     const climb = FRAGMENT_RE.test(data) && !MARK_RE.test(data) ? MAX_FRAGMENT_CLIMB : MAX_CLIMB;
     for (let depth = 0; el && depth < climb; depth += 1) {
       if (LIST_TAGS.has(el.nodeName)) break;
@@ -378,6 +397,11 @@ function collectRows(root: Node, ctx: Ctx): void {
         !hiddenWhy(prev, ctx)
       ) {
         if (!ctx.rows.has(el)) ctx.rows.set(el, [prev, el]);
+        break;
+      }
+      // The control of a collapsed order summary: its amount has no label of its own to climb to.
+      if (summaryToggle(el, ctx)) {
+        if (!ctx.rows.has(el)) ctx.rows.set(el, [el]);
         break;
       }
       el = parentOf(el);
@@ -572,12 +596,165 @@ function readVisibleText(el: Element, ctx: Ctx): string {
       if ((e.nodeName === 'SUP' || e.nodeName === 'SUB') && /^\s*\d{2}\s*$/.test(e.textContent ?? '')) {
         if (/\d\s*$/.test(parts.at(-1) ?? '')) parts.push('.');
       } else if (!inline) parts.push(' ');
-      walk(e.shadowRoot ?? e);
+      if (!word(e)) walk(e.shadowRoot ?? e);
       if (!inline) parts.push(' ');
     }
   };
-  walk(el.shadowRoot ?? el);
+  // A text split one character per element is one word: "$", "8", "4" are "$84", not "$8 4". Only when every
+  // character is plainly shown (`charState`), nothing around the run is part-way through a fade (`fading`) and the
+  // characters stand in one line inside their clipping boxes (`charLine`). A run that is wholly hidden (the amount
+  // being replaced) is left out. Any other is read element by element as before, and so not as a number.
+  const word = (e: Element): boolean => {
+    if (e.shadowRoot || !isCharRun(e, ctx)) return false;
+    const chars = [...e.children];
+    budget -= chars.length;
+    const states = chars.map((c) => charState(c, ctx));
+    if (states.every((state) => state === 'hidden')) return true;
+    if (!states.every((state) => state === 'shown') || fading(e, ctx) || !charLine(e, chars, ctx))
+      return false;
+    const text = chars.map((c) => c.textContent ?? '').join('');
+    if (ALNUM_END.test(parts.at(-1) ?? '') && ALNUM_START.test(text)) parts.push(' ');
+    parts.push(text);
+    return true;
+  };
+  if (!word(el)) walk(el.shadowRoot ?? el);
   return parts.join('');
+}
+
+/** The fewest characters, one per element, that make one split text: two neighbours ("2" beside "x") are not one. */
+const MIN_CHAR_RUN = 3;
+
+/**
+ * Whether an element's text is split one character per child element, as animated prices and split-text effects
+ * draw it ("$", "8", "4", ".", "0", "0"): at least MIN_CHAR_RUN children and nothing else (no text of its own, not
+ * even spaces, which would show between the characters), all of one tag, each an inline or inline-block box holding
+ * exactly one character. A stepper ("−", "1", "+": buttons around a span) and a list of two-digit numbers are not.
+ */
+function isCharRun(el: Element, ctx: Ctx): boolean {
+  let run = ctx.runs.get(el);
+  if (run !== undefined) return run;
+  const first = el.firstElementChild;
+  run = first !== null && el.childElementCount >= MIN_CHAR_RUN && first.namespaceURI === XHTML;
+  for (let c = el.firstChild; c && run; c = c.nextSibling) {
+    // Comments (a framework's markers between its text) are not content.
+    if (c.nodeType === 8) continue;
+    const only = c.firstChild;
+    run =
+      c.nodeType === 1 &&
+      c.nodeName === first!.nodeName &&
+      !SKIP_TAGS.has(c.nodeName) &&
+      only !== null &&
+      only === c.lastChild &&
+      only.nodeType === 3 &&
+      [...(only as Text).data].length === 1;
+  }
+  // Styles last: only for elements whose children already look like characters.
+  if (run)
+    run = [...el.children].every((c) => {
+      const display = style(c, ctx).display;
+      return display === 'inline' || display === 'inline-block' || display === '';
+    });
+  ctx.runs.set(el, run);
+  return run;
+}
+
+/** Whether a computed colour paints next to nothing: `transparent`, or an alpha below a tenth. */
+function faint(colour: string | undefined): boolean {
+  if (!colour) return false;
+  if (colour === 'transparent') return true;
+  const alpha = /^rgba\((?:[^,]+,){3}\s*([\d.]+)\)$/.exec(colour) ?? /\/\s*([\d.]+)(%?)\)$/.exec(colour);
+  return alpha !== null && Number(alpha[1]) / (alpha[2] ? 100 : 1) < 0.1;
+}
+/** An opacity part-way between hidden and shown: a fade in progress. */
+const midFade = (opacity: string | undefined): boolean => {
+  const value = parseFloat(opacity ?? '');
+  return value > 0.01 && value < 0.99;
+};
+/** A clip path or a mask on a box: part of what is in it may not show, and which part is not worked out. */
+const veiled = (cs: CSSStyleDeclaration): boolean => {
+  const mask = (cs as CSSStyleDeclaration & { webkitMaskImage?: string }).webkitMaskImage;
+  return [cs.clipPath, cs.maskImage, mask].some((value) => Boolean(value) && value !== 'none');
+};
+/** Characters that take no room in a line (spaces, zero-width and direction marks): not measured. */
+const UNSEEN_RE = /^[\s\u200b-\u200f\u202a-\u202e\u2060\u2066-\u2069\ufeff]*$/;
+
+/**
+ * How one character of a split text is drawn: plainly shown, hidden (by its own styles, a colour that paints next
+ * to nothing or, where there is layout, an empty box), or `partly`: an opacity between the two (a fade in
+ * progress), or a transparent colour under a background clipped to the text (gradient lettering, which does show).
+ */
+function charState(el: Element, ctx: Ctx): 'shown' | 'hidden' | 'partly' {
+  const cs = style(el, ctx);
+  if (midFade(cs.opacity) || veiled(cs)) return 'partly';
+  if (hiddenBox(cs) || cs.visibility === 'hidden' || cs.visibility === 'collapse') return 'hidden';
+  const fill = (cs as CSSStyleDeclaration & { webkitTextFillColor?: string }).webkitTextFillColor;
+  if (faint(cs.color) || faint(fill))
+    return (cs.backgroundClip ?? '').includes('text') || (cs.webkitBackgroundClip ?? '').includes('text')
+      ? 'partly'
+      : 'hidden';
+  if (!ctx.layout || UNSEEN_RE.test(el.textContent ?? '')) return 'shown';
+  const r = el.getBoundingClientRect();
+  return r.width < 1 || r.height < 1 ? 'hidden' : 'shown';
+}
+
+/** How many levels above a split text a fade or a clipping box is looked for. */
+const RUN_LEVELS = 6;
+
+/**
+ * Whether the run or a box near it is part-way through a fade (a layer cross-fading with the one it replaces) or
+ * cut by a clip path or a mask.
+ */
+function fading(run: Element, ctx: Ctx): boolean {
+  let a: Element | null = run;
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < RUN_LEVELS; depth += 1, a = parentOf(a)) {
+    const cs = style(a, ctx);
+    if (midFade(cs.opacity) || veiled(cs)) return true;
+  }
+  return false;
+}
+
+/**
+ * Whether the characters of a split text stand as the shopper reads them (checked where there is layout): every
+ * box within the height of the tallest one (a smaller raised "$" is; a digit part-way through a roll is not), each
+ * after the one before without overlapping it, in one direction, and every box whole inside each box near the run
+ * that cuts off its overflow. A digit rolled off the line, drawn over its neighbour or cut by the box around the
+ * amount fails: the run would read as a number the shopper does not see.
+ */
+function charLine(run: Element, chars: Element[], ctx: Ctx): boolean {
+  if (!ctx.layout) return true;
+  const rects = chars
+    .filter((c) => !UNSEEN_RE.test(c.textContent ?? ''))
+    .map((c) => c.getBoundingClientRect());
+  if (rects.length === 0) return true;
+  const tallest = rects.reduce((a, b) => (b.height > a.height ? b : a));
+  const lift = Math.max(1, tallest.height * 0.08);
+  for (const [i, r] of rects.entries()) {
+    if (r.top < tallest.top - lift || r.bottom > tallest.bottom + lift) return false;
+    if (i === 0) continue;
+    const prev = rects[i - 1]!;
+    // Kerning may pull neighbours a little into each other; a quarter of the narrower box is the most.
+    const slack = Math.min(prev.width, r.width) / 4;
+    const step = r.left >= prev.right - slack ? 1 : r.right <= prev.left + slack ? -1 : 0;
+    const before = i > 1 ? Math.sign(prev.left - rects[i - 2]!.left) : step;
+    if (step === 0 || step !== before) return false;
+  }
+  let a: Element | null = run;
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < RUN_LEVELS; depth += 1, a = parentOf(a)) {
+    const cs = style(a, ctx);
+    // Sideways, a scrolling box counts too: its scrollbar may be hidden, and an amount is not scrolled to be read.
+    // Downwards it does not: a summary further down a scrolling panel is the shopper's to reach.
+    const clipX = /hidden|clip|auto|scroll/.test(cs.overflowX ?? '');
+    const clipY = /hidden|clip/.test(cs.overflowY ?? '');
+    if (!clipX && !clipY) continue;
+    const box = a.getBoundingClientRect();
+    for (const r of rects) {
+      if (clipX && (r.left < box.left - 1 || r.right > box.right + 1)) return false;
+      // A line box may be a little shorter than the glyph boxes in it, which then stand out of it unclipped.
+      const over = Math.max(1, r.height * 0.15);
+      if (clipY && (r.top < box.top - over || r.bottom > box.bottom + over)) return false;
+    }
+  }
+  return true;
 }
 
 /** Reads one candidate row (one element, or a label element and a value element). */
@@ -615,7 +792,9 @@ function readRow(els: Element[], ctx: Ctx, store: Storefront, page: PageEvidence
     return CREDIT_RE.test(lower) && !OFFER_RE.test(lower)
       ? { ...report, kind: 'credit' }
       : dropped('negative');
-  const kind = classifyLabel(lower);
+  // A collapsed order summary's control shows the order's total (`toggleKind`).
+  const toggle = els.length === 1 && summaryToggle(els[0]!, ctx);
+  const kind = classifyLabel(lower) ?? (toggle && values.size === 1 ? toggleKind(els[0]!, lower) : null);
   if (!kind) return dropped('label');
   if ((kind === 'after-candidate' && OFFER_RE.test(lower)) || inOfferBlock(els.at(-1)!, ctx))
     return dropped('offer');
@@ -724,7 +903,83 @@ function summaryOf(
 
 /** Whether a row sits in a cart summary: an ancestor also holds shipping, tax, a checkout control or a subtotal. */
 function inSummary(el: Element, kind: Kind | 'after-candidate', ctx: Ctx): boolean {
-  return summaryOf(el, kind, ctx) !== null;
+  if (summaryOf(el, kind, ctx) !== null) return true;
+  // A row inside the control of a collapsed order summary ("Order summary · Total $84.00") is in that summary.
+  let a: Element | null = el;
+  for (let depth = 0; a && a.nodeName !== 'BODY' && depth < TOGGLE_LEVELS; depth += 1, a = parentOf(a))
+    if (summaryToggle(a, ctx)) return true;
+  return false;
+}
+
+/** How many levels up a row may sit inside the control of a collapsed order summary. */
+const TOGGLE_LEVELS = 4;
+/** The longest text such a control runs to: its name, a count and one amount. */
+const MAX_TOGGLE_TEXT = 100;
+
+/**
+ * Whether an element is the control of a collapsed order summary: a disclosure (`aria-expanded`, or a `<summary>`)
+ * outside the page header whose short text names the order summary. Checkouts fold the summary behind it on narrow
+ * windows and leave only the total beside the name. A header's cart button is not one.
+ */
+function summaryToggle(el: Element, ctx: Ctx): boolean {
+  if (!el.hasAttribute('aria-expanded') && el.nodeName !== 'SUMMARY') return false;
+  const text = shortText(el, ctx);
+  if (text === null || text.length > MAX_TOGGLE_TEXT || !SUMMARY_NAME_RE.test(text.toLowerCase()))
+    return false;
+  return !inHeader(el);
+}
+
+/** Words such a control carries beside the summary's name: "show", "hide" and their like. */
+const TOGGLE_WORDS_RE =
+  /\b(?:show|hide|view|toggle|open|close|expand|collapse|details)\b|anzeigen|ausblenden|einblenden|afficher|masquer|mostrar|ocultar|mostra|nascondi|tonen|verbergen|poka[żz]|ukryj|g[öo]ster|gizle|表示|非表示|显示|隐藏|顯示|隱藏|보기|숨기기|عرض|إخفاء/gu;
+/** A count of items on it: "(3)", "3 items", "(2 articles)". */
+const TOGGLE_COUNT_RE =
+  /\(\s*\d+\s*\)|\(?\s*\b\d+\s*(?:items?|products?|articles?|artikel|produkte?|produits?|art[ií]culos?|productos?|articoli|prodotti|itens|producten|st[üu]ck|stuks?)\b\s*\)?/gu;
+
+/** What a summary control's label (lower-cased, amounts removed) says beside its name, "show" or "hide" and a count. */
+function toggleRest(label: string): string {
+  return label
+    .replace(SUMMARY_NAME_RE, ' ')
+    .replace(TOGGLE_COUNT_RE, ' ')
+    .replace(TOGGLE_WORDS_RE, ' ')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+/** Articles and possessives that may stand in the summary's name ("the", "your", "le", "de la", "het"). */
+const TOGGLE_FILLER = new Set(
+  'the your my a le la les l de du des votre vos mon ma der die das den dem ihre ihr deine meine el los las del tu su mi il lo i gli dell della tuo tua het je uw mijn een o os as do da seu sua meu minha'.split(
+    ' ',
+  ),
+);
+/** Nothing of substance left: only articles and possessives, if anything. */
+const bare = (rest: string): boolean => rest.split(' ').every((word) => !word || TOGGLE_FILLER.has(word));
+
+/**
+ * The kind of the one amount on a collapsed order summary's control, or null when the control says anything else.
+ * The label the shopper sees must be the summary's name alone ("Order summary", "Show order summary (3 items)"):
+ * with any other word or number beside it ("each", "tip", an order number) it is not read, nor with savings,
+ * shipping or tax words. The words only a screen reader gets then decide the kind ("Total price", "Subtotal");
+ * words that are no total label ("Shipping") leave it unread, and with none it is the order's total.
+ */
+function toggleKind(el: Element, label: string): Kind | 'after-candidate' | null {
+  if (!bare(toggleRest(label)) || EXCLUDE_RE.test(label) || SHIP_RE.test(label) || TAX_RE.test(label))
+    return null;
+  const hidden = toggleRest(withoutAmounts(normalizeText(spacedText(el))).toLowerCase());
+  return bare(hidden) ? 'estimatedTotal' : classifyLabel(hidden);
+}
+
+/** A short element's whole text, hidden parts included, with a space between its text nodes. */
+function spacedText(el: Element): string {
+  const parts: string[] = [];
+  const walk = (node: Node) => {
+    for (let c = node.firstChild; c && parts.length < MAX_ROW_NODES; c = c.nextSibling) {
+      if (c.nodeType === 3) parts.push((c as Text).data);
+      else if (c.nodeType === 1 && !SKIP_TAGS.has(c.nodeName) && (c as Element).namespaceURI === XHTML)
+        walk(c);
+    }
+  };
+  walk(el);
+  return parts.join(' ');
 }
 
 /**

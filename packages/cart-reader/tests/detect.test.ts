@@ -345,4 +345,20 @@ describe('detectCartPage', () => {
       reading: { shown: true, kind: 'estimatedTotal', amountMinor: 2500, currency: 'USD' },
     });
   });
+  it('a checkout step whose order summary is collapsed behind its control is a checkout (2026-11-13)', () => {
+    // A narrow window: the form, and the summary folded into "Order summary $92.00".
+    const toggle = `<aside><button type="button" aria-expanded="false"><span>Order summary</span><span>$92.00</span></button></aside>`;
+    const form = `<main><h1>Checkout</h1><form><label>Email <input type="email"></label><button>Pay now</button></form></main>`;
+    document.title = 'Checkout';
+    document.body.innerHTML = toggle + form;
+    expect(readCartPage(document, { url: 'https://a.example/checkouts/c/1' })).toEqual({
+      detection: { page: 'checkout', reason: 'url-summary' },
+      reading: { shown: true, kind: 'estimatedTotal', amountMinor: 9200, currency: 'USD' },
+    });
+    // The same control on a page whose URL and headings name no cart or checkout decides nothing.
+    expect(page(toggle + form.replace('Checkout', 'Account'), { url: 'https://a.example/account' })).toEqual({
+      page: 'none',
+      reason: 'no-hint',
+    });
+  });
 });

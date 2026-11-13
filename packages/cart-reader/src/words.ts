@@ -49,6 +49,13 @@ export const ANY_LABEL_RE = new RegExp(
 export const CHECKOUT_RE =
   /check\s?out|proceed|place order|pay now|kasse|bestellen|commander|paiement|pagar|comprar|finalizar|acquista|\bpaga\b|cassa|afrekenen|betalen|kassan|betala|do kasy|zam[óo]w|ödeme|購入|レジ|会計|결제하기|주문하기|الدفع|إتمام/u;
 
+/**
+ * What a checkout calls its order summary on the control that opens and closes it ("Order summary", "Show order
+ * summary"). Used only for such a control (`summaryToggle` in reader.ts), never for a heading.
+ */
+export const SUMMARY_NAME_RE =
+  /order summary|cart summary|bestell(?:ü|ue)bersicht|(?:r[ée]sum[ée]|r[ée]capitulatif) de (?:la |votre )?commande|resumen del? pedido|resumo do pedido|riepilogo (?:dell['’] ?)?ordine|besteloverzicht|overzicht van (?:je |uw )?bestelling|podsumowanie zam[óo]wienia|sipari[şs] [öo]zeti|ordreoversigt|order[öo]versikt|注文概要|ご注文内容|订单摘要|訂單摘要|주문\s?요약|ملخص الطلب/u;
+
 export type Kind = 'afterCredit' | 'estimatedTotal' | 'subtotal';
 
 /** Quantity words and unrendered templates: a line item or a table header. */

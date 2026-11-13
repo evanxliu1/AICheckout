@@ -917,3 +917,209 @@ describe('Phase 15.1b review: credits outside the summary that the shopper does 
     expect(r).toEqual({ shown: true, kind: 'subtotal', amountMinor: 4349, currency: 'USD' });
   });
 });
+
+describe('amounts split one character per element, and a code before the symbol (2026-11-13)', () => {
+  // An animated total: each character of the amount in its own element, with nothing between them.
+  const chars = (text: string, style = '') =>
+    `<span>${[...text].map((c) => `<span${style ? ` style="${style}"` : ''}>${c}</span>`).join('')}</span>`;
+  const lines = row('Subtotal', '$84.00') + row('Shipping', '$8.00');
+  const unreadable = { shown: false, reason: 'amount-unreadable' };
+
+  it('reads a total drawn one character per element as one amount', () => {
+    expect(page(summary(lines + row('Total', chars('$92.00'))))).toEqual({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 9200,
+      currency: 'USD',
+    });
+    expect(page(summary(lines + row('Total', chars('$1,292.00'))))).toMatchObject({ amountMinor: 129200 });
+    expect(
+      page(summary(row('Zwischensumme', '84,00 €') + row('Gesamtsumme', chars('1.292,00 €'))), {
+        lang: 'de',
+      }),
+    ).toMatchObject({ kind: 'estimatedTotal', amountMinor: 129200, currency: 'EUR' });
+  });
+  it('finds the label of a split amount further up than a lone digit climbs', () => {
+    // The label is the previous sibling of the cell, six levels above each character.
+    const total = `<div><div><strong>Total</strong></div><div><div><abbr><span>USD</span></abbr><strong><span>${chars('$92.00')}</span></strong></div></div></div>`;
+    expect(page(summary(`${lines}<div>${total}</div>`))).toEqual({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 9200,
+      currency: 'USD',
+    });
+  });
+  it('leaves out the amount being replaced while it fades out beside the new one', () => {
+    const value = `<span>${chars('$91.35', 'opacity:0')}${chars('$99.35')}</span>`;
+    expect(page(summary(lines + row('Total', value)))).toMatchObject({ shown: true, amountMinor: 9935 });
+  });
+  it('does not read a split amount whose characters are only partly shown', () => {
+    const fading = `<span><span>$</span><span>9</span><span>9</span><span style="opacity:0">.</span><span style="opacity:0">3</span><span style="opacity:0">5</span></span>`;
+    expect(page(summary(lines + row('Total', fading)))).toEqual(unreadable);
+  });
+  it('does not read a split amount mid-fade or with a character that paints nothing (review, 2026-11-13)', () => {
+    // The old amount still more than half shown and the new one less: neither is the amount on the page yet.
+    const crossFade = `<span>${chars('$91.35', 'opacity:.6')}${chars('$99.35', 'opacity:.4')}</span>`;
+    expect(page(summary(lines + row('Total', crossFade)))).toEqual(unreadable);
+    // The same cross-fade set on the two layers instead of on their characters.
+    const layers = `<span><span style="opacity:.6">${chars('$91.35')}</span><span style="opacity:.4">${chars('$99.35')}</span></span>`;
+    expect(page(summary(lines + row('Total', layers)))).toEqual(unreadable);
+    // "$99.355" in the tree, "$99.35" on the page: the last digit has a colour that paints next to nothing.
+    const faint = `<span>${[...'$99.35'].map((c) => `<span>${c}</span>`).join('')}<span style="color:rgba(0, 0, 0, 0.004)">5</span></span>`;
+    expect(page(summary(lines + row('Total', faint)))).toEqual(unreadable);
+    // "$919.35" in the tree, "$99.35" on the page: the old digit is transparent among the new ones.
+    const stale = `<span><span>$</span><span>9</span><span style="color:transparent">1</span><span>9</span><span>.</span><span>3</span><span>5</span></span>`;
+    expect(page(summary(lines + row('Total', stale)))).toEqual(unreadable);
+  });
+  it('keeps neighbouring elements apart when they are not single characters or have spaces between them', () => {
+    // Two characters per element: numbers that touch across elements stay separate things.
+    const pairs = '<span><span>$1</span><span>2.</span><span>00</span></span>';
+    expect(page(summary(lines + row('Total', pairs)))).toEqual(unreadable);
+    // Spaces between the elements show between the characters.
+    const spaced = '<span><span>$</span> <span>9</span> <span>2</span></span>';
+    expect(page(summary(lines + row('Total', spaced)))).toEqual(unreadable);
+    // Two single characters are neighbours, not a split text.
+    const two = '<span><span>9</span><span>2</span></span><span>.00</span>';
+    expect(page(summary(lines + row('Total', `$${two}`)))).toEqual(unreadable);
+  });
+  it('reads a split label and a split amount in inline-block characters', () => {
+    const blocks = (text: string) => chars(text, 'display:inline-block');
+    expect(page(summary(lines + row(blocks('Total'), blocks('$92.00'))))).toMatchObject({
+      shown: true,
+      kind: 'estimatedTotal',
+      amountMinor: 9200,
+    });
+  });
+
+  it('takes a code written before the symbol as the currency of the amount', () => {
+    const total = (value: string) => summary(lines + row('Total', value));
+    expect(page(total('<abbr>CAD</abbr><strong>$92.00</strong>'))).toMatchObject({
+      shown: true,
+      currency: 'CAD',
+    });
+    expect(page(total('AUD $92.00'))).toMatchObject({ shown: true, currency: 'AUD', amountMinor: 9200 });
+    expect(page(total(`<abbr>CAD</abbr><strong>${chars('$92.00')}</strong>`))).toMatchObject({
+      currency: 'CAD',
+    });
+    // The code decides where the page's language would otherwise leave a bare "$" undetermined.
+    expect(page(total('<abbr>USD</abbr><strong>$92.00</strong>'), { lang: 'en-CA' })).toMatchObject({
+      shown: true,
+      currency: 'USD',
+      amountMinor: 9200,
+    });
+  });
+  it('leaves a word before the symbol that is not a currency in the label', () => {
+    expect(findAmounts('USD $84.00', isCode)).toMatchObject([{ code: 'USD', marker: 'shared', start: 0 }]);
+    expect(findAmounts('CAD$1,284.00', isCode)).toMatchObject([
+      { code: 'CAD', number: { int: '1284', frac: '00' } },
+    ]);
+    expect(findAmounts('TAX $5.00', isCode)).toMatchObject([{ code: null, marker: 'shared', start: 4 }]);
+    expect(findAmounts('- NOW $5.00', isCode)).toMatchObject([{ code: null, negative: false, start: 6 }]);
+    expect(findAmounts('-USD $5.00', isCode)).toMatchObject([{ code: 'USD', negative: true, start: 0 }]);
+    // A dash set off from the code by a space is punctuation, not a minus sign (review, 2026-11-13).
+    expect(findAmounts('Total – USD $92.00', isCode)).toMatchObject([
+      { code: 'USD', negative: false, start: 8 },
+    ]);
+    expect(page(summary(lines + row('Total –', 'USD $92.00')))).toMatchObject({
+      shown: true,
+      amountMinor: 9200,
+    });
+    // A symbol that names another currency than the code before it: the code is a word, as before the rule.
+    expect(findAmounts('CAD US$92.00', isCode)).toMatchObject([{ code: null, marker: 'USD', start: 4 }]);
+    expect(page(summary(lines + row('Total', 'CAD US$92.00')))).toMatchObject({
+      shown: true,
+      currency: 'USD',
+    });
+    // "TAX" stays in the label, so the row is still the tax row and not a second total.
+    expect(page(summary(lines + row('Total TAX', '$7.00') + row('Total', '$99.00')))).toMatchObject({
+      shown: true,
+      amountMinor: 9900,
+    });
+  });
+});
+
+describe('a collapsed order summary: the control that opens it shows the total (2026-11-13)', () => {
+  // The label a screen reader gets and the shopper does not see.
+  const hidden = (text: string) =>
+    `<span style="position:absolute;width:1px;height:1px;clip:rect(0,0,0,0)">${text}</span>`;
+  const toggle = (inner: string, attrs = 'aria-expanded="false" aria-controls="details"') =>
+    `<aside><button type="button" ${attrs}><span>Order summary</span>${inner}</button></aside>`;
+  const total = { shown: true, kind: 'estimatedTotal', amountMinor: 9200, currency: 'USD' };
+
+  it('reads the one amount beside the name of the summary as the order total', () => {
+    expect(
+      page(toggle(`<span>${hidden('Total price')}<span><p><strong>$92.00</strong></p></span></span>`)),
+    ).toEqual(total);
+    // No label at all, hidden or shown: the control's amount is the order's total.
+    expect(page(toggle('<span>$92.00</span>'))).toEqual(total);
+    expect(
+      page(`<details><summary><span>Show order summary</span><span>$92.00</span></summary></details>`),
+    ).toEqual(total);
+    expect(
+      page(toggle('<span>92,00 €</span>').replace('Order summary', 'Bestellübersicht anzeigen'), {
+        lang: 'de',
+      }),
+    ).toMatchObject({ kind: 'estimatedTotal', amountMinor: 9200, currency: 'EUR' });
+  });
+  it('takes the kind from the control’s own label, shown or hidden', () => {
+    expect(page(toggle(`<span>${hidden('Subtotal')}<span>$92.00</span></span>`))).toMatchObject({
+      shown: true,
+      kind: 'subtotal',
+    });
+    expect(page(toggle('<span>Total</span><span>$92.00</span>'))).toEqual(total);
+  });
+  it('agrees with the open summary below it, and withholds when they differ', () => {
+    const open = (amount: string) =>
+      toggle('<span>$92.00</span>', 'aria-expanded="true"') +
+      summary(row('Subtotal', '$84.00') + row('Shipping', '$8.00') + row('Total', amount));
+    expect(page(open('$92.00'))).toEqual(total);
+    expect(page(open('$95.00'))).toEqual({ shown: false, reason: 'ambiguous' });
+  });
+  it('is not read from a control that shows anything else, or from a heading', () => {
+    const none = { shown: false, reason: 'no-summary' };
+    expect(page(toggle('<span>$100.00</span><span>$92.00</span>'))).toEqual(none);
+    expect(page(toggle('<span>You save $8.00</span>'))).toEqual(none);
+    expect(page(toggle('<span>Shipping $8.00</span>'))).toEqual(none);
+    // A heading or a plain button with the same words is no disclosure.
+    expect(page('<section><h2>Order summary</h2><span>$92.00</span></section>')).toEqual(none);
+    expect(page('<button type="button"><span>Order summary</span><span>$92.00</span></button>')).toEqual(
+      none,
+    );
+    // A disclosure of something else.
+    expect(
+      page('<button aria-expanded="false"><span>Gift options</span><span>$92.00</span></button>'),
+    ).toEqual(none);
+  });
+  it('is the name of the summary and one amount, nothing more (review, 2026-11-13)', () => {
+    const none = { shown: false, reason: 'no-summary' };
+    // "Show", "hide" and a count of items are part of the name.
+    expect(page(toggle('<span>(3 items)</span><span>$92.00</span>'))).toEqual(total);
+    expect(page(toggle('<span>$92.00</span>').replace('Order summary', 'Hide order summary'))).toEqual(total);
+    // A qualifier beside the amount, an order number, or a hidden label that is no total label.
+    expect(page(toggle('<span>Spend $25.00</span>'))).toEqual(none);
+    expect(page(toggle('<span>2 items</span><span>$20.00 each</span>'))).toEqual(none);
+    expect(page(toggle('<span>#1001</span><span>$58.00</span>'))).toEqual(none);
+    expect(page(toggle('<span>Tip</span><span>$5.00</span>'))).toEqual(none);
+    expect(page(toggle('<span>$20.00 ea</span>'))).toEqual(none);
+    expect(
+      page(toggle('<span>运费</span><span>¥8.00</span>').replace('Order summary', '订单摘要'), {
+        url: 'https://shop.example.cn/checkout',
+        lang: 'zh',
+      }),
+    ).toEqual(none);
+    // An article in the name is part of it.
+    expect(
+      page(
+        toggle('<span>92,00 €</span>').replace('Order summary', 'Afficher le récapitulatif de la commande'),
+        { lang: 'fr' },
+      ),
+    ).toMatchObject({ shown: true, kind: 'estimatedTotal', amountMinor: 9200, currency: 'EUR' });
+    expect(page(toggle(`<span>${hidden('Shipping')}<span>$8.00</span></span>`))).toEqual(none);
+    // A cart button in the page header is not a collapsed order summary.
+    expect(
+      page(
+        '<header><button aria-expanded="false"><span>Cart summary</span><span>(3)</span><span>$45.00</span></button></header>',
+      ),
+    ).toEqual(none);
+  });
+});
